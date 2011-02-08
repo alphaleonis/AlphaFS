@@ -1,0 +1,620 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PathTestData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="PathTestData.xsd">
+  <Row>
+    <Input>.zip</Input>
+    <Root></Root>
+    <DirectoryName></DirectoryName>
+    <DirectoryNameWithoutRoot></DirectoryNameWithoutRoot>
+    <FileName>.zip</FileName>
+    <FileNameWithoutExtension></FileNameWithoutExtension>
+    <Extension>.zip</Extension>
+    <FullPath>C:\.zip</FullPath>
+    <LongFullPath>\\?\C:\.zip</LongFullPath>
+    <HasExtension>true</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>false</IsRooted>
+    <Parent></Parent>
+  </Row>
+  <Row>
+    <Input>C:\Test\File\Foo.txt</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\Test\File</DirectoryName>
+    <DirectoryNameWithoutRoot>Test\File</DirectoryNameWithoutRoot>
+    <FileName>Foo.txt</FileName>
+    <FileNameWithoutExtension>Foo</FileNameWithoutExtension>
+    <Extension>.txt</Extension>
+    <FullPath>C:\Test\File\Foo.txt</FullPath>
+    <LongFullPath>\\?\C:\Test\File\Foo.txt</LongFullPath>
+    <HasExtension>true</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\Test\File</Parent>
+  </Row>
+  <Row>
+    <Input>C:\</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\</DirectoryName>
+    <DirectoryNameWithoutRoot/>
+    <FileName/>
+    <FileNameWithoutExtension/>
+    <Extension/>
+    <FullPath>C:\</FullPath>
+    <LongFullPath>\\?\C:\</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>false</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\</Parent>
+  </Row>
+  <Row>
+    <Input>\\Server\Share\File.txt</Input>
+    <Root>\\Server\Share\</Root>
+    <DirectoryName>\\Server\Share\</DirectoryName>
+    <DirectoryNameWithoutRoot/>
+    <FileName>File.txt</FileName>
+    <FileNameWithoutExtension>File</FileNameWithoutExtension>
+    <Extension>.txt</Extension>
+    <FullPath>\\Server\Share\File.txt</FullPath>
+    <LongFullPath>\\?\UNC\Server\Share\File.txt</LongFullPath>
+    <HasExtension>true</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>\\Server\Share\</Parent>
+  </Row>
+  <Row>
+    <Input>\\?\UNC\Server\Share Name\File Name 1.txt</Input>
+    <Root>\\?\UNC\Server\Share Name\</Root>
+    <DirectoryName>\\?\UNC\Server\Share Name\</DirectoryName>
+    <DirectoryNameWithoutRoot/>
+    <FileName>File Name 1.txt</FileName>
+    <FileNameWithoutExtension>File Name 1</FileNameWithoutExtension>
+    <Extension>.txt</Extension>
+    <FullPath>\\?\UNC\Server\Share Name\File Name 1.txt</FullPath>
+    <LongFullPath>\\?\UNC\Server\Share Name\File Name 1.txt</LongFullPath>
+    <HasExtension>true</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>\\?\UNC\Server\Share Name\</Parent>
+  </Row>
+  <Row>
+    <Input>\\Server\Share</Input>
+    <Root>\\Server\Share\</Root>
+    <DirectoryName>\\Server\Share\</DirectoryName>
+    <DirectoryNameWithoutRoot/>
+    <FileName/>
+    <FileNameWithoutExtension/>
+    <Extension/>
+    <FullPath>\\Server\Share\</FullPath>
+    <LongFullPath>\\?\UNC\Server\Share\</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>false</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>\\Server\Share\</Parent>
+  </Row>
+  <Row>
+    <Input>\\?\C:\Directory\</Input>
+    <Root>\\?\C:\</Root>
+    <DirectoryName>\\?\C:\Directory</DirectoryName>
+    <DirectoryNameWithoutRoot>Directory</DirectoryNameWithoutRoot>
+    <FileName/>
+    <FileNameWithoutExtension/>
+    <Extension/>
+    <FullPath>\\?\C:\Directory\</FullPath>
+    <LongFullPath>\\?\C:\Directory\</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>false</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>\\?\C:\</Parent>
+  </Row>
+  <Row>
+    <Input>\</Input>
+    <Root>\</Root>
+    <DirectoryName>\</DirectoryName>
+    <DirectoryNameWithoutRoot/>
+    <FileName/>
+    <FileNameWithoutExtension/>
+    <Extension/>
+    <FullPath>C:\</FullPath>
+    <LongFullPath>\\?\C:\</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>false</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>\</Parent>
+  </Row>
+  <Row>
+    <Input>\Test\File</Input>
+    <Root>\</Root>
+    <DirectoryName>\Test</DirectoryName>
+    <DirectoryNameWithoutRoot>Test</DirectoryNameWithoutRoot>
+    <FileName>File</FileName>
+    <FileNameWithoutExtension>File</FileNameWithoutExtension>
+    <Extension/>
+    <FullPath>C:\Test\File</FullPath>
+    <LongFullPath>\\?\C:\Test\File</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>\Test</Parent>
+  </Row>
+  <Row>
+    <Input>\\?\globalroot\device\harddisk0\partition1\</Input>
+    <Root>\\?\GLOBALROOT\</Root>
+    <DirectoryName>\\?\GLOBALROOT\device\harddisk0\partition1</DirectoryName>
+    <DirectoryNameWithoutRoot>device\harddisk0\partition1</DirectoryNameWithoutRoot>
+    <FileName/>
+    <FileNameWithoutExtension/>
+    <Extension/>
+    <FullPath>\\?\GLOBALROOT\device\harddisk0\partition1\</FullPath>
+    <LongFullPath>\\?\GLOBALROOT\device\harddisk0\partition1\</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>false</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>\\?\GLOBALROOT\device\harddisk0</Parent>
+  </Row>
+  <Row>
+    <Input>\\?\Volume{12345678-aac3-31de-3321-3124565341ed}\Program Files\notepad.exe</Input>
+    <Root>\\?\Volume{12345678-aac3-31de-3321-3124565341ed}\</Root>
+    <DirectoryName>\\?\Volume{12345678-aac3-31de-3321-3124565341ed}\Program Files</DirectoryName>
+    <DirectoryNameWithoutRoot>Program Files</DirectoryNameWithoutRoot>
+    <FileName>notepad.exe</FileName>
+    <FileNameWithoutExtension>notepad</FileNameWithoutExtension>
+    <Extension>.exe</Extension>
+    <FullPath>\\?\Volume{12345678-aac3-31de-3321-3124565341ed}\Program Files\notepad.exe</FullPath>
+    <LongFullPath>\\?\Volume{12345678-aac3-31de-3321-3124565341ed}\Program Files\notepad.exe</LongFullPath>
+  <HasExtension>true</HasExtension><HasFileName>true</HasFileName><IsRooted>true</IsRooted><Parent>\\?\Volume{12345678-aac3-31de-3321-3124565341ed}\Program Files</Parent></Row>
+  <Row>
+    <Input>Program Files\Microsoft Office</Input>
+    <Root/>
+    <DirectoryName>Program Files</DirectoryName>
+    <DirectoryNameWithoutRoot>Program Files</DirectoryNameWithoutRoot>
+    <FileName>Microsoft Office</FileName>
+    <FileNameWithoutExtension>Microsoft Office</FileNameWithoutExtension>
+    <Extension/>
+    <FullPath>C:\Program Files\Microsoft Office</FullPath>
+    <LongFullPath>\\?\C:\Program Files\Microsoft Office</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>false</IsRooted>
+    <Parent>Program Files</Parent>
+  </Row>
+  <Row>
+    <Input>C</Input>
+    <Root/>
+    <DirectoryName/>
+    <DirectoryNameWithoutRoot/>
+    <FileName>C</FileName>
+    <FileNameWithoutExtension>C</FileNameWithoutExtension>
+    <Extension/>
+    <FullPath>C:\C</FullPath>
+    <LongFullPath>\\?\C:\C</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>false</IsRooted>
+    <Parent></Parent>
+  </Row>
+  <Row>
+    <Input>C:</Input>
+    <Root>C:</Root>
+    <DirectoryName/>
+    <DirectoryNameWithoutRoot/>
+    <FileName/>
+    <FileNameWithoutExtension/>
+    <Extension/>
+    <FullPath>C:</FullPath>
+    <LongFullPath>\\?\C:</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>false</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:</Parent>
+  </Row>
+  <Row>
+    <Input>C:\</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\</DirectoryName>
+    <DirectoryNameWithoutRoot/>
+    <FileName/>
+    <FileNameWithoutExtension/>
+    <Extension/>
+    <FullPath>C:\</FullPath>
+    <LongFullPath>\\?\C:\</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>false</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\</DirectoryName>
+    <DirectoryNameWithoutRoot/>
+    <FileName>a</FileName>
+    <FileNameWithoutExtension>a</FileNameWithoutExtension>
+    <Extension/>
+    <FullPath>C:\a</FullPath>
+    <LongFullPath>\\?\C:\a</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a\</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\a</DirectoryName>
+    <DirectoryNameWithoutRoot>a</DirectoryNameWithoutRoot>
+    <FileName/>
+    <FileNameWithoutExtension/>
+    <Extension/>
+    <FullPath>C:\a\</FullPath>
+    <LongFullPath>\\?\C:\a\</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>false</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a\b</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\a</DirectoryName>
+    <DirectoryNameWithoutRoot>a</DirectoryNameWithoutRoot>
+    <FileName>b</FileName>
+    <FileNameWithoutExtension>b</FileNameWithoutExtension>
+    <Extension/>
+    <FullPath>C:\a\b</FullPath>
+    <LongFullPath>\\?\C:\a\b</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\a</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a\b\</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\a\b</DirectoryName>
+    <DirectoryNameWithoutRoot>a\b</DirectoryNameWithoutRoot>
+    <FileName/>
+    <FileNameWithoutExtension/>
+    <Extension/>
+    <FullPath>C:\a\b\</FullPath>
+    <LongFullPath>\\?\C:\a\b\</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>false</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\a</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a\b\c</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\a\b</DirectoryName>
+    <DirectoryNameWithoutRoot>a\b</DirectoryNameWithoutRoot>
+    <FileName>c</FileName>
+    <FileNameWithoutExtension>c</FileNameWithoutExtension>
+    <Extension/>
+    <FullPath>C:\a\b\c</FullPath>
+    <LongFullPath>\\?\C:\a\b\c</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\a\b</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a\b\c\</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\a\b\c</DirectoryName>
+    <DirectoryNameWithoutRoot>a\b\c</DirectoryNameWithoutRoot>
+    <FileName/>
+    <FileNameWithoutExtension/>
+    <Extension/>
+    <FullPath>C:\a\b\c\</FullPath>
+    <LongFullPath>\\?\C:\a\b\c\</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>false</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\a\b</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a\b\c\f</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\a\b\c</DirectoryName>
+    <DirectoryNameWithoutRoot>a\b\c</DirectoryNameWithoutRoot>
+    <FileName>f</FileName>
+    <FileNameWithoutExtension>f</FileNameWithoutExtension>
+    <Extension/>
+    <FullPath>C:\a\b\c\f</FullPath>
+    <LongFullPath>\\?\C:\a\b\c\f</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\a\b\c</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a\b\c\f.</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\a\b\c</DirectoryName>
+    <DirectoryNameWithoutRoot>a\b\c</DirectoryNameWithoutRoot>
+    <FileName>f</FileName>
+    <FileNameWithoutExtension>f</FileNameWithoutExtension>
+    <Extension/>
+    <FullPath>C:\a\b\c\f</FullPath>
+    <LongFullPath>\\?\C:\a\b\c\f</LongFullPath>
+    <HasExtension>false</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\a\b\c</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a\b\c\f.t</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\a\b\c</DirectoryName>
+    <DirectoryNameWithoutRoot>a\b\c</DirectoryNameWithoutRoot>
+    <FileName>f.t</FileName>
+    <FileNameWithoutExtension>f</FileNameWithoutExtension>
+    <Extension>.t</Extension>
+    <FullPath>C:\a\b\c\f.t</FullPath>
+    <LongFullPath>\\?\C:\a\b\c\f.t</LongFullPath>
+    <HasExtension>true</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\a\b\c</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a\b\c\f.tx</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\a\b\c</DirectoryName>
+    <DirectoryNameWithoutRoot>a\b\c</DirectoryNameWithoutRoot>
+    <FileName>f.tx</FileName>
+    <FileNameWithoutExtension>f</FileNameWithoutExtension>
+    <Extension>.tx</Extension>
+    <FullPath>C:\a\b\c\f.tx</FullPath>
+    <LongFullPath>\\?\C:\a\b\c\f.tx</LongFullPath>
+    <HasExtension>true</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\a\b\c</Parent>
+  </Row>
+  <Row>
+    <Input>C:\a\b\c\f.txt</Input>
+    <Root>C:\</Root>
+    <DirectoryName>C:\a\b\c</DirectoryName>
+    <DirectoryNameWithoutRoot>a\b\c</DirectoryNameWithoutRoot>
+    <FileName>f.txt</FileName>
+    <FileNameWithoutExtension>f</FileNameWithoutExtension>
+    <Extension>.txt</Extension>
+    <FullPath>C:\a\b\c\f.txt</FullPath>
+    <LongFullPath>\\?\C:\a\b\c\f.txt</LongFullPath>
+    <HasExtension>true</HasExtension>
+    <HasFileName>true</HasFileName>
+    <IsRooted>true</IsRooted>
+    <Parent>C:\a\b\c</Parent>
+  </Row>
+<Row>
+  <Input>\\Server\Share\</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\</DirectoryName>
+  <DirectoryNameWithoutRoot/>
+  <FileName/>
+  <FileNameWithoutExtension/>
+  <Extension/>
+  <FullPath>\\Server\Share\</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>false</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\</DirectoryName>
+  <DirectoryNameWithoutRoot/>
+  <FileName>d</FileName>
+  <FileNameWithoutExtension>d</FileNameWithoutExtension>
+  <Extension/>
+  <FullPath>\\Server\Share\d</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\</DirectoryName>
+  <DirectoryNameWithoutRoot/>
+  <FileName>d1</FileName>
+  <FileNameWithoutExtension>d1</FileNameWithoutExtension>
+  <Extension/>
+  <FullPath>\\Server\Share\d1</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1</DirectoryName>
+  <DirectoryNameWithoutRoot>d1</DirectoryNameWithoutRoot>
+  <FileName/>
+  <FileNameWithoutExtension/>
+  <Extension/>
+  <FullPath>\\Server\Share\d1\</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>false</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1</DirectoryName>
+  <DirectoryNameWithoutRoot>d1</DirectoryNameWithoutRoot>
+  <FileName>d</FileName>
+  <FileNameWithoutExtension>d</FileNameWithoutExtension>
+  <Extension/>
+  <FullPath>\\Server\Share\d1\d</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d2</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1</DirectoryName>
+  <DirectoryNameWithoutRoot>d1</DirectoryNameWithoutRoot>
+  <FileName>d2</FileName>
+  <FileNameWithoutExtension>d2</FileNameWithoutExtension>
+  <Extension/>
+  <FullPath>\\Server\Share\d1\d2</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d2</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d2\</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1\d2</DirectoryName>
+  <DirectoryNameWithoutRoot>d1\d2</DirectoryNameWithoutRoot>
+  <FileName/>
+  <FileNameWithoutExtension/>
+  <Extension/>
+  <FullPath>\\Server\Share\d1\d2\</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d2\</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>false</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d2\f</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1\d2</DirectoryName>
+  <DirectoryNameWithoutRoot>d1\d2</DirectoryNameWithoutRoot>
+  <FileName>f</FileName>
+  <FileNameWithoutExtension>f</FileNameWithoutExtension>
+  <Extension/>
+  <FullPath>\\Server\Share\d1\d2\f</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d2\f</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1\d2</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d2\fi</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1\d2</DirectoryName>
+  <DirectoryNameWithoutRoot>d1\d2</DirectoryNameWithoutRoot>
+  <FileName>fi</FileName>
+  <FileNameWithoutExtension>fi</FileNameWithoutExtension>
+  <Extension/>
+  <FullPath>\\Server\Share\d1\d2\fi</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d2\fi</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1\d2</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d2\fil</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1\d2</DirectoryName>
+  <DirectoryNameWithoutRoot>d1\d2</DirectoryNameWithoutRoot>
+  <FileName>fil</FileName>
+  <FileNameWithoutExtension>fil</FileNameWithoutExtension>
+  <Extension/>
+  <FullPath>\\Server\Share\d1\d2\fil</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d2\fil</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1\d2</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d2\file</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1\d2</DirectoryName>
+  <DirectoryNameWithoutRoot>d1\d2</DirectoryNameWithoutRoot>
+  <FileName>file</FileName>
+  <FileNameWithoutExtension>file</FileNameWithoutExtension>
+  <Extension/>
+  <FullPath>\\Server\Share\d1\d2\file</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d2\file</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1\d2</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d2\file.</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1\d2</DirectoryName>
+  <DirectoryNameWithoutRoot>d1\d2</DirectoryNameWithoutRoot>
+  <FileName>file</FileName>
+  <FileNameWithoutExtension>file</FileNameWithoutExtension>
+  <Extension/>
+  <FullPath>\\Server\Share\d1\d2\file</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d2\file</LongFullPath>
+  <HasExtension>false</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1\d2</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d2\file.e</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1\d2</DirectoryName>
+  <DirectoryNameWithoutRoot>d1\d2</DirectoryNameWithoutRoot>
+  <FileName>file.e</FileName>
+  <FileNameWithoutExtension>file</FileNameWithoutExtension>
+  <Extension>.e</Extension>
+  <FullPath>\\Server\Share\d1\d2\file.e</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d2\file.e</LongFullPath>
+  <HasExtension>true</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1\d2</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d2\file.ex</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1\d2</DirectoryName>
+  <DirectoryNameWithoutRoot>d1\d2</DirectoryNameWithoutRoot>
+  <FileName>file.ex</FileName>
+  <FileNameWithoutExtension>file</FileNameWithoutExtension>
+  <Extension>.ex</Extension>
+  <FullPath>\\Server\Share\d1\d2\file.ex</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d2\file.ex</LongFullPath>
+  <HasExtension>true</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1\d2</Parent>
+</Row>
+<Row>
+  <Input>\\Server\Share\d1\d2\file.ext</Input>
+  <Root>\\Server\Share\</Root>
+  <DirectoryName>\\Server\Share\d1\d2</DirectoryName>
+  <DirectoryNameWithoutRoot>d1\d2</DirectoryNameWithoutRoot>
+  <FileName>file.ext</FileName>
+  <FileNameWithoutExtension>file</FileNameWithoutExtension>
+  <Extension>.ext</Extension>
+  <FullPath>\\Server\Share\d1\d2\file.ext</FullPath>
+  <LongFullPath>\\?\UNC\Server\Share\d1\d2\file.ext</LongFullPath>
+  <HasExtension>true</HasExtension>
+  <HasFileName>true</HasFileName>
+  <IsRooted>true</IsRooted>
+  <Parent>\\Server\Share\d1\d2</Parent>
+</Row>
+
+</PathTestData>
+
+
+
+
+

@@ -1,0 +1,164 @@
+/* Copyright (c) 2008-2009 Peter Palotas
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy
+ *  of this software and associated documentation files (the "Software"), to deal
+ *  in the Software without restriction, including without limitation the rights
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *  copies of the Software, and to permit persons to whom the Software is
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ *  THE SOFTWARE.
+ */
+using System;
+using System.Runtime.InteropServices;
+using System.Security.AccessControl;
+using System.Security.Permissions;
+using System.Transactions;
+namespace Alphaleonis.Win32.Filesystem
+{
+    [ComImport]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [Guid("79427A2B-F895-40e0-BE79-B57DC82ED231")]
+    internal interface IKernelTransaction 
+    {
+        void GetHandle([Out] out SafeKernelTransactionHandle handle);
+    }
+
+    /// <summary>
+    /// A KTM transaction object for use with the transacted operations in <see cref="Filesystem"/>
+    /// </summary>
+    public sealed class KernelTransaction : MarshalByRefObject, IDisposable
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KernelTransaction"/> class, internally using the
+        /// specified <see cref="Transaction"/>. This method allows the usage of methods accepting a 
+        /// <see cref="KernelTransaction"/> with an instance of <see cref="System.Transactions.Transaction"/>.
+        /// </summary>
+        /// <param name="transaction">The transaction to use for any transactional operations.</param>
+        [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
+        public KernelTransaction(Transaction transaction)            
+        {
+            ((IKernelTransaction)TransactionInterop.GetDtcTransaction(transaction)).GetHandle(out hTrans);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KernelTransaction"/> class with a default security descriptor,
+        /// infinite timeout and no description.
+        /// </summary>
+        [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
+        public KernelTransaction()
+            : this(0, null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KernelTransaction"/> class with a default security descriptor.
+        /// </summary>
+        /// <param name="timeout"><para>The time, in milliseconds, when the transaction will be aborted if it has not already reached the prepared state.</para></param>
+        /// <param name="description">A user-readable description of the transaction. May be <c>null.</c></param>
+        [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
+        public KernelTransaction(uint timeout, string description)
+            : this(null, timeout, description)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KernelTransaction"/> class.
+        /// </summary>
+        /// <param name="securityDescriptor">The security descriptor.</param>
+        /// <param name="timeout"><para>The time, in milliseconds, when the transaction will be aborted if it has not already reached the prepared state.</para>
+        /// <para>Specify <c>0</c> to provide an infinite timeout.</para></param>
+        /// <param name="description">A user-readable description of the transaction. May be <c>null.</c></param>
+        [SecurityPermission(SecurityAction.LinkDemand, UnmanagedCode = true)]
+        public KernelTransaction(ObjectSecurity securityDescriptor, uint timeout, string description)
+        {
+            NativeMethods.SecurityAttributes secAttr = new NativeMethods.SecurityAttributes();
+            SafeGlobalMemoryBufferHandle handle;
+            //NativeMethods.InitializeSecurityAttributes(ref secAttr, out handle, securityDescriptor);
+            secAttr.Initialize(out handle, securityDescriptor);
+
+            hTrans = NativeMethods.CreateTransaction(secAttr, IntPtr.Zero, 0, 0, 0, timeout, description);
+
+            handle.Dispose();
+
+            if (hTrans.IsInvalid)
+                Marshal.ThrowExceptionForHR(Marshal.GetHRForLastWin32Error());
+
+        }
+
+        /// <summary>
+        /// Requests that the specified transaction be committed.
+        /// </summary>
+        /// <exception cref="TransactionAlreadyCommittedException">The transaction was already committed.</exception>
+        /// <exception cref="TransactionAlreadyAbortedException">The transaction was already aborted.</exception>
+		/// <exception cref="System.ComponentModel.Win32Exception">An error occured</exception>
+        [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
+        public void Commit()
+        {			
+            if (!NativeMethods.CommitTransaction(hTrans))
+            {
+                uint error = (uint)Marshal.GetLastWin32Error();
+                int hr = Marshal.GetHRForLastWin32Error();
+
+                if (error == Win32Errors.ERROR_TRANSACTION_ALREADY_ABORTED)
+                    throw new TransactionAlreadyAbortedException("Transaction was already aborted", Marshal.GetExceptionForHR(hr));
+                else if (error == Win32Errors.ERROR_TRANSACTION_ALREADY_COMMITTED)
+                    throw new TransactionAlreadyAbortedException("Transaction was already committed", Marshal.GetExceptionForHR(hr));
+                else
+                    Marshal.ThrowExceptionForHR(Marshal.GetHRForLastWin32Error());
+            }
+        }
+
+        /// <summary>
+        /// Requests that the specified transaction be rolled back. This function is synchronous.
+        /// </summary>
+        /// <exception cref="TransactionAlreadyCommittedException">The transaction was already committed.</exception>
+		/// <exception cref="System.ComponentModel.Win32Exception">An error occured</exception>
+        [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
+        public void Rollback()
+        {
+            if (!NativeMethods.RollbackTransaction(hTrans))
+            {
+                uint error = (uint)Marshal.GetLastWin32Error();
+                int hr = Marshal.GetHRForLastWin32Error();
+
+                if (error == Win32Errors.ERROR_TRANSACTION_ALREADY_ABORTED)
+                    throw new TransactionAlreadyAbortedException("Transaction was already aborted", Marshal.GetExceptionForHR(hr));
+                else if (error == Win32Errors.ERROR_TRANSACTION_ALREADY_COMMITTED)
+                    throw new TransactionAlreadyAbortedException("Transaction was already committed", Marshal.GetExceptionForHR(hr));
+                else
+                    Marshal.ThrowExceptionForHR(Marshal.GetHRForLastWin32Error());
+            }
+        }
+
+        /// <summary>
+        /// Gets the safe handle.
+        /// </summary>
+        /// <value>The safe handle.</value>
+        public SafeHandle SafeHandle { get { return hTrans; } }
+
+        private SafeKernelTransactionHandle hTrans;
+
+        #region IDisposable Members
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        [SecurityPermissionAttribute(SecurityAction.Demand, UnmanagedCode = true)]
+        public void Dispose()
+        {
+            hTrans.Dispose();
+        }
+
+        #endregion
+    }
+}
