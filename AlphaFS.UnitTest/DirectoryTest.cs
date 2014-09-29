@@ -374,7 +374,7 @@ namespace AlphaFS.UnitTest
 
          // Check that everything is compressed.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in FileSystemInfo.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
+         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Compressed) == FileAttributes.Compressed;
@@ -405,7 +405,7 @@ namespace AlphaFS.UnitTest
 
          // Check that everything is decompressed.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in FileSystemInfo.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
+         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Compressed) != FileAttributes.Compressed;
@@ -514,7 +514,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
 
          // Directory depth level.
-         int level = new Random().Next(10, 1000);
+         int level = new Random().Next(1, 1000);
 
          string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
@@ -815,7 +815,7 @@ namespace AlphaFS.UnitTest
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.AllDirectories;
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in FileSystemInfo.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
+         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
@@ -848,7 +848,7 @@ namespace AlphaFS.UnitTest
          searchPattern = Path.WildcardStarMatchAll;
          searchOption = SearchOption.AllDirectories;
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in FileSystemInfo.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
+         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Encrypted) != FileAttributes.Encrypted;

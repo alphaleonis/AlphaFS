@@ -15,10 +15,8 @@ Version 1.6
 
     * Mod: Class File()/FileInfo();
         * Mod: Method: File.GetSize() now opens files in FileShare.ReadWrite mode instead of FileShare.None;
-
-    * Mod: Class FileSystemInfo();
-        * Mod: Changed method: FileSystemInfo.GetFileSystemEntryInfoInternal(): will now populate property: FullPath;
-        * Mod: Method: FileSystemInfo.CreateFileInternal() will check handle/throw Exception instead of the calling methods;
+        * Mod: Changed method: File.GetFileSystemEntryInfoInternal(): will now populate property: FullPath;
+        * Mod: Method: File.CreateFileInternal() will check handle/throw Exception instead of the calling methods;
 
     * Mod: Class Path();
         * Mod:  Changed 7 methods to use System.IO.Path since these methods are not affected by MAX_PATH:

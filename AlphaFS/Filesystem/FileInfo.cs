@@ -212,7 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decrypt()
       {
-         EncryptDecryptFileInternal(LongFullPath, false, true);
+         File.EncryptDecryptFileInternal(LongFullPath, false, true);
       }
 
       #endregion // .NET
@@ -259,7 +259,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt()
       {
-         EncryptDecryptFileInternal(LongFullPath, true, true);
+         File.EncryptDecryptFileInternal(LongFullPath, true, true);
       }
 
       #endregion // .NET
@@ -276,7 +276,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSecurity GetAccessControl()
       {
-         return GetAccessControlInternal<FileSecurity>(false, LongFullPath, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, true);
+         return File.GetAccessControlInternal<FileSecurity>(false, LongFullPath, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, true);
       }
 
       /// <summary>Gets a <see cref="T:System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</summary>
@@ -286,7 +286,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSecurity GetAccessControl(AccessControlSections includeSections)
       {
-         return GetAccessControlInternal<FileSecurity>(false, LongFullPath, includeSections, true);
+         return File.GetAccessControlInternal<FileSecurity>(false, LongFullPath, includeSections, true);
       }
 
       #endregion // .NET
@@ -548,7 +548,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity)
       {
-         SetAccessControlInternal(LongFullPath, null, fileSecurity, AccessControlSections.All, true);
+         File.SetAccessControlInternal(LongFullPath, null, fileSecurity, AccessControlSections.All, true);
       }
 
       /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
@@ -562,7 +562,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         SetAccessControlInternal(LongFullPath, null, fileSecurity, includeSections, true);
+         File.SetAccessControlInternal(LongFullPath, null, fileSecurity, includeSections, true);
       }
 
       #endregion // .NET

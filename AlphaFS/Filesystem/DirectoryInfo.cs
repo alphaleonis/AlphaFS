@@ -349,7 +349,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories()
       {
-         return EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, false, false, false, true);
+         return File.EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, false, false, false, true);
       }
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
@@ -358,7 +358,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories(string searchPattern)
       {
-         return EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, true, false, false, false, true);
+         return File.EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, true, false, false, false, true);
       }
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern and search subdirectory option.</summary>
@@ -368,7 +368,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories(string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, searchOption, true, false, false, false, true);
+         return File.EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, searchOption, true, false, false, false, true);
       }
 
       #endregion // .NET
@@ -381,7 +381,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories(bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, false, false, continueOnException, true);
+         return File.EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, false, false, continueOnException, true);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
@@ -391,7 +391,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories(string searchPattern, bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, true, false, false, continueOnException, true);
+         return File.EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, true, false, false, continueOnException, true);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory information that matches a specified search pattern and search subdirectory option.</summary>
@@ -402,7 +402,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories(string searchPattern, SearchOption searchOption, bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, searchOption, true, false, false, continueOnException, true);
+         return File.EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, searchOption, true, false, false, continueOnException, true);
       }
 
       #endregion // AlphaFS
@@ -418,7 +418,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles()
       {
-         return EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, false, false, false, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, false, false, false, true);
       }
 
       /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
@@ -427,7 +427,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(string searchPattern)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, false, false, false, false, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, false, false, false, false, true);
       }
 
       /// <summary>Returns an enumerable collection of file information that matches a specified search pattern and search subdirectory option.</summary>
@@ -437,7 +437,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, searchOption, false, false, false, false, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, searchOption, false, false, false, false, true);
       }
 
       #endregion // .NET
@@ -450,7 +450,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, false, false, continueOnException, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, false, false, continueOnException, true);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file information that matches a search pattern.</summary>
@@ -460,7 +460,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(string searchPattern, bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, false, false, false, continueOnException, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, false, false, false, continueOnException, true);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file information that matches a specified search pattern and search subdirectory option.</summary>
@@ -471,7 +471,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(string searchPattern, SearchOption searchOption, bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, searchOption, false, false, false, continueOnException, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, searchOption, false, false, false, continueOnException, true);
       }
 
       #endregion // AlphaFS
@@ -488,7 +488,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos()
       {
-         return EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, false, false, false, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, false, false, false, true);
       }
 
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern.</summary>
@@ -498,7 +498,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, null, false, false, false, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, null, false, false, false, true);
       }
 
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern and search subdirectory option.</summary>
@@ -509,7 +509,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, searchPattern, searchOption, null, false, false, false, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, searchPattern, searchOption, null, false, false, false, true);
       }
 
       #endregion // .NET
@@ -523,7 +523,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, false, false, continueOnException, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, false, false, continueOnException, true);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system information that matches a specified search pattern.</summary>
@@ -534,7 +534,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern, bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, null, false, false, continueOnException, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, null, false, false, continueOnException, true);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system information that matches a specified search pattern and search subdirectory option.</summary>
@@ -546,7 +546,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern, SearchOption searchOption, bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, searchPattern, searchOption, null, false, false, continueOnException, true);
+         return File.EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, LongFullPath, searchPattern, searchOption, null, false, false, continueOnException, true);
       }
 
       #endregion // AlphaFS
@@ -563,7 +563,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectorySecurity GetAccessControl()
       {
-         return GetAccessControlInternal<DirectorySecurity>(true, LongFullPath, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, true);
+         return File.GetAccessControlInternal<DirectorySecurity>(true, LongFullPath, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, true);
       }
 
       /// <summary>Gets a <see cref="T:DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the directory described by the current <see cref="T:DirectoryInfo"/> object.</summary>
@@ -573,7 +573,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectorySecurity GetAccessControl(AccessControlSections includeSections)
       {
-         return GetAccessControlInternal<DirectorySecurity>(true, LongFullPath, includeSections, true);
+         return File.GetAccessControlInternal<DirectorySecurity>(true, LongFullPath, includeSections, true);
       }
 
       #endregion // .NET
@@ -595,7 +595,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories()
       {
-         return EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, false, false, false, true).ToArray();
+         return File.EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, false, false, false, true).ToArray();
       }
 
       /// <summary>Returns an array of directories in the current <see cref="T:DirectoryInfo"/> matching the given search criteria.</summary>
@@ -609,7 +609,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories(string searchPattern)
       {
-         return EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, true, false, false, false, true).ToArray();
+         return File.EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, true, false, false, false, true).ToArray();
       }
 
       /// <summary>Returns an array of directories in the current <see cref="T:DirectoryInfo"/> matching the given search criteria and using a value to determine whether to search subdirectories.</summary>
@@ -625,7 +625,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories(string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, searchOption, true, false, false, false, true).ToArray();
+         return File.EnumerateFileSystemEntryInfoInternal<DirectoryInfo>(Transaction, LongFullPath, searchPattern, searchOption, true, false, false, false, true).ToArray();
       }
 
       #endregion // .NET
@@ -648,7 +648,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo[] GetFiles()
       {
-         return EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, false, false, false, true).ToArray();
+         return File.EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, false, false, false, true).ToArray();
       }
 
       /// <summary>Returns a file list from the current directory matching the given search pattern.</summary>
@@ -664,7 +664,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo[] GetFiles(string searchPattern)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, false, false, false, false, true).ToArray();
+         return File.EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, SearchOption.TopDirectoryOnly, false, false, false, false, true).ToArray();
       }
 
       /// <summary>Returns a file list from the current directory matching the given search pattern and using a value to determine whether to search subdirectories.</summary>
@@ -681,7 +681,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo[] GetFiles(string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, searchOption, false, false, false, false, true).ToArray();
+         return File.EnumerateFileSystemEntryInfoInternal<FileInfo>(Transaction, LongFullPath, searchPattern, searchOption, false, false, false, false, true).ToArray();
       }
 
       #endregion // .NET
@@ -707,7 +707,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSystemInfo[] GetFileSystemInfos()
       {
-         return EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, FullName, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, false, false, false, false).ToArray();
+         return File.EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, FullName, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, false, false, false, false).ToArray();
       }
 
       /// <summary>Retrieves an array of strongly typed <see cref="T:FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
@@ -726,7 +726,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSystemInfo[] GetFileSystemInfos(string searchPattern)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, FullName, searchPattern, SearchOption.TopDirectoryOnly, null, false, false, false, false).ToArray();
+         return File.EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, FullName, searchPattern, SearchOption.TopDirectoryOnly, null, false, false, false, false).ToArray();
       }
 
       /// <summary>Retrieves an array of strongly typed <see cref="T:FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
@@ -746,7 +746,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSystemInfo[] GetFileSystemInfos(string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, FullName, searchPattern, searchOption, null, false, false, false, false).ToArray();
+         return File.EnumerateFileSystemEntryInfoInternal<FileSystemInfo>(Transaction, FullName, searchPattern, searchOption, null, false, false, false, false).ToArray();
       }
 
       #endregion // .NET
@@ -845,7 +845,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity)
       {
-         SetAccessControlInternal(LongFullPath, null, directorySecurity, AccessControlSections.All, true);
+         File.SetAccessControlInternal(LongFullPath, null, directorySecurity, AccessControlSections.All, true);
       }
 
       /// <summary>Applies access control list (ACL) entries described by a <see cref="T:DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
@@ -856,7 +856,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity, AccessControlSections includeSections)
       {
-         SetAccessControlInternal(LongFullPath, null, directorySecurity, includeSections, true);
+         File.SetAccessControlInternal(LongFullPath, null, directorySecurity, includeSections, true);
       }
 
       #endregion // .NET
@@ -945,7 +945,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long CountDirectories(bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<string>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, continueOnException, true).Count();
+         return File.EnumerateFileSystemEntryInfoInternal<string>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, continueOnException, true).Count();
       }
 
       /// <summary>[AlphaFS] Counts directories in a given directory.</summary>
@@ -957,7 +957,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long CountDirectories(bool continueOnException, string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfoInternal<string>(Transaction, LongFullPath, searchPattern, searchOption, true, true, false, continueOnException, true).Count();
+         return File.EnumerateFileSystemEntryInfoInternal<string>(Transaction, LongFullPath, searchPattern, searchOption, true, true, false, continueOnException, true).Count();
       }
 
       #endregion // CountDirectories
@@ -971,7 +971,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long CountFiles(bool continueOnException)
       {
-         return EnumerateFileSystemEntryInfoInternal<string>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, continueOnException, true).Count();
+         return File.EnumerateFileSystemEntryInfoInternal<string>(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, continueOnException, true).Count();
       }
 
       /// <summary>[AlphaFS] Counts files in a given directory.</summary>
@@ -983,7 +983,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long CountFiles(bool continueOnException, string searchPattern, SearchOption searchOption)
       {
-         return EnumerateFileSystemEntryInfoInternal<string>(Transaction, LongFullPath, searchPattern, searchOption, false, true, false, continueOnException, true).Count();
+         return File.EnumerateFileSystemEntryInfoInternal<string>(Transaction, LongFullPath, searchPattern, searchOption, false, true, false, continueOnException, true).Count();
       }
 
       #endregion // CountFiles
@@ -1071,7 +1071,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decrypt()
       {
-         EncryptDecryptDirectoryInternal(LongFullPath, false, true);
+         File.EncryptDecryptDirectoryInternal(LongFullPath, false, true);
       }
 
       #endregion // Decrypt
@@ -1144,7 +1144,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt()
       {
-         EncryptDecryptDirectoryInternal(LongFullPath, true, true);
+         File.EncryptDecryptDirectoryInternal(LongFullPath, true, true);
       }
 
       #endregion // Encrypt

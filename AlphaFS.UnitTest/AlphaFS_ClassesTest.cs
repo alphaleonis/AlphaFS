@@ -899,7 +899,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput Directory Path: [{0}]", path);
 
          StopWatcher(true);
-         FileSystemEntryInfo fsei = FileSystemInfo.GetFileSystemEntryInfo(path);
+         FileSystemEntryInfo fsei = File.GetFileSystemEntryInfo(path);
          Console.WriteLine(Reporter());
          
          Assert.IsFalse(fsei == null);
@@ -913,12 +913,12 @@ namespace AlphaFS.UnitTest
          if (!isLocal) path = Path.LocalToUnc(path);
 
          Console.WriteLine("\nInput File Path: [{0}]", path);
-
+         
          StopWatcher(true);
-         fsei = FileSystemInfo.GetFileSystemEntryInfo(path);
+         fsei = File.GetFileSystemEntryInfo(path);
          Console.WriteLine(Reporter());
 
-         
+
          Assert.IsFalse(fsei == null);
          Assert.IsTrue(Dump(fsei, -17));
          #endregion // File
@@ -1115,7 +1115,7 @@ namespace AlphaFS.UnitTest
       #endregion // Unit Tests
 
       #region Unit Test Callers
-      
+
       #region Filesystem
 
       #region Class_Filesystem_BackupFileStream
