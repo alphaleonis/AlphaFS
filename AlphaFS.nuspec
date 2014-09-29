@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>AlphaFS</id>
+    <version>1.6.0.0</version>
+    <title>AlphaFS</title>
+    <authors>Peter Palotas, Alexandr Normuradov, Jeffrey Jangli</authors>
+    <owners>Peter Palotas</owners>
+    <licenseUrl>https://alphafs.codeplex.com/license</licenseUrl>
+    <projectUrl>https://alphafs.codeplex.com/</projectUrl>
+    <iconUrl>http://alphaleonis.com/img/AlphaFS-icon.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes. Features highlights: creating hardlinks, accessing hidden volumes, enumeration of volumes, transactional file operations and much more.</description>
+    <releaseNotes>Many bugfixes and new features.</releaseNotes>
+    <copyright>Copyright 2008-2014 Peter Palotas, Alexandr Normuradov, Jeffrey Jangli</copyright>
+    <tags>Win32, Filesystem</tags>
+  </metadata>
+   <files>
+      <file src="bin\Release\net40\AlphaFS.dll" target="lib\net40\AlphaFS.dll" />
+      <file src="bin\Release\net40\AlphaFS.pdb" target="lib\net40\AlphaFS.pdb" />
+      <file src="bin\Release\net40\AlphaFS.xml" target="lib\net40\AlphaFS.xml" />
+      <file src="bin\Release\net45\AlphaFS.dll" target="lib\net45\AlphaFS.dll" />
+      <file src="bin\Release\net45\AlphaFS.pdb" target="lib\net45\AlphaFS.pdb" />
+      <file src="bin\Release\net45\AlphaFS.xml" target="lib\net45\AlphaFS.xml" />
+   </files>
+   <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" />
+      <frameworkAssembly assemblyName="System.Transactions"  />
+   </frameworkAssemblies>
+</package>

@@ -1,0 +1,120 @@
+Version 1.6
+    * Numerous bugfixes and optimizations;
+    * Mod: Added more Unit Tests;
+    * Mod: The public key of AlphaFS.dll has changed. (Delay-signing is no longer used);
+    * Mod: Unicode path aka LongPaths:  \\?\...  will automatically be applied internally for all Win32 API functions that support it, no need to worry about this anymore.
+
+    * Mod: Class Volume()/VolumeInfo();
+
+    * Mod: Class Directory()/DirectoryInfo();
+        * Mod: DirectoryInfo() and FileInfo() instance creation does not check if file/folder exists, are per .NET specification;
+        * Mod: DirectoryInfo() and FileInfo() are now LazyLoading;
+        * New: Added methods: Encrypt() and Decrypt();
+        * New: Added method: DeleteEmpty() to remove empty subdirectories, recursively;
+        * New: Added method: HasInheritedPermissions() to check if a directory has permission inheritance enabled.
+
+    * Mod: Class File()/FileInfo();
+        * Mod: Method: File.GetSize() now opens files in FileShare.ReadWrite mode instead of FileShare.None;
+
+    * Mod: Class FileSystemInfo();
+        * Mod: Changed method: FileSystemInfo.GetFileSystemEntryInfoInternal(): will now populate property: FullPath;
+        * Mod: Method: FileSystemInfo.CreateFileInternal() will check handle/throw Exception instead of the calling methods;
+
+    * Mod: Class Path();
+        * Mod:  Changed 7 methods to use System.IO.Path since these methods are not affected by MAX_PATH:
+                ChangeExtension(), GetExtension(), GetFileName(), GetFileNameWithoutExtension(), GetPathRoot(), HasExtension(), IsPathRooted();
+
+    * New: Added instance Class Filesystem.DriveInfo();
+
+    * New: Added static Class Filesystem.Device();
+
+    * New: Added instance Class Filesystem.DeviceInfo();
+    
+    * New: Added static Class Filesystem.Shell32();
+   
+    * New: Added instance Class Filesystem.Shell32Info();
+
+    * New: Added namespace AlphaFS.Network;
+
+    * New: Added Class Host();
+          Provides static methods to retrieve SMB Share- and DFS information from a local- or remote host.
+          
+         EnumerateDfsLinks();
+         EnumerateDfsRoot();
+         EnumerateDomainDfsRoot();
+         EnumerateDrives();
+         EnumerateOpenConnections();
+         EnumerateOpenResources();
+         EnumerateShares();
+         GetDfsClientInformation();
+         GetDfsInformation();
+         GetHostShareFromPath();
+         GetShareInformation();
+         GetUncName();
+
+      Provides static methods for connecting to network resources:
+         
+         ConnectDrive();
+         ConnectTo();
+         DisconnectDrive();
+         DisconnectFrom();
+         DriveConnection();
+
+      Instance classes: OpenResourceInfo();
+   
+   * New: Added .NET 4 methods to classes Directory and File().
+
+   * New: Added "Cached LazyLoading" to class: FileSystemInfo() improving performance for classes: DirectoryInfo() and FileInfo().
+
+   * New: Added support to work with files/directories with a trailing dot or space.
+
+   * New: Added support for building against .NET 4.0, 4.5, and 4.5.1 in addition to 3.5.
+
+   * New: Added support for NuGet.
+   
+
+Version 1.5
+   * New: Various file system objects enumeration methods in Directory class.
+   * Numerous bugfixes and optimizations
+   * New: more unit tests
+   * New: VS 2010 help file format, aka Help Viewer 1, dumped MS HELP 2 format
+
+Version 1.0
+  * New: Directory.GetFileIdBothDirectoryInfo, which provides access to the GetFileInformationByHandleEx Win32 API 
+         function with the FileInformationClass set to FileIdBothDirectoryInfo.
+  * New: Directory.CountFiles
+  * Mod: Additional overloads for File.Open method.
+  * Mod: FileAttributes.Invalid flag removed.
+  * New: Directory.GetProperties method for retrieving aggregated information about files in a directory.
+
+Version 1.0 Beta
+  * New: File.GetFileInformationByHandle added providing information about file index and link count.
+  * New: KernelTransaction can now be created from a System.Transaction to participate in the ambient transaction
+  * New: File.GetHardlinks providing an enumeration about all hardlinks pointing to the same file.
+  * Mod: Many improvements and bug-fixes to Path/PathInfo path-parsing.
+  * Mod: More functions for manipulating timestamps on files and directories.
+  * Mod: Directory.GetFullFileSystemEntries added to provide more convenient usage of the FileSystemEnumerator.
+  * Mod: ... and many more minor changes and fixes.
+
+Version 0.7 alpha
+  * New: DirectoryInfo and FileInfo classes added
+  * New: PathInfo.GetLongFullPath() and Path.GetLongFullPath() methods added
+  * Mod: Path and PathInfo got many bugfixes, and some new functionality was added.
+  * Mod: AlphaFS now targets the .NET Framework 2.0 instead of 3.5 previously.
+  * Mod: KernelTransaction can now be created from, and participate in a System.Transactions.Transaction.
+  * New: BackupFileStream added, in support of the BackupWrite(), BackupRead() and BackupSeek() functions from the Win32 API.
+  * Mod: Inheritance structure for several classes was modified, mainly to add MarshalByRefObject to the relevant classes.
+  * Mod: FileSystemEntryInfo was changed to a reference type (class) instead of the previous value type (struct).
+  * Mod: PathInfo now accepts more types of internal paths, such as \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy5\ etc.
+  * ... and many minor changes and fixes, not mentioned here.
+
+Version 0.3.1    2008-08-18
+  * New: Added support for hardlinks and symbolic links in File.
+  * New: Added Directory.EnableEncryption() and Directory.DisableEncryption()
+  * New: Added File.GetCompressedSize()
+  * Mod: Applied CLSCompliant(false) to the assembly
+  * Mod: Improved error reporting, and cleanup of internal class NativeError.
+  
+Version 0.3.0    2008-08-17
+  * Initial release
+  

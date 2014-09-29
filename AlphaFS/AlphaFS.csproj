@@ -1,0 +1,324 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="11.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Alphaleonis.Win32</RootNamespace>
+    <AssemblyName>AlphaFS</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\AlphaFS.snk</AssemblyOriginatorKeyFile>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <DelaySign>false</DelaySign>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net35 Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Bin\Debug\Net35</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET35</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>..\Bin\Debug\Net35\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net40 Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Bin\Debug\Net40</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>..\Bin\Debug\Net40\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net45 Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Bin\Debug\Net45</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>..\Bin\Debug\Net45\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net451 Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Bin\Debug\Net451</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET451</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>..\Bin\Debug\Net451\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net35|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Bin\Release\Net35</OutputPath>
+    <DefineConstants>TRACE;NET35</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Bin\Release\Net35\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net40|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Bin\Release\Net40</OutputPath>
+    <DefineConstants>TRACE;NET40</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Bin\Release\Net40\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Bin\Release\Net45</OutputPath>
+    <DefineConstants>TRACE;NET45</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Bin\Release\Net45\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net451|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Bin\Release\Net451</OutputPath>
+    <DefineConstants>TRACE;NET451</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Bin\Release\Net451\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Transactions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Filesystem\Delegates\CopyMoveProgressResult.cs" />
+    <Compile Include="Filesystem\DeviceInfo.cs" />
+    <Compile Include="Filesystem\DiskSpaceInfo.cs" />
+    <Compile Include="Filesystem\DriveInfo.cs" />
+    <Compile Include="Filesystem\Enumerations\BackupStreamType.cs" />
+    <Compile Include="Filesystem\Enumerations\CopyMoveProgressResult.cs" />
+    <Compile Include="Filesystem\Enumerations\DeviceGuid.cs" />
+    <Compile Include="Filesystem\Enumerations\DiGetClassFlags.cs" />
+    <Compile Include="Filesystem\Enumerations\DosDeviceAttributes.cs" />
+    <Compile Include="Filesystem\Enumerations\FileInfoByHandleClass.cs" />
+    <Compile Include="Filesystem\Enumerations\FinalPathFormats.cs" />
+    <Compile Include="Filesystem\Enumerations\FindExAdditionalFlags.cs" />
+    <Compile Include="Filesystem\Enumerations\FindExInfoLevels.cs" />
+    <Compile Include="Filesystem\Enumerations\FindExSearchOps.cs" />
+    <Compile Include="Filesystem\Enumerations\ErrorMode.cs" />
+    <Compile Include="Filesystem\Enumerations\ReparsePointTag.cs" />
+    <Compile Include="Filesystem\Enumerations\SetupDiGetDeviceRegistryPropertyEnum.cs" />
+    <Compile Include="Filesystem\Enumerations\VolumeInfoAttributes.cs" />
+    <Compile Include="Filesystem\Exceptions\AlreadyExistsException.cs" />
+    <Compile Include="Filesystem\Enumerations\CopyOptions.cs" />
+    <Compile Include="Filesystem\Enumerations\CopyMoveProgressCallbackReason.cs" />
+    <Compile Include="Filesystem\Device.cs" />
+    <Compile Include="Filesystem\Exceptions\DeviceNotReadyException.cs" />
+    <Compile Include="Filesystem\Directory.cs" />
+    <Compile Include="Filesystem\DirectoryInfo.cs" />
+    <Compile Include="Filesystem\Exceptions\DirectoryNotEmptyException.cs" />
+    <Compile Include="Filesystem\File.cs" />
+    <Compile Include="Filesystem\BackupFileStream.cs" />
+    <Compile Include="Filesystem\Enumerations\FileEncryptionStatus.cs" />
+    <Compile Include="Filesystem\ByHandleFileInformation.cs" />
+    <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
+    <Compile Include="Filesystem\FileInfo.cs" />
+    <Compile Include="Filesystem\Enumerations\EFileAttributes.cs" />
+    <Compile Include="Filesystem\FindFileSystemEntryInfo.cs" />
+    <Compile Include="Filesystem\FileSystemEntryInfo.cs" />
+    <Compile Include="Filesystem\FileSystemInfo.cs" />
+    <Compile Include="Filesystem\Exceptions\IllegalPathException.cs" />
+    <Compile Include="Filesystem\Enumerations\GetFileExInfoLevels.cs" />
+    <Compile Include="Filesystem\SafeCmConnectMachineHandle.cs" />
+    <Compile Include="Filesystem\SafeSetupDiClassDevsExHandle.cs" />
+    <Compile Include="Filesystem\Shell32Info.cs" />
+    <Compile Include="Filesystem\Structures\ByHandleFileInfo.cs" />
+    <Compile Include="Filesystem\Structures\ChangeErrorMode.cs" />
+    <Compile Include="Filesystem\Structures\FileIdBothDirInfo.cs" />
+    <Compile Include="Filesystem\Structures\FileTime.cs" />
+    <Compile Include="Filesystem\LinkTargetInfo.cs" />
+    <Compile Include="Filesystem\Enumerations\MoveOptions.cs" />
+    <Compile Include="Filesystem\Exceptions\NotAReparsePointException.cs" />
+    <Compile Include="Filesystem\Path.cs" />
+    <Compile Include="Filesystem\Enumerations\BackupStreamAttributes.cs" />
+    <Compile Include="Filesystem\BackupStreamInfo.cs" />
+    <Compile Include="Filesystem\Shell32.cs" />
+    <Compile Include="Filesystem\Structures\MountPointReparseBuffer.cs" />
+    <Compile Include="Filesystem\Structures\ReparseDataBufferHeader.cs" />
+    <Compile Include="Filesystem\Structures\SpDeviceInfoData.cs" />
+    <Compile Include="Filesystem\Structures\SpDeviceInterfaceData.cs" />
+    <Compile Include="Filesystem\Structures\SpDeviceInterfaceDetailData.cs" />
+    <Compile Include="Filesystem\Structures\SymbolicLinkReparseBuffer.cs" />
+    <Compile Include="Filesystem\Structures\Win32FileAttributeData.cs" />
+    <Compile Include="Filesystem\Structures\Win32FindData.cs" />
+    <Compile Include="Filesystem\Structures\Win32StreamId.cs" />
+    <Compile Include="Network\DfsInfo.cs" />
+    <Compile Include="Network\DfsStorage.cs" />
+    <Compile Include="Network\Enumerations\ResourceUsage.cs" />
+    <Compile Include="Network\Enumerations\ResourceType.cs" />
+    <Compile Include="Network\Enumerations\ResourceScope.cs" />
+    <Compile Include="Network\Enumerations\ResourceDisplayType.cs" />
+    <Compile Include="Network\Enumerations\Connect.cs" />
+    <Compile Include="Network\Enumerations\DfsNamespaceFlavors.cs" />
+    <Compile Include="Network\Enumerations\DfsStorageStates.cs" />
+    <Compile Include="Network\Enumerations\DfsVolumeStates.cs" />
+    <Compile Include="Network\Enumerations\AccessPermissions.cs" />
+    <Compile Include="Network\Enumerations\ShareResourceTypes.cs" />
+    <Compile Include="Network\Enumerations\ShareType.cs" />
+    <Compile Include="Network\Host.cs" />
+    <Compile Include="Network\NativeMethods.cs" />
+    <Compile Include="Network\OpenConnectionInfo.cs" />
+    <Compile Include="Network\SafeNetApiBuffer.cs" />
+    <Compile Include="Network\OpenResourceInfo.cs" />
+    <Compile Include="Network\ShareInfo.cs" />
+    <Compile Include="Network\Structures\NetResource.cs" />
+    <Compile Include="Network\Structures\FileInfo3.cs" />
+    <Compile Include="Network\Structures\DfsInfo200.cs" />
+    <Compile Include="Network\Structures\DfsInfo300.cs" />
+    <Compile Include="Network\Structures\DfsInfo4.cs" />
+    <Compile Include="Network\Structures\DfsStorageInfo.cs" />
+    <Compile Include="Network\Structures\RemoteNameInfo.cs" />
+    <Compile Include="Network\Structures\ConnectionInfo1.cs" />
+    <Compile Include="Network\Structures\ShareInfo1005.cs" />
+    <Compile Include="Network\Structures\ShareInfo1.cs" />
+    <Compile Include="Network\Structures\ShareInfo2.cs" />
+    <Compile Include="Network\Structures\ShareInfo503.cs" />
+    <Compile Include="OperatingSystemInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SafeGlobalMemoryBufferHandle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Security\Enumerations\ObjectType.cs" />
+    <Compile Include="Security\Enumerations\SecurityDescriptorControl.cs" />
+    <Compile Include="Security\Enumerations\SecurityInformation.cs" />
+    <Compile Include="Filesystem\SafeLocalMemoryBufferHandle.cs" />
+    <Compile Include="Filesystem\Enumerations\SymbolicLinkTarget.cs" />
+    <Compile Include="Filesystem\SymbolicLinkTargetInfo.cs" />
+    <Compile Include="Filesystem\Enumerations\SymbolicLinkType.cs" />
+    <Compile Include="Filesystem\Exceptions\TransactionalConflictException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Filesystem\Exceptions\UnrecognizedReparsePointException.cs" />
+    <Compile Include="Filesystem\Exceptions\UnsupportedRemoteTransactionException.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Security\NativeMethods.cs" />
+    <Compile Include="Security\Privilege.cs" />
+    <Compile Include="Security\PrivilegeEnabler.cs" />
+    <Compile Include="Security\InternalPrivilegeEnabler.cs" />
+    <Compile Include="Filesystem\Exceptions\InvalidTransactionException.cs" />
+    <Compile Include="Filesystem\KernelTransaction.cs" />
+    <Compile Include="NativeError.cs" />
+    <Compile Include="Filesystem\SafeFindFileHandle.cs" />
+    <Compile Include="Filesystem\SafeFindVolumeMountPointHandle.cs" />
+    <Compile Include="Filesystem\SafeFindVolumeHandle.cs" />
+    <Compile Include="Filesystem\SafeKernelTransactionHandle.cs" />
+    <Compile Include="Filesystem\Exceptions\TransactionAlreadyAbortedException.cs" />
+    <Compile Include="Filesystem\Exceptions\TransactionAlreadyCommittedException.cs" />
+    <Compile Include="Filesystem\Exceptions\TransactionException.cs" />
+    <Compile Include="Filesystem\Volume.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Filesystem\VolumeInfo.cs" />
+    <Compile Include="Security\Structures\Luid.cs" />
+    <Compile Include="Security\SecurityAttributes.cs" />
+    <Compile Include="Security\Structures\TokenPrivileges.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="Win32Errors.cs" />
+    <Compile Include="Filesystem\NativeMethods.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\AlphaFS.snk">
+      <Link>AlphaFS.snk</Link>
+    </None>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
