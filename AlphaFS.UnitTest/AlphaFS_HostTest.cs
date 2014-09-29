@@ -278,21 +278,26 @@ namespace AlphaFS.UnitTest
 
          #region Disconnect drive from share
 
-         bool disconnectOk;
-         try
-         {
-            StopWatcher(true);
-            Host.DisconnectDrive(drive);
-            Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n\t{2}\n", drive, share, Reporter(true));
+         bool disconnectOk = false;
 
-            disconnectOk = true;
-
-         }
-         catch (Exception ex)
+         // We only need this for the unit test.
+         while (!disconnectOk)
          {
-            disconnectOk = false;
-            Console.WriteLine("\nFailed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            try
+            {
+               StopWatcher(true);
+               Host.DisconnectDrive(drive);
+               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n\t{2}\n", drive, share, Reporter(true));
+
+               disconnectOk = true;
+
+            }
+            catch (Exception ex)
+            {
+               disconnectOk = false;
+               Console.WriteLine("\nFailed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
+               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            }
          }
 
          Assert.IsTrue(disconnectOk);
@@ -326,6 +331,11 @@ namespace AlphaFS.UnitTest
 
          #region Disconnect last available drive from share
 
+         disconnectOk = false;
+
+         // We only need this for the unit test.
+         while (!disconnectOk)
+         {
             try
             {
                StopWatcher(true);
@@ -341,10 +351,11 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\nFailed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
                Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
             }
+         }
 
-            Assert.IsTrue(disconnectOk);
+         Assert.IsTrue(disconnectOk);
 
-            #endregion // Disconnect last available drive from share
+         #endregion // Disconnect last available drive from share
       }
 
       #endregion // ConnectDrive
@@ -382,21 +393,26 @@ namespace AlphaFS.UnitTest
 
          #region Disconnect from share
 
-         bool disconnectOk;
-         try
-         {
-            StopWatcher(true);
-            Host.DisconnectFrom(share);
-            Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n\t{1}\n", share, Reporter(true));
+         bool disconnectOk = false;
 
-            disconnectOk = true;
-
-         }
-         catch (Exception ex)
+         // We only need this for the unit test.
+         while (!disconnectOk)
          {
-            disconnectOk = false;
-            Console.WriteLine("\nFailed DisconnectFrom(): [{0}]", share);
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            try
+            {
+               StopWatcher(true);
+               Host.DisconnectFrom(share);
+               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n\t{1}\n", share, Reporter(true));
+
+               disconnectOk = true;
+
+            }
+            catch (Exception ex)
+            {
+               disconnectOk = false;
+               Console.WriteLine("\nFailed DisconnectFrom(): [{0}]", share);
+               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            }
          }
 
          Assert.IsTrue(disconnectOk);
@@ -429,20 +445,26 @@ namespace AlphaFS.UnitTest
 
          #region Disconnect from share
 
-         try
-         {
-            StopWatcher(true);
-            Host.DisconnectFrom(share);
-            Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n\t{1}\n", share, Reporter(true));
+         disconnectOk = false;
 
-            disconnectOk = true;
-
-         }
-         catch (Exception ex)
+         // We only need this for the unit test.
+         while (!disconnectOk)
          {
-            disconnectOk = false;
-            Console.WriteLine("\nFailed DisconnectFrom(): [{0}]", share);
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            try
+            {
+               StopWatcher(true);
+               Host.DisconnectFrom(share);
+               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n\t{1}\n", share, Reporter(true));
+
+               disconnectOk = true;
+
+            }
+            catch (Exception ex)
+            {
+               disconnectOk = false;
+               Console.WriteLine("\nFailed DisconnectFrom(): [{0}]", share);
+               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            }
          }
 
          Assert.IsTrue(disconnectOk);
