@@ -329,10 +329,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
       /// <param name="compress"><c>true</c> = compress, <c>false</c> = decompress</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, bool isFullPath)
+      internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, bool? isFullPath)
       {
          using (SafeFileHandle handle = File.CreateFileInternal(!isFolder, transaction, path, isFolder ? EFileAttributes.BackupSemantics : EFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, isFullPath))
          {

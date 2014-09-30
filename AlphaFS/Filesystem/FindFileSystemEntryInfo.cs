@@ -198,7 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
             // The handle is invalid, there are couple of common scenarios where this can fail on valid paths like "C:\"
             // and network root share names like: \\server\sharename, will use function GetFileAttributesXxx() in this case.
 
-            NativeMethods.Win32FileAttributeData win32AttrData = File.GetAttributesExInternal(IsFolder, Transaction, InputPath, false, ContinueOnException, true);
+            NativeMethods.Win32FileAttributeData win32AttrData = File.GetAttributesExInternal(IsFolder, Transaction, InputPath, false, ContinueOnException, IsFullPath);
             if (win32AttrData.FileAttributes == (FileAttributes) (-1))
             {
                if (ContinueOnException)
@@ -318,9 +318,11 @@ namespace Alphaleonis.Win32.Filesystem
             if (Utils.IsNullOrWhiteSpace(value))
                throw new ArgumentNullException("value");
 
-            _inputPath = IsFullPath
-               ? Path.GetLongPathInternal(value, false, false, false, false)
-               : Path.GetFullPathInternal(Transaction, value, true, false, false, false);
+            _inputPath = IsFullPath == null
+               ? value
+               : (bool) IsFullPath
+                  ? Path.GetLongPathInternal(value, false, false, false, false)
+                  : Path.GetFullPathInternal(Transaction, value, true, false, false, false);
          }
       }
 
@@ -337,7 +339,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary><c>true</c> uses the path as is.</summary>
-      public bool IsFullPath { get; set; }
+      public bool? IsFullPath { get; set; }
 
       #endregion // IsFullPath
 

@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void Refresh()
       {
-         EntryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullPath, true, true, true);
+         EntryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullPath, true, true, null);
          _exists = _systemInfo != null;
       }
 
@@ -169,15 +169,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The full path and name of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
-      internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, bool isFullPath)
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException(isFolder ? "path" : "filename");
 
-         LongFullPath = isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, !isFolder);
+         LongFullPath = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, !isFolder);
 
          FullPath = Path.GetRegularPathInternal(LongFullPath, false, false, false, false);
 
@@ -224,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (EntryInfo == null)
                VerifyObjectExists();
 
-            File.SetAttributesInternal(IsDirectory, Transaction, FullPath, value, false, true);
+            File.SetAttributesInternal(IsDirectory, Transaction, LongFullPath, value, false, null);
             Reset();
          }
       }
@@ -268,7 +270,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (EntryInfo == null)
                VerifyObjectExists();
 
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, FullPath, value, null, null, false);
+            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullPath, value, null, null, null);
             Reset();
          }
       }
@@ -352,7 +354,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (EntryInfo == null)
                VerifyObjectExists();
 
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, FullPath, null, value, null, false);
+            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullPath, null, value, null, null);
             Reset();
          }
       }
@@ -396,7 +398,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (EntryInfo == null)
                VerifyObjectExists();
 
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, FullPath, null, null, value, false);
+            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullPath, null, null, value, null);
             Reset();
          }
       }

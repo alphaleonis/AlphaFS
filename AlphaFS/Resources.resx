@@ -238,4 +238,7 @@
   <data name="DevicesAreNotSupported" xml:space="preserve">
     <value>Devices are not supported.</value>
   </data>
+  <data name="DirectoryNotEmpty" xml:space="preserve">
+    <value>Directory is not empty: [{0}]</value>
+  </data>
 </root>

@@ -582,7 +582,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An <see cref="T:IEnumerable{BackupStreamInfo}"/> collection of streams for the file specified by path.</returns>
       public IEnumerable<BackupStreamInfo> EnumerateStreams()
       {
-         return File.EnumerateStreamsInternal(null, null, SafeFileHandle);
+         return File.EnumerateStreamsInternal(null, SafeFileHandle, null);
       }
 
       #endregion // EnumerateStreams
@@ -596,7 +596,7 @@ namespace Alphaleonis.Win32.Filesystem
       public BackupStreamInfo ReadStreamInfo()
       {
          // Return the first entry.
-         return File.EnumerateStreamsInternal(null, null, _safeFileHandle).FirstOrDefault();
+         return File.EnumerateStreamsInternal(null, _safeFileHandle, null).FirstOrDefault();
       }
 
       #endregion // ReadStreamInfo

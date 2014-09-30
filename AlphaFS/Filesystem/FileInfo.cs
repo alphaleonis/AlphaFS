@@ -52,9 +52,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="fileName"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="fileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="fileName"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public FileInfo(string fileName, bool isFullPath) : this(null, fileName, isFullPath)
+      public FileInfo(string fileName, bool? isFullPath) : this(null, fileName, isFullPath)
       {
       }
 
@@ -71,9 +71,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="fileName"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="fileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="fileName"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public FileInfo(KernelTransaction transaction, string fileName, bool isFullPath)
+      public FileInfo(KernelTransaction transaction, string fileName, bool? isFullPath)
       {
          InitializeInternal(false, transaction, fileName, isFullPath);
 
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamWriter AppendText()
       {
-         return File.AppendTextInternal(Transaction, LongFullPath, NativeMethods.DefaultFileEncoding, true);
+         return File.AppendTextInternal(Transaction, LongFullPath, NativeMethods.DefaultFileEncoding, null);
       }
 
       /// <summary>Creates a <see cref="T:StreamWriter"/> that appends text to the file represented by this instance of the <see cref="T:FileInfo"/>.</summary>
@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamWriter AppendText(Encoding encoding)
       {
-         return File.AppendTextInternal(Transaction, LongFullPath, encoding, true);
+         return File.AppendTextInternal(Transaction, LongFullPath, encoding, null);
       }
 
       #endregion // .NET
@@ -179,7 +179,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Create()
       {
-         return File.CreateFileInternal(Transaction, LongFullPath, NativeMethods.DefaultFileBufferSize, EFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, true);
+         return File.CreateFileInternal(Transaction, LongFullPath, NativeMethods.DefaultFileBufferSize, EFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, null);
       }
 
       #endregion // .NET
@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamWriter CreateText()
       {
-         return new StreamWriter(File.CreateFileInternal(Transaction, LongFullPath, NativeMethods.DefaultFileBufferSize, EFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, true), NativeMethods.DefaultFileEncoding);
+         return new StreamWriter(File.CreateFileInternal(Transaction, LongFullPath, NativeMethods.DefaultFileBufferSize, EFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, null), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -212,7 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decrypt()
       {
-         File.EncryptDecryptFileInternal(LongFullPath, false, true);
+         File.EncryptDecryptFileInternal(LongFullPath, false, null);
       }
 
       #endregion // .NET
@@ -228,7 +228,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NativeError.ThrowException()"/>
       public override void Delete()
       {
-         File.DeleteFileInternal(EntryInfo, Transaction, null, false, true);
+         File.DeleteFileInternal(Transaction, LongFullPath, false, null);
          Reset();
       }
 
@@ -242,7 +242,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NativeError.ThrowException()"/>
       public void Delete(bool ignoreReadOnly)
       {
-         File.DeleteFileInternal(EntryInfo, Transaction, null, ignoreReadOnly, true);
+         File.DeleteFileInternal(Transaction, LongFullPath, ignoreReadOnly, null);
          Reset();
       }
 
@@ -259,7 +259,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt()
       {
-         File.EncryptDecryptFileInternal(LongFullPath, true, true);
+         File.EncryptDecryptFileInternal(LongFullPath, true, null);
       }
 
       #endregion // .NET
@@ -276,7 +276,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSecurity GetAccessControl()
       {
-         return File.GetAccessControlInternal<FileSecurity>(false, LongFullPath, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, true);
+         return File.GetAccessControlInternal<FileSecurity>(false, LongFullPath, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, null);
       }
 
       /// <summary>Gets a <see cref="T:System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</summary>
@@ -286,7 +286,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSecurity GetAccessControl(AccessControlSections includeSections)
       {
-         return File.GetAccessControlInternal<FileSecurity>(false, LongFullPath, includeSections, true);
+         return File.GetAccessControlInternal<FileSecurity>(false, LongFullPath, includeSections, null);
       }
 
       #endregion // .NET
@@ -341,7 +341,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode)
       {
-         return File.OpenInternal(Transaction, LongFullPath, mode, 0, FileAccess.Read, FileShare.None, EFileAttributes.Normal, true);
+         return File.OpenInternal(Transaction, LongFullPath, mode, 0, FileAccess.Read, FileShare.None, EFileAttributes.Normal, null);
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access.</summary>
@@ -351,7 +351,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access)
       {
-         return File.OpenInternal(Transaction, LongFullPath, mode, 0, access, FileShare.None, EFileAttributes.Normal, true);
+         return File.OpenInternal(Transaction, LongFullPath, mode, 0, access, FileShare.None, EFileAttributes.Normal, null);
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -362,7 +362,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access, FileShare share)
       {
-         return File.OpenInternal(Transaction, LongFullPath, mode, 0, access, share, EFileAttributes.Normal, true);
+         return File.OpenInternal(Transaction, LongFullPath, mode, 0, access, share, EFileAttributes.Normal, null);
       }
 
       #endregion // .NET
@@ -376,7 +376,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights)
       {
-         return File.OpenInternal(Transaction, LongFullPath, mode, rights, 0, FileShare.None, EFileAttributes.Normal, true);
+         return File.OpenInternal(Transaction, LongFullPath, mode, rights, 0, FileShare.None, EFileAttributes.Normal, null);
       }
 
       /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -387,7 +387,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights, FileShare share)
       {
-         return File.OpenInternal(Transaction, LongFullPath, mode, rights, 0, share, EFileAttributes.Normal, true);
+         return File.OpenInternal(Transaction, LongFullPath, mode, rights, 0, share, EFileAttributes.Normal, null);
       }
 
       #endregion // AlphaFS
@@ -404,7 +404,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream OpenRead()
       {
-         return File.OpenInternal(Transaction, LongFullPath, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, true);
+         return File.OpenInternal(Transaction, LongFullPath, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, null);
       }
 
       #endregion // .NET
@@ -421,7 +421,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText()
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullPath, FileMode.Open, 0, FileAccess.Read, FileShare.None, EFileAttributes.Normal, true), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(File.OpenInternal(Transaction, LongFullPath, FileMode.Open, 0, FileAccess.Read, FileShare.None, EFileAttributes.Normal, null), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -435,7 +435,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText(Encoding encoding)
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullPath, FileMode.Open, 0, FileAccess.Read, FileShare.None, EFileAttributes.Normal, true), encoding);
+         return new StreamReader(File.OpenInternal(Transaction, LongFullPath, FileMode.Open, 0, FileAccess.Read, FileShare.None, EFileAttributes.Normal, null), encoding);
       }
 
       #endregion // AlphaFS
@@ -451,7 +451,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream OpenWrite()
       {
-         return File.OpenInternal(Transaction, LongFullPath, FileMode.Open, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, true);
+         return File.OpenInternal(Transaction, LongFullPath, FileMode.Open, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, null);
       }
 
       #endregion // .NET
@@ -510,22 +510,26 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
       /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the destinationFileName parameter.</param>
       /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; <c>false</c> otherwise.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="destinationFileName"/> and <paramref name="destinationFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="destinationFileName"/> and <paramref name="destinationFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the destinationFileName parameter.</returns>
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:FileInfo"/> object that describes the overwritten file.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool isFullPath)
+      public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
       {
-         string destinationFileNameLp = isFullPath
-            ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
-            : Path.GetFullPathInternal(Transaction, destinationFileName, true, false, false, false);
+         string destinationFileNameLp = isFullPath == null
+            ? destinationFileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
+               : Path.GetFullPathInternal(Transaction, destinationFileName, true, false, false, false);
 
-         string destinationBackupFileNameLp = isFullPath
-            ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
-            : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, false, false, false);
+         string destinationBackupFileNameLp = isFullPath == null
+            ? destinationBackupFileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
+               : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, false, false, false);
 
-         File.ReplaceInternal(LongFullPath, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, true);
+         File.ReplaceInternal(LongFullPath, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, null);
 
          return new FileInfo(Transaction, destinationFileNameLp, true);
       }
@@ -548,7 +552,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity)
       {
-         File.SetAccessControlInternal(LongFullPath, null, fileSecurity, AccessControlSections.All, true);
+         File.SetAccessControlInternal(LongFullPath, null, fileSecurity, AccessControlSections.All, null);
       }
 
       /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
@@ -562,7 +566,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         File.SetAccessControlInternal(LongFullPath, null, fileSecurity, includeSections, true);
+         File.SetAccessControlInternal(LongFullPath, null, fileSecurity, includeSections, null);
       }
 
       #endregion // .NET
@@ -595,7 +599,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Compress()
       {
-         Device.ToggleCompressionInternal(false, Transaction, LongFullPath, true, true);
+         Device.ToggleCompressionInternal(false, Transaction, LongFullPath, true, null);
       }
 
       #endregion // Compress
@@ -607,7 +611,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decompress()
       {
-         Device.ToggleCompressionInternal(false, Transaction, LongFullPath, false, true);
+         Device.ToggleCompressionInternal(false, Transaction, LongFullPath, false, null);
       }
 
       #endregion // Decompress
@@ -619,7 +623,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<BackupStreamInfo> EnumerateStreams()
       {
-         return File.EnumerateStreamsInternal(Transaction, LongFullPath, null);
+         return File.EnumerateStreamsInternal(Transaction, null, LongFullPath);
       }
 
       #endregion // EnumerateStreams
@@ -636,7 +640,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions"><para>This parameter can be <c>null</c>. Use <see cref="T:MoveOptions"/> that specify how the file is to be moved.</para></param>
       /// <param name="copyProgress"><para>This parameter can be <c>null</c>. A callback function that is called each time another portion of the file has been copied.</para></param>
       /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="destFileName"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="destFileName"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>When <paramref name="isMove"/> is <c>false</c> a new <see cref="T:FileInfo"/> instance with a fully qualified path. Otherwise <c>null</c> is returned.</returns>
       /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
@@ -646,13 +650,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      private FileInfo CopyToMoveToInternal(bool isMove, string destFileName, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyProgress, object userProgressData, bool isFullPath)
+      private FileInfo CopyToMoveToInternal(bool isMove, string destFileName, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyProgress, object userProgressData, bool? isFullPath)
       {
-         string destFileNameLp = isFullPath
-            ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-            : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, false);
+         string destFileNameLp = isFullPath == null
+            ? destFileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(destFileName, false, false, false, false)
+               : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, false);
 
-         File.CopyMoveInternal(isMove, Transaction, LongFullPath, destFileNameLp, false, copyOptions, moveOptions, copyProgress, userProgressData, true);
+         File.CopyMoveInternal(isMove, Transaction, LongFullPath, destFileNameLp, false, copyOptions, moveOptions, copyProgress, userProgressData, null);
 
          if (isMove)
             Refresh();

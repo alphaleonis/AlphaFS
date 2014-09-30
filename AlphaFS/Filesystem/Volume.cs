@@ -309,7 +309,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsReady(string drivePath)
       {
-         return File.ExistsInternal(true, null, drivePath, false);
+         return File.ExistsInternal(true, null, drivePath, true);
       }
 
       #endregion // IsReady
@@ -914,7 +914,7 @@ namespace Alphaleonis.Win32.Filesystem
                // GetLastError returns ERROR_DIR_NOT_EMPTY, even if the directory is empty.
 
                if (lastError != Win32Errors.ERROR_DIR_NOT_EMPTY)
-                  NativeError.ThrowException(lastError, volumeMountPoint, volumeGuid);
+                  NativeError.ThrowException(lastError, null, volumeGuid);
             }
       }
 

@@ -76,10 +76,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
-      public static void AppendAllLines(string path, IEnumerable<string> contents, bool isFullPath)
+      public static void AppendAllLines(string path, IEnumerable<string> contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, contents, NativeMethods.DefaultFileEncoding, true, false, isFullPath);
       }
@@ -88,10 +88,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
-      public static void AppendAllLines(string path, IEnumerable<string> contents, Encoding encoding, bool isFullPath)
+      public static void AppendAllLines(string path, IEnumerable<string> contents, Encoding encoding, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, contents, encoding, true, false, isFullPath);
       }
@@ -133,10 +133,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
-      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, bool isFullPath)
+      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, NativeMethods.DefaultFileEncoding, true, false, isFullPath);
       }
@@ -146,10 +146,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
-      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool isFullPath)
+      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, true, false, isFullPath);
       }
@@ -194,9 +194,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Appends the specified stringto the file, creating the file if it does not already exist.</summary>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void AppendAllText(string path, string contents, bool isFullPath)
+      public static void AppendAllText(string path, string contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, isFullPath);
       }
@@ -205,9 +205,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void AppendAllText(string path, string contents, Encoding encoding, bool isFullPath)
+      public static void AppendAllText(string path, string contents, Encoding encoding, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, true, false, isFullPath);
       }
@@ -247,9 +247,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void AppendAllText(KernelTransaction transaction, string path, string contents, bool isFullPath)
+      public static void AppendAllText(KernelTransaction transaction, string path, string contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, isFullPath);
       }
@@ -259,9 +259,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void AppendAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, bool isFullPath)
+      public static void AppendAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, true, false, isFullPath);
       }
@@ -295,10 +295,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
       /// <param name="path">The path to the file to append to.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(string path, bool isFullPath)
+      public static StreamWriter AppendText(string path, bool? isFullPath)
       {
          return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
@@ -306,10 +306,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(string path, Encoding encoding, bool isFullPath)
+      public static StreamWriter AppendText(string path, Encoding encoding, bool? isFullPath)
       {
          return AppendTextInternal(null, path, encoding, isFullPath);
       }
@@ -347,10 +347,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path, bool isFullPath)
+      public static StreamWriter AppendText(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
@@ -359,10 +359,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          return AppendTextInternal(transaction, path, encoding, isFullPath);
       }
@@ -428,12 +428,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destFileName">The name of the new file.</param>
       /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; <c>false</c> otherwise.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Copy(string sourceFileName, string destFileName, bool overwrite, bool preserveDates, bool isFullPath)
+      public static void Copy(string sourceFileName, string destFileName, bool overwrite, bool preserveDates, bool? isFullPath)
       {
          CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, isFullPath);
       }
@@ -445,12 +445,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Copy(string sourceFileName, string destFileName, bool overwrite, bool preserveDates, CopyMoveProgressCallback copyProgress, object userProgressData, bool isFullPath)
+      public static void Copy(string sourceFileName, string destFileName, bool overwrite, bool preserveDates, CopyMoveProgressCallback copyProgress, object userProgressData, bool? isFullPath)
       {
          CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, copyProgress, userProgressData, isFullPath);
       }
@@ -516,12 +516,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destFileName">The name of the new file.</param>
       /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; <c>false</c> otherwise.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite, bool preserveDates, bool isFullPath)
+      public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite, bool preserveDates, bool? isFullPath)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, isFullPath);
       }
@@ -534,11 +534,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <returns><c>true</c> if the file was completely copied, or <c>false</c> if the copy operation was aborted/failed.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite, bool preserveDates, CopyMoveProgressCallback copyProgress, object userProgressData, bool isFullPath)
+      public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite, bool preserveDates, CopyMoveProgressCallback copyProgress, object userProgressData, bool? isFullPath)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, copyProgress, userProgressData, isFullPath);
       }
@@ -621,10 +621,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.</summary>
       /// <param name="path">The path and name of the file to create.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static FileStream Create(string path, bool isFullPath)
+      public static FileStream Create(string path, bool? isFullPath)
       {
          return CreateFileInternal(null, path, NativeMethods.DefaultFileBufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
@@ -632,10 +632,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates or overwrites the specified file.</summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static FileStream Create(string path, int bufferSize, bool isFullPath)
+      public static FileStream Create(string path, int bufferSize, bool? isFullPath)
       {
          return CreateFileInternal(null, path, bufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
@@ -644,10 +644,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="T:FileOptions"/> values that describes how to create or overwrite the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A new file with the specified buffer size.</returns>
       [SecurityCritical]
-      public static FileStream Create(string path, int bufferSize, FileOptions options, bool isFullPath)
+      public static FileStream Create(string path, int bufferSize, FileOptions options, bool? isFullPath)
       {
          return CreateFileInternal(null, path, bufferSize, (EFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
@@ -657,10 +657,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="T:FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <param name="fileSecurity">One of the <see cref="T:FileSecurity"/> values that determines the access control and audit security for the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
-      public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, bool isFullPath)
+      public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, bool? isFullPath)
       {
          return CreateFileInternal(null, path, bufferSize, (EFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
@@ -724,10 +724,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file to create.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, bool isFullPath)
+      public static FileStream Create(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
@@ -736,10 +736,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, bool isFullPath)
+      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, bool? isFullPath)
       {
          return CreateFileInternal(transaction, path, bufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
@@ -749,10 +749,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="T:FileOptions"/> values that describes how to create or overwrite the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A new file with the specified buffer size.</returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, bool isFullPath)
+      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, bool? isFullPath)
       {
          return CreateFileInternal(transaction, path, bufferSize, (EFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
@@ -763,10 +763,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="T:FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <param name="fileSecurity">One of the <see cref="T:FileSecurity"/> values that determines the access control and audit security for the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, bool isFullPath)
+      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, bool? isFullPath)
       {
          return CreateFileInternal(transaction, path, bufferSize, (EFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
@@ -801,11 +801,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(string path, bool isFullPath)
+      public static StreamWriter CreateText(string path, bool? isFullPath)
       {
          return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
@@ -813,11 +813,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(string path, Encoding encoding, bool isFullPath)
+      public static StreamWriter CreateText(string path, Encoding encoding, bool? isFullPath)
       {
          return CreateTextInternal(null, path, encoding, isFullPath);
       }
@@ -847,11 +847,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      public static StreamWriter CreateText(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          return CreateTextInternal(transaction, path, encoding, isFullPath);
       }
@@ -885,10 +885,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a file to decrypt.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Decrypt(string path, bool isFullPath)
+      public static void Decrypt(string path, bool? isFullPath)
       {
          EncryptDecryptFileInternal(path, false, isFullPath);
       }
@@ -910,7 +910,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileInternal(null, null, path, false, false);
+         DeleteFileInternal(null, path, false, false);
       }
 
       #endregion // .NET
@@ -922,13 +922,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="T:FileAttributes"/> of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Delete(string path, bool ignoreReadOnly, bool isFullPath)
+      public static void Delete(string path, bool ignoreReadOnly, bool? isFullPath)
       {
-         DeleteFileInternal(null, null, path, ignoreReadOnly, isFullPath);
+         DeleteFileInternal(null, path, ignoreReadOnly, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -941,7 +941,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly)
       {
-         DeleteFileInternal(null, null, path, ignoreReadOnly, false);
+         DeleteFileInternal(null, path, ignoreReadOnly, false);
       }
 
       #region Transacted
@@ -956,7 +956,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
       {
-         DeleteFileInternal(null, transaction, path, false, false);
+         DeleteFileInternal(transaction, path, false, false);
       }
 
       #endregion // .NET
@@ -967,13 +967,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="T:FileAttributes"/> of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly, bool isFullPath)
+      public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
       {
-         DeleteFileInternal(null, transaction, path, ignoreReadOnly, isFullPath);
+         DeleteFileInternal(transaction, path, ignoreReadOnly, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -987,7 +987,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
-         DeleteFileInternal(null, transaction, path, ignoreReadOnly, false);
+         DeleteFileInternal(transaction, path, ignoreReadOnly, false);
       }
 
       #endregion // Transacted
@@ -1017,10 +1017,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
       /// <param name="path">A path that describes a file to encrypt.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Encrypt(string path, bool isFullPath)
+      public static void Encrypt(string path, bool? isFullPath)
       {
          EncryptDecryptFileInternal(path, true, isFullPath);
       }
@@ -1057,7 +1057,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the specified file exists.</summary>
       /// <param name="path">The file to check. Note that this files may contain wildcards, such as '*'.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <remarks>Note that this files may contain wildcards, such as '*'</remarks>
       /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
@@ -1065,7 +1065,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This method also returns <c>false</c> if path is a null reference, an invalid path, or a zero-length string.</remarks>
       /// <remarks>If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method returns <c>false</c> regardless of the existence of path.</remarks>
       [SecurityCritical]
-      public static bool Exists(string path, bool isFullPath)
+      public static bool Exists(string path, bool? isFullPath)
       {
          return ExistsInternal(false, null, path, isFullPath);
       }
@@ -1099,7 +1099,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Determines whether the specified file exists.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to check. Note that this files may contain wildcards, such as '*'.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <remarks>Note that this files may contain wildcards, such as '*'</remarks>
       /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
@@ -1108,7 +1108,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method returns <c>false</c> regardless of the existence of path.</remarks>
       /// <remarks>A trailing backslash is not allowed and will be removed.</remarks>
       [SecurityCritical]
-      public static bool Exists(KernelTransaction transaction, string path, bool isFullPath)
+      public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return ExistsInternal(false, transaction, path, isFullPath);
       }
@@ -1154,11 +1154,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets a <see cref="T:FileSecurity"/> object that encapsulates the access control list (ACL) entries for a specified file.</summary>
       /// <param name="path">The path to a file containing a <see cref="T:FileSecurity"/> object that describes the file's access control list (ACL) information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static FileSecurity GetAccessControl(string path, bool isFullPath)
+      public static FileSecurity GetAccessControl(string path, bool? isFullPath)
       {
          return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, isFullPath);
       }
@@ -1166,11 +1166,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets a <see cref="T:FileSecurity"/> object that encapsulates the access control list (ACL) entries for a specified file.</summary>
       /// <param name="path">The path to a file containing a <see cref="T:FileSecurity"/> object that describes the file's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections, bool isFullPath)
+      public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections, bool? isFullPath)
       {
          return GetAccessControlInternal<FileSecurity>(false, path, includeSections, isFullPath);
       }
@@ -1202,10 +1202,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the <see cref="T:FileAttributes"/> of the file on the path.</summary>
       /// <param name="path">The path to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileAttributes"/> of the file on the path.</returns>
       [SecurityCritical]
-      public static FileAttributes GetAttributes(string path, bool isFullPath)
+      public static FileAttributes GetAttributes(string path, bool? isFullPath)
       {
          return GetAttributesInternal(false, null, path, true, false, isFullPath);
       }
@@ -1233,10 +1233,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the <see cref="T:FileAttributes"/> of the file on the path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileAttributes"/> of the file on the path.</returns>
       [SecurityCritical]
-      public static FileAttributes GetAttributes(KernelTransaction transaction, string path, bool isFullPath)
+      public static FileAttributes GetAttributes(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetAttributesInternal(false, transaction, path, true, false, isFullPath);
       }
@@ -1270,10 +1270,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in local time.</returns>
       [SecurityCritical]
-      public static DateTime GetCreationTime(string path, bool isFullPath)
+      public static DateTime GetCreationTime(string path, bool? isFullPath)
       {
          return GetCreationTimeInternal(false, null, path, false, isFullPath).ToLocalTime();
       }
@@ -1301,10 +1301,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in local time.</returns>
       [SecurityCritical]
-      public static DateTime GetCreationTime(KernelTransaction transaction, string path, bool isFullPath)
+      public static DateTime GetCreationTime(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetCreationTimeInternal(false, transaction, path, false, isFullPath).ToLocalTime();
       }
@@ -1338,10 +1338,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
       /// <param name="path">The file for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in UTC time.</returns>
       [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(string path, bool isFullPath)
+      public static DateTime GetCreationTimeUtc(string path, bool? isFullPath)
       {
          return GetCreationTimeInternal(false, null, path, true, isFullPath);
       }
@@ -1369,10 +1369,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in UTC time.</returns>
       [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, bool isFullPath)
+      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetCreationTimeInternal(false, transaction, path, true, isFullPath);
       }
@@ -1406,10 +1406,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to obtain access date and time information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the date and time that the specified file was last accessed. This value is expressed in local time.</returns>
       [SecurityCritical]
-      public static DateTime GetLastAccessTime(string path, bool isFullPath)
+      public static DateTime GetLastAccessTime(string path, bool? isFullPath)
       {
          return GetLastAccessTimeInternal(false, null, path, false, isFullPath).ToLocalTime();
       }
@@ -1437,10 +1437,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last accessed.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain access date and time information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the date and time that the specified file was last accessed. This value is expressed in local time.</returns>
       [SecurityCritical]
-      public static DateTime GetLastAccessTime(KernelTransaction transaction, string path, bool isFullPath)
+      public static DateTime GetLastAccessTime(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetLastAccessTimeInternal(false, transaction, path, false, isFullPath).ToLocalTime();
       }
@@ -1474,10 +1474,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to obtain access date and time information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the date and time that the specified file was last accessed. This value is expressed in UTC time.</returns>
       [SecurityCritical]
-      public static DateTime GetLastAccessTimeUtc(string path, bool isFullPath)
+      public static DateTime GetLastAccessTimeUtc(string path, bool? isFullPath)
       {
          return GetLastAccessTimeInternal(false, null, path, true, isFullPath);
       }
@@ -1505,10 +1505,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain access date and time information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the date and time that the specified file was last accessed. This value is expressed in UTC time.</returns>
       [SecurityCritical]
-      public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path, bool isFullPath)
+      public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetLastAccessTimeInternal(false, transaction, path, true, isFullPath);
       }
@@ -1542,10 +1542,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
       /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is expressed in local time.</returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTime(string path, bool isFullPath)
+      public static DateTime GetLastWriteTime(string path, bool? isFullPath)
       {
          return GetLastWriteTimeInternal(false, null, path, false, isFullPath).ToLocalTime();
       }
@@ -1573,10 +1573,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is expressed in local time.</returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, bool isFullPath)
+      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetLastWriteTimeInternal(false, transaction, path, false, isFullPath).ToLocalTime();
       }
@@ -1610,10 +1610,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified file was last written to.</summary>
       /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is expressed in UTC time.</returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(string path, bool isFullPath)
+      public static DateTime GetLastWriteTimeUtc(string path, bool? isFullPath)
       {
          return GetLastWriteTimeInternal(false, null, path, true, isFullPath);
       }
@@ -1641,10 +1641,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified file was last written to.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is expressed in UTC time.</returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, bool isFullPath)
+      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetLastWriteTimeInternal(false, transaction, path, true, isFullPath);
       }
@@ -1683,13 +1683,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Move(string sourceFileName, string destFileName, bool isFullPath)
+      public static void Move(string sourceFileName, string destFileName, bool? isFullPath)
       {
          CopyMoveInternal(true, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
       }
@@ -1698,13 +1698,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
       /// <param name="options">The <see cref="T:MoveOptions"/> options.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Move(string sourceFileName, string destFileName, MoveOptions options, bool isFullPath)
+      public static void Move(string sourceFileName, string destFileName, MoveOptions options, bool? isFullPath)
       {
          CopyMoveInternal(true, null, sourceFileName, destFileName, false, null, options, null, null, isFullPath);
       }
@@ -1726,14 +1726,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// portion of the file has been moved. The callback function can be useful if you provide a user interface that displays
       /// the progress of the operation. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">An argument to be passed to the <see cref="T:CopyMoveProgressCallback"/> callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <returns><c>true</c> when successfully moved, <c>false</c> otherwise or the operation was aborted.</returns>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Move(string sourceFileName, string destFileName, MoveOptions options, CopyMoveProgressCallback moveProgress, object userProgressData, bool isFullPath)
+      public static void Move(string sourceFileName, string destFileName, MoveOptions options, CopyMoveProgressCallback moveProgress, object userProgressData, bool? isFullPath)
       {
          CopyMoveInternal(true, null, sourceFileName, destFileName, false, null, options, moveProgress, userProgressData, isFullPath);
       }
@@ -1795,14 +1795,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <returns><c>true</c> when successfully moved, <c>false</c> otherwise.</returns>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, bool isFullPath)
+      public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, bool? isFullPath)
       {
          CopyMoveInternal(true, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
       }
@@ -1819,14 +1819,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </para>
       /// 	<para>When moving a directory, <paramref name="sourceFileName"/> and <paramref name="destFileName"/> must be on the same drive. </para></param>
       /// <param name="options">The move options.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <returns><c>true</c> when successfully moved, <c>false</c> otherwise.</returns>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions options, bool isFullPath)
+      public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions options, bool? isFullPath)
       {
          CopyMoveInternal(true, transaction, sourceFileName, destFileName, false, null, options, null, null, isFullPath);
       }
@@ -1847,14 +1847,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// portion of the file has been moved. The callback function can be useful if you provide a user interface that displays
       /// the progress of the operation. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">An argument to be passed to the <see cref="T:CopyMoveProgressCallback"/> callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <returns><c>true</c> when successfully moved, <c>false</c> otherwise or the operation was aborted.</returns>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions options, CopyMoveProgressCallback moveProgress, object userProgressData, bool isFullPath)
+      public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions options, CopyMoveProgressCallback moveProgress, object userProgressData, bool? isFullPath)
       {
          CopyMoveInternal(true, transaction, sourceFileName, destFileName, false, null, options, moveProgress, userProgressData, isFullPath);
       }
@@ -1940,10 +1940,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a <see cref="T:FileStream"/> on the specified path with read/write access.</summary>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">A <see cref="T:FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
       [SecurityCritical]
-      public static FileStream Open(string path, FileMode mode, bool isFullPath)
+      public static FileStream Open(string path, FileMode mode, bool? isFullPath)
       {
          return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, EFileAttributes.Normal, isFullPath);
       }
@@ -1952,10 +1952,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to open.</param>
       /// <param name="mode">A <see cref="T:FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
       /// <param name="access">A <see cref="T:FileAccess"/> value that specifies the operations that can be performed on the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An unshared <see cref="T:FileStream"/> that provides access to the specified file, with the specified mode and access.</returns>
       [SecurityCritical]
-      public static FileStream Open(string path, FileMode mode, FileAccess access, bool isFullPath)
+      public static FileStream Open(string path, FileMode mode, FileAccess access, bool? isFullPath)
       {
          return OpenInternal(null, path, mode, 0, access, FileShare.None, EFileAttributes.Normal, isFullPath);
       }
@@ -1965,10 +1965,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="mode">A <see cref="T:FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
       /// <param name="access">A <see cref="T:FileAccess"/> value that specifies the operations that can be performed on the file.</param>
       /// <param name="share">A <see cref="T:FileShare"/> value specifying the type of access other threads have to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
       [SecurityCritical]
-      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, bool isFullPath)
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
       {
          return OpenInternal(null, path, mode, 0, access, share, EFileAttributes.Normal, isFullPath);
       }
@@ -2023,10 +2023,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">A <see cref="T:FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, bool isFullPath)
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, bool? isFullPath)
       {
          return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, EFileAttributes.Normal, isFullPath);
       }
@@ -2036,10 +2036,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to open.</param>
       /// <param name="mode">A <see cref="T:FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
       /// <param name="access">A <see cref="T:FileAccess"/> value that specifies the operations that can be performed on the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An unshared <see cref="T:FileStream"/> that provides access to the specified file, with the specified mode and access.</returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, bool isFullPath)
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, bool? isFullPath)
       {
          return OpenInternal(transaction, path, mode, 0, access, FileShare.None, EFileAttributes.Normal, isFullPath);
       }
@@ -2050,10 +2050,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="mode">A <see cref="T:FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
       /// <param name="access">A <see cref="T:FileAccess"/> value that specifies the operations that can be performed on the file.</param>
       /// <param name="share">A <see cref="T:FileShare"/> value specifying the type of access other threads have to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, bool isFullPath)
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
       {
          return OpenInternal(transaction, path, mode, 0, access, share, EFileAttributes.Normal, isFullPath);
       }
@@ -2089,10 +2089,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
       /// <returns>A read-only <see cref="T:FileStream"/> on the specified path.</returns>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>This method is equivalent to the FileStream(string, FileMode, FileAccess, FileShare) constructor overload with a <see cref="T:FileMode"/> value of Open, a <see cref="T:FileAccess"/> value of Read and a <see cref="T:FileShare"/> value of Read.</remarks>
       [SecurityCritical]
-      public static FileStream OpenRead(string path, bool isFullPath)
+      public static FileStream OpenRead(string path, bool? isFullPath)
       {
          return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath);
       }
@@ -2121,11 +2121,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A read-only <see cref="T:FileStream"/> on the specified path.</returns>
       /// <remarks>This method is equivalent to the FileStream(string, FileMode, FileAccess, FileShare) constructor overload with a <see cref="T:FileMode"/> value of Open, a <see cref="T:FileAccess"/> value of Read and a <see cref="T:FileShare"/> value of Read.</remarks>
       [SecurityCritical]
-      public static FileStream OpenRead(KernelTransaction transaction, string path, bool isFullPath)
+      public static FileStream OpenRead(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath);
       }
@@ -2160,11 +2160,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens an existing <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamReader OpenText(string path, bool isFullPath)
+      public static StreamReader OpenText(string path, bool? isFullPath)
       {
          return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath), NativeMethods.DefaultFileEncoding);
       }
@@ -2172,11 +2172,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens an existing <see cref="T:Encoding"/> encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamReader OpenText(string path, Encoding encoding, bool isFullPath)
+      public static StreamReader OpenText(string path, Encoding encoding, bool? isFullPath)
       {
          return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath), encoding);
       }
@@ -2215,10 +2215,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens an existing <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path, bool isFullPath)
+      public static StreamReader OpenText(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath), NativeMethods.DefaultFileEncoding);
       }
@@ -2227,10 +2227,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath), encoding);
       }
@@ -2275,10 +2275,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An unshared <see cref="T:FileStream"/> object on the specified path with <see cref="T:FileAccess.Write"/> access.</returns>
       [SecurityCritical]
-      public static FileStream OpenWrite(string path, bool isFullPath)
+      public static FileStream OpenWrite(string path, bool? isFullPath)
       {
          return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, isFullPath);
       }
@@ -2306,10 +2306,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An unshared <see cref="T:FileStream"/> object on the specified path with <see cref="T:FileAccess.Write"/> access.</returns>
       [SecurityCritical]
-      public static FileStream OpenWrite(KernelTransaction transaction, string path, bool isFullPath)
+      public static FileStream OpenWrite(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, isFullPath);
       }
@@ -2343,10 +2343,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      public static byte[] ReadAllBytes(string path, bool isFullPath)
+      public static byte[] ReadAllBytes(string path, bool? isFullPath)
       {
          return ReadAllBytesInternal(null, path, isFullPath);
       }
@@ -2374,10 +2374,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      public static byte[] ReadAllBytes(KernelTransaction transaction, string path, bool isFullPath)
+      public static byte[] ReadAllBytes(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return ReadAllBytesInternal(transaction, path, isFullPath);
       }
@@ -2421,10 +2421,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(string path, bool isFullPath)
+      public static string[] ReadAllLines(string path, bool? isFullPath)
       {
          return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath).ToArray();
       }
@@ -2432,10 +2432,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(string path, Encoding encoding, bool isFullPath)
+      public static string[] ReadAllLines(string path, Encoding encoding, bool? isFullPath)
       {
          return ReadAllLinesInternal(null, path, encoding, isFullPath).ToArray();
       }
@@ -2474,10 +2474,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(KernelTransaction transaction, string path, bool isFullPath)
+      public static string[] ReadAllLines(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath).ToArray();
       }
@@ -2486,10 +2486,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      public static string[] ReadAllLines(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          return ReadAllLinesInternal(transaction, path, encoding, isFullPath).ToArray();
       }
@@ -2533,10 +2533,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(string path, bool isFullPath)
+      public static string ReadAllText(string path, bool? isFullPath)
       {
          return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
@@ -2544,10 +2544,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(string path, Encoding encoding, bool isFullPath)
+      public static string ReadAllText(string path, Encoding encoding, bool? isFullPath)
       {
          return ReadAllTextInternal(null, path, encoding, isFullPath);
       }
@@ -2586,10 +2586,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(KernelTransaction transaction, string path, bool isFullPath)
+      public static string ReadAllText(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
@@ -2598,10 +2598,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      public static string ReadAllText(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          return ReadAllTextInternal(transaction, path, encoding, isFullPath);
       }
@@ -2645,10 +2645,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Reads the lines of a file.</summary>
       /// <param name="path">The file to read.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(string path, bool isFullPath)
+      public static IEnumerable<string> ReadLines(string path, bool? isFullPath)
       {
          return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
@@ -2656,10 +2656,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
       /// <param name="path">The file to read.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(string path, Encoding encoding, bool isFullPath)
+      public static IEnumerable<string> ReadLines(string path, Encoding encoding, bool? isFullPath)
       {
          return ReadLinesInternal(null, path, encoding, isFullPath);
       }
@@ -2698,10 +2698,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Reads the lines of a file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to read.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, bool isFullPath)
+      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
@@ -2710,10 +2710,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to read.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          return ReadLinesInternal(transaction, path, encoding, isFullPath);
       }
@@ -2766,11 +2766,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destFileName">The name of the file being replaced.</param>
       /// <param name="destinationBackupFileName">The name of the backup file.</param>
       /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the replacement file; <c>false</c> otherwise.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Replace(string sourceFileName, string destFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool isFullPath)
+      public static void Replace(string sourceFileName, string destFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
       {
          ReplaceInternal(sourceFileName, destFileName, destinationBackupFileName, ignoreMetadataErrors, isFullPath);
       }
@@ -2817,11 +2817,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Applies access control list (ACL) entries described by a <see cref="T:FileSecurity"/> FileSecurity object to the specified file.</summary>
       /// <param name="path">A file to add or remove access control list (ACL) entries from.</param>
       /// <param name="fileSecurity">A  <see cref="T:FileSecurity"/> object that describes an ACL entry to apply to the file described by the <paramref name="path"/> parameter.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static void SetAccessControl(string path, FileSecurity fileSecurity, bool isFullPath)
+      public static void SetAccessControl(string path, FileSecurity fileSecurity, bool? isFullPath)
       {
          SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, isFullPath);
       }
@@ -2830,11 +2830,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
       /// <param name="fileSecurity">A <see cref="T:FileSecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
       /// <param name="includeSections">One or more of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections, bool isFullPath)
+      public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections, bool? isFullPath)
       {
          SetAccessControlInternal(path, null, fileSecurity, includeSections, isFullPath);
       }
@@ -2869,11 +2869,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the specified <see cref="T:FileAttributes"/> of the file or directory on the specified path.</summary>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values. </param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>It is not possible to change the compression status of a File object using the SetAttributes method.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetAttributes(string path, FileAttributes fileAttributes, bool isFullPath)
+      public static void SetAttributes(string path, FileAttributes fileAttributes, bool? isFullPath)
       {
          SetAttributesInternal(false, null, path, fileAttributes, false, isFullPath);
       }
@@ -2904,11 +2904,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values. </param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>It is not possible to change the compression status of a File object using the <see cref="M:SetAttributes"/> method.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes, bool isFullPath)
+      public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes, bool? isFullPath)
       {
          SetAttributesInternal(false, transaction, path, fileAttributes, false, isFullPath);
       }
@@ -2944,10 +2944,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time the file was created.</summary>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTime">A <see cref="T:System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetCreationTime(string path, DateTime creationTime, bool isFullPath)
+      public static void SetCreationTime(string path, DateTime creationTime, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), null, null, isFullPath);
       }
@@ -2977,10 +2977,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTime">A <see cref="T:System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime, bool isFullPath)
+      public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), null, null, isFullPath);
       }
@@ -3016,10 +3016,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the file was created.</summary>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc, bool isFullPath)
+      public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, null, path, creationTimeUtc, null, null, isFullPath);
       }
@@ -3049,10 +3049,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, bool isFullPath)
+      public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, null, null, isFullPath);
       }
@@ -3088,10 +3088,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">A <see cref="T:System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetLastAccessTime(string path, DateTime lastAccessTime, bool isFullPath)
+      public static void SetLastAccessTime(string path, DateTime lastAccessTime, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, null, path, null, lastAccessTime.ToUniversalTime(), null, isFullPath);
       }
@@ -3121,10 +3121,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">A <see cref="T:System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime, bool isFullPath)
+      public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTime.ToUniversalTime(), null, isFullPath);
       }
@@ -3160,10 +3160,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, bool isFullPath)
+      public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, null, path, null, lastAccessTimeUtc, null, isFullPath);
       }
@@ -3193,10 +3193,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, bool isFullPath)
+      public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTimeUtc, null, isFullPath);
       }
@@ -3232,10 +3232,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time that the specified file was last written to.</summary>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTime">A <see cref="T:System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetLastWriteTime(string path, DateTime lastWriteTime, bool isFullPath)
+      public static void SetLastWriteTime(string path, DateTime lastWriteTime, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTime.ToUniversalTime(), isFullPath);
       }
@@ -3265,10 +3265,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTime">A <see cref="T:System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime, bool isFullPath)
+      public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTime.ToUniversalTime(), isFullPath);
       }
@@ -3304,10 +3304,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified file was last written to.</summary>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc, bool isFullPath)
+      public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTimeUtc, isFullPath);
       }
@@ -3337,10 +3337,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, bool isFullPath)
+      public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTimeUtc, isFullPath);
       }
@@ -3376,10 +3376,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a new file, writes the specified byte array to the file, and then closes the file. If the target file already exists, it is overwritten.</summary>
       /// <param name="path">The file to write to.</param>
       /// <param name="bytes">The bytes to write to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "bytes")]
       [SecurityCritical]
-      public static void WriteAllBytes(string path, byte[] bytes, bool isFullPath)
+      public static void WriteAllBytes(string path, byte[] bytes, bool? isFullPath)
       {
          WriteAllBytesInternal(null, path, bytes, isFullPath);
       }
@@ -3409,10 +3409,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="bytes">The bytes to write to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "bytes")]
       [SecurityCritical]
-      public static void WriteAllBytes(KernelTransaction transaction, string path, byte[] bytes, bool isFullPath)
+      public static void WriteAllBytes(KernelTransaction transaction, string path, byte[] bytes, bool? isFullPath)
       {
          WriteAllBytesInternal(transaction, path, bytes, isFullPath);
       }
@@ -3477,10 +3477,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
       [SecurityCritical]
-      public static void WriteAllLines(string path, IEnumerable<string> contents, bool isFullPath)
+      public static void WriteAllLines(string path, IEnumerable<string> contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
       }
@@ -3488,9 +3488,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void WriteAllLines(string path, string[] contents, bool isFullPath)
+      public static void WriteAllLines(string path, string[] contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
       }
@@ -3499,9 +3499,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void WriteAllLines(string path, IEnumerable<string> contents, Encoding encoding, bool isFullPath)
+      public static void WriteAllLines(string path, IEnumerable<string> contents, Encoding encoding, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, isFullPath);
       }
@@ -3510,9 +3510,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void WriteAllLines(string path, string[] contents, Encoding encoding, bool isFullPath)
+      public static void WriteAllLines(string path, string[] contents, Encoding encoding, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, isFullPath);
       }
@@ -3575,10 +3575,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, bool isFullPath)
+      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
       }
@@ -3587,10 +3587,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, bool isFullPath)
+      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
       }
@@ -3600,9 +3600,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool isFullPath)
+      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, isFullPath);
       }
@@ -3612,9 +3612,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, Encoding encoding, bool isFullPath)
+      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, Encoding encoding, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, isFullPath);
       }
@@ -3660,10 +3660,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a new file, writes the specified string to the file, and then closes the file. If the target file already exists, it is overwritten.</summary>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>This method uses UTF-8 encoding without a Byte-Order Mark (BOM)</remarks>
       [SecurityCritical]
-      public static void WriteAllText(string path, string contents, bool isFullPath)
+      public static void WriteAllText(string path, string contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, isFullPath);
       }
@@ -3672,9 +3672,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void WriteAllText(string path, string contents, Encoding encoding, bool isFullPath)
+      public static void WriteAllText(string path, string contents, Encoding encoding, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, false, false, isFullPath);
       }
@@ -3715,10 +3715,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>This method uses UTF-8 encoding without a Byte-Order Mark (BOM)</remarks>
       [SecurityCritical]
-      public static void WriteAllText(KernelTransaction transaction, string path, string contents, bool isFullPath)
+      public static void WriteAllText(KernelTransaction transaction, string path, string contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, isFullPath);
       }
@@ -3728,9 +3728,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SecurityCritical]
-      public static void WriteAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, bool isFullPath)
+      public static void WriteAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, isFullPath);
       }
@@ -3753,10 +3753,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
       /// <param name="path">A path that describes a file to compress.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Compress(string path, bool isFullPath)
+      public static void Compress(string path, bool? isFullPath)
       {
          Device.ToggleCompressionInternal(false, null, path, true, isFullPath);
       }
@@ -3779,10 +3779,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a file to compress.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path, bool isFullPath)
+      public static void Compress(KernelTransaction transaction, string path, bool? isFullPath)
       {
          Device.ToggleCompressionInternal(false, transaction, path, true, isFullPath);
       }
@@ -3802,97 +3802,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transacted
 
       #endregion // Compress
-
-      #region CreateFileInternal
-
-      /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or open a file, directory or I/O device.</summary>
-      /// <param name="isFile"><c>null</c> indicates a device. <c>true</c> indicates a file object. <c>false</c> indicates a folder object.</param>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path and name of the file or directory to create.</param>
-      /// <param name="attributes">One of the <see cref="T:EFileAttributes"/> values that describes how to create or overwrite the file or directory.</param>
-      /// <param name="fileSecurity">A <see cref="T:FileSecurity"/> instance that determines the access control and audit security for the file or directory.</param>
-      /// <param name="fileMode">A <see cref="T:FileMode"/> constant that determines how to open or create the file or directory.</param>
-      /// <param name="fileSystemRights">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file or directory.</param>
-      /// <param name="fileShare">A <see cref="T:FileShare"/> constant that determines how the file or directory will be shared by processes.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
-      /// <remarks>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.</remarks>
-      /// <remarks>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe.</remarks>
-      /// <returns>A <see cref="T:SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
-      [SecurityCritical]
-      internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, EFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool isFullPath)
-      {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
-
-         PrivilegeEnabler privilegeEnabler = null;
-         try
-         {
-            if (fileSecurity != null)
-               fileSystemRights |= (FileSystemRights)0x1000000;
-
-            // AccessSystemSecurity = 0x1000000    AccessSystemAcl access type.
-            // MaximumAllowed       = 0x2000000    MaximumAllowed access type.            
-            if ((fileSystemRights & (FileSystemRights)0x1000000) != 0 ||
-                (fileSystemRights & (FileSystemRights)0x2000000) != 0)
-               privilegeEnabler = new PrivilegeEnabler(Privilege.Security);
-
-
-            using (Security.NativeMethods.SecurityAttributes securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
-            {
-               // When isFile == null, we're working with a device.
-               // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
-               // the path string should be the following form: "\\.\X:"
-               // Do not use a trailing backslash (\), which indicates the root.
-
-               string pathLp = isFullPath
-                  ? Path.GetLongPathInternal(path, false, false, false, false)
-                  : Path.GetFullPathInternal(transaction, path, true, false, false, (isFile == null || (bool)isFile));
-
-
-               SafeFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
-
-                  // CreateFile() / CreateFileTransacted()
-                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-                  // 2013-01-13: MSDN confirms LongPath usage.
-
-                  ? NativeMethods.CreateFile(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero)
-                  : NativeMethods.CreateFileTransacted(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero, transaction.SafeHandle, IntPtr.Zero, IntPtr.Zero);
-
-               int lastError = Marshal.GetLastWin32Error();
-               switch ((uint)lastError)
-               {
-                  case Win32Errors.ERROR_PATH_NOT_FOUND:
-                     if (pathLp.Equals(Path.GetPathRoot(pathLp), StringComparison.OrdinalIgnoreCase))
-                        lastError = 5;
-                     break;
-
-                  case Win32Errors.ERROR_FILE_NOT_FOUND:
-                     lastError = (int)((isFile == null || (bool)!isFile)
-                        ? Win32Errors.ERROR_PATH_NOT_FOUND
-                        : Win32Errors.ERROR_FILE_NOT_FOUND);
-                     break;
-               }
-
-               if (handle.IsInvalid)
-               {
-                  handle.Close();
-                  NativeError.ThrowException(lastError, pathLp);
-               }
-
-               return handle;
-            }
-         }
-         finally
-         {
-            if (privilegeEnabler != null)
-               privilegeEnabler.Dispose();
-         }
-      }
-
-      #endregion // CreateFileInternal
-
+      
       #region CreateHardlink
 
       #region IsFullPath
@@ -3900,11 +3810,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="fileName"/> and <paramref name="existingFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      public static void CreateHardlink(string fileName, string existingFileName, bool isFullPath)
+      public static void CreateHardlink(string fileName, string existingFileName, bool? isFullPath)
       {
          CreateHardlinkInternal(null, fileName, existingFileName, isFullPath);
       }
@@ -3930,11 +3840,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="fileName"/> and <paramref name="existingFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName, bool isFullPath)
+      public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName, bool? isFullPath)
       {
          CreateHardlinkInternal(transaction, fileName, existingFileName, isFullPath);
       }
@@ -3965,11 +3875,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
-      public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool isFullPath)
+      public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool? isFullPath)
       {
          CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, isFullPath);
       }
@@ -3997,11 +3907,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
-      public static void CreateSymbolicLink(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool isFullPath)
+      public static void CreateSymbolicLink(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool? isFullPath)
       {
          CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, isFullPath);
       }
@@ -4031,10 +3941,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
       /// <param name="path">A path that describes a file to decompress.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Decompress(string path, bool isFullPath)
+      public static void Decompress(string path, bool? isFullPath)
       {
          Device.ToggleCompressionInternal(false, null, path, false, isFullPath);
       }
@@ -4057,10 +3967,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a file to decompress.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path, bool isFullPath)
+      public static void Decompress(KernelTransaction transaction, string path, bool? isFullPath)
       {
          Device.ToggleCompressionInternal(false, transaction, path, false, isFullPath);
       }
@@ -4087,11 +3997,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances and directory instances in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, bool isFullPath)
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, bool? isFullPath)
       {
          return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, false, false, isFullPath);
       }
@@ -4099,12 +4009,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances and directory instances in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [
          SecurityCritical]
-      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, bool continueOnException, bool isFullPath)
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, bool continueOnException, bool? isFullPath)
       {
          return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, false, continueOnException, isFullPath);
       }
@@ -4113,11 +4023,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, bool continueOnException, bool isFullPath)
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, bool continueOnException, bool? isFullPath)
       {
          return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, null, false, continueOnException, isFullPath);
       }
@@ -4127,11 +4037,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool isFullPath)
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
          return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, searchPattern, searchOption, null, null, false, continueOnException, isFullPath);
       }
@@ -4203,11 +4113,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances and directory instances in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, bool isFullPath)
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, false, false, isFullPath);
       }
@@ -4216,11 +4126,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, bool continueOnException, bool isFullPath)
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, bool continueOnException, bool? isFullPath)
       {
          return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, false, continueOnException, isFullPath);
       }
@@ -4230,11 +4140,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, bool continueOnException, bool isFullPath)
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, bool continueOnException, bool? isFullPath)
       {
          return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, null, false, continueOnException, isFullPath);
       }
@@ -4245,11 +4155,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool isFullPath)
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
          return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, searchPattern, searchOption, null, null, false, continueOnException, isFullPath);
       }
@@ -4329,11 +4239,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
       /// <param name="path">The name of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of <see cref="T:String"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinks(string path, bool isFullPath)
+      public static IEnumerable<string> EnumerateHardlinks(string path, bool? isFullPath)
       {
          return EnumerateHardlinksInternal(null, path, isFullPath);
       }
@@ -4357,11 +4267,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of <see cref="T:String"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path, bool isFullPath)
+      public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return EnumerateHardlinksInternal(transaction, path, isFullPath);
       }
@@ -4391,7 +4301,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<BackupStreamInfo> EnumerateStreams(string path)
       {
-         return EnumerateStreamsInternal(null, path, null);
+         return EnumerateStreamsInternal(null, null, path);
       }
 
       /// <summary>[AlphaFS] Enumerates <see cref="T:BackupStreamInfo"/> instances associated with the file.</summary>
@@ -4400,7 +4310,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<BackupStreamInfo> EnumerateStreams(SafeFileHandle handle)
       {
-         return EnumerateStreamsInternal(null, null, handle);
+         return EnumerateStreamsInternal(null, handle, null);
       }
 
       #region Transacted
@@ -4412,7 +4322,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<BackupStreamInfo> EnumerateStreams(KernelTransaction transaction, string path)
       {
-         return EnumerateStreamsInternal(transaction, path, null);
+         return EnumerateStreamsInternal(transaction, null, path);
       }
 
       #endregion // Transacted
@@ -4431,10 +4341,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// size of the specified file.
       /// </remarks>
       /// <param name="path"><para>The name of the file.</para></param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
-      public static long GetCompressedSize(string path, bool isFullPath)
+      public static long GetCompressedSize(string path, bool? isFullPath)
       {
          return GetCompressedSizeInternal(null, path, isFullPath);
       }
@@ -4467,10 +4377,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path"><para>The name of the file.</para></param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
-      public static long GetCompressedSize(KernelTransaction transaction, string path, bool isFullPath)
+      public static long GetCompressedSize(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetCompressedSizeInternal(transaction, path, isFullPath);
       }
@@ -4501,11 +4411,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
       /// <param name="path">The name of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static FileEncryptionStatus GetEncryptionStatus(string path, bool isFullPath)
+      public static FileEncryptionStatus GetEncryptionStatus(string path, bool? isFullPath)
       {
          return GetEncryptionStatusInternal(path, isFullPath);
       }
@@ -4551,11 +4461,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the <see cref="T:FileSystemEntryInfo"/> of the file or directory on the path.</summary>
       /// <param name="path">The path to the file or directory.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the file or directory on the path.</returns>
       /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool isFullPath)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool? isFullPath)
       {
          return GetFileSystemEntryInfoInternal(false, null, path, true, false, isFullPath);
       }
@@ -4563,11 +4473,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the <see cref="T:FileSystemEntryInfo"/> of the file or directory on the path.</summary>
       /// /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
       /// <param name="path">The path to the file or directory.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the file or directory on the path.</returns>
       /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(bool isFolder, string path, bool isFullPath)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(bool isFolder, string path, bool? isFullPath)
       {
          return GetFileSystemEntryInfoInternal(isFolder, null, path, true, false, isFullPath);
       }
@@ -4602,11 +4512,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the <see cref="T:FileSystemEntryInfo"/> of the file or directory on the path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the file or directory on the path.</returns>
       /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, bool isFullPath)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetFileSystemEntryInfoInternal(false, transaction, path, true, false, isFullPath);
       }
@@ -4615,11 +4525,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the file or directory on the path.</returns>
       /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(bool isFolder, KernelTransaction transaction, string path, bool isFullPath)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetFileSystemEntryInfoInternal(isFolder, transaction, path, true, false, isFullPath);
       }
@@ -4659,11 +4569,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <param name="path">The path to the reparse point.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An instance of <see cref="T:LinkTargetInfo"/> or <see cref="T:SymbolicLinkTargetInfo"/> containing
       /// information about the symbolic link or mount point pointed to by <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static LinkTargetInfo GetLinkTargetInfo(string path, bool isFullPath)
+      public static LinkTargetInfo GetLinkTargetInfo(string path, bool? isFullPath)
       {
          return GetLinkTargetInfoInternal(null, path, isFullPath);
       }
@@ -4687,12 +4597,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the reparse point.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An instance of <see cref="T:LinkTargetInfo"/> or <see cref="T:SymbolicLinkTargetInfo"/> containing
       /// information about the symbolic link or mount point pointed to by <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      public static LinkTargetInfo GetLinkTargetInfo(KernelTransaction transaction, string path, bool isFullPath)
+      public static LinkTargetInfo GetLinkTargetInfo(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetLinkTargetInfoInternal(transaction, path, isFullPath);
       }
@@ -4721,11 +4631,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
       /// <param name="path">The path to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The file size, in bytes.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static long GetSize(string path, bool isFullPath)
+      public static long GetSize(string path, bool? isFullPath)
       {
          return GetSizeInternal(null, null, path, isFullPath);
       }
@@ -4759,10 +4669,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
-      public static long GetSize(KernelTransaction transaction, string path, bool isFullPath)
+      public static long GetSize(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetSizeInternal(transaction, null, path, isFullPath);
       }
@@ -4821,10 +4731,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTime">A <see cref="T:System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastAccessTime">A <see cref="T:System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastWriteTime">A <see cref="T:System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool isFullPath)
+      public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), isFullPath);
       }
@@ -4853,10 +4763,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTime">A <see cref="T:System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastAccessTime">A <see cref="T:System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastWriteTime">A <see cref="T:System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool isFullPath)
+      public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), isFullPath);
       }
@@ -4889,10 +4799,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool isFullPath)
+      public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, isFullPath);
       }
@@ -4921,10 +4831,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool isFullPath)
+      public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
          SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, isFullPath);
       }
@@ -4956,10 +4866,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="source">The source file to get the date and time stamps from.</param>
       /// <param name="destination">The destination file to set the date and time stamps.</param>
       /// <remarks>This method does not change last access time for the source file.</remarks>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="source"/> and <paramref name="destination"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="source"/> and <paramref name="destination"/> will be normalized and long path prefixed. <c>null</c> <paramref name="source"/> and <paramref name="destination"/> are already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void TransferTimestamps(string source, string destination, bool isFullPath)
+      public static void TransferTimestamps(string source, string destination, bool? isFullPath)
       {
          TransferTimestampsInternal(false, null, source, destination, isFullPath);
       }
@@ -4985,11 +4895,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="source">The source file to get the date and time stamps from.</param>
       /// <param name="destination">The destination file to set the date and time stamps.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="source"/> and <paramref name="destination"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="source"/> and <paramref name="destination"/> will be normalized and long path prefixed. <c>null</c> <paramref name="source"/> and <paramref name="destination"/> are already a full path with long path prefix, will be used as is.</param>
       /// <remarks>This method does not change last access time for the source file.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void TransferTimestamps(KernelTransaction transaction, string source, string destination, bool isFullPath)
+      public static void TransferTimestamps(KernelTransaction transaction, string source, string destination, bool? isFullPath)
       {
          TransferTimestampsInternal(false, transaction, source, destination, isFullPath);
       }
@@ -5021,11 +4931,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static StreamWriter AppendTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      internal static StreamWriter AppendTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          FileStream fs = OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, isFullPath);
 
@@ -5056,14 +4966,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions">Flags that specify how the file is to be move. This parameter can be <c>null</c>.</param>
       /// <param name="copyMoveProgress">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
       /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
       /// get an IOException. You cannot use the Move method to overwrite an existing file.</remarks>
       /// <returns><c>true</c> when successfully copied or moved, <c>false</c> otherwise or the operation was aborted.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static void CopyMoveInternal(bool isMove, KernelTransaction transaction, string sourceFileName, string destFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool isFullPath)
+      internal static void CopyMoveInternal(bool isMove, KernelTransaction transaction, string sourceFileName, string destFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(sourceFileName))
             throw new ArgumentNullException("sourceFileName");
@@ -5071,13 +4982,17 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(destFileName))
             throw new ArgumentNullException("destFileName");
 
-         string sourceFileNameLp = isFullPath
-            ? Path.GetLongPathInternal(sourceFileName, false, false, false, true)
-            : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true);
+         string sourceFileNameLp = isFullPath == null
+            ? sourceFileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(sourceFileName, false, false, false, true)
+               : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true);
 
-         string destFileNameLp = isFullPath
-            ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, destFileName, true, false, false, false);
+         string destFileNameLp = isFullPath == null
+            ? destFileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(destFileName, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, destFileName, true, false, false, false);
 
          
          // Setup callback function for progress notifications.
@@ -5102,7 +5017,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Remove file read-only attribute, if applicable.
          // If the file is read-only, the function can fail with ERROR_ACCESS_DENIED.
          if (overwrite)
-            DeleteFileInternal(null, transaction, destFileNameLp, true, true);
+            DeleteFileInternal(transaction, destFileNameLp, true, null);
 
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -5145,12 +5060,12 @@ namespace Alphaleonis.Win32.Filesystem
          // Apply original Timestamps if requested and action is Copy().
          if (preserveDates && doCopy)
          {
-            NativeMethods.Win32FileAttributeData originalAttrs = GetAttributesExInternal(false, transaction, sourceFileNameLp, true, false, true);
+            NativeMethods.Win32FileAttributeData originalAttrs = GetAttributesExInternal(false, transaction, sourceFileNameLp, true, false, null);
             
             SetFsoDateTimeInternal(false, transaction, destFileNameLp,
                DateTime.FromFileTimeUtc(originalAttrs.CreationTime),
                DateTime.FromFileTimeUtc(originalAttrs.LastAccessTime),
-               DateTime.FromFileTimeUtc(originalAttrs.LastWriteTime), true);
+               DateTime.FromFileTimeUtc(originalAttrs.LastWriteTime), null);
          }
       }
 
@@ -5169,14 +5084,101 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="mode">The <see cref="T:FileMode"/> option gives you more precise control over how you want to create a file.</param>
       /// <param name="access">The <see cref="T:FileAccess"/> allow you additionally specify to default read/write capability - just write, bypassing any cache.</param>
       /// <param name="share">The <see cref="T:FileShare"/> option controls how you would like to share created file with other requesters.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static FileStream CreateFileInternal(KernelTransaction transaction, string path, int bufferSize, EFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, bool isFullPath)
+      internal static FileStream CreateFileInternal(KernelTransaction transaction, string path, int bufferSize, EFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
       {
          SafeFileHandle handle = CreateFileInternal(true, transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, isFullPath);
          return new FileStream(handle, access, bufferSize, (attributes & EFileAttributes.Overlapped) != 0);
+      }
+
+      /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or open a file, directory or I/O device.</summary>
+      /// <param name="isFile"><c>null</c> indicates a device. <c>true</c> indicates a file object. <c>false</c> indicates a folder object.</param>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path and name of the file or directory to create.</param>
+      /// <param name="attributes">One of the <see cref="T:EFileAttributes"/> values that describes how to create or overwrite the file or directory.</param>
+      /// <param name="fileSecurity">A <see cref="T:FileSecurity"/> instance that determines the access control and audit security for the file or directory.</param>
+      /// <param name="fileMode">A <see cref="T:FileMode"/> constant that determines how to open or create the file or directory.</param>
+      /// <param name="fileSystemRights">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file or directory.</param>
+      /// <param name="fileShare">A <see cref="T:FileShare"/> constant that determines how the file or directory will be shared by processes.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <remarks>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.</remarks>
+      /// <remarks>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe.</remarks>
+      /// <returns>A <see cref="T:SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
+      [SecurityCritical]
+      internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, EFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool? isFullPath)
+      {
+         if (Utils.IsNullOrWhiteSpace(path))
+            throw new ArgumentNullException("path");
+
+         PrivilegeEnabler privilegeEnabler = null;
+         try
+         {
+            if (fileSecurity != null)
+               fileSystemRights |= (FileSystemRights)0x1000000;
+
+            // AccessSystemSecurity = 0x1000000    AccessSystemAcl access type.
+            // MaximumAllowed       = 0x2000000    MaximumAllowed access type.            
+            if ((fileSystemRights & (FileSystemRights)0x1000000) != 0 ||
+                (fileSystemRights & (FileSystemRights)0x2000000) != 0)
+               privilegeEnabler = new PrivilegeEnabler(Privilege.Security);
+
+
+            using (Security.NativeMethods.SecurityAttributes securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
+            {
+               // When isFile == null, we're working with a device.
+               // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
+               // the path string should be the following form: "\\.\X:"
+               // Do not use a trailing backslash (\), which indicates the root.
+
+               string pathLp = isFullPath == null
+                  ? path
+                  : (bool)isFullPath
+                     ? Path.GetLongPathInternal(path, false, false, false, (isFile == null || (bool)isFile))
+                     : Path.GetFullPathInternal(transaction, path, true, false, false, (isFile == null || (bool)isFile));
+
+               SafeFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
+
+                  // CreateFile() / CreateFileTransacted()
+                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+                  // 2013-01-13: MSDN confirms LongPath usage.
+
+                  ? NativeMethods.CreateFile(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero)
+                  : NativeMethods.CreateFileTransacted(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero, transaction.SafeHandle, IntPtr.Zero, IntPtr.Zero);
+
+               int lastError = Marshal.GetLastWin32Error();
+               switch ((uint)lastError)
+               {
+                  case Win32Errors.ERROR_PATH_NOT_FOUND:
+                     if (pathLp.Equals(Path.GetPathRoot(pathLp), StringComparison.OrdinalIgnoreCase))
+                        lastError = 5;
+                     break;
+
+                  case Win32Errors.ERROR_FILE_NOT_FOUND:
+                     lastError = (int)((isFile == null || (bool)!isFile)
+                        ? Win32Errors.ERROR_PATH_NOT_FOUND
+                        : Win32Errors.ERROR_FILE_NOT_FOUND);
+                     break;
+               }
+
+               if (handle.IsInvalid)
+               {
+                  handle.Close();
+                  NativeError.ThrowException(lastError, pathLp);
+               }
+
+               return handle;
+            }
+         }
+         finally
+         {
+            if (privilegeEnabler != null)
+               privilegeEnabler.Dispose();
+         }
       }
 
       #endregion // CreateFileInternal
@@ -5187,19 +5189,23 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
-      /// /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="fileName"/> and <paramref name="existingFileName"/> are already a full path and will be used as is.</param>
+      /// /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      internal static void CreateHardlinkInternal(KernelTransaction transaction, string fileName, string existingFileName, bool isFullPath)
+      internal static void CreateHardlinkInternal(KernelTransaction transaction, string fileName, string existingFileName, bool? isFullPath)
       {
-         string fileNameLp = isFullPath
-            ? Path.GetLongPathInternal(fileName, false, false, false, true)
-            : Path.GetFullPathInternal(transaction, fileName, true, false, false, true);
+         string fileNameLp = isFullPath == null
+            ? fileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(fileName, false, false, false, true)
+               : Path.GetFullPathInternal(transaction, fileName, true, false, false, true);
 
-         string existingFileNameLp = isFullPath
-            ? Path.GetLongPathInternal(existingFileName, false, false, false, true)
-            : Path.GetFullPathInternal(transaction, existingFileName, true, false, false, true);
+         string existingFileNameLp = isFullPath == null
+            ? existingFileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(existingFileName, false, false, false, true)
+               : Path.GetFullPathInternal(transaction, existingFileName, true, false, false, true);
 
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -5234,18 +5240,22 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void CreateSymbolicLinkInternal(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool isFullPath)
+      internal static void CreateSymbolicLinkInternal(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool? isFullPath)
       {
-         string symlinkFileNameLp = isFullPath
-            ? Path.GetLongPathInternal(symlinkFileName, false, false, false, true)
-            : Path.GetFullPathInternal(transaction, symlinkFileName, true, false, false, true);
+         string symlinkFileNameLp = isFullPath == null
+            ? symlinkFileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(symlinkFileName, false, false, false, true)
+               : Path.GetFullPathInternal(transaction, symlinkFileName, true, false, false, true);
 
-         string targetFileNameLp = isFullPath
-            ? Path.GetLongPathInternal(targetFileName, false, false, false, true)
-            : Path.GetFullPathInternal(transaction, targetFileName, true, false, false, true);
+         string targetFileNameLp = isFullPath == null
+            ? targetFileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(targetFileName, false, false, false, true)
+               : Path.GetFullPathInternal(transaction, targetFileName, true, false, false, true);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -5267,11 +5277,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:StreamWriter"/> that writes to the specified file using <see cref="T:NativeMethods.DefaultFileBufferSize"/> encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static StreamWriter CreateTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      internal static StreamWriter CreateTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          return new StreamWriter(CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, EFileAttributes.SequentialScan, null, FileMode.Create, FileAccess.Write, FileShare.Read, isFullPath), encoding);
       }
@@ -5281,29 +5291,28 @@ namespace Alphaleonis.Win32.Filesystem
       #region DeleteFileInternal
 
       /// <summary>[AlphaFS] Unified method DeleteFileInternal() to delete a Non-/Transacted file.</summary>
-      /// <param name="fileSystemEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fileSystemEntryInfo"/> or <paramref name="path"/>, not both.</param>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file to be deleted. Use either <paramref name="path"/> or <paramref name="fileSystemEntryInfo"/>, not both.</param>
+      /// <param name="path">The name of the file to be deleted.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="T:FileAttributes"/> of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void DeleteFileInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool ignoreReadOnly, bool isFullPath)
+      internal static void DeleteFileInternal(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
       {
-         if (fileSystemEntryInfo == null && Utils.IsNullOrWhiteSpace(path))
+         if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = fileSystemEntryInfo == null && !isFullPath
-            ? Path.GetFullPathInternal(transaction, path, true, false, false, true)
-            : fileSystemEntryInfo != null
-               ? fileSystemEntryInfo.LongFullPath
-               : Path.GetLongPathInternal(path, false, false, false, true);
+         string pathLp = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, true)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true);
          
          // Remove file read-only attribute, if applicable.
          // If the file is read-only, the function DeleteFile() can fail with ERROR_ACCESS_DENIED.
          if (ignoreReadOnly)
-            SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, true);
+            SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, null);
 
          // If the path points to a symbolic link, the symbolic link is deleted, not the target.
          
@@ -5332,19 +5341,23 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Unified method EncryptDecryptFileInternal() to decrypt/encrypt a file or directory so that only the account used to encrypt the file can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
       /// <param name="encrypt"><c>true</c> encrypt, <c>false</c> decrypt.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void EncryptDecryptDirectoryInternal(string path, bool encrypt, bool isFullPath)
+      internal static void EncryptDecryptDirectoryInternal(string path, bool encrypt, bool? isFullPath)
       {
-         string pathLp = isFullPath ? path : Path.GetFullPathInternal(null, path, true, false, false, false);
+         string pathLp = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(null, path, true, false, false, false);
 
          // Process folders and files.
-         foreach (string fso in EnumerateFileSystemEntryInfoInternal<string>(null, pathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, true, false, true))
-            EncryptDecryptFileInternal(fso, encrypt, true);
+         foreach (string fso in EnumerateFileSystemEntryInfoInternal<string>(null, pathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, true, false, null))
+            EncryptDecryptFileInternal(fso, encrypt, null);
 
          // Process the root folder, the given path.
-         EncryptDecryptFileInternal(pathLp, encrypt, true);
+         EncryptDecryptFileInternal(pathLp, encrypt, null);
       }
 
       #endregion // EncryptDecryptDirectoryInternal
@@ -5354,12 +5367,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Unified method EncryptDecryptFileInternal() to decrypt/encrypt a file or directory so that only the account used to encrypt the file can decrypt it.</summary>
       /// <param name="path">A path that describes a file to encrypt.</param>
       /// <param name="encrypt"><c>true</c> encrypt, <c>false</c> decrypt.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void EncryptDecryptFileInternal(string path, bool encrypt, bool isFullPath)
+      internal static void EncryptDecryptFileInternal(string path, bool encrypt, bool? isFullPath)
       {
-         string pathLp = isFullPath ? path : Path.GetFullPathInternal(null, path, true, false, false, true);
+         string pathLp = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, true)
+               : Path.GetFullPathInternal(null, path, true, false, false, true);
 
          // EncryptFile() / DecryptFile()
          // In the ANSI version of this function, the name is limited to 248 characters.
@@ -5393,16 +5410,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of <see cref="T:String"/> of all the hard links to the specified <paramref name="path"/></returns>
-      internal static IEnumerable<string> EnumerateHardlinksInternal(KernelTransaction transaction, string path, bool isFullPath)
+      internal static IEnumerable<string> EnumerateHardlinksInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         string pathLp = isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, true)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, true);
+         string pathLp = isFullPath == null
+            ? path
+            : (bool)isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, true)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
          // Default buffer length, will be extended if needed, although this should not happen.
          uint length = NativeMethods.MaxPathUnicode;
@@ -5493,14 +5512,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="asLongPath"><c>true</c> returns the full path with long path prefix.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>
       /// If <paramref name="getAsString"/> is <c>null</c> an enumerable <see cref="T:FileSystemEntryInfo"/> collection that match <paramref name="searchPattern"/> and <paramref name="searchOption"/>.
       /// If <paramref name="getAsString"/> is <c>true</c> an enumerable <see cref="T:string"/> collection of the full pathnames that match searchPattern and searchOption.
       /// If <paramref name="getAsString"/> is <c>false</c>, an enumerable <see cref="T:FileSystemInfo"/> (<see cref="T:DirectoryInfo"/> / <see cref="T:FileInfo"/>) collection that match <paramref name="searchPattern"/> and <paramref name="searchOption"/>.
       /// </returns>
       [SecurityCritical]
-      internal static IEnumerable<T> EnumerateFileSystemEntryInfoInternal<T>(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool? getFolders, bool? getAsString, bool asLongPath, bool continueOnException, bool isFullPath)
+      internal static IEnumerable<T> EnumerateFileSystemEntryInfoInternal<T>(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool? getFolders, bool? getAsString, bool asLongPath, bool continueOnException, bool? isFullPath)
       {
          foreach (FileSystemEntryInfo fsei in new FindFileSystemEntryInfo
          {
@@ -5575,130 +5594,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // EnumerateFileSystemEntryInfoInternal
 
-      #region ExistsInternal
-
-      /// <summary>[AlphaFS] Unified method ExistsInternal() to determine whether the given path refers to an existing file or directory on disk.</summary>
-      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to test.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <remarks>Note that this files may contain wildcards, such as '*'</remarks>
-      /// <remarks>Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.</remarks>
-      /// <remarks>Trailing spaces are removed from the path parameter before determining if the file exists.</remarks>
-      /// <remarks>Return value is <c>true</c> if the caller has the required permissions and path contains the name of an existing file; <c>false</c> otherwise.</remarks>
-      /// <remarks>This method also returns <c>false</c> if path is a <c>null</c> reference, an invalid path, or a zero-length string.</remarks>
-      /// <remarks>If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method returns <c>false</c> regardless of the existence of path.</remarks>
-      [SecurityCritical]
-      internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, bool isFullPath)
-      {
-         string pathLp = isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, true, false, false);
-
-         // MSDN: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
-         // MSDN: Trailing spaces are removed from the path parameter before determining if the file exists.
-
-         FileAttributes attrs = GetAttributesInternal(isFolder, transaction, pathLp, true, true, true);
-
-         return attrs != (FileAttributes)(-1) && (isFolder
-            ? (attrs & FileAttributes.Directory) == FileAttributes.Directory
-            : (attrs & FileAttributes.Directory) != FileAttributes.Directory);
-      }
-
-      #endregion ExistsInternal
-
-      #region GetAccessControlInternal
-
-      /// <summary>[AlphaFS] Unified method GetAccessControlInternal() to get/set an <see cref="T:ObjectSecurity"/> for a particular file or directory.</summary>
-      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
-      /// <param name="path">The path to a directory containing a <see cref="T:DirectorySecurity"/> object that describes the directory's or file's access control list (ACL) information.</param>
-      /// <param name="includeSections">One (or more) of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
-      /// <returns>An <see cref="T:ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the <paramref name="path"/> parameter. </returns>
-      /// <exception cref="NativeError.ThrowException()"/>
-      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SecurityCritical]
-      internal static T GetAccessControlInternal<T>(bool isFolder, string path, AccessControlSections includeSections, bool isFullPath)
-      {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
-
-         SecurityInformation securityInfo = 0;
-         PrivilegeEnabler privilegeEnabler = null;
-
-         if ((includeSections & AccessControlSections.Access) != 0)
-            securityInfo |= SecurityInformation.Dacl;
-
-         if ((includeSections & AccessControlSections.Group) != 0)
-            securityInfo |= SecurityInformation.Group;
-
-         if ((includeSections & AccessControlSections.Owner) != 0)
-            securityInfo |= SecurityInformation.Owner;
-
-         if ((includeSections & AccessControlSections.Audit) != 0)
-         {
-            // We need the SE_SECURITY_NAME privilege enabled to be able to get the
-            // SACL descriptor. So we enable it here for the remainder of this function.
-            privilegeEnabler = new PrivilegeEnabler(Privilege.Security);
-            securityInfo |= SecurityInformation.Sacl;
-         }
-
-         using (privilegeEnabler)
-         {
-            string pathLp = isFullPath ? path : Path.GetFullPathInternal(null, path, true, false, false, true);
-            uint sizeRequired = 1024;
-
-         startGetFileSecurity:
-
-            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle((int)sizeRequired))
-            {
-               // GetFileSecurity()
-               // Seems to perform better than GetNamedSecurityInfo() and doesn't require Administrator rights.
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-
-               if (!Security.NativeMethods.GetFileSecurity(pathLp, securityInfo, safeBuffer, (uint)safeBuffer.Capacity, out sizeRequired))
-               {
-                  int lastError = Marshal.GetLastWin32Error();
-                  switch ((uint)lastError)
-                  {
-                     case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-                        safeBuffer.Dispose();
-                        goto startGetFileSecurity;
-
-                     case Win32Errors.ERROR_FILE_NOT_FOUND:
-                     case Win32Errors.ERROR_PATH_NOT_FOUND:
-                        lastError = (int)(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
-                        break;
-                  }
-
-                  // If the function fails, the return value is zero.
-                  NativeError.ThrowException(lastError, path);
-               }
-
-               ObjectSecurity objectSecurity = (isFolder) ? (ObjectSecurity)new DirectorySecurity() : new FileSecurity();
-               objectSecurity.SetSecurityDescriptorBinaryForm(safeBuffer.ToByteArray(0, safeBuffer.Capacity));
-
-               return (T)(object)objectSecurity;
-            }
-         }
-      }
-
-      #endregion // GetAccessControlInternal
-
       #region EnumerateStreamsInternal
 
       /// <summary>[AlphaFS] Unified method EnumerateStreamsInternal() to enumerate <see cref="T:BackupStreamInfo"/> instances associated with the file.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file.</param>
       /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information.</param>
+      /// <param name="path">A path that describes a file.</param>
       /// <returns>An <see cref="T:IEnumerable{BackupStreamInfo}"/> collection of streams for the file specified by path.</returns>
-      /// <remarks>Either use <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
+      /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
       [SecurityCritical]
-      internal static IEnumerable<BackupStreamInfo> EnumerateStreamsInternal(KernelTransaction transaction, string path, SafeFileHandle handle)
+      internal static IEnumerable<BackupStreamInfo> EnumerateStreamsInternal(KernelTransaction transaction, SafeFileHandle handle, string path)
       {
          if (!Utils.IsNullOrWhiteSpace(path))
          {
@@ -5708,7 +5613,7 @@ namespace Alphaleonis.Win32.Filesystem
             // 2013-01-13: MSDN confirms LongPath usage.
 
             // To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.
-            handle = File.CreateFileInternal(true, transaction, path, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Read, FileShare.Read, false);
+            handle = CreateFileInternal(true, transaction, path, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Read, FileShare.Read, false);
          }
 
          if (!NativeMethods.IsValidHandle(handle, Marshal.GetLastWin32Error(), false))
@@ -5766,6 +5671,127 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // EnumerateStreamsInternal
 
+      #region ExistsInternal
+
+      /// <summary>[AlphaFS] Unified method ExistsInternal() to determine whether the given path refers to an existing file or directory on disk.</summary>
+      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to test.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
+      /// <remarks>Note that this files may contain wildcards, such as '*'</remarks>
+      /// <remarks>Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.</remarks>
+      /// <remarks>Trailing spaces are removed from the path parameter before determining if the file exists.</remarks>
+      /// <remarks>Return value is <c>true</c> if the caller has the required permissions and path contains the name of an existing file; <c>false</c> otherwise.</remarks>
+      /// <remarks>This method also returns <c>false</c> if path is a <c>null</c> reference, an invalid path, or a zero-length string.</remarks>
+      /// <remarks>If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method returns <c>false</c> regardless of the existence of path.</remarks>
+      [SecurityCritical]
+      internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
+      {
+         string pathLp = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+
+         // MSDN: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
+         // MSDN: Trailing spaces are removed from the path parameter before determining if the file exists.
+
+         FileAttributes attrs = GetAttributesInternal(isFolder, transaction, pathLp, true, true, null);
+
+         return attrs != (FileAttributes)(-1) && (isFolder
+            ? (attrs & FileAttributes.Directory) == FileAttributes.Directory
+            : (attrs & FileAttributes.Directory) != FileAttributes.Directory);
+      }
+
+      #endregion ExistsInternal
+
+      #region GetAccessControlInternal
+
+      /// <summary>[AlphaFS] Unified method GetAccessControlInternal() to get/set an <see cref="T:ObjectSecurity"/> for a particular file or directory.</summary>
+      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
+      /// <param name="path">The path to a directory containing a <see cref="T:DirectorySecurity"/> object that describes the directory's or file's access control list (ACL) information.</param>
+      /// <param name="includeSections">One (or more) of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>An <see cref="T:ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the <paramref name="path"/> parameter. </returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      [SecurityCritical]
+      internal static T GetAccessControlInternal<T>(bool isFolder, string path, AccessControlSections includeSections, bool? isFullPath)
+      {
+         if (Utils.IsNullOrWhiteSpace(path))
+            throw new ArgumentNullException("path");
+
+         SecurityInformation securityInfo = 0;
+         PrivilegeEnabler privilegeEnabler = null;
+
+         if ((includeSections & AccessControlSections.Access) != 0)
+            securityInfo |= SecurityInformation.Dacl;
+
+         if ((includeSections & AccessControlSections.Group) != 0)
+            securityInfo |= SecurityInformation.Group;
+
+         if ((includeSections & AccessControlSections.Owner) != 0)
+            securityInfo |= SecurityInformation.Owner;
+
+         if ((includeSections & AccessControlSections.Audit) != 0)
+         {
+            // We need the SE_SECURITY_NAME privilege enabled to be able to get the
+            // SACL descriptor. So we enable it here for the remainder of this function.
+            privilegeEnabler = new PrivilegeEnabler(Privilege.Security);
+            securityInfo |= SecurityInformation.Sacl;
+         }
+
+         using (privilegeEnabler)
+         {
+            string pathLp = isFullPath == null
+               ? path
+               : (bool) isFullPath
+                  ? Path.GetLongPathInternal(path, false, false, false, true)
+                  : Path.GetFullPathInternal(null, path, true, false, false, true);
+
+            uint sizeRequired = 1024;
+
+         startGetFileSecurity:
+
+            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle((int)sizeRequired))
+            {
+               // GetFileSecurity()
+               // Seems to perform better than GetNamedSecurityInfo() and doesn't require Administrator rights.
+               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+
+               if (!Security.NativeMethods.GetFileSecurity(pathLp, securityInfo, safeBuffer, (uint)safeBuffer.Capacity, out sizeRequired))
+               {
+                  int lastError = Marshal.GetLastWin32Error();
+                  switch ((uint)lastError)
+                  {
+                     case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
+                        safeBuffer.Dispose();
+                        goto startGetFileSecurity;
+
+                     case Win32Errors.ERROR_FILE_NOT_FOUND:
+                     case Win32Errors.ERROR_PATH_NOT_FOUND:
+                        lastError = (int)(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
+                        break;
+                  }
+
+                  // If the function fails, the return value is zero.
+                  NativeError.ThrowException(lastError, path);
+               }
+
+               ObjectSecurity objectSecurity = (isFolder) ? (ObjectSecurity)new DirectorySecurity() : new FileSecurity();
+               objectSecurity.SetSecurityDescriptorBinaryForm(safeBuffer.ToByteArray(0, safeBuffer.Capacity));
+
+               return (T)(object)objectSecurity;
+            }
+         }
+      }
+
+      #endregion // GetAccessControlInternal
+      
       #region GetAttributesInternal
 
       /// <summary>[AlphaFS] Gets the <see cref="T:FileAttributes"/> of the specified file or directory.</summary>
@@ -5774,15 +5800,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="fallBack"><c>true</c> fallback on function FindFirstFileXxx() in case function GetFileAttributesXxx() fails.</param>
       /// <param name="continueOnNotExist"><c>true</c> does not throw an Exception when the file system object does not exist.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileAttributes"/> of the specified file or directory.</returns>
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
       [SecurityCritical]
-      internal static FileAttributes GetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, bool fallBack, bool continueOnNotExist, bool isFullPath)
+      internal static FileAttributes GetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, bool fallBack, bool continueOnNotExist, bool? isFullPath)
       {
-         string pathLp = isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+         string pathLp = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
 
          // GetFileAttributes()
          // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -5809,7 +5837,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (fallBack)
             {
-               FileSystemEntryInfo fsei = GetFileSystemEntryInfoInternal(isFolder, transaction, pathLp, false, continueOnNotExist, true);
+               FileSystemEntryInfo fsei = GetFileSystemEntryInfoInternal(isFolder, transaction, pathLp, false, continueOnNotExist, null);
                lastError = Marshal.GetLastWin32Error(); // Might not be the latest Exception.
 
                if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && isFolder)
@@ -5836,15 +5864,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="fallBack"><c>true</c> fallback on function FindFirstFileXxx() in case function GetFileAttributesXxx() fails.</param>
       /// <param name="continueOnNotExist"><c>true</c> does not throw an Exception when the file system object does not exist.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileAttributes"/> of the specified file or directory.</returns>
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
       [SecurityCritical]
-      internal static NativeMethods.Win32FileAttributeData GetAttributesExInternal(bool isFolder, KernelTransaction transaction, string path, bool fallBack, bool continueOnNotExist, bool isFullPath)
+      internal static NativeMethods.Win32FileAttributeData GetAttributesExInternal(bool isFolder, KernelTransaction transaction, string path, bool fallBack, bool continueOnNotExist, bool? isFullPath)
       {
-         string pathLp = isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+         string pathLp = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
 
          NativeMethods.Win32FileAttributeData win32AttrData;
 
@@ -5877,7 +5907,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                if (fallBack)
                {
-                  FileSystemEntryInfo fsei = GetFileSystemEntryInfoInternal(isFolder, transaction, pathLp, false, continueOnNotExist, true);
+                  FileSystemEntryInfo fsei = GetFileSystemEntryInfoInternal(isFolder, transaction, pathLp, false, continueOnNotExist, null);
                   lastError = Marshal.GetLastWin32Error(); // Might not be the latest Exception.
 
                   if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && isFolder)
@@ -5913,18 +5943,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path"><para>The name of the file.</para></param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static long GetCompressedSizeInternal(KernelTransaction transaction, string path, bool isFullPath)
+      internal static long GetCompressedSizeInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+         string pathLp = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
 
          uint fileSizeHigh;
          uint fileSizeLow = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -5953,10 +5985,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain creation date and time information.</param>
       /// <param name="getUtc"><c>true</c> gets the Coordinated Universal Time (UTC), <c>false</c> gets the local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the creation date and time for the specified file or directory. Depending on <paramref name="getUtc"/> this value is expressed in UTC- or local time.</returns>
       [SecurityCritical]
-      internal static DateTime GetCreationTimeInternal(bool isFolder, KernelTransaction transaction, string path, bool getUtc, bool isFullPath)
+      internal static DateTime GetCreationTimeInternal(bool isFolder, KernelTransaction transaction, string path, bool getUtc, bool? isFullPath)
       {
          return (getUtc)
             ? DateTime.FromFileTimeUtc(GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).CreationTime)
@@ -5969,17 +6001,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Unified method GetEncryptionStatusInternal() to retrieve the encryption status of the specified file.</summary>
       /// <param name="path">The name of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
       [SecurityCritical]
-      internal static FileEncryptionStatus GetEncryptionStatusInternal(string path, bool isFullPath)
+      internal static FileEncryptionStatus GetEncryptionStatusInternal(string path, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(null, path, true, false, false, false);
+         string pathLp = isFullPath == null
+            ? path
+            : (bool)isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(null, path, true, false, false, false);
 
          FileEncryptionStatus status;
 
@@ -6004,11 +6038,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="fallback"><c>true</c> enable fallback on function GetFileAttributesXxx() when function FindFirstFileXxx() fails. <c>false</c> disable fallback.</param>
       /// <param name="continueOnException">If <c>null</c>, function GetFileAttributesXxx() will be skipped in case function FindFirstFileXxx() fails. <c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the file or directory, or <c>null</c> on Exception when <paramref name="continueOnException"/> is <c>true</c>.</returns>
       /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
-      internal static FileSystemEntryInfo GetFileSystemEntryInfoInternal(bool isFolder, KernelTransaction transaction, string path, bool fallback, bool continueOnException, bool isFullPath)
+      internal static FileSystemEntryInfo GetFileSystemEntryInfoInternal(bool isFolder, KernelTransaction transaction, string path, bool fallback, bool continueOnException, bool? isFullPath)
       {
          return new FindFileSystemEntryInfo
          {
@@ -6031,10 +6065,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain access date and time information.</param>
       /// <param name="getUtc"><c>true</c> gets the Coordinated Universal Time (UTC), <c>false</c> gets the local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the date and time that the specified file or directory was last accessed. Depending on <paramref name="getUtc"/> this value is expressed in UTC- or local time.</returns>
       [SecurityCritical]
-      internal static DateTime GetLastAccessTimeInternal(bool isFolder, KernelTransaction transaction, string path, bool getUtc, bool isFullPath)
+      internal static DateTime GetLastAccessTimeInternal(bool isFolder, KernelTransaction transaction, string path, bool getUtc, bool? isFullPath)
       {
          return (getUtc)
             ? DateTime.FromFileTimeUtc(GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).LastAccessTime)
@@ -6050,10 +6084,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain write date and time information.</param>
       /// <param name="getUtc"><c>true</c> gets the Coordinated Universal Time (UTC), <c>false</c> gets the local time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the date and time that the specified file or directory was last written to. Depending on <paramref name="getUtc"/> this value is expressed in UTC- or local time.</returns>
       [SecurityCritical]
-      internal static DateTime GetLastWriteTimeInternal(bool isFolder, KernelTransaction transaction, string path, bool getUtc, bool isFullPath)
+      internal static DateTime GetLastWriteTimeInternal(bool isFolder, KernelTransaction transaction, string path, bool getUtc, bool? isFullPath)
       {
          return (getUtc)
             ? DateTime.FromFileTimeUtc(GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).LastWriteTime)
@@ -6067,11 +6101,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Unified method GetLinkTargetInfoInternal() to get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the reparse point.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An instance of <see cref="T:LinkTargetInfo"/> or <see cref="T:SymbolicLinkTargetInfo"/> containing information about the symbolic link or mount point pointed to by <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoInternal(KernelTransaction transaction, string path, bool isFullPath)
+      internal static LinkTargetInfo GetLinkTargetInfoInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
          using (SafeFileHandle handle = CreateFileInternal(true, transaction, path, EFileAttributes.OpenReparsePoint | EFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, isFullPath))
             return Device.GetLinkTargetInfoInternal(handle);
@@ -6085,11 +6119,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="handle">The <see cref="T:SafeFileHandle"/> to the file.</param>
       /// <param name="path">The path to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static long GetSizeInternal(KernelTransaction transaction, SafeFileHandle handle, string path, bool isFullPath)
+      internal static long GetSizeInternal(KernelTransaction transaction, SafeFileHandle handle, string path, bool? isFullPath)
       {
          bool ownsHandle = handle != null;
          if (!ownsHandle)
@@ -6097,11 +6131,13 @@ namespace Alphaleonis.Win32.Filesystem
             if (Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
 
-            string pathLp = isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+            string pathLp = isFullPath == null
+               ? path
+               : (bool)isFullPath
+                  ? Path.GetLongPathInternal(path, false, false, false, false)
+                  : Path.GetFullPathInternal(transaction, path, true, false, false, false);
 
-            handle = CreateFileInternal(true, transaction, pathLp, EFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true);
+            handle = CreateFileInternal(true, transaction, pathLp, EFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, null);
          }
          else
             NativeMethods.IsValidHandle(handle);
@@ -6134,11 +6170,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="access">A <see cref="T:FileAccess"/> value that specifies the operations that can be performed on the file.</param>
       /// <param name="share">A <see cref="T:FileShare"/> value specifying the type of access other threads have to the file.</param>
       /// <param name="attributes">Advanced <see cref="T:EFileAttributes"/> options for this file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An <see cref="T:FileStream"/> instance on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, EFileAttributes attributes, bool isFullPath)
+      internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, EFileAttributes attributes, bool? isFullPath)
       {
          SafeFileHandle handle = CreateFileInternal(true, transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights) access, share, isFullPath);
 
@@ -6154,10 +6190,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Unified method ReadAllBytesInternal() to open a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      internal static byte[] ReadAllBytesInternal(KernelTransaction transaction, string path, bool isFullPath)
+      internal static byte[] ReadAllBytesInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
          byte[] buffer;
 
@@ -6191,11 +6227,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An IEnumerable string containing all lines of the file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static IEnumerable<string> ReadAllLinesInternal(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      internal static IEnumerable<string> ReadAllLinesInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.SequentialScan, isFullPath), encoding))
          {
@@ -6213,11 +6249,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All lines of the file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static string ReadAllTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      internal static string ReadAllTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.SequentialScan, isFullPath), encoding))
             return sr.ReadToEnd();
@@ -6231,11 +6267,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to read.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static IEnumerable<string> ReadLinesInternal(KernelTransaction transaction, string path, Encoding encoding, bool isFullPath)
+      internal static IEnumerable<string> ReadLinesInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
          using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.SequentialScan, isFullPath), encoding))
          {
@@ -6254,10 +6290,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destFileName">The name of the file being replaced.</param>
       /// <param name="destinationBackupPath">The name of the backup file.</param>
       /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the replacement file; <c>false</c> otherwise.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="sourceFileName"/>, <paramref name="destFileName"/> and <paramref name="destinationBackupPath"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destinationBackupPath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destinationBackupPath"/> are already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void ReplaceInternal(string sourceFileName, string destFileName, string destinationBackupPath, bool ignoreMetadataErrors, bool isFullPath)
+      internal static void ReplaceInternal(string sourceFileName, string destFileName, string destinationBackupPath, bool ignoreMetadataErrors, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(sourceFileName))
             throw new ArgumentNullException("sourceFileName");
@@ -6265,17 +6301,23 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(destFileName))
             throw new ArgumentNullException("destFileName");
 
-         string sourceFileNameLp = isFullPath
-            ? Path.GetLongPathInternal(sourceFileName, false, false, false, true)
-            : Path.GetFullPathInternal(null, sourceFileName, true, false, false, true);
+         string sourceFileNameLp = isFullPath == null
+            ? sourceFileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(sourceFileName, false, false, false, true)
+               : Path.GetFullPathInternal(null, sourceFileName, true, false, false, true);
 
-         string destFileNameLp = isFullPath
-            ? Path.GetLongPathInternal(destFileName, false, false, false, true)
-            : Path.GetFullPathInternal(null, destFileName, true, false, false, true);
+         string destFileNameLp = isFullPath == null
+            ? destFileName
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(destFileName, false, false, false, true)
+               : Path.GetFullPathInternal(null, destFileName, true, false, false, true);
 
-         string destinationBackupPathLp = isFullPath
-            ? Path.GetLongPathInternal(destinationBackupPath, false, false, false, true)
-            : Path.GetFullPathInternal(null, destinationBackupPath, true, false, false, true);
+         string destinationBackupPathLp = isFullPath == null
+            ? destinationBackupPath
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(destinationBackupPath, false, false, false, true)
+               : Path.GetFullPathInternal(null, destinationBackupPath, true, false, false, true);
 
          const int replacefileWriteThrough = 1;
          const int replacefileIgnoreMergeErrors = 2;
@@ -6301,15 +6343,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="handle">A handle to add or remove access control list (ACL) entries from. This parameter This parameter may be <c>null</c>.</param>
       /// <param name="objectSecurity">A <see cref="T:DirectorySecurity"/> or <see cref="T:FileSecurity"/> object that describes an ACL entry to apply to the file described by the <paramref name="path"/> parameter.</param>
       /// <param name="includeSections">One or more of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
-      /// <remarks>Either use <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, bool isFullPath)
+      internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, bool? isFullPath)
       {
          if (objectSecurity == null)
             throw new ArgumentNullException("objectSecurity");
-
 
          byte[] managedDescriptor = objectSecurity.GetSecurityDescriptorBinaryForm();
          using (SafeGlobalMemoryBufferHandle hDescriptor = new SafeGlobalMemoryBufferHandle(managedDescriptor.Length))
@@ -6386,7 +6427,11 @@ namespace Alphaleonis.Win32.Filesystem
                uint lastError;
                if (!Utils.IsNullOrWhiteSpace(path))
                {
-                  string pathLp = isFullPath ? path : Path.GetFullPathInternal(null, path, true, false, false, false);
+                  string pathLp = isFullPath == null
+                     ? path
+                     : (bool) isFullPath
+                        ? Path.GetLongPathInternal(path, false, false, false, false)
+                        : Path.GetFullPathInternal(null, path, true, false, false, false);
 
                   // SetNamedSecurityInfo()
                   // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -6422,15 +6467,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file or directory whose attributes are to be set.</param>
       /// <param name="fileAttributes">The attributes to set for the file or directory. Note that all other values override <see cref="T:FileAttributes.Normal"/>.</param>
       /// <param name="continueOnNotExist"><c>true</c> does not throw an Exception when the file system object does not exist.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, bool isFullPath)
+      internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = isFullPath ? path : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+         string pathLp = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -6464,10 +6513,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="T:System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void SetFsoDateTimeInternal(bool isFolder, KernelTransaction transaction, string path, DateTime? creationTimeUtc, DateTime? lastAccessTimeUtc, DateTime? lastWriteTimeUtc, bool isFullPath)
+      internal static void SetFsoDateTimeInternal(bool isFolder, KernelTransaction transaction, string path, DateTime? creationTimeUtc, DateTime? lastAccessTimeUtc, DateTime? lastWriteTimeUtc, bool? isFullPath)
       {
          using (SafeGlobalMemoryBufferHandle hCreationTime = SafeGlobalMemoryBufferHandle.CreateFromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle hLastAccessTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))
@@ -6486,12 +6535,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="source">The source path.</param>
       /// <param name="destination">The destination path.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="source"/> and <paramref name="destination"/> are already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="source"/> and <paramref name="destination"/> will be normalized and long path prefixed. <c>null</c> <paramref name="source"/> and <paramref name="destination"/> are already a full path with long path prefix, will be used as is.</param>
       /// <remarks>This method does not change last access time for the source file.</remarks>
       /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void TransferTimestampsInternal(bool isFolder, KernelTransaction transaction, string source, string destination, bool isFullPath)
+      internal static void TransferTimestampsInternal(bool isFolder, KernelTransaction transaction, string source, string destination, bool? isFullPath)
       {
          FileSystemEntryInfo fsei = GetFileSystemEntryInfoInternal(isFolder, transaction, source, true, false, isFullPath);
          SetFsoDateTimeInternal(isFolder, transaction, destination, DateTime.FromFileTimeUtc(fsei.Win32FindData.CreationTime.ToLong()), DateTime.FromFileTimeUtc(fsei.Win32FindData.LastAccessTime.ToLong()), DateTime.FromFileTimeUtc(fsei.Win32FindData.LastWriteTime.ToLong()), isFullPath);
@@ -6505,10 +6554,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="bytes">The bytes to write to the file.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "bytes")]
       [SecurityCritical]
-      internal static void WriteAllBytesInternal(KernelTransaction transaction, string path, byte[] bytes, bool isFullPath)
+      internal static void WriteAllBytesInternal(KernelTransaction transaction, string path, byte[] bytes, bool? isFullPath)
       {
          if (bytes == null)
             throw new ArgumentNullException("bytes");
@@ -6528,10 +6577,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
       /// <param name="isAppend"><c>true</c> for file Append, <c>false</c> for file Write.</param>
       /// <param name="addNewLine"><c>true</c> to a line terminator, <c>false</c> to ommit the line terminator.</param>
-      /// <param name="isFullPath"><c>true</c> it is assumed that <paramref name="path"/> is already a full path and will be used as is.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SecurityCritical]
-      internal static void WriteAppendAllLinesInternal(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool isAppend, bool addNewLine, bool isFullPath)
+      internal static void WriteAppendAllLinesInternal(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool isAppend, bool addNewLine, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");

@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32
                throw new NotSupportedException(FormatError(e.Message, readPath ?? writePath), e);
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
-               throw new DirectoryNotEmptyException(FormatError(e.Message, readPath ?? writePath), e);
+               throw new DirectoryNotEmptyException(FormatError(e.Message, writePath), e);
 
 
             case Win32Errors.ERROR_BAD_DEVICE:

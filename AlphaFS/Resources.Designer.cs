@@ -152,6 +152,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Directory is not empty: [{0}].
+        /// </summary>
+        internal static string DirectoryNotEmpty {
+            get {
+                return ResourceManager.GetString("DirectoryNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Directory not found.
         /// </summary>
         internal static string DirectoryNotFound {
