@@ -108,8 +108,8 @@ namespace Alphaleonis.Win32.Filesystem
          get { return _fullPath; }
          set
          {
-            _fullPath = Path.GetRegularPathInternal(value, false, false, false, false);
             LongFullPath = value;
+            _fullPath = Path.GetRegularPathInternal(LongFullPath, false, false, false, false);
          }
       }
 
@@ -185,8 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       private string _longFullPath;
 
-      /// <summary>The full path of the file system object.</summary>
-      /// <remarks>The path is always in Unicode (LongPath) format.</remarks>
+      /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
       public string LongFullPath
       {
          get { return _longFullPath; }

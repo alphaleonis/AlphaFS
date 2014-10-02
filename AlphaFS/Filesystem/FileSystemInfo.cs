@@ -417,12 +417,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
+      #region DisplayPath
+
+      /// <summary>Returns the path as a string.</summary>
+      protected internal string DisplayPath { get; set; }
+
+      #endregion // DisplayPath
+
       #region EntryInfo
 
       private FileSystemEntryInfo _systemInfo;
 
       /// <summary>[AlphaFS] Gets the instance of the <see cref="T:FileSystemEntryInfo"/> class.</summary>
-      public FileSystemEntryInfo EntryInfo
+      protected internal FileSystemEntryInfo EntryInfo
       {
          get
          {
@@ -432,10 +439,24 @@ namespace Alphaleonis.Win32.Filesystem
             return _systemInfo;
          }
 
-         internal set { _systemInfo = value; }
+         set { _systemInfo = value; }
       }
 
       #endregion // EntryInfo
+
+      #region IsDirectory
+
+      /// <summary>[AlphaFS] The initial "IsDirectory" indicator that was passed to the constructor.</summary>
+      protected internal bool IsDirectory { get; set; }
+
+      #endregion // IsDirectory
+
+      #region LongFullPath
+
+      /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
+      protected internal string LongFullPath { get; set; }
+
+      #endregion // LongFullPath
 
       #region Transaction
 
@@ -443,7 +464,7 @@ namespace Alphaleonis.Win32.Filesystem
       private KernelTransaction _transaction;
 
       /// <summary>[AlphaFS] Represents the KernelTransaction that was passed to the constructor.</summary>
-      protected KernelTransaction Transaction
+      protected internal KernelTransaction Transaction
       {
          get { return _transaction; }
          set { _transaction = value; }
@@ -469,23 +490,7 @@ namespace Alphaleonis.Win32.Filesystem
       protected string OriginalPath;
 
       #endregion // .NET
-
-      #region AlphaFS
-
-      /// <summary>Returns the path as a string.</summary>
-      internal string DisplayPath;
-
-      /// <summary>[AlphaFS] The initial "IsDirectory" indicator that was passed to the constructor.</summary>
-      [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-      protected bool IsDirectory;
-
-      /// <summary>Represents the fully qualified path with  of the file or directory.</summary>
-      /// <remarks>The path is always in Unicode (LongPath) format.</remarks>
-      [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-      protected string LongFullPath;
-
-      #endregion // AlphaFS
-
+       
       #endregion // Fields
    }
 }

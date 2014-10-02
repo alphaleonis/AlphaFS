@@ -1336,7 +1336,7 @@ namespace Alphaleonis.Win32.Filesystem
                   : NativeMethods.GetLongPathNameTransacted(pathLp, buffer, (uint) buffer.Capacity, transaction.SafeHandle);
 
             if (actualLength == Win32Errors.ERROR_SUCCESS)
-               NativeError.ThrowException(path);
+               NativeError.ThrowException(pathLp);
          }
 
          return GetRegularPathInternal(buffer.ToString(), false, false, false, false); 
@@ -1481,11 +1481,11 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
          
-         Network.NativeMethods.RemoteNameInfo UNC = Host.GetRemoteNameInfoInternal(drive, true);
+         Network.NativeMethods.RemoteNameInfo unc = Host.GetRemoteNameInfoInternal(drive, true);
 
-         if (!Utils.IsNullOrWhiteSpace(UNC.ConnectionName))
+         if (!Utils.IsNullOrWhiteSpace(unc.ConnectionName))
             // Only leave trailing backslash if "localPath" also ends with backslash.
-            return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) ? AddDirectorySeparator(UNC.ConnectionName, false) : RemoveDirectorySeparator(UNC.ConnectionName, false);
+            return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) ? AddDirectorySeparator(unc.ConnectionName, false) : RemoveDirectorySeparator(unc.ConnectionName, false);
 
          // Split: localDrive[0] = "C", localDrive[1] = "\Windows"
          string[] localDrive = localPath.Split(VolumeSeparatorChar);
@@ -1517,7 +1517,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>PathSeparator = ';' A platform-specific separator character used to separate path strings in environment variables.</summary>
       public static readonly char PathSeparator = System.IO.Path.PathSeparator;
-
+      
       /// <summary>VolumeSeparatorChar = ':' Provides a platform-specific Volume Separator character.</summary>
       public static readonly char VolumeSeparatorChar = System.IO.Path.VolumeSeparatorChar;
 
@@ -1547,7 +1547,7 @@ namespace Alphaleonis.Win32.Filesystem
       public const char StringTerminatorChar = '\0';
 
       /// <summary>[AlphaFS] VolumeSeparatorChar = ':' Provides a platform-specific Volume Separator character.</summary>
-      public const string VolumeSeparator = ":";
+      public static readonly string VolumeSeparator = VolumeSeparatorChar.ToString(CultureInfo.CurrentCulture);
 
       /// <summary>[AlphaFS] WildcardStarMatchAll = "*" Provides a match-all-items string.</summary>
       public const string WildcardStarMatchAll = "*";

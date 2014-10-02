@@ -4133,8 +4133,8 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+            ? Path.GetLongPathInternal(path, false, false, false, false)
+            : Path.GetFullPathInternal(transaction, path, true, false, false, false);
 
          // Process directories and files.
          foreach (string fso in File.EnumerateFileSystemEntryInfoInternal<string>(transaction, pathLp, searchPattern, searchOption, null, true, true, continueOnException, null))
@@ -4185,14 +4185,14 @@ namespace Alphaleonis.Win32.Filesystem
          string sourcePathLp = isFullPath == null
             ? sourcePath
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(sourcePath, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, sourcePath, true, false, false, false);
+            ? Path.GetLongPathInternal(sourcePath, false, false, false, false)
+            : Path.GetFullPathInternal(transaction, sourcePath, true, false, false, false);
 
          string destinationPathLp = isFullPath == null
             ? destinationPath
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, destinationPath, true, true, false, false);
+            ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
+            : Path.GetFullPathInternal(transaction, destinationPath, true, true, false, false);
 
          //if (isSameVolume == null)
             //isSameVolume = Volume.IsSameVolume(sourcePathLp, destinationPathLp);
@@ -4291,16 +4291,16 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, true, false, true);
+            ? Path.GetLongPathInternal(path, false, false, false, false)
+            : Path.GetFullPathInternal(transaction, path, true, true, false, true);
 
          string templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
             ? null
             : isFullPath == null
                ? templatePath
                : (bool) isFullPath
-                  ? Path.GetLongPathInternal(templatePath, false, false, false, false)
-                  : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true);
+               ? Path.GetLongPathInternal(templatePath, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true);
 
          #region Construct Full Path
 
@@ -4596,8 +4596,8 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(null, path, true, false, false, false);
+            ? Path.GetLongPathInternal(path, false, false, false, false)
+            : Path.GetFullPathInternal(null, path, true, false, false, false);
 
          // EncryptionDisable()
          // In the ANSI version of this function, the name is limited to 248 characters.
@@ -4605,7 +4605,7 @@ namespace Alphaleonis.Win32.Filesystem
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
          if (!NativeMethods.EncryptionDisable(pathLp, !enable))
-            NativeError.ThrowException(path);
+            NativeError.ThrowException(pathLp);
       }
 
       #endregion // EnableDisableEncryptionInternal
@@ -4637,8 +4637,8 @@ namespace Alphaleonis.Win32.Filesystem
             string pathLp = isFullPath == null
                ? path
                : (bool) isFullPath
-                  ? Path.GetLongPathInternal(path, false, false, false, false)
-                  : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
 
             handle = File.CreateFileInternal(false, transaction, pathLp, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, null);
          }
@@ -4851,8 +4851,8 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+            ? Path.GetLongPathInternal(path, false, false, false, false)
+            : Path.GetFullPathInternal(transaction, path, true, false, false, false);
 
          foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, searchOption, null, null, false, continueOnException, null))
          {

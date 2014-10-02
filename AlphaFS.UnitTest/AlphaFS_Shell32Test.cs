@@ -152,7 +152,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("\nInput Path: [{0}]\n", path);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
 
          int cnt = 0;
          foreach (string file in Directory.EnumerateFiles(path))
@@ -196,7 +196,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("\nInput Path: [{0}]\n", path);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
 
          string collectStrings = string.Empty;
          int cnt = 0;

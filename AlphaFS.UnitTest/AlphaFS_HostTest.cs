@@ -41,6 +41,7 @@ namespace AlphaFS.UnitTest
 
       private readonly string LocalHost = Environment.MachineName;
       private readonly string LocalHostShare = Environment.SystemDirectory;
+      private readonly bool _testMyServer = Environment.UserName.Equals(@"jjangli", StringComparison.OrdinalIgnoreCase);
       private const string MyServer = "yomodo";
       private const string MyServerShare = @"\\" + MyServer + @"\video";
       private static Stopwatch _stopWatcher;
@@ -644,7 +645,7 @@ namespace AlphaFS.UnitTest
       public void EnumerateOpenConnections()
       {
          Console.WriteLine("Network.Host.EnumerateOpenConnections()");
-         Console.WriteLine("\nPlease see unit test: Class_Network_OpenConnectionInfo");
+         Console.WriteLine("\nPlease see unit test: Network_Class_OpenConnectionInfo");
       }
 
       #endregion // EnumerateOpenConnections
@@ -655,7 +656,7 @@ namespace AlphaFS.UnitTest
       public void EnumerateOpenResources()
       {
          Console.WriteLine("Network.Host.EnumerateOpenResources()");
-         Console.WriteLine("\nPlease see unit test: Class_Network_OpenResourceInfo()");
+         Console.WriteLine("\nPlease see unit test: Network_Class_OpenResourceInfo()");
       }
 
       #endregion // EnumerateOpenResources
@@ -666,7 +667,7 @@ namespace AlphaFS.UnitTest
       public void EnumerateShares()
       {
          Console.WriteLine("Network.Host.EnumerateShares()");
-         Console.WriteLine("\nPlease see unit test: Class_Network_ShareInfo()");
+         Console.WriteLine("\nPlease see unit test: Network_Class_ShareInfo()");
       }
 
       #endregion // EnumerateShares

@@ -45,6 +45,7 @@ namespace AlphaFS.UnitTest
 
       private readonly string LocalHost = Environment.MachineName;
       private readonly string LocalHostShare = Environment.SystemDirectory;
+      private readonly bool _testMyServer = Environment.UserName.Equals(@"jjangli", StringComparison.OrdinalIgnoreCase);
       private const string MyServer = "yomodo";
       private const string MyServerShare = @"\\" + MyServer + @"\video";
       private const string Local = @"LOCAL";

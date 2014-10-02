@@ -233,7 +233,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AsLongPath
 
-      /// <summary>Gets the path in Unicode format aka with a LongPath prefix.</summary>
+      /// <summary>Gets the path in Unicode (LongPath) format.</summary>
       public bool AsLongPath { get; set; }
 
       #endregion // AsLongPath

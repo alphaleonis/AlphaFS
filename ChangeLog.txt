@@ -2,7 +2,6 @@ Version 1.6
     * Numerous bugfixes and optimizations;
     * Mod: Added more Unit Tests;
     * Mod: The public key of AlphaFS.dll has changed. (Delay-signing is no longer used);
-    * Mod: Unicode path aka LongPaths:  \\?\...  will automatically be applied internally for all Win32 API functions that support it, no need to worry about this anymore.
 
     * Mod: Class Volume()/VolumeInfo();
 
@@ -65,6 +64,18 @@ Version 1.6
    * New: Added "Cached LazyLoading" to class: FileSystemInfo() improving performance for classes: DirectoryInfo() and FileInfo().
 
    * New: Added support to work with files/directories with a trailing dot or space.
+
+   * New: Added bool? isFullPath parameter to applicable methods of the File() and Directory() class.
+			isFullPath is false by default.
+
+			false (slow)   : GetFullPath() is called and a local or network Unicode (LongPath) prefix is applied.
+			true  (fast)   : Prefix + use as is, path is already a full path, a local or UNC network (LongPath) prefix is applied.
+			null  (fastest): Use as is, Full path with a local or network Unicode (LongPath) prefix.
+
+			Local "\\?\" or network "\\?\UNC" Unicode (LongPaths) are applied internally for all Win32 API functions that support it.
+			
+			The FileInfo() and DirectoryInfo() also benefit from isFullPath; AlphaFS adds an internal property: LongFullPath
+			which is always the full path of the file or directory in Unicode (LongPath) format.
 
    * New: Added support for building against .NET 4.0, 4.5, and 4.5.1 in addition to 3.5.
 

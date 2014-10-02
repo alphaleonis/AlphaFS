@@ -50,6 +50,7 @@ namespace AlphaFS.UnitTest
 
       private readonly string LocalHost = Environment.MachineName;
       private readonly string LocalHostShare = Environment.SystemDirectory;
+      private readonly bool _testMyServer = Environment.UserName.Equals(@"jjangli", StringComparison.OrdinalIgnoreCase);
       private const string MyServer = "yomodo";
       private const string MyServerShare = @"\\" + MyServer + @"\video";
       private const string Local = @"LOCAL";
@@ -605,6 +606,30 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpGetFileTime
+
+      #region DumpEnumerateFileSystemEntryInfos
+
+      private void DumpEnumerateFileSystemEntryInfos(bool isLocal)
+      {
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+
+         int cntAlphaFs = 0;
+         string searchPattern = Path.WildcardStarMatchAll;
+         SearchOption searchOption = SearchOption.TopDirectoryOnly;
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("\tEnumerate directories and files, using \"SearchOption.{0}\"\n", searchOption);
+
+         StopWatcher(true);
+         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(path, searchPattern, searchOption, true))
+            Console.WriteLine("\t#{0:000}\t{1}\t[{2}]", ++cntAlphaFs, fsei.IsDirectory ? "[Directory]" : "[File]\t", fsei.FullPath);
+
+         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Assert.IsTrue(cntAlphaFs > 0, "Nothing was enumerated.");
+      }
+
+      #endregion // DumpEnumerateFileSystemEntryInfos
 
       #region DumpEnumerateHardlinks
 
@@ -2521,6 +2546,19 @@ namespace AlphaFS.UnitTest
 
       #endregion // Compress/Decompress
 
+      #region EnumerateFileSystemEntryInfos
+
+      [TestMethod]
+      public void AlphaFS_EnumerateFileSystemEntryInfos()
+      {
+         Console.WriteLine("File.EnumerateFileSystemEntryInfos()");
+
+         DumpEnumerateFileSystemEntryInfos(true);
+         DumpEnumerateFileSystemEntryInfos(false);
+      }
+
+      #endregion // EnumerateFileSystemEntryInfos
+
       #region EnumerateHardlinks
 
       [TestMethod]
@@ -2538,7 +2576,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_EnumerateStreams()
       {
          Console.WriteLine("File.EnumerateStreams()");
-         Console.WriteLine("\nPlease see unit test: Class_Filesystem_AlternateDataStreamInfo()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
       }
 
       #endregion // EnumerateStreams
@@ -2572,7 +2610,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_GetFileInformationByHandle()
       {
          Console.WriteLine("File.GetFileInformationByHandle()");
-         Console.WriteLine("\nPlease see unit test: Class_Filesystem_ByHandleFileInformation()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_ByHandleFileInformation()");
       }
 
       #endregion // GetFileInformationByHandle

@@ -54,6 +54,7 @@ namespace AlphaFS.UnitTest
 
       private readonly string LocalHost = Environment.MachineName;
       private readonly string LocalHostShare = Environment.SystemDirectory;
+      private readonly bool _testMyServer = Environment.UserName.Equals(@"jjangli", StringComparison.OrdinalIgnoreCase);
       private const string MyServer = "yomodo";
       private const string MyServerShare = @"\\" + MyServer + @"\video";
       private const string Local = @"LOCAL";
@@ -917,7 +918,6 @@ namespace AlphaFS.UnitTest
       private void DumpEnumerateFileSystemEntries(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tmp = Path.Combine(Path.GetTempPath(), "Directory.EnumerateFileSystemEntries-" + Path.GetRandomFileName());
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
          int cntAlphaFs = 0;

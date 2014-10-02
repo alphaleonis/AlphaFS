@@ -23,6 +23,7 @@ using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -32,7 +33,6 @@ using System.IO;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
-using Microsoft.Win32.SafeHandles;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
@@ -53,6 +53,7 @@ namespace AlphaFS.UnitTest
 
       private readonly string LocalHost = Environment.MachineName;
       private readonly string LocalHostShare = Environment.SystemDirectory;
+      private readonly bool _testMyServer = Environment.UserName.Equals(@"jjangli", StringComparison.OrdinalIgnoreCase);
       private const string MyServer = "yomodo";
       private const string MyServerShare = @"\\" + MyServer + @"\video";
       private const string Local = @"LOCAL";
@@ -423,7 +424,7 @@ namespace AlphaFS.UnitTest
 
             #region DeviceGuid.Disk
 
-            Console.Write("\nEnumerating volumes from host: [{0}]\n", tempPath);
+            Console.Write("\nEnumerating disks from host: [{0}]\n", tempPath);
             cnt = 0;
             StopWatcher(true);
             foreach (DeviceInfo device in Device.EnumerateDevices(tempPath, DeviceGuid.Disk))
@@ -1169,7 +1170,7 @@ namespace AlphaFS.UnitTest
          DumpClassDeviceInfo(LocalHost);
          //DumpClassDeviceInfo(MyServer);
       }
-      
+
       #endregion // Class_Filesystem_Shell32Info
 
       #region Class_Filesystem_DirectoryInfo
@@ -1264,7 +1265,7 @@ namespace AlphaFS.UnitTest
       #endregion // Class_Filesystem_VolumeInfo
 
       #endregion Filesystem
-      
+
       #region Network
 
       #region Class_Network_DfsInfo
@@ -1309,7 +1310,7 @@ namespace AlphaFS.UnitTest
       public void Class_Network_OpenResourceInfo()
       {
          Console.WriteLine("Class Network.OpenResourceInfo()");
-         
+
          DumpClassOpenResourceInfo(LocalHost, LocalHostShare);
          //DumpClassOpenResourceInfo(MyServer, MyServerShare);
       }

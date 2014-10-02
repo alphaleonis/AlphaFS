@@ -520,14 +520,14 @@ namespace Alphaleonis.Win32.Filesystem
          string destinationFileNameLp = isFullPath == null
             ? destinationFileName
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
-               : Path.GetFullPathInternal(Transaction, destinationFileName, true, false, false, false);
+            ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
+            : Path.GetFullPathInternal(Transaction, destinationFileName, true, false, false, false);
 
          string destinationBackupFileNameLp = isFullPath == null
             ? destinationBackupFileName
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
-               : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, false, false, false);
+            ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
+            : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, false, false, false);
 
          File.ReplaceInternal(LongFullPath, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, null);
 
@@ -655,8 +655,8 @@ namespace Alphaleonis.Win32.Filesystem
          string destFileNameLp = isFullPath == null
             ? destFileName
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-               : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, false);
+            ? Path.GetLongPathInternal(destFileName, false, false, false, false)
+            : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, false);
 
          File.CopyMoveInternal(isMove, Transaction, LongFullPath, destFileNameLp, false, copyOptions, moveOptions, copyProgress, userProgressData, null);
 
@@ -740,7 +740,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Length
 
-      // The AlphaFS implementation replaces the .NET implementation.
+      private long _length = -1;
+
+      /// <summary>Gets the size, in bytes, of the current file.</summary>
+      /// <returns>The size of the current file in bytes.</returns>
+      public long Length
+      {
+         get
+         {
+            if (_length == -1)
+               Refresh();
+
+            _length = Exists ? EntryInfo.FileSize : -1;
+
+            return _length;
+         }
+      }
 
       #endregion // Length
 
@@ -762,31 +777,6 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Name
 
       #endregion // .NET
-
-      #region AlphaFS
-      
-      #region Length
-
-      private long _length = -1;
-
-      /// <summary>[AlphaFS] Gets the size, in bytes, of the current file.</summary>
-      /// <returns>The size of the current file in bytes.</returns>
-      public long Length
-      {
-         get
-         {
-            if (_length == -1)
-               Refresh();
-
-            _length = Exists ? EntryInfo.FileSize : -1;
-
-            return _length;
-         }
-      }
-
-      #endregion // Length
-
-      #endregion // AlphaFS
 
       #endregion // Properties
    }
