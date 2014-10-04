@@ -881,6 +881,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
+      #region AddStream
+
+      /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to the directory.</summary>
+      /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
+      /// <param name="contents">The lines to add to the stream.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public void AddStream(string name, string[] contents)
+      {
+         AlternateDataStreamInfo.AddStreamInternal(true, Transaction, LongFullPath, name, contents, null);
+      }
+
+      #endregion // AddStream
+
       #region CopyTo
 
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
@@ -1151,33 +1165,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateStreams
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:BackupStreamInfo"/> instances, associated with the directory.</summary>
-      /// <returns>An enumerable <see cref="T:BackupStreamInfo"/> collection of streams for the directory or <c>null</c> on error.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the directory.</summary>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the directory.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public IEnumerable<BackupStreamInfo> EnumerateStreams()
+      public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return Directory.EnumerateStreamsInternal(Transaction, LongFullPath, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(true, Transaction, null, LongFullPath, null, null, null);
       }
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:BackupStreamInfo"/> instances, associated with the directory.</summary>
-      /// <param name="searchPattern">The path which has wildcard characters, for example, an asterisk (<see cref="T:Path.WildcardStarMatchAll"/>) or a question mark (<see cref="T:Path.WildcardQuestion"/>).</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <returns>An enumerable <see cref="T:BackupStreamInfo"/> collection of streams for the directory or <c>null</c> on error.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the directory.</summary>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the directory.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public IEnumerable<BackupStreamInfo> EnumerateStreams(string searchPattern, SearchOption searchOption)
+      public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
-         return Directory.EnumerateStreamsInternal(Transaction, LongFullPath, searchPattern, searchOption, false, null);
-      }
-
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:BackupStreamInfo"/> instances, associated with the directory.</summary>
-      /// <param name="searchPattern">The path which has wildcard characters, for example, an asterisk (<see cref="T:Path.WildcardStarMatchAll"/>) or a question mark (<see cref="T:Path.WildcardQuestion"/>).</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
-      /// <returns>An enumerable <see cref="T:BackupStreamInfo"/> collection of streams for the directory or <c>null</c> on error.</returns>
-      [SecurityCritical]
-      public IEnumerable<BackupStreamInfo> EnumerateStreams(string searchPattern, SearchOption searchOption, bool continueOnException)
-      {
-         return Directory.EnumerateStreamsInternal(Transaction, LongFullPath, searchPattern, searchOption, continueOnException, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(true, Transaction, null, LongFullPath, null, streamType, null);
       }
 
       #endregion // EnumerateStreams
@@ -1199,6 +1202,64 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // GetDisplayName
+
+      #region GetStreamSize
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
+      /// <returns>The number of bytes used by all data streams.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public long GetStreamSize()
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(true, Transaction, null, LongFullPath, null, null, null);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
+      /// <param name="name">The name of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by a named stream.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public long GetStreamSize(string name)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(true, Transaction, null, LongFullPath, name, StreamType.Data, null);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="T:StreamType"/> data streams (NTFS ADS).</summary>
+      /// <param name="type">The <see cref="T:StreamType"/> of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public long GetStreamSize(StreamType type)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(true, Transaction, null, LongFullPath, null, type, null);
+      }
+
+      #endregion GetStreamSize
+
+      #region RemoveStream
+
+      /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the directory.</summary>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public void RemoveStream()
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(true, Transaction, LongFullPath, null, null);
+      }
+
+      /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from the directory.</summary>
+      /// <param name="name">The name of the stream to remove.</param>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public void RemoveStream(string name)
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(true, Transaction, LongFullPath, name, null);
+      }
+
+      #endregion // RemoveStream
 
 
       #region Unified Internals
@@ -1255,8 +1316,8 @@ namespace Alphaleonis.Win32.Filesystem
          string destinationPathLp = isFullPath == null
             ? destinationPath
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
-               : Path.GetFullPathInternal(null, destinationPath, true, false, false, false);
+            ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
+            : Path.GetFullPathInternal(null, destinationPath, true, false, false, false);
 
          Directory.CopyMoveInternal(isMove, Transaction, LongFullPath, destinationPathLp, preserveSecurity, copyOptions, moveOptions, copyProgress, userProgressData, null, null);
 

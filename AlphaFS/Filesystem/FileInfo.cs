@@ -592,6 +592,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
+      #region AddStream
+
+      /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to the file.</summary>
+      /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
+      /// <param name="contents">The lines to add to the stream.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public void AddStream(string name, string[] contents)
+      {
+         AlternateDataStreamInfo.AddStreamInternal(false, Transaction, LongFullPath, name, contents, null);
+      }
+
+      #endregion // AddStream
+
       #region Compress
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
@@ -618,15 +632,83 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateStreams
 
-      /// <summary>[AlphaFS] Returns <see cref="T:AlternateDataStreamInfo"/> instances, associated with the file.</summary>
-      /// <returns>An enumerable <see cref="T:AlternateDataStreamInfo"/> collection of streams for the file or <c>null</c> on error.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file.</summary>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public IEnumerable<BackupStreamInfo> EnumerateStreams()
+      public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return File.EnumerateStreamsInternal(Transaction, null, LongFullPath);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullPath, null, null, null);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file.</summary>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
+      {
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullPath, null, streamType, null);
       }
 
       #endregion // EnumerateStreams
+
+      #region GetStreamSize
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
+      /// <returns>The number of bytes used by all data streams.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public long GetStreamSize()
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullPath, null, null, null);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
+      /// <param name="name">The name of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by a named stream.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public long GetStreamSize(string name)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullPath, name, StreamType.Data, null);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="T:StreamType"/> data streams (NTFS ADS).</summary>
+      /// <param name="type">The <see cref="T:StreamType"/> of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public long GetStreamSize(StreamType type)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullPath, null, type, null);
+      }
+
+      #endregion GetStreamSize
+
+      #region RemoveStream
+
+      /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the file.</summary>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public void RemoveStream()
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullPath, null, null);
+      }
+
+      /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from the file.</summary>
+      /// <param name="name">The name of the stream to remove.</param>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public void RemoveStream(string name)
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullPath, name, null);
+      }
+
+      #endregion // RemoveStream
 
 
       #region Unified Internals

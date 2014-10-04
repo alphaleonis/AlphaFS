@@ -318,6 +318,19 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
 
+      // Note: These unit tests are empty and are here to confirm AlphaFS implementation.
+
+      #region AddStream
+
+      [TestMethod]
+      public void AlphaFS_AddStream()
+      {
+         Console.WriteLine("FileInfo.AddStream()");
+         Console.WriteLine("\nPlease see unit tests from class: File().");
+      }
+
+      #endregion // AddStream
+
       #region Compress
 
       [TestMethod]
@@ -350,6 +363,28 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // EnumerateStreams
+
+      #region GetStreamSize
+
+      [TestMethod]
+      public void AlphaFS_GetStreamSize()
+      {
+         Console.WriteLine("FileInfo.GetStreamSize()");
+         Console.WriteLine("\nPlease see unit tests from class: File().");
+      }
+
+      #endregion // GetStreamSize
+
+      #region RemoveStream
+
+      [TestMethod]
+      public void AlphaFS_RemoveStream()
+      {
+         Console.WriteLine("FileInfo.RemoveStream()");
+         Console.WriteLine("\nPlease see unit tests from class: File().");
+      }
+
+      #endregion // RemoveStream
 
       #endregion // AlphaFS
    }

@@ -302,6 +302,17 @@ namespace AlphaFS.UnitTest
 
       // Note: These unit tests are empty and are here to confirm AlphaFS implementation.
 
+      #region AddStream
+
+      [TestMethod]
+      public void AlphaFS_AddStream()
+      {
+         Console.WriteLine("DirectoryInfo.AddStream()");
+         Console.WriteLine("\nPlease see unit tests from class: Directory().");
+      }
+
+      #endregion // AddStream
+
       #region CopyTo
 
       [TestMethod]
@@ -444,6 +455,28 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // EnumerateStreams
+
+      #region GetStreamSize
+
+      [TestMethod]
+      public void AlphaFS_GetStreamSize()
+      {
+         Console.WriteLine("DirectoryInfo.GetStreamSize()");
+         Console.WriteLine("\nPlease see unit tests from class: Directory().");
+      }
+
+      #endregion // GetStreamSize
+
+      #region RemoveStream
+
+      [TestMethod]
+      public void AlphaFS_RemoveStream()
+      {
+         Console.WriteLine("DirectoryInfo.RemoveStream()");
+         Console.WriteLine("\nPlease see unit tests from class: Directory().");
+      }
+
+      #endregion // RemoveStream
 
       #endregion // AlphaFS
 

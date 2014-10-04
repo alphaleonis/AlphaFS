@@ -369,6 +369,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stream name should not contain a colon..
+        /// </summary>
+        internal static string StreamNameWithColon {
+            get {
+                return ResourceManager.GetString("StreamNameWithColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This stream does not support seeking..
         /// </summary>
         internal static string ThisStreamDoesNotSupportSeeking {

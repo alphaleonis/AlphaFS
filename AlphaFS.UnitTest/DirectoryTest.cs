@@ -2142,6 +2142,17 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
+      
+      #region AddStream
+
+      [TestMethod]
+      public void AlphaFS_AddStream()
+      {
+         Console.WriteLine("Directory.GetStreamSize()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
+      }
+
+      #endregion // AddStream
 
       #region Compress/Decompress
 
@@ -2432,6 +2443,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // EnumerateLogicalDrives
+      
+      #region EnumerateStreams
+
+      [TestMethod]
+      public void AlphaFS_EnumerateStreams()
+      {
+         Console.WriteLine("Directory.EnumerateStreams()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
+      }
+
+      #endregion // EnumerateStreams
 
       #region GetProperties
 
@@ -2445,6 +2467,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetProperties
+
+      #region GetStreamSize
+
+      [TestMethod]
+      public void AlphaFS_GetStreamSize()
+      {
+         Console.WriteLine("Directory.GetStreamSize()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
+      }
+
+      #endregion // GetStreamSize
 
       #region HasInheritedPermissions
 
@@ -2478,6 +2511,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // HasInheritedPermissions
+
+      #region RemoveStream
+
+      [TestMethod]
+      public void AlphaFS_RemoveStream()
+      {
+         Console.WriteLine("Directory.RemoveStream()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
+      }
+
+      #endregion // RemoveStream
 
       #region SetTimestamps
 

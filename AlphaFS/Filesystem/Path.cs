@@ -1543,6 +1543,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] ParentDirectoryPrefix = ".." Provides a parent directory string.</summary>
       public const string ParentDirectoryPrefix = "..";
 
+      /// <summary>[AlphaFS] StreamSeparator = ':' Provides a platform-specific Stream-name character.</summary>
+      public static readonly char StreamSeparatorChar = System.IO.Path.VolumeSeparatorChar;
+
+      /// <summary>[AlphaFS] StreamSeparator = ':' Provides a platform-specific Stream-name character.</summary>
+      public static readonly string StreamSeparator = StreamSeparatorChar.ToString(CultureInfo.CurrentCulture);
+
       /// <summary>[AlphaFS] StringTerminatorChar = '\0' String Terminator Suffix.</summary>
       public const char StringTerminatorChar = '\0';
 

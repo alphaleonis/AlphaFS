@@ -20,28 +20,26 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   internal static partial class NativeMethods
+   /// <summary>WIN32_STREAM_ID Attributes of data to facilitate cross-operating system transfer.</summary>
+   [Flags]
+   public enum StreamAttributes
    {
-      /// <summary>WIN32_STREAM_ID structure - Contains stream data.</summary>
-      [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Unicode)]
-      [SerializableAttribute]
-      internal struct Win32StreamId
-      {
-         /// <summary>Type of stream data.</summary>
-         public readonly StreamType StreamType;
+      /// <summary>STREAM_NORMAL_ATTRIBUTE - This backup stream has no special attributes.</summary>
+      None = 0,
 
-         /// <summary>Attributes of data to facilitate cross-operating system transfer.</summary>
-         public readonly StreamAttributes StreamAttributes;
+      /// <summary>STREAM_MODIFIED_WHEN_READ - Attribute set if the stream contains data that is modified when read. Allows the backup application to know that verification of data will fail.</summary>
+      ModifiedWhenRead = 1,
 
-         /// <summary>Size of data, in bytes.</summary>
-         public readonly ulong StreamSize;
+      /// <summary>STREAM_CONTAINS_SECURITY - The backup stream contains security information. This attribute applies only to backup stream of type <see cref="T:Type.SecurityData"/>.</summary>
+      ContainsSecurity = 2,
 
-         /// <summary>Length of the name of the alternative data stream, in bytes.</summary>
-         public readonly uint StreamNameSize;
-      }
+      /// <summary>Reserved.</summary>
+      ContainsProperties = 4,
+
+      /// <summary>STREAM_SPARSE_ATTRIBUTE - The backup stream is part of a sparse file stream. This attribute applies only to backup stream of type <see cref="T:Type.Data"/>, <see cref="T:Type.AlternateData"/>, and <see cref="T:Type.SparseBlock"/>.</summary>
+      Sparse = 8
    }
 }

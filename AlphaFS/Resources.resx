@@ -241,4 +241,7 @@
   <data name="DirectoryNotEmpty" xml:space="preserve">
     <value>Directory is not empty: [{0}]</value>
   </data>
+  <data name="StreamNameWithColon" xml:space="preserve">
+    <value>Stream name should not contain a colon.</value>
+  </data>
 </root>

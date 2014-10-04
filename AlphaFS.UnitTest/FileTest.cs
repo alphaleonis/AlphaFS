@@ -33,7 +33,6 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
 using Path = Alphaleonis.Win32.Filesystem.Path;
@@ -378,7 +377,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpCopy
-      
+
       #region DumpDelete
 
       private void DumpDelete(bool isLocal)
@@ -457,40 +456,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpDelete
-
-      #region DumpEnumerateStreams
-      private static void DumpEnumerateStreams(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
-         string path = Path.Combine(Path.GetTempPath(), "File.EnumerateStreams()-" + Path.GetRandomFileName());
-         if (!isLocal) path = Path.LocalToUnc(path);
-
-         // Create file; unnamed stream 0.
-         File.WriteAllText(path, TextHelloWorld);
-         string txtFromStream = File.ReadAllText(path);
-
-         Console.WriteLine("\n\t\tStream content: [{0}]", txtFromStream);
-
-         // Create alternate stream.
-         string extraStream = ":ThisIsAnExtraStream-" + (isLocal ? "Local" : "Network");
-         string txtToStream = TextAppend + " - Extra Stream Information (" + (isLocal ? "Local" : "Network") + ")";
-         File.WriteAllText(path + extraStream, txtToStream);
-
-         Console.WriteLine("\n\tAdded stream, name: [{0}]", extraStream);
-         txtFromStream = File.ReadAllText(path + extraStream);
-         Console.WriteLine("\n\t\tStream content: [{0}]", txtFromStream);
-         Assert.AreEqual(txtToStream, txtFromStream);
-
-         StopWatcher(true);
-         foreach (BackupStreamInfo fs in File.EnumerateStreams(path))
-            Assert.IsTrue(Dump(fs, -10));
-         Console.WriteLine("\n\t{0}\n", Reporter());
-
-         File.Delete(path, true);
-         Assert.IsFalse(File.Exists(path), "Cleanup failed: File should have been removed.");
-      }
-
-      #endregion // DumpEnumerateStreams
 
       #region DumpExists
 
@@ -606,6 +571,167 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpGetFileTime
+
+      #region DumpGetSize
+
+      private void DumpGetSize(bool isLocal)
+      {
+         #region Setup
+
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string tempPath = Path.GetTempPath("File-GetSize()-file-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Console.WriteLine("\nInput File Path: [{0}]\n", tempPath);
+         
+         int randomLines = new Random().Next(1000, 100000);
+
+         // Create file with contents.
+         FileInfo fi = new FileInfo(tempPath);
+         using (StreamWriter sw = fi.CreateText())
+            for (int i = 0; i < randomLines; i++)
+               sw.WriteLine(TextHelloWorld);
+
+
+         long fileGetStreamSize = File.GetStreamSize(tempPath);
+         long fileGetStreamsDataSize = File.GetStreamSize(tempPath, StreamType.Data);
+         long fileGetSize = File.GetSize(tempPath); 
+         long fileGetCompressedSize = File.GetCompressedSize(tempPath);
+         long fiLength = fi.Length;
+
+         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
+         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
+         
+         Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetSize), fileGetSize);
+         Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
+
+         Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fiLength), fiLength);
+         Console.WriteLine("\tFileInfo().Attributes\t\t== [{0}]", fi.Attributes);
+
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != FileAttributes.Compressed, "File should be uncompressed.");
+         Assert.IsTrue(fiLength == fileGetSize, "Uncompressed size should match.");
+         Assert.IsTrue(fiLength == fileGetCompressedSize, "Uncompressed size should match.");
+         Assert.IsTrue(fiLength < fileGetStreamSize, "Uncompressed size should be less than size of all streams.");
+         Assert.IsTrue(fileGetStreamSize > fileGetSize, "Size of all streams should be greater than size of file.");
+         Assert.IsTrue(fileGetStreamSize != fileGetStreamsDataSize, "Size of all streams should be greater than size of StreamType.Data.");
+         Assert.AreEqual(fileGetSize, fileGetStreamsDataSize, "Size of file should match size of StreamType.Data.");
+         
+         #endregion // Setup
+
+         #region Compress
+
+         bool compressOk = false;
+         string report;
+         StopWatcher(true);
+
+         try
+         {
+            fi.Compress();
+            report = Reporter(true);
+            compressOk = true;
+
+            fileGetStreamSize = File.GetStreamSize(tempPath);
+            fileGetStreamsDataSize = File.GetStreamSize(tempPath, StreamType.Data);
+            fileGetSize = File.GetSize(tempPath); 
+            fileGetCompressedSize = File.GetCompressedSize(tempPath);
+         }
+         catch (Exception ex)
+         {
+            report = Reporter(true);
+            Console.WriteLine("\n\tFile.Compress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+         }
+
+         
+         // FileInfo() must Refresh().
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != FileAttributes.Compressed, "FileInfo() should not know it is compressed.");
+         fi.Refresh();
+         fiLength = fi.Length;
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed, "FileInfo() should know it is compressed.");
+
+
+         Console.WriteLine("\n\n\tFile.Compress() (Should be True): [{0}]{1}\n", compressOk, report);
+         
+         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
+         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
+         
+         Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetSize), fileGetSize);
+         Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
+         
+         Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fiLength), fiLength);
+         Console.WriteLine("\tFileInfo().Attributes\t\t== [{0}]", fi.Attributes);
+
+         Assert.IsTrue(compressOk);
+
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed, "File should be compressed.");
+         Assert.IsTrue(fiLength != fileGetCompressedSize, "FileInfo() size should not match compressed size.");
+         Assert.IsTrue(fiLength == fileGetSize, "File size should match FileInfo() size.");
+         Assert.IsTrue(fiLength < fileGetStreamSize, "Compressed size should be less than size of all streams.");
+         Assert.IsTrue(fileGetStreamSize > fileGetSize, "Size of all streams should be greater than size of file.");
+         Assert.IsTrue(fileGetStreamSize != fileGetStreamsDataSize, "Size of all streams should be greater than size of StreamType.Data.");
+         Assert.AreEqual(fileGetSize, fileGetStreamsDataSize, "Size of file should match size of StreamType.Data.");
+
+         #endregion // Compress
+
+         #region Decompress
+
+         bool decompressOk = false;
+         StopWatcher(true);
+
+         try
+         {
+            File.Decompress(tempPath);
+            report = Reporter(true);
+            decompressOk = true;
+
+            fileGetStreamSize = File.GetStreamSize(tempPath);
+            fileGetStreamsDataSize = File.GetStreamSize(tempPath, StreamType.Data);
+            fileGetSize = File.GetSize(tempPath);
+            fileGetCompressedSize = File.GetCompressedSize(tempPath);
+
+         }
+         catch (Exception ex)
+         {
+            report = Reporter(true);
+            Console.WriteLine("\n\tFile.Decompress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+         }
+
+         
+         // FileInfo() must Refresh().
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed, "FileInfo() should not know it is compressed.");
+         fi.Refresh();
+         fiLength = fi.Length;
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != FileAttributes.Compressed, "FileInfo() should know it is compressed.");
+
+
+         Console.WriteLine("\n\n\tFile.Decompress() (Should be True): [{0}]{1}\n", decompressOk, report);
+
+         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
+         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
+
+         Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetSize), fileGetSize);
+         Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
+
+         Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fiLength), fiLength);
+         Console.WriteLine("\tFileInfo().Attributes\t\t== [{0}]", fi.Attributes);
+
+         Assert.IsTrue(decompressOk);
+
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != FileAttributes.Compressed, "File should be uncompressed.");
+         Assert.IsTrue(fiLength == fileGetSize, "Uncompressed size should match.");
+         Assert.IsTrue(fiLength == fileGetCompressedSize, "Uncompressed size should match.");
+         Assert.IsTrue(fiLength < fileGetStreamSize, "Uncompressed size should be less than size of all streams.");
+         Assert.IsTrue(fileGetStreamSize > fileGetSize, "Size of all streams should be greater than size of file.");
+         Assert.IsTrue(fileGetStreamSize != fileGetStreamsDataSize, "Size of all streams should be greater than size of StreamType.Data.");
+         Assert.AreEqual(fileGetSize, fileGetStreamsDataSize, "Size of file should match size of StreamType.Data.");
+
+         #endregion //Decompress
+
+         fi.Delete();
+         Assert.IsFalse(fi.Exists, "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
+      }
+
+      #endregion // DumpGetSize
 
       #region DumpEnumerateFileSystemEntryInfos
 
@@ -2429,6 +2555,17 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
+      
+      #region AddStream
+
+      [TestMethod]
+      public void AlphaFS_AddStream()
+      {
+         Console.WriteLine("File.GetStreamSize()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
+      }
+
+      #endregion // AddStream
 
       #region Compress
 
@@ -2550,36 +2687,34 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_GetSize()
       {
          Console.WriteLine("File.GetSize()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_Compress()");
+
+         DumpGetSize(true);
+         DumpGetSize(false);
       }
 
       #endregion // GetSize
 
-      #region GetStreamsSize
+      #region GetStreamSize
 
       [TestMethod]
-      public void AlphaFS_GetStreamsSize()
+      public void AlphaFS_GetStreamSize()
       {
-         Console.WriteLine("File.GetStreamsSize()\n");
-
-         string path = SysRoot;
-         int cnt = 0;
-
-         foreach (string file in Directory.EnumerateFiles(path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly))
-         {
-            try
-            {
-               Console.WriteLine("\t#{0:000} File: [{1}]\t\t = [{2}]", ++cnt, file, File.GetStreamsSize(file));
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message);
-            }
-         }
-
+         Console.WriteLine("File.GetStreamSize()");
+         Console.WriteLine("\nPlease see unit test: AlphaFS_GetSize()");
       }
 
-      #endregion // GetStreamsSize
+      #endregion // GetStreamSize
+
+      #region RemoveStream
+
+      [TestMethod]
+      public void AlphaFS_RemoveStream()
+            {
+         Console.WriteLine("File.RemoveStream()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
+      }
+
+      #endregion // RemoveStream
 
       #region SetTimestamps
 

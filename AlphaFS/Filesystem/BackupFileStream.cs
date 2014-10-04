@@ -578,25 +578,25 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateStreams
 
-      /// <summary>Returns <see cref="T:BackupStreamInfo"/> instances, associated with the file.</summary>
-      /// <returns>An <see cref="T:IEnumerable{BackupStreamInfo}"/> collection of streams for the file specified by path.</returns>
-      public IEnumerable<BackupStreamInfo> EnumerateStreams()
+      /// <summary>Returns <see cref="T:AlternateDataStreamInfo"/> instances, associated with the file.</summary>
+      /// <returns>An <see cref="T:IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file specified by path.</returns>
+      public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return File.EnumerateStreamsInternal(null, SafeFileHandle, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, SafeFileHandle, null, null, null, null);
       }
 
       #endregion // EnumerateStreams
 
       #region ReadStreamInfo
 
-      /// <summary>Reads a stream header from the current <see cref="T:BackupFileStream"/>.</summary>
-      /// <returns>The stream header read from the current <see cref="T:BackupFileStream"/>, or <c>null</c> if the end-of-file 
+      /// <summary>Reads a stream header from the current <see cref="T:AlternateDataStreamInfo"/>.</summary>
+      /// <returns>The stream header read from the current <see cref="T:AlternateDataStreamInfo"/>, or <c>null</c> if the end-of-file 
       /// was reached before the required number of bytes of a header could be read.</returns>
       /// <remarks>The stream must be positioned at where an actual header starts for the returned object to represent valid information.</remarks>
-      public BackupStreamInfo ReadStreamInfo()
+      public AlternateDataStreamInfo ReadStreamInfo()
       {
          // Return the first entry.
-         return File.EnumerateStreamsInternal(null, _safeFileHandle, null).FirstOrDefault();
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, SafeFileHandle, null, null, null, null).FirstOrDefault();
       }
 
       #endregion // ReadStreamInfo

@@ -3747,6 +3747,70 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
+      #region AddStream
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to an existing file.</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
+      /// <param name="contents">The lines to add to the stream.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void AddStream(string path, string name, string[] contents, bool? isFullPath)
+      {
+         AlternateDataStreamInfo.AddStreamInternal(false, null, path, name, contents, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to an existing file.</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
+      /// <param name="contents">The lines to add to the stream.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void AddStream(string path, string name, string[] contents)
+      {
+         AlternateDataStreamInfo.AddStreamInternal(false, null, path, name, contents, false);
+      }
+
+      #region Transacted
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to an existing file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
+      /// <param name="contents">The lines to add to the stream.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents, bool? isFullPath)
+      {
+         AlternateDataStreamInfo.AddStreamInternal(false, transaction, path, name, contents, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to an existing file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
+      /// <param name="contents">The lines to add to the stream.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents)
+      {
+         AlternateDataStreamInfo.AddStreamInternal(false, transaction, path, name, contents, false);
+      }
+
+      #endregion Transacted
+
+      #endregion // AddStream
+
       #region Compress
 
       #region IsFullPath
@@ -4295,34 +4359,107 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateStreams
 
-      /// <summary>[AlphaFS] Enumerates <see cref="T:BackupStreamInfo"/> instances associated with the file.</summary>
-      /// <param name="path">A path that describes a file.</param>
-      /// <returns>An <see cref="T:IEnumerable{BackupStreamInfo}"/> collection of streams for the file specified by path.</returns>
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</summary>
+      /// <param name="path">The file to search.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static IEnumerable<BackupStreamInfo> EnumerateStreams(string path)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, bool isFullPath)
       {
-         return EnumerateStreamsInternal(null, null, path);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Enumerates <see cref="T:BackupStreamInfo"/> instances associated with the file.</summary>
-      /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information.</param>
-      /// <returns>An <see cref="T:IEnumerable{BackupStreamInfo}"/> collection of streams for the file specified by path.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</summary>
+      /// <param name="path">The file to search.</param>
+      /// <param name="streamType">The type of stream to retrieve.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static IEnumerable<BackupStreamInfo> EnumerateStreams(SafeFileHandle handle)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType, bool isFullPath)
       {
-         return EnumerateStreamsInternal(null, handle, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</summary>
+      /// <param name="path">The file to search.</param>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
+      [SecurityCritical]
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path)
+      {
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</summary>
+      /// <param name="path">The file to search.</param>
+      /// <param name="streamType">The type of stream to retrieve.</param>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
+      [SecurityCritical]
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType)
+      {
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the handle specified by <paramref name="handle"/>.</summary>
+      /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the file from which to retrieve the information.</param>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the handle specified by <paramref name="handle"/>.</returns>
+      [SecurityCritical]
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(SafeFileHandle handle)
+      {
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, handle, null, null, null, null);
       }
 
       #region Transacted
 
-      /// <summary>[AlphaFS] Enumerates <see cref="T:BackupStreamInfo"/> instances associated with the file.</summary>
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file.</param>
-      /// <returns>An <see cref="T:IEnumerable{BackupStreamInfo}"/> collection of streams for the file specified by path.</returns>
+      /// <param name="path">The file to search.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static IEnumerable<BackupStreamInfo> EnumerateStreams(KernelTransaction transaction, string path)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, bool isFullPath)
       {
-         return EnumerateStreamsInternal(transaction, null, path);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to search.</param>
+      /// <param name="streamType">The type of stream to retrieve.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
+      [SecurityCritical]
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType, bool isFullPath)
+      {
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to search.</param>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
+      [SecurityCritical]
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path)
+      {
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to search.</param>
+      /// <param name="streamType">The type of stream to retrieve.</param>
+      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
+      [SecurityCritical]
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType)
+      {
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, false);
       }
 
       #endregion // Transacted
@@ -4693,34 +4830,299 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetSize
 
-      #region GetStreamsSize
+      #region GetStreamSize
 
-      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by alternate data streams (NTFS ADS).</summary>
-      /// <param name="path">A path that describes a file.</param>
-      /// <remarks>Use <see cref="T:FileInfo.Length"/> + <see cref="T:FileInfo.LengthStreams"/> = more accurate file size.</remarks>
-      /// <returns>The size of the actual number of bytes used by file streams, other then the default stream.</returns>
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>The number of bytes used by all data streams.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static long GetStreamsSize(string path)
+      public static long GetStreamSize(string path, bool isFullPath)
       {
-         return EnumerateStreams(null, path).Where(fs => fs.StreamType != BackupStreamType.Data).Sum(fs => fs.Size);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name of the stream to retrieve.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>The number of bytes used by a named stream.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(string path, string name, bool isFullPath)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="T:StreamType"/> data streams (NTFS ADS).</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="type">The <see cref="T:StreamType"/> of the stream to retrieve.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(string path, StreamType type, bool isFullPath)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <returns>The number of bytes used by all data streams.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(string path)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, false);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by a named stream.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(string path, string name)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, false);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="T:StreamType"/> data streams (NTFS ADS).</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="type">The <see cref="T:StreamType"/> of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(string path, StreamType type)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, false);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
+      /// <param name="handle">The <see cref="T:SafeFileHandle"/> to the file.</param>
+      /// <param name="name">The name of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by a named stream.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(SafeFileHandle handle, string name)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, name, StreamType.Data, null);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="T:StreamType"/> data streams (NTFS ADS).</summary>
+      /// <param name="handle">The <see cref="T:SafeFileHandle"/> to the file.</param>
+      /// <param name="type">The <see cref="T:StreamType"/> of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(SafeFileHandle handle, StreamType type)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, null, type, null);
       }
 
       #region Transacted
 
-      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by alternate data streams (NTFS ADS).</summary>
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file.</param>
-      /// <remarks>Use <see cref="T:FileInfo.Length"/> + <see cref="T:FileInfo.LengthStreams"/> = more accurate file size.</remarks>
-      /// <returns>The size of the actual number of bytes used by file streams, other then the default stream.</returns>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>The number of bytes used by all data streams.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static long GetStreamsSize(KernelTransaction transaction, string path)
+      public static long GetStreamSize(KernelTransaction transaction, string path, bool isFullPath)
       {
-         return EnumerateStreams(transaction, path).Where(fs => fs.StreamType != BackupStreamType.Data).Sum(fs => fs.Size);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name of the stream to retrieve.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>The number of bytes used by a named stream.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(KernelTransaction transaction, string path, string name, bool isFullPath)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, StreamType.Data, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="T:StreamType"/> data streams (NTFS ADS).</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="type">The <see cref="T:StreamType"/> of the stream to retrieve.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type, bool isFullPath)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <returns>The number of bytes used by all data streams.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(KernelTransaction transaction, string path)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, false);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by a named stream.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(KernelTransaction transaction, string path, string name)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, null, false);
+      }
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="type">The <see cref="T:StreamType"/> of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type)
+      {
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, false);
       }
 
       #endregion // Transacted
 
-      #endregion // GetStreamsSize
+      #endregion GetStreamSize
+
+      #region RemoveStream
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file.</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void RemoveStream(string path, bool? isFullPath)
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name of the stream to remove.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void RemoveStream(string path, string name, bool? isFullPath)
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, isFullPath);
+      }
+      
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file.</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void RemoveStream(string path)
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, false);
+      }
+
+      /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name of the stream to remove.</param>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void RemoveStream(string path, string name)
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, false);
+      }
+
+      #region Transacted
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void RemoveStream(KernelTransaction transaction, string path, bool? isFullPath)
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name of the stream to remove.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void RemoveStream(KernelTransaction transaction, string path, string name, bool? isFullPath)
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void RemoveStream(KernelTransaction transaction, string path)
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, false);
+      }
+
+      /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file.</param>
+      /// <param name="name">The name of the stream to remove.</param>
+      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void RemoveStream(KernelTransaction transaction, string path, string name)
+      {
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, false);
+      }
+      
+      #endregion Transacted
+
+      #endregion // RemoveStream
 
       #region SetTimestamps
 
@@ -5593,83 +5995,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // EnumerateFileSystemEntryInfoInternal
-
-      #region EnumerateStreamsInternal
-
-      /// <summary>[AlphaFS] Unified method EnumerateStreamsInternal() to enumerate <see cref="T:BackupStreamInfo"/> instances associated with the file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information.</param>
-      /// <param name="path">A path that describes a file.</param>
-      /// <returns>An <see cref="T:IEnumerable{BackupStreamInfo}"/> collection of streams for the file specified by path.</returns>
-      /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
-      [SecurityCritical]
-      internal static IEnumerable<BackupStreamInfo> EnumerateStreamsInternal(KernelTransaction transaction, SafeFileHandle handle, string path)
-      {
-         if (!Utils.IsNullOrWhiteSpace(path))
-         {
-            // CreateFileInternal()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-            // 2013-01-13: MSDN confirms LongPath usage.
-
-            // To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.
-            handle = CreateFileInternal(true, transaction, path, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Read, FileShare.Read, false);
-         }
-
-         if (!NativeMethods.IsValidHandle(handle, Marshal.GetLastWin32Error(), false))
-            yield break;
-
-
-         using (handle)
-         {
-            Type typeWin32Stream = typeof(NativeMethods.Win32StreamId);
-            uint sizeOfType = (uint)Marshal.SizeOf(typeWin32Stream);
-
-            bool doLoop = true;
-
-            using (new PrivilegeEnabler(Privilege.Backup))
-            using (SafeHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
-            {
-               uint numberOfBytesRead;
-               IntPtr context;
-
-               while (doLoop)
-               {
-                  if (!NativeMethods.BackupRead(handle, safeBuffer, sizeOfType, out numberOfBytesRead, false, true, out context))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error());
-
-                  if (numberOfBytesRead == sizeOfType)
-                  {
-                     string name = null;
-                     NativeMethods.Win32StreamId stream = NativeMethods.GetStructure<NativeMethods.Win32StreamId>(0, safeBuffer.DangerousGetHandle());
-
-                     if (stream.StreamNameSize > 0)
-                     {
-                        if (!NativeMethods.BackupRead(handle, safeBuffer, stream.StreamNameSize, out numberOfBytesRead, false, true, out context))
-                           NativeError.ThrowException(Marshal.GetLastWin32Error());
-
-                        name = Marshal.PtrToStringUni(safeBuffer.DangerousGetHandle(), (int)numberOfBytesRead / 2);
-                     }
-
-                     yield return new BackupStreamInfo(stream, name);
-
-                     if (stream.StreamSize > 0)
-                     {
-                        uint lo, hi;
-                        doLoop = !NativeMethods.BackupSeek(handle, uint.MinValue, uint.MaxValue, out lo, out hi, out context);
-                     }
-                  }
-                  else
-                     doLoop = false;
-               }
-
-               if (!NativeMethods.BackupRead(handle, safeBuffer, 0, out numberOfBytesRead, true, false, out context))
-                  NativeError.ThrowException(Marshal.GetLastWin32Error());
-            }
-         }
-      }
-
-      #endregion // EnumerateStreamsInternal
 
       #region ExistsInternal
 

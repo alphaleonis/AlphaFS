@@ -158,11 +158,11 @@
     <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\Delegates\CopyMoveProgressResult.cs" />
     <Compile Include="Filesystem\DeviceInfo.cs" />
     <Compile Include="Filesystem\DiskSpaceInfo.cs" />
     <Compile Include="Filesystem\DriveInfo.cs" />
-    <Compile Include="Filesystem\Enumerations\BackupStreamType.cs" />
     <Compile Include="Filesystem\Enumerations\CopyMoveProgressResult.cs" />
     <Compile Include="Filesystem\Enumerations\DeviceGuid.cs" />
     <Compile Include="Filesystem\Enumerations\DiGetClassFlags.cs" />
@@ -175,6 +175,8 @@
     <Compile Include="Filesystem\Enumerations\ErrorMode.cs" />
     <Compile Include="Filesystem\Enumerations\ReparsePointTag.cs" />
     <Compile Include="Filesystem\Enumerations\SetupDiGetDeviceRegistryPropertyEnum.cs" />
+    <Compile Include="Filesystem\Enumerations\StreamAttributes.cs" />
+    <Compile Include="Filesystem\Enumerations\StreamType.cs" />
     <Compile Include="Filesystem\Enumerations\VolumeInfoAttributes.cs" />
     <Compile Include="Filesystem\Exceptions\AlreadyExistsException.cs" />
     <Compile Include="Filesystem\Enumerations\CopyOptions.cs" />
@@ -208,7 +210,6 @@
     <Compile Include="Filesystem\Exceptions\NotAReparsePointException.cs" />
     <Compile Include="Filesystem\Path.cs" />
     <Compile Include="Filesystem\Enumerations\BackupStreamAttributes.cs" />
-    <Compile Include="Filesystem\BackupStreamInfo.cs" />
     <Compile Include="Filesystem\Shell32.cs" />
     <Compile Include="Filesystem\Structures\MountPointReparseBuffer.cs" />
     <Compile Include="Filesystem\Structures\ReparseDataBufferHeader.cs" />
@@ -318,7 +319,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
