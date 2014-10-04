@@ -35,11 +35,11 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Creates a <see cref="T:ShareInfo"/> instance.</summary>
       /// <param name="host">A host to retrieve shares from.</param>
-      /// <param name="structureLevel">Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>,  <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</param>
+      /// <param name="shareLevel">Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>,  <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</param>
       /// <param name="shareInfo">A <see cref="T:NativeMethods.ShareInfo2"/> or <see cref="T:NativeMethods.ShareInfo503"/> instance.</param>
-      internal ShareInfo(string host, int structureLevel, object shareInfo)
+      internal ShareInfo(string host, int shareLevel, object shareInfo)
       {
-         switch (structureLevel)
+         switch (shareLevel)
          {
             case 1005:
                NativeMethods.ShareInfo1005 s1005 = (NativeMethods.ShareInfo1005) shareInfo;
@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Network
          }
 
          NetFullPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Filesystem.Path.UncPrefix, ServerName, Filesystem.Path.DirectorySeparatorChar, NetName);
-         StructureLevel = structureLevel;
+         ShareLevel = shareLevel;
       }
 
       #endregion // ShareInfo
@@ -233,12 +233,12 @@ namespace Alphaleonis.Win32.Network
       #endregion // ResourceType
 
 
-      #region StructureLevel
+      #region ShareLevel
 
       /// <summary>The structure level for the ShareInfo instance. Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>, <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</summary>
-      public int StructureLevel { get; private set; }
+      public int ShareLevel { get; private set; }
 
-      #endregion // StructureLevel
+      #endregion // ShareLevel
       
       #endregion // Properties
    }
