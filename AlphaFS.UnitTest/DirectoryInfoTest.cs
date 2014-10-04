@@ -300,6 +300,8 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
 
+      // Note: These unit tests are empty and are here to confirm AlphaFS implementation.
+
       #region CopyTo
 
       [TestMethod]
@@ -445,6 +447,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // AlphaFS
 
+      
       #region SetSecurity (Issue-19788)
 
       private static string GetTempDirectoryName()
@@ -453,19 +456,19 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS___SetSecurity_ShouldNotProduceError()
+      public void Test_AlphaFS___SetSecurity_ShouldNotProduceError()
       {
          SetSecurityAlpha(GetTempDirectoryName());
       }
 
       [TestMethod]
-      public void System___SetSecurity_ShouldNotProduceError()
+      public void Test_System___SetSecurity_ShouldNotProduceError()
       {
          SetSecuritySystem(GetTempDirectoryName());
       }
 
       [TestMethod]
-      public void System___AnalyzeSecurity_LocalAcessShouldNotExist()
+      public void Test_System___AnalyzeSecurity_LocalAcessShouldNotExist()
       {
          string testDir = GetTempDirectoryName();
          SetSecuritySystem(testDir);
@@ -475,7 +478,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS___AnalyzeSecurity_LocalAcessShouldNotExist()
+      public void Test_AlphaFS___AnalyzeSecurity_LocalAcessShouldNotExist()
       {
          string testDir = GetTempDirectoryName();
          SetSecuritySystem(testDir);

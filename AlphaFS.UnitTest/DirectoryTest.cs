@@ -320,7 +320,7 @@ namespace AlphaFS.UnitTest
          string tempPath = Path.Combine(Path.GetTempPath(), "Directory.CompressDecompress()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         Console.WriteLine("\nInput Path: [{0}]", tempPath);
+         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
          int cnt = 0;
          Directory.CreateDirectory(tempPath);
@@ -357,19 +357,22 @@ namespace AlphaFS.UnitTest
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.AllDirectories;
          action = false;
+         string report = "";
+
          StopWatcher(true);
          try
          {
             Directory.Compress(tempPath, searchPattern, searchOption);
+            report = Reporter(true);
             action = true;
             actual = File.GetAttributes(tempPath);
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tDirectory.Compress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
             Directory.Delete(tempPath, true);
          }
-         Console.WriteLine("\n\nDirectory compressed recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n\t{2}\n", action, actual, Reporter(true));
+         Console.WriteLine("\n\nDirectory compressed recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
          Assert.IsTrue(action, "Compression should be True");
          Assert.IsTrue((actual & FileAttributes.Compressed) == FileAttributes.Compressed, "Compression should be True");
 
@@ -389,9 +392,11 @@ namespace AlphaFS.UnitTest
          // Decompress directory recursively.
          action = false;
          StopWatcher(true);
+
          try
          {
             Directory.Decompress(tempPath, searchPattern, searchOption);
+            report = Reporter(true);
             action = true;
             actual = File.GetAttributes(tempPath);
          }
@@ -400,7 +405,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
             Directory.Delete(tempPath, true);
          }
-         Console.WriteLine("\n\nDirectory decompressed recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n\t{2}\n", action, actual, Reporter(true));
+         Console.WriteLine("\n\nDirectory decompressed recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
          Assert.IsTrue(action, "Compression should be True");
          Assert.IsFalse((actual & FileAttributes.Compressed) == FileAttributes.Compressed, "Compression should be True");
 
@@ -2137,7 +2142,7 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
-      
+
       #region Compress/Decompress
 
       [TestMethod]
@@ -2427,7 +2432,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // EnumerateLogicalDrives
-      
+
       #region GetProperties
 
       [TestMethod]

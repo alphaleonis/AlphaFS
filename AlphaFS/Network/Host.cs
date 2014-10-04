@@ -863,12 +863,12 @@ namespace Alphaleonis.Win32.Network
          // Three characters for: "X:\0" (Drive X: with null terminator)
          uint bufferSize = 3;
          StringBuilder buffer;
-         uint result;
 
          do
          {
             buffer = new StringBuilder((int) bufferSize);
-            
+
+            uint result;
             lastError = NativeMethods.WNetUseConnection(arguments.WinOwner, ref resource, arguments.Password, arguments.UserName, connect, buffer, out bufferSize, out result);
             
             switch (lastError)

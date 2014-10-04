@@ -39,6 +39,7 @@ using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
 using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
+using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
@@ -601,21 +602,50 @@ namespace AlphaFS.UnitTest
 
       private void DumpClassDiskSpaceInfo(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tempPath = SysDrive;
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-         Console.WriteLine("\nInput Path: [{0}]", tempPath);
+          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+          string tempPath = SysDrive;
+          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+          Console.WriteLine("\nInput Path: [{0}]", tempPath);
 
-         StopWatcher(true);
-         DiskSpaceInfo dsi = new DiskSpaceInfo(tempPath, null, true, false);
-         string report = Reporter();
+          int cnt = 0;
 
-         Assert.IsTrue(Dump(dsi, -26));
-         Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
-         Assert.IsTrue(dsi.FreeBytesAvailable != 0 && dsi.TotalNumberOfBytes != 0 && dsi.TotalNumberOfFreeBytes != 0);
+          // Get only .IsReady drives.
+          foreach (string drv in Directory.EnumerateLogicalDrives(false, true).Select(drive => drive.Name))
+          {
+              string drive = isLocal ? drv : Path.LocalToUnc(drv);
 
-         Console.WriteLine("\n{0}", report);
-         Console.WriteLine();
+              StopWatcher(true);
+
+              try
+              {
+                  // null == All information.
+                  DiskSpaceInfo dsi = Volume.GetDiskFreeSpace(drive, null);
+                  string report = Reporter(true);
+                  Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
+                  Assert.IsTrue(dsi.FreeBytesAvailable != 0 && dsi.TotalNumberOfBytes != 0 && dsi.TotalNumberOfFreeBytes != 0);
+
+                  Console.WriteLine("\n#{0:000}\tInput Path: [{1}]{2}", ++cnt, drive, report);
+                  Assert.IsTrue(Dump(dsi, -26));
+
+
+                  // false == Size information only.
+                  dsi = Volume.GetDiskFreeSpace(drive, false);
+                  Assert.IsTrue(dsi.BytesPerSector == 0 && dsi.NumberOfFreeClusters == 0 && dsi.SectorsPerCluster == 0 && dsi.TotalNumberOfClusters == 0);
+                  Assert.IsTrue(dsi.FreeBytesAvailable != 0 && dsi.TotalNumberOfBytes != 0 && dsi.TotalNumberOfFreeBytes != 0);
+
+                  // true == Cluster information only.
+                  dsi = Volume.GetDiskFreeSpace(drive, true);
+                  Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
+                  Assert.IsTrue(dsi.FreeBytesAvailable == 0 && dsi.TotalNumberOfBytes == 0 && dsi.TotalNumberOfFreeBytes == 0);
+              }
+              catch (Exception ex)
+              {
+                  Console.Write("\n\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+              }
+          }
+
+          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+          Console.WriteLine();
       }
 
       #endregion // DumpClassDiskSpaceInfo
@@ -971,15 +1001,28 @@ namespace AlphaFS.UnitTest
       private void DumpClassVolumeInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tempPath = SysDrive;
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
-         StopWatcher(true);
-         VolumeInfo volInfo = Volume.GetVolumeInformation(tempPath);
-         string report = Reporter();
-         Assert.IsTrue(Dump(volInfo, -26));
-         Console.WriteLine("\n{0}", report);
+         int cnt = 0;
+         foreach (string drive in Directory.GetLogicalDrives())
+         {
+            string tempPath = drive;
+            if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+            StopWatcher(true);
+            try
+            {
+               VolumeInfo volInfo = Volume.GetVolumeInformation(tempPath);
+               Console.WriteLine("\n#{0:000}\tLogical Drive: [{1}]", ++cnt, tempPath);
+               Assert.AreEqual(tempPath, volInfo.FullPath);
+               Dump(volInfo, -26);
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("#{0:000}\tLogical Drive: [{1}]\n\tCaught Exception: [{2}]\n\n", ++cnt, tempPath, ex.Message.Replace(Environment.NewLine, string.Empty));
+            }
+         }
+
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
       }
 
@@ -1119,10 +1162,23 @@ namespace AlphaFS.UnitTest
 
       #region Filesystem
 
-      #region Class_Filesystem_BackupFileStream
+      #region Filesystem_Class_BackupStreamInfo
 
       [TestMethod]
-      public void Class_Filesystem_BackupFileStream()
+      public void Filesystem_Class_BackupStreamInfo()
+      {
+         Console.WriteLine("Class Filesystem.BackupStreamInfo()");
+
+         DumpClassBackupFileStream(true);
+         DumpClassBackupFileStream(false);
+      }
+
+      #endregion // Filesystem_Class_BackupStreamInfo
+
+      #region Filesystem_Class_BackupFileStream
+
+      [TestMethod]
+      public void Filesystem_Class_BackupFileStream()
       {
          Console.WriteLine("Class Filesystem.BackupFileStream()");
 
@@ -1130,25 +1186,12 @@ namespace AlphaFS.UnitTest
          DumpClassBackupFileStream(false);
       }
 
-      #endregion // Class_Filesystem_BackupFileStream
+      #endregion // Filesystem_Class_BackupFileStream
 
-      #region Class_Filesystem_BackupStreamInfo
-
-      [TestMethod]
-      public void Class_Filesystem_BackupStreamInfo()
-      {
-         Console.WriteLine("Class Filesystem.BackupStreamInfo()");
-
-         DumpClassBackupStreamInfo(true);
-         DumpClassBackupStreamInfo(false);
-      }
-
-      #endregion // Class_Filesystem_BackupStreamInfo
-
-      #region Class_Filesystem_ByHandleFileInformation
+      #region Filesystem_Class_ByHandleFileInformation
 
       [TestMethod]
-      public void Class_Filesystem_ByHandleFileInformation()
+      public void Filesystem_Class_ByHandleFileInformation()
       {
          Console.WriteLine("Class Filesystem.ByHandleFileInformation()");
 
@@ -1156,27 +1199,27 @@ namespace AlphaFS.UnitTest
          DumpClassByHandleFileInformation(false);
       }
 
-      #endregion // Class_Filesystem_ByHandleFileInformation
+      #endregion // Filesystem_Class_ByHandleFileInformation
 
-      #region Class_Filesystem_DeviceInfo
+      #region Filesystem_Class_DeviceInfo
 
       [TestMethod]
-      public void Class_Filesystem_DeviceInfo()
+      public void Filesystem_Class_DeviceInfo()
       {
          Console.WriteLine("Class Filesystem.DeviceInfo()");
          Console.WriteLine("\nMSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
          Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
 
          DumpClassDeviceInfo(LocalHost);
-         //DumpClassDeviceInfo(MyServer);
+         //if (_testMyServer) DumpClassDeviceInfo(MyServer);
       }
+      
+      #endregion // Filesystem_Class_Shell32Info
 
-      #endregion // Class_Filesystem_Shell32Info
-
-      #region Class_Filesystem_DirectoryInfo
+      #region Filesystem_Class_DirectoryInfo
 
       [TestMethod]
-      public void Class_Filesystem_DirectoryInfo()
+      public void Filesystem_Class_DirectoryInfo()
       {
          Console.WriteLine("Class Filesystem.DirectoryInfo()");
 
@@ -1184,12 +1227,12 @@ namespace AlphaFS.UnitTest
          DumpClassDirectoryInfo(false);
       }
 
-      #endregion // Class_Filesystem_DirectoryInfo
+      #endregion // Filesystem_Class_DirectoryInfo
 
-      #region Class_Filesystem_DiskSpaceInfo
+      #region Filesystem_Class_DiskSpaceInfo
 
       [TestMethod]
-      public void Class_Filesystem_DiskSpaceInfo()
+      public void Filesystem_Class_DiskSpaceInfo()
       {
          Console.WriteLine("Class Filesystem.DiskSpaceInfo()");
 
@@ -1197,12 +1240,12 @@ namespace AlphaFS.UnitTest
          DumpClassDiskSpaceInfo(false);
       }
 
-      #endregion // Class_Filesystem_DiskSpaceInfo
+      #endregion // Filesystem_Class_DiskSpaceInfo
 
-      #region Class_Filesystem_DriveInfo
+      #region Filesystem_Class_DriveInfo
 
       [TestMethod]
-      public void Class_Filesystem_DriveInfo()
+      public void Filesystem_Class_DriveInfo()
       {
          Console.WriteLine("Class Filesystem.DriveInfo()");
 
@@ -1210,12 +1253,12 @@ namespace AlphaFS.UnitTest
          DumpClassDriveInfo(false, SysDrive);
       }
 
-      #endregion // Class_Filesystem_DriveInfo
+      #endregion // Filesystem_Class_DriveInfo
 
-      #region Class_Filesystem_FileInfo
+      #region Filesystem_Class_FileInfo
 
       [TestMethod]
-      public void Class_Filesystem_FileInfo()
+      public void Filesystem_Class_FileInfo()
       {
          Console.WriteLine("Class Filesystem.FileInfo()");
 
@@ -1223,12 +1266,12 @@ namespace AlphaFS.UnitTest
          DumpClassFileInfo(false);
       }
 
-      #endregion // Class_Filesystem_FileInfo
+      #endregion // Filesystem_Class_FileInfo
 
-      #region Class_Filesystem_FileSystemEntryInfo
+      #region Filesystem_Class_FileSystemEntryInfo
 
       [TestMethod]
-      public void Class_Filesystem_FileSystemEntryInfo()
+      public void Filesystem_Class_FileSystemEntryInfo()
       {
          Console.WriteLine("Class Filesystem.FileSystemEntryInfo()");
 
@@ -1236,12 +1279,12 @@ namespace AlphaFS.UnitTest
          DumpClassFileSystemEntryInfo(false);
       }
 
-      #endregion // Class_Filesystem_FileSystemEntryInfo
+      #endregion // Filesystem_Class_FileSystemEntryInfo
 
-      #region Class_Filesystem_Shell32Info
+      #region Filesystem_Class_Shell32Info
 
       [TestMethod]
-      public void Class_Filesystem_Shell32Info()
+      public void Filesystem_Class_Shell32Info()
       {
          Console.WriteLine("Class Filesystem.Shell32Info()");
 
@@ -1249,12 +1292,12 @@ namespace AlphaFS.UnitTest
          DumpClassShell32Info(false);
       }
 
-      #endregion // Class_Filesystem_Shell32Info
+      #endregion // Filesystem_Class_Shell32Info
 
-      #region Class_Filesystem_VolumeInfo
+      #region Filesystem_Class_VolumeInfo
 
       [TestMethod]
-      public void Class_Filesystem_VolumeInfo()
+      public void Filesystem_Class_VolumeInfo()
       {
          Console.WriteLine("Class Filesystem.VolumeInfo()");
 
@@ -1262,73 +1305,73 @@ namespace AlphaFS.UnitTest
          DumpClassVolumeInfo(false);
       }
 
-      #endregion // Class_Filesystem_VolumeInfo
+      #endregion // Filesystem_Class_VolumeInfo
 
       #endregion Filesystem
-
+      
       #region Network
 
-      #region Class_Network_DfsInfo
+      #region Network_Class_DfsInfo
 
       [TestMethod]
-      public void Class_Network_DfsInfo()
+      public void Network_Class_DfsInfo()
       {
          Console.WriteLine("Class Network.DfsInfo()");
 
          DumpClassDfsInfo();
       }
 
-      #endregion // Class_Network_DfsInfo
+      #endregion // Network_Class_DfsInfo
 
-      #region Class_Network_DfsStorage
+      #region Network_Class_DfsStorage
 
       [TestMethod]
-      public void Class_Network_DfsStorage()
+      public void Network_Class_DfsStorage()
       {
          Console.WriteLine("Class Network.DfsStorage()");
-         Console.WriteLine("\nPlease see unit test: Class_Network_DfsInfo()");
+         Console.WriteLine("\nPlease see unit test: Network_Class_DfsInfo()");
       }
 
-      #endregion // Class_Network_DfsStorage
+      #endregion // Network_Class_DfsStorage
 
-      #region Class_Network_OpenConnectionInfo
+      #region Network_Class_OpenConnectionInfo
 
       [TestMethod]
-      public void Class_Network_OpenConnectionInfo()
+      public void Network_Class_OpenConnectionInfo()
       {
          Console.WriteLine("Class Network.OpenConnectionInfo()");
 
          DumpOpenConnectionInfo(LocalHost);
-         //DumpOpenConnectionInfo(MyServer);
+         if (_testMyServer) DumpOpenConnectionInfo(MyServer);
       }
 
-      #endregion // Class_Network_OpenConnectionInfo
+      #endregion // Network_Class_OpenConnectionInfo
 
-      #region Class_Network_OpenResourceInfo
+      #region Network_Class_OpenResourceInfo
 
       [TestMethod]
-      public void Class_Network_OpenResourceInfo()
+      public void Network_Class_OpenResourceInfo()
       {
          Console.WriteLine("Class Network.OpenResourceInfo()");
-
+         
          DumpClassOpenResourceInfo(LocalHost, LocalHostShare);
-         //DumpClassOpenResourceInfo(MyServer, MyServerShare);
+         if (_testMyServer) DumpClassOpenResourceInfo(MyServer, MyServerShare);
       }
 
-      #endregion // Class_Network_OpenResourceInfo
+      #endregion // Network_Class_OpenResourceInfo
 
-      #region Class_Network_ShareInfo
+      #region Network_Class_ShareInfo
 
       [TestMethod]
-      public void Class_Network_ShareInfo()
+      public void Network_Class_ShareInfo()
       {
          Console.WriteLine("Class Network.ShareInfo()");
 
          DumpClassShareInfo(LocalHost);
-         DumpClassShareInfo(MyServer);
+         if (_testMyServer) DumpClassShareInfo(MyServer);
       }
 
-      #endregion // Class_Network_ShareInfo
+      #endregion // Network_Class_ShareInfo
 
       #endregion // Network
 

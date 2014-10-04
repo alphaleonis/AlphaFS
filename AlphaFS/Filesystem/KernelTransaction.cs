@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public KernelTransaction(Transaction transaction)
       {
-         ((IKernelTransaction) TransactionInterop.GetDtcTransaction(transaction)).GetHandle(out hTrans);
+         ((IKernelTransaction) TransactionInterop.GetDtcTransaction(transaction)).GetHandle(out _hTrans);
       }
 
       /// <summary>Initializes a new instance of the <see cref="T:KernelTransaction"/> class with a default security descriptor, infinite timeout and no description.</summary>
@@ -82,10 +82,10 @@ namespace Alphaleonis.Win32.Filesystem
          using (Security.NativeMethods.SecurityAttributes securityAttributes = new Security.NativeMethods.SecurityAttributes(securityDescriptor))
          {
 
-            hTrans = NativeMethods.CreateTransaction(securityAttributes, IntPtr.Zero, 0, 0, 0, timeout, description);
+            _hTrans = NativeMethods.CreateTransaction(securityAttributes, IntPtr.Zero, 0, 0, 0, timeout, description);
             int lastError = Marshal.GetLastWin32Error();            
 
-            NativeMethods.IsValidHandle(hTrans, lastError);
+            NativeMethods.IsValidHandle(_hTrans, lastError);
          }
       }
 
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         if (!NativeMethods.CommitTransaction(hTrans))
+         if (!NativeMethods.CommitTransaction(_hTrans))
             CheckTransaction();
       }
 
@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         if (!NativeMethods.RollbackTransaction(hTrans))
+         if (!NativeMethods.RollbackTransaction(_hTrans))
             CheckTransaction();
       }
 
@@ -147,10 +147,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The safe handle.</value>
       public SafeHandle SafeHandle
       {
-         get { return hTrans; }
+         get { return _hTrans; }
       }
 
-      private SafeKernelTransactionHandle hTrans;
+      private readonly SafeKernelTransactionHandle _hTrans;
 
       #region IDisposable Members
 
@@ -158,7 +158,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityPermissionAttribute(SecurityAction.Demand, UnmanagedCode = true)]
       public void Dispose()
       {
-         hTrans.Dispose();
+         _hTrans.Dispose();
       }
 
       #endregion // IDisposable Members

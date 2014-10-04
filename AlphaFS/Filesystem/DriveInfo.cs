@@ -96,7 +96,8 @@ namespace Alphaleonis.Win32.Filesystem
 #endif
       void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
       {
-         if (info != null) info.AddValue("_name", _name, typeof(string));
+         if (info != null)
+            info.AddValue("_name", _name, typeof (string));
       }
 
       ///// <summary>Implements the operator ==</summary>
@@ -325,6 +326,7 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      case 0:
                         // DriveType
+                        // Do not use ?? expression here.
                         if (_driveType == null)
                            _driveType = Volume.GetDriveType(Name);
                         return _driveType;

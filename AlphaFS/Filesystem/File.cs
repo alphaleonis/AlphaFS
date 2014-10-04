@@ -4659,7 +4659,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(SafeFileHandle handle)
       {
-         return GetSizeInternal(null, handle, null, false);
+         return GetSizeInternal(null, handle, null, null);
       }
 
       #region Transacted

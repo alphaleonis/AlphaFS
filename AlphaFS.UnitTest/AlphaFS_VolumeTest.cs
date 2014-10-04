@@ -287,79 +287,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("{0}\n\n", Reporter(true));
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
       }
-
-      private void DumpGetDiskFreeSpace(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
-         int cnt = 0;
-
-         // Get only .IsReady drives.
-         foreach (string drv in Directory.EnumerateLogicalDrives(false, true).Select(drive => drive.Name))
-         {
-            string drive = isLocal ? drv : Path.LocalToUnc(drv);
-
-            StopWatcher(true);
-
-            try
-            { 
-               // null == All information.
-               DiskSpaceInfo dsi = Volume.GetDiskFreeSpace(drive, null);
-               string report = Reporter(true);
-               Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
-               Assert.IsTrue(dsi.FreeBytesAvailable != 0 && dsi.TotalNumberOfBytes != 0 && dsi.TotalNumberOfFreeBytes != 0);
-
-               Console.WriteLine("\n#{0:000}\tInput Path: [{1}]\n\t{2}", ++cnt, drive, report);
-               Assert.IsTrue(Dump(dsi, -26));
-
-
-               // false == Size information only.
-               dsi = Volume.GetDiskFreeSpace(drive, false);
-               Assert.IsTrue(dsi.BytesPerSector == 0 && dsi.NumberOfFreeClusters == 0 && dsi.SectorsPerCluster == 0 && dsi.TotalNumberOfClusters == 0);
-               Assert.IsTrue(dsi.FreeBytesAvailable != 0 && dsi.TotalNumberOfBytes != 0 && dsi.TotalNumberOfFreeBytes != 0);
-
-               // true == Cluster information only.
-               dsi = Volume.GetDiskFreeSpace(drive, true);
-               Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
-               Assert.IsTrue(dsi.FreeBytesAvailable == 0 && dsi.TotalNumberOfBytes == 0 && dsi.TotalNumberOfFreeBytes == 0);
-            }
-            catch (Exception ex)
-            {
-               Console.Write("\n\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
-            }
-         }
-
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-         Console.WriteLine("\n");
-      }
-      
-      private void DumpGetVolumeInformation(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
-
-         int cnt = 0;
-         foreach (string drive in Directory.GetLogicalDrives())
-         {
-            string tempPath = drive;
-            if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-            StopWatcher(true);
-            try
-            {
-               VolumeInfo volInfo = Volume.GetVolumeInformation(tempPath);
-               Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++cnt, tempPath);
-               Assert.AreEqual(tempPath, volInfo.FullPath);
-               Dump(volInfo, -26);
-
-               Console.WriteLine("\n");
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("#{0:000}\tLogical Drive: [{1}]\n\tCaught Exception: [{2}]\n\n", ++cnt, tempPath, ex.Message.Replace(Environment.NewLine, string.Empty));
-            }
-         }
-
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-      }
       
       private void DumpGetVolumePathName(bool isLocal)
       {
@@ -805,9 +732,7 @@ namespace AlphaFS.UnitTest
       public void GetDiskFreeSpace()
       {
          Console.WriteLine("Volume.GetDiskFreeSpace()");
-
-         DumpGetDiskFreeSpace(true);
-         DumpGetDiskFreeSpace(false);
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_DiskSpaceInfo()");
       }
 
       #endregion // GetDiskFreeSpace
@@ -1019,9 +944,7 @@ namespace AlphaFS.UnitTest
       public void GetVolumeInformation()
       {
          Console.WriteLine("Volume.GetVolumeInformation()");
-
-         DumpGetVolumeInformation(true);
-         DumpGetVolumeInformation(false);
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_DiskSpaceInfo()");
       }
 
       #endregion // GetVolumeInformation

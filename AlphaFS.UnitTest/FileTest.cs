@@ -378,7 +378,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpCopy
-
+      
       #region DumpDelete
 
       private void DumpDelete(bool isLocal)
@@ -1771,7 +1771,7 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void AlphaFS_CreateWithFileSecurity()
+      public void AlphaFS___CreateWithFileSecurity()
       {
          Console.WriteLine("File.Create()");
 
@@ -1824,7 +1824,7 @@ namespace AlphaFS.UnitTest
       public void Decrypt()
       {
          Console.WriteLine("File.Decrypt()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_Encrypt()");
+         Console.WriteLine("\nPlease see unit test: Encrypt()");
       }
 
       #endregion // Decrypt
@@ -2429,95 +2429,14 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
-      
+
       #region Compress
 
       [TestMethod]
       public void AlphaFS_Compress()
       {
          Console.WriteLine("File.Compress()");
-
-         // Create file and append text.
-         string tempFile8 = Path.GetTempFileName();
-
-         // Check that the drive, on which the tempfile will be created, is NOT NTFS-compressed.
-         DirectoryInfo di = new DirectoryInfo(tempFile8);
-
-         if (di.Attributes != (FileAttributes)(-1) && (di.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed)
-            Assert.IsTrue(false, "Volume is a compressed volume.");
-
-         // Append text as UTF-8, default.
-         for (int i = 0; i < 10000; i++)
-         {
-            File.AppendAllText(tempFile8, TextHelloWorld);
-         }
-
-         string utf8 = NativeMethods.DefaultFileEncoding.BodyName.ToUpperInvariant();
-         FileAttributes actual = File.GetAttributes(tempFile8);
-         FileInfo file = new FileInfo(tempFile8);
-         long sizeUncompressed = file.Length;
-         long sizeCompressed = File.GetCompressedSize(tempFile8);
-         long sizeBytes = File.GetSize(tempFile8);
-         Console.WriteLine("\n\tCreated {0} file: [{1}]", utf8, tempFile8);
-         Console.WriteLine("\tFile.Length == [{0}]", NativeMethods.UnitSizeToText(sizeUncompressed));
-         Console.WriteLine("\tFile.LengthCompressed() == [{0}]", NativeMethods.UnitSizeToText(sizeCompressed));
-         Console.WriteLine("\tFile.GetSize() == [{0}]", NativeMethods.UnitSizeToText(sizeBytes));
-         Console.WriteLine("\tFile.GetAttributes() == [{0}]", actual);
-         Assert.IsTrue((actual & FileAttributes.Compressed) != FileAttributes.Compressed);
-         Assert.IsTrue(sizeUncompressed == sizeCompressed, "Size should match.");
-         Assert.IsTrue(sizeBytes == sizeUncompressed, "Size should match.");
-
-         file = new FileInfo(tempFile8);
-         bool compressOk = false;
-         try
-         {
-            file.Compress();
-            compressOk = true;
-            actual = File.GetAttributes(tempFile8);
-            sizeUncompressed = file.Length;
-            sizeCompressed = File.GetCompressedSize(tempFile8);
-            sizeBytes = File.GetSize(tempFile8);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
-         }
-         Assert.IsTrue(compressOk);
-         Console.WriteLine("\n\tFile.Compress() successful == [{0}]: {1}", TextTrue, compressOk);
-         Console.WriteLine("\tFile.Length == [{0}]", NativeMethods.UnitSizeToText(sizeUncompressed));
-         Console.WriteLine("\tFile.GetCompressedSize() == [{0}]", NativeMethods.UnitSizeToText(sizeCompressed));
-         Console.WriteLine("\tFile.GetSize() == [{0}]", NativeMethods.UnitSizeToText(sizeBytes));
-         Console.WriteLine("\tFile.GetAttributes() == [{0}]", actual);
-         Assert.IsTrue((actual & FileAttributes.Compressed) == FileAttributes.Compressed);
-         Assert.IsTrue(sizeUncompressed != sizeCompressed);
-         Assert.IsTrue(sizeBytes == sizeUncompressed);
-
-         bool decompressOk = false;
-         try
-         {
-            File.Decompress(tempFile8);
-            decompressOk = true;
-            actual = File.GetAttributes(tempFile8);
-            file = new FileInfo(tempFile8);
-            sizeUncompressed = file.Length;
-            sizeCompressed = File.GetCompressedSize(tempFile8);
-            sizeBytes = File.GetSize(tempFile8);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
-         }
-         Console.WriteLine("\n\tFile.Decompress() successful == [{0}]: {1}", TextTrue, decompressOk);
-         Console.WriteLine("\tFile Size == [{0}]", NativeMethods.UnitSizeToText(sizeUncompressed));
-         Console.WriteLine("\tFile.LengthCompressed() == [{0}]", NativeMethods.UnitSizeToText(sizeCompressed));
-         Console.WriteLine("\tFile.GetSize() == [{0}]", NativeMethods.UnitSizeToText(sizeBytes));
-         Console.WriteLine("\tFile.GetAttributes() == [{0}]", actual);
-         Assert.IsTrue((actual & FileAttributes.Compressed) != FileAttributes.Compressed);
-         Assert.IsTrue(sizeUncompressed == sizeCompressed);
-         Assert.IsTrue(sizeBytes == sizeUncompressed);
-
-         file.Delete(true);
-         Assert.IsFalse(file.Exists, "Cleanup failed: File should have been removed.");
+         Console.WriteLine("\nPlease see unit test: AlphaFS_GetSize()");
       }
 
       #endregion // Compress
@@ -2541,7 +2460,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_Decompress()
       {
          Console.WriteLine("File.Decompress()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_Compress()");
+         Console.WriteLine("\nPlease see unit test: AlphaFS_GetSize()");
       }
 
       #endregion // Compress/Decompress
@@ -2598,8 +2517,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_GetEncryptionStatus()
       {
          Console.WriteLine("File.GetEncryptionStatus()");
-
-         Decrypt();
+         Console.WriteLine("\nPlease see unit test: Encrypt()");
       }
 
       #endregion // GetEncryptionStatus

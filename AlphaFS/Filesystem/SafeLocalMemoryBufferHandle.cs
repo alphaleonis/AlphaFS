@@ -21,8 +21,10 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using Microsoft.Win32.SafeHandles;
+#if NET35
+using System.Security.Permissions;
+#endif
 
 namespace Alphaleonis.Win32.Security
 {
@@ -70,6 +72,9 @@ namespace Alphaleonis.Win32.Security
       #region ReleaseHandle
 
       /// <summary>Called when object is disposed or finalized.</summary>
+#if NET35
+      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
+#endif
       protected override bool ReleaseHandle()
       {
          return NativeMethods.LocalFree(handle) == IntPtr.Zero;

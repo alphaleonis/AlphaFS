@@ -19,7 +19,9 @@
  *  THE SOFTWARE. 
  */
 
+#if NET35
 using System.Security.Permissions;
+#endif
 using Microsoft.Win32.SafeHandles;
 using System.Security;
 

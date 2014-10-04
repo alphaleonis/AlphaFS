@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Security
          [MarshalAs(UnmanagedType.U4)]
          private int nLength;
                   
-         private SafeHandle lpSecurityDescriptor;
+         private readonly SafeHandle lpSecurityDescriptor;
 
          [MarshalAs(UnmanagedType.Bool)]
          private bool bInheritHandle;
@@ -57,23 +57,20 @@ namespace Alphaleonis.Win32.Security
          private static SafeGlobalMemoryBufferHandle ToUnmanagedSecurityAttributes(ObjectSecurity securityDescriptor)
          {
             if (securityDescriptor == null)
-            {
                return new SafeGlobalMemoryBufferHandle();
-            }
-            else
+            
+            
+            byte[] src = securityDescriptor.GetSecurityDescriptorBinaryForm();
+            SafeGlobalMemoryBufferHandle memoryHandle = new SafeGlobalMemoryBufferHandle(src.Length);
+            try
             {
-               byte[] src = securityDescriptor.GetSecurityDescriptorBinaryForm();
-               SafeGlobalMemoryBufferHandle memoryHandle = new SafeGlobalMemoryBufferHandle(src.Length);
-               try
-               {
-                  memoryHandle.CopyFrom(src, 0, src.Length);
-                  return memoryHandle;
-               }
-               catch
-               {
-                  memoryHandle.Dispose();
-                  throw;
-               }
+               memoryHandle.CopyFrom(src, 0, src.Length);
+               return memoryHandle;
+            }
+            catch
+            {
+               memoryHandle.Dispose();
+               throw;
             }
          }
 
