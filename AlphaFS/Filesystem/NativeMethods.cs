@@ -591,6 +591,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function succeeds, the return value is nonzero.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
+      /// <remarks>The RemoveDirectory function marks a directory for deletion on close. Therefore, the directory is not removed until the last handle to the directory is closed.</remarks>
       /// <remarks>
       /// RemoveDirectory removes a directory junction, even if the contents of the target are not empty; the function removes directory
       /// junctions regardless of the state of the target object. For more information on junctions, see Hard Links and Junctions.

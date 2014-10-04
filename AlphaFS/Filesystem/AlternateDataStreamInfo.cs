@@ -149,6 +149,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // RemoveStreams
 
+
       #region Unified Internals
 
       #region AddStreamInternal

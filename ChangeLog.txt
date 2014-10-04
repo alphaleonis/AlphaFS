@@ -3,19 +3,11 @@ Version 1.6
     * Mod: Added more Unit Tests;
     * Mod: The public key of AlphaFS.dll has changed. (Delay-signing is no longer used);
 
+	* Mod: File and Directory classes contain all .NET 4 methods.
+
     * Mod: Class Volume()/VolumeInfo();
-
     * Mod: Class Directory()/DirectoryInfo();
-        * Mod: DirectoryInfo() and FileInfo() instance creation does not check if file/folder exists, are per .NET specification;
-        * Mod: DirectoryInfo() and FileInfo() are now LazyLoading;
-        * New: Added methods: Encrypt() and Decrypt();
-        * New: Added method: DeleteEmpty() to remove empty subdirectories, recursively;
-        * New: Added method: HasInheritedPermissions() to check if a directory has permission inheritance enabled.
-
     * Mod: Class File()/FileInfo();
-        * Mod: Method: File.GetSize() now opens files in FileShare.ReadWrite mode instead of FileShare.None;
-        * Mod: Changed method: File.GetFileSystemEntryInfoInternal(): will now populate property: FullPath;
-        * Mod: Method: File.CreateFileInternal() will check handle/throw Exception instead of the calling methods;
 
     * Mod: Class Path();
         * Mod:  Changed 7 methods to use System.IO.Path since these methods are not affected by MAX_PATH:
@@ -31,9 +23,8 @@ Version 1.6
    
     * New: Added instance Class Filesystem.Shell32Info();
 
-    * New: Added namespace AlphaFS.Network;
+    * New: Added namespace & class AlphaFS.Network.Host
 
-    * New: Added Class Host();
           Provides static methods to retrieve SMB Share- and DFS information from a local- or remote host.
           
          EnumerateDfsLinks();
@@ -58,12 +49,13 @@ Version 1.6
          DriveConnection();
 
       Instance classes: OpenResourceInfo();
-   
-   * New: Added .NET 4 methods to classes Directory and File().
+
 
    * New: Added "Cached LazyLoading" to class: FileSystemInfo() improving performance for classes: DirectoryInfo() and FileInfo().
 
    * New: Added support to work with files/directories with a trailing dot or space.
+
+   * New: Added support to work with Alternate Data Streams (NTFS ADS).
 
    * New: Added bool? isFullPath parameter to applicable methods of the File() and Directory() class.
 			isFullPath is false by default.

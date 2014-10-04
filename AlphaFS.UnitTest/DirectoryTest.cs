@@ -934,11 +934,14 @@ namespace AlphaFS.UnitTest
 
          StopWatcher(true);
          foreach (string dir in Directory.EnumerateFileSystemEntries(path, searchPattern, searchOption, true))
-            Console.WriteLine("\t#{0:000}\t{1}\t[{2}]", ++cntAlphaFs, ((File.GetAttributes(dir) & FileAttributes.Directory) == FileAttributes.Directory) ? "[Directory]" : "[File]\t", dir);
+            Console.WriteLine("\t#{0:000}\t{1}\t[{2}]", ++cntAlphaFs,
+               ((File.GetAttributes(dir) & FileAttributes.Directory) == FileAttributes.Directory)
+                  ? "[Directory]"
+                  : "[File]\t", dir);
 
          Console.WriteLine("\n\t{0}\n", Reporter(true));
          Assert.IsTrue(cntAlphaFs > 0, "Nothing was enumerated.");
-               }
+      }
 
       #endregion // DumpEnumerateFileSystemEntries
 
@@ -1172,7 +1175,7 @@ namespace AlphaFS.UnitTest
       private void DumpGetProperties(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot32 : Path.LocalToUnc(SysRoot32);
+         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
          
          Console.WriteLine("\n\tAggregated properties of file system objects from Directory: [{0}]\n", path);
 

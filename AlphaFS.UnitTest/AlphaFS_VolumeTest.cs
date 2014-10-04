@@ -944,7 +944,7 @@ namespace AlphaFS.UnitTest
       public void GetVolumeInformation()
       {
          Console.WriteLine("Volume.GetVolumeInformation()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_DiskSpaceInfo()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_VolumeInfo()");
       }
 
       #endregion // GetVolumeInformation

@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -116,13 +117,26 @@ namespace Alphaleonis.Win32.Filesystem
                         break;
 
                      default:
-                        bool fseiIsDir = (win32FindData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory;
                         string fullPathLp = path + fileName;
+                        bool fseiIsDir = (win32FindData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory;
 
-                        // If object is a Directory, add it to the queue for later traversal.
+                        // If object is a Directory, add it to the queue for later traversal, or not.
                         if (_searchAllDirs && fseiIsDir)
-                           dirs.Enqueue(fullPathLp);
+                        {
+                           // Skip on reparse points here to cleanly separate regular directories from links.
+                           if ((win32FindData.FileAttributes & FileAttributes.ReparsePoint) ==  FileAttributes.ReparsePoint)
+                           {
+                              if (SkipReparsePoints)
+                              {
+                                 //Debug.WriteLine("Skipped ReparsePoint: [" + (path + win32FindData.FileName) + "]");
+                                 break;
+                              }
+                           }
 
+                           dirs.Enqueue(fullPathLp);
+                        }
+
+                        
                         if (!(_nameFilter == null || (_nameFilter != null && _nameFilter.IsMatch(fileName))))
                            break;
 
@@ -406,6 +420,13 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // SearchPattern
+
+      #region SkipReparsePoints
+
+      /// <summary><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</summary>
+      public bool SkipReparsePoints { get; set; }
+
+      #endregion // SkipReparsePoints
 
       #region Transaction
 
