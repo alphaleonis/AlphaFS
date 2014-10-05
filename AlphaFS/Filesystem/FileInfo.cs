@@ -212,7 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decrypt()
       {
-         File.EncryptDecryptFileInternal(LongFullPath, false, null);
+         File.EncryptDecryptFileInternal(false, LongFullPath, false, null);
       }
 
       #endregion // .NET
@@ -259,7 +259,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt()
       {
-         File.EncryptDecryptFileInternal(LongFullPath, true, null);
+         File.EncryptDecryptFileInternal(false, LongFullPath, true, null);
       }
 
       #endregion // .NET

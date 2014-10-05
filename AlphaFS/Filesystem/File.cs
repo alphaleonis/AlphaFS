@@ -874,7 +874,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decrypt(string path)
       {
-         EncryptDecryptFileInternal(path, false, false);
+         EncryptDecryptFileInternal(false, path, false, false);
       }
 
       #endregion // .NET
@@ -890,7 +890,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decrypt(string path, bool? isFullPath)
       {
-         EncryptDecryptFileInternal(path, false, isFullPath);
+         EncryptDecryptFileInternal(false, path, false, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -1006,7 +1006,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Encrypt(string path)
       {
-         EncryptDecryptFileInternal(path, true, false);
+         EncryptDecryptFileInternal(false, path, true, false);
       }
 
       #endregion // .NET
@@ -1022,7 +1022,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Encrypt(string path, bool? isFullPath)
       {
-         EncryptDecryptFileInternal(path, true, isFullPath);
+         EncryptDecryptFileInternal(false, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -5769,48 +5769,27 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // DeleteFileInternal
-
-      #region EncryptDecryptDirectoryInternal
-
-      /// <summary>[AlphaFS] Unified method EncryptDecryptFileInternal() to decrypt/encrypt a file or directory so that only the account used to encrypt the file can decrypt it.</summary>
-      /// <param name="path">A path that describes a directory to encrypt.</param>
-      /// <param name="encrypt"><c>true</c> encrypt, <c>false</c> decrypt.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
-      [SecurityCritical]
-      internal static void EncryptDecryptDirectoryInternal(string path, bool encrypt, bool? isFullPath)
-      {
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(null, path, true, false, false, false);
-
-         // Process folders and files.
-         foreach (string fso in EnumerateFileSystemEntryInfoInternal<string>(null, pathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, true, false, false, null))
-            EncryptDecryptFileInternal(fso, encrypt, null);
-
-         // Process the root folder, the given path.
-         EncryptDecryptFileInternal(pathLp, encrypt, null);
-      }
-
-      #endregion // EncryptDecryptDirectoryInternal
-
+      
       #region EncryptDecryptFileInternal
 
       /// <summary>[AlphaFS] Unified method EncryptDecryptFileInternal() to decrypt/encrypt a file or directory so that only the account used to encrypt the file can decrypt it.</summary>
+      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
       /// <param name="path">A path that describes a file to encrypt.</param>
       /// <param name="encrypt"><c>true</c> encrypt, <c>false</c> decrypt.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void EncryptDecryptFileInternal(string path, bool encrypt, bool? isFullPath)
+      internal static void EncryptDecryptFileInternal(bool isFolder, string path, bool encrypt, bool? isFullPath)
       {
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(null, path, true, false, false, true);
+
+         // Reset file/directory attributes.
+         // MSDN: If lpFileName specifies a read-only file, the function fails and GetLastError returns ERROR_FILE_READ_ONLY.
+         SetAttributesInternal(isFolder, null, pathLp, FileAttributes.Normal, true, null);
 
          // EncryptFile() / DecryptFile()
          // In the ANSI version of this function, the name is limited to 248 characters.
@@ -5831,6 +5810,9 @@ namespace Alphaleonis.Win32.Filesystem
                   break;
 
                default:
+                  if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && isFolder)
+                     lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+
                   NativeError.ThrowException(lastError, pathLp);
                   break;
             }

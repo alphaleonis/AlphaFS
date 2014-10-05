@@ -386,7 +386,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in path; <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -403,7 +403,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in path; <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of files and directories.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
@@ -418,7 +418,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in path; <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of files and directories.</param>
       /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -446,7 +446,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in path; <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -462,7 +462,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in path; <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of files and directories.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
@@ -478,7 +478,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in path; <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of files and directories.</param>
       /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -3524,24 +3524,43 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a directory to decrypt.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>This will only decrypt the root items, non recursive.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Decrypt(string path, bool? isFullPath)
       {
-         File.EncryptDecryptDirectoryInternal(path, false, isFullPath);
+         EncryptDecryptDirectoryInternal(path, false, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
+      /// <param name="path">A path that describes a directory to decrypt.</param>
+      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void Decrypt(string path, bool recursive, bool? isFullPath)
+      {
+         EncryptDecryptDirectoryInternal(path, false, recursive, isFullPath);
       }
 
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a directory to decrypt.</param>
-      /// <remarks>This will only decrypt the root items, non recursive.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Decrypt(string path)
       {
-         File.EncryptDecryptDirectoryInternal(path, false, false);
+         EncryptDecryptDirectoryInternal(path, false, false, false);
+      }
+
+      /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
+      /// <param name="path">A path that describes a directory to decrypt.</param>
+      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void Decrypt(string path, bool recursive)
+      {
+         EncryptDecryptDirectoryInternal(path, false, recursive, false);
       }
       
       #endregion // Decrypt
@@ -3993,30 +4012,49 @@ namespace Alphaleonis.Win32.Filesystem
       #region Encrypt
 
       #region IsFullPath
-
+      
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>This will only encrypt the root items, non recursive.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Encrypt(string path, bool? isFullPath)
       {
-         File.EncryptDecryptDirectoryInternal(path, true, isFullPath);
+         EncryptDecryptDirectoryInternal(path, true, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
+      /// <param name="path">A path that describes a directory to encrypt.</param>
+      /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void Encrypt(string path, bool recursive, bool? isFullPath)
+      {
+         EncryptDecryptDirectoryInternal(path, true, recursive, isFullPath);
       }
 
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
-      /// <remarks>This will only encrypt the root items, non recursive.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Encrypt(string path)
       {
-         File.EncryptDecryptDirectoryInternal(path, true, false);
+         EncryptDecryptDirectoryInternal(path, true, false, false);
       }
-      
+
+      /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
+      /// <param name="path">A path that describes a directory to encrypt.</param>
+      /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static void Encrypt(string path, bool recursive)
+      {
+         EncryptDecryptDirectoryInternal(path, true, recursive, false);
+      }
+
       #endregion // Encrypt
       
       #region GetProperties
@@ -5169,6 +5207,33 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // EnableDisableEncryptionInternal
+
+      #region EncryptDecryptDirectoryInternal
+
+      /// <summary>[AlphaFS] Unified method EncryptDecryptFileInternal() to decrypt/encrypt a directory recursively so that only the account used to encrypt the file can decrypt it.</summary>
+      /// <param name="path">A path that describes a directory to encrypt.</param>
+      /// <param name="encrypt"><c>true</c> encrypt, <c>false</c> decrypt.</param>
+      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      internal static void EncryptDecryptDirectoryInternal(string path, bool encrypt, bool recursive, bool? isFullPath)
+      {
+         string pathLp = isFullPath == null
+            ? path
+            : (bool)isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(null, path, true, false, false, false);
+
+         // Process folders and files.
+         foreach (string fso in File.EnumerateFileSystemEntryInfoInternal<string>(null, pathLp, Path.WildcardStarMatchAll, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly, null, true, true, false, false, null))
+            File.EncryptDecryptFileInternal(true, fso, encrypt, null);
+
+         // Process the root folder, the given path.
+         File.EncryptDecryptFileInternal(true, pathLp, encrypt, null);
+      }
+
+      #endregion // EncryptDecryptDirectoryInternal
 
       #region EnumerateFileIdBothDirectoryInfoInternal
 

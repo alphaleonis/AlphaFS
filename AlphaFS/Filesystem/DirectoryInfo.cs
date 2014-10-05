@@ -1081,11 +1081,18 @@ namespace Alphaleonis.Win32.Filesystem
       #region Decrypt
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
-      /// <remarks>This will only decrypt the root items, non recursive.</remarks>
       [SecurityCritical]
       public void Decrypt()
       {
-         File.EncryptDecryptDirectoryInternal(LongFullPath, false, null);
+         Directory.EncryptDecryptDirectoryInternal(LongFullPath, false, false, null);
+      }
+
+      /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
+      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of the directory.</param>
+      [SecurityCritical]
+      public void Decrypt(bool recursive)
+      {
+         Directory.EncryptDecryptDirectoryInternal(LongFullPath, false, recursive, null);
       }
 
       #endregion // Decrypt
@@ -1154,11 +1161,18 @@ namespace Alphaleonis.Win32.Filesystem
       #region Encrypt
 
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
-      /// <remarks>This will only encrypt the root items, non recursive.</remarks>
       [SecurityCritical]
       public void Encrypt()
       {
-         File.EncryptDecryptDirectoryInternal(LongFullPath, true, null);
+         Directory.EncryptDecryptDirectoryInternal(LongFullPath, true, false, null);
+      }
+
+      /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
+      /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt files and directories in the root of the directory.</param>
+      [SecurityCritical]
+      public void Encrypt(bool recursive)
+      {
+         Directory.EncryptDecryptDirectoryInternal(LongFullPath, true, recursive, null);
       }
 
       #endregion // Encrypt

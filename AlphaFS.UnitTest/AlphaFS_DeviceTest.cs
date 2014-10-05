@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System.IO;
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -26,6 +27,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using File = Alphaleonis.Win32.Filesystem.File;
 
 namespace AlphaFS.UnitTest
 {
@@ -157,7 +159,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
 
          DumpEnumerateDevices(true);
-         DumpEnumerateDevices(false);
+         //DumpEnumerateDevices(false);
       }
 
       #endregion // EnumerateDevices

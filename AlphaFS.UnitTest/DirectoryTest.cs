@@ -38,7 +38,6 @@ using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
-using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
 using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
@@ -294,6 +293,8 @@ namespace AlphaFS.UnitTest
 
       #region Unit Tests
 
+      #region DumpCreateDirectory
+
       private static void DumpAccessRules(int cntCheck, DirectorySecurity dsSystem, DirectorySecurity dsAlpha)
       {
          Console.WriteLine("\n\tSanity check AlphaFS <> System.IO {0}.", cntCheck);
@@ -312,8 +313,11 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesCanonical: [{0}]", dsAlpha.AreAuditRulesCanonical);
          Assert.AreEqual(dsAlpha.AreAuditRulesCanonical, dsSystem.AreAuditRulesCanonical);
       }
-      
-      
+
+      #endregion // DumpCreateDirectory
+
+      #region DumpCompressDecompress
+
       private void DumpCompressDecompress(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
@@ -427,6 +431,8 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
+      #endregion // DumpCompressDecompress
+
       #region DumpCopy
 
       private void DumpCopy(bool isLocal)
@@ -514,6 +520,8 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpCopy
+
+      #region DumpCreateDirectory
 
       private void DumpCreateDirectory(bool isLocal)
       {
@@ -615,6 +623,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
+      #endregion // DumpCreateDirectory
+
+      #region DumpEnableDisableCompression
+
       private void DumpEnableDisableCompression(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
@@ -672,6 +684,10 @@ namespace AlphaFS.UnitTest
          Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          Console.WriteLine();
       }
+
+      #endregion // DumpEnableDisableCompression
+
+      #region DumpEnableDisableEncryption
 
       private void DumpEnableDisableEncryption(bool isLocal)
       {
@@ -760,24 +776,31 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
+      #endregion // DumpEnableDisableEncryption
+
+      #region DumpEncryptDecrypt
+
       private void DumpEncryptDecrypt(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
          string tempPath = Path.Combine(Path.GetTempPath(), "Directory.EncryptDecrypt()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         Console.WriteLine("\nInput Path: [{0}]", tempPath);
+         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
-         int cnt = 0;
+         
+         int cnt;
+         string report = "";
          Directory.CreateDirectory(tempPath);
          FileAttributes actual = File.GetAttributes(tempPath);
          bool action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
 
-         Console.WriteLine("\nEncrypted (Should be False): [{0}]\t\tAttributes: [{1}]\n", action, actual);
+         Console.WriteLine("\nDirectory Encrypted (Should be False): [{0}]\tAttributes: [{1}]", action, actual);
          Assert.IsFalse(action, "Encryption should be False");
          Assert.IsFalse((actual & FileAttributes.Encrypted) == FileAttributes.Encrypted, "Encryption should be False");
-
-
+         
          // Create some directories and files.
          for (int i = 0; i < 5; i++)
          {
@@ -792,83 +815,93 @@ namespace AlphaFS.UnitTest
 
             actual = File.GetAttributes(file);
             action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
-
-            Console.WriteLine("\t#{0:000}\tEncrypted (Should be False): [{1}]\t\tAttributes: [{2}] [{3}]", ++cnt, action, actual, Path.GetFullPath(file));
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
             Assert.IsFalse(action, "Encryption should be False");
          }
 
+         #endregion // Setup
+
+         #region Encrypt
 
          // Encrypt directory recursively.
-         action = false;
          StopWatcher(true);
          try
          {
-            Directory.Encrypt(tempPath);
+            Directory.Encrypt(tempPath, true);
+            report = Reporter(true);
             action = true;
-            actual = File.GetAttributes(tempPath);
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
-            Directory.Delete(tempPath, true);
+            action = false;
+            report = Reporter(true);
+            Console.WriteLine("\n\tDirectory.Encrypt(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
          }
-         Console.WriteLine("\nDirectory encrypted recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n{2}\n", action, actual, Reporter());
-         Assert.IsTrue(action, "Encryption should be True");
-         Assert.IsTrue((actual & FileAttributes.Encrypted) == FileAttributes.Encrypted, "Encryption should be True");
+         Assert.IsTrue(action, "Unexpected Exception");
 
-         // Check that everything is encrypted.
-         string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.AllDirectories;
+         actual = File.GetAttributes(tempPath);
+         action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
+         Assert.IsTrue(action, "File system ojbect should be encrypted.");
+         Console.WriteLine("\nDirectory Encrypted (Should be True): [{0}]\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
+
+         
+         // Verify that everything is encrypted.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
+         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, Path.WildcardStarMatchAll, SearchOption.AllDirectories))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
 
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tEncrypted (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-            Assert.IsTrue(action, "Encryption should be True");
+            Assert.IsTrue(action, "File system ojbect should be encrypted.");
          }
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
+         #endregion // Encrypt
+
+         #region Decrypt
 
          // Decrypt directory recursively.
-         action = false;
          StopWatcher(true);
          try
          {
-            Directory.Decrypt(tempPath);
+            Directory.Decrypt(tempPath, true);
+            report = Reporter(true);
             action = true;
-            actual = File.GetAttributes(tempPath);
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
-            Directory.Delete(tempPath, true);
+            action = false;
+            report = Reporter(true);
+            Console.WriteLine("\n\tDirectory.Decrypt(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
          }
-         Console.WriteLine("\n\nDirectory decrypted recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n{2}\n", action, actual, Reporter());
-         Assert.IsTrue(action, "Decryption should be True");
-         Assert.IsFalse((actual & FileAttributes.Encrypted) == FileAttributes.Encrypted, "Decryption should be True");
+         Assert.IsTrue(action, "Unexpected Exception");
 
-         // Check that everything is decrypted.
-         searchPattern = Path.WildcardStarMatchAll;
-         searchOption = SearchOption.AllDirectories;
+         actual = File.GetAttributes(tempPath);
+         action = (actual & FileAttributes.Encrypted) != FileAttributes.Encrypted;
+         Assert.IsTrue(action, "File system ojbect should be decrypted.");
+         Console.WriteLine("\nDirectory Decrypted (Should be True): [{0}]\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
+
+         
+         // Verify that everything is decrypted.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
+         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, Path.WildcardStarMatchAll, SearchOption.AllDirectories))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Encrypted) != FileAttributes.Encrypted;
 
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tDecrypted (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-            Assert.IsTrue(action, "Decryption should be True");
+            Assert.IsTrue(action, "File system ojbect should be decrypted.");
          }
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
+         #endregion // Decrypt
 
          Directory.Delete(tempPath, true);
          Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine("\n");
+         Console.WriteLine();
       }
+
+      #endregion // DumpEncryptDecrypt
 
       #region DumpEnumerateDirectories
 
@@ -945,7 +978,9 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpEnumerateFileSystemEntries
 
-      private static void DumpExists(bool isLocal)
+      #region DumpExists
+
+      private void DumpExists(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
          string tempPath = Path.GetTempPath("Directory-Exists-" + Path.GetRandomFileName());
@@ -969,6 +1004,10 @@ namespace AlphaFS.UnitTest
          Assert.IsFalse(exists, "Directory should exist.");
          Console.WriteLine();
       }
+
+      #endregion // DumpExists
+
+      #region DumpGetAccessControl
 
       private void DumpGetAccessControl(bool isLocal)
       {
@@ -1005,7 +1044,11 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n");
       }
-      
+
+      #endregion // DumpGetAccessControl
+
+      #region DumpGetDirectories
+
       private void DumpGetDirectories(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
@@ -1025,6 +1068,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\t{0}\n", Reporter(true));
          Assert.IsTrue(cntAlphaFS > 0);
       }
+
+      #endregion // DumpGetDirectories
+
+      #region DumpGetDirectoryTime
 
       private void DumpGetDirectoryTime(bool isLocal)
       {
@@ -1065,7 +1112,11 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n");
       }
-      
+
+      #endregion // DumpGetDirectoryTime
+
+      #region DumpGetDrives
+
       private void DumpGetDrives(bool enumerate)
       {
          Console.WriteLine("\nIf you are missing drives, please see this topic: https://alphafs.codeplex.com/discussions/397693 \n");
@@ -1094,6 +1145,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\t{0}", Reporter(true));
       }
 
+      #endregion // DumpGetDrives
+
+      #region DumpGetFiles
+
       private void DumpGetFiles(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
@@ -1113,6 +1168,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\t{0}\n", Reporter(true));
          Assert.IsTrue(cntAlphaFS > 0);
       }
+
+      #endregion // DumpGetFiles
+
+      #region DumpEnumerateFileIdBothDirectoryInfo
 
       private void DumpEnumerateFileIdBothDirectoryInfo(bool isLocal)
       {
@@ -1151,7 +1210,11 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(matchAll, "Number of directories and/or files don't match.");
          Console.WriteLine();
       }
-      
+
+      #endregion // DumpEnumerateFileIdBothDirectoryInfo
+
+      #region DumpGetFileSystemEntries
+
       private void DumpGetFileSystemEntries(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
@@ -1171,6 +1234,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\t{0}\n", Reporter(true));
          Assert.IsTrue(cntAlphaFS > 0);
       }
+
+      #endregion // DumpGetFileSystemEntries
+
+      #region DumpGetProperties
 
       private void DumpGetProperties(bool isLocal)
       {
@@ -1201,6 +1268,10 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(size > 0, "0 Size.");
          Console.WriteLine();
       }
+
+      #endregion // DumpGetProperties
+
+      #region DumpSetDirectoryTime
 
       private void DumpSetDirectoryTime(bool isLocal)
       {
@@ -1293,6 +1364,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
+      #endregion // DumpSetDirectoryTime
+
+      #region DumpSetTimestamps
+
       private void DumpSetTimestamps(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
@@ -1374,6 +1449,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
+      #endregion // DumpSetTimestamps
+
+      #region DumpTransferTimestamps
+
       private void DumpTransferTimestamps(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
@@ -1434,7 +1513,9 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n");
       }
-     
+
+      #endregion // DumpTransferTimestamps
+
       #region HasInheritedPermissions
 
       private static bool HasInheritedPermissions(string path)
