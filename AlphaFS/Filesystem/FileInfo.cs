@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          InitializeInternal(false, transaction, fileName, isFullPath);
 
-         _name = Path.GetFileName(Path.RemoveDirectorySeparator(fileName, false));
+         _name = Path.GetFileName(Path.RemoveDirectorySeparator(fileName, false), isFullPath);
       }
 
       #endregion // Transacted

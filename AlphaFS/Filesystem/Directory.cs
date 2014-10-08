@@ -1026,7 +1026,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Returns an enumerable collection of file names and directory names in a specified path. </summary>
+      /// <summary>Returns an enumerable collection of file names and directory names in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
@@ -1062,7 +1062,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>Returns an enumerable collection of file names and directory names in a specified path. </summary>
+      /// <summary>Returns an enumerable collection of file names and directory names in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
@@ -1072,7 +1072,7 @@ namespace Alphaleonis.Win32.Filesystem
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, isFullPath);
       }
 
-      /// <summary>Returns an enumerable collection of file names and directory names in a specified path. </summary>
+      /// <summary>Returns an enumerable collection of file names and directory names in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
@@ -1151,7 +1151,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Returns an enumerable collection of file names and directory names in a specified path. </summary>
+      /// <summary>Returns an enumerable collection of file names and directory names in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
@@ -1188,7 +1188,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>Returns an enumerable collection of file names and directory names in a specified path. </summary>
+      /// <summary>Returns an enumerable collection of file names and directory names in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
@@ -1199,7 +1199,7 @@ namespace Alphaleonis.Win32.Filesystem
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, isFullPath);
       }
 
-      /// <summary>Returns an enumerable collection of file names and directory names in a specified path. </summary>
+      /// <summary>Returns an enumerable collection of file names and directory names in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>

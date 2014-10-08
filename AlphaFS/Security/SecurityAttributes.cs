@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Security
             }
             catch
             {
-               memoryHandle.Dispose();
+               memoryHandle.Close();
                throw;
             }
          }
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Security
          public void Dispose()
          {
             if (lpSecurityDescriptor != null)
-               lpSecurityDescriptor.Dispose();
+               lpSecurityDescriptor.Close();
          }
       }
    }

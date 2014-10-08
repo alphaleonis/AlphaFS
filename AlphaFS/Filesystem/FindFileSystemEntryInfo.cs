@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -120,10 +119,10 @@ namespace Alphaleonis.Win32.Filesystem
                         string fullPathLp = path + fileName;
                         bool fseiIsDir = (win32FindData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory;
 
-                        // If object is a Directory, add it to the queue for later traversal, or not.
+                        // If object is a directory, add it to the queue for later traversal.
                         if (_searchAllDirs && fseiIsDir)
                         {
-                           // Skip on reparse points here to cleanly separate regular directories from links.
+                           // Or not: Skip on reparse points here to cleanly separate regular directories from links.
                            if ((win32FindData.FileAttributes & FileAttributes.ReparsePoint) ==  FileAttributes.ReparsePoint)
                            {
                               if (SkipReparsePoints)
@@ -226,7 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException(lastError, InputPath);
             }
 
-            win32FindData.FileName = Path.GetFileName(InputPath);
+            win32FindData.FileName = Path.GetFileName(InputPath, true);
             win32FindData.AlternateFileName = string.Empty;
             win32FindData.FileAttributes = win32AttrData.FileAttributes;
             win32FindData.CreationTime = win32AttrData.CreationTime;
@@ -244,13 +243,6 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Methods
 
       #region Properties
-
-      #region AsLongPath
-
-      /// <summary>Gets the path in Unicode (LongPath) format.</summary>
-      public bool AsLongPath { get; set; }
-
-      #endregion // AsLongPath
 
       #region BasicSearch
 

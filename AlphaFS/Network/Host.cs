@@ -556,7 +556,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates local drives from the specified host.</summary>
-      /// <param name="host">The DNS or NetBIOS name of the remote server.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> drives from the specified host.</returns>
       [SecurityCritical]
@@ -578,7 +578,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates open connections from the specified host.</summary>
-      /// <param name="host">The DNS or NetBIOS name of the remote server.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>Returns <see cref="T:OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
@@ -601,7 +601,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates open resources from the specified host.</summary>
-      /// <param name="host">The DNS or NetBIOS name of the remote server.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="basePath">This parameter may be <c>null</c>. Enumerates only resources that have the value of the basepath parameter as a prefix. (A prefix is the portion of a path that comes before a backslash.)</param>
       /// <param name="typeName">This parameter may be <c>null</c>. The name of the user or the name of the connection; If <paramref name="typeName"/> does not begin with two backslashes ("\\") it indicates the name of the user. If <paramref name="typeName"/> begins with two backslashes ("\\") it indicates the name of the connection,</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
@@ -769,9 +769,11 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string GetUncName(string computerName)
       {
-         return (Utils.IsNullOrWhiteSpace(computerName) || computerName.StartsWith(Path.UncPrefix, StringComparison.OrdinalIgnoreCase)
-            ? computerName
-            : string.Format(CultureInfo.InvariantCulture, "{0}{1}", Path.UncPrefix, computerName));
+         return Utils.IsNullOrWhiteSpace(computerName)
+            ? GetUncName()
+            : (computerName.StartsWith(Path.UncPrefix, StringComparison.OrdinalIgnoreCase)
+               ? computerName
+               : GetUncName());
       }
 
       #endregion // GetUncName
@@ -959,7 +961,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateDrivesInternal
 
       /// <summary>Unified method EnumerateDrivesInternal() to enumerate local drives from the specified host.</summary>
-      /// <param name="host">The DNS or NetBIOS name of the remote server.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> drives from the specified host.</returns>
       [SecurityCritical]
@@ -980,7 +982,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateOpenConnectionsInternal
 
       /// <summary>Unified method EnumerateOpenConnectionsInternal() to enumerate open connections from the specified host.</summary>
-      /// <param name="host">The DNS or NetBIOS name of the remote server.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>Returns <see cref="T:OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
@@ -1005,7 +1007,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateOpenResourcesInternal
 
       /// <summary>>Unified method EnumerateOpenResourcesInternal() to enumerate open resources from the specified host.</summary>
-      /// <param name="host">The DNS or NetBIOS name of the remote server.</param>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="basePath">This parameter may be <c>null</c>. Enumerates only resources that have the value of the basepath parameter as a prefix. (A prefix is the portion of a path that comes before a backslash.)</param>
       /// <param name="typeName">This parameter may be <c>null</c>. The name of the user or the name of the connection; If <paramref name="typeName"/> does not begin with two backslashes ("\\") it indicates the name of the user. If <paramref name="typeName"/> begins with two backslashes ("\\") it indicates the name of the connection,</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
@@ -1323,7 +1325,7 @@ namespace Alphaleonis.Win32.Network
                case Win32Errors.RPC_X_BAD_STUB_DATA:
                   if (!fallback && structureLevel != 2)
                   {
-                     safeBuffer.Dispose();
+                     safeBuffer.Close();
                      structureLevel = 2;
                      fallback = true;
                      goto startNetShareGetInfo;

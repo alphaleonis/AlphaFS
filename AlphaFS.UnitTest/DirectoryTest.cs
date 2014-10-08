@@ -346,7 +346,7 @@ namespace AlphaFS.UnitTest
 
             // using() == Dispose() == Close() = deletable.
             using (File.Create(file)) { }
-            using (File.Create(Path.Combine(dir, Path.GetFileName(file)))) { }
+            using (File.Create(Path.Combine(dir, Path.GetFileName(file, true)))) { }
 
             actual = File.GetAttributes(file);
             action = (actual & FileAttributes.Compressed) == FileAttributes.Compressed;
@@ -811,7 +811,7 @@ namespace AlphaFS.UnitTest
 
             // using() == Dispose() == Close() = deletable.
             using (File.Create(file)) { }
-            using (File.Create(Path.Combine(dir, Path.GetFileName(file)))) { }
+            using (File.Create(Path.Combine(dir, Path.GetFileName(file, true)))) { }
 
             actual = File.GetAttributes(file);
             action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;

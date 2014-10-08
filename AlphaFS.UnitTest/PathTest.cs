@@ -996,7 +996,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Path.GetLongPath()");
          Console.WriteLine("\n\tDirectory: [{0}]", SysRoot);
 
-         string folderName = Path.GetFileName(SysRoot);
+         string folderName = Path.GetFileName(SysRoot, true);
          string longPath = Path.GetLongPath(SysRoot);
          Console.WriteLine("\n\tGetLongPath(): [{0}]", longPath);
          Assert.IsTrue(longPath.StartsWith(Path.LongPathPrefix));

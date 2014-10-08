@@ -38,7 +38,14 @@ namespace Alphaleonis.Win32.Filesystem
       [NonSerialized] private readonly string _hostName;
 
       /// <summary>Initializes a DeviceInfo class.</summary>
-      /// <param name="host">The DNS or NetBIOS name of the remote server.</param>
+      [SecurityCritical]
+      public DeviceInfo()
+      {
+         _hostName = Host.GetUncName();
+      }
+
+      /// <summary>Initializes a DeviceInfo class.</summary>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       [SecurityCritical]
       public DeviceInfo(string host)
       {
@@ -61,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       #endregion // EnumerateDevices
-
+      
       #endregion // Methods
 
       #region Properties

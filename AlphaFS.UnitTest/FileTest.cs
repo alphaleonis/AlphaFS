@@ -327,7 +327,7 @@ namespace AlphaFS.UnitTest
          StopWatcher(true);
          foreach (string file in Directory.EnumerateFiles(path))
          {
-            string newFile = Path.Combine(tempPath, Path.GetFileName(file));
+            string newFile = Path.Combine(tempPath, Path.GetFileName(file, true));
             File.Copy(file, newFile);
             Console.WriteLine("\t#{0:000}\tCopy() == [{1}]", ++cnt, newFile);
             Assert.IsTrue(File.Exists(newFile));
@@ -343,7 +343,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          foreach (string file in Directory.EnumerateFiles(path))
          {
-            string newFile = Path.Combine(tempPath, Path.GetFileName(file));
+            string newFile = Path.Combine(tempPath, Path.GetFileName(file, true));
 
             try
             {
@@ -843,7 +843,7 @@ namespace AlphaFS.UnitTest
 
          foreach (string file in Directory.EnumerateFiles(path))
          {
-            string newFile = Path.Combine(tempPath, Path.GetFileName(file));
+            string newFile = Path.Combine(tempPath, Path.GetFileName(file, true));
             File.Copy(file, newFile);
             Assert.IsTrue(File.Exists(newFile));
          }
@@ -858,7 +858,7 @@ namespace AlphaFS.UnitTest
          StopWatcher(true);
          foreach (string file in Directory.EnumerateFiles(tempPath))
          {
-            string newFile = Path.Combine(movePath, Path.GetFileName(file));
+            string newFile = Path.Combine(movePath, Path.GetFileName(file, true));
             File.Move(file, newFile);
             Console.WriteLine("\t#{0:000}\tMove: [{1}]", ++cnt, newFile);
             Assert.IsTrue(File.Exists(newFile));
@@ -873,7 +873,7 @@ namespace AlphaFS.UnitTest
 
          foreach (string file in Directory.EnumerateFiles(path))
          {
-            string newFile = Path.Combine(tempPath, Path.GetFileName(file));
+            string newFile = Path.Combine(tempPath, Path.GetFileName(file, true));
             File.Copy(file, newFile);
             Assert.IsTrue(File.Exists(newFile));
          }
@@ -886,7 +886,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          foreach (string file in Directory.EnumerateFiles(tempPath))
          {
-            string newFile = Path.Combine(movePath, Path.GetFileName(file));
+            string newFile = Path.Combine(movePath, Path.GetFileName(file, true));
 
             try
             {

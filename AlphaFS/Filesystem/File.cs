@@ -5379,7 +5379,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
          catch (IOException)
          {
-            fs.Dispose();
+            fs.Close();
             throw;
          }
       }
@@ -5942,7 +5942,6 @@ namespace Alphaleonis.Win32.Filesystem
          {
             IsFullPath = isFullPath,
             InputPath = path,
-            AsLongPath = asLongPath,
             FileSystemObjectType = getFolders,
             SearchOption = searchOption,
             SearchPattern = searchPattern,
@@ -5952,37 +5951,37 @@ namespace Alphaleonis.Win32.Filesystem
 
          }.Enumerate())
          {
-            // Return FullPath property as string.
-            if (getAsString != null && (bool)getAsString)
-               yield return (T)(object)(asLongPath ? fsei.LongFullPath : fsei.FullPath);
+            // Return FileSystemEntryInfo instance.
+            if (getAsString == null)
+            {
+               switch (getFolders)
+               {
+                  case null:
+                     yield return (T) (object) fsei;
+                     break;
 
+                  case true:
+                     if (fsei.IsDirectory)
+                        yield return (T) (object) fsei;
+                     break;
+
+                  case false:
+                     if (!fsei.IsDirectory)
+                        yield return (T) (object) fsei;
+                     break;
+               }
+            }
             else
             {
-               // Return FileSystemEntryInfo instance.
-               if (getAsString == null)
-               {
-                  switch (getFolders)
-                  {
-                     case true:
-                        if (fsei.IsDirectory)
-                           yield return (T)(object)fsei;
-                        break;
+               // Return FullPath property as string.
+               if ((bool) getAsString)
+                  yield return (T) (object) (asLongPath ? fsei.LongFullPath : fsei.FullPath);
 
-                     case false:
-                        if (!fsei.IsDirectory)
-                           yield return (T)(object)fsei;
-                        break;
-
-                     default:
-                        yield return (T)(object)fsei;
-                        break;
-                  }
-               }
                else
                {
                   // Return a specific instance of type: FileSystemInfo, DirectoryInfo or FileInfo.
                   // Bonus: the returned FileSystemEntryInfo instance is constructed from a Win32FindData data structure
-                  // with properties already populated by the Win32 FindFirstFileEx() function.
+                  // with properties already populated by the Win32 FindFirstFile()/FindNextFile() functions.
                   // This means that the returned DirectoryInfo/FileInfo instance is already .Refresh()-ed.
                   // I call it: Cached LazyLoading.
 
@@ -5990,7 +5989,8 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      // true = return instance of type: DirectoryInfo.
                      case true:
-                        yield return (T)(object)new DirectoryInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei };
+                        yield return
+                           (T)(object)new DirectoryInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei };
                         break;
 
                      // false = return instance of type: FileInfo.
@@ -6001,8 +6001,8 @@ namespace Alphaleonis.Win32.Filesystem
                      // null = return instances of type: DirectoryInfo or FileInfo.
                      default:
                         yield return (T)(object)(fsei.IsDirectory
-                              ? (FileSystemInfo)new DirectoryInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei }
-                              : new FileInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei });
+                           ? (FileSystemInfo)new DirectoryInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei }
+                           : new FileInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei });
                         break;
                   }
                }
@@ -6110,7 +6110,7 @@ namespace Alphaleonis.Win32.Filesystem
                   switch ((uint)lastError)
                   {
                      case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-                        safeBuffer.Dispose();
+                        safeBuffer.Close();
                         goto startGetFileSecurity;
 
                      case Win32Errors.ERROR_FILE_NOT_FOUND:
@@ -6388,8 +6388,8 @@ namespace Alphaleonis.Win32.Filesystem
          return new FindFileSystemEntryInfo
          {
             IsFullPath = isFullPath,
-            IsFolder = isFolder,
             InputPath = path,
+            IsFolder = isFolder,
             Transaction = transaction,
             Fallback = fallback,
             ContinueOnException = continueOnException,

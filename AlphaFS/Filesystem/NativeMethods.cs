@@ -19,6 +19,8 @@
  *  THE SOFTWARE. 
  */
 
+using Alphaleonis.Win32.Security;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,9 +32,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Text;
-using Alphaleonis.Win32.Security;
-using Microsoft.Win32.SafeHandles;
-using SecurityNativeMethods = Alphaleonis.Win32.Security.NativeMethods;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -385,7 +384,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.I4)]
-      internal static extern int CM_Connect_Machine([MarshalAs(UnmanagedType.LPWStr)] string uncServerName, ref SafeCmConnectMachineHandle phMachine);
+      internal static extern int CM_Connect_Machine([MarshalAs(UnmanagedType.LPWStr)] string uncServerName, out SafeCmConnectMachineHandle phMachine);
 
       #endregion // CM_Connect_Machine
 

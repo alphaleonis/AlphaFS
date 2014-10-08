@@ -10,8 +10,23 @@ Version 1.6
     * Mod: Class File()/FileInfo();
 
     * Mod: Class Path();
-        * Mod:  Changed 7 methods to use System.IO.Path since these methods are not affected by MAX_PATH:
-                ChangeExtension(), GetExtension(), GetFileName(), GetFileNameWithoutExtension(), GetPathRoot(), HasExtension(), IsPathRooted();
+
+		- Class PathInfo() no longer exists. Most methods have been rewritten to closely resemble .NET code.
+
+		- some methods call their System.IO.Path counterpart.
+		  These methods are not affected by MAX_PATH:
+
+			Path.ChangeExtension()
+			Path.GetExtension()
+			Path.GetFileName()
+			Path.GetFileNameWithoutExtension()
+		    Path.GetInvalidFileNameChars()
+			Path.GetInvalidPathChars()
+			Path.GetRandomFileName()
+			Path.GetTempFileName()
+			Path.GetTempPath()
+			Path.HasExtension()
+			Path.IsPathRooted()
 
     * New: Added instance Class Filesystem.DriveInfo();
 

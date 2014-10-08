@@ -32,19 +32,28 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides static methods to retrieve device resource information from a local- or remote host.</summary>
+   /// <summary>Provides static methods to retrieve device resource information from a local or remote host.</summary>
    public static class Device
    {
       #region EnumerateDevices
 
-      /// <summary>Enumerates all available devices on the local or remote host.</summary>
-      /// <param name="host">The DNS or NetBIOS name of the remote server.</param>
+      /// <summary>Enumerates all available devices on the local.</summary>
       /// <param name="deviceGuid">One of the <see cref="T:DeviceGuid"/> devices.</param>
-      /// <returns>Returns <see cref="T:IEnumerable{DeviceInfo}"/> instances of type <see cref="T:DeviceGuid"/> from the specified <paramref name="host"/>.</returns>
+      /// <returns>Returns <see cref="T:IEnumerable{DeviceInfo}"/> instances of type <see cref="T:DeviceGuid"/> from the local host.</returns>
       [SecurityCritical]
-      public static IEnumerable<DeviceInfo> EnumerateDevices(string host, DeviceGuid deviceGuid)
+      public static IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {
-         return EnumerateDevicesInternal(null, host, deviceGuid);
+         return EnumerateDevices(null, deviceGuid);
+      }
+
+      /// <summary>Enumerates all available devices of type <see cref="T:DeviceGuid"/> on the local or remote host.</summary>
+      /// <param name="hostName">The name of the local or remote host on which the device resides. <c>null</c> refers to the local host.</param>
+      /// <param name="deviceGuid">One of the <see cref="T:DeviceGuid"/> devices.</param>
+      /// <returns>Returns <see cref="T:IEnumerable{DeviceInfo}"/> instances of type <see cref="T:DeviceGuid"/> for the specified <paramref name="hostName"/>.</returns>
+      [SecurityCritical]
+      public static IEnumerable<DeviceInfo> EnumerateDevices(string hostName, DeviceGuid deviceGuid)
+      {
+         return EnumerateDevicesInternal(null, hostName, deviceGuid);
       }
 
       #endregion // EnumerateDevices
@@ -59,35 +68,40 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static IEnumerable<DeviceInfo> EnumerateDevicesInternal(SafeHandle safeHandle, string hostName, DeviceGuid deviceInterfaceGuid)
       {
+         bool ownsHandle = safeHandle != null;
          Guid deviceGuid = new Guid(NativeMethods.GetEnumDescription(deviceInterfaceGuid));
 
-         // Connect to machine.
-
+         
          // CM_Connect_Machine()
          // MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.
          // You cannot access remote machines when running on these versions of Windows. 
          // http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx
 
-         SafeCmConnectMachineHandle safeMachineHandle = new SafeCmConnectMachineHandle();
-
-         int lastError = NativeMethods.CM_Connect_Machine(Path.LocalToUncInternal(Host.GetUncName(hostName), false, false, false, false), ref safeMachineHandle);
-         NativeMethods.IsValidHandle(safeMachineHandle, lastError);
+         SafeCmConnectMachineHandle safeMachineHandle;
+         int lastError = NativeMethods.CM_Connect_Machine(Path.LocalToUncInternal(Host.GetUncName(hostName), false, false, false, false), out safeMachineHandle);
+         if (safeMachineHandle.IsInvalid)
+         {
+            safeMachineHandle.Close();
+            NativeError.ThrowException(lastError, Resources.HandleInvalid);
+         }
 
          using (safeMachineHandle)
          {
-            if (lastError != Win32Errors.CR_SUCCESS)
-               NativeError.ThrowException(lastError, hostName);
-
             // Start at the "Root" of the device tree of the specified machine.
-            if (safeHandle == null)
+            if (!ownsHandle)
                safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref deviceGuid, IntPtr.Zero, IntPtr.Zero,
                   NativeMethods.SetupDiGetClassDevsExFlags.Present |
                   NativeMethods.SetupDiGetClassDevsExFlags.DeviceInterface,
                   IntPtr.Zero, hostName, IntPtr.Zero);
 
-            NativeMethods.IsValidHandle(safeHandle);
+            if (safeHandle.IsInvalid)
+            {
+               safeHandle.Close();
+               NativeError.ThrowException(Marshal.GetLastWin32Error(), Resources.HandleInvalid);
+            }
                  
-            using (safeHandle)
+            
+            try
             {
                uint memberInterfaceIndex = 0;
                NativeMethods.SpDeviceInterfaceData deviceInterfaceData = CreateDeviceInterfaceDataInstance();
@@ -128,7 +142,7 @@ namespace Alphaleonis.Win32.Filesystem
                   lastError = NativeMethods.CM_Get_Parent_Ex(out ptrPrevious, deviceInfoData.DevInst, 0, safeMachineHandle);
                   if (lastError != Win32Errors.CR_SUCCESS)
                      NativeError.ThrowException(lastError, hostName);
-               
+
 
                   // Now we get the InstanceID of the USB level device.
                   using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
@@ -164,9 +178,6 @@ namespace Alphaleonis.Win32.Filesystem
                            deviceInfo.BaseContainerId = new Guid(dataString);
                      }
 
-                     if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Class, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.Class = Marshal.PtrToStringUni(handle);
-
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.ClassGuid, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
                      {
                         dataString = Marshal.PtrToStringUni(handle);
@@ -175,6 +186,9 @@ namespace Alphaleonis.Win32.Filesystem
                      }
 
 
+                     if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Class, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
+                        deviceInfo.Class = Marshal.PtrToStringUni(handle);
+                     
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.CompatibleIds, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
                         deviceInfo.CompatibleIds = Marshal.PtrToStringUni(handle);
 
@@ -210,12 +224,17 @@ namespace Alphaleonis.Win32.Filesystem
                   }
 
                   #endregion // Get Registry Properties
-
+                  
                   yield return deviceInfo;
 
                   // Get new structure instance.
                   deviceInterfaceData = CreateDeviceInterfaceDataInstance();
                }
+            }
+            finally
+            {
+               if (!ownsHandle && safeHandle != null)
+                  safeHandle.Close();
             }
          }
       }
@@ -230,8 +249,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle")]
       [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoInternal(SafeFileHandle handle)
+      internal static LinkTargetInfo GetLinkTargetInfoInternal(SafeFileHandle safeHandle)
       {
+         bool ownsHandle = safeHandle != null;
+
          // Start with a large buffer to prevent a 2nd call.
          uint bytesReturned = NativeMethods.MaxPathUnicode;
          SafeGlobalMemoryBufferHandle safeBuffer = null;
@@ -249,7 +270,7 @@ namespace Alphaleonis.Win32.Filesystem
                // DeviceIoControlFileDevice.FileSystem = 9
                // FsctlGetReparsePoint = (DeviceIoControlFileDevice.FileSystem << 16) | (42 << 2) | DeviceIoControlMethod.Buffered | (0 << 14)
 
-               if (!NativeMethods.DeviceIoControl(handle, ((9 << 16) | (42 << 2) | 0 | (0 << 14)), IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned, IntPtr.Zero))
+               if (!NativeMethods.DeviceIoControl(safeHandle, ((9 << 16) | (42 << 2) | 0 | (0 << 14)), IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned, IntPtr.Zero))
                {
                   int lastError = Marshal.GetLastWin32Error();
                   switch ((uint)lastError)
@@ -258,7 +279,7 @@ namespace Alphaleonis.Win32.Filesystem
                      case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
                         if (safeBuffer.Capacity < bytesReturned)
                         {
-                           safeBuffer.Dispose();
+                           safeBuffer.Close();
                            break;
                         }
 
@@ -316,7 +337,10 @@ namespace Alphaleonis.Win32.Filesystem
          finally
          {
             if (safeBuffer != null)
-               safeBuffer.Dispose();
+               safeBuffer.Close();
+
+            if (!ownsHandle && safeHandle != null)
+               safeHandle.Close();
          }
       }
 

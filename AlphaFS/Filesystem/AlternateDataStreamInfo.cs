@@ -278,7 +278,7 @@ namespace Alphaleonis.Win32.Filesystem
          finally
          {
             if (!ownsHandle && handle != null)
-               handle.Dispose();
+               handle.Close();
          }
       }
 

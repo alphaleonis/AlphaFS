@@ -232,7 +232,7 @@ namespace Alphaleonis.Win32.Filesystem
                _context = IntPtr.Zero;
             }
 
-            SafeFileHandle.Dispose();
+            SafeFileHandle.Close();
          }
 
          base.Dispose(disposing);
@@ -505,7 +505,7 @@ namespace Alphaleonis.Win32.Filesystem
          finally
          {
             if (pSecurityDescriptor != null)
-               pSecurityDescriptor.Dispose();
+               pSecurityDescriptor.Close();
          }
       }
 

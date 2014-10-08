@@ -592,7 +592,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tFilestream.Name == [{0}]\n{1}", streamName, Reporter());
             Assert.IsTrue(Dump(info, -18));
 
-            stream.Dispose();
+            stream.Close();
 
             Assert.AreEqual(System.IO.File.GetCreationTime(tempPath), info.CreationTime);
             Assert.AreEqual(System.IO.File.GetLastAccessTime(tempPath), info.LastAccessTime);
@@ -611,17 +611,16 @@ namespace AlphaFS.UnitTest
       private void DumpClassDeviceInfo(string host)
       {
          Console.WriteLine("\n=== TEST ===");
-         string tempPath = host; 
 
          bool allOk = false;
          try
          {
             #region DeviceGuid.Volume
 
-            Console.Write("\nEnumerating volumes from host: [{0}]\n", tempPath);
+            Console.Write("\nEnumerating volumes from host: [{0}]\n", host);
             int cnt = 0;
             StopWatcher(true);
-            foreach (DeviceInfo device in Device.EnumerateDevices(tempPath, DeviceGuid.Volume))
+            foreach (DeviceInfo device in Device.EnumerateDevices(host, DeviceGuid.Volume))
             {
                Console.WriteLine("\n#{0:000}\tClass: [{1}]", ++cnt, device.Class);
 
@@ -647,10 +646,10 @@ namespace AlphaFS.UnitTest
 
             #region DeviceGuid.Disk
 
-            Console.Write("\nEnumerating disks from host: [{0}]\n", tempPath);
+            Console.Write("\nEnumerating disks from host: [{0}]\n", host);
             cnt = 0;
             StopWatcher(true);
-            foreach (DeviceInfo device in Device.EnumerateDevices(tempPath, DeviceGuid.Disk))
+            foreach (DeviceInfo device in Device.EnumerateDevices(host, DeviceGuid.Disk))
             {
                Console.WriteLine("\n#{0:000}\tClass: [{1}]", ++cnt, device.Class);
 

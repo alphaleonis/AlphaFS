@@ -154,6 +154,38 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
+      #region AlphaFS
+
+      #region IsFullPath
+
+      /// <summary>Returns the file name and extension of the specified path string.</summary>
+      /// <param name="path">The path string from which to obtain the file name and extension.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <returns>The characters after the last directory character in <paramref name="path"/>. If the last character of <paramref name="path"/> is a directory or volume separator character, this method returns <c>string.Empty</c>. If path is null, this method returns null.</returns>
+      public static string GetFileName(string path, bool? isFullPath)
+      {
+         if (path != null)
+         {
+            if ((bool) !isFullPath)
+               CheckInvalidPathChars(path);
+
+            int length = path.Length;
+            int index = length;
+            while (--index >= 0)
+            {
+               char ch = path[index];
+               if (IsDVsc(ch, null))
+                  return path.Substring(index + 1, length - index - 1);
+            }
+         }
+
+         return path;
+      }
+
+      #endregion // IsFullPath
+
+      #endregion // AlphaFS
+
       #endregion // GetFileName (.NET)
 
       #region GetFileNameWithoutExtension (.NET)
@@ -366,7 +398,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetTempFileName (.NET)
 
-      #region GetTempPath
+      #region GetTempPath (.NET)
 
       #region .NET
 
@@ -394,7 +426,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // AlphaFS
 
-      #endregion // GetTempPath
+      #endregion // GetTempPath (.NET)
 
       #region HasExtension (.NET)
 
@@ -962,22 +994,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Check if <paramref name="c"/> is a directory- and/or volume-separator character.</summary>
       /// <param name="c">The character to check.</param>
-      /// <param name="checkVolumeSeparatorChar">
+      /// <param name="checkSeparatorChar">
       /// If <c>null</c>, checks for all separator characters: <see cref="T:DirectorySeparatorChar"/>, <see cref="T:AltDirectorySeparatorChar"/> and <see cref="T:VolumeSeparatorChar"/>
       /// If <c>false</c>, only checks for: <see cref="T:DirectorySeparatorChar"/> and <see cref="T:AltDirectorySeparatorChar"/>
       /// If <c>true</c> only checks for: <see cref="T:VolumeSeparatorChar"/>
       ///</param>
       /// <returns><c>true</c> if <paramref name="c"/> is a separator character.</returns>
       [SecurityCritical]
-      internal static bool IsDVsc(char c, bool? checkVolumeSeparatorChar)
+      internal static bool IsDVsc(char c, bool? checkSeparatorChar)
       {
-         return checkVolumeSeparatorChar == null
+         return checkSeparatorChar == null
 
             // Check for all separator characters.
             ? c == DirectorySeparatorChar || c == AltDirectorySeparatorChar || c == VolumeSeparatorChar
 
             // Check for some separator characters.
-            : ((bool) checkVolumeSeparatorChar
+            : ((bool) checkSeparatorChar
                ? c == VolumeSeparatorChar
                : c == DirectorySeparatorChar || c == AltDirectorySeparatorChar);
       }
@@ -1166,7 +1198,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   string path = GetSuffixedDirectoryNameWithoutRootInternal(null, dosPath);
                   string driveLetter = RemoveDirectorySeparator(GetPathRoot(dosPath, false), false);
-                  string file = GetFileName(dosPath);
+                  string file = GetFileName(dosPath, true);
 
                   if (!Utils.IsNullOrWhiteSpace(file))
                      foreach (string drive in Directory.EnumerateLogicalDrivesInternal(false, false).Select(drv => drv.Name).Where(drv => driveLetter.Equals(RemoveDirectorySeparator(drv, false), StringComparison.OrdinalIgnoreCase)))

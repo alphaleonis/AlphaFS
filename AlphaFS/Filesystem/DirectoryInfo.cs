@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          LongFullPath = Path.GetLongPathInternal(fullPath, false, false, false, false);
 
-         OriginalPath = Path.GetFileName(fullPath);
+         OriginalPath = Path.GetFileName(fullPath, true);
 
          FullPath = fullPath;
 

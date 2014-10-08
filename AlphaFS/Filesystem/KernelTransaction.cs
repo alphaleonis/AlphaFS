@@ -158,7 +158,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityPermissionAttribute(SecurityAction.Demand, UnmanagedCode = true)]
       public void Dispose()
       {
-         _hTrans.Dispose();
+         _hTrans.Close();
       }
 
       #endregion // IDisposable Members
