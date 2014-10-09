@@ -6,8 +6,18 @@ Version 1.6
 	* Mod: File and Directory classes contain all .NET 4 methods.
 
     * Mod: Class Volume()/VolumeInfo();
-    * Mod: Class Directory()/DirectoryInfo();
-    * Mod: Class File()/FileInfo();
+    * Mod: Class File()/Directory();
+
+    * Mod: Class FileSystemInfo() has a couple of public read only properties:
+
+		DirectoryInfo() / FileInfo()
+			EntryInfo	 : Instance of the FileSystemEntryInfo() class;
+			LongFullPath : The full path of the file system object in Unicode (LongPath) format;
+			Transaction  : Represents the KernelTransaction that was passed to the constructor;
+
+		FileInfo()
+			LengthStreams: Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).
+		
 
     * Mod: Class Path();
 
@@ -81,7 +91,7 @@ Version 1.6
 
 			Local "\\?\" or network "\\?\UNC" Unicode (LongPaths) are applied internally for all Win32 API functions that support it.
 			
-			The FileInfo() and DirectoryInfo() also benefit from isFullPath; AlphaFS adds an internal property: LongFullPath
+			The FileInfo() and DirectoryInfo() also benefit from isFullPath; AlphaFS adds an internal property: EntryInfo.LongFullPath
 			which is always the full path of the file or directory in Unicode (LongPath) format.
 
    * New: Added support for building against .NET 4.0, 4.5, and 4.5.1 in addition to 3.5.

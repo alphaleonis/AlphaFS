@@ -56,8 +56,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void Refresh()
       {
-         EntryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullPath, true, true, null);
-         _exists = _systemInfo != null;
+         // .NET uses GetFileAttributesEx() for this.
+
+         _entryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullPath, true, true, null);
+         _exists = _entryInfo != null;
       }
 
       #endregion // Refresh
@@ -157,8 +159,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Resets the state of the file system object to uninitialized.</summary>
       internal void Reset()
       {
+         _entryInfo = null;
          _exists = false;
-         _systemInfo = null;
       }
 
       #endregion // Reset
@@ -214,16 +216,16 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          get
          {
-            if (EntryInfo == null)
+            if (_entryInfo == null)
                Refresh();
 
-            return EntryInfo != null ? EntryInfo.Attributes : (FileAttributes)(-1);
+            return _entryInfo != null ? _entryInfo.Attributes : (FileAttributes)(-1);
          }
 
          [SecurityCritical]
          set
          {
-            if (EntryInfo == null)
+            if (_entryInfo == null)
                VerifyObjectExists();
 
             File.SetAttributesInternal(IsDirectory, Transaction, LongFullPath, value, false, null);
@@ -257,17 +259,17 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          get
          {
-            if (EntryInfo == null)
+            if (_entryInfo == null)
                Refresh();
 
-            return DateTime.FromFileTimeUtc(EntryInfo != null
-               ? EntryInfo.Win32FindData.CreationTime.ToLong()
+            return DateTime.FromFileTimeUtc(_entryInfo != null
+               ? _entryInfo.Win32FindData.CreationTime.ToLong()
                : new NativeMethods.Win32FindData().CreationTime.ToLong());
          }
 
          set
          {
-            if (EntryInfo == null)
+            if (_entryInfo == null)
                VerifyObjectExists();
 
             File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullPath, value, null, null, null);
@@ -341,17 +343,17 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          get
          {
-            if (EntryInfo == null)
+            if (_entryInfo == null)
                Refresh();
 
-            return DateTime.FromFileTimeUtc(EntryInfo != null
-               ? EntryInfo.Win32FindData.LastAccessTime.ToLong()
+            return DateTime.FromFileTimeUtc(_entryInfo != null
+               ? _entryInfo.Win32FindData.LastAccessTime.ToLong()
                : new NativeMethods.Win32FindData().LastAccessTime.ToLong());
          }
 
          set
          {
-            if (EntryInfo == null)
+            if (_entryInfo == null)
                VerifyObjectExists();
 
             File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullPath, null, value, null, null);
@@ -385,17 +387,17 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          get
          {
-            if (EntryInfo == null)
+            if (_entryInfo == null)
                Refresh();
 
-            return DateTime.FromFileTimeUtc(EntryInfo != null
-               ? EntryInfo.Win32FindData.LastWriteTime.ToLong()
+            return DateTime.FromFileTimeUtc(_entryInfo != null
+               ? _entryInfo.Win32FindData.LastWriteTime.ToLong()
                : new NativeMethods.Win32FindData().LastWriteTime.ToLong());
          }
 
          set
          {
-            if (EntryInfo == null)
+            if (_entryInfo == null)
                VerifyObjectExists();
 
             File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullPath, null, null, value, null);
@@ -426,20 +428,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EntryInfo
 
-      private FileSystemEntryInfo _systemInfo;
+      private FileSystemEntryInfo _entryInfo;
 
       /// <summary>[AlphaFS] Gets the instance of the <see cref="T:FileSystemEntryInfo"/> class.</summary>
-      protected internal FileSystemEntryInfo EntryInfo
+      public FileSystemEntryInfo EntryInfo
       {
          get
          {
-            if (_systemInfo == null)
+            if (_entryInfo == null)
                Refresh();
 
-            return _systemInfo;
+            return _entryInfo;
          }
 
-         set { _systemInfo = value; }
+         internal set { _entryInfo = value; }
       }
 
       #endregion // EntryInfo
@@ -454,7 +456,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region LongFullPath
 
       /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
-      protected internal string LongFullPath { get; set; }
+      public string LongFullPath { get; internal set; }
 
       #endregion // LongFullPath
 
@@ -464,10 +466,10 @@ namespace Alphaleonis.Win32.Filesystem
       private KernelTransaction _transaction;
 
       /// <summary>[AlphaFS] Represents the KernelTransaction that was passed to the constructor.</summary>
-      protected internal KernelTransaction Transaction
+      public KernelTransaction Transaction
       {
          get { return _transaction; }
-         set { _transaction = value; }
+         internal set { _transaction = value; }
       }
 
       #endregion // Transaction

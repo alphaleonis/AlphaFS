@@ -833,7 +833,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (_length == -1)
                Refresh();
 
-            _length = Exists ? EntryInfo.FileSize : -1;
+            _length = EntryInfo != null ? EntryInfo.FileSize : -1;
 
             return _length;
          }
@@ -859,6 +859,24 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Name
 
       #endregion // .NET
+
+      #region AlphaFS
+
+      #region LengthStreams
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
+      /// <returns>The number of bytes used by all data streams.</returns>
+      public long LengthStreams
+      {
+         get
+         {
+            return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullPath, null, null, null);
+         }
+      }
+
+      #endregion // LengthStreams
+
+      #endregion // AlphaFS
 
       #endregion // Properties
    }

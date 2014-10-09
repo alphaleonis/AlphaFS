@@ -127,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns the extension of the specified path string.</summary>
-      /// <param name="path">The path string from which to get the extension.</param>
+      /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
       /// <returns>The extension of the specified path (including the period "."), or null, or <see cref="F:System.String.Empty"/>. If <paramref name="path"/> is null, <see cref="M:System.IO.Path.GetExtension(System.String)"/> returns null. If <paramref name="path"/> does not have extension information, <see cref="M:System.IO.Path.GetExtension(System.String)"/> returns <see cref="F:System.String.Empty"/>.</returns>
       [SecurityCritical]
       public static string GetExtension(string path)
@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns the file name and extension of the specified path string.</summary>
-      /// <param name="path">The path string from which to obtain the file name and extension.</param>
+      /// <param name="path">The path string from which to obtain the file name and extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
       /// <returns>The characters after the last directory character in <paramref name="path"/>. If the last character of <paramref name="path"/> is a directory or volume separator character, this method returns <c>string.Empty</c>. If path is null, this method returns null.</returns>
       [SecurityCritical]
       public static string GetFileName(string path)
@@ -193,7 +193,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns the file name of the specified path string without the extension.</summary>
-      /// <param name="path">The path of the file.</param>
+      /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
       /// <returns>The string returned by GetFileName, minus the last period (.) and all characters following it.</returns>
       [SecurityCritical]
       public static string GetFileNameWithoutExtension(string path)
@@ -433,7 +433,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Determines whether a path includes a file name extension.</summary>
-      /// <param name="path">The path to search for an extension.</param>
+      /// <param name="path">The path to search for an extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
       /// <returns><c>true</c> if the characters that follow the last directory separator (\\ or /) or volume separator (:) in the path include a period (.) followed by one or more characters; <c>false</c> otherwise.</returns>
       [SecurityCritical]
       public static bool HasExtension(string path)
@@ -450,7 +450,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Gets a value indicating whether the specified path string contains absolute or relative path information.</summary>
-      /// <param name="path">The path to test.</param>
+      /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
       /// <returns><c>true</c> if <paramref name="path"/> contains a root; <c>false</c> otherwise.</returns>
       /// <remarks>The IsPathRooted method returns true if the first character is a directory separator character such as <see cref="T:DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="T:VolumeSeparatorChar"/>). For example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir". It returns <c>false</c> for path strings such as "MyDir".</remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
