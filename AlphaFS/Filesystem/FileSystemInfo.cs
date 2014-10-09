@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          // .NET uses GetFileAttributesEx() for this.
 
-         _entryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullPath, true, true, null);
+         _entryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullName, true, true, null);
          _exists = _entryInfo != null;
       }
 
@@ -149,7 +149,7 @@ namespace Alphaleonis.Win32.Filesystem
          Refresh();
 
          if (!_exists)
-            NativeError.ThrowException(IsDirectory ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, LongFullPath);
+            NativeError.ThrowException(IsDirectory ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
       }
 
       #endregion // VerifyObjectExists
@@ -177,13 +177,13 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException(isFolder ? "path" : "filename");
 
-         LongFullPath = isFullPath == null
+         LongFullName = isFullPath == null
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, !isFolder);
 
-         FullPath = Path.GetRegularPathInternal(LongFullPath, false, false, false, false);
+         FullPath = Path.GetRegularPathInternal(LongFullName, false, false, false, false);
 
          IsDirectory = isFolder;
          Transaction = transaction;
@@ -228,7 +228,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (_entryInfo == null)
                VerifyObjectExists();
 
-            File.SetAttributesInternal(IsDirectory, Transaction, LongFullPath, value, false, null);
+            File.SetAttributesInternal(IsDirectory, Transaction, LongFullName, value, false, null);
             Reset();
          }
       }
@@ -272,7 +272,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (_entryInfo == null)
                VerifyObjectExists();
 
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullPath, value, null, null, null);
+            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, value, null, null, null);
             Reset();
          }
       }
@@ -356,7 +356,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (_entryInfo == null)
                VerifyObjectExists();
 
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullPath, null, value, null, null);
+            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, value, null, null);
             Reset();
          }
       }
@@ -400,7 +400,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (_entryInfo == null)
                VerifyObjectExists();
 
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullPath, null, null, value, null);
+            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, null, value, null);
             Reset();
          }
       }
@@ -453,12 +453,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsDirectory
 
-      #region LongFullPath
+      #region LongFullName
 
       /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
-      public string LongFullPath { get; internal set; }
+      public string LongFullName { get; internal set; }
 
-      #endregion // LongFullPath
+      #endregion // LongFullName
 
       #region Transaction
 

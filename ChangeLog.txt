@@ -12,7 +12,7 @@ Version 1.6
 
 		DirectoryInfo() / FileInfo()
 			EntryInfo	 : Instance of the FileSystemEntryInfo() class;
-			LongFullPath : The full path of the file system object in Unicode (LongPath) format;
+			LongFullName : The full path of the file system object in Unicode (LongPath) format;
 			Transaction  : Represents the KernelTransaction that was passed to the constructor;
 
 		FileInfo()
