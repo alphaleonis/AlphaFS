@@ -26,93 +26,100 @@ using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32
 {
-
-   #region OsVersionName enum
-
-   /// <summary>A set of flags that describe the named Windows versions.</summary>
-   /// <remarks>
-   /// <para>The values of the enumeration are ordered. A a later released operating system version</para>
-   /// <para>has a higher number, so comparisons between named versions are meaningful.</para>
-   /// </remarks>
-   internal enum OsVersionName
-   {
-      /// <summary>A Windows version earlier than Windows 2000.</summary>
-      Earlier = -1,
-
-      /// <summary>Windows 2000 (Server or Professional).</summary>
-      Windows2000 = 0,
-
-      /// <summary>Windows XP.</summary>
-      WindowsXp = 1,
-
-      /// <summary>Windows Server 2003.</summary>
-      WindowsServer2003 = 2,
-
-      /// <summary>Windows Vista.</summary>
-      WindowsVista = 3,
-
-      /// <summary>Windows Server 2008.</summary>
-      WindowsServer2008 = 4,
-
-      /// <summary>Windows 7.</summary>
-      Windows7 = 5,
-
-      /// <summary>Windows Server 2008 R2.</summary>
-      WindowsServer2008R2 = 6,
-
-      /// <summary>Windows 8.</summary>
-      Windows8 = 7,
-
-      /// <summary>Windows Server 2012.</summary>
-      WindowsServer2012 = 8,
-
-      /// <summary>Windows 8.1.</summary>
-      Windows81 = 9,
-
-      /// <summary>Windows Server 2012 R2.</summary>
-      WindowsServer2012R2 = 10,
-
-      /// <summary>A later version of Windows than currently installed.</summary>
-      Later = 0xffff
-   }
-
-   #endregion // OsVersionName enum
-
-   #region ProcessorArchitecture enum
-
-   /// <summary>A set of flags used by class <see cref="T:OperatingSystemInfo"/> to indicate the current processor
-   /// <para> architecture for which the operating system is targeted and running.</para>
-   /// </summary>
-   [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
-   internal enum ProcessorArchitecture : ushort
-   {
-      /// <summary>The system is running a 32-bit version of Windows.
-      /// <para>Win32: PROCESSOR_ARCHITECTURE_INTEL = 0x00000000</para>
-      /// </summary>
-      X86 = 0x00,
-
-      /// <summary>The system is running on a Itanium processor.
-      /// <para>Win32: PROCESSOR_ARCHITECTURE_IA64 = 0x00000006</para>
-      /// </summary>
-      Ia64 = 6,
-
-      /// <summary>The system is running a 64-bit version of Windows.
-      /// <para>Win32: PROCESSOR_ARCHITECTURE_AMD64 = 0x00000009</para>
-      /// </summary>
-      X64 = 9,
-
-      /// <summary>Unknown architecture.
-      /// <para>Win32: PROCESSOR_ARCHITECTURE_UNKNOWN = 0x0000ffff</para>
-      /// </summary>
-      Unknown = 65535
-   }
-
-   #endregion // ProcessorArchitecture enum
-
    /// <summary>Static class providing access to information about the operating system under which the assembly is executing.</summary>
-   internal static class OperatingSystemInfo
+   public static class OperatingSystem
    {
-      #region Public Properties
+      #region OperatingSystem Name Enum
+
+      /// <summary>A set of flags that describe the named Windows versions.</summary>
+      /// <remarks>
+      /// <para>The values of the enumeration are ordered. A a later released operating system version</para>
+      /// <para>has a higher number, so comparisons between named versions are meaningful.</para>
+      /// </remarks>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
+      public enum OsName
+      {
+         /// <summary>(-1) A Windows version earlier than Windows 2000.</summary>
+         Earlier = -1,
+
+         /// <summary>(0) Windows 2000 (Server or Professional).</summary>
+         Windows2000 = 0,
+
+         /// <summary>(1) Windows XP.</summary>
+         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Xp")]
+         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Xp")]
+         WindowsXp = 1,
+
+         /// <summary>(2) Windows Server 2003.</summary>
+         WindowsServer2003 = 2,
+
+         /// <summary>(3) Windows Vista.</summary>
+         WindowsVista = 3,
+
+         /// <summary>(4) Windows Server 2008.</summary>
+         WindowsServer2008 = 4,
+
+         /// <summary>(5) Windows 7.</summary>
+         Windows7 = 5,
+
+         /// <summary>(6) Windows Server 2008 R2.</summary>
+         WindowsServer2008R2 = 6,
+
+         /// <summary>(7) Windows 8.</summary>
+         Windows8 = 7,
+
+         /// <summary>(8) Windows Server 2012.</summary>
+         WindowsServer2012 = 8,
+
+         /// <summary>(9) Windows 8.1.</summary>
+         Windows81 = 9,
+
+         /// <summary>(10) Windows Server 2012 R2.</summary>
+         WindowsServer2012R2 = 10,
+
+         /// <summary>(0xffff) A later version of Windows than currently installed.</summary>
+         Later = 0xffff
+      }
+
+      #endregion // OperatingSystem Name Enum
+
+      #region ProcessorArchitecture Name enum
+
+      /// <summary>A set of flags used by class <see cref="T:OperatingSystem"/> to indicate the current processor
+      /// <para> architecture for which the operating system is targeted and running.</para>
+      /// </summary>
+      [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Pa")]
+      [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
+      public enum PaName : ushort
+      {
+         /// <summary>The system is running a 32-bit version of Windows.
+         /// <para>Win32: PROCESSOR_ARCHITECTURE_INTEL = 0x00000000</para>
+         /// </summary>
+         X86 = 0x00,
+
+         /// <summary>The system is running on a Itanium processor.
+         /// <para>Win32: PROCESSOR_ARCHITECTURE_IA64 = 0x00000006</para>
+         /// </summary>
+         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
+         [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
+         Ia64 = 6,
+
+         /// <summary>The system is running a 64-bit version of Windows.
+         /// <para>Win32: PROCESSOR_ARCHITECTURE_AMD64 = 0x00000009</para>
+         /// </summary>
+         X64 = 9,
+
+         /// <summary>Unknown architecture.
+         /// <para>Win32: PROCESSOR_ARCHITECTURE_UNKNOWN = 0x0000ffff</para>
+         /// </summary>
+         Unknown = 65535
+      }
+
+      #endregion // ProcessorArchitecture Name enum
+
+
+      #region Properties
 
       #region IsServer
 
@@ -132,49 +139,49 @@ namespace Alphaleonis.Win32
 
       #endregion // IsServer
 
-      #region OSVersion
+      #region Version
 
       /// <summary>Gets the numeric version of the operating system. This is the same as returned by <see cref="T:System.Environment.OSVersion"/>.</summary>
       /// <value>The numeric version of the operating system.</value>
-      public static Version OsVersion
+      public static Version Version
       {
          get { return Environment.OSVersion.Version; }
       }
 
-      #endregion // OSVersion
+      #endregion // Version
 
-      #region OSVersionName
+      #region VersionName
 
-      private static OsVersionName _osVersionName = OsVersionName.Later;
+      private static OsName _osName = OsName.Later;
 
       /// <summary>Gets the named version of the operating system.</summary>
       /// <value>The named version of the operating system.</value>
-      public static OsVersionName OsVersionName
+      public static OsName VersionName
       {
          get
          {
             if (_servicePackVersion == null)
                UpdateData();
-            return _osVersionName;
+            return _osName;
          }
       }
 
-      #endregion // OSVersionName
+      #endregion // VersionName
 
       #region ProcessorArchitecture
 
-      private static ProcessorArchitecture _processorArchitecture;
+      private static PaName _paName;
 
       /// <summary>Gets the processor architecture for which the operating system is targeted.</summary>
       /// <value>The processor architecture for which the operating system is targeted.</value>
       /// <remarks>If running under WOW64 this will return a 32-bit processor. Use <see cref="T:IsWow64Process"/> to determine if this is the case.</remarks>
-      public static ProcessorArchitecture ProcessorArchitecture
+      public static PaName ProcessorArchitecture
       {
          get
          {
             if (_servicePackVersion == null)
                UpdateData();
-            return _processorArchitecture;
+            return _paName;
          }
       }
 
@@ -199,25 +206,25 @@ namespace Alphaleonis.Win32
 
       #endregion // ServicePackVersion
 
-      #endregion // Public Properties
+      #endregion // Properties
 
-      #region Public Methods
+      #region Methods
 
       #region IsAtLeast
 
       /// <summary>Determines whether the operating system is of the specified version or later.</summary>
       /// <param name="version">The lowest version for which to return true.</param>
       /// <returns><c>true</c> if the operating system is of the specified <paramref name="version"/> or later; otherwise, <c>false</c>.</returns>      
-      public static bool IsAtLeast(OsVersionName version)
+      public static bool IsAtLeast(OsName version)
       {
-         return OsVersionName >= version;
+         return VersionName >= version;
       }
 
       /// <summary>Determines whether operating system is of the specified version or later, allowing specification of a minimum service pack that must be installed on the lowest version.</summary>
       /// <param name="version">The minimum required version.</param>
       /// <param name="servicePackVersion">The major version of the service pack that must be installed on the minimum required version to return true. This can be 0 to indicate that no service pack is required.</param>
       /// <returns><c>true</c> if the operating system matches the specified <paramref name="version"/> with the specified service pack, or if the operating system is of a later version; otherwise, <c>false</c>.</returns>      
-      public static bool IsAtLeast(OsVersionName version, int servicePackVersion)
+      public static bool IsAtLeast(OsName version, int servicePackVersion)
       {
          return IsAtLeast(version) && ServicePackVersion.Major >= servicePackVersion;
       }
@@ -239,9 +246,10 @@ namespace Alphaleonis.Win32
 
       #endregion // IsWow64Process
 
-      #endregion // Public Methods
+      #endregion // Methods
 
-      #region Private members
+
+      #region Private
 
       private static void UpdateData()
       {
@@ -260,7 +268,7 @@ namespace Alphaleonis.Win32
          Debug.Assert(verInfo.MinorVersion == Environment.OSVersion.Version.Minor);
          Debug.Assert(verInfo.BuildNumber == Environment.OSVersion.Version.Build);
 
-         _processorArchitecture = (ProcessorArchitecture) sysInfo.processorArchitecture;
+         _paName = (PaName) sysInfo.processorArchitecture;
          _servicePackVersion = new Version(verInfo.ServicePackMajor, verInfo.ServicePackMinor);
          _isServer = verInfo.ProductType == NativeMethods.VerNtDomainController ||
                      verInfo.ProductType == NativeMethods.VerNtServer;
@@ -282,13 +290,13 @@ namespace Alphaleonis.Win32
          //    Windows Server 2003 R2	      5.2               GetSystemMetrics(SM_SERVERR2) != 0
          //    Windows Home Server  	      5.2               OSVersionInfoEx.SuiteMask & VER_SUITE_WH_SERVER
          //    Windows Server 2003           5.2               GetSystemMetrics(SM_SERVERR2) == 0
-         //    Windows XP 64-Bit Edition     5.2               (OSVersionInfoEx.ProductType == VerNtWorkstation) && (SystemInfo.ProcessorArchitecture == ProcessorArchitecture.X64)
+         //    Windows XP 64-Bit Edition     5.2               (OSVersionInfoEx.ProductType == VerNtWorkstation) && (sysInfo.PaName == PaName.X64)
          //    Windows XP	                  5.1               Not applicable
          //    Windows 2000	               5.0               Not applicable
 
 
          if (verInfo.MajorVersion > 6)
-            _osVersionName = OsVersionName.Later;
+            _osName = OsName.Later;
 
          else
             switch (verInfo.MajorVersion)
@@ -300,34 +308,34 @@ namespace Alphaleonis.Win32
                   {
                         // Windows Vista or Windows Server 2008
                      case 0:
-                        _osVersionName = (verInfo.ProductType == NativeMethods.VerNtWorkstation)
-                           ? OsVersionName.WindowsVista
-                           : OsVersionName.WindowsServer2008;
+                        _osName = (verInfo.ProductType == NativeMethods.VerNtWorkstation)
+                           ? OsName.WindowsVista
+                           : OsName.WindowsServer2008;
                         break;
 
                         // Windows 7 or Windows Server 2008 R2
                      case 1:
-                        _osVersionName = (verInfo.ProductType == NativeMethods.VerNtWorkstation)
-                           ? OsVersionName.Windows7
-                           : OsVersionName.WindowsServer2008R2;
+                        _osName = (verInfo.ProductType == NativeMethods.VerNtWorkstation)
+                           ? OsName.Windows7
+                           : OsName.WindowsServer2008R2;
                         break;
 
                         // Windows 8 or Windows Server 2012
                      case 2:
-                        _osVersionName = (verInfo.ProductType == NativeMethods.VerNtWorkstation)
-                           ? OsVersionName.Windows8
-                           : OsVersionName.WindowsServer2012;
+                        _osName = (verInfo.ProductType == NativeMethods.VerNtWorkstation)
+                           ? OsName.Windows8
+                           : OsName.WindowsServer2012;
                         break;
 
                         // Windows 8.1 or Windows Server 2012R2
                      case 3:
-                        _osVersionName = (verInfo.ProductType == NativeMethods.VerNtWorkstation)
-                           ? OsVersionName.Windows81
-                           : OsVersionName.WindowsServer2012R2;
+                        _osName = (verInfo.ProductType == NativeMethods.VerNtWorkstation)
+                           ? OsName.Windows81
+                           : OsName.WindowsServer2012R2;
                         break;
 
                      default:
-                        _osVersionName = OsVersionName.Later;
+                        _osName = OsName.Later;
                         break;
                   }
                   break;
@@ -340,24 +348,23 @@ namespace Alphaleonis.Win32
                   switch (verInfo.MinorVersion)
                   {
                      case 0:
-                        _osVersionName = OsVersionName.Windows2000;
+                        _osName = OsName.Windows2000;
                         break;
 
                      case 1:
-                        _osVersionName = OsVersionName.WindowsXp;
+                        _osName = OsName.WindowsXp;
                         break;
 
                      case 2:
-                        _osVersionName = (verInfo.ProductType == NativeMethods.VerNtWorkstation &&
-                                          _processorArchitecture == ProcessorArchitecture.X64)
-                           ? OsVersionName.WindowsXp
+                        _osName = (verInfo.ProductType == NativeMethods.VerNtWorkstation && _paName == PaName.X64)
+                           ? OsName.WindowsXp
                            : (verInfo.ProductType != NativeMethods.VerNtWorkstation)
-                              ? OsVersionName.WindowsServer2003
-                              : OsVersionName.Later;
+                              ? OsName.WindowsServer2003
+                              : OsName.Later;
                         break;
 
                      default:
-                        _osVersionName = OsVersionName.Later;
+                        _osName = OsName.Later;
                         break;
                   }
                   break;
@@ -365,13 +372,11 @@ namespace Alphaleonis.Win32
                   #endregion // Version 5
 
                default:
-                  _osVersionName = OsVersionName.Earlier;
+                  _osName = OsName.Earlier;
                   break;
             }
       }
-
-      #endregion // Private members
-
+      
       #region P/Invoke members / NativeMethods
 
       private static class NativeMethods
@@ -467,5 +472,7 @@ namespace Alphaleonis.Win32
       }
 
       #endregion // P/Invoke members / NativeMethods
+
+      #endregion // Private
    }
 }

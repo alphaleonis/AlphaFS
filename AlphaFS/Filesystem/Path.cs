@@ -1142,7 +1142,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
 
-         #region Older OperatingSystemInfo
+         #region Older OperatingSystem
          
          // Obtaining a File Name From a File Handle
          // http://msdn.microsoft.com/en-us/library/aa366789%28VS.85%29.aspx
@@ -1213,7 +1213,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? string.Empty
             : LongPathPrefix + DosDeviceToDosPath(dosDevice, null);
 
-         #endregion // Older OperatingSystemInfo
+         #endregion // Older OperatingSystem
       }
 
       #endregion // GetFinalPathNameByHandleInternal

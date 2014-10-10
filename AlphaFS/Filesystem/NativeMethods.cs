@@ -41,8 +41,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Fields
 
-      internal static readonly bool IsAtLeastWindows7 = OperatingSystemInfo.IsAtLeast(OsVersionName.Windows7);
-      internal static readonly bool IsAtLeastWindowsVista = OperatingSystemInfo.IsAtLeast(OsVersionName.WindowsVista);
+      internal static readonly bool IsAtLeastWindows7 = OperatingSystem.IsAtLeast(OperatingSystem.OsName.Windows7);
+      internal static readonly bool IsAtLeastWindowsVista = OperatingSystem.IsAtLeast(OperatingSystem.OsName.WindowsVista);
 
       #region DefaultFileBufferSize
 

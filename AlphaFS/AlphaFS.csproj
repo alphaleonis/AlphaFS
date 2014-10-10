@@ -251,7 +251,7 @@
     <Compile Include="Network\Structures\ShareInfo1.cs" />
     <Compile Include="Network\Structures\ShareInfo2.cs" />
     <Compile Include="Network\Structures\ShareInfo503.cs" />
-    <Compile Include="OperatingSystemInfo.cs" />
+    <Compile Include="OperatingSystem.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -319,7 +319,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
