@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       
       ////// <summary>Determines whether the specified Object is equal to the current Object.</summary>
       ///// <param name="obj">Another object to compare to.</param>
-      ///// <returns><c>true</c> if the specified Object is equal to the current Object; <c>false</c> otherwise.</returns>
+      ///// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
       //public override bool Equals(object obj)
       //{
       //   if (obj == null || GetType() != obj.GetType())
@@ -423,7 +423,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsReady
 
       /// <summary>Gets a value indicating whether a drive is ready.</summary>
-      /// <returns><c>true</c> if the drive is ready; <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the drive is ready; otherwise, <c>false</c>.</returns>
       /// <remarks>
       /// IsReady indicates whether a drive is ready. For example, it indicates whether a CD is in a CD drive or whether
       /// a removable storage device is ready for read/write operations. If you do not test whether a drive is ready, and

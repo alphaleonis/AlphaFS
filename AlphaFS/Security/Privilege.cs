@@ -410,7 +410,7 @@ namespace Alphaleonis.Win32.Security
 
       /// <summary>Indicates whether the current object is equal to another object of the same type.</summary>
       /// <param name="other">An object to compare with this object.</param>
-      /// <returns><c>true</c> if the current object is equal to the <paramref name="other"/> parameter; <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the current object is equal to the <paramref name="other"/> parameter; otherwise, <c>false</c>.</returns>
       public bool Equals(Privilege other)
       {
          if (other == null)
@@ -423,7 +423,7 @@ namespace Alphaleonis.Win32.Security
 
       /// <summary>Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.</summary>
       /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
-      /// <returns><c>true</c> if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, <c>false</c>.</returns>
       /// <exception cref="System.NullReferenceException">The <paramref name="obj"/> parameter is <c>null</c>.</exception>
       public override bool Equals(object obj)
       {

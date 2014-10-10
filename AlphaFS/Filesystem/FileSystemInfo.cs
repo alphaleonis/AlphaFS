@@ -27,7 +27,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides the base class for both FileInfo and DirectoryInfo objects.</summary>
+   /// <summary>Provides the base class for both <see cref="T:FileInfo"/> and <see cref="T:DirectoryInfo"/> objects.</summary>
    [SerializableAttribute]
    [ComVisibleAttribute(true)]
    public abstract class FileSystemInfo : MarshalByRefObject
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
       /// <param name="obj">Another object to compare to.</param>
-      /// <returns><c>true</c> if the specified Object is equal to the current Object; <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
       public override bool Equals(object obj)
       {
          if (obj == null || GetType() != obj.GetType())
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
             return hash;
          }
       }
-      
+
       /// <summary>Implements the operator ==</summary>
       /// <param name="left">A.</param>
       /// <param name="right">B.</param>
@@ -284,7 +284,7 @@ namespace Alphaleonis.Win32.Filesystem
       private bool _exists;
 
       /// <summary>Gets a value indicating whether the file or directory exists.</summary>
-      /// <returns><c>true</c> if the file or directory exists; <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the file or directory exists; otherwise, <c>false</c>.</returns>
       /// <remarks>The <see cref="T:Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file or directory exists. This can occur in situations that raise exceptions such as passing a directory- or file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file or directory.</remarks>
       public abstract bool Exists { get; }
 

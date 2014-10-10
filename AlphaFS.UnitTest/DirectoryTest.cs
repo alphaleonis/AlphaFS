@@ -299,19 +299,19 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("\n\tSanity check AlphaFS <> System.IO {0}.", cntCheck);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesProtected: [{0}]", dsAlpha.AreAccessRulesProtected);
-         Assert.AreEqual(dsAlpha.AreAccessRulesProtected, dsSystem.AreAccessRulesProtected);
+         Assert.AreEqual(dsSystem.AreAccessRulesProtected, dsAlpha.AreAccessRulesProtected);
 
          StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesProtected: [{0}]", dsAlpha.AreAuditRulesProtected);
-         Assert.AreEqual(dsAlpha.AreAuditRulesProtected, dsSystem.AreAuditRulesProtected);
+         Assert.AreEqual(dsSystem.AreAuditRulesProtected, dsAlpha.AreAuditRulesProtected);
 
          StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesCanonical: [{0}]", dsAlpha.AreAccessRulesCanonical);
-         Assert.AreEqual(dsAlpha.AreAccessRulesCanonical, dsSystem.AreAccessRulesCanonical);
+         Assert.AreEqual(dsSystem.AreAccessRulesCanonical, dsAlpha.AreAccessRulesCanonical);
 
          StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesCanonical: [{0}]", dsAlpha.AreAuditRulesCanonical);
-         Assert.AreEqual(dsAlpha.AreAuditRulesCanonical, dsSystem.AreAuditRulesCanonical);
+         Assert.AreEqual(dsSystem.AreAuditRulesCanonical, dsAlpha.AreAuditRulesCanonical);
       }
 
       #endregion // DumpCreateDirectory
@@ -1000,8 +1000,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(exists, "Directory should exist.");
 
          Directory.Delete(tempPath, true);
-         exists = Directory.Exists(tempPath);
-         Assert.IsFalse(exists, "Directory should exist.");
+         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          Console.WriteLine();
       }
 

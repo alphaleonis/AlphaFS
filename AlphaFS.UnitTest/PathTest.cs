@@ -232,7 +232,7 @@ namespace AlphaFS.UnitTest
          StopWatcher(true);
          directoryNameWithoutRoot = Path.GetDirectoryNameWithoutRoot(fullPath);
          Console.WriteLine("\nInput Path: [{0}]\n\tGetDirectoryNameWithoutRoot() (Should be: [null]): [{1}]", fullPath, directoryNameWithoutRoot ?? "null");
-         Assert.AreEqual(directoryNameWithoutRoot, null);
+         Assert.AreEqual(null, directoryNameWithoutRoot);
 
          Console.WriteLine("\n");
       }
@@ -374,7 +374,7 @@ namespace AlphaFS.UnitTest
          StopWatcher(true);
          suffixedDirectoryName = Path.GetSuffixedDirectoryName(fullPath);
          Console.WriteLine("\nInput Path: [{0}]\n\tGetSuffixedDirectoryName() (Should be: [null]): [{1}]\n{2}", fullPath, suffixedDirectoryName ?? "null", Reporter(false, true));
-         Assert.AreEqual(suffixedDirectoryName, null);
+         Assert.AreEqual(null, suffixedDirectoryName);
 
 
          fullPath = SysDrive + Path.DirectorySeparator;
@@ -383,7 +383,7 @@ namespace AlphaFS.UnitTest
          StopWatcher(true);
          suffixedDirectoryName = Path.GetSuffixedDirectoryNameWithoutRoot(fullPath);
          Console.WriteLine("\nInput Path: [{0}]\n\tGetSuffixedDirectoryName() (Should be: [null]): [{1}]\n{2}", fullPath, suffixedDirectoryName ?? "null", Reporter(false, true));
-         Assert.AreEqual(suffixedDirectoryName, null);
+         Assert.AreEqual(null, suffixedDirectoryName);
 
          Console.WriteLine("\n");
       }

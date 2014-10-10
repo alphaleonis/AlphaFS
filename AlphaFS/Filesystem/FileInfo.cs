@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
       /// <param name="destFileName">The name of the new file to copy to.</param>
-      /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; <c>false</c> otherwise.</param>
+      /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
       /// <returns>A new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <c>true</c>. If the file exists and <paramref name="overwrite"/> is <c>false</c>, an <see cref="T:System.IO.IOException"/> is thrown.</returns>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -153,7 +153,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
       /// <param name="destFileName">The name of the new file to copy to.</param>
-      /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; <c>false</c> otherwise.</param>
+      /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
       /// <param name="copyProgress"><para>This parameter can be <c>null</c>. A callback function that is called each time another portion of the file has been copied.</para></param>
       /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
       /// <returns>A new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <c>true</c>. If the file exists and <paramref name="overwrite"/> is <c>false</c>, an <see cref="T:System.IO.IOException"/> is thrown.</returns>
@@ -479,9 +479,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="T:FileInfo"/> object, deleting the original file, and creating a backup of the replaced file.</summary>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
-      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the destinationFileName parameter.</param>
-      /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the destinationFileName parameter.</returns>
+      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
+      /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:FileInfo"/> object that describes the overwritten file.</remarks>
+      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName)
@@ -491,10 +492,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="T:FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
-      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the destinationFileName parameter.</param>
-      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; <c>false</c> otherwise.</param>
-      /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the destinationFileName parameter.</returns>
+      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
+      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
+      /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:FileInfo"/> object that describes the overwritten file.</remarks>
+      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
@@ -506,13 +508,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
+      #region IsFullPath
+
       /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="T:FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
-      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the destinationFileName parameter.</param>
-      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; <c>false</c> otherwise.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="destinationFileName"/> and <paramref name="destinationFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="destinationFileName"/> and <paramref name="destinationFileName"/> are already a full path with long path prefix, will be used as is.</param>
-      /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the destinationFileName parameter.</returns>
+      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
+      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> are already a full path with long path prefix, will be used as is.</param>
+      /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:FileInfo"/> object that describes the overwritten file.</remarks>
+      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
@@ -520,19 +525,22 @@ namespace Alphaleonis.Win32.Filesystem
          string destinationFileNameLp = isFullPath == null
             ? destinationFileName
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
-            : Path.GetFullPathInternal(Transaction, destinationFileName, true, false, false, false);
+               ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
+               : Path.GetFullPathInternal(Transaction, destinationFileName, true, false, false, true);
 
+         // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
          string destinationBackupFileNameLp = isFullPath == null
             ? destinationBackupFileName
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
-            : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, false, false, false);
+               ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
+               : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, false, false, true);
 
          File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, null);
 
          return new FileInfo(Transaction, destinationFileNameLp, true);
       }
+
+      #endregion // IsFullPath
 
       #endregion // AlphaFS
 
@@ -738,7 +746,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? destFileName
             : (bool) isFullPath
             ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-            : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, false);
+            : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, true);
 
          File.CopyMoveInternal(isMove, Transaction, LongFullName, destFileNameLp, false, copyOptions, moveOptions, copyProgress, userProgressData, null);
 

@@ -210,7 +210,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? path
                : (bool) isFullPath
                   ? Path.GetLongPathInternal(path, false, false, false, false)
-                  : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+                  : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
             if (isFolder == null)
             {
@@ -327,7 +327,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
          foreach (AlternateDataStreamInfo stream in EnumerateStreamsInternal(isFolder, transaction, null, pathLp, name, StreamType.AlternateData, isFullPath))
             File.DeleteFileInternal(transaction, string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{1}$DATA", pathLp, Path.StreamSeparator, stream.OriginalName), false, null);
@@ -377,7 +377,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsDirectory
 
       /// <summary>Gets a value indicating whether this instance represents a directory.</summary>
-      /// <value><c>true</c> if this instance represents a directory; <c>false</c> otherwise.</value>
+      /// <value><c>true</c> if this instance represents a directory; otherwise, <c>false</c>.</value>
       public bool IsDirectory { get; private set; }
 
       #endregion // IsDirectory

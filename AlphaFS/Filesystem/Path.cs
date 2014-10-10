@@ -434,7 +434,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Determines whether a path includes a file name extension.</summary>
       /// <param name="path">The path to search for an extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
-      /// <returns><c>true</c> if the characters that follow the last directory separator (\\ or /) or volume separator (:) in the path include a period (.) followed by one or more characters; <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the characters that follow the last directory separator (\\ or /) or volume separator (:) in the path include a period (.) followed by one or more characters; otherwise, <c>false</c>.</returns>
       [SecurityCritical]
       public static bool HasExtension(string path)
       {
@@ -451,7 +451,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets a value indicating whether the specified path string contains absolute or relative path information.</summary>
       /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
-      /// <returns><c>true</c> if <paramref name="path"/> contains a root; <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if <paramref name="path"/> contains a root; otherwise, <c>false</c>.</returns>
       /// <remarks>The IsPathRooted method returns true if the first character is a directory separator character such as <see cref="T:DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="T:VolumeSeparatorChar"/>). For example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir". It returns <c>false</c> for path strings such as "MyDir".</remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
       [SecurityCritical]

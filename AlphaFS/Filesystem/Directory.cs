@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Creates all directories and subdirectories in the specified path unless they already exist.</summary>
       /// <param name="path">The directory to create.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path)
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -127,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -142,7 +142,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -171,7 +171,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -186,7 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -205,7 +205,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -219,7 +219,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -240,7 +240,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -256,7 +256,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -273,7 +273,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -290,7 +290,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -306,7 +306,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -321,7 +321,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -337,7 +337,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -353,7 +353,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -376,7 +376,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes an empty directory from a specified path.</summary>
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Delete(string path)
@@ -387,7 +387,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="path">The name of the directory to remove.</param>
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Delete(string path, bool recursive)
@@ -406,7 +406,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of files and directories.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly, bool? isFullPath)
@@ -420,7 +420,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove.</param>
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of files and directories.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly)
@@ -435,7 +435,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
@@ -447,7 +447,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive)
@@ -465,7 +465,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of files and directories.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool? isFullPath)
@@ -480,7 +480,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove.</param>
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of files and directories.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
@@ -1293,8 +1293,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Determines whether the given path refers to an existing directory on disk.</summary>
       /// <param name="path">The path to test.</param>
       /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
-      /// <remarks>Possible performance improvement may be achieved by utilizing <see cref="T:NativeMethods.FindExSearchOps.SearchLimitToDirectories"/>.</remarks>
+      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(string path)
       {
@@ -1311,8 +1311,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to test.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
-      /// <remarks>Possible performance improvement may be achieved by utilizing <see cref="T:NativeMethods.FindExSearchOps.SearchLimitToDirectories"/>.</remarks>
+      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(string path, bool? isFullPath)
       {
@@ -1329,7 +1329,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
       /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
       {
@@ -1345,7 +1346,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to test.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -2133,7 +2135,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Moves a file or a directory and its contents to a new location.</summary>
       /// <param name="sourcePath">The path of the file or directory to move.</param>
       /// <param name="destinationPath">The path to the new location for sourcePath. If sourcePath is a file, then destinationPath must also be a file name.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -2155,7 +2157,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
       /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> are already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -2173,7 +2175,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveProgress">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> are already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -2189,7 +2191,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The path of the file or directory to move.</param>
       /// <param name="destinationPath">The path to the new location for sourcePath. If sourcePath is a file, then destinationPath must also be a file name.</param>
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -2206,7 +2208,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
       /// <param name="moveProgress">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -2224,7 +2226,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The path of the file or directory to move.</param>
       /// <param name="destinationPath">The path to the new location for sourcePath. If sourcePath is a file, then destinationPath must also be a file name.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -2245,7 +2247,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
       /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> are already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -2264,7 +2266,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveProgress">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> are already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -2281,7 +2283,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The path of the file or directory to move.</param>
       /// <param name="destinationPath">The path to the new location for sourcePath. If sourcePath is a file, then destinationPath must also be a file name.</param>
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -2299,7 +2301,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
       /// <param name="moveProgress">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -2543,10 +2545,9 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("path");
 
          // System.IO SetCurrentDirectory() does not handle long paths.
-         // MSDN: Trailing spaces are removed from the end of the path parameter before setting the directory.
-         System.IO.Directory.SetCurrentDirectory(Path.GetRegularPathInternal(path, true, true, false, false));
+         System.IO.Directory.SetCurrentDirectory(Path.GetRegularPathInternal(path, true, false, false, false));
       }
-
+      
       #endregion // .NET
 
       #endregion // SetCurrentDirectory (.NET)
@@ -3025,8 +3026,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
       /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> are already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Copy(string sourcePath, string destinationPath, bool overwrite, bool preserveSecurity, bool? isFullPath)
@@ -3042,7 +3044,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> are already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -3056,7 +3058,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
       /// <param name="sourcePath">The source directory path, of type string</param>
       /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -3069,7 +3071,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The source directory path, of type string</param>
       /// <param name="destinationPath">The destination directory path, of type string</param>
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -3085,7 +3087,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -3105,7 +3107,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
       /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> are already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -3123,7 +3125,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> are already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -3138,7 +3140,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path, of type string</param>
       /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -3152,7 +3154,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The source directory path, of type string</param>
       /// <param name="destinationPath">The destination directory path, of type string</param>
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -3169,7 +3171,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -4008,7 +4010,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transacted
 
       #endregion // EnumerateStreams
-
+      
       #region Encrypt
 
       #region IsFullPath
@@ -4732,7 +4734,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+            : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
          // Process directories and files.
          foreach (string fso in File.EnumerateFileSystemEntryInfoInternal<string>(transaction, pathLp, searchPattern, searchOption, null, true, true, false, continueOnException, null))
@@ -4759,11 +4761,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isSameVolume"><c>null</c> same volume is unknown and will be retrieved. <c>true</c> it is assumed that the source and destination paths as are on thge same volume.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> are already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying/moving the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
       /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
       /// get an IOException. You cannot use the Move method to overwrite an existing file.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying/moving the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       internal static void CopyMoveInternal(bool isMove, KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveSecurity, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool? isSameVolume, bool? isFullPath)
@@ -4777,21 +4779,29 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentNullException("destinationPath");
          }
          
-         // MSDN: Directory.Move(): Trailing spaces are removed from the end of the path parameters before moving the directory.
+         // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
          // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
 
          string sourcePathLp = isFullPath == null
             ? sourcePath
             : (bool) isFullPath
             ? Path.GetLongPathInternal(sourcePath, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, sourcePath, true, false, false, false);
+#if NET35
+               : Path.GetFullPathInternal(transaction, sourcePath, true, false, false, true);
+#else
+               : Path.GetFullPathInternal(transaction, sourcePath, true, true, false, true);
+#endif
+
 
          string destinationPathLp = isFullPath == null
             ? destinationPath
             : (bool) isFullPath
             ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, destinationPath, true, true, false, false);
-
+#if NET35
+               : Path.GetFullPathInternal(transaction, destinationPath, true, false, false, true);
+#else
+               : Path.GetFullPathInternal(transaction, destinationPath, true, true, false, true);
+#endif
          //if (isSameVolume == null)
             //isSameVolume = Volume.IsSameVolume(sourcePathLp, destinationPathLp);
 
@@ -4875,7 +4885,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> and <paramref name="templatePath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> and <paramref name="templatePath"/> are already a full path with long path prefix, will be used as is.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
@@ -4883,26 +4893,32 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
-
-         // MSDN: Trailing spaces are removed from the end of the path parameter before creating the directory.
-
+         
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
+#if NET35
+            : Path.GetFullPathInternal(transaction, path, true, false, false, true);
+#else
+            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
             : Path.GetFullPathInternal(transaction, path, true, true, false, true);
-
+#endif
          string templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
             ? null
             : isFullPath == null
                ? templatePath
                : (bool) isFullPath
                ? Path.GetLongPathInternal(templatePath, false, false, false, false)
+#if NET35
+               : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true);
+#else
+               // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
                : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true);
-
+#endif
          #region Construct Full Path
 
-         path = Path.GetRegularPathInternal(pathLp, false, isFullPath != null && (bool) !isFullPath, false, false);
+         path = Path.GetRegularPathInternal(pathLp, false, false, false, false);
 
          int length = path.Length;
          if (length >= 2 && Path.IsDVsc(path[length - 1], false))
@@ -4922,7 +4938,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                string path1 = path.Substring(0, index + 1);
 
-               if (File.GetAttributesInternal(true, null, path1, true, true, true) == (FileAttributes) (-1))
+               if (File.GetAttributesInternal(true, transaction, path1, true, true, true) == (FileAttributes) (-1))
                   list.Push(path1);
 
                while (index > rootLength && !Path.IsDVsc(path[index], false))
@@ -5012,8 +5028,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="requireEmpty"><c>true</c> requires the the directory must be empty.</param>
       /// <param name="continueOnNotExist"><c>true</c> does not throw an Exception when the file system object does not exist.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <remarks>The RemoveDirectory function marks a directory for deletion on close. Therefore, the directory is not removed until the last handle to the directory is closed.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       internal static void DeleteDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool requireEmpty, bool continueOnNotExist, bool? isFullPath)
@@ -5023,15 +5039,18 @@ namespace Alphaleonis.Win32.Filesystem
             if (Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
 
-            // MSDN: Trailing spaces are removed from the end of the path parameter before deleting the directory.
-
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
                isFullPath == null
                   ? path
                   : (bool) isFullPath
                      ? Path.GetLongPathInternal(path, false, false, false, false)
-                     : Path.GetFullPathInternal(transaction, path, true, true, false, false),
-               true, continueOnNotExist, null);
+#if NET35
+                     : Path.GetFullPathInternal(transaction, path, true, false, false, true),
+#else
+                     // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+                     : Path.GetFullPathInternal(transaction, path, true, true, false, true),
+#endif
+ true, continueOnNotExist, null);
          }
 
          if (fileSystemEntryInfo == null)
@@ -5135,6 +5154,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of empty directories.</param>
       /// <param name="initialize">When <c>true</c> indicates the method is called externally.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the empty directory.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       internal static void DeleteEmptyDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool initialize, bool? isFullPath)
       {
@@ -5143,15 +5164,18 @@ namespace Alphaleonis.Win32.Filesystem
             if (Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
 
-            // MSDN: Trailing spaces are removed from the end of the path parameter before deleting the directory.
-
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
                isFullPath == null
                   ? path
                   : (bool) isFullPath
                      ? Path.GetLongPathInternal(path, false, false, false, false)
-                     : Path.GetFullPathInternal(transaction, path, true, true, false, false),
-               true, false, null);
+#if NET35
+                     : Path.GetFullPathInternal(transaction, path, true, false, false, true),
+#else
+                     : Path.GetFullPathInternal(transaction, path, true, true, false, true),
+#endif
+
+ true, false, null);
          }
 
          if (fileSystemEntryInfo == null)
@@ -5195,7 +5219,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(null, path, true, false, false, false);
+            : Path.GetFullPathInternal(null, path, true, false, false, true);
 
          // EncryptionDisable()
          // In the ANSI version of this function, the name is limited to 248 characters.
@@ -5223,7 +5247,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool)isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(null, path, true, false, false, false);
+               : Path.GetFullPathInternal(null, path, true, false, false, true);
 
          // Process folders and files.
          foreach (string fso in File.EnumerateFileSystemEntryInfoInternal<string>(null, pathLp, Path.WildcardStarMatchAll, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly, null, true, true, false, false, null))
@@ -5263,7 +5287,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? path
                : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
             handle = File.CreateFileInternal(false, transaction, pathLp, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, null);
          }
@@ -5447,7 +5471,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+            : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
          foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, searchOption, null, null, false, false, continueOnException, null))
          {

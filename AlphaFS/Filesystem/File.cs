@@ -406,7 +406,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
       /// <param name="sourceFileName">The file to copy.</param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; <c>false</c> otherwise.</param>
+      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
       /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -426,7 +426,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Copies an existing file to a new file.</summary>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
-      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; <c>false</c> otherwise.</param>
+      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
@@ -441,7 +441,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Copies an existing file to a new file, notifying the application of its progress through a callback function.</summary>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
-      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; <c>false</c> otherwise.</param>
+      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -460,7 +460,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Copies an existing file to a new file, notifying the application of its progress through a callback function.</summary>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
-      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; <c>false</c> otherwise.</param>
+      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -495,7 +495,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy.</param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; <c>false</c> otherwise.</param>
+      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
       /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -514,7 +514,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
-      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; <c>false</c> otherwise.</param>
+      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
@@ -530,7 +530,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
-      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; <c>false</c> otherwise.</param>
+      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -549,7 +549,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
-      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; <c>false</c> otherwise.</param>
+      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -1036,13 +1036,15 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Determines whether the specified file exists.</summary>
-      /// <param name="path">The file to check. Note that this files may contain wildcards, such as '*'.</param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <remarks>Note that this files may contain wildcards, such as '*'</remarks>
-      /// <remarks>Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
-      /// <remarks><c>true</c> if the caller has the required permissions and path contains the name of an existing file; <c>false</c> otherwise.</remarks>
-      /// <remarks>This method also returns <c>false</c> if path is a null reference, an invalid path, or a zero-length string.</remarks>
-      /// <remarks>If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method returns <c>false</c> regardless of the existence of path.</remarks>
+      /// <param name="path">The file to check. </param>
+      /// <returns>
+      /// <c>true</c> if the caller has the required permissions and path contains the name of an existing file; otherwise, <c>false</c>.
+      /// This method also returns <c>false</c> if path is null, an invalid path, or a zero-length string.
+      /// If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method <c>false</c> false regardless of the existence of path.
+      /// </returns>
+      /// <remarks>If path describes a directory, this method returns <c>false</c>.</remarks>
+      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
+      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(string path)
       {
@@ -1056,14 +1058,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>[AlphaFS] Determines whether the specified file exists.</summary>
-      /// <param name="path">The file to check. Note that this files may contain wildcards, such as '*'.</param>
+      /// <param name="path">The file to check. </param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <remarks>Note that this files may contain wildcards, such as '*'</remarks>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
-      /// <remarks><c>true</c> if the caller has the required permissions and path contains the name of an existing file; <c>false</c> otherwise.</remarks>
-      /// <remarks>This method also returns <c>false</c> if path is a null reference, an invalid path, or a zero-length string.</remarks>
-      /// <remarks>If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method returns <c>false</c> regardless of the existence of path.</remarks>
+      /// <returns>
+      /// <c>true</c> if the caller has the required permissions and path contains the name of an existing file; otherwise, <c>false</c>.
+      /// This method also returns <c>false</c> if path is null, an invalid path, or a zero-length string.
+      /// If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method <c>false</c> false regardless of the existence of path.
+      /// </returns>
+      /// <remarks>If path describes a directory, this method returns <c>false</c>.</remarks>
+      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
+      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(string path, bool? isFullPath)
       {
@@ -1078,14 +1082,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the specified file exists.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to check. Note that this files may contain wildcards, such as '*'.</param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <remarks>Note that this files may contain wildcards, such as '*'</remarks>
-      /// <remarks>Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
-      /// <remarks>Return value is <c>true</c> if the caller has the required permissions and path contains the name of an existing file; <c>false</c> otherwise.</remarks>
-      /// <remarks>This method also returns <c>false</c> if path is a null reference, an invalid path, or a zero-length string.</remarks>
-      /// <remarks>If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method returns <c>false</c> regardless of the existence of path.</remarks>
-      /// <remarks>A trailing backslash is not allowed and will be removed.</remarks>
+      /// <param name="path">The file to check. </param>
+      /// <returns>
+      /// <c>true</c> if the caller has the required permissions and path contains the name of an existing file; otherwise, <c>false</c>.
+      /// This method also returns <c>false</c> if path is null, an invalid path, or a zero-length string.
+      /// If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method <c>false</c> false regardless of the existence of path.
+      /// </returns>
+      /// <remarks>If path describes a directory, this method returns <c>false</c>.</remarks>
+      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
+      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
       {
@@ -1098,15 +1103,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the specified file exists.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to check. Note that this files may contain wildcards, such as '*'.</param>
+      /// <param name="path">The file to check. </param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <remarks>Note that this files may contain wildcards, such as '*'</remarks>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
-      /// <remarks>Return value is <c>true</c> if the caller has the required permissions and path contains the name of an existing file; <c>false</c> otherwise.</remarks>
-      /// <remarks>This method also returns <c>false</c> if path is a null reference, an invalid path, or a zero-length string.</remarks>
-      /// <remarks>If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method returns <c>false</c> regardless of the existence of path.</remarks>
-      /// <remarks>A trailing backslash is not allowed and will be removed.</remarks>
+      /// <returns>
+      /// <c>true</c> if the caller has the required permissions and path contains the name of an existing file; otherwise, <c>false</c>.
+      /// This method also returns <c>false</c> if path is null, an invalid path, or a zero-length string.
+      /// If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method <c>false</c> false regardless of the existence of path.
+      /// </returns>
+      /// <remarks>If path describes a directory, this method returns <c>false</c>.</remarks>
+      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
+      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -2730,29 +2736,34 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Replaces one file with another file, with the option of creating a backup copy of the original file. The replacement file assumes the name of the replaced file and its identity.</summary>
-      /// <param name="sourceFileName">The name of a file that replaces the file specified by <paramref name="destFileName"/>.</param>
-      /// <param name="destFileName">The name of the file being replaced.</param>
+      /// <summary>Replaces the contents of a specified file with the contents of another file, deleting the original file, and creating a backup of the replaced file.</summary>
+      /// <param name="sourceFileName">The name of a file that replaces the file specified by <paramref name="destinationFileName"/>.</param>
+      /// <param name="destinationFileName">The name of the file being replaced.</param>
       /// <param name="destinationBackupFileName">The name of the backup file.</param>
+      /// <remarks>The Replace method replaces the contents of a specified file with the contents of another file. It also creates a backup of the file that was replaced.</remarks>
+      /// <remarks>If the <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are on different volumes, this method will raise an exception. If the <paramref name="destinationBackupFileName"/> is on a different volume from the source file, the backup file will be deleted.</remarks>
+      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Replace(string sourceFileName, string destFileName, string destinationBackupFileName)
+      public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName)
       {
-         ReplaceInternal(sourceFileName, destFileName, destinationBackupFileName, false, false);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, false, false);
       }
 
-      /// <summary>Replaces one file with another file, with the option of creating a backup copy of the original file. The replacement file assumes the name of the replaced file and its identity.</summary>
-      /// <param name="sourceFileName">The name of a file that replaces the file specified by <paramref name="destFileName"/>.</param>
-      /// <param name="destFileName">The name of the file being replaced.</param>
+      /// <summary>Replaces the contents of a specified file with the contents of another file, deleting the original file, and creating a backup of the replaced file and optionally ignores merge errors.</summary>
+      /// <param name="sourceFileName">The name of a file that replaces the file specified by <paramref name="destinationFileName"/>.</param>
+      /// <param name="destinationFileName">The name of the file being replaced.</param>
       /// <param name="destinationBackupFileName">The name of the backup file.</param>
-      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the replacement file; <c>false</c> otherwise.</param>
+      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
+      /// <remarks>The Replace method replaces the contents of a specified file with the contents of another file. It also creates a backup of the file that was replaced.</remarks>
+      /// <remarks>If the <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are on different volumes, this method will raise an exception. If the <paramref name="destinationBackupFileName"/> is on a different volume from the source file, the backup file will be deleted.</remarks>
+      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Replace(string sourceFileName, string destFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
+      public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
-         ReplaceInternal(sourceFileName, destFileName, destinationBackupFileName, ignoreMetadataErrors, false);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, false);
       }
 
       #endregion // .NET
@@ -2761,18 +2772,21 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Replaces one file with another file, with the option of creating a backup copy of the original file. The replacement file assumes the name of the replaced file and its identity.</summary>
-      /// <param name="sourceFileName">The name of a file that replaces the file specified by <paramref name="destFileName"/>.</param>
-      /// <param name="destFileName">The name of the file being replaced.</param>
+      /// <summary>[AlphaFS] Replaces the contents of a specified file with the contents of another file, deleting the original file, and creating a backup of the replaced file and optionally ignores merge errors.</summary>
+      /// <param name="sourceFileName">The name of a file that replaces the file specified by <paramref name="destinationFileName"/>.</param>
+      /// <param name="destinationFileName">The name of the file being replaced.</param>
       /// <param name="destinationBackupFileName">The name of the backup file.</param>
-      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the replacement file; <c>false</c> otherwise.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already a full path with long path prefix, will be used as is.</param>
+      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are already a full path with long path prefix, will be used as is.</param>
+      /// <remarks>The Replace method replaces the contents of a specified file with the contents of another file. It also creates a backup of the file that was replaced.</remarks>
+      /// <remarks>If the <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are on different volumes, this method will raise an exception. If the <paramref name="destinationBackupFileName"/> is on a different volume from the source file, the backup file will be deleted.</remarks>
+      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Replace(string sourceFileName, string destFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
+      public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
       {
-         ReplaceInternal(sourceFileName, destFileName, destinationBackupFileName, ignoreMetadataErrors, isFullPath);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2852,7 +2866,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the specified <see cref="T:FileAttributes"/> of the file or directory on the specified path.</summary>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values. </param>
-      /// <remarks>It is not possible to change the compression status of a File object using the SetAttributes method.</remarks>
+      /// <remarks>Certain file attributes, such as <see cref="T:FileAttributes.Hidden"/> and <see cref="T:FileAttributes.ReadOnly"/>, can be combined. Other attributes, such as <see cref="T:FileAttributes.Normal"/>, must be used alone.</remarks>
+      /// <remarks>It is not possible to change the <see cref="T:FileAttributes.Compressed"/> status of a File object using the <see cref="M:File.SetAttributes"/> method.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes)
@@ -2870,7 +2885,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values. </param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>It is not possible to change the compression status of a File object using the SetAttributes method.</remarks>
+      /// <remarks>Certain file attributes, such as <see cref="T:FileAttributes.Hidden"/> and <see cref="T:FileAttributes.ReadOnly"/>, can be combined. Other attributes, such as <see cref="T:FileAttributes.Normal"/>, must be used alone.</remarks>
+      /// <remarks>It is not possible to change the <see cref="T:FileAttributes.Compressed"/> status of a File object using the <see cref="M:File.SetAttributes"/> method.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes, bool? isFullPath)
@@ -2888,7 +2904,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values. </param>
-      /// <remarks>It is not possible to change the compression status of a File object using the <see cref="M:SetAttributes"/> method.</remarks>
+      /// <remarks>Certain file attributes, such as <see cref="T:FileAttributes.Hidden"/> and <see cref="T:FileAttributes.ReadOnly"/>, can be combined. Other attributes, such as <see cref="T:FileAttributes.Normal"/>, must be used alone.</remarks>
+      /// <remarks>It is not possible to change the <see cref="T:FileAttributes.Compressed"/> status of a File object using the <see cref="M:File.SetAttributes"/> method.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes)
@@ -2905,7 +2922,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values. </param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>It is not possible to change the compression status of a File object using the <see cref="M:SetAttributes"/> method.</remarks>
+      /// <remarks>Certain file attributes, such as <see cref="T:FileAttributes.Hidden"/> and <see cref="T:FileAttributes.ReadOnly"/>, can be combined. Other attributes, such as <see cref="T:FileAttributes.Normal"/>, must be used alone.</remarks>
+      /// <remarks>It is not possible to change the <see cref="T:FileAttributes.Compressed"/> status of a File object using the <see cref="M:File.SetAttributes"/> method.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes, bool? isFullPath)
@@ -5425,7 +5443,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? destFileName
             : (bool) isFullPath
             ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, destFileName, true, false, false, false);
+            : Path.GetFullPathInternal(transaction, destFileName, true, false, false, true);
 
          
          // Setup callback function for progress notifications.
@@ -5569,9 +5587,9 @@ namespace Alphaleonis.Win32.Filesystem
 
                string pathLp = isFullPath == null
                   ? path
-                  : (bool)isFullPath
-                     ? Path.GetLongPathInternal(path, false, false, false, (isFile == null || (bool)isFile))
-                     : Path.GetFullPathInternal(transaction, path, true, false, false, (isFile == null || (bool)isFile));
+                  : (bool) isFullPath
+                     ? Path.GetLongPathInternal(path, false, false, false, false)
+                     : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
                SafeFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -5592,7 +5610,7 @@ namespace Alphaleonis.Win32.Filesystem
                      break;
 
                   case Win32Errors.ERROR_FILE_NOT_FOUND:
-                     lastError = (int)((isFile == null || (bool)!isFile)
+                     lastError = (int) ((isFile == null || (bool) !isFile)
                         ? Win32Errors.ERROR_PATH_NOT_FOUND
                         : Win32Errors.ERROR_FILE_NOT_FOUND);
                      break;
@@ -6021,26 +6039,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <remarks>Note that this files may contain wildcards, such as '*'</remarks>
-      /// <remarks>Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.</remarks>
-      /// <remarks>Trailing spaces are removed from the path parameter before determining if the file exists.</remarks>
-      /// <remarks>Return value is <c>true</c> if the caller has the required permissions and path contains the name of an existing file; <c>false</c> otherwise.</remarks>
-      /// <remarks>This method also returns <c>false</c> if path is a <c>null</c> reference, an invalid path, or a zero-length string.</remarks>
-      /// <remarks>If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method returns <c>false</c> regardless of the existence of path.</remarks>
+      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
+      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
       {
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, true, false, true);
 
-         // MSDN: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
-         // MSDN: Trailing spaces are removed from the path parameter before determining if the file exists.
+         // MSDN: .NET 2+ Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
+         // MSDN: .NET 2+ Trailing spaces are removed from the path parameter before determining if the file exists.
 
          FileAttributes attrs = GetAttributesInternal(isFolder, transaction, pathLp, true, true, null);
 
-         return attrs != (FileAttributes)(-1) && (isFolder
+         return attrs != (FileAttributes) (-1) && (isFolder
             ? (attrs & FileAttributes.Directory) == FileAttributes.Directory
             : (attrs & FileAttributes.Directory) != FileAttributes.Directory);
       }
@@ -6151,7 +6167,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+            : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
          // GetFileAttributes()
          // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -6215,7 +6231,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+            : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
          NativeMethods.Win32FileAttributeData win32AttrData;
 
@@ -6297,7 +6313,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+            : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
          uint fileSizeHigh;
          uint fileSizeLow = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -6354,7 +6370,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool)isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(null, path, true, false, false, false);
+            : Path.GetFullPathInternal(null, path, true, false, false, true);
 
          FileEncryptionStatus status;
 
@@ -6626,21 +6642,27 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region ReplaceInternal
 
-      /// <summary>[AlphaFS] Unified method ReplaceInternal() to replace one file with another file, with the option of creating a backup copy of the original file. The replacement file assumes the name of the replaced file and its identity.</summary>
-      /// <param name="sourceFileName">The name of a file that replaces the file specified by <paramref name="destFileName"/>.</param>
-      /// <param name="destFileName">The name of the file being replaced.</param>
-      /// <param name="destinationBackupPath">The name of the backup file.</param>
-      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the replacement file; <c>false</c> otherwise.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destinationBackupPath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destinationBackupPath"/> are already a full path with long path prefix, will be used as is.</param>
+      /// <summary>[AlphaFS] Unified method ReplaceInternal() to replace the contents of a specified file with the contents of another file, deleting the original file, and creating a backup of the replaced file and optionally ignores merge errors.</summary>
+      /// <param name="sourceFileName">The name of a file that replaces the file specified by <paramref name="destinationFileName"/>.</param>
+      /// <param name="destinationFileName">The name of the file being replaced.</param>
+      /// <param name="destinationBackupFileName">The name of the backup file.</param>
+      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are already a full path with long path prefix, will be used as is.</param>
+      /// <remarks>The Replace method replaces the contents of a specified file with the contents of another file. It also creates a backup of the file that was replaced.</remarks>
+      /// <remarks>If the <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are on different volumes, this method will raise an exception. If the <paramref name="destinationBackupFileName"/> is on a different volume from the source file, the backup file will be deleted.</remarks>
+      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static void ReplaceInternal(string sourceFileName, string destFileName, string destinationBackupPath, bool ignoreMetadataErrors, bool? isFullPath)
+      internal static void ReplaceInternal(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(sourceFileName))
             throw new ArgumentNullException("sourceFileName");
 
-         if (Utils.IsNullOrWhiteSpace(destFileName))
-            throw new ArgumentNullException("destFileName");
+         if (Utils.IsNullOrWhiteSpace(destinationFileName))
+            throw new ArgumentNullException("destinationFileName");
+
+         // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
+
 
          string sourceFileNameLp = isFullPath == null
             ? sourceFileName
@@ -6648,31 +6670,33 @@ namespace Alphaleonis.Win32.Filesystem
             ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
             : Path.GetFullPathInternal(null, sourceFileName, true, false, false, true);
 
-         string destFileNameLp = isFullPath == null
-            ? destFileName
+         string destinationFileNameLp = isFullPath == null
+            ? destinationFileName
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-            : Path.GetFullPathInternal(null, destFileName, true, false, false, true);
+               ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
+               : Path.GetFullPathInternal(null, destinationFileName, true, false, false, true);
 
-         string destinationBackupPathLp = isFullPath == null
-            ? destinationBackupPath
+         string destinationBackupFileNameLp = isFullPath == null
+            ? destinationBackupFileName
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(destinationBackupPath, false, false, false, false)
-            : Path.GetFullPathInternal(null, destinationBackupPath, true, false, false, true);
-
+               ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
+               : Path.GetFullPathInternal(null, destinationBackupFileName, true, false, false, true);
+         
+         
          const int replacefileWriteThrough = 1;
          const int replacefileIgnoreMergeErrors = 2;
+
          FileSystemRights dwReplaceFlags = (FileSystemRights) replacefileWriteThrough;
          if (ignoreMetadataErrors)
             dwReplaceFlags |= (FileSystemRights) replacefileIgnoreMergeErrors;
-
+         
          // ReplaceFile()
          // In the ANSI version of this function, the name is limited to MAX_PATH characters.
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-         if (!NativeMethods.ReplaceFile(destFileNameLp, sourceFileNameLp, destinationBackupPathLp, dwReplaceFlags, IntPtr.Zero, IntPtr.Zero))
-            NativeError.ThrowException(Marshal.GetLastWin32Error(), sourceFileNameLp, destinationBackupPathLp);
+         if (!NativeMethods.ReplaceFile(destinationFileNameLp, sourceFileNameLp, destinationBackupFileNameLp, dwReplaceFlags, IntPtr.Zero, IntPtr.Zero))
+            NativeError.ThrowException(Marshal.GetLastWin32Error(), sourceFileNameLp, destinationFileNameLp);
       }
 
       #endregion // ReplaceInternal
@@ -6772,7 +6796,7 @@ namespace Alphaleonis.Win32.Filesystem
                      ? path
                      : (bool) isFullPath
                         ? Path.GetLongPathInternal(path, false, false, false, false)
-                        : Path.GetFullPathInternal(null, path, true, false, false, false);
+                        : Path.GetFullPathInternal(null, path, true, false, false, true);
 
                   // SetNamedSecurityInfo()
                   // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -6809,6 +6833,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileAttributes">The attributes to set for the file or directory. Note that all other values override <see cref="T:FileAttributes.Normal"/>.</param>
       /// <param name="continueOnNotExist"><c>true</c> does not throw an Exception when the file system object does not exist.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <remarks>Certain file attributes, such as <see cref="T:FileAttributes.Hidden"/> and <see cref="T:FileAttributes.ReadOnly"/>, can be combined. Other attributes, such as <see cref="T:FileAttributes.Normal"/>, must be used alone.</remarks>
+      /// <remarks>It is not possible to change the <see cref="T:FileAttributes.Compressed"/> status of a File object using the SetAttributes method.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, bool? isFullPath)
@@ -6820,7 +6846,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 

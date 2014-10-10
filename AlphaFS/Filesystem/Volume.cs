@@ -305,7 +305,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets a value indicating whether a drive is ready.</summary>
       /// <param name="drivePath">A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</param>
-      /// <returns><c>true</c> if <paramref name="drivePath"/> is ready; <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if <paramref name="drivePath"/> is ready; otherwise, <c>false</c>.</returns>
       [SecurityCritical]
       public static bool IsReady(string drivePath)
       {
@@ -891,6 +891,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
+
 
          volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, false, true, false);
 

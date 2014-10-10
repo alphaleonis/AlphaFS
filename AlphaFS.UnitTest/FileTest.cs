@@ -291,19 +291,19 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("\n\tSanity check AlphaFS <> System.IO {0}.", cntCheck);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesProtected: [{0}]", dsAlpha.AreAccessRulesProtected);
-         Assert.AreEqual(dsAlpha.AreAccessRulesProtected, dsSystem.AreAccessRulesProtected);
+         Assert.AreEqual(dsSystem.AreAccessRulesProtected, dsAlpha.AreAccessRulesProtected);
 
          StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesProtected: [{0}]", dsAlpha.AreAuditRulesProtected);
-         Assert.AreEqual(dsAlpha.AreAuditRulesProtected, dsSystem.AreAuditRulesProtected);
+         Assert.AreEqual(dsSystem.AreAuditRulesProtected, dsAlpha.AreAuditRulesProtected);
 
          StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesCanonical: [{0}]", dsAlpha.AreAccessRulesCanonical);
-         Assert.AreEqual(dsAlpha.AreAccessRulesCanonical, dsSystem.AreAccessRulesCanonical);
+         Assert.AreEqual(dsSystem.AreAccessRulesCanonical, dsAlpha.AreAccessRulesCanonical);
 
          StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesCanonical: [{0}]", dsAlpha.AreAuditRulesCanonical);
-         Assert.AreEqual(dsAlpha.AreAuditRulesCanonical, dsSystem.AreAuditRulesCanonical);
+         Assert.AreEqual(dsSystem.AreAuditRulesCanonical, dsAlpha.AreAuditRulesCanonical);
       }
 
       #endregion // DumpAccessRules
@@ -810,7 +810,7 @@ namespace AlphaFS.UnitTest
             StopWatcher(true);
             ByHandleFileInformation bhfi = File.GetFileInformationByHandle(stream.SafeFileHandle);
             string report = Reporter();
-            Assert.AreEqual((int)bhfi.NumberOfLinks, numCreate);
+            Assert.AreEqual(numCreate, (int)bhfi.NumberOfLinks);
 
             Console.WriteLine("\n\tByHandleFileInformation for Input Path, see property: NumberOfLinks");
             Dump(bhfi, -18);

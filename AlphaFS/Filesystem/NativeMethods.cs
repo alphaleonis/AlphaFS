@@ -1440,7 +1440,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region PathFileExists
 
       /// <summary>Determines whether a path to a file system object such as a file or folder is valid.</summary>
-      /// <returns><c>true</c> if the file exists; <c>false</c> otherwise. Call GetLastError for extended error information.</returns>
+      /// <returns><c>true</c> if the file exists; otherwise, <c>false</c>. Call GetLastError for extended error information.</returns>
       /// <remarks>
       /// This function tests the validity of the path.
       /// A path specified by Universal Naming Convention (UNC) is limited to a file only; that is, \\server\share\file is permitted.

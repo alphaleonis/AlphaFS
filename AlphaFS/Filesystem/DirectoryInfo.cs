@@ -121,7 +121,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates a directory.</summary>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <remarks>Trailing spaces are removed from the end of the path parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public void Create()
@@ -132,7 +131,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Creates a directory using a <see cref="T:System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <remarks>Trailing spaces are removed from the end of the path parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -145,12 +143,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      #region Compress
-
       /// <summary>[AlphaFS] Creates a directory using a <see cref="T:System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <remarks>Trailing spaces are removed from the end of the path parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -163,7 +158,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <remarks>Trailing spaces are removed from the end of the path parameter before creating the directory.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -171,8 +165,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, compress, null);
       }
-
-      #endregion // Compress
 
       #endregion // AlphaFS
 
@@ -216,8 +208,6 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       #region AlphaFS
-
-      #region Compress
 
       /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:DirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
@@ -288,8 +278,6 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateSubdirectoryInternal(path, templatePath, directorySecurity, compress);
       }
 
-      #endregion // Compress
-
       #endregion // AlphaFS
 
       #endregion // CreateSubdirectory
@@ -299,6 +287,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Deletes this <see cref="T:DirectoryInfo"/> if it is empty.</summary>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public override void Delete()
       {
@@ -307,11 +296,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Deletes this instance of a <see cref="T:DirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
-      /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; otherwise, <c>false</c>.</param>
       /// <remarks>
       /// If the <see cref="T:DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="T:DirectoryInfo"/> even if <paramref name="recursive"/> is <c>false</c>.
       /// Attempting to delete a <see cref="T:DirectoryInfo"/> that is not empty when <paramref name="recursive"/> is <c>false</c> throws an <see cref="T:IOException"/>.
       /// </remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public void Delete(bool recursive)
       {
@@ -324,12 +314,14 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Deletes this instance of a <see cref="T:DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
-      /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; <c>false</c> otherwise.</param>
+      /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; otherwise, <c>false</c>.</param>
       /// <param name="ignoreReadOnly"><c>true</c> ignores read only attribute of files and directories.</param>
       /// <remarks>
       /// If the <see cref="T:DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="T:DirectoryInfo"/> even if recursive is <c>false</c>.
       /// Attempting to delete a <see cref="T:DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="T:IOException"/>.
       /// </remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly)
       {
          Directory.DeleteDirectoryInternal(EntryInfo, Transaction, null, recursive, ignoreReadOnly, !recursive, false, null);
@@ -758,14 +750,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Moves a <see cref="T:DirectoryInfo"/> instance and its contents to a new path.</summary>
-      /// <param name="destinationPath">The name and path to which to move this directory. The destination cannot be another disk volume or a directory with the identical name. It can be an existing directory to which you want to add this directory as a subdirectory.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before moving the directory.</remarks>
+      /// <param name="destDirName">The name and path to which to move this directory. The destination cannot be another disk volume or a directory with the identical name. It can be an existing directory to which you want to add this directory as a subdirectory.</param>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before moving the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public void MoveTo(string destinationPath)
+      public void MoveTo(string destDirName)
       {
-         CopyToMoveToInternal(true, destinationPath, false, null, MoveOptions.None, null, null, false);
+         CopyToMoveToInternal(true, destDirName, false, null, MoveOptions.None, null, null, false);
       }
 
       #endregion // .NET
@@ -773,46 +767,52 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Moves a <see cref="T:DirectoryInfo"/> instance and its contents to a new path.</summary>
-      /// <param name="destinationPath">The path to the new location for sourcePath.</param>
+      /// <param name="destDirName">The path to the new location for sourcePath.</param>
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public void MoveTo(string destinationPath, bool overwrite)
+      public void MoveTo(string destDirName, bool overwrite)
       {
-         CopyToMoveToInternal(true, destinationPath, false, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, false);
+         CopyToMoveToInternal(true, destDirName, false, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, false);
       }
 
       /// <summary>[AlphaFS] Moves a <see cref="T:DirectoryInfo"/> instance and its contents to a new path.</summary>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
+      /// <param name="destDirName">The destination directory path, of type string</param>
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
       /// <param name="preserveSecurity"><c>true</c> Preserves ACLs information.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public void MoveTo(string destinationPath, bool overwrite, bool preserveSecurity)
+      public void MoveTo(string destDirName, bool overwrite, bool preserveSecurity)
       {
-         CopyToMoveToInternal(true, destinationPath, preserveSecurity, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, false);
+         CopyToMoveToInternal(true, destDirName, preserveSecurity, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, false);
       }
 
       /// <summary>[AlphaFS] Moves a <see cref="T:DirectoryInfo"/> instance and its contents to a new path.</summary>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
+      /// <param name="destDirName">The destination directory path, of type string</param>
       /// <param name="moveOptions">Flags that specify how the file is to be move. This parameter can be <c>null</c>.</param>
       /// <param name="preserveSecurity"><c>true</c> Preserves ACLs information.</param>
       /// <param name="moveProgress">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before moving the directory.</remarks>
       /// <remarks>This method works across disk volumes.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public void MoveTo(string destinationPath, MoveOptions moveOptions, bool preserveSecurity, CopyMoveProgressCallback moveProgress, object userProgressData)
+      public void MoveTo(string destDirName, MoveOptions moveOptions, bool preserveSecurity, CopyMoveProgressCallback moveProgress, object userProgressData)
       {
-         CopyToMoveToInternal(true, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, false);
+         CopyToMoveToInternal(true, destDirName, preserveSecurity, null, moveOptions, moveProgress, userProgressData, false);
       }
 
       #endregion // AlphaFS
@@ -898,54 +898,62 @@ namespace Alphaleonis.Win32.Filesystem
       #region CopyTo
 
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before copying the directory.</remarks>
+      /// <param name="destDirName">The destination directory path, of type string</param>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public DirectoryInfo CopyTo(string destinationPath)
+      public DirectoryInfo CopyTo(string destDirName)
       {
-         return CopyToMoveToInternal(false, destinationPath, false, NativeMethods.CopyOptionsFail, null, null, null, false);
+         return CopyToMoveToInternal(false, destDirName, false, NativeMethods.CopyOptionsFail, null, null, null, false);
       }
 
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
+      /// <param name="destDirName">The destination directory path, of type string</param>
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public DirectoryInfo CopyTo(string destinationPath, bool overwrite)
+      public DirectoryInfo CopyTo(string destDirName, bool overwrite)
       {
-         return CopyToMoveToInternal(false, destinationPath, false, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, false);
+         return CopyToMoveToInternal(false, destDirName, false, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, false);
       }
 
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
+      /// <param name="destDirName">The destination directory path, of type string</param>
       /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
       /// <param name="preserveSecurity"><c>true</c> Preserves ACLs information.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public DirectoryInfo CopyTo(string destinationPath, bool overwrite, bool preserveSecurity)
+      public DirectoryInfo CopyTo(string destDirName, bool overwrite, bool preserveSecurity)
       {
-         return CopyToMoveToInternal(false, destinationPath, preserveSecurity, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, false);
+         return CopyToMoveToInternal(false, destDirName, preserveSecurity, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, false);
       }
 
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
+      /// <param name="destDirName">The destination directory path, of type string</param>
       /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="preserveSecurity"><c>true</c> Preserves ACLs information.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before copying the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destDirName"/> parameter before copying the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public DirectoryInfo CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressCallback copyProgress, object userProgressData)
+      public DirectoryInfo CopyTo(string destDirName, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressCallback copyProgress, object userProgressData)
       {
-         return CopyToMoveToInternal(false, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, false);
+         return CopyToMoveToInternal(false, destDirName, preserveSecurity, copyOptions, null, copyProgress, userProgressData, false);
       }
 
       #endregion // CopyTo
@@ -1317,7 +1325,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="destinationPath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="destinationPath"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>When <paramref name="isMove"/> is <c>false</c> a new <see cref="T:DirectoryInfo"/> instance with a fully qualified path. Otherwise <c>null</c> is returned.</returns>
-      /// <remarks>If <paramref name="isFullPath"/> is <c>false></c> trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before copying/moving the directory.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before copying/moving the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
       /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
@@ -1331,7 +1339,12 @@ namespace Alphaleonis.Win32.Filesystem
             ? destinationPath
             : (bool) isFullPath
             ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
-            : Path.GetFullPathInternal(null, destinationPath, true, false, false, false);
+#if NET35
+               : Path.GetFullPathInternal(null, destinationPath, true, false, false, true);
+#else
+               : Path.GetFullPathInternal(null, destinationPath, true, true, false, true);
+#endif
+
 
          Directory.CopyMoveInternal(isMove, Transaction, LongFullName, destinationPathLp, preserveSecurity, copyOptions, moveOptions, copyProgress, userProgressData, null, null);
 
@@ -1357,7 +1370,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Exists
 
       /// <summary>Gets a value indicating whether the directory exists.</summary>
-      /// <returns><c>true</c> if the directory exists; <c>false</c> otherwise.</returns>
+      /// <returns><c>true</c> if the directory exists; otherwise, <c>false</c>.</returns>
       public override bool Exists
       {
          get { return (EntryInfo != null && EntryInfo.IsDirectory); }

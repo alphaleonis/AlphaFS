@@ -119,7 +119,7 @@ namespace Alphaleonis.Win32
       private static bool _isServer;
 
       /// <summary>Gets a value indicating whether the operating system is a server os.</summary>
-      /// <value><c>true</c> if the current operating system is a server os; <c>false</c> otherwise.</value>
+      /// <value><c>true</c> if the current operating system is a server os; otherwise, <c>false</c>.</value>
       public static bool IsServer
       {
          get
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32
 
       /// <summary>Determines whether the operating system is of the specified version or later.</summary>
       /// <param name="version">The lowest version for which to return true.</param>
-      /// <returns><c>true</c> if the operating system is of the specified <paramref name="version"/> or later; <c>false</c> otherwise.</returns>      
+      /// <returns><c>true</c> if the operating system is of the specified <paramref name="version"/> or later; otherwise, <c>false</c>.</returns>      
       public static bool IsAtLeast(OsVersionName version)
       {
          return OsVersionName >= version;
@@ -216,7 +216,7 @@ namespace Alphaleonis.Win32
       /// <summary>Determines whether operating system is of the specified version or later, allowing specification of a minimum service pack that must be installed on the lowest version.</summary>
       /// <param name="version">The minimum required version.</param>
       /// <param name="servicePackVersion">The major version of the service pack that must be installed on the minimum required version to return true. This can be 0 to indicate that no service pack is required.</param>
-      /// <returns><c>true</c> if the operating system matches the specified <paramref name="version"/> with the specified service pack, or if the operating system is of a later version; <c>false</c> otherwise.</returns>      
+      /// <returns><c>true</c> if the operating system matches the specified <paramref name="version"/> with the specified service pack, or if the operating system is of a later version; otherwise, <c>false</c>.</returns>      
       public static bool IsAtLeast(OsVersionName version, int servicePackVersion)
       {
          return IsAtLeast(version) && ServicePackVersion.Major >= servicePackVersion;
@@ -227,7 +227,7 @@ namespace Alphaleonis.Win32
       #region IsWow64Process
 
       /// <summary>Determines whether the current process is running under WOW64.</summary>
-      /// <returns><c>true</c> if the current process is running under WOW64; <c>false</c> otherwise.</returns>      
+      /// <returns><c>true</c> if the current process is running under WOW64; otherwise, <c>false</c>.</returns>      
       public static bool IsWow64Process()
       {
          IntPtr processHandle = Process.GetCurrentProcess().Handle;
