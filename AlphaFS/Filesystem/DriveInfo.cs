@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region  .NET
 
-      #region GetDrives()
+      #region GetDrives
 
       #region  .NET
 
@@ -192,7 +192,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
       
-      #endregion // GetDrives()
+      #endregion // GetDrives
 
       #region ToString
 
@@ -256,6 +256,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // GetFreeDriveLetter
+
 
       #region Private
 

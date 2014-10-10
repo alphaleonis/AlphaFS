@@ -23,7 +23,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Identifies the type of file information that GetFileInformationByHandleEx should retrieve or SetFileInformationByHandle should set.</summary>
+      /// <summary>FILE_INFO_BY_HANDLE_CLASS - Identifies the type of file information that GetFileInformationByHandleEx should retrieve or SetFileInformationByHandle should set.</summary>
       internal enum FileInfoByHandleClass
       {
          ///// <summary>Minimal information for the file should be retrieved or set. Used for file handles. See FILE_BASIC_INFO.</summary>

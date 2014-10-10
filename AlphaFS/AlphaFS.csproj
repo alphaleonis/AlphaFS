@@ -189,7 +189,7 @@
     <Compile Include="Filesystem\File.cs" />
     <Compile Include="Filesystem\BackupFileStream.cs" />
     <Compile Include="Filesystem\Enumerations\FileEncryptionStatus.cs" />
-    <Compile Include="Filesystem\ByHandleFileInformation.cs" />
+    <Compile Include="Filesystem\FileInfoByHandle.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\EFileAttributes.cs" />
@@ -201,7 +201,7 @@
     <Compile Include="Filesystem\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Filesystem\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
-    <Compile Include="Filesystem\Structures\ByHandleFileInfo.cs" />
+    <Compile Include="Filesystem\Structures\FileInfoByHandle.cs" />
     <Compile Include="Filesystem\Structures\ChangeErrorMode.cs" />
     <Compile Include="Filesystem\Structures\FileIdBothDirInfo.cs" />
     <Compile Include="Filesystem\Structures\FileTime.cs" />
@@ -319,7 +319,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

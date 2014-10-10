@@ -4620,26 +4620,26 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetEncryptionStatus
 
-      #region GetFileInformationByHandle
+      #region GetFileInfoByHandle
 
       /// <summary>[AlphaFS] Retrieves file information for the specified <see cref="T:SafeFileHandle"/>.</summary>
       /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information.</param>
-      /// <returns>A <see cref="T:ByHandleFileInformation"/> object containing the requested information.</returns>
+      /// <returns>A <see cref="T:FileInfoByHandle"/> object containing the requested information.</returns>
       /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
-      public static ByHandleFileInformation GetFileInformationByHandle(SafeFileHandle handle)
+      public static FileInfoByHandle GetFileInfoByHandle(SafeFileHandle handle)
       {
          NativeMethods.IsValidHandle(handle);
 
-         NativeMethods.ByHandleFileInformation info;
+         NativeMethods.FileInfoByHandle info;
 
          if (!NativeMethods.GetFileInformationByHandle(handle, out info))
             NativeError.ThrowException(Marshal.GetLastWin32Error());
 
-         return new ByHandleFileInformation(info);
+         return new FileInfoByHandle(info);
       }
 
-      #endregion // GetFileInformationByHandle
+      #endregion // GetFileInfoByHandle
 
       #region GetFileSystemEntryInfo
 

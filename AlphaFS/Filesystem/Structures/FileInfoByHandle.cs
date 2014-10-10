@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>BY_HANDLE_FILE_INFORMATION - Contains information that the GetFileInformationByHandle function retrieves.</summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct ByHandleFileInformation
+      internal struct FileInfoByHandle
       {
          /// <summary>The file attributes.</summary>
          public readonly FileAttributes FileAttributes;

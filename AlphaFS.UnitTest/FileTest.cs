@@ -808,11 +808,11 @@ namespace AlphaFS.UnitTest
          using (FileStream stream = File.OpenRead(tempPath))
          {
             StopWatcher(true);
-            ByHandleFileInformation bhfi = File.GetFileInformationByHandle(stream.SafeFileHandle);
+            FileInfoByHandle bhfi = File.GetFileInfoByHandle(stream.SafeFileHandle);
             string report = Reporter();
             Assert.AreEqual(numCreate, (int)bhfi.NumberOfLinks);
 
-            Console.WriteLine("\n\tByHandleFileInformation for Input Path, see property: NumberOfLinks");
+            Console.WriteLine("\n\tFileInfoByHandle for Input Path, see property: NumberOfLinks");
             Dump(bhfi, -18);
             Console.WriteLine("\n{0}", report);
          }
@@ -2659,16 +2659,16 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetEncryptionStatus
 
-      #region GetFileInformationByHandle
+      #region GetFileInfoByHandle
 
       [TestMethod]
-      public void AlphaFS_GetFileInformationByHandle()
+      public void AlphaFS_GetFileInfoByHandle()
       {
-         Console.WriteLine("File.GetFileInformationByHandle()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_ByHandleFileInformation()");
+         Console.WriteLine("File.GetFileInfoByHandle()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_FileInfoByHandle()");
       }
 
-      #endregion // GetFileInformationByHandle
+      #endregion // GetFileInfoByHandle
 
       #region GetLinkTargetInfo
 

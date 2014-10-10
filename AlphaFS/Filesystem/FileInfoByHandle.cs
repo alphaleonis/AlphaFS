@@ -25,16 +25,16 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   #region ByHandleFileInformation
+   #region FileInfoByHandle
 
    /// <summary>BY_HANDLE_FILE_INFORMATION - Contains information that the GetFileInformationByHandle function retrieves.</summary>
    [SerializableAttribute]
    [SecurityCritical]
-   public sealed class ByHandleFileInformation
+   public sealed class FileInfoByHandle
    {
       #region Constructor
 
-      internal ByHandleFileInformation(NativeMethods.ByHandleFileInformation bhfi)
+      internal FileInfoByHandle(NativeMethods.FileInfoByHandle bhfi)
       {
          CreationTime = DateTime.FromFileTimeUtc(bhfi.CreationTime).ToLocalTime();
          LastAccessTime = DateTime.FromFileTimeUtc(bhfi.LastAccessTime).ToLocalTime();
@@ -131,5 +131,5 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Properties
    }
 
-   #endregion // ByHandleFileInformation
+   #endregion // FileInfoByHandle
 }
