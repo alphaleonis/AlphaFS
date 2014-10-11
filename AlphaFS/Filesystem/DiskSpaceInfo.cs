@@ -102,8 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
-            bool getOk;
-            int lastError;
+            int lastError = (int) Win32Errors.NO_ERROR;
 
             #region Get size information.
             
@@ -111,16 +110,17 @@ namespace Alphaleonis.Win32.Filesystem
             {
                ulong freeBytesAvailable, totalNumberOfBytes, totalNumberOfFreeBytes;
 
-               getOk = NativeMethods.GetDiskFreeSpaceEx(DriveName, out freeBytesAvailable, out totalNumberOfBytes, out totalNumberOfFreeBytes);
-               lastError = Marshal.GetLastWin32Error();
+               if (!NativeMethods.GetDiskFreeSpaceEx(DriveName, out freeBytesAvailable, out totalNumberOfBytes, out totalNumberOfFreeBytes))
+                  lastError = Marshal.GetLastWin32Error();
 
-               if (getOk)
+               else
                {
                   FreeBytesAvailable = freeBytesAvailable;
                   TotalNumberOfBytes = totalNumberOfBytes;
                   TotalNumberOfFreeBytes = totalNumberOfFreeBytes;
                }
-               else if (!_continueOnAccessError && (lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_NOT_READY))
+
+               if (!_continueOnAccessError && (lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_NOT_READY))
                   NativeError.ThrowException(DriveName);
             }
 
@@ -132,17 +132,18 @@ namespace Alphaleonis.Win32.Filesystem
             {
                uint sectorsPerCluster, bytesPerSector, numberOfFreeClusters, totalNumberOfClusters;
 
-               getOk = NativeMethods.GetDiskFreeSpace(DriveName, out sectorsPerCluster, out bytesPerSector, out numberOfFreeClusters, out totalNumberOfClusters);
-               lastError = Marshal.GetLastWin32Error();
+               if (!NativeMethods.GetDiskFreeSpace(DriveName, out sectorsPerCluster, out bytesPerSector, out numberOfFreeClusters, out totalNumberOfClusters))
+                  lastError = Marshal.GetLastWin32Error();
 
-               if (getOk)
+               else
                {
                   BytesPerSector = bytesPerSector;
                   NumberOfFreeClusters = numberOfFreeClusters;
                   SectorsPerCluster = sectorsPerCluster;
                   TotalNumberOfClusters = totalNumberOfClusters;
                }
-               else if (!_continueOnAccessError && (lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_NOT_READY))
+
+               if (!_continueOnAccessError && (lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_NOT_READY))
                   NativeError.ThrowException(DriveName);
             }
 

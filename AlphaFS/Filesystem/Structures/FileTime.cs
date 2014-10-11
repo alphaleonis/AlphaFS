@@ -22,12 +22,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>FILETIME Structure - Represents the number of 100-nanosecond intervals since January 1, 1601. This structure is a 64-bit value.</summary>
+      /// <summary>FILETIME - Represents the number of 100-nanosecond intervals since January 1, 1601. This structure is a 64-bit value.</summary>
       [SerializableAttribute]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct FileTime

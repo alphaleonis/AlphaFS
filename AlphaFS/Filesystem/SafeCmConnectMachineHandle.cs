@@ -41,10 +41,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       protected override bool ReleaseHandle()
       {
-         // MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.
-         // You cannot access remote machines when running on these versions of Windows. 
-         // http://msdn.microsoft.com/en-us/library/windows/hardware/ff538005%28v=vs.85%29.aspx
-
          return NativeMethods.CM_Disconnect_Machine(handle) == Win32Errors.NO_ERROR;
       }
 

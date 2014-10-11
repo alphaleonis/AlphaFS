@@ -417,7 +417,7 @@ namespace Alphaleonis.Win32.Filesystem
             cbSize = (IntPtr.Size == 4) ? (uint) (Marshal.SystemDefaultCharSize + 4) : 8
          };
 
-         // Get details.
+         // Get device interace details.
          if (!NativeMethods.SetupDiGetDeviceInterfaceDetail(safeHandle, ref deviceInterfaceData, ref didd, NativeMethods.DefaultFileBufferSize, IntPtr.Zero, ref deviceInfoData))
          {
             int lastError = Marshal.GetLastWin32Error();

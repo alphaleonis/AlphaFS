@@ -27,8 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>FILE_ID_BOTH_DIR_INFO - Contains information about files in the specified directory. Used for directory handles.
-      /// Use only when calling GetFileInformationByHandleEx.</summary>
+      /// <summary>FILE_ID_BOTH_DIR_INFO - Contains information about files in the specified directory. Used for directory handles. Use only when calling GetFileInformationByHandleEx.</summary>
       /// <remarks>
       /// The number of files that are returned for each call to GetFileInformationByHandleEx depends on the size of the buffer that is passed to the function.
       /// Any subsequent calls to GetFileInformationByHandleEx on the same handle will resume the enumeration operation after the last file is returned.

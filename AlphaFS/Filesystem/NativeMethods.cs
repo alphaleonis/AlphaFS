@@ -313,14 +313,22 @@ namespace Alphaleonis.Win32.Filesystem
       #region BackupRead
 
       /// <summary>The BackupRead function can be used to back up a file or directory, including the security information.
-      /// The function reads data associated with a specified file or directory into a buffer, which can then be written to the backup medium using the WriteFile function.</summary>
+      /// <para>The function reads data associated with a specified file or directory into a buffer,</para>
+      /// <para>which can then be written to the backup medium using the WriteFile function.</para>
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero, indicating that an I/O error occurred. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero, indicating that an I/O error occurred. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>This function is not intended for use in backing up files encrypted under the Encrypted File System. Use ReadEncryptedFileRaw for that purpose.</remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This function is not intended for use in backing up files encrypted under the Encrypted File System.</para>
+      /// <para>Use <see cref="M:ReadEncryptedFileRaw"/> for that purpose.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -330,19 +338,24 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region BackupSeek
 
-      /// <summary>The BackupSeek function seeks forward in a data stream initially accessed by using the BackupRead or BackupWrite function.</summary>
+      /// <summary>The BackupSeek function seeks forward in a data stream initially accessed by using the <see cref="M:BackupRead"/> or <see cref="M:BackupWrite"/> function.
+      /// <para>The function reads data associated with a specified file or directory into a buffer, which can then be written to the backup medium using the <see cref="M:WriteFile"/> function.</para>
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function could seek the requested amount, the function returns a nonzero value.
-      /// If the function could not seek the requested amount, the function returns zero. To get extended error information, call GetLastError.
+      /// <para>If the function could seek the requested amount, the function returns a nonzero value.</para>
+      /// <para>If the function could not seek the requested amount, the function returns zero. To get extended error information, call GetLastError.</para>
       /// </returns>
+      /// <para>&#160;</para>
       /// <remarks>
-      /// Applications use the BackupSeek function to skip portions of a data stream that cause errors.
-      /// This function does not seek across stream headers. For example, this function cannot be used to skip the stream name.
-      /// If an application attempts to seek past the end of a substream, the function fails, the lpdwLowByteSeeked and lpdwHighByteSeeked parameters
-      /// indicate the actual number of bytes the function seeks, and the file position is placed at the start of the next stream header.
+      /// <para>Applications use the BackupSeek function to skip portions of a data stream that cause errors.</para>
+      /// <para>This function does not seek across stream headers. For example, this function cannot be used to skip the stream name.</para>
+      /// <para>If an application attempts to seek past the end of a substream, the function fails, the lpdwLowByteSeeked and lpdwHighByteSeeked parameters</para>
+      /// <para>indicate the actual number of bytes the function seeks, and the file position is placed at the start of the next stream header.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -352,15 +365,21 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region BackupWrite
 
-      /// <summary>The BackupWrite function can be used to restore a file or directory that was backed up using BackupRead.
-      /// Use the ReadFile function to get a stream of data from the backup medium, then use BackupWrite to write the data to the specified file or directory.</summary>
+      /// <summary>The BackupWrite function can be used to restore a file or directory that was backed up using <see cref="M:BackupRead"/>.
+      /// <para>Use the <see cref="M:ReadFile"/> function to get a stream of data from the backup medium, then use BackupWrite to write the data to the specified file or directory.</para>
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero, indicating that an I/O error occurred. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero, indicating that an I/O error occurred. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>This function is not intended for use in restoring files encrypted under the Encrypted File System. Use WriteEncryptedFileRaw for that purpose.</remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This function is not intended for use in restoring files encrypted under the Encrypted File System. Use WriteEncryptedFileRaw for that purpose.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -373,14 +392,24 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Device Management
 
+      #region CM_Xxx
+
       #region CM_Connect_Machine
 
-      /// <summary>The CM_Connect_Machine function creates a connection to a remote machine.</summary>
-      /// <returns>If the operation succeeds, the function returns CR_SUCCESS. Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</returns>
-      /// <remarks>Available in Microsoft Windows 2000 and later versions of Windows.</remarks>
-      /// <remarks>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</remarks>
-      /// <remarks>You cannot access remote machines when running on these versions of Windows.</remarks>
-      /// <remarks>http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx</remarks>
+      /// <summary>The CM_Connect_Machine function creates a connection to a remote machine.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>If the operation succeeds, the function returns CR_SUCCESS.</para>
+      /// <para>Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
+      /// <para>You cannot access remote machines when running on these versions of Windows.</para>
+      /// <para>&#160;</para>
+      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.I4)]
@@ -390,9 +419,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CM_Get_Device_ID_Ex
 
-      /// <summary>The CM_Get_Device_ID_Ex function retrieves the device instance ID for a specified device instance on a local or a remote machine.</summary>
-      /// <returns>If the operation succeeds, the function returns CR_SUCCESS. Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</returns>
-      /// <remarks>Available in Microsoft Windows 2000 and later versions of Windows.</remarks>
+      /// <summary>The CM_Get_Device_ID_Ex function retrieves the device instance ID for a specified device instance on a local or a remote machine.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>If the operation succeeds, the function returns CR_SUCCESS.</para>
+      /// <para>Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
+      /// <para>You cannot access remote machines when running on these versions of Windows.</para>
+      /// <para>&#160;</para>
+      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.I4)]
@@ -402,13 +442,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CM_Disconnect_Machine
 
-      /// <summary>The CM_Disconnect_Machine function removes a connection to a remote machine.</summary>
-      /// <returns>If the operation succeeds, the function returns CR_SUCCESS. Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
-      /// <remarks>Available in Microsoft Windows 2000 and later versions of Windows.</remarks>
-      /// <remarks>Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</remarks>
-      /// <remarks>You cannot access remote machines when running on these versions of Windows. </remarks>
-      /// <remarks>http://msdn.microsoft.com/en-us/library/windows/hardware/ff538005%28v=vs.85%29.aspx</remarks>
+      /// <summary>The CM_Disconnect_Machine function removes a connection to a remote machine.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>If the operation succeeds, the function returns CR_SUCCESS.</para>
+      /// <para>Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
+      /// <para>You cannot access remote machines when running on these versions of Windows.</para>
+      /// <para>&#160;</para>
+      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = false, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.I4)]
@@ -418,12 +465,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CM_Get_Parent_Ex
 
-      /// <summary>The CM_Get_Parent_Ex function obtains a device instance handle to the parent node of a specified device node (devnode) in a local or a remote machine's device tree.</summary>
-      /// <returns>If the operation succeeds, the function returns CR_SUCCESS. Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</returns>
-      /// <remarks>Available in Microsoft Windows 2000 and later versions of Windows.</remarks>
-      /// <remarks>Using this function to access remote machines is not supported</remarks>
-      /// <remarks>beginning with Windows 8 and Windows Server 2012, as this functionality has been removed.</remarks>
-      /// <remarks>http://msdn.microsoft.com/en-us/library/windows/hardware/ff538615%28v=vs.85%29.aspx</remarks>
+      /// <summary>The CM_Get_Parent_Ex function obtains a device instance handle to the parent node of a specified device node (devnode) in a local or a remote machine's device tree.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>If the operation succeeds, the function returns CR_SUCCESS.</para>
+      /// <para>Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
+      /// <para>You cannot access remote machines when running on these versions of Windows.</para>
+      /// <para>&#160;</para>
+      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.I4)]
@@ -431,20 +486,45 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // CM_Get_Parent_Ex
 
+      #endregion // CM_Xxx
+
       #region DeviceIoControl
 
-      /// <summary>Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.</summary>
+      /// <summary>Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the operation completes successfully, the return value is nonzero.</para>
+      /// <para>If the operation fails or is pending, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows XP</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>To retrieve a handle to the device, you must call the <see cref="M:CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
+      /// <para>To specify a device name, use the following format: <c>\\.\DeviceName</c></para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP</para>
+      /// <para>Minimum supported server: Windows Server 2003</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool DeviceIoControl(SafeFileHandle hDevice, [MarshalAs(UnmanagedType.U4)] uint dwIoControlCode, IntPtr lpInBuffer, [MarshalAs(UnmanagedType.U4)] uint nInBufferSize, SafeGlobalMemoryBufferHandle lpOutBuffer, [MarshalAs(UnmanagedType.U4)] uint nOutBufferSize, [MarshalAs(UnmanagedType.U4)] out uint lpBytesReturned, IntPtr lpOverlapped);
 
+      /// <summary>Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>If the operation completes successfully, the return value is nonzero.</para>
+      /// <para>If the operation fails or is pending, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>To retrieve a handle to the device, you must call the <see cref="M:CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
+      /// <para>To specify a device name, use the following format: <c>\\.\DeviceName</c></para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP</para>
+      /// <para>Minimum supported server: Windows Server 2003</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -452,12 +532,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // DeviceIoControl
 
+      #region SetupDiXxx
+
       #region SetupDiDestroyDeviceInfoList
 
-      /// <summary>The SetupDiDestroyDeviceInfoList function deletes a device information set and frees all associated memory.</summary>
-      /// <returns>The function returns TRUE if it is successful. Otherwise, it returns FALSE and the logged error can be retrieved with a call to GetLastError.</returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
-      /// <remarks>Available in Microsoft Windows 2000 and later versions of Windows.</remarks>
+      /// <summary>The SetupDiDestroyDeviceInfoList function deletes a device information set and frees all associated memory.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>The function returns TRUE if it is successful.</para>
+      /// <para>Otherwise, it returns FALSE and the logged error can be retrieved with a call to GetLastError.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>&#160;</para>
+      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = false, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -467,9 +558,21 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region SetupDiEnumDeviceInterfaces
 
-      /// <summary>The SetupDiEnumDeviceInterfaces function enumerates the device interfaces that are contained in a device information set.</summary>
-      /// <returns>SetupDiEnumDeviceInterfaces returns TRUE if the function completed without error. If the function completed with an error, FALSE is returned and the error code for the failure can be retrieved by calling GetLastError.</returns>
-      /// <remarks>Available in Microsoft Windows 2000 and later versions of Windows.</remarks>
+      /// <summary>The SetupDiEnumDeviceInterfaces function enumerates the device interfaces that are contained in a device information set.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>SetupDiEnumDeviceInterfaces returns TRUE if the function completed without error.</para>
+      /// <para>If the function completed with an error, FALSE is returned and the error code for the failure can be retrieved by calling GetLastError.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Repeated calls to this function return an <see cref="T:NativeMethods.SpDeviceInterfaceData"/> structure for a different device interface.</para>
+      /// <para>This function can be called repeatedly to get information about interfaces in a device information set that are associated</para>
+      /// <para>with a particular device information element or that are associated with all device information elements.</para>
+      /// <para>&#160;</para>
+      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -479,12 +582,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region SetupDiGetClassDevsEx
 
-      /// <summary>The SetupDiGetClassDevsEx function returns a handle to a device information set that contains requested device information elements for a local or a remote computer.</summary>
+      /// <summary>The SetupDiGetClassDevsEx function returns a handle to a device information set that contains requested device information elements for a local or a remote computer.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the operation succeeds, SetupDiGetClassDevsEx returns a handle to a device information set that contains all installed devices that matched the supplied parameters.
-      /// If the operation fails, the function returns INVALID_HANDLE_VALUE. To get extended error information, call GetLastError.
+      /// <para>If the operation succeeds, SetupDiGetClassDevsEx returns a handle to a device information set that contains all installed devices that matched the supplied parameters.</para>
+      /// <para>If the operation fails, the function returns INVALID_HANDLE_VALUE. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>Available in Microsoft Windows 2000 and later versions of Windows.</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The caller of SetupDiGetClassDevsEx must delete the returned device information set when it is no longer needed by calling <see cref="M:SetupDiDestroyDeviceInfoList"/>.</para>
+      /// <para>&#160;</para>
+      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       internal static extern SafeSetupDiClassDevsExHandle SetupDiGetClassDevsEx(ref Guid classGuid, IntPtr enumerator, IntPtr hwndParent, [MarshalAs(UnmanagedType.U4)] SetupDiGetClassDevsExFlags devsExFlags, IntPtr deviceInfoSet, [MarshalAs(UnmanagedType.LPWStr)] string machineName, IntPtr reserved);
@@ -493,12 +603,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region SetupDiGetDeviceInterfaceDetail
 
-      /// <summary>The SetupDiGetDeviceInterfaceDetail function returns details about a device interface.</summary>
+      /// <summary>The SetupDiGetDeviceInterfaceDetail function returns details about a device interface.
+      /// <para>&#160;</para>
       /// <returns>
-      /// SetupDiGetDeviceInterfaceDetail returns TRUE if the function completed without error.
-      /// If the function completed with an error, FALSE is returned and the error code for the failure can be retrieved by calling GetLastError.
+      /// <para>SetupDiGetDeviceInterfaceDetail returns TRUE if the function completed without error.</para>
+      /// <para>If the function completed with an error, FALSE is returned and the error code for the failure can be retrieved by calling GetLastError.</para>
       /// </returns>
-      /// <remarks>Available in Microsoft Windows 2000 and later versions of Windows.</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The interface detail returned by this function consists of a device path that can be passed to Win32 functions such as CreateFile.</para>
+      /// <para>Do not attempt to parse the device path symbolic name. The device path can be reused across system starts.</para>
+      /// <para>&#160;</para>
+      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -508,19 +626,26 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region SetupDiGetDeviceRegistryProperty
 
-      /// <summary>The SetupDiGetDeviceRegistryProperty function retrieves a specified Plug and Play device property.</summary>
+      /// <summary>The SetupDiGetDeviceRegistryProperty function retrieves a specified Plug and Play device property.
+      /// <para>&#160;</para>
       /// <returns>
-      /// SetupDiGetDeviceRegistryProperty returns TRUE if the call was successful.
-      /// Otherwise, it returns FALSE and the logged error can be retrieved by making a call to GetLastError.
-      /// SetupDiGetDeviceRegistryProperty returns the ERROR_INVALID_DATA error code if the requested property does not exist for a device or if the property data is not valid.
+      /// <para>SetupDiGetDeviceRegistryProperty returns TRUE if the call was successful.</para>
+      /// <para>Otherwise, it returns FALSE and the logged error can be retrieved by making a call to GetLastError.</para>
+      /// <para>SetupDiGetDeviceRegistryProperty returns the ERROR_INVALID_DATA error code if the requested property does not exist for a device or if the property data is not valid.</para>
       /// </returns>
-      /// <remarks>Available in Microsoft Windows 2000 and later versions of Windows.</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool SetupDiGetDeviceRegistryProperty(SafeHandle deviceInfoSet, ref SpDeviceInfoData deviceInfoData, SetupDiGetDeviceRegistryPropertyEnum property, [MarshalAs(UnmanagedType.U4)] out uint propertyRegDataType, SafeGlobalMemoryBufferHandle propertyBuffer, [MarshalAs(UnmanagedType.U4)] uint propertyBufferSize, IntPtr requiredSize);
 
       #endregion // SetupDiGetDeviceRegistryProperty
+
+      #endregion // SetupDiXxx
 
       #endregion // Device Management
 
@@ -530,14 +655,23 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateDirectory
 
       /// <summary>Creates a new directory. 
-      /// If the underlying file system supports security on files and directories, the function applies a specified security descriptor to the new directory.
-      /// </summary>
+      /// <para>If the underlying file system supports security on files and directories,</para>
+      /// <para>the function applies a specified security descriptor to the new directory.</para>
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Some file systems, such as the NTFS file system, support compression or encryption for individual files and directories.</para>
+      /// <para>On volumes formatted for such a file system, a new directory inherits the compression and encryption attributes of its parent directory.</para>
+      /// <para>An application can obtain a handle to a directory by calling <see cref="M:CreateFile"/> with the FILE_FLAG_BACKUP_SEMANTICS flag set.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateDirectoryW")]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -548,15 +682,28 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateDirectoryEx
 
       /// <summary>Creates a new directory with the attributes of a specified template directory.
-      /// If the underlying file system supports security on files and directories, the function applies a specified security descriptor to the new directory.
-      /// The new directory retains the other attributes of the specified template directory.
-      /// </summary>
+      /// <para>If the underlying file system supports security on files and directories,</para>
+      /// <para>the function applies a specified security descriptor to the new directory.</para>
+      /// <para>The new directory retains the other attributes of the specified template directory.</para>
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero (0). To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The CreateDirectoryEx function allows you to create directories that inherit stream information from other directories.</para>
+      /// <para>This function is useful, for example, when you are using Macintosh directories, which have a resource stream</para>
+      /// <para>that is needed to properly identify directory contents as an attribute.</para>
+      /// <para>&#160;</para>
+      /// <para>Some file systems, such as the NTFS file system, support compression or encryption for individual files and directories.</para>
+      /// <para>On volumes formatted for such a file system, a new directory inherits the compression and encryption attributes of its parent directory.</para>
+      /// <para>You can obtain a handle to a directory by calling the <see cref="M:CreateFile"/> function with the FILE_FLAG_BACKUP_SEMANTICS flag set.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateDirectoryExW")]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -567,15 +714,30 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateDirectoryTransacted
 
       /// <summary>Creates a new directory as a transacted operation, with the attributes of a specified template directory.
-      /// If the underlying file system supports security on files and directories, the function applies a specified security descriptor to the new directory.
-      /// The new directory retains the other attributes of the specified template directory.
-      /// </summary>
+      /// <para>If the underlying file system supports security on files and directories,</para>
+      /// <para>the function applies a specified security descriptor to the new directory.</para>
+      /// <para>The new directory retains the other attributes of the specified template directory.</para>
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero (0). To get extended error information, call GetLastError.</para>
+      /// <para>This function fails with ERROR_EFS_NOT_ALLOWED_IN_TRANSACTION if you try to create a</para>
+      /// <para>child directory with a parent directory that has encryption disabled.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The CreateDirectoryTransacted function allows you to create directories that inherit stream information from other directories.</para>
+      /// <para>This function is useful, for example, when you are using Macintosh directories, which have a resource stream</para>
+      /// <para>that is needed to properly identify directory contents as an attribute.</para>
+      /// <para>&#160;</para>
+      /// <para>Some file systems, such as the NTFS file system, support compression or encryption for individual files and directories.</para>
+      /// <para>On volumes formatted for such a file system, a new directory inherits the compression and encryption attributes of its parent directory.</para>
+      /// <para>You can obtain a handle to a directory by calling the <see cref="M:CreateFileTransacted"/> function with the FILE_FLAG_BACKUP_SEMANTICS flag set.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateDirectoryTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -585,18 +747,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region RemoveDirectory
 
-      /// <summary>Deletes an existing empty directory.</summary>
+      /// <summary>Deletes an existing empty directory.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>The RemoveDirectory function marks a directory for deletion on close. Therefore, the directory is not removed until the last handle to the directory is closed.</remarks>
+      /// <para>&#160;</para>
       /// <remarks>
-      /// RemoveDirectory removes a directory junction, even if the contents of the target are not empty; the function removes directory
-      /// junctions regardless of the state of the target object. For more information on junctions, see Hard Links and Junctions.
+      /// <para>The RemoveDirectory function marks a directory for deletion on close.</para>
+      /// <para>Therefore, the directory is not removed until the last handle to the directory is closed.</para>
+      /// <para>RemoveDirectory removes a directory junction, even if the contents of the target are not empty;</para>
+      /// <para>the function removes directory junctions regardless of the state of the target object.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
       /// </remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "RemoveDirectoryW")]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -606,17 +773,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region RemoveDirectoryTransacted
 
-      /// <summary>Deletes an existing empty directory as a transacted operation.</summary>
+      /// <summary>Deletes an existing empty directory as a transacted operation.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
+      /// <para>&#160;</para>
       /// <remarks>
-      /// RemoveDirectory removes a directory junction, even if the contents of the target are not empty; the function removes directory
-      /// junctions regardless of the state of the target object. For more information on junctions, see Hard Links and Junctions.
+      /// <para>The RemoveDirectoryTransacted function marks a directory for deletion on close.</para>
+      /// <para>Therefore, the directory is not removed until the last handle to the directory is closed.</para>
+      /// <para>RemoveDirectory removes a directory junction, even if the contents of the target are not empty;</para>
+      /// <para>the function removes directory junctions regardless of the state of the target object.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows Vista [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2008 [desktop apps only]</para>
       /// </remarks>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "RemoveDirectoryTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -631,16 +804,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetDiskFreeSpace
 
-      /// <summary>Retrieves information about the specified disk, including the amount of free space on the disk.</summary>
+      /// <summary>Retrieves information about the specified disk, including the amount of free space on the disk.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
+      /// <para>&#160;</para>
       /// <remarks>
-      /// Symbolic link behavior; if the path points to a symbolic link, the operation is performed on the target.
+      /// <para>Symbolic link behavior: If the path points to a symbolic link, the operation is performed on the target.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetDiskFreeSpaceW")]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -650,55 +827,31 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetDiskFreeSpaceEx
 
-      /// <summary>Retrieves information about the amount of space that is available on a disk volume, which is the total amount of space,
-      /// the total amount of free space, and the total amount of free space available to the user that is associated with the calling thread.
-      /// </summary>
+      /// <summary>
+      /// <para>Retrieves information about the amount of space that is available on a disk volume, which is the total amount of space,</para>
+      /// <para>the total amount of free space, and the total amount of free space available to the user that is associated with the calling thread.</para>
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero (0). To get extended error information, call GetLastError.</para>
       /// </returns>
+      /// <para>&#160;</para>
       /// <remarks>
-      /// Symbolic link behavior; if the path points to a symbolic link, the operation is performed on the target.
+      /// <para>Symbolic link behavior: If the path points to a symbolic link, the operation is performed on the target.</para>
+      /// <para>The GetDiskFreeSpaceEx function returns zero (0) for lpTotalNumberOfFreeBytes and lpFreeBytesAvailable</para>
+      /// <para>for all CD requests unless the disk is an unwritten CD in a CD-RW drive.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
       /// </remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetDiskFreeSpaceExW")]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetDiskFreeSpaceEx([MarshalAs(UnmanagedType.LPWStr)] string lpDirectoryName, out ulong lpFreeBytesAvailable, out ulong lpTotalNumberOfBytes, out ulong lpTotalNumberOfFreeBytes);
 
       #endregion // GetDiskFreeSpaceEx
-
-      #region GetDriveType
-
-      /// <summary>Determines whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.</summary>
-      /// <returns>The return value specifies the type of drive, which can be one of the following <see cref="T:DriveType"/> values.</returns>
-      /// <remarks>Minimum supported client: Windows XP</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003</remarks>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetDriveTypeW")]
-      [return: MarshalAs(UnmanagedType.U4)]
-      internal extern static DriveType GetDriveType([MarshalAs(UnmanagedType.LPWStr)] string lpRootPathName);
-
-      #endregion // GetDriveType
-
-      #region GetLogicalDrives
-
-      /// <summary>Retrieves a bitmask representing the currently available disk drives.</summary>
-      /// <returns>
-      /// If the function succeeds, the return value is a bitmask representing the currently available disk drives.
-      /// Bit position 0 (the least-significant bit) is drive A, bit position 1 is drive B, bit position 2 is drive C, and so on.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
-      /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-      [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint GetLogicalDrives();
-
-      #endregion // GetLogicalDrives
-
+      
       #endregion // Disk Management
 
 
@@ -1307,14 +1460,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFileInformationByHandleEx
 
-      /// <summary>Retrieves file information for the specified file.</summary>
+      /// <summary>Retrieves file information for the specified file.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero and file information data is contained in the buffer pointed to by the lpFileInformation parameter.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero and file information data is contained in the buffer pointed to by the lpFileInformation parameter.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps | Windows Store apps]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps | Windows Store apps]</remarks>
-      /// <remarks>Redistributable: Windows SDK on Windows Server 2003 and Windows XP.</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows Vista [desktop apps | Windows Store apps]</para>
+      /// <para>Minimum supported server: Windows Server 2008 [desktop apps | Windows Store apps]</para>
+      /// <para>Redistributable: Windows SDK on Windows Server 2003 and Windows XP.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -1573,14 +1731,24 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CloseHandle
 
-      /// <summary>Closes an open object handle.</summary>
+      /// <summary>Closes an open object handle.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// <para>If the application is running under a debugger, the function will throw an exception if it receives either a handle value that is not valid or a pseudo-handle value.</para>
+      /// <para>This can happen if you close a handle twice, or if you call CloseHandle on a handle returned by the FindFirstFile function instead of calling the FindClose function.</para>
       /// </returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
-      /// <remarks>Minimum supported client: Windows 2000 Professional</remarks>
-      /// <remarks>Minimum supported server: Windows 2000 Server</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The CloseHandle function closes handles to the following objects:</para>
+      /// <para>Access token, Communications device, Console input, Console screen buffer, Event, File, File mapping, I/O completion port, Job,</para>
+      /// <para>Mailslot, Memory resource notification, Mutex, Named pipe, Pipe, Process, Semaphore, Thread, Transaction, Waitable timer.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows 2000 Professional [desktop apps | Windows Store apps]</para>
+      /// <para>Minimum supported server: Windows 2000 Server [desktop apps | Windows Store apps]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -1595,13 +1763,21 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CreateTransaction
 
-      /// <summary>Creates a new transaction object.</summary>
+      /// <summary>Creates a new transaction object.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is a handle to the transaction. 
-      /// If the function fails, the return value is INVALID_HANDLE_VALUE. To get extended error information, call the GetLastError function.
+      /// <para>If the function succeeds, the return value is a handle to the transaction.</para>
+      /// <para>If the function fails, the return value is INVALID_HANDLE_VALUE. To get extended error information, call the GetLastError function.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows Vista</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Use the <see cref="M:CloseHandle"/> function to close the transaction handle. If the last transaction handle is closed before</para>
+      /// <para>a client calls the CommitTransaction function with the transaction handle, then KTM rolls back the transaction.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows Vista</para>
+      /// <para>Minimum supported server:Windows Server 2008</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       internal static extern SafeKernelTransactionHandle CreateTransaction([MarshalAs(UnmanagedType.LPStruct)] Security.NativeMethods.SecurityAttributes lpTransactionAttributes, IntPtr uow, [MarshalAs(UnmanagedType.U4)] uint createOptions, [MarshalAs(UnmanagedType.U4)] uint isolationLevel, [MarshalAs(UnmanagedType.U4)] uint isolationFlags, [MarshalAs(UnmanagedType.U4)] uint timeout, [MarshalAs(UnmanagedType.LPWStr)] string description);
@@ -1610,13 +1786,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CommitTransaction
 
-      /// <summary>Requests that the specified transaction be committed.</summary>
+      /// <summary>Requests that the specified transaction be committed.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is 0 (zero). To get extended error information, call the GetLastError function.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is 0 (zero). To get extended error information, call the GetLastError function.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows Vista</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>You can commit any transaction handle that has been opened or created using the</para>
+      /// <para>TRANSACTION_COMMIT permission; any application can commit a transaction, not just the creator.</para>
+      /// <para>This function can only be called if the transaction is still active, not prepared, pre-prepared, or rolled back.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows Vista</para>
+      /// <para>Minimum supported server:Windows Server 2008</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -1626,13 +1811,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region RollbackTransaction
 
-      /// <summary>Requests that the specified transaction be rolled back. This function is synchronous.</summary>
+      /// <summary>Requests that the specified transaction be rolled back. This function is synchronous.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call the GetLastError function.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call the GetLastError function. </para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows Vista</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008</remarks>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows Vista</para>
+      /// <para>Minimum supported server:Windows Server 2008</para>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("ktmw32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -1920,6 +2108,54 @@ namespace Alphaleonis.Win32.Filesystem
       internal extern static bool FindVolumeMountPointClose(IntPtr hFindVolume);
 
       #endregion // FindVolumeMountPointClose
+
+      #region GetDriveType
+
+      /// <summary>Determines whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.
+      /// <para>To determine whether a drive is a USB-type drive, call <see cref="M:SetupDiGetDeviceRegistryProperty"/> and specify the SPDRP_REMOVAL_POLICY property.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>The return value specifies the type of drive, see <see cref="T:DriveType"/>.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>SMB does not support volume management functions.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
+      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetDriveTypeW")]
+      [return: MarshalAs(UnmanagedType.U4)]
+      internal extern static DriveType GetDriveType([MarshalAs(UnmanagedType.LPWStr)] string lpRootPathName);
+
+      #endregion // GetDriveType
+
+      #region GetLogicalDrives
+
+      /// <summary>Retrieves a bitmask representing the currently available disk drives.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>If the function succeeds, the return value is a bitmask representing the currently available disk drives.</para>
+      /// <para>Bit position 0 (the least-significant bit) is drive A, bit position 1 is drive B, bit position 2 is drive C, and so on.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>SMB does not support volume management functions.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
+      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [return: MarshalAs(UnmanagedType.U4)]
+      internal static extern uint GetLogicalDrives();
+
+      #endregion // GetLogicalDrives
 
       #region GetVolumeInformation
 
