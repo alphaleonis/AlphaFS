@@ -36,8 +36,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a new instance of the <see cref="T:SafeFindFileHandle"/> class.</summary>
       /// <param name="handle">The handle.</param>
-      /// <param name="ownsHandle"><c>true</c> [owns handle].</param>
-      public SafeFindFileHandle(IntPtr handle, bool ownsHandle) : base(ownsHandle)
+      /// <param name="callerHandle"><c>true</c> [owns handle].</param>
+      public SafeFindFileHandle(IntPtr handle, bool callerHandle) : base(callerHandle)
       {
          SetHandle(handle);
       }

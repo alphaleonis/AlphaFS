@@ -42,9 +42,9 @@ namespace Alphaleonis.Win32.Security
 
          public SecurityAttributes(ObjectSecurity securityDescriptor)
          {
-            SafeGlobalMemoryBufferHandle handle = ToUnmanagedSecurityAttributes(securityDescriptor);
-            nLength = handle.Capacity;
-            lpSecurityDescriptor = handle;
+            SafeGlobalMemoryBufferHandle safeBuffer = ToUnmanagedSecurityAttributes(securityDescriptor);
+            nLength = safeBuffer.Capacity;
+            lpSecurityDescriptor = safeBuffer;
             bInheritHandle = false;
          }
 
@@ -61,15 +61,15 @@ namespace Alphaleonis.Win32.Security
             
             
             byte[] src = securityDescriptor.GetSecurityDescriptorBinaryForm();
-            SafeGlobalMemoryBufferHandle memoryHandle = new SafeGlobalMemoryBufferHandle(src.Length);
+            SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(src.Length);
             try
             {
-               memoryHandle.CopyFrom(src, 0, src.Length);
-               return memoryHandle;
+               safeBuffer.CopyFrom(src, 0, src.Length);
+               return safeBuffer;
             }
             catch
             {
-               memoryHandle.Close();
+               safeBuffer.Close();
                throw;
             }
          }

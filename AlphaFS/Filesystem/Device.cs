@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static IEnumerable<DeviceInfo> EnumerateDevicesInternal(SafeHandle safeHandle, string hostName, DeviceGuid deviceInterfaceGuid)
       {
-         bool ownsHandle = safeHandle != null;
+         bool callerHandle = safeHandle != null;
          Guid deviceGuid = new Guid(NativeMethods.GetEnumDescription(deviceInterfaceGuid));
 
          
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (safeMachineHandle)
          {
             // Start at the "Root" of the device tree of the specified machine.
-            if (!ownsHandle)
+            if (!callerHandle)
                safeHandle = NativeMethods.SetupDiGetClassDevsEx(ref deviceGuid, IntPtr.Zero, IntPtr.Zero,
                   NativeMethods.SetupDiGetClassDevsExFlags.Present |
                   NativeMethods.SetupDiGetClassDevsExFlags.DeviceInterface,
@@ -156,8 +156,27 @@ namespace Alphaleonis.Win32.Filesystem
                      if (lastError != Win32Errors.CR_SUCCESS)
                         NativeError.ThrowException(lastError, hostName);
 
+
+                     // CA2001:AvoidCallingProblematicMethods
+
+                     IntPtr buffer = IntPtr.Zero;
+                     bool successRef = false;
+                     safeBuffer.DangerousAddRef(ref successRef);
+
+                     // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+                     if (successRef)
+                        buffer = safeBuffer.DangerousGetHandle();
+
+                     safeBuffer.DangerousRelease();
+
+                     if (buffer == IntPtr.Zero)
+                        NativeError.ThrowException(Resources.HandleDangerousRef);
+
+                     // CA2001:AvoidCallingProblematicMethods
+
+
                      // Add to instance.
-                     deviceInfo.InstanceId = Marshal.PtrToStringUni(safeBuffer.DangerousGetHandle());
+                     deviceInfo.InstanceId = Marshal.PtrToStringUni(buffer);
                   }
 
                   #region Get Registry Properties
@@ -167,60 +186,78 @@ namespace Alphaleonis.Win32.Filesystem
                      uint regType;
                      string dataString;
 
-                     IntPtr handle = safeBuffer.DangerousGetHandle();
+
+                     // CA2001:AvoidCallingProblematicMethods
+
+                     IntPtr buffer = IntPtr.Zero;
+                     bool successRef = false;
+                     safeBuffer.DangerousAddRef(ref successRef);
+
+                     // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+                     if (successRef)
+                        buffer = safeBuffer.DangerousGetHandle();
+
+                     safeBuffer.DangerousRelease();
+
+                     if (buffer == IntPtr.Zero)
+                        NativeError.ThrowException(Resources.HandleDangerousRef);
+
+                     // CA2001:AvoidCallingProblematicMethods
+
+
                      uint safeBufferCapacity = (uint)safeBuffer.Capacity;
 
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.BaseContainerId, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
                      {
-                        dataString = Marshal.PtrToStringUni(handle);
+                        dataString = Marshal.PtrToStringUni(buffer);
                         if (!Utils.IsNullOrWhiteSpace(dataString))
                            deviceInfo.BaseContainerId = new Guid(dataString);
                      }
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.ClassGuid, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
                      {
-                        dataString = Marshal.PtrToStringUni(handle);
+                        dataString = Marshal.PtrToStringUni(buffer);
                         if (!Utils.IsNullOrWhiteSpace(dataString))
                            deviceInfo.ClassGuid = new Guid(dataString);
                      }
 
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Class, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.Class = Marshal.PtrToStringUni(handle);
+                        deviceInfo.Class = Marshal.PtrToStringUni(buffer);
                      
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.CompatibleIds, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.CompatibleIds = Marshal.PtrToStringUni(handle);
+                        deviceInfo.CompatibleIds = Marshal.PtrToStringUni(buffer);
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.DeviceDescription, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.DeviceDescription = Marshal.PtrToStringUni(handle);
+                        deviceInfo.DeviceDescription = Marshal.PtrToStringUni(buffer);
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Driver, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.Driver = Marshal.PtrToStringUni(handle);
+                        deviceInfo.Driver = Marshal.PtrToStringUni(buffer);
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.EnumeratorName, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.EnumeratorName = Marshal.PtrToStringUni(handle);
+                        deviceInfo.EnumeratorName = Marshal.PtrToStringUni(buffer);
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.FriendlyName, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.FriendlyName = Marshal.PtrToStringUni(handle);
+                        deviceInfo.FriendlyName = Marshal.PtrToStringUni(buffer);
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.HardwareId, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.HardwareId = Marshal.PtrToStringUni(handle);
+                        deviceInfo.HardwareId = Marshal.PtrToStringUni(buffer);
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.LocationInformation, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.LocationInformation = Marshal.PtrToStringUni(handle);
+                        deviceInfo.LocationInformation = Marshal.PtrToStringUni(buffer);
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.LocationPaths, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.LocationPaths = Marshal.PtrToStringUni(handle);
+                        deviceInfo.LocationPaths = Marshal.PtrToStringUni(buffer);
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Manufacturer, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.Manufacturer = Marshal.PtrToStringUni(handle);
+                        deviceInfo.Manufacturer = Marshal.PtrToStringUni(buffer);
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.PhysicalDeviceObjectName, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.PhysicalDeviceObjectName = Marshal.PtrToStringUni(handle);
+                        deviceInfo.PhysicalDeviceObjectName = Marshal.PtrToStringUni(buffer);
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Service, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
-                        deviceInfo.Service = Marshal.PtrToStringUni(handle);
+                        deviceInfo.Service = Marshal.PtrToStringUni(buffer);
                   }
 
                   #endregion // Get Registry Properties
@@ -233,7 +270,8 @@ namespace Alphaleonis.Win32.Filesystem
             }
             finally
             {
-               if (!ownsHandle && safeHandle != null)
+               // Handle is ours, dispose.
+               if (!callerHandle && safeHandle != null)
                   safeHandle.Close();
             }
          }
@@ -247,30 +285,25 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NativeError.ThrowException()"></exception>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle")]
+      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
       [SecurityCritical]
       internal static LinkTargetInfo GetLinkTargetInfoInternal(SafeFileHandle safeHandle)
       {
-         bool ownsHandle = safeHandle != null;
-
          // Start with a large buffer to prevent a 2nd call.
          uint bytesReturned = NativeMethods.MaxPathUnicode;
-         SafeGlobalMemoryBufferHandle safeBuffer = null;
 
-         try
-         {
-            safeBuffer = new SafeGlobalMemoryBufferHandle((int)bytesReturned);
-
+         using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle((int)bytesReturned))
+         { 
             do
             {
                // Possible PInvoke signature bug: safeBuffer.Capacity and bytesReturned are always the same.
-               // Since we use a large buffer, we're not affected.
+               // Since a large buffer is used, we are not affected.
 
                // DeviceIoControlMethod.Buffered = 0,
                // DeviceIoControlFileDevice.FileSystem = 9
                // FsctlGetReparsePoint = (DeviceIoControlFileDevice.FileSystem << 16) | (42 << 2) | DeviceIoControlMethod.Buffered | (0 << 14)
 
-               if (!NativeMethods.DeviceIoControl(safeHandle, ((9 << 16) | (42 << 2) | 0 | (0 << 14)), IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned, IntPtr.Zero))
+               if (!NativeMethods.DeviceIoControl(safeHandle, ((9 << 16) | (42 << 2) | 0 | (0 << 14)), IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero))
                {
                   int lastError = Marshal.GetLastWin32Error();
                   switch ((uint)lastError)
@@ -292,13 +325,31 @@ namespace Alphaleonis.Win32.Filesystem
             } while (true);
 
 
-            IntPtr bufPtr = safeBuffer.DangerousGetHandle();
+            
+            // CA2001:AvoidCallingProblematicMethods
+
+            IntPtr buffer = IntPtr.Zero;
+            bool successRef = false;
+            safeBuffer.DangerousAddRef(ref successRef);
+
+            // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+            if (successRef)
+               buffer = safeBuffer.DangerousGetHandle();
+
+            safeBuffer.DangerousRelease();
+
+            if (buffer == IntPtr.Zero)
+               NativeError.ThrowException(Resources.HandleDangerousRef);
+
+            // CA2001:AvoidCallingProblematicMethods
+ 
+            
             Type toMountPointReparseBuffer = typeof(NativeMethods.MountPointReparseBuffer);
             Type toReparseDataBufferHeader = typeof(NativeMethods.ReparseDataBufferHeader);
             Type toSymbolicLinkReparseBuffer = typeof(NativeMethods.SymbolicLinkReparseBuffer);
             IntPtr marshalReparseBuffer = Marshal.OffsetOf(toReparseDataBufferHeader, "data");
 
-            NativeMethods.ReparseDataBufferHeader header = NativeMethods.GetStructure<NativeMethods.ReparseDataBufferHeader>(0, bufPtr);
+            NativeMethods.ReparseDataBufferHeader header = NativeMethods.GetStructure<NativeMethods.ReparseDataBufferHeader>(0, buffer);
                
             IntPtr dataPos;
             byte[] dataBuffer;
@@ -306,41 +357,34 @@ namespace Alphaleonis.Win32.Filesystem
             switch (header.ReparseTag)
             {
                case NativeMethods.ReparsePointTag.MountPoint:
-                  NativeMethods.MountPointReparseBuffer mprb = NativeMethods.GetStructure<NativeMethods.MountPointReparseBuffer>(0, new IntPtr(bufPtr.ToInt64() + marshalReparseBuffer.ToInt64()));
+                  NativeMethods.MountPointReparseBuffer mprb = NativeMethods.GetStructure<NativeMethods.MountPointReparseBuffer>(0, new IntPtr(buffer.ToInt64() + marshalReparseBuffer.ToInt64()));
 
                   dataPos = new IntPtr(marshalReparseBuffer.ToInt64() + Marshal.OffsetOf(toMountPointReparseBuffer, "data").ToInt64());
                   dataBuffer = new byte[bytesReturned - dataPos.ToInt64()];
 
-                  Marshal.Copy(new IntPtr(bufPtr.ToInt64() + dataPos.ToInt64()), dataBuffer, 0, dataBuffer.Length);
+                  Marshal.Copy(new IntPtr(buffer.ToInt64() + dataPos.ToInt64()), dataBuffer, 0, dataBuffer.Length);
 
                   return new LinkTargetInfo(
                      Encoding.Unicode.GetString(dataBuffer, mprb.SubstituteNameOffset, mprb.SubstituteNameLength),
                      Encoding.Unicode.GetString(dataBuffer, mprb.PrintNameOffset, mprb.PrintNameLength));
 
+               
                case NativeMethods.ReparsePointTag.SymLink:
-                  NativeMethods.SymbolicLinkReparseBuffer slrb = NativeMethods.GetStructure<NativeMethods.SymbolicLinkReparseBuffer>(0, new IntPtr(bufPtr.ToInt64() + marshalReparseBuffer.ToInt64()));
+                  NativeMethods.SymbolicLinkReparseBuffer slrb = NativeMethods.GetStructure<NativeMethods.SymbolicLinkReparseBuffer>(0, new IntPtr(buffer.ToInt64() + marshalReparseBuffer.ToInt64()));
 
                   dataPos = new IntPtr(marshalReparseBuffer.ToInt64() + Marshal.OffsetOf(toSymbolicLinkReparseBuffer, "data").ToInt64());
                   dataBuffer = new byte[bytesReturned - dataPos.ToInt64()];
 
-                  Marshal.Copy(new IntPtr(bufPtr.ToInt64() + dataPos.ToInt64()), dataBuffer, 0, dataBuffer.Length);
+                  Marshal.Copy(new IntPtr(buffer.ToInt64() + dataPos.ToInt64()), dataBuffer, 0, dataBuffer.Length);
 
                   return new SymbolicLinkTargetInfo(
                      Encoding.Unicode.GetString(dataBuffer, slrb.SubstituteNameOffset, slrb.SubstituteNameLength),
-                     Encoding.Unicode.GetString(dataBuffer, slrb.PrintNameOffset, slrb.PrintNameLength),
-                     slrb.Flags);
+                     Encoding.Unicode.GetString(dataBuffer, slrb.PrintNameOffset, slrb.PrintNameLength), slrb.Flags);
 
+               
                default:
                   throw new UnrecognizedReparsePointException();
             }
-         }
-         finally
-         {
-            if (safeBuffer != null)
-               safeBuffer.Close();
-
-            if (!ownsHandle && safeHandle != null)
-               safeHandle.Close();
          }
       }
 

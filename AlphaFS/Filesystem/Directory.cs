@@ -3780,7 +3780,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(string path, bool? isFullPath)
       {
-         return EnumerateFileIdBothDirectoryInfoInternal(null, path, null, FileShare.ReadWrite, false, isFullPath);
+         return EnumerateFileIdBothDirectoryInfoInternal(null, null, path, FileShare.ReadWrite, false, isFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="T:FileShare"/> mode.</summary>
@@ -3792,7 +3792,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(string path, FileShare shareMode, bool? isFullPath)
       {
-         return EnumerateFileIdBothDirectoryInfoInternal(null, path, null, shareMode, false, isFullPath);
+         return EnumerateFileIdBothDirectoryInfoInternal(null, null, path, shareMode, false, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -3804,7 +3804,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(string path)
       {
-         return EnumerateFileIdBothDirectoryInfoInternal(null, path, null, FileShare.ReadWrite, false, false);
+         return EnumerateFileIdBothDirectoryInfoInternal(null, null, path, FileShare.ReadWrite, false, false);
       }
       
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="T:FileShare"/> mode.</summary>
@@ -3815,7 +3815,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(string path, FileShare shareMode)
       {
-         return EnumerateFileIdBothDirectoryInfoInternal(null, path, null, shareMode, false, false);
+         return EnumerateFileIdBothDirectoryInfoInternal(null, null, path, shareMode, false, false);
       }
       
       /// <summary>[AlphaFS] Retrieves information about files in the directory handle specified.</summary>
@@ -3826,7 +3826,7 @@ namespace Alphaleonis.Win32.Filesystem
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(SafeFileHandle handle)
       {
          // FileShare has no effect since a handle is already opened.
-         return EnumerateFileIdBothDirectoryInfoInternal(null, null, handle, FileShare.ReadWrite, false, false);
+         return EnumerateFileIdBothDirectoryInfoInternal(null, handle, null, FileShare.ReadWrite, false, false);
       }
 
       #region Transacted
@@ -3842,7 +3842,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return EnumerateFileIdBothDirectoryInfoInternal(transaction, path, null, FileShare.ReadWrite, false, isFullPath);
+         return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, FileShare.ReadWrite, false, isFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="T:FileShare"/> mode.</summary>
@@ -3855,7 +3855,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path, FileShare shareMode, bool? isFullPath)
       {
-         return EnumerateFileIdBothDirectoryInfoInternal(transaction, path, null, shareMode, false, isFullPath);
+         return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, shareMode, false, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -3868,7 +3868,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path)
       {
-         return EnumerateFileIdBothDirectoryInfoInternal(transaction, path, null, FileShare.ReadWrite, false, false);
+         return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, FileShare.ReadWrite, false, false);
       }
       
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="T:FileShare"/> mode.</summary>
@@ -3880,7 +3880,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path, FileShare shareMode)
       {
-         return EnumerateFileIdBothDirectoryInfoInternal(transaction, path, null, shareMode, false, false);
+         return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, shareMode, false, false);
       }
       
       #endregion // Transacted
@@ -5263,22 +5263,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Unified method EnumerateFileIdBothDirectoryInfoInternal() to return an enumerable collection of information about files in the directory handle specified.</summary>
       /// <param name="transaction">The transaction.</param>
+      /// <param name="safeHandle">An open handle to the directory from which to retrieve information.</param>
       /// <param name="path">A path to the directory.</param>
-      /// <param name="handle">An open handle to the directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="T:FileShare"/> mode with which to open a handle to the directory.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An IEnumerable of <see cref="T:FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
-      /// <remarks>Either use <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
+      /// <remarks>Either use <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoInternal(KernelTransaction transaction, string path, SafeFileHandle handle, FileShare shareMode, bool continueOnException, bool? isFullPath)
+      internal static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoInternal(KernelTransaction transaction, SafeFileHandle safeHandle, string path, FileShare shareMode, bool continueOnException, bool? isFullPath)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         bool ownsHandle = handle != null;
-         if (!ownsHandle)
+         bool callerHandle = safeHandle != null;
+         if (!callerHandle)
          {
             if (Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
@@ -5289,27 +5289,42 @@ namespace Alphaleonis.Win32.Filesystem
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
-            handle = File.CreateFileInternal(false, transaction, pathLp, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, null);
+            safeHandle = File.CreateFileInternal(false, transaction, pathLp, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, null);
          }
-         else
-            NativeMethods.IsValidHandle(handle);
 
 
          try
          {
-            if (!NativeMethods.IsValidHandle(handle, Marshal.GetLastWin32Error(), !continueOnException))
+            if (!NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error(), !continueOnException))
                yield break;
 
 
-            using (SafeHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                NativeMethods.IsValidHandle(safeBuffer, Marshal.GetLastWin32Error());
 
                long fileNameOffset = Marshal.OffsetOf(typeof (NativeMethods.FileIdBothDirInfo), "FileName").ToInt64();
 
-               while (NativeMethods.GetFileInformationByHandleEx(handle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, NativeMethods.DefaultFileBufferSize))
+               while (NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, NativeMethods.DefaultFileBufferSize))
                {
-                  IntPtr buffer = safeBuffer.DangerousGetHandle();
+                  // CA2001:AvoidCallingProblematicMethods
+
+                  IntPtr buffer = IntPtr.Zero;
+                  bool successRef = false;
+                  safeBuffer.DangerousAddRef(ref successRef);
+
+                  // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+                  if (successRef)
+                     buffer = safeBuffer.DangerousGetHandle();
+
+                  safeBuffer.DangerousRelease();
+
+                  if (buffer == IntPtr.Zero)
+                     NativeError.ThrowException(Resources.HandleDangerousRef);
+
+                  // CA2001:AvoidCallingProblematicMethods
+
+
                   while (buffer != IntPtr.Zero)
                   {
                      NativeMethods.FileIdBothDirInfo fdi = NativeMethods.GetStructure<NativeMethods.FileIdBothDirInfo>(0, buffer);
@@ -5343,8 +5358,9 @@ namespace Alphaleonis.Win32.Filesystem
          }
          finally
          {
-            if (!ownsHandle && handle != null)
-               handle.Close();
+            // Handle is ours, dispose.
+            if (!callerHandle && safeHandle != null)
+               safeHandle.Close();
          }
       }
 

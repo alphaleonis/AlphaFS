@@ -79,13 +79,13 @@ namespace Alphaleonis.Win32.Network
 
       #region (Class) DriveConnection
 
-      /// <summary>Makes a connection to a temporary network resource. The function can redirect a local device to a network resource.</summary>
+      /// <summary>Creates a temporary connection to a network resource. The function can redirect a local device to a network resource.</summary>
       [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
       public sealed class DriveConnection : IDisposable
       {
          #region Constructors
 
-         /// <summary>Makes a connection to a network resource. The function can redirect a local device to a network resource.</summary>
+         /// <summary>Creates a temporary connection to a network resource. The function can redirect a local device to a network resource.</summary>
          /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
          public DriveConnection(string remoteName)
          {
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Network
             });
          }
 
-         /// <summary>Makes a connection to a network resource. The function can redirect a local device to a network resource.</summary>
+         /// <summary>Creates a temporary connection to a network resource. The function can redirect a local device to a network resource.</summary>
          /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
          /// <param name="userName">The user name for making the connection. If <paramref name="userName"/> is <c>null</c>, the function uses the default user name. (The user context for the process provides the default user name)</param>
          /// <param name="password">The password to be used for making the network connection. If <paramref name="password"/> is <c>null</c>, the function uses the current default password associated with the user specified by <paramref name="userName"/>.</param>
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Network
             });
          }
 
-         /// <summary>Makes a connection to a network resource. The function can redirect a local device to a network resource.</summary>
+         /// <summary>Creates a temporary connection to a network resource. The function can redirect a local device to a network resource.</summary>
          /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
          /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
          /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
@@ -182,7 +182,7 @@ namespace Alphaleonis.Win32.Network
 
       #region ConnectDrive
 
-      /// <summary>Makes a connection to a network resource. The function can redirect a local device to a network resource.</summary>
+      /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
       /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, returns the last available drive letter, <c>null</c> otherwise.</returns>
@@ -197,7 +197,7 @@ namespace Alphaleonis.Win32.Network
          });
       }
 
-      /// <summary>Makes a connection to a network resource. The function can redirect a local device to a network resource.</summary>
+      /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
       /// <param name="userName">The user name for making the connection. If <paramref name="userName"/> is <c>null</c>, the function uses the default user name. (The user context for the process provides the default user name)</param>
@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32.Network
          });
       }
       
-      /// <summary>Makes a connection to a network resource. The function can redirect a local device to a network resource.</summary>
+      /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
       /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
@@ -245,7 +245,7 @@ namespace Alphaleonis.Win32.Network
          });
       }
 
-      /// <summary>Makes a connection to a network resource. The function can redirect a local device to a network resource.</summary>
+      /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
@@ -272,7 +272,7 @@ namespace Alphaleonis.Win32.Network
          });
       }
 
-      /// <summary>Makes a connection to a network resource. The function can redirect a local device to a network resource.</summary>
+      /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
@@ -301,7 +301,7 @@ namespace Alphaleonis.Win32.Network
       
       #region ConnectTo
 
-      /// <summary>Makes a connection to a network resource.</summary>
+      /// <summary>Creates a connection to a network resource.</summary>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -310,7 +310,7 @@ namespace Alphaleonis.Win32.Network
          ConnectDisconnectInternal(new ConnectDisconnectArguments {RemoteName = remoteName});
       }
 
-      /// <summary>Makes a connection to a network resource.</summary>
+      /// <summary>Creates a connection to a network resource.</summary>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share</param>
       /// <param name="userName">The user name for making the connection. If <paramref name="userName"/> is <c>null</c>, the function uses the default user name. (The user context for the process provides the default user name)</param>
       /// <param name="password">The password to be used for making the network connection. If <paramref name="password"/> is <c>null</c>, the function uses the current default password associated with the user specified by <paramref name="userName"/>.</param>
@@ -332,7 +332,7 @@ namespace Alphaleonis.Win32.Network
          });
       }
 
-      /// <summary>Makes a connection to a network resource.</summary>
+      /// <summary>Creates a connection to a network resource.</summary>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share</param>
       /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
@@ -352,7 +352,7 @@ namespace Alphaleonis.Win32.Network
          });
       }
 
-      /// <summary>Makes a connection to a network resource.</summary>
+      /// <summary>Creates a connection to a network resource.</summary>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share</param>
       /// <param name="userName">The user name for making the connection. If <paramref name="userName"/> is <c>null</c>, the function uses the default user name. (The user context for the process provides the default user name)</param>
@@ -376,7 +376,7 @@ namespace Alphaleonis.Win32.Network
          });
       }
 
-      /// <summary>Makes a connection to a network resource.</summary>
+      /// <summary>Creates a connection to a network resource.</summary>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share</param>
       /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
@@ -1088,10 +1088,30 @@ namespace Alphaleonis.Win32.Network
                   case Win32Errors.NERR_Success:
                   case Win32Errors.ERROR_MORE_DATA:
                      if (entriesRead > 0)
-                        for (long i = 0, itemOffset = safeBuffer.DangerousGetHandle().ToInt64(); i < entriesRead; i++, itemOffset += objectSize)
-                           yield return (TStruct)(isString
+                     {
+                        // CA2001:AvoidCallingProblematicMethods
+
+                        IntPtr buffer = IntPtr.Zero;
+                        bool successRef = false;
+                        safeBuffer.DangerousAddRef(ref successRef);
+
+                        // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+                        if (successRef)
+                           buffer = safeBuffer.DangerousGetHandle();
+
+                        safeBuffer.DangerousRelease();
+
+                        if (buffer == IntPtr.Zero)
+                           NativeError.ThrowException(Resources.HandleDangerousRef);
+
+                        // CA2001:AvoidCallingProblematicMethods
+
+
+                        for (long i = 0, itemOffset = buffer.ToInt64(); i < entriesRead; i++, itemOffset += objectSize)
+                           yield return (TStruct) (isString
                               ? Marshal.PtrToStringUni(new IntPtr(itemOffset))
-                              : (object)createTStruct((TNative)Marshal.PtrToStructure(new IntPtr(itemOffset), objectType), safeBuffer));
+                              : (object) createTStruct((TNative) Marshal.PtrToStructure(new IntPtr(itemOffset), objectType), safeBuffer));
+                     }
                      break;
 
                   // Non-existent host.
@@ -1174,7 +1194,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="shareName">The name of the share corresponding to the DFS root target or link target. If <paramref name="getFromClient"/> is <c>false</c>, this parameter is always <c>null</c>.</param>
       /// <returns>Returns <see cref="T:IEnumerable{DfsInfo}"/></returns>
       /// <exception cref="NativeError.ThrowException()"/>
-      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle")]
+      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
       [SecurityCritical]
@@ -1189,12 +1209,32 @@ namespace Alphaleonis.Win32.Network
          SafeNetApiBuffer safeBuffer;
          uint lastError = getFromClient
             ? NativeMethods.NetDfsGetClientInfo(dfsName, serverName, shareName, 4, out safeBuffer) // Max level: 4 (DFS_INFO_4)
-            : NativeMethods.NetDfsGetInfo(dfsName, null, null, 4, out safeBuffer);                 // These parameters are currently ignored and should be null.
+            : NativeMethods.NetDfsGetInfo(dfsName, null, null, 4, out safeBuffer);                 // MSDN: These parameters are currently ignored and should be null.
 
          using (safeBuffer)
          {
-            if (Filesystem.NativeMethods.IsValidHandle(safeBuffer, (int)lastError))
-               return new DfsInfo(Filesystem.NativeMethods.GetStructure<NativeMethods.DfsInfo4>(0, safeBuffer.DangerousGetHandle()));
+            if (Filesystem.NativeMethods.IsValidHandle(safeBuffer, (int) lastError))
+            {
+               // CA2001:AvoidCallingProblematicMethods
+
+               IntPtr buffer = IntPtr.Zero;
+               bool successRef = false;
+               safeBuffer.DangerousAddRef(ref successRef);
+
+               // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+               if (successRef)
+                  buffer = safeBuffer.DangerousGetHandle();
+
+               safeBuffer.DangerousRelease();
+
+               if (buffer == IntPtr.Zero)
+                  NativeError.ThrowException(Resources.HandleDangerousRef);
+
+               // CA2001:AvoidCallingProblematicMethods
+
+
+               return new DfsInfo(Filesystem.NativeMethods.GetStructure<NativeMethods.DfsInfo4>(0, buffer));
+            }
 
             if (lastError != Win32Errors.NERR_Success)
                NativeError.ThrowException(lastError);
@@ -1213,7 +1253,7 @@ namespace Alphaleonis.Win32.Network
       /// <returns>A <see cref="T:NativeMethods.RemoteNameInfo"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid: http://alphafs.codeplex.com/discussions/316583</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
-      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle")]
+      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
       [SecurityCritical]
       internal static NativeMethods.RemoteNameInfo GetRemoteNameInfoInternal(string path, bool continueOnException)
       {
@@ -1238,7 +1278,7 @@ namespace Alphaleonis.Win32.Network
 
          do
          {
-            using (SafeHandle safeBuffer = new SafeGlobalMemoryBufferHandle((int) bufferSize))
+            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle((int)bufferSize))
             {
                // Structure: UNIVERSAL_NAME_INFO_LEVEL = 1 (not used in AlphaFS).
                // Structure: REMOTE_NAME_INFO_LEVEL    = 2
@@ -1247,7 +1287,26 @@ namespace Alphaleonis.Win32.Network
                switch (lastError)
                {
                   case Win32Errors.NO_ERROR:
-                     return Filesystem.NativeMethods.GetStructure<NativeMethods.RemoteNameInfo>(0, safeBuffer.DangerousGetHandle());
+
+                     // CA2001:AvoidCallingProblematicMethods
+
+                     IntPtr buffer = IntPtr.Zero;
+                     bool successRef = false;
+                     safeBuffer.DangerousAddRef(ref successRef);
+
+                     // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+                     if (successRef)
+                        buffer = safeBuffer.DangerousGetHandle();
+
+                     safeBuffer.DangerousRelease();
+
+                     if (buffer == IntPtr.Zero)
+                        NativeError.ThrowException(Resources.HandleDangerousRef);
+
+                     // CA2001:AvoidCallingProblematicMethods
+
+
+                     return Filesystem.NativeMethods.GetStructure<NativeMethods.RemoteNameInfo>(0, buffer);
 
                   case Win32Errors.ERROR_MORE_DATA:
                      //bufferSize = Received the required buffer size.
@@ -1276,7 +1335,7 @@ namespace Alphaleonis.Win32.Network
       /// <returns>A <see cref="T:ShareInfo"/> class, or <see cref="T:null"/> on failure or when not available.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle")]
+      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
       [SecurityCritical]
       internal static ShareInfo GetShareInformationInternal(int structureLevel, string host, string share, bool continueOnException)
       {
@@ -1297,23 +1356,41 @@ namespace Alphaleonis.Win32.Network
             switch (lastError)
             {
                case Win32Errors.NERR_Success:
+
+                  // CA2001:AvoidCallingProblematicMethods
+
+                  IntPtr buffer = IntPtr.Zero;
+                  bool successRef = false;
+                  safeBuffer.DangerousAddRef(ref successRef);
+
+                  // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+                  if (successRef)
+                     buffer = safeBuffer.DangerousGetHandle();
+
+                  safeBuffer.DangerousRelease();
+
+                  if (buffer == IntPtr.Zero)
+                     NativeError.ThrowException(Resources.HandleDangerousRef);
+
+                  // CA2001:AvoidCallingProblematicMethods
+
+
                   switch (structureLevel)
                   {
                      case 1005:
-                        NativeMethods.ShareInfo1005 s1005 = Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo1005>(0, safeBuffer.DangerousGetHandle());
-                        return new ShareInfo(host, structureLevel, s1005) {NetFullPath = Path.CombineInternal(false, Path.UncPrefix + host, share)};
+                        return new ShareInfo(host, structureLevel, Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo1005>(0, buffer))
+                        {
+                           NetFullPath = Path.CombineInternal(false, Path.UncPrefix + host, share)
+                        };
 
                      case 503:
-                        NativeMethods.ShareInfo503 s503 = Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo503>(0, safeBuffer.DangerousGetHandle());
-                        return new ShareInfo(host, structureLevel, s503);
+                        return new ShareInfo(host, structureLevel, Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo503>(0, buffer));
 
                      case 2:
-                        NativeMethods.ShareInfo2 s2 = Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo2>(0, safeBuffer.DangerousGetHandle());
-                        return new ShareInfo(host, structureLevel, s2);
+                        return new ShareInfo(host, structureLevel, Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo2>(0, buffer));
 
                      case 1:
-                        NativeMethods.ShareInfo1 s1 = Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo1>(0, safeBuffer.DangerousGetHandle());
-                        return new ShareInfo(host, structureLevel, s1);
+                        return new ShareInfo(host, structureLevel, Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo1>(0, buffer));
                   }
                   break;
                

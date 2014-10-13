@@ -188,20 +188,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Unified method EnumerateStreamsInternal() to return an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances, associated with a file or directory.</summary>
       /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information. Use either <paramref name="handle"/> or <paramref name="path"/>, not both.</param>
-      /// <param name="path">The path to an existing file or directory. Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</param>
+      /// <param name="safeHandle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information. Use either <paramref name="safeHandle"/> or <paramref name="path"/>, not both.</param>
+      /// <param name="path">The path to an existing file or directory. Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</param>
       /// <param name="originalName">The name of the stream to retrieve.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An <see cref="T:IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file or directory specified by path.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static IEnumerable<AlternateDataStreamInfo> EnumerateStreamsInternal(bool? isFolder, KernelTransaction transaction, SafeFileHandle handle, string path, string originalName, StreamType? streamType, bool? isFullPath)
+      internal static IEnumerable<AlternateDataStreamInfo> EnumerateStreamsInternal(bool? isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, string originalName, StreamType? streamType, bool? isFullPath)
       {
          string pathLp = null;
 
-         bool ownsHandle = handle != null;
-         if (!ownsHandle)
+         bool callerHandle = safeHandle != null;
+         if (!callerHandle)
          {
             if (Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
@@ -218,16 +218,16 @@ namespace Alphaleonis.Win32.Filesystem
                isFolder = (attrs & FileAttributes.Directory) == FileAttributes.Directory;
             }
 
-            handle = File.CreateFileInternal(null, transaction, pathLp, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Read, FileShare.ReadWrite, null);
+            safeHandle = File.CreateFileInternal(null, transaction, pathLp, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Read, FileShare.ReadWrite, null);
          }
          else
-            NativeMethods.IsValidHandle(handle);
+            NativeMethods.IsValidHandle(safeHandle);
 
 
          try
          {
             using (new PrivilegeEnabler(Privilege.Backup))
-            using (SafeHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                Type typeWin32Stream = typeof(NativeMethods.Win32StreamId);
                uint sizeOfType = (uint)Marshal.SizeOf(typeWin32Stream);
@@ -237,7 +237,7 @@ namespace Alphaleonis.Win32.Filesystem
                bool doLoop = true;
                while (doLoop)
                {
-                  if (!NativeMethods.BackupRead(handle, safeBuffer, sizeOfType, out numberOfBytesRead, false, true, out context))
+                  if (!NativeMethods.BackupRead(safeHandle, safeBuffer, sizeOfType, out numberOfBytesRead, false, true, out context))
                      NativeError.ThrowException(Marshal.GetLastWin32Error());
 
                   doLoop = numberOfBytesRead == sizeOfType;
@@ -246,16 +246,54 @@ namespace Alphaleonis.Win32.Filesystem
                      string streamName = null;
                      string streamSearchName = null;
 
-                     NativeMethods.Win32StreamId stream = NativeMethods.GetStructure<NativeMethods.Win32StreamId>(0, safeBuffer.DangerousGetHandle());
+                     
+                     // CA2001:AvoidCallingProblematicMethods
+
+                     IntPtr buffer = IntPtr.Zero;
+                     bool successRef = false;
+                     safeBuffer.DangerousAddRef(ref successRef);
+
+                     // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+                     if (successRef)
+                        buffer = safeBuffer.DangerousGetHandle();
+
+                     safeBuffer.DangerousRelease();
+
+                     if (buffer == IntPtr.Zero)
+                        NativeError.ThrowException(Resources.HandleDangerousRef);
+
+                     // CA2001:AvoidCallingProblematicMethods
+
+
+                     NativeMethods.Win32StreamId stream = NativeMethods.GetStructure<NativeMethods.Win32StreamId>(0, buffer);
 
                      if (streamType == null || stream.StreamType == streamType)
                      {
                         if (stream.StreamNameSize > 0)
                         {
-                           if (!NativeMethods.BackupRead(handle, safeBuffer, stream.StreamNameSize, out numberOfBytesRead, false, true, out context))
+                           if (!NativeMethods.BackupRead(safeHandle, safeBuffer, stream.StreamNameSize, out numberOfBytesRead, false, true, out context))
                               NativeError.ThrowException(Marshal.GetLastWin32Error());
 
-                           streamName = Marshal.PtrToStringUni(safeBuffer.DangerousGetHandle(), (int) numberOfBytesRead/2);
+
+                           // CA2001:AvoidCallingProblematicMethods
+
+                           buffer = IntPtr.Zero;
+                           successRef = false;
+                           safeBuffer.DangerousAddRef(ref successRef);
+
+                           // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+                           if (successRef)
+                              buffer = safeBuffer.DangerousGetHandle();
+
+                           safeBuffer.DangerousRelease();
+
+                           if (buffer == IntPtr.Zero)
+                              NativeError.ThrowException(Resources.HandleDangerousRef);
+
+                           // CA2001:AvoidCallingProblematicMethods
+
+
+                           streamName = Marshal.PtrToStringUni(buffer, (int)numberOfBytesRead / 2);
 
                            // Returned stream name format: ":streamName:$DATA"
                            streamSearchName = streamName.TrimStart(Path.StreamSeparatorChar).Replace(Path.StreamSeparator + "$DATA", "");
@@ -266,19 +304,20 @@ namespace Alphaleonis.Win32.Filesystem
                      }
 
                      uint lo, hi;
-                     doLoop = !NativeMethods.BackupSeek(handle, uint.MinValue, uint.MaxValue, out lo, out hi, out context);
+                     doLoop = !NativeMethods.BackupSeek(safeHandle, uint.MinValue, uint.MaxValue, out lo, out hi, out context);
                   }
                }
 
                // MSDN: To release the memory used by the data structure, call BackupRead with the bAbort parameter set to TRUE when the backup operation is complete.
-               if (!NativeMethods.BackupRead(handle, safeBuffer, 0, out numberOfBytesRead, true, false, out context))
+               if (!NativeMethods.BackupRead(safeHandle, safeBuffer, 0, out numberOfBytesRead, true, false, out context))
                   NativeError.ThrowException(Marshal.GetLastWin32Error());
             }
          }
          finally
          {
-            if (!ownsHandle && handle != null)
-               handle.Close();
+            // Handle is ours, dispose.
+            if (!callerHandle && safeHandle != null)
+               safeHandle.Close();
          }
       }
 

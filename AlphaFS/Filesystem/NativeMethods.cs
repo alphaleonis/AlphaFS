@@ -41,8 +41,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Fields
 
-      internal static readonly bool IsAtLeastWindows7 = OperatingSystem.IsAtLeast(OperatingSystem.OsName.Windows7);
-      internal static readonly bool IsAtLeastWindowsVista = OperatingSystem.IsAtLeast(OperatingSystem.OsName.WindowsVista);
+      internal static readonly bool IsAtLeastWindows7 = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows7);
+      internal static readonly bool IsAtLeastWindowsVista = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsVista);
 
       #region DefaultFileBufferSize
 
@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static T GetStructure<T>(int offset, IntPtr buffer) where T : struct
       {
          T structure = new T();
-         return (T)Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset * Marshal.SizeOf(structure)), typeof(T));
+         return (T) Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
       }
 
       #endregion // GetStructure
@@ -231,7 +231,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// Because the error mode is set for the entire process, you must ensure that multi-threaded applications
       /// do not set different error-mode attributes. Doing so can lead to inconsistent error handling.
       /// </remarks>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
@@ -249,7 +251,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// Because the error mode is set for the entire process, you must ensure that multi-threaded applications
       /// do not set different error-mode attributes. Doing so can lead to inconsistent error handling.
       /// </remarks>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows 7 [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 R2 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
@@ -452,6 +456,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       /// <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
       /// <para>You cannot access remote machines when running on these versions of Windows.</para>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
       /// <para>&#160;</para>
       /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
       /// </remarks>
@@ -999,7 +1005,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function succeeds, the return value is a handle to the newly created file mapping object.
       /// If the function fails, the return value is <c>null</c>.
       /// </returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003</remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
@@ -1211,14 +1219,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FindClose
 
-      /// <summary>Closes a file search handle opened by the FindFirstFile, FindFirstFileEx, FindFirstFileNameW, FindFirstFileNameTransactedW, FindFirstFileTransacted, FindFirstStreamTransactedW, or FindFirstStreamW functions.</summary>
+      /// <summary>Closes a file search handle opened by the FindFirstFile, FindFirstFileEx, FindFirstFileNameW, FindFirstFileNameTransactedW, FindFirstFileTransacted, FindFirstStreamTransactedW, or FindFirstStreamW functions.
       /// <returns>
       /// If the function succeeds, the return value is nonzero.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -1482,13 +1493,18 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFileSizeEx
 
-      /// <summary>Retrieves the size of the specified file.</summary>
+      /// <summary>Retrieves the size of the specified file.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -1521,7 +1537,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function succeeds, the return value is nonzero.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003</remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
@@ -1554,7 +1572,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function succeeds, the return value is the starting address of the mapped view.
       /// If the function fails, the return value is <c>null</c>.
       /// </returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003</remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
@@ -1662,7 +1682,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static extern bool SetFileAttributesTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] FileAttributes dwFileAttributes, SafeHandle hTransaction);
 
       #endregion // SetFileAttributesTransacted
-
+      
       #region SetFileTime
 
       /// <summary>Sets the date and time that the specified file or directory was created, last accessed, or last modified.</summary>
@@ -1714,7 +1734,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function succeeds, the return value is nonzero.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003</remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
@@ -1744,6 +1766,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>The CloseHandle function closes handles to the following objects:</para>
       /// <para>Access token, Communications device, Console input, Console screen buffer, Event, File, File mapping, I/O completion port, Job,</para>
       /// <para>Mailslot, Memory resource notification, Mutex, Named pipe, Pipe, Process, Semaphore, Thread, Transaction, Waitable timer.</para>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
       /// <para>&#160;</para>
       /// <para>Minimum supported client: Windows 2000 Professional [desktop apps | Windows Store apps]</para>
       /// <para>Minimum supported server: Windows 2000 Server [desktop apps | Windows Store apps]</para>
@@ -2082,7 +2106,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function succeeds, the return value is nonzero.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
@@ -2099,7 +2125,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function succeeds, the return value is nonzero.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
+      /// <para>&#160;</para>
+      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003</remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]

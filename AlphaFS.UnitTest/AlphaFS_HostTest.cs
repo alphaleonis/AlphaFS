@@ -208,38 +208,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpEnumerateShares
 
-      #region DumpGetShareInformation
-
-      public void DumpGetShareInformation(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
-         string host = isLocal ? Path.LocalToUnc(LocalHostShare) : MyServerShare;
-         Console.WriteLine("\nInput Path: [{0}]", host);
-
-         string report = null;
-         bool shareOk;
-         try
-         {
-            StopWatcher();
-            ShareInfo share = Host.GetShareInformation(host, true);
-            report = Reporter(true);
-            Dump(share, -18);
-            shareOk = true;
-         }
-         catch (Exception ex)
-         {
-            shareOk = false;
-            Console.WriteLine("\nFailed GetShareInformation() to: [{0}]", host);
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
-         }
-
-         Assert.IsTrue(shareOk);
-         Console.WriteLine("\n\t{0}\n", report);
-
-      }
-
-      #endregion // DumpGetShareInformation
-
       #endregion Dumpers
 
       #endregion // FileTest Helpers
@@ -731,9 +699,7 @@ namespace AlphaFS.UnitTest
       public void GetShareInformation()
       {
          Console.WriteLine("Network.Host.GetShareInformation()");
-
-         DumpGetShareInformation(true);
-         DumpGetShareInformation(false);
+         Console.WriteLine("\nPlease see unit test: Network_Class_ShareInfo()");
       }
 
       #endregion // GetShareInformation

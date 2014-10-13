@@ -293,7 +293,7 @@ namespace Alphaleonis.Win32.Network
 
       #region WNetUseConnection
 
-      /// <summary>The WNetUseConnection function makes a connection to a network resource. The function can redirect a local device to a network resource.</summary>
+      /// <summary>The WNetUseConnection function creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <returns>
       /// If the function succeeds, the return value is <see cref="T:Win32Errors.NO_ERROR"/>
       /// If the function fails, the return value is a system error code.

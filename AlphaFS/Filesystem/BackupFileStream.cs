@@ -304,14 +304,14 @@ namespace Alphaleonis.Win32.Filesystem
          if (count < 0)
             throw new ArgumentOutOfRangeException("count", count, Resources.CountMustNotBeNegative);
 
-         using (SafeGlobalMemoryBufferHandle hBuf = new SafeGlobalMemoryBufferHandle(count))
+         using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(count))
          {
             uint numberOfBytesRead;
 
-            if (!NativeMethods.BackupRead(SafeFileHandle, hBuf, (uint)hBuf.Capacity, out numberOfBytesRead, false, processSecurity, out _context))
+            if (!NativeMethods.BackupRead(SafeFileHandle, safeBuffer, (uint) safeBuffer.Capacity, out numberOfBytesRead, false, processSecurity, out _context))
                NativeError.ThrowException(Marshal.GetLastWin32Error());
 
-            hBuf.CopyTo(buffer, offset, count);
+            safeBuffer.CopyTo(buffer, offset, count);
 
             return (int) numberOfBytesRead;
          }
@@ -374,13 +374,13 @@ namespace Alphaleonis.Win32.Filesystem
          if (offset + count > buffer.Length)
             throw new ArgumentException(Resources.BufferIsNotLargeEnoughForTheRequestedOperation);
 
-         using (SafeGlobalMemoryBufferHandle hBuf = new SafeGlobalMemoryBufferHandle(count))
+         using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(count))
          {
-            hBuf.CopyFrom(buffer, offset, count);
+            safeBuffer.CopyFrom(buffer, offset, count);
 
             uint bytesWritten;
 
-            if (!NativeMethods.BackupWrite(SafeFileHandle, hBuf, (uint)hBuf.Capacity, out bytesWritten, false, processSecurity, out _context))
+            if (!NativeMethods.BackupWrite(SafeFileHandle, safeBuffer, (uint) safeBuffer.Capacity, out bytesWritten, false, processSecurity, out _context))
                NativeError.ThrowException(Marshal.GetLastWin32Error());
          }
 
