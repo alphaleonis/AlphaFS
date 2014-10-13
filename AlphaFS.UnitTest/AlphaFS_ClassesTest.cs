@@ -1607,29 +1607,35 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Class Win32.OperatingSystem()\n");
 
-         Console.WriteLine("\tVersionName          : [{0}]", OperatingSystem.VersionName);
-         Console.WriteLine("\tVersion              : [{0}]", OperatingSystem.Version);
-         Console.WriteLine("\tServicePackVersion   : [{0}]", OperatingSystem.ServicePackVersion);
-         Console.WriteLine("\tIsServer             : [{0}]", OperatingSystem.IsServer);
-         Console.WriteLine("\tProcessorArchitecture: [{0}]", OperatingSystem.ProcessorArchitecture);
+         StopWatcher(true);
 
-         Console.WriteLine("\n\tOperatingSystemInfo.IsAtLeast()\n");
+         Console.WriteLine("VersionName          : [{0}]", OperatingSystem.VersionName);
+         Console.WriteLine("OsVersion            : [{0}]", OperatingSystem.OSVersion);
+         Console.WriteLine("ServicePackVersion   : [{0}]", OperatingSystem.ServicePackVersion);
+         Console.WriteLine("IsServer             : [{0}]", OperatingSystem.IsServer);
+         Console.WriteLine("IsWow64Process       : [{0}]", OperatingSystem.IsWow64Process);
+         Console.WriteLine("ProcessorArchitecture: [{0}]", OperatingSystem.ProcessorArchitecture);
 
-         Console.WriteLine("\t\tOS Earlier           : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.Earlier));
-         Console.WriteLine("\t\tWindows 2000         : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.Windows2000));
-         Console.WriteLine("\t\tWindows XP           : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.WindowsXp));
-         Console.WriteLine("\t\tWindows Vista        : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.WindowsVista));
-         Console.WriteLine("\t\tWindows 7            : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.Windows7));
-         Console.WriteLine("\t\tWindows 8            : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.Windows8));
-         Console.WriteLine("\t\tWindows 8.1          : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.Windows81));
+         Console.WriteLine("\nOperatingSystemInfo.IsAtLeast()\n");
 
-         Console.WriteLine("\t\tWindows Server 2003  : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.WindowsServer2003));
-         Console.WriteLine("\t\tWindows Server 2008  : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.WindowsServer2008));
-         Console.WriteLine("\t\tWindows Server 2008R2: [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.WindowsServer2008R2));
-         Console.WriteLine("\t\tWindows Server 2012  : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.WindowsServer2012));
-         Console.WriteLine("\t\tWindows Server 2012R2: [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.WindowsServer2012R2));
+         Console.WriteLine("\tOS Earlier           : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Earlier));
+         Console.WriteLine("\tWindows 2000         : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows2000));
+         Console.WriteLine("\tWindows XP           : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsXP));
+         Console.WriteLine("\tWindows Vista        : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsVista));
+         Console.WriteLine("\tWindows 7            : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows7));
+         Console.WriteLine("\tWindows 8            : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows8));
+         Console.WriteLine("\tWindows 8.1          : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows81));
 
-         Console.WriteLine("\t\tOS Later             : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.OsName.Later));
+         Console.WriteLine("\tWindows Server 2003  : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsServer2003));
+         Console.WriteLine("\tWindows Server 2008  : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsServer2008));
+         Console.WriteLine("\tWindows Server 2008R2: [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsServer2008R2));
+         Console.WriteLine("\tWindows Server 2012  : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsServer2012));
+         Console.WriteLine("\tWindows Server 2012R2: [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsServer2012R2));
+
+         Console.WriteLine("\tOS Later             : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Later));
+
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
       }
 
       #endregion // Class_OperatingSystemInfo
