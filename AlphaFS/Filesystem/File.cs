@@ -4414,6 +4414,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to search.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, bool isFullPath)
       {
@@ -4425,6 +4426,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="streamType">The type of stream to retrieve.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType, bool isFullPath)
       {
@@ -4436,6 +4438,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</summary>
       /// <param name="path">The file to search.</param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path)
       {
@@ -4446,6 +4449,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to search.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType)
       {
@@ -4455,6 +4459,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the handle specified by <paramref name="handle"/>.</summary>
       /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the file from which to retrieve the information.</param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the handle specified by <paramref name="handle"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(SafeFileHandle handle)
       {
@@ -4470,6 +4475,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to search.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, bool isFullPath)
       {
@@ -4482,6 +4488,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="streamType">The type of stream to retrieve.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType, bool isFullPath)
       {
@@ -4494,6 +4501,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to search.</param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path)
       {
@@ -4505,6 +4513,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to search.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType)
       {
@@ -4514,6 +4523,180 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transacted
 
       #endregion // EnumerateStreams
+
+      #region GetChangeTime
+
+      #region IsFullPath
+
+      /// <summary>Gets the change date and time of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>A <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The file for which to obtain creation date and time information.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static DateTime GetChangeTime(string path, bool? isFullPath)
+      {
+         return GetChangeTimeInternal(false, null, null, path, false, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>Gets the change date and time of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>A <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The file for which to obtain creation date and time information.</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTime(string path)
+      {
+         return GetChangeTimeInternal(false, null, null, path, false, false);
+      }
+
+      /// <summary>Gets the change date and time of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>A <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      [SecurityCritical]
+      public static DateTime GetChangeTime(SafeFileHandle safeHandle)
+      {
+         return GetChangeTimeInternal(false, null, safeHandle, null, false, null);
+      }
+
+      #region Transacted
+
+      #region IsFullPath
+
+      /// <summary>Gets the change date and time of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>A <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file for which to obtain creation date and time information.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static DateTime GetChangeTime(KernelTransaction transaction, string path, bool? isFullPath)
+      {
+         return GetChangeTimeInternal(false, transaction, null, path, false, isFullPath);
+      }
+      
+      #endregion // IsFullPath
+
+      /// <summary>Gets the change date and time of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>A <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file for which to obtain creation date and time information.</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTime(KernelTransaction transaction, string path)
+      {
+         return GetChangeTimeInternal(false, transaction, null, path, false, false);
+      }
+
+      #endregion // Transacted
+
+      #endregion // GetChangeTime
+
+      #region GetChangeTimeUtc
+
+      #region IsFullPath
+
+      /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>A <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static DateTime GetChangeTimeUtc(string path, bool? isFullPath)
+      {
+         return GetChangeTimeInternal(false, null, null, path, true, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>A <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTimeUtc(string path)
+      {
+         return GetChangeTimeInternal(false, null, null, path, true, false);
+      }
+
+      /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>A <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      [SecurityCritical]
+      public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
+      {
+         return GetChangeTimeInternal(false, null, safeHandle, null, true, null);
+      }
+
+      #region Transacted
+
+      #region IsFullPath
+
+      /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>A <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
+      {
+         return GetChangeTimeInternal(false, transaction, null, path, true, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>A <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path)
+      {
+         return GetChangeTimeInternal(false, transaction, null, path, true, false);
+      }
+
+      #endregion // Transacted
+
+      #endregion // GetChangeTimeUtc
 
       #region GetCompressedSize
 
@@ -5483,11 +5666,11 @@ namespace Alphaleonis.Win32.Filesystem
                         // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                         // 2013-04-15: MSDN confirms LongPath usage.
 
-                       ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions)moveOptions)
+                       ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
                        : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, copyOptions ?? CopyOptions.FailIfExists)
                   : doMove
 
-                       ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions)moveOptions, transaction.SafeHandle)
+                       ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
                        : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, copyOptions ?? CopyOptions.FailIfExists, transaction.SafeHandle)))
          {
             int lastError = Marshal.GetLastWin32Error();
@@ -5524,8 +5707,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CreateFileInternal
 
-      /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or overwrite a file in the specified path, specifying a buffer size and advanced options:
-      /// <see cref="T:EFileAttributes"/>, <see cref="T:FileSecurity"/>, <see cref="T:FileMode"/>, <see cref="T:FileAccess"/>, <see cref="T:FileShare"/>.
+      /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or overwrite a file in the specified path.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>A <see cref="T:FileStream"/> that provides read/write access to the file specified in path.</para>
+      /// </returns>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
@@ -5535,8 +5721,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="mode">The <see cref="T:FileMode"/> option gives you more precise control over how you want to create a file.</param>
       /// <param name="access">The <see cref="T:FileAccess"/> allow you additionally specify to default read/write capability - just write, bypassing any cache.</param>
       /// <param name="share">The <see cref="T:FileShare"/> option controls how you would like to share created file with other requesters.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in path.</returns>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static FileStream CreateFileInternal(KernelTransaction transaction, string path, int bufferSize, EFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
@@ -5545,7 +5734,12 @@ namespace Alphaleonis.Win32.Filesystem
          return new FileStream(handle, access, bufferSize, (attributes & EFileAttributes.Overlapped) != 0);
       }
 
-      /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or open a file, directory or I/O device.</summary>
+      /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or open a file, directory or I/O device.
+      /// <remarks>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.</remarks>
+      /// <remarks>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe.</remarks>
+      /// <returns>A <see cref="T:SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       /// <param name="isFile"><c>null</c> indicates a device. <c>true</c> indicates a file object. <c>false</c> indicates a folder object.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file or directory to create.</param>
@@ -5555,9 +5749,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileSystemRights">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file or directory.</param>
       /// <param name="fileShare">A <see cref="T:FileShare"/> constant that determines how the file or directory will be shared by processes.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <remarks>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.</remarks>
-      /// <remarks>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe.</remarks>
-      /// <returns>A <see cref="T:SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
       internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, EFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool? isFullPath)
@@ -6282,7 +6473,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (win32AttrData.FileAttributes == 0 && !continueOnNotExist)
                   NativeError.ThrowException(lastError, pathLp);
                else
-                  return new NativeMethods.Win32FileAttributeData((FileAttributes) (-1));
+                  win32AttrData = new NativeMethods.Win32FileAttributeData((FileAttributes) (-1));
             }
          }
 
@@ -6335,6 +6526,95 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetCompressedSizeInternal
 
+      #region GetChangeTimeInternal
+
+      /// <summary>[AlphaFS] Unified method GetChangeTimeInternal() to get the change date and time of the specified file.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns a <see cref="T:System.DateTime"/> structure set to the change date and time for the specified file.</para>
+      /// <para>This value is expressed in local time.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</para>
+      /// </remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="safeHandle">An open handle to the file from which to retrieve information.</param>
+      /// <param name="path">The file for which to obtain creation date and time information.</param>
+      /// <param name="getUtc"><c>true</c> gets the Coordinated Universal Time (UTC), <c>false</c> gets the local time.</param>
+      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
+      [SecurityCritical]
+      internal static DateTime GetChangeTimeInternal(bool isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, bool getUtc, bool? isFullPath)
+      {
+         bool callerHandle = safeHandle != null;
+         if (!callerHandle)
+         {
+            if (Utils.IsNullOrWhiteSpace(path))
+            throw new ArgumentNullException("path");
+
+            string pathLp = isFullPath == null
+               ? path
+               : (bool) isFullPath
+                  ? Path.GetLongPathInternal(path, false, false, false, false)
+                  : Path.GetFullPathInternal(transaction, path, true, false, false, true);
+
+            safeHandle = CreateFileInternal(!isFolder, transaction, pathLp, EFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, null);
+         }
+
+         
+         try
+         {
+            NativeMethods.IsValidHandle(safeHandle);
+
+            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+            {
+               NativeMethods.IsValidHandle(safeBuffer);
+
+               if (!NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, safeBuffer, NativeMethods.DefaultFileBufferSize))
+                  NativeError.ThrowException(Marshal.GetLastWin32Error());
+
+               
+               // CA2001:AvoidCallingProblematicMethods
+
+               IntPtr buffer = IntPtr.Zero;
+               bool successRef = false;
+               safeBuffer.DangerousAddRef(ref successRef);
+
+               // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
+               if (successRef)
+                  buffer = safeBuffer.DangerousGetHandle();
+
+               safeBuffer.DangerousRelease();
+
+               if (buffer == IntPtr.Zero)
+                  NativeError.ThrowException(Resources.HandleDangerousRef);
+
+               // CA2001:AvoidCallingProblematicMethods
+               
+
+               NativeMethods.FileTime changeTime = NativeMethods.GetStructure<NativeMethods.FileBasicInfo>(0, buffer).ChangeTime;
+
+               return getUtc
+                  ? DateTime.FromFileTimeUtc(changeTime)
+                  : DateTime.FromFileTime(changeTime);
+               
+            }
+         }
+         finally
+         {
+            // Handle is ours, dispose.
+            if (!callerHandle && safeHandle != null)
+               safeHandle.Close();
+         }
+      }
+
+      #endregion // GetChangeTimeInternal
+
       #region GetCreationTimeInternal
 
       /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) or local time, of the specified file or directory.</summary>
@@ -6347,9 +6627,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DateTime GetCreationTimeInternal(bool isFolder, KernelTransaction transaction, string path, bool getUtc, bool? isFullPath)
       {
-         return (getUtc)
-            ? DateTime.FromFileTimeUtc(GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).CreationTime)
-            : DateTime.FromFileTime(GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).CreationTime);
+         NativeMethods.FileTime creationTime = GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).CreationTime;
+
+         return getUtc
+            ? DateTime.FromFileTimeUtc(creationTime)
+            : DateTime.FromFileTime(creationTime);
       }
 
       #endregion // GetCreationTimeInternal
@@ -6427,9 +6709,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DateTime GetLastAccessTimeInternal(bool isFolder, KernelTransaction transaction, string path, bool getUtc, bool? isFullPath)
       {
-         return (getUtc)
-            ? DateTime.FromFileTimeUtc(GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).LastAccessTime)
-            : DateTime.FromFileTime(GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).LastAccessTime);
+         NativeMethods.FileTime lastAccessTime = GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).LastAccessTime;
+
+         return getUtc
+            ? DateTime.FromFileTimeUtc(lastAccessTime)
+            : DateTime.FromFileTime(lastAccessTime);
       }
 
       #endregion // GetLastAccessTimeInternal
@@ -6446,9 +6730,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DateTime GetLastWriteTimeInternal(bool isFolder, KernelTransaction transaction, string path, bool getUtc, bool? isFullPath)
       {
-         return (getUtc)
-            ? DateTime.FromFileTimeUtc(GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).LastWriteTime)
-            : DateTime.FromFileTime(GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).LastWriteTime);
+         NativeMethods.FileTime lastWriteTime = GetAttributesExInternal(isFolder, transaction, path, true, true, isFullPath).LastWriteTime;
+
+         return getUtc
+            ? DateTime.FromFileTimeUtc(lastWriteTime)
+            : DateTime.FromFileTime(lastWriteTime);
       }
 
       #endregion // GetLastWriteTimeUtcInternal
@@ -6472,44 +6758,46 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetSizeInternal
 
-      /// <summary>[AlphaFS] Unified method GetSizeInternal() to retrieve the file size, in bytes to store a specified file.</summary>
+      /// <summary>[AlphaFS] Unified method GetSizeInternal() to retrieve the file size, in bytes to store a specified file.
       /// <param name="transaction">The transaction.</param>
-      /// <param name="handle">The <see cref="T:SafeFileHandle"/> to the file.</param>
+      /// <param name="safeHandle">The <see cref="T:SafeFileHandle"/> to the file.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
+      /// <remarks>Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static long GetSizeInternal(KernelTransaction transaction, SafeFileHandle handle, string path, bool? isFullPath)
+      internal static long GetSizeInternal(KernelTransaction transaction, SafeFileHandle safeHandle, string path, bool? isFullPath)
       {
-         bool ownsHandle = handle != null;
-         if (!ownsHandle)
+         bool callerHandle = safeHandle != null;
+         if (!callerHandle)
          {
             if (Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
 
             string pathLp = isFullPath == null
                ? path
-               : (bool)isFullPath
+               : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, false);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true);
 
-            handle = CreateFileInternal(true, transaction, pathLp, EFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, null);
+            safeHandle = CreateFileInternal(true, transaction, pathLp, EFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, null);
          }
-         else
-            NativeMethods.IsValidHandle(handle);
-
          
+
          long fileSize;
          
          try
          {
-            NativeMethods.GetFileSizeEx(handle, out fileSize);
+            NativeMethods.GetFileSizeEx(safeHandle, out fileSize);
          }
          finally
          {
-            if (!ownsHandle && handle != null)
-               handle.Close();
+            // Handle is ours, dispose.
+            if (!callerHandle && safeHandle != null)
+               safeHandle.Close();
          }
 
          return fileSize;
@@ -6909,8 +7197,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void TransferTimestampsInternal(bool isFolder, KernelTransaction transaction, string source, string destination, bool? isFullPath)
       {
-         FileSystemEntryInfo fsei = GetFileSystemEntryInfoInternal(isFolder, transaction, source, true, false, isFullPath);
-         SetFsoDateTimeInternal(isFolder, transaction, destination, DateTime.FromFileTimeUtc(fsei.Win32FindData.CreationTime.ToLong()), DateTime.FromFileTimeUtc(fsei.Win32FindData.LastAccessTime.ToLong()), DateTime.FromFileTimeUtc(fsei.Win32FindData.LastWriteTime.ToLong()), isFullPath);
+         NativeMethods.Win32FileAttributeData attrs = GetAttributesExInternal(isFolder, transaction, source, true, false, isFullPath);
+         SetFsoDateTimeInternal(isFolder, transaction, destination, DateTime.FromFileTimeUtc(attrs.CreationTime), DateTime.FromFileTimeUtc(attrs.LastAccessTime), DateTime.FromFileTimeUtc(attrs.LastWriteTime), isFullPath);
       }
 
       #endregion // TransferTimestampsInternal

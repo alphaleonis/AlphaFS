@@ -160,13 +160,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns the file name and extension of the specified path string.</summary>
       /// <param name="path">The path string from which to obtain the file name and extension.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <param name="checkInvalidChars"><c>true</c> will not check <paramref name="path"/> for invalid path characters.</param>
       /// <returns>The characters after the last directory character in <paramref name="path"/>. If the last character of <paramref name="path"/> is a directory or volume separator character, this method returns <c>string.Empty</c>. If path is null, this method returns null.</returns>
-      public static string GetFileName(string path, bool? isFullPath)
+      public static string GetFileName(string path, bool checkInvalidChars)
       {
          if (path != null)
          {
-            if ((bool) !isFullPath)
+            if (checkInvalidChars)
                CheckInvalidPathChars(path);
 
             int length = path.Length;

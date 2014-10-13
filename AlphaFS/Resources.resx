@@ -244,4 +244,7 @@
   <data name="StreamNameWithColon" xml:space="preserve">
     <value>Stream name should not contain a colon.</value>
   </data>
+  <data name="HandleDangerousRef" xml:space="preserve">
+    <value>SafeGlobalMemoryBufferHandle DangerousAddRef / DangerousRelease failure.</value>
+  </data>
 </root>

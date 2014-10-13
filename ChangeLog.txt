@@ -85,14 +85,14 @@ Version 1.6
    * New: Added bool? isFullPath parameter to applicable methods of the File() and Directory() class.
 			isFullPath is false by default.
 
-			false (slow)   : GetFullPath() is called and a local or network Unicode (LongPath) prefix is applied.
-			true  (fast)   : Prefix + use as is, path is already a full path, a local or UNC network (LongPath) prefix is applied.
-			null  (fastest): Use as is, Full path with a local or network Unicode (LongPath) prefix.
+			false (slow)   : Path is an absolute path. Unicode prefix is applied.
+			true  (fast)   : Path will be checked and resolved to an absolute path. Unicode prefix is applied.
+			null  (fastest): Path is already an absolute path with Unicode prefix. Use as is.
 
-			Local "\\?\" or network "\\?\UNC" Unicode (LongPaths) are applied internally for all Win32 API functions that support it.
+			Local "\\?\" or network "\\?\UNC" Unicode prefix is applied internally for all Win32 API functions that support it.
 			
 			The FileInfo() and DirectoryInfo() also benefit from isFullPath; AlphaFS adds an internal property: EntryInfo.LongFullPath
-			which is always the full path of the file or directory in Unicode (LongPath) format.
+			which is always the Unicode absolute path of the file or directory.
 
    * New: Added support for building against .NET 4.0, 4.5, and 4.5.1 in addition to 3.5.
 

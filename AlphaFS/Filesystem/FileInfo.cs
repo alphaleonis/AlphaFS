@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          InitializeInternal(false, transaction, fileName, isFullPath);
 
-         _name = Path.GetFileName(Path.RemoveDirectorySeparator(fileName, false), isFullPath);
+         _name = Path.GetFileName(Path.RemoveDirectorySeparator(fileName, false), isFullPath != null && (bool) isFullPath);
       }
 
       #endregion // Transacted
@@ -751,7 +751,18 @@ namespace Alphaleonis.Win32.Filesystem
          File.CopyMoveInternal(isMove, Transaction, LongFullName, destFileNameLp, false, copyOptions, moveOptions, copyProgress, userProgressData, null);
 
          if (isMove)
-            Refresh();
+         {
+            LongFullName = destFileNameLp;
+            FullPath = Path.GetRegularPathInternal(destFileNameLp, false, false, false, false);
+
+            OriginalPath = destFileName;
+            DisplayPath = OriginalPath;
+
+            _name = Path.GetFileName(destFileNameLp, true);
+
+            // Flush any cached information about the file.
+            Reset();
+         }
 
          return isMove ? null : new FileInfo(Transaction, destFileNameLp, true);
       }
@@ -851,7 +862,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Name
 
-      private readonly string _name;
+      private string _name;
 
       /// <summary>Gets the name of the file.</summary>
       /// <returns>The name of the file.</returns>
