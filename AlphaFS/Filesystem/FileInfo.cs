@@ -764,7 +764,7 @@ namespace Alphaleonis.Win32.Filesystem
             Reset();
          }
 
-         return isMove ? null : new FileInfo(Transaction, destFileNameLp, true);
+         return isMove ? null : new FileInfo(Transaction, destFileNameLp, null);
       }
 
       #endregion // CopyToMoveToInternal

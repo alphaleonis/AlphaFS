@@ -1324,7 +1324,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="destinationPath"/> will be normalized and long path prefixed. <c>null</c> <paramref name="destinationPath"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <returns>When <paramref name="isMove"/> is <c>false</c> a new <see cref="T:DirectoryInfo"/> instance with a fully qualified path. Otherwise <c>null</c> is returned.</returns>
+      /// <returns>When <paramref name="isMove"/> is <c>true</c> <c>null</c> is returned. Otherwise copy; a new <see cref="T:DirectoryInfo"/> instance with a fully qualified path returned.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="destinationPath"/> parameter before copying/moving the directory.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
@@ -1348,11 +1348,19 @@ namespace Alphaleonis.Win32.Filesystem
 
          Directory.CopyMoveInternal(isMove, Transaction, LongFullName, destinationPathLp, preserveSecurity, copyOptions, moveOptions, copyProgress, userProgressData, null, null);
 
-         if (!isMove)
-            return new DirectoryInfo(Transaction, destinationPathLp, true);
+         if (isMove)
+         {
+            LongFullName = destinationPathLp;
+            FullPath = Path.GetRegularPathInternal(destinationPathLp, false, false, false, false);
 
-         Refresh();
-         return null;
+            OriginalPath = destinationPath;
+            DisplayPath = GetDisplayName(OriginalPath);
+
+            // Flush any cached information about the file.
+            Reset();
+         }
+
+         return isMove ? null : new DirectoryInfo(Transaction, destinationPathLp, null);
       }
 
       #endregion // CopyToMoveToInternal
