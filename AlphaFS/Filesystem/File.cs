@@ -6256,13 +6256,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetAccessControlInternal
 
-      /// <summary>[AlphaFS] Unified method GetAccessControlInternal() to get/set an <see cref="T:ObjectSecurity"/> for a particular file or directory.</summary>
-      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
+      /// <summary>[AlphaFS] Unified method GetAccessControlInternal() to get an <see cref="T:ObjectSecurity"/> object for a particular file or directory.
+      /// <returns>An <see cref="T:ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the <paramref name="path"/> parameter. </returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">The path to a directory containing a <see cref="T:DirectorySecurity"/> object that describes the directory's or file's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
-      /// <returns>An <see cref="T:ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the <paramref name="path"/> parameter. </returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
@@ -6299,42 +6300,42 @@ namespace Alphaleonis.Win32.Filesystem
                   ? Path.GetLongPathInternal(path, false, false, false, false)
                   : Path.GetFullPathInternal(null, path, true, false, false, true);
 
-            uint sizeRequired = 1024;
 
-         startGetFileSecurity:
+            IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
+            SafeGlobalMemoryBufferHandle pSecurityDescriptor;
+            ObjectSecurity objectSecurity = null;
 
-            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle((int)sizeRequired))
+            uint lastError = Security.NativeMethods.GetNamedSecurityInfo(pathLp, ObjectType.FileObject, securityInfo, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
+
+            try
             {
-               // GetFileSecurity()
-               // Seems to perform better than GetNamedSecurityInfo() and doesn't require Administrator rights.
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+               if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND || lastError == Win32Errors.ERROR_PATH_NOT_FOUND)
+                  lastError = (isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
 
-               if (!Security.NativeMethods.GetFileSecurity(pathLp, securityInfo, safeBuffer, (uint)safeBuffer.Capacity, out sizeRequired))
-               {
-                  int lastError = Marshal.GetLastWin32Error();
-                  switch ((uint)lastError)
-                  {
-                     case Win32Errors.ERROR_INSUFFICIENT_BUFFER:
-                        safeBuffer.Close();
-                        goto startGetFileSecurity;
+               // If the function fails, the return value is zero.
+               if (lastError != Win32Errors.ERROR_SUCCESS)
+                  NativeError.ThrowException(lastError, pathLp);
 
-                     case Win32Errors.ERROR_FILE_NOT_FOUND:
-                     case Win32Errors.ERROR_PATH_NOT_FOUND:
-                        lastError = (int)(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND);
-                        break;
-                  }
+               if (!NativeMethods.IsValidHandle(pSecurityDescriptor, false))
+                  throw new IOException(Resources.InvalidSecurityDescriptorReturnedFromSystem);
 
-                  // If the function fails, the return value is zero.
-                  NativeError.ThrowException(lastError, path);
-               }
 
-               ObjectSecurity objectSecurity = (isFolder) ? (ObjectSecurity)new DirectorySecurity() : new FileSecurity();
-               objectSecurity.SetSecurityDescriptorBinaryForm(safeBuffer.ToByteArray(0, safeBuffer.Capacity));
+               uint length = Security.NativeMethods.GetSecurityDescriptorLength(pSecurityDescriptor);
 
-               return (T)(object)objectSecurity;
+               // Seems not to work.
+               // pSecurityDescriptor.CopyTo(managedBuffer, 0, (int)length);
+               byte[] managedBuffer = pSecurityDescriptor.ToByteArray(0, (int) length);
+
+               objectSecurity = (isFolder) ? (ObjectSecurity) new DirectorySecurity() : new FileSecurity();
+               objectSecurity.SetSecurityDescriptorBinaryForm(managedBuffer);
             }
+            finally
+            {
+               if (pSecurityDescriptor != null)
+                  pSecurityDescriptor.Close();
+            }
+
+            return (T) (object) objectSecurity;
          }
       }
 

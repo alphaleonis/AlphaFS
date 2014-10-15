@@ -1,14 +1,23 @@
 Version 1.6
-    * Numerous bugfixes and optimizations;
-    * Mod: Added more Unit Tests;
-    * Mod: The public key of AlphaFS.dll has changed. (Delay-signing is no longer used);
 
-	* Mod: File and Directory classes contain all .NET 4 methods.
+	* Unit Tests, also act as code samples.
+    * Numerous bugfixes and optimizations.
+    * The public key of AlphaFS.dll has changed, delay-signing is no longer used.
+	* Complete implementation of .NET 4.5 File(Info) and Directory(Info) classes.
+	* Complete implementation of .NET 4.5 DriveInfo() class and with UNC support.
+	* Complete implementation of .NET 4.5 Path() class.
+	* Implemented Unicode aka "Long Path" handling for all Win32 API functions that support it.
+	* Class PathInfo() no longer exists.
+	
+	* New: Added support for NuGet.
+	* New: Added support for building against .NET 4.0, 4.5, and 4.5.1 in addition to 3.5.
+	* New: Supports networking: Enumerating Hosts, SMB share-/DFS information and connecting to network resources.
+	* New: Supports working with Alternate Data Streams (NTFS ADS).
+	* New: Supports working with files/directories with a trailing dot or space.
 
-    * Mod: Class Volume()/VolumeInfo();
-    * Mod: Class File()/Directory();
-
-    * Mod: Class FileSystemInfo() has a couple of public read only properties:
+    
+	
+	* Mod: Class FileSystemInfo() has a couple of public read only properties:
 
 		DirectoryInfo() / FileInfo()
 			EntryInfo	 : Instance of the FileSystemEntryInfo() class;
@@ -20,8 +29,6 @@ Version 1.6
 		
 
     * Mod: Class Path();
-
-		- Class PathInfo() no longer exists. Most methods have been rewritten to closely resemble .NET code.
 
 		- some methods call their System.IO.Path counterpart.
 		  These methods are not affected by MAX_PATH:
@@ -38,8 +45,6 @@ Version 1.6
 			Path.HasExtension()
 			Path.IsPathRooted()
 
-    * New: Added instance Class Filesystem.DriveInfo();
-
     * New: Added static Class Filesystem.Device();
 
     * New: Added instance Class Filesystem.DeviceInfo();
@@ -48,39 +53,8 @@ Version 1.6
    
     * New: Added instance Class Filesystem.Shell32Info();
 
-    * New: Added namespace & class AlphaFS.Network.Host
-
-          Provides static methods to retrieve SMB Share- and DFS information from a local- or remote host.
-          
-         EnumerateDfsLinks();
-         EnumerateDfsRoot();
-         EnumerateDomainDfsRoot();
-         EnumerateDrives();
-         EnumerateOpenConnections();
-         EnumerateOpenResources();
-         EnumerateShares();
-         GetDfsClientInformation();
-         GetDfsInformation();
-         GetHostShareFromPath();
-         GetShareInformation();
-         GetUncName();
-
-      Provides static methods for connecting to network resources:
-         
-         ConnectDrive();
-         ConnectTo();
-         DisconnectDrive();
-         DisconnectFrom();
-         DriveConnection();
-
-      Instance classes: OpenResourceInfo();
-
-
    * New: Added "Cached LazyLoading" to class: FileSystemInfo() improving performance for classes: DirectoryInfo() and FileInfo().
 
-   * New: Added support to work with files/directories with a trailing dot or space.
-
-   * New: Added support to work with Alternate Data Streams (NTFS ADS).
 
    * New: Added bool? isFullPath parameter to applicable methods of the File() and Directory() class.
 			isFullPath is false by default.
@@ -94,9 +68,7 @@ Version 1.6
 			The FileInfo() and DirectoryInfo() also benefit from isFullPath; AlphaFS adds an internal property: EntryInfo.LongFullPath
 			which is always the Unicode absolute path of the file or directory.
 
-   * New: Added support for building against .NET 4.0, 4.5, and 4.5.1 in addition to 3.5.
-
-   * New: Added support for NuGet.
+   
    
 
 Version 1.5

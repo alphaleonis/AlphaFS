@@ -2042,8 +2042,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\tDirectoryInfo.MoveTo()");
          Console.WriteLine("\t\tDST directory: [{0}]\n\t{1}", destDir.FullName, Reporter());
 
-         Assert.IsFalse(sourceDir.Exists);
-         Assert.IsTrue(destDir.Exists);
+         Assert.IsTrue(sourceDir.Exists, "Source directory should exist.");
+         Assert.IsTrue(destDir.Exists, "Destination directory should exist.");
+         Assert.AreEqual(sourceDir.LongFullName, destDir.LongFullName);
 
          #endregion // MoveTo
 
@@ -2075,8 +2076,8 @@ namespace AlphaFS.UnitTest
 
          #endregion // Move, delete destination first.
 
-         Assert.IsFalse(sourceDir.Exists);
-         Assert.IsTrue(destDir.Exists);
+         Assert.IsTrue(sourceDir.Exists, "Source directory should exist.");
+         Assert.IsTrue(destDir.Exists, "Destination directory should exist.");
 
          Directory.Delete(path, true);
          Assert.IsFalse(Directory.Exists(path), "Cleanup failed: Directory should have been removed.");

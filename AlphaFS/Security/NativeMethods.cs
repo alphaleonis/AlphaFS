@@ -77,22 +77,26 @@ namespace Alphaleonis.Win32.Security
       #endregion // LookupPrivilegeValue
 
       
-      #region GetFileSecurity
+      #region GetNamedSecurityInfo
 
-      /// <summary>The GetFileSecurity function obtains specified information about the security of a file or directory.
-      /// The information obtained is constrained by the caller's access rights and privileges.</summary>
+      /// <summary>The GetNamedSecurityInfo function retrieves a copy of the security descriptor for an object specified by name.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, it returns zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is ERROR_SUCCESS.</para>
+      /// <para>If the function fails, the return value is a nonzero error code defined in WinError.h.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFileSecurityW")]
-      [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetFileSecurity([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, SecurityInformation securityInfo, SafeHandle pSecurityDescriptor, uint nLength, out uint lpnLengthNeeded);
+      [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetNamedSecurityInfoW")]
+      [return: MarshalAs(UnmanagedType.U4)]
+      internal static extern uint GetNamedSecurityInfo([MarshalAs(UnmanagedType.LPWStr)] string pObjectName, ObjectType objectType, SecurityInformation securityInfo, out IntPtr pSidOwner, out IntPtr pSidGroup, out IntPtr pDacl, out IntPtr pSacl, out SafeGlobalMemoryBufferHandle pSecurityDescriptor);
 
-      #endregion // GetFileSecurity
+      #endregion // GetNamedSecurityInfo
 
       #region GetSecurityInfo
 
@@ -129,13 +133,18 @@ namespace Alphaleonis.Win32.Security
 
       #region SetNamedSecurityInfo
 
-      /// <summary>The SetNamedSecurityInfo function sets specified security information in the security descriptor of a specified object. The caller identifies the object by name.</summary>
+      /// <summary>The SetNamedSecurityInfo function sets specified security information in the security descriptor of a specified object. The caller identifies the object by name.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the function returns ERROR_SUCCESS.
-      /// If the function fails, it returns a nonzero error code defined in WinError.h.
+      /// <para>If the function succeeds, the function returns ERROR_SUCCESS.</para>
+      /// <para>If the function fails, it returns a nonzero error code defined in WinError.h.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SetNamedSecurityInfoW")]
       [return: MarshalAs(UnmanagedType.U4)]

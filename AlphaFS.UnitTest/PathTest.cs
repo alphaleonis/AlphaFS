@@ -422,7 +422,7 @@ namespace AlphaFS.UnitTest
          StopWatcher(true);
          suffixedDirectoryNameWithoutRoot = Path.GetSuffixedDirectoryNameWithoutRoot(fullPath);
          Console.WriteLine("\nInput Path: [{0}]\n\tGetSuffixedDirectoryName() (Should be: [null]): [{1}]\n{2}", fullPath, suffixedDirectoryNameWithoutRoot ?? "null", Reporter(false, true));
-         Assert.AreEqual(suffixedDirectoryNameWithoutRoot, null, "Path mismatch.");
+         Assert.AreEqual(null, suffixedDirectoryNameWithoutRoot, "Path mismatch.");
 
 
 
@@ -432,7 +432,7 @@ namespace AlphaFS.UnitTest
          StopWatcher(true);
          suffixedDirectoryNameWithoutRoot = Path.GetSuffixedDirectoryNameWithoutRoot(fullPath);
          Console.WriteLine("\nInput Path: [{0}]\n\tGetSuffixedDirectoryName() (Should be: [null]): [{1}]\n{2}", fullPath, suffixedDirectoryNameWithoutRoot ?? "null", Reporter(false, true));
-         Assert.AreEqual(suffixedDirectoryNameWithoutRoot, null, "Path mismatch.");
+         Assert.AreEqual(null, suffixedDirectoryNameWithoutRoot, "Path mismatch.");
 
          Console.WriteLine("\n");
       }

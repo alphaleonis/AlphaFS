@@ -1534,28 +1534,18 @@ namespace AlphaFS.UnitTest
 
       #region Network
 
-      #region Network_Class_DfsInfo
+      #region Network_Class_DfsXxx
 
       [TestMethod]
-      public void Network_Class_DfsInfo()
+      public void Network_Class_DfsXxx()
       {
          Console.WriteLine("Class Network.DfsInfo()");
+         Console.WriteLine("Class Network.DfsStorage()");
 
          DumpClassDfsInfo();
       }
 
-      #endregion // Network_Class_DfsInfo
-
-      #region Network_Class_DfsStorage
-
-      [TestMethod]
-      public void Network_Class_DfsStorage()
-      {
-         Console.WriteLine("Class Network.DfsStorage()");
-         Console.WriteLine("\nPlease see unit test: Network_Class_DfsInfo()");
-      }
-
-      #endregion // Network_Class_DfsStorage
+      #endregion // Network_Class_DfsXxx
 
       #region Network_Class_OpenConnectionInfo
 
