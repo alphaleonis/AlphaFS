@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Security
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetSecurityDescriptorDacl(SafeHandle pSecurityDescriptor, [MarshalAs(UnmanagedType.Bool)] out bool lpbDaclPresent, out IntPtr pDacl, [MarshalAs(UnmanagedType.Bool)] out bool lpbDaclDefaulted);
+      internal static extern bool GetSecurityDescriptorDacl(SafeGlobalMemoryBufferHandle pSecurityDescriptor, [MarshalAs(UnmanagedType.Bool)] out bool lpbDaclPresent, out IntPtr pDacl, [MarshalAs(UnmanagedType.Bool)] out bool lpbDaclDefaulted);
 
       #endregion // GetSecurityDescriptorDacl
 
@@ -181,7 +181,7 @@ namespace Alphaleonis.Win32.Security
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetSecurityDescriptorSacl(SafeHandle pSecurityDescriptor, [MarshalAs(UnmanagedType.Bool)] out bool lpbSaclPresent, out IntPtr pSacl, [MarshalAs(UnmanagedType.Bool)] out bool lpbSaclDefaulted);
+      internal static extern bool GetSecurityDescriptorSacl(SafeGlobalMemoryBufferHandle pSecurityDescriptor, [MarshalAs(UnmanagedType.Bool)] out bool lpbSaclPresent, out IntPtr pSacl, [MarshalAs(UnmanagedType.Bool)] out bool lpbSaclDefaulted);
 
       #endregion // GetSecurityDescriptorSacl
 
@@ -197,7 +197,7 @@ namespace Alphaleonis.Win32.Security
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetSecurityDescriptorGroup(SafeHandle pSecurityDescriptor, out IntPtr pGroup, [MarshalAs(UnmanagedType.Bool)] out bool lpbGroupDefaulted);
+      internal static extern bool GetSecurityDescriptorGroup(SafeGlobalMemoryBufferHandle pSecurityDescriptor, out IntPtr pGroup, [MarshalAs(UnmanagedType.Bool)] out bool lpbGroupDefaulted);
 
       #endregion // GetSecurityDescriptorGroup
 
@@ -213,7 +213,7 @@ namespace Alphaleonis.Win32.Security
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetSecurityDescriptorControl(SafeHandle pSecurityDescriptor, out SecurityDescriptorControl pControl, out uint lpdwRevision);
+      internal static extern bool GetSecurityDescriptorControl(SafeGlobalMemoryBufferHandle pSecurityDescriptor, out SecurityDescriptorControl pControl, out uint lpdwRevision);
 
       #endregion // GetSecurityDescriptorControl
 
@@ -229,7 +229,7 @@ namespace Alphaleonis.Win32.Security
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetSecurityDescriptorOwner(SafeHandle pSecurityDescriptor, out IntPtr pOwner, [MarshalAs(UnmanagedType.Bool)] out bool lpbOwnerDefaulted);
+      internal static extern bool GetSecurityDescriptorOwner(SafeGlobalMemoryBufferHandle pSecurityDescriptor, out IntPtr pOwner, [MarshalAs(UnmanagedType.Bool)] out bool lpbOwnerDefaulted);
 
       #endregion // GetSecurityDescriptorOwner
 
@@ -245,7 +245,7 @@ namespace Alphaleonis.Win32.Security
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint GetSecurityDescriptorLength(SafeHandle pSecurityDescriptor);
+      internal static extern uint GetSecurityDescriptorLength(SafeGlobalMemoryBufferHandle pSecurityDescriptor);
 
       #endregion // GetSecurityDescriptorLength
 

@@ -100,6 +100,7 @@ namespace AlphaFS.UnitTest
       #region StopWatcher
 
       private static Stopwatch _stopWatcher;
+
       private static string StopWatcher(bool start = false)
       {
          if (_stopWatcher == null)
@@ -508,7 +509,7 @@ namespace AlphaFS.UnitTest
          AuthorizationRuleCollection sysIoaccessRules = sysIo.GetAccessRules(true, true, typeof(NTAccount));
 
          Console.WriteLine("\nInput Path: [{0}]", tempPath);
-         Console.WriteLine("\n\tGetAccessControl() rules found: [{0}]\n\tSystem.IO rules found         : [{1}]\n{2}", accessRules.Count, sysIoaccessRules.Count, report);
+         Console.WriteLine("\n\tGetAccessControl() rules found: [{0}]\n    System.IO rules found         : [{1}]\n{2}", accessRules.Count, sysIoaccessRules.Count, report);
          Assert.AreEqual(sysIoaccessRules.Count, accessRules.Count);
 
          foreach (FileSystemAccessRule far in accessRules)
@@ -526,9 +527,9 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpGetAccessControl
 
-      #region DumpGetFileTime
+      #region DumpGetXxxTimeXxx
 
-      private void DumpGetFileTime(bool isLocal)
+      private void DumpGetXxxTimeXxx(bool isLocal)
       {
          #region Setup
 
@@ -546,12 +547,12 @@ namespace AlphaFS.UnitTest
 
          DateTime actual = File.GetCreationTime(path);
          DateTime expected = System.IO.File.GetCreationTime(path);
-         Console.WriteLine("\tGetCreationTime()     : [{0}]\tSystem.IO: [{1}]", actual, expected);
+         Console.WriteLine("\tGetCreationTime()     : [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = File.GetCreationTimeUtc(path);
          expected = System.IO.File.GetCreationTimeUtc(path);
-         Console.WriteLine("\tGetCreationTimeUtc()  : [{0}]\tSystem.IO: [{1}]\n", actual, expected);
+         Console.WriteLine("\tGetCreationTimeUtc()  : [{0}]    System.IO: [{1}]\n", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          #endregion // GetCreationTimeXxx
@@ -560,12 +561,12 @@ namespace AlphaFS.UnitTest
 
          actual = File.GetLastAccessTime(path);
          expected = System.IO.File.GetLastAccessTime(path);
-         Console.WriteLine("\tGetLastAccessTime()   : [{0}]\tSystem.IO: [{1}]", actual, expected);
+         Console.WriteLine("\tGetLastAccessTime()   : [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = File.GetLastAccessTimeUtc(path);
          expected = System.IO.File.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\tGetLastAccessTimeUtc(): [{0}]\tSystem.IO: [{1}]\n", actual, expected);
+         Console.WriteLine("\tGetLastAccessTimeUtc(): [{0}]    System.IO: [{1}]\n", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          #endregion // GetLastAccessTimeXxx
@@ -574,26 +575,28 @@ namespace AlphaFS.UnitTest
 
          actual = File.GetLastWriteTime(path);
          expected = System.IO.File.GetLastWriteTime(path);
-         Console.WriteLine("\tGetLastWriteTime()    : [{0}]\tSystem.IO: [{1}]", actual, expected);
+         Console.WriteLine("\tGetLastWriteTime()    : [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = File.GetLastWriteTimeUtc(path);
          expected = System.IO.File.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\tGetLastWriteTimeUtc() : [{0}]\tSystem.IO: [{1}]\n", actual, expected);
+         Console.WriteLine("\tGetLastWriteTimeUtc() : [{0}]    System.IO: [{1}]\n", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          #endregion // GetLastWriteTimeXxx
 
+
          #region GetChangeTimeXxx
 
-         Console.WriteLine("\tGetChangeTime()       : [{0}]\tSystem.IO: [N/A]", File.GetChangeTime(path));
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\tSystem.IO: [N/A]\n", File.GetChangeTimeUtc(path));
+         Console.WriteLine("\tGetChangeTime()       : [{0}]    System.IO: [N/A]", File.GetChangeTime(path));
+         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]    System.IO: [N/A]", File.GetChangeTimeUtc(path));
 
-         #endregion GetChangeTimeXxx
+         #endregion // GetChangeTimeXxx
 
+         Console.WriteLine();
          Console.WriteLine(Reporter());
          Console.WriteLine();
-         
+
          #region Trigger GetChangeTimeXxx
 
          // We can not compare ChangeTime against .NET because it does not exist.
@@ -612,25 +615,26 @@ namespace AlphaFS.UnitTest
          DateTime changeTimeActual = File.GetChangeTime(path);
          DateTime changeTimeUtcActual = File.GetChangeTimeUtc(path);
 
-         Console.WriteLine("\nTrigger ChangeTime of a temp file by renaming it.");
+         Console.WriteLine("\nTesting ChangeTime on a temp file.");
          Console.WriteLine("\nInput File Path: [{0}]\n", path);
          Console.WriteLine("\tGetChangeTime()       : [{0}]\t", changeTimeActual);
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t\n", changeTimeUtcActual);
+         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t", changeTimeUtcActual);
 
-         fi.MoveTo(fi.FullName.Replace(fileName, "rename.txt"));
+         fi.MoveTo(fi.FullName.Replace(fileName, fileName + "-Renamed"));
          
          // Pause for at least a second so that the difference in time can be seen.
          int sleep = new Random().Next(2000, 4000);
          Thread.Sleep(sleep);
 
-         fi.MoveTo(fi.FullName.Replace("rename.txt", fileName));
+         fi.MoveTo(fi.FullName.Replace(fileName + "-Renamed", fileName));
 
          DateTime lastAccessTimeExpected = File.GetLastAccessTime(path);
          DateTime lastAccessTimeUtcExpected = File.GetLastAccessTimeUtc(path);
          DateTime changeTimeExpected = File.GetChangeTime(path);
          DateTime changeTimeUtcExpected = File.GetChangeTimeUtc(path);
 
-         Console.WriteLine("Renamed file back and forth, ChangeTime should differ approximately: [{0}] seconds.\n", sleep / 1000);
+         Console.WriteLine("\nTrigger ChangeTime by renaming the file.");
+         Console.WriteLine("For Unit Test, ChangeTime should differ approximately: [{0}] seconds.\n", sleep / 1000);
          Console.WriteLine("\tGetChangeTime()       : [{0}]\t", changeTimeExpected);
          Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t\n", changeTimeUtcExpected);
 
@@ -641,16 +645,15 @@ namespace AlphaFS.UnitTest
          Assert.AreEqual(lastAccessTimeExpected, lastAccessTimeActual);
          Assert.AreEqual(lastAccessTimeUtcExpected, lastAccessTimeUtcActual);
 
+         #endregion // Trigger GetChangeTimeXxx
+
 
          fi.Delete();
          Assert.IsFalse(fi.Exists, "Cleanup failed: File should have been removed.");
-
-         #endregion // Trigger GetChangeTimeXxx
-
          Console.WriteLine();
       }
 
-      #endregion // DumpGetFileTime
+      #endregion // DumpGetXxxTimeXxx
 
       #region DumpGetSize
 
@@ -1040,7 +1043,7 @@ namespace AlphaFS.UnitTest
                FileAttributes actual = File.GetAttributes(file);
                FileAttributes expected = System.IO.File.GetAttributes(file);
 
-               Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t\tSystem.IO: [{3}]", ++cnt, file, expected, actual);
+               Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t    System.IO: [{3}]", ++cnt, file, expected, actual);
                Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
                Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
             }
@@ -1068,7 +1071,7 @@ namespace AlphaFS.UnitTest
                FileAttributes actual = File.GetAttributes(file);
                FileAttributes expected = System.IO.File.GetAttributes(file);
 
-               Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t\tSystem.IO: [{3}]", ++cnt, file, expected, actual);
+               Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t    System.IO: [{3}]", ++cnt, file, expected, actual);
                Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
                Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
             }
@@ -1088,100 +1091,105 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpGetSetAttributes
 
-      #region DumpSetFileTime
+      #region DumpSetXxxTimeXxx
 
-      private void DumpSetFileTime(bool isLocal)
+      private void DumpSetXxxTimeXxx(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = Path.Combine(Path.GetTempPath(), "File.SetCreationTime()-" + Path.GetRandomFileName());
+         string path = Path.GetTempPath("File.SetCreationTime()-" + Path.GetRandomFileName());
          if (!isLocal) path = Path.LocalToUnc(path);
 
-         Console.WriteLine("\nInput File Path: [{0}]", path);
-
+         Console.WriteLine("\nInput File Path: [{0}]\n", path);
+         
          using (File.Create(path)) { }
 
-         #region SetCreationTime/Utc
-         Thread.Sleep(new Random().Next(250, 500));
+         #endregion // Setup
+
+         StopWatcher(true);
+
+         #region SetCreationTimeXxx
+
+         //Thread.Sleep(new Random().Next(250, 500));
          int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-         Console.WriteLine("\n\tSetCreationTime() to: [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
          File.SetCreationTime(path, creationTime);
          DateTime actual = File.GetCreationTime(path);
          System.IO.File.SetCreationTime(path, creationTime);
          DateTime expected = System.IO.File.GetCreationTime(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
+         Console.WriteLine("\tSetCreationTime()     : [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
 
-         Thread.Sleep(new Random().Next(250, 500));
+         //Thread.Sleep(new Random().Next(250, 500));
          seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
-         Console.WriteLine("\n\tSetCreationTimeUtc() to: [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
-         File.SetCreationTimeUtc(path, creationTime);
+         DateTime creationTimeUtc = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
+         File.SetCreationTimeUtc(path, creationTimeUtc);
          actual = File.GetCreationTimeUtc(path);
-         System.IO.File.SetCreationTimeUtc(path, creationTime);
+         System.IO.File.SetCreationTimeUtc(path, creationTimeUtc);
          expected = System.IO.File.GetCreationTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
-         #endregion // SetCreationTime/Utc
+         Console.WriteLine("\tSetCreationTimeUtc()  : [{0}]    System.IO: [{1}]\n", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
-         #region SetLastAccessTime/Utc
-         Thread.Sleep(new Random().Next(250, 500));
+         #endregion // SetCreationTimeXxx
+
+         #region SetLastAccessTimeXxx
+
+         //Thread.Sleep(new Random().Next(250, 500));
          seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-         Console.WriteLine("\n\tSetLastAccessTime() to: [{0} {1}]", lastAccessTime.ToLongDateString(), lastAccessTime.ToLongTimeString());
          File.SetLastAccessTime(path, lastAccessTime);
          actual = File.GetLastAccessTime(path);
          System.IO.File.SetLastAccessTime(path, lastAccessTime);
          expected = System.IO.File.GetLastAccessTime(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
+         Console.WriteLine("\tSetLastAccessTime()   : [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         
 
-
-         Thread.Sleep(new Random().Next(250, 500));
+         //Thread.Sleep(new Random().Next(250, 500));
          seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
-         Console.WriteLine("\n\tSetLastAccessTimeUtc() to: [{0} {1}]", lastAccessTime.ToLongDateString(), lastAccessTime.ToLongTimeString());
-         File.SetLastAccessTimeUtc(path, lastAccessTime);
+         DateTime lastAccessTimeUtc = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
+         File.SetLastAccessTimeUtc(path, lastAccessTimeUtc);
          actual = File.GetLastAccessTimeUtc(path);
-         System.IO.File.SetLastAccessTimeUtc(path, lastAccessTime);
+         System.IO.File.SetLastAccessTimeUtc(path, lastAccessTimeUtc);
          expected = System.IO.File.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
-         #endregion // SetLastAccessTime/Utc
+         Console.WriteLine("\tSetLastAccessTimeUtc(): [{0}]    System.IO: [{1}]\n", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
-         #region SetLastWriteTime/Utc
-         Thread.Sleep(new Random().Next(250, 500));
+         #endregion // SetLastAccessTimeXxx
+
+         #region SetLastWriteTimeXxx
+
+         //Thread.Sleep(new Random().Next(250, 500));
          seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-         Console.WriteLine("\n\tSetLastWriteTime() to: [{0} {1}]", lastWriteTime.ToLongDateString(), lastWriteTime.ToLongTimeString());
          File.SetLastWriteTime(path, lastWriteTime);
          actual = File.GetLastWriteTime(path);
          System.IO.File.SetLastWriteTime(path, lastWriteTime);
          expected = System.IO.File.GetLastWriteTime(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
+         Console.WriteLine("\tSetLastWriteTime()    : [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         
 
-
-         Thread.Sleep(new Random().Next(250, 500));
+         //Thread.Sleep(new Random().Next(250, 500));
          seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
-         Console.WriteLine("\n\tSetLastWriteTimeUtc() to: [{0} {1}]", lastWriteTime.ToLongDateString(), lastWriteTime.ToLongTimeString());
-         File.SetLastWriteTimeUtc(path, lastWriteTime);
+         DateTime lastWriteTimeUtc = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
+         File.SetLastWriteTimeUtc(path, lastWriteTimeUtc);
          actual = File.GetLastWriteTimeUtc(path);
-         System.IO.File.SetLastWriteTimeUtc(path, lastWriteTime);
+         System.IO.File.SetLastWriteTimeUtc(path, lastWriteTimeUtc);
          expected = System.IO.File.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
-         #endregion // SetLastWriteTime/Utc
+         Console.WriteLine("\tSetLastWriteTimeUtc() : [{0}]    System.IO: [{1}]\n", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+
+         #endregion // SetLastWriteTimeXxx
 
          File.Delete(path);
-         Assert.IsTrue(!File.Exists(path));
-
-         Console.WriteLine("\n");
+         Assert.IsTrue(!File.Exists(path), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
       }
 
-      #endregion // DumpSetFileTime
+      #endregion // DumpSetXxxTimeXxx
 
       #region DumpSetTimestamps
 
@@ -1217,18 +1225,18 @@ namespace AlphaFS.UnitTest
 
          DateTime actual = File.GetCreationTime(path);
          DateTime expected = System.IO.File.GetCreationTime(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
+         Console.WriteLine("\t\tAlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = File.GetLastAccessTime(path);
          expected = System.IO.File.GetLastAccessTime(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
+         Console.WriteLine("\t\tAlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = File.GetLastWriteTime(path);
          expected = System.IO.File.GetLastWriteTime(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
+         Console.WriteLine("\t\tAlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
 
 
@@ -1247,18 +1255,18 @@ namespace AlphaFS.UnitTest
 
          actual = File.GetCreationTimeUtc(path);
          expected = System.IO.File.GetCreationTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
+         Console.WriteLine("\t\tAlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = File.GetLastAccessTimeUtc(path);
          expected = System.IO.File.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
+         Console.WriteLine("\t\tAlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = File.GetLastWriteTimeUtc(path);
          expected = System.IO.File.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(actual, expected, "AlphaFS != System.IO");
+         Console.WriteLine("\t\tAlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          File.Delete(path);
          Assert.IsTrue(!File.Exists(path));
@@ -2157,10 +2165,10 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void GetCreationTime()
       {
-         Console.WriteLine("File.GetCreationTime()");
+         Console.WriteLine("File.GetXxxTimeXxx()");
 
-         DumpGetFileTime(true);
-         DumpGetFileTime(false);
+         DumpGetXxxTimeXxx(true);
+         DumpGetXxxTimeXxx(false);
       }
 
       #endregion // GetCreationTime
@@ -2411,7 +2419,7 @@ namespace AlphaFS.UnitTest
             FileSecurity dsAlpha = File.GetAccessControl(pathAlpha, AccessControlSections.Access);
             AuthorizationRuleCollection accessRulesSystem = dsSystem.GetAccessRules(true, true, typeof(NTAccount));
             AuthorizationRuleCollection accessRulesAlpha = dsAlpha.GetAccessRules(true, true, typeof(NTAccount));
-            Console.WriteLine("\t\tSystem.IO.File.GetAccessControl() rules found: [{0}]", accessRulesSystem.Count);
+            Console.WriteLine("\t    System.IO.File.GetAccessControl() rules found: [{0}]", accessRulesSystem.Count);
             Console.WriteLine("\t\t\t   File.GetAccessControl() rules found: [{0}]", accessRulesAlpha.Count);
             Assert.AreEqual(accessRulesSystem.Count, accessRulesAlpha.Count);
 
@@ -2474,10 +2482,10 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void SetCreationTime()
       {
-         Console.WriteLine("File.SetCreationTime()");
+         Console.WriteLine("File.SetXxxTimeXxx()");
 
-         DumpSetFileTime(true);
-         DumpSetFileTime(false);
+         DumpSetXxxTimeXxx(true);
+         DumpSetXxxTimeXxx(false);
       }
 
       #endregion // SetCreationTime

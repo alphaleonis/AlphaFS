@@ -34,19 +34,25 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructors
 
-      /// <summary>Initializes a Shell32Info instance.</summary>
-      /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
+      /// <summary>Initializes a Shell32Info instance.
       /// <remarks>Shell32 is limited to MAX_PATH length.</remarks>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
+      /// </summary>
+      /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       public Shell32Info(string fileName) : this(fileName, false)
       {
       }
 
-      /// <summary>Initializes a Shell32Info instance.</summary>
-      /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="fileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="fileName"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <summary>Initializes a Shell32Info instance.
       /// <remarks>Shell32 is limited to MAX_PATH length.</remarks>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
+      /// </summary>
+      /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       public Shell32Info(string fileName, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(fileName))

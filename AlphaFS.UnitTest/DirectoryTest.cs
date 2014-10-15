@@ -126,19 +126,15 @@ namespace AlphaFS.UnitTest
 
       #region Reporter
 
-      private static string Reporter(bool condensed = false, bool onlyTime = false)
+      private static string Reporter(bool onlyTime = false)
       {
          Win32Exception lastError = new Win32Exception();
 
          StopWatcher();
 
          return onlyTime
-            ? string.Format(CultureInfo.CurrentCulture, condensed
-               ? "{0} [{1}: {2}]"
-               : "\t\t{0}", StopWatcher())
-            : string.Format(CultureInfo.CurrentCulture, condensed
-               ? "{0} [{1}: {2}]"
-               : "\t\t{0}\t*Win32 Result: [{1, 4}]\t*Win32 Message: [{2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
+            ? string.Format(CultureInfo.CurrentCulture, "\t\t{0}", StopWatcher())
+            : string.Format(CultureInfo.CurrentCulture, "\t{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
       }
 
       #endregion // Reporter
@@ -367,7 +363,7 @@ namespace AlphaFS.UnitTest
          try
          {
             Directory.Compress(tempPath, searchPattern, searchOption);
-            report = Reporter(true);
+            report = Reporter();
             action = true;
             actual = File.GetAttributes(tempPath);
          }
@@ -400,7 +396,7 @@ namespace AlphaFS.UnitTest
          try
          {
             Directory.Decompress(tempPath, searchPattern, searchOption);
-            report = Reporter(true);
+            report = Reporter();
             action = true;
             actual = File.GetAttributes(tempPath);
          }
@@ -455,7 +451,7 @@ namespace AlphaFS.UnitTest
 
          StopWatcher(true);
          DirectoryInfo firstCopy = sourceDir.CopyTo(tempPath + @"\1stCopy");
-         Console.WriteLine("\n\t1st: DirectoryInfo.CopyTo()\n\n\t  Source:      [{0}]\n\t  Destination: [{1}]\n\t{2}", sourceDir.FullName, firstCopy.FullName, Reporter(true));
+         Console.WriteLine("\n\t1st: DirectoryInfo.CopyTo()\n\n\t  Source:      [{0}]\n\t  Destination: [{1}]\n\t{2}", sourceDir.FullName, firstCopy.FullName, Reporter());
          Dictionary<string, long> props1stCopy = Directory.GetProperties(sourceDir.FullName, SearchOption.AllDirectories);
 
          Dictionary<string, long> propsSourceDir = Directory.GetProperties(sourceDir.FullName, SearchOption.AllDirectories);
@@ -472,7 +468,7 @@ namespace AlphaFS.UnitTest
          string secondCopy = Path.GetTempPath(tempPath + @"\2ndCopy");
          StopWatcher(true);
          Directory.Copy(firstCopy.FullName, secondCopy);
-         Console.WriteLine("\n\n\t2nd: Directory.Copy()\n\n\t  Source:      [{0}]\n\t  Destination: [{1}]\n\t{2}", firstCopy.FullName, secondCopy, Reporter(true));
+         Console.WriteLine("\n\n\t2nd: Directory.Copy()\n\n\t  Source:      [{0}]\n\t  Destination: [{1}]\n\t{2}", firstCopy.FullName, secondCopy, Reporter());
 
          Dictionary<string, long> props2ndDirCopy = Directory.GetProperties(secondCopy, SearchOption.AllDirectories);
          Console.WriteLine("\n\t\tTotal size       : [{0}]\n\t\tTotal directories: [{1}]\n\t\tTotal files      : [{2}]", NativeMethods.UnitSizeToText(props2ndDirCopy["Size"]), props2ndDirCopy["Directory"], props2ndDirCopy["File"]);
@@ -487,7 +483,7 @@ namespace AlphaFS.UnitTest
 
          StopWatcher(true);
          DirectoryInfo thirdCopy = sourceDir.CopyTo(tempPath + @"\3rdCopy");
-         Console.WriteLine("\n\n\t3rd: Directory.Copy()/DirectoryInfo.CopyTo(), Exception/Overwrite\n\n\t  Source:      [{0}]\n\t  Destination: [{1}]\n\t{2}", sourceDir.FullName, thirdCopy.FullName, Reporter(true));
+         Console.WriteLine("\n\n\t3rd: Directory.Copy()/DirectoryInfo.CopyTo(), Exception/Overwrite\n\n\t  Source:      [{0}]\n\t  Destination: [{1}]\n\t{2}", sourceDir.FullName, thirdCopy.FullName, Reporter());
 
          Dictionary<string, long> props3rdDirCopy = Directory.GetProperties(thirdCopy.FullName, SearchOption.AllDirectories);
          Console.WriteLine("\n\t\tTotal size       : [{0}]\n\t\tTotal directories: [{1}]\n\t\tTotal files      : [{2}]", NativeMethods.UnitSizeToText(props3rdDirCopy["Size"]), props3rdDirCopy["Directory"], props3rdDirCopy["File"]);
@@ -545,7 +541,7 @@ namespace AlphaFS.UnitTest
          
          StopWatcher(true);
          dirInfo.Create(true);  // Create compressed directory.
-         string report = Reporter(true);
+         string report = Reporter();
          bool exist = dirInfo.Exists;
          Console.WriteLine("\nCreateDirectory() (Should be True): [{0}]\n\t{1}\n", exist, report);
          
@@ -566,7 +562,7 @@ namespace AlphaFS.UnitTest
 
          StopWatcher(true);
          string pathSub = dirInfo.CreateSubdirectory("A Sub Directory").FullName;
-         report = Reporter(true);
+         report = Reporter();
 
          Console.WriteLine("CreateSubdirectory(): [{0}]\n\t{1}\n", pathSub, report);
 
@@ -588,7 +584,7 @@ namespace AlphaFS.UnitTest
          
          StopWatcher(true);
          dirInfo = Directory.CreateDirectory(root);
-         report = Reporter(true);
+         report = Reporter();
          Console.WriteLine("Created directory structure (Should be True): [{0}]\n\t{1}", dirInfo != null, report);
          Console.WriteLine("\nSubdirectory depth: [{0}], path length: [{1}] characters.\n", level, root.Length);
 
@@ -615,7 +611,7 @@ namespace AlphaFS.UnitTest
 
          StopWatcher(true);
          Directory.Delete(tempPath, true);
-         report = Reporter(true);
+         report = Reporter();
          exist = Directory.Exists(tempPath);
 
          Console.WriteLine("\n\nDirectory.Delete() (Should be True): [{0}]\n\t{1}", !exist, report);
@@ -648,7 +644,7 @@ namespace AlphaFS.UnitTest
          try
          {
             Directory.EnableCompression(tempPath);
-            report = Reporter(true);
+            report = Reporter();
             action = true;
             actual = File.GetAttributes(tempPath);
          }
@@ -666,7 +662,7 @@ namespace AlphaFS.UnitTest
          try
          {
             Directory.DisableCompression(tempPath);
-            report = Reporter(true);
+            report = Reporter();
             action = true;
             actual = File.GetAttributes(tempPath);
          }
@@ -714,7 +710,7 @@ namespace AlphaFS.UnitTest
          {
             StopWatcher(true);
             Directory.EnableEncryption(tempPath);
-            report = Reporter(true);
+            report = Reporter();
             action = true;
          }
          catch (Exception ex)
@@ -745,7 +741,7 @@ namespace AlphaFS.UnitTest
          {
             StopWatcher(true);
             Directory.DisableEncryption(tempPath);
-            report = Reporter(true);
+            report = Reporter();
             action = true;
          }
          catch (Exception ex)
@@ -827,13 +823,13 @@ namespace AlphaFS.UnitTest
          try
          {
             Directory.Encrypt(tempPath, true);
-            report = Reporter(true);
+            report = Reporter();
             action = true;
          }
          catch (Exception ex)
          {
             action = false;
-            report = Reporter(true);
+            report = Reporter();
             Console.WriteLine("\n\tDirectory.Encrypt(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
          }
          Assert.IsTrue(action, "Unexpected Exception");
@@ -865,13 +861,13 @@ namespace AlphaFS.UnitTest
          try
          {
             Directory.Decrypt(tempPath, true);
-            report = Reporter(true);
+            report = Reporter();
             action = true;
          }
          catch (Exception ex)
          {
             action = false;
-            report = Reporter(true);
+            report = Reporter();
             Console.WriteLine("\n\tDirectory.Decrypt(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
          }
          Assert.IsTrue(action, "Unexpected Exception");
@@ -921,7 +917,7 @@ namespace AlphaFS.UnitTest
          foreach (string dir in Directory.EnumerateDirectories(path, searchPattern, searchOption))
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cntAlphaFS, dir);
 
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Console.WriteLine("\n\t{0}\n", Reporter());
          Assert.IsTrue(cntAlphaFS > 0, "Nothing was enumerated.");
       }
 
@@ -945,7 +941,7 @@ namespace AlphaFS.UnitTest
          foreach (string file in Directory.EnumerateFiles(path, searchPattern, searchOption))
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cntAlphaFS, file);
 
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Console.WriteLine("\n\t{0}\n", Reporter());
          Assert.IsTrue(cntAlphaFS > 0, "Nothing was enumerated.");
       }
 
@@ -972,7 +968,7 @@ namespace AlphaFS.UnitTest
                   ? "[Directory]"
                   : "[File]\t", dir);
 
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Console.WriteLine("\n\t{0}\n", Reporter());
          Assert.IsTrue(cntAlphaFs > 0, "Nothing was enumerated.");
       }
 
@@ -1027,7 +1023,7 @@ namespace AlphaFS.UnitTest
          AuthorizationRuleCollection sysIoaccessRules = sysIo.GetAccessRules(true, true, typeof(NTAccount));
 
          Console.WriteLine("\nInput Path: [{0}]", tempPath);
-         Console.WriteLine("\n\tGetAccessControl() rules found: [{0}]\n\tSystem.IO rules found         : [{1}]\n{2}", accessRules.Count, sysIoaccessRules.Count, report);
+         Console.WriteLine("\n\tGetAccessControl() rules found: [{0}]\n    System.IO rules found         : [{1}]\n{2}", accessRules.Count, sysIoaccessRules.Count, report);
          Assert.AreEqual(sysIoaccessRules.Count, accessRules.Count);
 
          foreach (FileSystemAccessRule far in accessRules)
@@ -1064,55 +1060,11 @@ namespace AlphaFS.UnitTest
          foreach (string dir in Directory.GetDirectories(path, searchPattern, searchOption))
             Console.WriteLine("\t#{0:000}\t[{1}]\t[{2}]", ++cntAlphaFS, File.GetAttributes(dir), dir);
 
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Console.WriteLine("\n\t{0}\n", Reporter());
          Assert.IsTrue(cntAlphaFS > 0);
       }
 
       #endregion // DumpGetDirectories
-
-      #region DumpGetDirectoryTime
-
-      private void DumpGetDirectoryTime(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot32 : Path.LocalToUnc(SysRoot32);
-
-         Console.WriteLine("\nInput Path: [{0}]\n", path);
-
-         DateTime actual = Directory.GetCreationTime(path);
-         DateTime expected = System.IO.Directory.GetCreationTime(path);
-         Console.WriteLine("\tGetCreationTime()     : [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "GetCreationTime()");
-
-         actual = Directory.GetCreationTimeUtc(path);
-         expected = System.IO.Directory.GetCreationTimeUtc(path);
-         Console.WriteLine("\tGetCreationTimeUtc()  : [{0}]\tSystem.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual, "GetCreationTimeUtc()");
-
-         actual = Directory.GetLastAccessTime(path);
-         expected = System.IO.Directory.GetLastAccessTime(path);
-         Console.WriteLine("\tGetLastAccessTime()   : [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "GetLastAccessTime()");
-
-         actual = Directory.GetLastAccessTimeUtc(path);
-         expected = System.IO.Directory.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\tGetLastAccessTimeUtc(): [{0}]\tSystem.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual, "GetLastAccessTimeUtc()");
-
-         actual = Directory.GetLastWriteTime(path);
-         expected = System.IO.Directory.GetLastWriteTime(path);
-         Console.WriteLine("\tGetLastWriteTime()    : [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "GetLastWriteTime()");
-
-         actual = Directory.GetLastWriteTimeUtc(path);
-         expected = System.IO.Directory.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\tGetLastWriteTimeUtc() : [{0}]\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "GetLastWriteTimeUtc()");
-
-         Console.WriteLine("\n");
-      }
-
-      #endregion // DumpGetDirectoryTime
 
       #region DumpGetDrives
 
@@ -1141,7 +1093,7 @@ namespace AlphaFS.UnitTest
                              !string.IsNullOrWhiteSpace(actual.DiskSpaceInfo.AvailableFreeSpaceUnitSize));
             }
          }
-         Console.WriteLine("\n\t{0}", Reporter(true));
+         Console.WriteLine("\n\t{0}", Reporter());
       }
 
       #endregion // DumpGetDrives
@@ -1164,11 +1116,138 @@ namespace AlphaFS.UnitTest
          foreach (string file in Directory.GetFiles(path, searchPattern, searchOption))
             Console.WriteLine("\t#{0:000}\t[{1}]\t[{2}]", ++cntAlphaFS, File.GetAttributes(file), file);
 
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Console.WriteLine("\n\t{0}\n", Reporter());
          Assert.IsTrue(cntAlphaFS > 0);
       }
 
       #endregion // DumpGetFiles
+
+      #region DumpGetXxxTime
+
+      private void DumpGetXxxTime(bool isLocal)
+      {
+         #region Setup
+
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string path = isLocal ? SysRoot32 : Path.LocalToUnc(SysRoot32);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+
+         #endregion // Setup
+
+         StopWatcher(true);
+
+         #region GetCreationTimeXxx
+
+         DateTime actual = Directory.GetCreationTime(path);
+         DateTime expected = System.IO.Directory.GetCreationTime(path);
+         Console.WriteLine("\tGetCreationTime()     : [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "GetCreationTime()");
+
+         actual = Directory.GetCreationTimeUtc(path);
+         expected = System.IO.Directory.GetCreationTimeUtc(path);
+         Console.WriteLine("\tGetCreationTimeUtc()  : [{0}]    System.IO: [{1}]\n", actual, expected);
+         Assert.AreEqual(expected, actual, "GetCreationTimeUtc()");
+
+         #endregion // GetCreationTimeXxx
+
+         #region GetLastAccessTimeXxx
+
+         actual = Directory.GetLastAccessTime(path);
+         expected = System.IO.Directory.GetLastAccessTime(path);
+         Console.WriteLine("\tGetLastAccessTime()   : [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "GetLastAccessTime()");
+
+         actual = Directory.GetLastAccessTimeUtc(path);
+         expected = System.IO.Directory.GetLastAccessTimeUtc(path);
+         Console.WriteLine("\tGetLastAccessTimeUtc(): [{0}]    System.IO: [{1}]\n", actual, expected);
+         Assert.AreEqual(expected, actual, "GetLastAccessTimeUtc()");
+
+         #endregion // GetLastAccessTimeXxx
+
+         #region GetLastWriteTimeXxx
+
+         actual = Directory.GetLastWriteTime(path);
+         expected = System.IO.Directory.GetLastWriteTime(path);
+         Console.WriteLine("\tGetLastWriteTime()    : [{0}]    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "GetLastWriteTime()");
+
+         actual = Directory.GetLastWriteTimeUtc(path);
+         expected = System.IO.Directory.GetLastWriteTimeUtc(path);
+         Console.WriteLine("\tGetLastWriteTimeUtc() : [{0}]    System.IO: [{1}]\n", actual, expected);
+         Assert.AreEqual(expected, actual, "GetLastWriteTimeUtc()");
+
+         #endregion // GetLastWriteTimeXxx
+
+
+         #region GetChangeTimeXxx
+
+         Console.WriteLine("\tGetChangeTime()       : [{0}]    System.IO: [N/A]", Directory.GetChangeTime(path));
+         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]    System.IO: [N/A]", Directory.GetChangeTimeUtc(path));
+
+         #endregion GetChangeTimeXxx
+
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
+         Console.WriteLine();
+
+         #region Trigger GetChangeTimeXxx
+
+         // We can not compare ChangeTime against .NET because it does not exist.
+         // Creating a directory and renaming it triggers ChangeTime, so test for that.
+
+         path = Path.GetTempPath("Directory-GetChangeTimeXxx()-directory-" + Path.GetRandomFileName());
+         if (!isLocal) path = Path.LocalToUnc(path);
+
+         DirectoryInfo di = new DirectoryInfo(path);
+         di.Create();
+         string fileName = di.Name;
+
+         DateTime lastAccessTimeActual = Directory.GetLastAccessTime(path);
+         DateTime lastAccessTimeUtcActual = Directory.GetLastAccessTimeUtc(path);
+
+         DateTime changeTimeActual = Directory.GetChangeTime(path);
+         DateTime changeTimeUtcActual = Directory.GetChangeTimeUtc(path);
+
+         Console.WriteLine("\nTesting ChangeTime on a temp directory.");
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("\tGetChangeTime()       : [{0}]\t", changeTimeActual);
+         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t", changeTimeUtcActual);
+
+         di.MoveTo(di.FullName.Replace(fileName, fileName + "-Renamed"));
+
+         // Pause for at least a second so that the difference in time can be seen.
+         int sleep = new Random().Next(2000, 4000);
+         Thread.Sleep(sleep);
+
+         di.MoveTo(di.FullName.Replace(fileName + "-Renamed", fileName));
+
+         DateTime lastAccessTimeExpected = Directory.GetLastAccessTime(path);
+         DateTime lastAccessTimeUtcExpected = Directory.GetLastAccessTimeUtc(path);
+         DateTime changeTimeExpected = Directory.GetChangeTime(path);
+         DateTime changeTimeUtcExpected = Directory.GetChangeTimeUtc(path);
+
+         Console.WriteLine("\nTrigger ChangeTime by renaming the directory.");
+         Console.WriteLine("For Unit Test, ChangeTime should differ approximately: [{0}] seconds.\n", sleep / 1000);
+         Console.WriteLine("\tGetChangeTime()       : [{0}]\t", changeTimeExpected);
+         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t\n", changeTimeUtcExpected);
+
+
+         Assert.AreNotEqual(changeTimeActual, changeTimeExpected);
+         Assert.AreNotEqual(changeTimeUtcActual, changeTimeUtcExpected);
+
+         Assert.AreEqual(lastAccessTimeExpected, lastAccessTimeActual);
+         Assert.AreEqual(lastAccessTimeUtcExpected, lastAccessTimeUtcActual);
+
+         #endregion // Trigger GetChangeTimeXxx
+
+
+         di.Delete();
+         Assert.IsFalse(di.Exists, "Cleanup failed: Directory should have been removed.");
+         Console.WriteLine();
+      }
+
+      #endregion // DumpGetXxxTime
 
       #region DumpEnumerateFileIdBothDirectoryInfo
 
@@ -1201,7 +1280,7 @@ namespace AlphaFS.UnitTest
 
             foundFse = Dump(fse, -22);
          }
-         string report = Reporter(true);
+         string report = Reporter();
 
          bool matchAll = directories == numDirectories && files == numFiles;
          Console.WriteLine("\n\tDirectories = [{0}], Files = [{1}]\n\t{2}", numDirectories, numFiles, report);
@@ -1230,7 +1309,7 @@ namespace AlphaFS.UnitTest
          foreach (string file in Directory.GetFileSystemEntries(path, searchPattern, searchOption))
             Console.WriteLine("\t#{0:000}\t[{1}]\t[{2}]", ++cntAlphaFS, File.GetAttributes(file), file);
 
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Console.WriteLine("\n\t{0}\n", Reporter());
          Assert.IsTrue(cntAlphaFS > 0);
       }
 
@@ -1249,7 +1328,7 @@ namespace AlphaFS.UnitTest
 
          StopWatcher(true);
          Dictionary<string, long> props = Directory.GetProperties(path, searchOption, true, false);
-         string report = Reporter(true);
+         string report = Reporter();
 
          long total = props["Total"];
          long file = props["File"];
@@ -1270,110 +1349,15 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpGetProperties
 
-      #region DumpSetDirectoryTime
-
-      private void DumpSetDirectoryTime(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = Path.Combine(Path.GetTempPath(), "Directory.SetCreationTime()-" + Path.GetRandomFileName());
-         if (!isLocal) path = Path.LocalToUnc(path);
-
-         Console.WriteLine("\nInput Path: [{0}]", path);
-
-         Directory.CreateDirectory(path);
-
-         #region SetCreationTime/Utc
-         Thread.Sleep(new Random().Next(250, 500));
-         int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
-         Console.WriteLine("\n\tSetCreationTime() to: [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
-         Directory.SetCreationTime(path, creationTime);
-         DateTime actual = Directory.GetCreationTime(path);
-         System.IO.Directory.SetCreationTime(path, creationTime);
-         DateTime expected = System.IO.Directory.GetCreationTime(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-
-         Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
-         Console.WriteLine("\n\tSetCreationTimeUtc() to: [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
-         Directory.SetCreationTimeUtc(path, creationTime);
-         actual = Directory.GetCreationTimeUtc(path);
-         System.IO.Directory.SetCreationTimeUtc(path, creationTime);
-         expected = System.IO.Directory.GetCreationTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-         #endregion // SetCreationTime/Utc
-
-         #region SetLastAccessTime/Utc
-         Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
-         Console.WriteLine("\n\tSetLastAccessTime() to: [{0} {1}]", lastAccessTime.ToLongDateString(), lastAccessTime.ToLongTimeString());
-         Directory.SetLastAccessTime(path, lastAccessTime);
-         actual = Directory.GetLastAccessTime(path);
-         System.IO.Directory.SetLastAccessTime(path, lastAccessTime);
-         expected = System.IO.Directory.GetLastAccessTime(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-
-         Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
-         Console.WriteLine("\n\tSetLastAccessTimeUtc() to: [{0} {1}]", lastAccessTime.ToLongDateString(), lastAccessTime.ToLongTimeString());
-         Directory.SetLastAccessTimeUtc(path, lastAccessTime);
-         actual = Directory.GetLastAccessTimeUtc(path);
-         System.IO.Directory.SetLastAccessTimeUtc(path, lastAccessTime);
-         expected = System.IO.Directory.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-         #endregion // SetLastAccessTime/Utc
-
-         #region SetLastWriteTime/Utc
-         Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
-         Console.WriteLine("\n\tSetLastWriteTime() to: [{0} {1}]", lastWriteTime.ToLongDateString(), lastWriteTime.ToLongTimeString());
-         Directory.SetLastWriteTime(path, lastWriteTime);
-         actual = Directory.GetLastWriteTime(path);
-         System.IO.Directory.SetLastWriteTime(path, lastWriteTime);
-         expected = System.IO.Directory.GetLastWriteTime(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-
-         Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
-         Console.WriteLine("\n\tSetLastWriteTimeUtc() to: [{0} {1}]", lastWriteTime.ToLongDateString(), lastWriteTime.ToLongTimeString());
-         Directory.SetLastWriteTimeUtc(path, lastWriteTime);
-         actual = Directory.GetLastWriteTimeUtc(path);
-         System.IO.Directory.SetLastWriteTimeUtc(path, lastWriteTime);
-         expected = System.IO.Directory.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-         #endregion // SetLastWriteTime/Utc
-
-         Directory.Delete(path);
-         Assert.IsTrue(!Directory.Exists(path));
-
-         Console.WriteLine("\n");
-      }
-
-      #endregion // DumpSetDirectoryTime
-
       #region DumpSetTimestamps
 
       private void DumpSetTimestamps(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = Path.Combine(Path.GetTempPath(), "Directory.SetTimestamps()-" + Path.GetRandomFileName());
+         string path = Path.Combine(Path.GetTempPath(), "Directory.SetTimestamps()-directory-" + Path.GetRandomFileName());
          if (!isLocal) path = Path.LocalToUnc(path);
 
-         Console.WriteLine("\nInput Path: [{0}]", path);
+         Console.WriteLine("\nInput Directory Path: [{0}]", path);
 
          Directory.CreateDirectory(path);
 
@@ -1389,27 +1373,27 @@ namespace AlphaFS.UnitTest
          seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
-         Console.WriteLine("\n");
-         Console.WriteLine("\tCreationTime  : [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
-         Console.WriteLine("\tLastAccessTime: [{0} {1}]", lastAccessTime.ToLongDateString(), lastAccessTime.ToLongTimeString());
-         Console.WriteLine("\tLastWriteTime : [{0} {1}]", lastWriteTime.ToLongDateString(), lastWriteTime.ToLongTimeString());
-         Console.WriteLine("\n");
+         Console.WriteLine("\nSet timestamps to:\n");
+         Console.WriteLine("\tCreationTime  : [{0}]", creationTime);
+         Console.WriteLine("\tLastAccessTime: [{0}]", lastAccessTime);
+         Console.WriteLine("\tLastWriteTime : [{0}]", lastWriteTime);
+         Console.WriteLine();
 
          Directory.SetTimestamps(path, creationTime, lastAccessTime, lastWriteTime);
 
          DateTime actual = Directory.GetCreationTime(path);
          DateTime expected = System.IO.Directory.GetCreationTime(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
+         Console.WriteLine("\tGetCreationTime()   AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = Directory.GetLastAccessTime(path);
          expected = System.IO.Directory.GetLastAccessTime(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
+         Console.WriteLine("\tGetLastAccessTime() AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = Directory.GetLastWriteTime(path);
          expected = System.IO.Directory.GetLastWriteTime(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
+         Console.WriteLine("\tGetLastWriteTime()  AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
 
@@ -1419,28 +1403,122 @@ namespace AlphaFS.UnitTest
          lastAccessTime = lastAccessTime.ToUniversalTime();
          lastWriteTime = lastWriteTime.ToUniversalTime();
 
-         Console.WriteLine("\n");
-         Console.WriteLine("\tCreationTimeUtc  : [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
-         Console.WriteLine("\tLastAccessTimeUtc: [{0} {1}]", lastAccessTime.ToLongDateString(), lastAccessTime.ToLongTimeString());
-         Console.WriteLine("\tLastWriteTimeUtc : [{0} {1}]", lastWriteTime.ToLongDateString(), lastWriteTime.ToLongTimeString());
-         Console.WriteLine("\n");
+         Console.WriteLine("\nSet timestampsUtc to:\n");
+         Console.WriteLine("\tCreationTimeUtc  : [{0}]", creationTime);
+         Console.WriteLine("\tLastAccessTimeUtc: [{0}]", lastAccessTime);
+         Console.WriteLine("\tLastWriteTimeUtc : [{0}]", lastWriteTime);
+         Console.WriteLine();
 
          Directory.SetTimestampsUtc(path, creationTime, lastAccessTime, lastWriteTime);
 
          actual = Directory.GetCreationTimeUtc(path);
          expected = System.IO.Directory.GetCreationTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
+         Console.WriteLine("\tGetCreationTimeUtc()   AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = Directory.GetLastAccessTimeUtc(path);
          expected = System.IO.Directory.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
+         Console.WriteLine("\tGetLastAccessTimeUtc() AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          actual = Directory.GetLastWriteTimeUtc(path);
          expected = System.IO.Directory.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS: [{0}]\tSystem.IO: [{1}]", actual, expected);
+         Console.WriteLine("\tGetLastWriteTimeUtc()  AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+
+         Directory.Delete(path);
+         Assert.IsTrue(!Directory.Exists(path), "Cleanup failed: Directory should have been removed.");
+         Console.WriteLine();
+      }
+
+      #endregion // DumpSetTimestamps
+
+      #region DumpSetXxxTime
+
+      private void DumpSetXxxTime(bool isLocal)
+      {
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string path = Path.Combine(Path.GetTempPath(), "Directory.SetCreationTime()-" + Path.GetRandomFileName());
+         if (!isLocal) path = Path.LocalToUnc(path);
+
+         Console.WriteLine("\nInput Path: [{0}]", path);
+
+         Directory.CreateDirectory(path);
+
+         #region SetCreationTime/Utc
+         Thread.Sleep(new Random().Next(250, 500));
+         int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         Console.WriteLine("\n\tSetCreationTime() to: [{0} {1}]", creationTime, creationTime.ToLongTimeString());
+         Directory.SetCreationTime(path, creationTime);
+         DateTime actual = Directory.GetCreationTime(path);
+         System.IO.Directory.SetCreationTime(path, creationTime);
+         DateTime expected = System.IO.Directory.GetCreationTime(path);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+
+
+         Thread.Sleep(new Random().Next(250, 500));
+         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         Console.WriteLine("\n\tSetCreationTimeUtc() to: [{0} {1}]", creationTime, creationTime.ToLongTimeString());
+         Directory.SetCreationTimeUtc(path, creationTime);
+         actual = Directory.GetCreationTimeUtc(path);
+         System.IO.Directory.SetCreationTimeUtc(path, creationTime);
+         expected = System.IO.Directory.GetCreationTimeUtc(path);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         #endregion // SetCreationTime/Utc
+
+         #region SetLastAccessTime/Utc
+         Thread.Sleep(new Random().Next(250, 500));
+         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         Console.WriteLine("\n\tSetLastAccessTime() to: [{0} {1}]", lastAccessTime, lastAccessTime.ToLongTimeString());
+         Directory.SetLastAccessTime(path, lastAccessTime);
+         actual = Directory.GetLastAccessTime(path);
+         System.IO.Directory.SetLastAccessTime(path, lastAccessTime);
+         expected = System.IO.Directory.GetLastAccessTime(path);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+
+
+         Thread.Sleep(new Random().Next(250, 500));
+         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         Console.WriteLine("\n\tSetLastAccessTimeUtc() to: [{0} {1}]", lastAccessTime, lastAccessTime.ToLongTimeString());
+         Directory.SetLastAccessTimeUtc(path, lastAccessTime);
+         actual = Directory.GetLastAccessTimeUtc(path);
+         System.IO.Directory.SetLastAccessTimeUtc(path, lastAccessTime);
+         expected = System.IO.Directory.GetLastAccessTimeUtc(path);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         #endregion // SetLastAccessTime/Utc
+
+         #region SetLastWriteTime/Utc
+         Thread.Sleep(new Random().Next(250, 500));
+         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         Console.WriteLine("\n\tSetLastWriteTime() to: [{0} {1}]", lastWriteTime, lastWriteTime.ToLongTimeString());
+         Directory.SetLastWriteTime(path, lastWriteTime);
+         actual = Directory.GetLastWriteTime(path);
+         System.IO.Directory.SetLastWriteTime(path, lastWriteTime);
+         expected = System.IO.Directory.GetLastWriteTime(path);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+
+
+         Thread.Sleep(new Random().Next(250, 500));
+         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         Console.WriteLine("\n\tSetLastWriteTimeUtc() to: [{0} {1}]", lastWriteTime, lastWriteTime.ToLongTimeString());
+         Directory.SetLastWriteTimeUtc(path, lastWriteTime);
+         actual = Directory.GetLastWriteTimeUtc(path);
+         System.IO.Directory.SetLastWriteTimeUtc(path, lastWriteTime);
+         expected = System.IO.Directory.GetLastWriteTimeUtc(path);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         #endregion // SetLastWriteTime/Utc
 
          Directory.Delete(path);
          Assert.IsTrue(!Directory.Exists(path));
@@ -1448,7 +1526,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
-      #endregion // DumpSetTimestamps
+      #endregion // DumpSetXxxTime
 
       #region DumpTransferTimestamps
 
@@ -1485,21 +1563,21 @@ namespace AlphaFS.UnitTest
          Directory.SetTimestamps(path, creationTime, lastAccessTime, lastWriteTime);
 
          Console.WriteLine("\n\tPath1 dates and times:");
-         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
-         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", lastAccessTime.ToLongDateString(), lastAccessTime.ToLongTimeString());
-         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", lastWriteTime.ToLongDateString(), lastWriteTime.ToLongTimeString());
+         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", creationTime, creationTime.ToLongTimeString());
+         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", lastAccessTime, lastAccessTime.ToLongTimeString());
+         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", lastWriteTime, lastWriteTime.ToLongTimeString());
 
          Console.WriteLine("\n\tPath2 current dates and times:");
-         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", Directory.GetCreationTime(path2).ToLongDateString(), Directory.GetCreationTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", Directory.GetLastAccessTime(path2).ToLongDateString(), Directory.GetLastAccessTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", Directory.GetLastWriteTime(path2).ToLongDateString(), Directory.GetLastWriteTime(path2).ToLongTimeString());
+         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", Directory.GetCreationTime(path2), Directory.GetCreationTime(path2).ToLongTimeString());
+         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", Directory.GetLastAccessTime(path2), Directory.GetLastAccessTime(path2).ToLongTimeString());
+         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", Directory.GetLastWriteTime(path2), Directory.GetLastWriteTime(path2).ToLongTimeString());
 
          Directory.TransferTimestamps(path, path2);
 
          Console.WriteLine("\n\tPath2 dates and times after TransferTimestamps():");
-         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", Directory.GetCreationTime(path2).ToLongDateString(), Directory.GetCreationTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", Directory.GetLastAccessTime(path2).ToLongDateString(), Directory.GetLastAccessTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", Directory.GetLastWriteTime(path2).ToLongDateString(), Directory.GetLastWriteTime(path2).ToLongTimeString());
+         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", Directory.GetCreationTime(path2), Directory.GetCreationTime(path2).ToLongTimeString());
+         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", Directory.GetLastAccessTime(path2), Directory.GetLastAccessTime(path2).ToLongTimeString());
+         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", Directory.GetLastWriteTime(path2), Directory.GetLastWriteTime(path2).ToLongTimeString());
 
          Assert.AreEqual(Directory.GetCreationTime(path), Directory.GetCreationTime(path2));
          Assert.AreEqual(Directory.GetLastAccessTime(path), Directory.GetLastAccessTime(path2));
@@ -1671,7 +1749,7 @@ namespace AlphaFS.UnitTest
 
          #endregion // TrailingSpace
 
-         Console.WriteLine("\tClass DirectoryInfo()\t{0}", Reporter(true));
+         Console.WriteLine("\tClass DirectoryInfo()\t{0}", Reporter());
 
          #endregion // Directory() Class
 
@@ -1780,10 +1858,10 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void GetCreationTime()
       {
-         Console.WriteLine("Directory.GetCreationTime()");
+         Console.WriteLine("Directory.GetXxxTime()");
          
-         DumpGetDirectoryTime(true);
-         DumpGetDirectoryTime(false);
+         DumpGetXxxTime(true);
+         DumpGetXxxTime(false);
       }
 
       #endregion // GetCreationTime
@@ -1854,7 +1932,7 @@ namespace AlphaFS.UnitTest
 
                method = "System.IO";
                string expected = System.IO.Directory.GetDirectoryRoot(path);
-               Console.WriteLine("\t\tSystem.IO: [{0}]", expected);
+               Console.WriteLine("    System.IO: [{0}]", expected);
 
                Assert.AreEqual(expected, actual);
                Assert.AreEqual(Directory.GetCurrentDirectory(), System.IO.Directory.GetCurrentDirectory(), "AlphaFS != System.IO");
@@ -1988,14 +2066,14 @@ namespace AlphaFS.UnitTest
 
                if (diActual == null || diExpected == null)
                {
-                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, diActual, diExpected);
+                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n    System.IO : [{3}]", ++pathCnt, input, diActual, diExpected);
                   Assert.AreEqual(diActual, diExpected);
                }
                else
                {
                   string actual = diActual.FullName;
                   string expected = diExpected.FullName;
-                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, diActual.FullName, diExpected.FullName);
+                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n    System.IO : [{3}]", ++pathCnt, input, diActual.FullName, diExpected.FullName);
                   Assert.AreEqual(expected, actual);
                }
             }
@@ -2149,10 +2227,10 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void SetCreationTime()
       {
-         Console.WriteLine("Directory.SetCreationTime()");
+         Console.WriteLine("Directory.SetXxxTime()");
 
-         DumpSetDirectoryTime(true);
-         DumpSetDirectoryTime(false);
+         DumpSetXxxTime(true);
+         DumpSetXxxTime(false);
       }
 
       #endregion // SetCreationTime
@@ -2539,6 +2617,17 @@ namespace AlphaFS.UnitTest
 
       #endregion // EnumerateStreams
 
+      #region GetChangeTime
+
+      [TestMethod]
+      public void AlphaFS_GetChangeTime()
+      {
+         Console.WriteLine("Directory.GetChangeTime()");
+         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
+      }
+
+      #endregion // GetChangeTime
+
       #region GetProperties
 
       [TestMethod]
@@ -2634,10 +2723,10 @@ namespace AlphaFS.UnitTest
       #endregion // TransferTimestamps
 
 
-      #region AlphaFS___DirectoryWithTrailingDotSpace
+      #region AlphaFS___DirectoryTrailingDotSpace
 
       [TestMethod]
-      public void AlphaFS___DirectoryWithTrailingDotSpace()
+      public void AlphaFS___DirectoryTrailingDotSpace()
       {
          Console.WriteLine(".NET does not support the creation/manipulation of directory with a trailing dot or space.");
          Console.WriteLine("These will be stripped due to path normalization.");
@@ -2649,7 +2738,7 @@ namespace AlphaFS.UnitTest
          DumpDirectoryTrailingDotSpace(false);
       }
 
-      #endregion // AlphaFS___DirectoryWithTrailingDotSpace
+      #endregion // AlphaFS___DirectoryTrailingDotSpace
 
       #endregion // AlphaFS
 

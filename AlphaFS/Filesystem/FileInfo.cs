@@ -52,7 +52,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="fileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="fileName"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(string fileName, bool? isFullPath) : this(null, fileName, isFullPath)
       {
@@ -71,7 +75,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="fileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="fileName"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(KernelTransaction transaction, string fileName, bool? isFullPath)
       {
@@ -514,7 +522,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
       /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
       /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> are already a full path with long path prefix, will be used as is.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:FileInfo"/> object that describes the overwritten file.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
@@ -730,7 +742,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions"><para>This parameter can be <c>null</c>. Use <see cref="T:MoveOptions"/> that specify how the file is to be moved.</para></param>
       /// <param name="copyProgress"><para>This parameter can be <c>null</c>. A callback function that is called each time another portion of the file has been copied.</para></param>
       /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="destFileName"/> will be normalized and long path prefixed. <c>null</c> <paramref name="destFileName"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="destFileName"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="destFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       /// <returns>When <paramref name="isMove"/> is <c>false</c> a new <see cref="T:FileInfo"/> instance with a fully qualified path. Otherwise <c>null</c> is returned.</returns>
       /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>

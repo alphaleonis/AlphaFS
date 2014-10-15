@@ -98,6 +98,7 @@ namespace Alphaleonis.Win32
             Marshal.WriteInt64(safeBuffer.handle, value.Value);
             return safeBuffer;
          }
+
          return new SafeGlobalMemoryBufferHandle();
       }
 
@@ -134,6 +135,8 @@ namespace Alphaleonis.Win32
 
       #region Capacity
 
+      private readonly int _capacity;
+
       public int Capacity
       {
          get { return _capacity; }
@@ -142,11 +145,5 @@ namespace Alphaleonis.Win32
       #endregion // Capacity
 
       #endregion // Properties
-
-      #region Fields
-
-      private readonly int _capacity;
-
-      #endregion // Fields
    }
 }

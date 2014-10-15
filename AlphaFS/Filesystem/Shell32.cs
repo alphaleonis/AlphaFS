@@ -821,7 +821,7 @@ namespace Alphaleonis.Win32.Filesystem
             // In the ANSI version of this function, the name is limited to 248 characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2014-02-05: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-            // However, the function fails when using LongPath notation.
+            // However, the function fails when using Unicode format.
 
             retVal = NativeMethods.AssocQueryString(attributes, associationType, path, null, buffer, out bufferSize);
 
@@ -875,7 +875,7 @@ namespace Alphaleonis.Win32.Filesystem
             // In the ANSI version of this function, the name is limited to 248 characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
-            // However, the function fails when using LongPath notation.
+            // However, the function fails when using Unicode format.
 
             IntPtr shGetFileInfo = NativeMethods.ShGetFileInfo(Path.GetRegularPathInternal(path, true, false, false, false), attributes, out fileInfo, (uint)Marshal.SizeOf(fileInfo), fileAttributes);
 

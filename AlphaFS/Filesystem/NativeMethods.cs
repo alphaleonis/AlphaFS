@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal static long ToLong(uint highPart, uint lowPart)
       {
-         return (((long)highPart) << 32) | (((long)lowPart) & 0xFFFFFFFF);
+         return (((long) highPart) << 32) | (((long) lowPart) & 0xFFFFFFFF);
       }
 
       #endregion // ToLong
@@ -336,7 +336,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool BackupRead(SafeFileHandle hFile, SafeHandle lpBuffer, [MarshalAs(UnmanagedType.U4)] uint nNumberOfBytesToRead, [MarshalAs(UnmanagedType.U4)] out uint lpNumberOfBytesRead, [MarshalAs(UnmanagedType.Bool)] bool bAbort, [MarshalAs(UnmanagedType.Bool)] bool bProcessSecurity, out IntPtr lpContext);
+      internal static extern bool BackupRead(SafeFileHandle hFile, SafeGlobalMemoryBufferHandle lpBuffer, [MarshalAs(UnmanagedType.U4)] uint nNumberOfBytesToRead, [MarshalAs(UnmanagedType.U4)] out uint lpNumberOfBytesRead, [MarshalAs(UnmanagedType.Bool)] bool bAbort, [MarshalAs(UnmanagedType.Bool)] bool bProcessSecurity, out IntPtr lpContext);
 
       #endregion // BackupRead
 
@@ -1487,7 +1487,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetFileInformationByHandleEx(SafeFileHandle hFile, FileInfoByHandleClass fileInfoByHandleClass, SafeHandle lpFileInformation, [MarshalAs(UnmanagedType.U4)] uint dwBufferSize);
+      internal static extern bool GetFileInformationByHandleEx(SafeFileHandle hFile, [MarshalAs(UnmanagedType.I4)] FileInfoByHandleClass fileInfoByHandleClass, SafeGlobalMemoryBufferHandle lpFileInformation, [MarshalAs(UnmanagedType.U4)] uint dwBufferSize);
 
       #endregion // GetFileInformationByHandleEx
 
@@ -1682,7 +1682,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static extern bool SetFileAttributesTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] FileAttributes dwFileAttributes, SafeHandle hTransaction);
 
       #endregion // SetFileAttributesTransacted
-      
+
       #region SetFileTime
 
       /// <summary>Sets the date and time that the specified file or directory was created, last accessed, or last modified.</summary>

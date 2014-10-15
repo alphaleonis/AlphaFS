@@ -58,8 +58,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file or directory.</param>
       /// <param name="name">The originalName of the stream.</param>
       /// <param name="originalName">The alternative data stream name originally specified by the user.</param>
-      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       private AlternateDataStreamInfo(NativeMethods.Win32StreamId stream, string path, string name, string originalName, bool? isFolder, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
@@ -155,12 +159,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region AddStreamInternal
 
       /// <summary>[AlphaFS] Unified method AddStreamInternal() to add an alternate data stream (NTFS ADS) to an existing file or directory.</summary>
-      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file or directory.</param>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "StreamWriter() disposes of FileStream() object.")]
       [SecurityCritical]
@@ -175,7 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (name.Contains(Path.StreamSeparator))
             throw new ArgumentException(Resources.StreamNameWithColon);
 
-         using (SafeFileHandle handle = File.CreateFileInternal(!isFolder, transaction, path + Path.StreamSeparator + name, EFileAttributes.BackupSemantics, null, FileMode.Create, FileSystemRights.Write, FileShare.ReadWrite, isFullPath))
+         using (SafeFileHandle handle = File.CreateFileInternal(!isFolder, transaction, path + Path.StreamSeparator + name, isFolder ? EFileAttributes.BackupSemantics : EFileAttributes.Normal, null, FileMode.Create, FileSystemRights.Write, FileShare.ReadWrite, isFullPath))
          using (StreamWriter writer = new StreamWriter(new FileStream(handle, FileAccess.Write), NativeMethods.DefaultFileEncoding))
             foreach (string line in contents)
                writer.WriteLine(line);
@@ -186,13 +194,17 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnumerateStreamsInternal
 
       /// <summary>Unified method EnumerateStreamsInternal() to return an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances, associated with a file or directory.</summary>
-      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeHandle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information. Use either <paramref name="safeHandle"/> or <paramref name="path"/>, not both.</param>
       /// <param name="path">The path to an existing file or directory. Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</param>
       /// <param name="originalName">The name of the stream to retrieve.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       /// <returns>An <see cref="T:IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file or directory specified by path.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -218,7 +230,7 @@ namespace Alphaleonis.Win32.Filesystem
                isFolder = (attrs & FileAttributes.Directory) == FileAttributes.Directory;
             }
 
-            safeHandle = File.CreateFileInternal(null, transaction, pathLp, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.Read, FileShare.ReadWrite, null);
+            safeHandle = File.CreateFileInternal(null, transaction, pathLp, (bool) isFolder ? EFileAttributes.BackupSemantics : EFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Read, FileShare.ReadWrite, null);
          }
          else
             NativeMethods.IsValidHandle(safeHandle);
@@ -326,13 +338,17 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetStreamSizeInternal
 
       /// <summary>Retrieves the actual number of bytes of disk storage used by all or a specific alternate data streams (NTFS ADS).</summary>
-      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information. Use either <paramref name="handle"/> or <paramref name="path"/>, not both.</param>
       /// <param name="path">A path that describes a file. Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</param>
       /// <param name="name">The name of the stream to retrieve or <c>null</c> to retrieve all streams.</param>
       /// <param name="streamType">The type of stream to retrieve or <c>null</c> to retrieve all streams.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       [SecurityCritical]
       public static long GetStreamSizeInternal(bool? isFolder, KernelTransaction transaction, SafeFileHandle handle, string path, string name, StreamType? streamType, bool? isFullPath)
       {
@@ -348,11 +364,15 @@ namespace Alphaleonis.Win32.Filesystem
       #region RemoveStreamInternal
 
       /// <summary>Unified method RemoveStreamInternal() to remove alternate data streams (NTFS ADS) from a file or directory.</summary>
-      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file or directory.</param>
       /// <param name="name">The name of the stream to remove. When <c>null</c> all ADS are removed.</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>

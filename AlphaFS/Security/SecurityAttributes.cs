@@ -34,8 +34,8 @@ namespace Alphaleonis.Win32.Security
       {
          [MarshalAs(UnmanagedType.U4)]
          private int nLength;
-                  
-         private readonly SafeHandle lpSecurityDescriptor;
+
+         private readonly SafeGlobalMemoryBufferHandle lpSecurityDescriptor;
 
          [MarshalAs(UnmanagedType.Bool)]
          private bool bInheritHandle;

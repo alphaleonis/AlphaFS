@@ -205,7 +205,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // CA2001:AvoidCallingProblematicMethods
 
 
-                     uint safeBufferCapacity = (uint)safeBuffer.Capacity;
+                     uint safeBufferCapacity = (uint) safeBuffer.Capacity;
 
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.BaseContainerId, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
@@ -393,11 +393,15 @@ namespace Alphaleonis.Win32.Filesystem
       #region ToggleCompressionInternal
 
       /// <summary>Unified method ToggleCompressionInternal() to set the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
-      /// <param name="isFolder">The main reason for this parameter is to throw a more appropriate error: DirectoryNotFound vs FileNotFound. <c>true</c> indicates a directory object, DirectoryNotFound will be thrown. <c>false</c> indicates a file object.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
       /// <param name="compress"><c>true</c> = compress, <c>false</c> = decompress</param>
-      /// <param name="isFullPath"><c>true</c> No path normalization and only long path prefixing is performed. <c>false</c> <paramref name="path"/> will be normalized and long path prefixed. <c>null</c> <paramref name="path"/> is already a full path with long path prefix, will be used as is.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, bool? isFullPath)
