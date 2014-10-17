@@ -123,12 +123,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetEnumDescription
 
+      /// <summary>Gets an attribute on an enum field value.</summary>
+      /// <param name="enumValue">One of the <see cref="T:DeviceGuid"/> enum types.</param>
+      /// <returns></returns>
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-      internal static string GetEnumDescription(Enum value)
+      internal static string GetEnumDescription(Enum enumValue)
       {
-         FieldInfo fi = value.GetType().GetField(value.ToString());
+         FieldInfo fi = enumValue.GetType().GetField(enumValue.ToString());
          DescriptionAttribute[] attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof (DescriptionAttribute), false);
-         return attributes.Length > 0 ? attributes[0].Description : value.ToString();
+         return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
       }
 
       #endregion // GetEnumDescription
@@ -137,7 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal static uint GetHighOrderDword(long highPart)
       {
-         return (uint)((highPart >> 32) & 0xFFFFFFFF);
+         return (uint) ((highPart >> 32) & 0xFFFFFFFF);
       }
 
       #endregion // GetHighOrderDword
@@ -146,7 +149,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal static uint GetLowOrderDword(long lowPart)
       {
-         return (uint)(lowPart & 0xFFFFFFFF);
+         return (uint) (lowPart & 0xFFFFFFFF);
       }
 
       #endregion // GetLowOrderDword

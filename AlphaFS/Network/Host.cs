@@ -772,8 +772,8 @@ namespace Alphaleonis.Win32.Network
          return Utils.IsNullOrWhiteSpace(computerName)
             ? GetUncName()
             : (computerName.StartsWith(Path.UncPrefix, StringComparison.OrdinalIgnoreCase)
-               ? computerName
-               : GetUncName());
+               ? computerName.Trim()
+               : Path.UncPrefix + computerName.Trim());
       }
 
       #endregion // GetUncName
@@ -1126,7 +1126,7 @@ namespace Alphaleonis.Win32.Network
 
          } while (lastError == Win32Errors.ERROR_MORE_DATA);
 
-         if (!continueOnException && lastError != Win32Errors.NO_ERROR)
+         if (lastError != Win32Errors.NO_ERROR && !continueOnException)
             NativeError.ThrowException(lastError);
       }
 

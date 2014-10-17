@@ -1022,7 +1022,7 @@ namespace AlphaFS.UnitTest
          DirectorySecurity sysIo = System.IO.Directory.GetAccessControl(tempPath);
          AuthorizationRuleCollection sysIoaccessRules = sysIo.GetAccessRules(true, true, typeof(NTAccount));
 
-         Console.WriteLine("\nInput Path: [{0}]", tempPath);
+         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
          Console.WriteLine("\n\tGetAccessControl() rules found: [{0}]\n    System.IO rules found         : [{1}]\n{2}", accessRules.Count, sysIoaccessRules.Count, report);
          Assert.AreEqual(sysIoaccessRules.Count, accessRules.Count);
 
@@ -1271,20 +1271,20 @@ namespace AlphaFS.UnitTest
          long numFiles = 0;
 
          StopWatcher(true);
-         foreach (FileIdBothDirectoryInfo fse in Directory.EnumerateFileIdBothDirectoryInfo(tempPath))
+         foreach (FileIdBothDirectoryInfo fibdi in Directory.EnumerateFileIdBothDirectoryInfo(tempPath))
          {
-            if ((fse.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
+            if ((fibdi.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
                numDirectories++;
             else
                numFiles++;
 
-            foundFse = Dump(fse, -22);
+            foundFse = Dump(fibdi, -22);
          }
          string report = Reporter();
 
          bool matchAll = directories == numDirectories && files == numFiles;
-         Console.WriteLine("\n\tDirectories = [{0}], Files = [{1}]\n\t{2}", numDirectories, numFiles, report);
-         Assert.IsTrue(foundFse);
+         Console.WriteLine("\n\tDirectories = [{0}], Files = [{1}]\n{2}", numDirectories, numFiles, report);
+         Assert.IsTrue(foundFse, "Nothing was enumerated.");
          Assert.IsTrue(matchAll, "Number of directories and/or files don't match.");
          Console.WriteLine();
       }
@@ -2392,9 +2392,9 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             gotException = true;
-            Console.WriteLine("\n\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tDirectory.CountDirectories(): Caught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
          }
-         Console.WriteLine("\n\tCaught Exception: [{0}]", gotException);
+         Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", gotException);
          Assert.IsTrue(gotException);
          Console.WriteLine("\n\tdirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, dirs, Reporter());
 
@@ -2448,9 +2448,9 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             gotException = true;
-            Console.WriteLine("\n\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tDirectory.CountFiles(): Caught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
          }
-         Console.WriteLine("\n\tCaught Exception: [{0}]", gotException);
+         Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", gotException);
          Assert.IsTrue(gotException);
          Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, files, Reporter());
 

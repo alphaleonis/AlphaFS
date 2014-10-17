@@ -1,75 +1,59 @@
 Version 1.6
 
-	* Unit Tests, also act as code samples.
-    * Numerous bugfixes and optimizations.
-    * The public key of AlphaFS.dll has changed, delay-signing is no longer used.
-	* Complete implementation of .NET 4.5 File(Info) and Directory(Info) classes.
-	* Complete implementation of .NET 4.5 DriveInfo() class and with UNC support.
-	* Complete implementation of .NET 4.5 Path() class.
-	* Implemented Unicode aka "Long Path" handling for all Win32 API functions that support it.
-	* Class PathInfo() no longer exists.
-	
-	* New: Added support for NuGet.
-	* New: Added support for building against .NET 4.0, 4.5, and 4.5.1 in addition to 3.5.
-	* New: Supports networking: Enumerating Hosts, SMB share-/DFS information and connecting to network resources.
-	* New: Supports working with Alternate Data Streams (NTFS ADS).
-	* New: Supports working with files/directories with a trailing dot or space.
+    * New: The public key of AlphaFS.dll has changed, delay-signing is no longer used.
 
-    
+	* New: Unit Tests, also act as code samples.
+
+    * New: Numerous bugfixes and optimizations.
+
+	* New: Complete implementation of .NET 4.5 File(Info) and Directory(Info) classes.
+
+	* New: Complete implementation of .NET 4.5 DriveInfo() class and with UNC support.
+
+	* New: Complete implementation of .NET 4.5 Path() class.
 	
-	* Mod: Class FileSystemInfo() has a couple of public read only properties:
+	* New: Implemented Unicode aka "Long Path" handling for all Win32 API functions that support it.
+
+	* New: Added support for NuGet.
+	
+	* New: Added support for building against .NET 4.0, 4.5, and 4.5.1 in addition to 3.5.
+
+	* New: Supports networking by enumerating hosts and shares (SMB/DFS) and connect/disconnect to/from network resources (AlphaFS.Network.Host() class).
+	
+	* New: Supports working with NTFS ADS (Alternate Data Streams) on files and directories (AlphaFS.Filesystem.AlternateDataStreamInfo() class).
+	
+	* New: Supports extracting icons from files and folders (AlphaFS.Filesystem.Shell32Info() class).
+	
+	* New: Supports isFullPath parameter for numerous methods to control path normalization. This speeds up things internally
+	       (less string processing and GetFullPath() calls) and also enables working with files and directories with a trailing dot or space.
+
+			false (slow)   : (default) Path will be checked and resolved to an absolute path. Unicode prefix is applied.
+			true  (fast)   : Path is an absolute path. Unicode prefix is applied.
+			null  (fastest): Path is already an absolute path with Unicode prefix. Use as is.
+
+	
+	* Mod: Enabled KernelTransaction parameter for all Win32 API functions that support it.
+
+	* Mod: Added public read only properties to class FileSystemInfo()
 
 		DirectoryInfo() / FileInfo()
-			EntryInfo	 : Instance of the FileSystemEntryInfo() class;
-			LongFullName : The full path of the file system object in Unicode (LongPath) format;
-			Transaction  : Represents the KernelTransaction that was passed to the constructor;
+			EntryInfo	 : Instance of the FileSystemEntryInfo() class.
+			LongFullName : The Unicode absolute path of the file system object.
+			Transaction  : Represents the KernelTransaction that was passed to the constructor.
 
 		FileInfo()
 			LengthStreams: Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).
-		
+	
+	* Mod: Rewrote Path() class.
 
-    * Mod: Class Path();
-
-		- some methods call their System.IO.Path counterpart.
-		  These methods are not affected by MAX_PATH:
-
-			Path.ChangeExtension()
-			Path.GetExtension()
-			Path.GetFileName()
-			Path.GetFileNameWithoutExtension()
-		    Path.GetInvalidFileNameChars()
-			Path.GetInvalidPathChars()
-			Path.GetRandomFileName()
-			Path.GetTempFileName()
-			Path.GetTempPath()
-			Path.HasExtension()
-			Path.IsPathRooted()
+	* Mod: Removed class PathInfo().
 
     * New: Added static Class Filesystem.Device();
 
     * New: Added instance Class Filesystem.DeviceInfo();
     
-    * New: Added static Class Filesystem.Shell32();
-   
-    * New: Added instance Class Filesystem.Shell32Info();
-
    * New: Added "Cached LazyLoading" to class: FileSystemInfo() improving performance for classes: DirectoryInfo() and FileInfo().
 
-
-   * New: Added bool? isFullPath parameter to applicable methods of the File() and Directory() class.
-			isFullPath is false by default.
-
-			false (slow)   : Path is an absolute path. Unicode prefix is applied.
-			true  (fast)   : Path will be checked and resolved to an absolute path. Unicode prefix is applied.
-			null  (fastest): Path is already an absolute path with Unicode prefix. Use as is.
-
-			Local "\\?\" or network "\\?\UNC" Unicode prefix is applied internally for all Win32 API functions that support it.
-			
-			The FileInfo() and DirectoryInfo() also benefit from isFullPath; AlphaFS adds an internal property: EntryInfo.LongFullPath
-			which is always the Unicode absolute path of the file or directory.
-
-   
-   
 
 Version 1.5
    * New: Various file system objects enumeration methods in Directory class.

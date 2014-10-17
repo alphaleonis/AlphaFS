@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
                         bool fseiIsDir = (win32FindData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory;
 
                         // If object is a directory, add it to the queue for later traversal.
-                        if (_searchAllDirs && fseiIsDir)
+                        if (fseiIsDir && _searchAllDirs)
                         {
                            // Or not: Skip on reparse points here to cleanly separate regular directories from links.
                            if ((win32FindData.FileAttributes & FileAttributes.ReparsePoint) ==  FileAttributes.ReparsePoint)

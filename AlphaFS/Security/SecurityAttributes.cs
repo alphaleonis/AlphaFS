@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Security
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Class used to represent the SECURITY_ATTRIBUES native win32 structure. It provides initialization function from an <see cref="T:ObjectSecurity"/> object.</summary>
+      /// <summary>Class used to represent the SECURITY_ATTRIBUES native Win32 structure. It provides initialization function from an <see cref="T:ObjectSecurity"/> object.</summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal sealed class SecurityAttributes : IDisposable
       {
@@ -73,8 +73,6 @@ namespace Alphaleonis.Win32.Security
                throw;
             }
          }
-
-         //private uint nLength;
 
          public void Dispose()
          {

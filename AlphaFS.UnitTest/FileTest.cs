@@ -508,7 +508,7 @@ namespace AlphaFS.UnitTest
          FileSecurity sysIo = System.IO.File.GetAccessControl(tempPath);
          AuthorizationRuleCollection sysIoaccessRules = sysIo.GetAccessRules(true, true, typeof(NTAccount));
 
-         Console.WriteLine("\nInput Path: [{0}]", tempPath);
+         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
          Console.WriteLine("\n\tGetAccessControl() rules found: [{0}]\n    System.IO rules found         : [{1}]\n{2}", accessRules.Count, sysIoaccessRules.Count, report);
          Assert.AreEqual(sysIoaccessRules.Count, accessRules.Count);
 
@@ -1994,8 +1994,6 @@ namespace AlphaFS.UnitTest
 
          File.Delete(pathExpected);
          File.Delete(pathActual);
-
-         StopWatcher(true);
 
          FileSecurity expectedFileSecurity = new FileSecurity();
          expectedFileSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, AccessControlType.Allow));

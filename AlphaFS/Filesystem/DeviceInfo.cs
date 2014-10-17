@@ -27,7 +27,7 @@ using System.Security.Permissions;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides access to information on a local or remote device.</summary>
+   /// <summary>Provides access to information of a device, on a local or remote host.</summary>
    [SecurityPermission(SecurityAction.InheritanceDemand, UnmanagedCode = true)]
    [SerializableAttribute]
    [SecurityCritical]
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateDevices
 
-      /// <summary>Enumerates all available devices on the local or remote host.</summary>
+      /// <summary>Enumerates all available devices on the local host.</summary>
       /// <param name="deviceGuid">One of the <see cref="T:DeviceGuid"/> devices.</param>
       /// <returns>Returns <see cref="T:IEnumerable{DeviceInfo}"/> instances of type <see cref="T:DeviceGuid"/> from the local host.</returns>
       [SecurityCritical]

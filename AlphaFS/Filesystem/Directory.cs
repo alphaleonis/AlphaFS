@@ -6036,7 +6036,8 @@ namespace Alphaleonis.Win32.Filesystem
             if (!NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error(), !continueOnException))
                yield break;
 
-
+            // 2014-10-16: Number of returned items depends on the size of the buffer.
+            // That does not seem right, investigate.
             using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                NativeMethods.IsValidHandle(safeBuffer, Marshal.GetLastWin32Error());
@@ -6065,18 +6066,19 @@ namespace Alphaleonis.Win32.Filesystem
 
                   while (buffer != IntPtr.Zero)
                   {
-                     NativeMethods.FileIdBothDirInfo fdi = NativeMethods.GetStructure<NativeMethods.FileIdBothDirInfo>(0, buffer);
+                     NativeMethods.FileIdBothDirInfo fibdi = NativeMethods.GetStructure<NativeMethods.FileIdBothDirInfo>(0, buffer);
 
-                     string fileName = Marshal.PtrToStringUni(new IntPtr(fileNameOffset + buffer.ToInt64()), (int) (fdi.FileNameLength/2));
+                     string fileName = Marshal.PtrToStringUni(new IntPtr(fileNameOffset + buffer.ToInt64()), (int) (fibdi.FileNameLength / 2));
 
                      if (!Utils.IsNullOrWhiteSpace(fileName) &&
                          !fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
                          !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
-                        yield return new FileIdBothDirectoryInfo(fdi, fileName);
+                        yield return new FileIdBothDirectoryInfo(fibdi, fileName);
 
-                     buffer = fdi.NextEntryOffset != 0
-                        ? new IntPtr(buffer.ToInt64() + fdi.NextEntryOffset)
-                        : IntPtr.Zero;
+                     
+                     buffer = fibdi.NextEntryOffset == 0
+                        ? IntPtr.Zero
+                        : new IntPtr(buffer.ToInt64() + fibdi.NextEntryOffset);
                   }
                }
 

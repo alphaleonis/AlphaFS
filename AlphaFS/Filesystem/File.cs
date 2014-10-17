@@ -7019,7 +7019,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
             SafeGlobalMemoryBufferHandle pSecurityDescriptor;
-            ObjectSecurity objectSecurity = null;
+            ObjectSecurity objectSecurity;
 
             uint lastError = Security.NativeMethods.GetNamedSecurityInfo(pathLp, ObjectType.FileObject, securityInfo, out pSidOwner, out pSidGroup, out pDacl, out pSacl, out pSecurityDescriptor);
 
@@ -7038,8 +7038,10 @@ namespace Alphaleonis.Win32.Filesystem
 
                uint length = Security.NativeMethods.GetSecurityDescriptorLength(pSecurityDescriptor);
 
-               // Seems not to work.
-               // pSecurityDescriptor.CopyTo(managedBuffer, 0, (int)length);
+               // Seems not to work: Method .CopyTo: length > Capacity, so an Exception is thrown.
+               //byte[] managedBuffer = new byte[length];
+               //pSecurityDescriptor.CopyTo(managedBuffer, 0, (int) length);
+
                byte[] managedBuffer = pSecurityDescriptor.ToByteArray(0, (int) length);
 
                objectSecurity = (isFolder) ? (ObjectSecurity) new DirectorySecurity() : new FileSecurity();

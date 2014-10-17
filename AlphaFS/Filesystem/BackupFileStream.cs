@@ -311,6 +311,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (!NativeMethods.BackupRead(SafeFileHandle, safeBuffer, (uint) safeBuffer.Capacity, out numberOfBytesRead, false, processSecurity, out _context))
                NativeError.ThrowException(Marshal.GetLastWin32Error());
 
+            // See File.GetAccessControlInternal(): .CopyTo() does not work there?
             safeBuffer.CopyTo(buffer, offset, count);
 
             return (int) numberOfBytesRead;
@@ -496,7 +497,10 @@ namespace Alphaleonis.Win32.Filesystem
             uint length = SecurityNativeMethods.GetSecurityDescriptorLength(pSecurityDescriptor);
 
             byte[] managedBuffer = new byte[length];
+
+            // See File.GetAccessControlInternal(): .CopyTo() does not work there?
             pSecurityDescriptor.CopyTo(managedBuffer, 0, (int) length);
+
             FileSecurity fs = new FileSecurity();
             fs.SetSecurityDescriptorBinaryForm(managedBuffer);
 
