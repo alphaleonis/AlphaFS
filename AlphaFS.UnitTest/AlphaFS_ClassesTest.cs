@@ -1421,7 +1421,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
 
          DumpClassDeviceInfo(LocalHost);
-         if (_testMyServer) DumpClassDeviceInfo(MyServer);
+         //if (_testMyServer) DumpClassDeviceInfo(MyServer);
       }
 
       #endregion // Filesystem_Class_Shell32Info

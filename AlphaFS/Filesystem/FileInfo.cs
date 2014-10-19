@@ -538,14 +538,14 @@ namespace Alphaleonis.Win32.Filesystem
             ? destinationFileName
             : (bool) isFullPath
                ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
-               : Path.GetFullPathInternal(Transaction, destinationFileName, true, false, false, true);
+               : Path.GetFullPathInternal(Transaction, destinationFileName, true, false, false, true, false);
 
          // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
          string destinationBackupFileNameLp = isFullPath == null
             ? destinationBackupFileName
             : (bool) isFullPath
                ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
-               : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, false, false, true);
+               : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, false, false, true, false);
 
          File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, null);
 
@@ -762,7 +762,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? destFileName
             : (bool) isFullPath
             ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-            : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, true);
+            : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, true, false);
 
          File.CopyMoveInternal(isMove, Transaction, LongFullName, destFileNameLp, false, copyOptions, moveOptions, copyProgress, userProgressData, null);
 

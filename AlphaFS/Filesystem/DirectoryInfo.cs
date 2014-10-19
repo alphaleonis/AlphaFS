@@ -1354,7 +1354,7 @@ namespace Alphaleonis.Win32.Filesystem
 #if NET35
                : Path.GetFullPathInternal(null, destinationPath, true, false, false, true);
 #else
-               : Path.GetFullPathInternal(null, destinationPath, true, true, false, true);
+               : Path.GetFullPathInternal(null, destinationPath, true, true, false, true, false);
 #endif
 
 

@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? path
                : (bool) isFullPath
                   ? Path.GetLongPathInternal(path, false, false, false, false)
-                  : Path.GetFullPathInternal(transaction, path, true, false, false, true);
+                  : Path.GetFullPathInternal(transaction, path, true, false, false, true, false);
 
             if (isFolder == null)
             {
@@ -386,7 +386,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false);
 
          foreach (AlternateDataStreamInfo stream in EnumerateStreamsInternal(isFolder, transaction, null, pathLp, name, StreamType.AlternateData, isFullPath))
             File.DeleteFileInternal(transaction, string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{1}$DATA", pathLp, Path.StreamSeparator, stream.OriginalName), false, null);

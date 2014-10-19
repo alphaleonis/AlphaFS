@@ -217,7 +217,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(string path)
       {
-         return GetFullPathInternal(null, path, false, false, false, false);
+         return GetFullPathInternal(null, path, false, false, false, false, false);
       }
 
       #endregion // .NET
@@ -233,7 +233,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(string path, bool asLongPath)
       {
-         return GetFullPathInternal(null, path, asLongPath, false, false, false);
+         return GetFullPathInternal(null, path, asLongPath, false, false, false, false);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -247,7 +247,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(string path, bool asLongPath, bool addDirectorySeparator, bool removeDirectorySeparator)
       {
-         return GetFullPathInternal(null, path, asLongPath, false, addDirectorySeparator, removeDirectorySeparator);
+         return GetFullPathInternal(null, path, asLongPath, false, addDirectorySeparator, removeDirectorySeparator, false);
       }
       
       #region Transacted
@@ -261,7 +261,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(KernelTransaction transaction, string path)
       {
-         return GetFullPathInternal(transaction, path, false, false, false, false);
+         return GetFullPathInternal(transaction, path, false, false, false, false, false);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -274,7 +274,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(KernelTransaction transaction, string path, bool asLongPath)
       {
-         return GetFullPathInternal(transaction, path, asLongPath, false, false, false);
+         return GetFullPathInternal(transaction, path, asLongPath, false, false, false, false);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -289,7 +289,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(KernelTransaction transaction, string path, bool asLongPath, bool addDirectorySeparator, bool removeDirectorySeparator)
       {
-         return GetFullPathInternal(transaction, path, asLongPath, false, addDirectorySeparator, removeDirectorySeparator);
+         return GetFullPathInternal(transaction, path, asLongPath, false, addDirectorySeparator, removeDirectorySeparator, false);
       }
 
       #endregion Transacted
@@ -1227,12 +1227,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="trimEnd"><c>true</c> removes trailing whitespace from <paramref name="path"/>.</param>
       /// <param name="addDirectorySeparator"><c>true</c> adds a directory separator to that path.</param>
       /// <param name="removeDirectorySeparator"><c>true</c> removes any directory separator to that path.</param>
+      /// <param name="continueOnNotExist"><c>true</c> does not throw an Exception when the file system object does not exist.</param>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       /// <remarks>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</remarks>
       /// <remarks>GetFullPath does not work reliable with relative paths.</remarks>
       /// <remarks>GetFullPath is not recommended for multithreaded applications or shared library code.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static string GetFullPathInternal(KernelTransaction transaction, string path, bool asLongPath, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator)
+      internal static string GetFullPathInternal(KernelTransaction transaction, string path, bool asLongPath, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator, bool continueOnNotExist)
       {
          if (path == null)
             return null;
@@ -1256,7 +1258,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? NativeMethods.GetFullPathName(pathLp, bufferSize, buffer, IntPtr.Zero)
                : NativeMethods.GetFullPathNameTransacted(pathLp, bufferSize, buffer, IntPtr.Zero, transaction.SafeHandle));
 
-            if (returnLength != Win32Errors.ERROR_SUCCESS)
+            if (returnLength != Win32Errors.NO_ERROR)
             {
                if (returnLength > bufferSize)
                {
@@ -1265,7 +1267,12 @@ namespace Alphaleonis.Win32.Filesystem
                }
             }
             else
+            {
+               if (continueOnNotExist)
+                  return null;
+
                NativeError.ThrowException(pathLp);
+            }
 
             return asLongPath
                ? GetLongPathInternal(buffer.ToString(), false, false, false, false)
@@ -1341,7 +1348,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = GetFullPathInternal(transaction, path, true, false, false, false);
+         string pathLp = GetFullPathInternal(transaction, path, true, false, false, false, false);
 
          StringBuilder buffer = new StringBuilder();
          uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint) path.Length;
@@ -1501,7 +1508,7 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
          localPath = (localPath.Equals(CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
-            ? GetFullPathInternal(null, localPath, asLongPath, trimEnd, addDirectorySeparator, removeDirectorySeparator)
+            ? GetFullPathInternal(null, localPath, asLongPath, trimEnd, addDirectorySeparator, removeDirectorySeparator, false)
             : GetRegularPathInternal(localPath, true, trimEnd, addDirectorySeparator, removeDirectorySeparator);
 
          if (IsUncPath(localPath, false))

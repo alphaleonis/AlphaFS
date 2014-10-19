@@ -637,7 +637,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeMountPoint");
 
          // The string must end with a trailing backslash ('\').
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, false, true, false);
+         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, false, true, false, false);
 
          StringBuilder volumeGuid = new StringBuilder(100);
          StringBuilder uniqueName = new StringBuilder(100);
@@ -764,7 +764,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetFullPathInternal(null, path, true, false, false, false);
+         string pathLp = Path.GetFullPathInternal(null, path, true, false, false, false, false);
          StringBuilder volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode);
          bool getOk;
          int lastError;
@@ -893,7 +893,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
 
 
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, false, true, false);
+         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, false, true, false, false);
 
          // This string must be of the form "\\?\Volume{GUID}\"
          volumeGuid = Path.AddDirectorySeparator(volumeGuid, false);
