@@ -5501,7 +5501,7 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
             ? Path.GetLongPathInternal(sourcePath, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(transaction, sourcePath, true, false, false, true);
+               : Path.GetFullPathInternal(transaction, sourcePath, true, false, false, true, false);
 #else
                : Path.GetFullPathInternal(transaction, sourcePath, true, true, false, true, false);
 #endif
@@ -5512,7 +5512,7 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
             ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(transaction, destinationPath, true, false, false, true);
+               : Path.GetFullPathInternal(transaction, destinationPath, true, false, false, true, false);
 #else
                : Path.GetFullPathInternal(transaction, destinationPath, true, true, false, true, false);
 #endif
@@ -5617,10 +5617,10 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
-            : Path.GetFullPathInternal(transaction, path, true, false, false, true);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false);
 #else
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
-            : Path.GetFullPathInternal(transaction, path, true, true, false, true, false);
+               : Path.GetFullPathInternal(transaction, path, true, true, false, true, false);
 #endif
          string templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
             ? null
@@ -5629,7 +5629,7 @@ namespace Alphaleonis.Win32.Filesystem
                : (bool) isFullPath
                ? Path.GetLongPathInternal(templatePath, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true);
+               : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true, false);
 #else
                // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
                : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true, false);
@@ -5767,7 +5767,7 @@ namespace Alphaleonis.Win32.Filesystem
                   : (bool) isFullPath
                      ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
-                     : Path.GetFullPathInternal(transaction, path, true, false, false, true),
+                     : Path.GetFullPathInternal(transaction, path, true, false, false, true, false),
 #else
                      // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
                      : Path.GetFullPathInternal(transaction, path, true, true, false, true, false),
@@ -5896,7 +5896,7 @@ namespace Alphaleonis.Win32.Filesystem
                   : (bool) isFullPath
                      ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
-                     : Path.GetFullPathInternal(transaction, path, true, false, false, true),
+                     : Path.GetFullPathInternal(transaction, path, true, false, false, true, false),
 #else
                      : Path.GetFullPathInternal(transaction, path, true, true, false, true, false),
 #endif

@@ -1352,7 +1352,7 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
             ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(null, destinationPath, true, false, false, true);
+               : Path.GetFullPathInternal(null, destinationPath, true, false, false, true, false);
 #else
                : Path.GetFullPathInternal(null, destinationPath, true, true, false, true, false);
 #endif
