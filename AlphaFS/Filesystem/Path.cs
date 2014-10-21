@@ -197,11 +197,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Returns the absolute path for the specified path string.</summary>
-      /// <param name="path">The file or directory for which to obtain absolute path information.</param>
+      /// <summary>Returns the absolute path for the specified path string.
+      /// <para>&#160;</para>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
-      /// <remarks>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0"</remarks>
-      /// <remarks>GetFullPath is not recommended for multithreaded applications or shared library code.</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0"</para>
+      /// <para>GetFullPath is not recommended for multithreaded applications or shared library code.</para>
+      /// </remarks>
+      /// </summary>
+      /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       [SecurityCritical]
       public static string GetFullPath(string path)
       {
@@ -1462,7 +1467,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          do
          {
-            suffixedDirectoryNameWithoutRoot = tmp.DisplayPath.Replace(di.Root.ToString(), "");
+            suffixedDirectoryNameWithoutRoot = tmp.DisplayPath.Replace(di.Root.ToString(), string.Empty);
 
             if (tmp.Parent != null)
                tmp = di.Parent.Parent;

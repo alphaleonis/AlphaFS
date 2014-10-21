@@ -52,8 +52,8 @@ namespace Alphaleonis.Win32.Network
          {
             if (fdqn)
             {
-               domain = Dns.GetHostEntry("LocalHost").HostName.ToUpper(CultureInfo.InvariantCulture).Replace(machine + ".", "");
-               domain = domain.Replace(machine, "");
+               domain = Dns.GetHostEntry("LocalHost").HostName.ToUpper(CultureInfo.InvariantCulture).Replace(machine + ".", string.Empty);
+               domain = domain.Replace(machine, string.Empty);
             }
          }
          catch

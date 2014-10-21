@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
          _isFullPath = isFullPath;
 
          OriginalName = originalName;
-         Name = name ?? "";
+         Name = name ?? string.Empty;
 
          Attributes = stream.StreamAttributes;
          Type = stream.StreamType;
@@ -308,7 +308,7 @@ namespace Alphaleonis.Win32.Filesystem
                            streamName = Marshal.PtrToStringUni(buffer, (int)numberOfBytesRead / 2);
 
                            // Returned stream name format: ":streamName:$DATA"
-                           streamSearchName = streamName.TrimStart(Path.StreamSeparatorChar).Replace(Path.StreamSeparator + "$DATA", "");
+                           streamSearchName = streamName.TrimStart(Path.StreamSeparatorChar).Replace(Path.StreamSeparator + "$DATA", string.Empty);
                         }
 
                         if (originalName == null || (streamSearchName != null && streamSearchName.Equals(originalName, StringComparison.OrdinalIgnoreCase)))

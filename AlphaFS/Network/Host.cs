@@ -918,7 +918,7 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<string> EnumerateDfsRootInternal(string host, bool continueOnException)
       {
          // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, "");
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
 
          FunctionData fd = new FunctionData();
          return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo300 structure, SafeNetApiBuffer safeBuffer) =>
@@ -944,7 +944,7 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<string> EnumerateDomainDfsRootInternal(string domain, bool continueOnException)
       {
          // The UNC prefix: \\ is not required and always removed.
-         domain = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathInternal(domain, true, false, false, false).Replace(Path.UncPrefix, "");
+         domain = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathInternal(domain, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
 
          FunctionData fd = new FunctionData();
          return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo200 structure, SafeNetApiBuffer safeBuffer) =>
@@ -968,7 +968,7 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<string> EnumerateDrivesInternal(string host, bool continueOnException)
       {
          // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, "");
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
 
          FunctionData fd = new FunctionData {EnumType = 1};
          return EnumerateNetworkObjectInternal(fd, (string structure, SafeNetApiBuffer safeBuffer) =>
@@ -1019,7 +1019,7 @@ namespace Alphaleonis.Win32.Network
          // However, the resulting OpenResourceInfo.Host property will be empty.
          // So, explicitly state Environment.MachineName to prevent this.
          // Furthermore, the UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, "");
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
 
          basePath = Utils.IsNullOrWhiteSpace(basePath)
             ? null
@@ -1142,7 +1142,7 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<ShareInfo> EnumerateSharesInternal(string host, bool continueOnException)
       {
          // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, "");
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
 
          FunctionData fd = new FunctionData();
          bool hasItems = false;
@@ -1343,7 +1343,7 @@ namespace Alphaleonis.Win32.Network
             return null;
 
          // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, "");
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
          
          bool fallback = false;
          
