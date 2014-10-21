@@ -281,7 +281,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string UnitSizeToText<T>(T numberOfBytes, bool usePercent = false)
       {
          string template = "{0:0.00}{1}";
-         string sfx = "bytes";
+         string sfx = "B";
 
          double bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
 
@@ -293,7 +293,7 @@ namespace Alphaleonis.Win32.Filesystem
          else if (bytes >= 1024) { sfx = "KB"; bytes /= 1024; }
 
          else if (!usePercent)
-            // Will return "512 bytes" instead of "512,00 bytes".
+            // Will return "512 B" instead of "512,00 B".
             template = "{0:0}{1}";
 
          return string.Format(CultureInfo.CurrentCulture, template, bytes, usePercent ? "%" : " " + sfx);
