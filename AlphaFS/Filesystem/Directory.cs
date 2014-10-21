@@ -1835,12 +1835,30 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryRoot(string path)
       {
-         return GetDirectoryRootInternal(null, path);
+         return GetDirectoryRootInternal(null, path, false);
       }
 
       #endregion // .NET
 
       #region AlphaFS
+
+      #region IsFullPath
+
+      /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
+      /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
+      /// <param name="path">The path of a file or directory.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static string GetDirectoryRoot(string path, bool isFullPath)
+      {
+         return GetDirectoryRootInternal(null, path, isFullPath);
+      }
+
+      #endregion // IsFullPath
 
       #region Transacted
 
@@ -1853,11 +1871,30 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryRoot(KernelTransaction transaction, string path)
       {
-         return GetDirectoryRootInternal(transaction, path);
+         return GetDirectoryRootInternal(transaction, path, false);
       }
 
       #endregion // .NET
 
+      #region IsFullPath
+
+      /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
+      /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path of a file or directory.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static string GetDirectoryRoot(KernelTransaction transaction, string path, bool isFullPath)
+      {
+         return GetDirectoryRootInternal(transaction, path, isFullPath);
+      }
+
+      #endregion // IsFullPath
+      
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2323,12 +2360,30 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo GetParent(string path)
       {
-         return GetParentInternal(null, path);
+         return GetParentInternal(null, path, false);
       }
 
       #endregion // .NET
 
       #region AlphaFS
+
+      #region IsFullPath
+
+      /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
+      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <param name="path">The path for which to retrieve the parent directory.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static DirectoryInfo GetParent(string path, bool isFullPath)
+      {
+         return GetParentInternal(null, path, isFullPath);
+      }
+
+      #endregion // IsFullPath
 
       #region Transacted
 
@@ -2341,11 +2396,30 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo GetParent(KernelTransaction transaction, string path)
       {
-         return GetParentInternal(transaction, path);
+         return GetParentInternal(transaction, path, false);
       }
 
       #endregion // .NET
-      
+
+      #region IsFullPath
+
+      /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
+      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path for which to retrieve the parent directory.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static DirectoryInfo GetParent(KernelTransaction transaction, string path, bool isFullPath)
+      {
+         return GetParentInternal(transaction, path, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -5707,14 +5781,32 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetDirectoryRootInternal
 
-      /// <summary>[AlphaFS] Unified method GetDirectoryRootInternal() to return the volume information, root information, or both for the specified path.</summary>
+      /// <summary>[AlphaFS] Unified method GetDirectoryRootInternal() to return the volume information, root information, or both for the specified path.
+      /// <returns>
+      /// <para>Returns the volume information, root information, or both for the specified path,</para>
+      /// <para> or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</para>
+      /// </returns>
+      /// </summary>
+      
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path of a file or directory.</param>
-      /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       [SecurityCritical]
-      internal static string GetDirectoryRootInternal(KernelTransaction transaction, string path)
+      internal static string GetDirectoryRootInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         string rootPath = Path.GetPathRoot(Path.GetFullPathInternal(transaction, path, false, false, false, false, false), false);
+         string pathLp = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ?  Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, false, false);
+
+         pathLp = Path.GetRegularPathInternal(pathLp, false, false, false, false);
+         string rootPath = Path.GetPathRoot(pathLp, false);
+
          return Utils.IsNullOrWhiteSpace(rootPath) ? null : rootPath;
       }
 
@@ -5722,14 +5814,29 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetParentInternal
 
-      /// <summary>[AlphaFS] Unified method GetParent() to retrieve the parent directory of the specified path, including both absolute and relative paths.</summary>
+      /// <summary>[AlphaFS] Unified method GetParent() to retrieve the parent directory of the specified path, including both absolute and relative paths.
+      /// <para>&#160;</para>
+      /// <returns>Returns the parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
-      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       [SecurityCritical]
-      internal static DirectoryInfo GetParentInternal(KernelTransaction transaction, string path)
+      internal static DirectoryInfo GetParentInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         string dirName = Path.GetDirectoryName(Path.GetFullPathInternal(transaction, path, false, true, false, false, false));
+         string pathLp = isFullPath == null
+            ? path
+            : (bool) isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, false, false);
+
+         pathLp = Path.GetRegularPathInternal(pathLp, false, false, false, false);
+         string dirName = Path.GetDirectoryName(pathLp);
+
          return Utils.IsNullOrWhiteSpace(dirName) ? null : new DirectoryInfo(transaction, dirName, false);
       }
 
@@ -5948,8 +6055,8 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(null, path, true, false, false, true, false);
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(null, path, true, false, false, true, false);
 
          // EncryptionDisable()
          // In the ANSI version of this function, the name is limited to 248 characters.

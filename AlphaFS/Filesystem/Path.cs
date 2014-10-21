@@ -91,30 +91,18 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (path != null)
          {
-            if (path.Length > 0)
-            {
-               string str2 = GetRegularPathInternal(path, true, false, false, false);
-               int length = 0;
-
-               while (length < str2.Length && str2[length] != WildcardQuestionChar && str2[length] != WildcardStarMatchAllChar)
-                  ++length;
-            }
-
-            int rootLength = GetRootLength(path, false);
+            int rootLength = GetRootLength(path, true);
             if (path.Length > rootLength)
             {
                int length = path.Length;
                if (length == rootLength)
                   return null;
 
-               while (length > rootLength && path[--length] != DirectorySeparatorChar && path[length] != AltDirectorySeparatorChar)
-               {
-               }
-
+               while (length > rootLength && path[--length] != DirectorySeparatorChar && path[length] != AltDirectorySeparatorChar) { }
                return path.Substring(0, length);
             }
          }
-
+         
          return null;
       }
 
@@ -1102,7 +1090,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path == null)
             return null;
 
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path);
+         DirectoryInfo di = Directory.GetParentInternal(transaction, path, false);
          return di != null && di.Parent != null ? di.Name : null;
       }
 
@@ -1445,7 +1433,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path == null)
             return null;
 
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path);
+         DirectoryInfo di = Directory.GetParentInternal(transaction, path, false);
          return di != null && di.Parent != null && di.Name != null
             ? AddDirectorySeparator(CombineInternal(false, di.Parent.FullName, di.Name), false)
             : null;
@@ -1465,7 +1453,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path == null)
             return null;
 
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path);
+         DirectoryInfo di = Directory.GetParentInternal(transaction, path, false);
          if (di == null || di.Parent == null)
             return null;
 

@@ -46,7 +46,7 @@ Version 1.6
 	
 	* Mod: Rewrote Path() class.
 
-	* Mod: Removed class PathInfo().
+	* Mod: Removed classes PathInfoXxx().
 
     * New: Added static Class Filesystem.Device();
 

@@ -1928,11 +1928,11 @@ namespace AlphaFS.UnitTest
             {
                method = "AlphaFS";
                string actual = Directory.GetDirectoryRoot(path);
-               Console.WriteLine("\t\tAlphaFS  : [{0}]", actual);
+               Console.WriteLine("\tAlphaFS  : [{0}]", actual);
 
                method = "System.IO";
                string expected = System.IO.Directory.GetDirectoryRoot(path);
-               Console.WriteLine("    System.IO: [{0}]", expected);
+               Console.WriteLine("\tSystem.IO: [{0}]", expected);
 
                Assert.AreEqual(expected, actual);
                Assert.AreEqual(Directory.GetCurrentDirectory(), System.IO.Directory.GetCurrentDirectory(), "AlphaFS != System.IO");
@@ -1941,7 +1941,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\t\t{0} Exception: [{1}]", method, ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\t{0} Exception: [{1}]", method, ex.Message.Replace(Environment.NewLine, string.Empty));
 
                // Exception to the Exception.
                if (path != null && !path.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) &&
