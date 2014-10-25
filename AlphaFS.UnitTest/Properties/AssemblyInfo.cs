@@ -10,7 +10,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("AlphaFS.UnitTest")]
-[assembly: AssemblyCopyright("© Peter Palotas, Normalex, Jeffrey Jangli")]
+[assembly: AssemblyCopyright("© 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

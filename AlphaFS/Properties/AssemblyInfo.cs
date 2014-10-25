@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2012 Peter Palotas, Alexandr Normuradov, Jeffrey Jangli
+/* Copyright (c) 2008-2012 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -31,7 +31,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("AlphaFS")]
-[assembly: AssemblyCopyright("© 2008-2014 Peter Palotas, Normalex, Jeffrey Jangli")]
+[assembly: AssemblyCopyright("© 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
