@@ -1219,7 +1219,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       private static string GetDirName(string path)
       {
-         return path.Length > 3 ? Path.GetFileName(Path.RemoveDirectorySeparator(path, false)) : path;
+         return path.Length > 3 ? Path.GetFileName(Path.RemoveDirectorySeparator(path, false), true) : path;
       }
 
       #endregion // GetDirName

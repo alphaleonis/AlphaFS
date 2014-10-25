@@ -24,7 +24,7 @@ namespace Alphaleonis
    internal static class Utils
    {
       /// <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
-      /// <returns><c>true</c> if the <paramref name="value"/> parameter is null or <see cref="T:F:System.String.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
+      /// <returns><c>true</c> if the <paramref name="value"/> parameter is null or <see cref="T:string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
       /// <param name="value">The string to test.</param>
       public static bool IsNullOrWhiteSpace(string value)
       {

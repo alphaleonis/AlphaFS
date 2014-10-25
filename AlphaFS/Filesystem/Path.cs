@@ -110,24 +110,68 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetDirectoryName
 
-      #region GetExtension (.NET)
+      #region GetExtension
 
       #region .NET
 
-      /// <summary>Returns the extension of the specified path string.</summary>
+      /// <summary>Returns the extension of the specified path string.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>The extension of the specified path (including the period "."), or null, or <see cref="T:string.Empty"/>.</para>
+      /// <para>If <paramref name="path"/> is null, <see cref="M:Path.GetExtension()"/> returns null.</para>
+      /// <para>If <paramref name="path"/> does not have extension information, <see cref="M:Path.GetExtension()"/> returns <see cref="T:string.Empty"/>.</para>
+      /// </returns>
+      /// </summary>
       /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
-      /// <returns>The extension of the specified path (including the period "."), or null, or <see cref="F:System.String.Empty"/>. If <paramref name="path"/> is null, <see cref="M:System.IO.Path.GetExtension(System.String)"/> returns null. If <paramref name="path"/> does not have extension information, <see cref="M:System.IO.Path.GetExtension(System.String)"/> returns <see cref="F:System.String.Empty"/>.</returns>
       [SecurityCritical]
       public static string GetExtension(string path)
       {
-         return System.IO.Path.GetExtension(path);
+         return GetExtension(path, true);
       }
 
       #endregion // .NET
 
-      #endregion // GetExtension (.NET)
+      #region AlphaFS
 
-      #region GetFileName (.NET)
+      /// <summary>Returns the extension of the specified path string.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>The extension of the specified path (including the period "."), or null, or <see cref="T:string.Empty"/>.</para>
+      /// <para>If <paramref name="path"/> is null, <see cref="M:Path.GetExtension()"/> returns null.</para>
+      /// <para>If <paramref name="path"/> does not have extension information, <see cref="M:Path.GetExtension()"/> returns <see cref="T:string.Empty"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      [SecurityCritical]
+      public static string GetExtension(string path, bool checkInvalidChars)
+      {
+         if (path == null)
+            return null;
+
+         if (checkInvalidChars)
+            CheckInvalidPathChars(path);
+
+         int length = path.Length;
+         int index = length;
+         while (--index >= 0)
+         {
+            char ch = path[index];
+            if (ch == ExtensionSeparatorChar)
+               return index != length - 1 ? path.Substring(index, length - index) : string.Empty;
+
+            if (IsDVsc(ch, null))
+               break;
+         }
+
+         return string.Empty;
+      }
+
+      #endregion // AlphaFS
+
+      #endregion // GetExtension
+
+      #region GetFileName
 
       #region .NET
 
@@ -137,7 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFileName(string path)
       {
-         return System.IO.Path.GetFileName(path);
+         return GetFileName(path, true);
       }
 
       #endregion // .NET
@@ -148,7 +192,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns the file name and extension of the specified path string.</summary>
       /// <param name="path">The path string from which to obtain the file name and extension.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will not check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       /// <returns>The characters after the last directory character in <paramref name="path"/>. If the last character of <paramref name="path"/> is a directory or volume separator character, this method returns <c>string.Empty</c>. If path is null, this method returns null.</returns>
       public static string GetFileName(string path, bool checkInvalidChars)
       {
@@ -174,24 +218,48 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // AlphaFS
 
-      #endregion // GetFileName (.NET)
+      #endregion // GetFileName
 
-      #region GetFileNameWithoutExtension (.NET)
+      #region GetFileNameWithoutExtension
 
       #region .NET
 
-      /// <summary>Returns the file name of the specified path string without the extension.</summary>
-      /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <summary>Returns the file name of the specified path string without the extension.
       /// <returns>The string returned by GetFileName, minus the last period (.) and all characters following it.</returns>
+      /// </summary>
+      /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static string GetFileNameWithoutExtension(string path)
       {
-         return System.IO.Path.GetFileNameWithoutExtension(path);
+         return GetFileNameWithoutExtension(path, true);
       }
 
       #endregion // .NET
 
-      #endregion // GetFileNameWithoutExtension (.NET)
+      #region AlphaFS
+
+      /// <summary>Returns the file name of the specified path string without the extension.
+      /// <returns>The string returned by GetFileName, minus the last period (.) and all characters following it.</returns>
+      /// </summary>
+      /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      [SecurityCritical]
+      public static string GetFileNameWithoutExtension(string path, bool checkInvalidChars)
+      {
+         path = GetFileName(path, checkInvalidChars);
+
+         if (path != null)
+         {
+            int i;
+            return (i = path.LastIndexOf('.')) == -1 ? path : path.Substring(0, i);
+         }
+
+         return null;
+      }
+
+      #endregion // AlphaFS
+
+      #endregion // GetFileNameWithoutExtension
 
       #region GetFullPath
 
@@ -342,7 +410,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the root directory information of the specified path.</summary>
       /// <param name="path">The path from which to obtain root directory information.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will not check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       /// <returns>The root directory of <paramref name="path"/>, such as "C:\", or <c>null</c> if <paramref name="path"/> is <c>null</c>, or <c>string.Empty</c> if <paramref name="path"/> does not contain root directory information.</returns>
       [SecurityCritical]
       public static string GetPathRoot(string path, bool checkInvalidChars)
@@ -737,7 +805,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines whether the specified path is a local path.</summary>
       /// <param name="path">The path to check.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will not check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       /// <returns><c>true</c> if the specified path is a local path, <c>false</c> otherwise.</returns>
       [SecurityCritical]
       public static bool IsLocalPath(string path, bool checkInvalidChars)
@@ -782,7 +850,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path.</summary>
       /// <param name="path">The path to check.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will not check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       /// <returns><c>true</c> if the specified path is a Universal Naming Convention (UNC) path, <c>false</c> otherwise.</returns>
       [SecurityCritical]
       public static bool IsUncPath(string path, bool checkInvalidChars)

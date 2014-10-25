@@ -5787,7 +5787,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para> or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</para>
       /// </returns>
       /// </summary>
-      
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path of a file or directory.</param>
       /// <param name="isFullPath">

@@ -19,7 +19,6 @@
  *  THE SOFTWARE.
  */
 
-using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Win32.SafeHandles;
@@ -660,65 +659,116 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetDirectoryName
 
-      #region GetExtension (.NET)
+      #region GetExtension
 
       [TestMethod]
-      public void NET_GetExtension()
+      public void GetExtension()
       {
          Console.WriteLine("Path.GetExtension()");
-         Console.WriteLine("\nThe .NET method is used.\n");
+
+         int pathCnt = 0;
+         bool allOk = true;
+         int errorCnt = 0;
 
          StopWatcher(true);
          foreach (string input in InputPaths)
          {
-            string action = Path.GetExtension(input);
-            Console.WriteLine("\tGetExtension: [{0}]\t\tInput Path: [{1}]", action, input);
-            Assert.AreEqual(System.IO.Path.GetExtension(input), action);
+            try
+            {
+               string actual = Path.GetExtension(input);
+               string expected = System.IO.Path.GetExtension(input);
+               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, actual, expected);
+               
+               Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+
+               allOk = false;
+               errorCnt++;
+            }
          }
          Console.WriteLine("\n\t{0}\n", Reporter(true));
+
+         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
 
-      #endregion // GetExtension (.NET)
+      #endregion // GetExtension
 
-      #region GetFileName (.NET)
+      #region GetFileName
 
       [TestMethod]
-      public void NET_GetFileName()
+      public void GetFileName()
       {
          Console.WriteLine("Path.GetFileName()");
-         Console.WriteLine("\nThe .NET method is used.\n");
+
+         int pathCnt = 0;
+         bool allOk = true;
+         int errorCnt = 0;
 
          StopWatcher(true);
          foreach (string input in InputPaths)
          {
-            string action = Path.GetFileName(input);
-            Console.WriteLine("\tGetFileName: [{0}]\t\tInput Path: [{1}]", action, input);
-            Assert.AreEqual(System.IO.Path.GetFileName(input), action);
+            try
+            {
+               string actual = Path.GetFileName(input);
+               string expected = System.IO.Path.GetFileName(input);
+               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, actual, expected);
+
+               Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+
+               allOk = false;
+               errorCnt++;
+            }
          }
          Console.WriteLine("\n\t{0}\n", Reporter(true));
+
+         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
 
-      #endregion // GetFileName (.NET)
+      #endregion // GetFileName
 
-      #region GetFileNameWithoutExtension (.NET)
+      #region GetFileNameWithoutExtension
 
       [TestMethod]
-      public void NET_GetFileNameWithoutExtension()
+      public void GetFileNameWithoutExtension()
       {
          Console.WriteLine("Path.GetFileNameWithoutExtension()");
-         Console.WriteLine("\nThe .NET method is used.\n");
+
+         int pathCnt = 0;
+         bool allOk = true;
+         int errorCnt = 0;
 
          StopWatcher(true);
          foreach (string input in InputPaths)
          {
-            string action = Path.GetFileNameWithoutExtension(input);
-            Console.WriteLine("\tGetFileNameWithoutExtension: [{0}]\t\tInput Path: [{1}]", action, input);
-            Assert.AreEqual(System.IO.Path.GetFileNameWithoutExtension(input), action);
+            try
+            {
+               string actual = Path.GetFileNameWithoutExtension(input);
+               string expected = System.IO.Path.GetFileNameWithoutExtension(input);
+               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, actual, expected);
+
+               Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+
+               allOk = false;
+               errorCnt++;
+            }
          }
          Console.WriteLine("\n\t{0}\n", Reporter(true));
+
+         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
 
-      #endregion // GetFileNameWithoutExtension (.NET)
+      #endregion // GetFileNameWithoutExtension
 
       #region GetFullPath
 

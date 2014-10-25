@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</summary>
          public IntPtr WinOwner;
 
-         /// <summary>The name of a local device to be redirected, such as "F:". When <see cref="T:LocalName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</summary>
+         /// <summary>The name of a local device to be redirected, such as "F:". When <see cref="T:LocalName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</summary>
          public string LocalName;
 
          /// <summary>A network resource to connect to/disconnect from, for example: \\server or \\server\share</summary>
@@ -183,9 +183,9 @@ namespace Alphaleonis.Win32.Network
       #region ConnectDrive
 
       /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
-      /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
+      /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
-      /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, returns the last available drive letter, <c>null</c> otherwise.</returns>
+      /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, returns the last available drive letter, <c>null</c> otherwise.</returns>
       [SecurityCritical]
       public static string ConnectDrive(string localName, string remoteName)
       {
@@ -198,14 +198,14 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
-      /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
+      /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
       /// <param name="userName">The user name for making the connection. If <paramref name="userName"/> is <c>null</c>, the function uses the default user name. (The user context for the process provides the default user name)</param>
       /// <param name="password">The password to be used for making the network connection. If <paramref name="password"/> is <c>null</c>, the function uses the current default password associated with the user specified by <paramref name="userName"/>.</param>
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
-      /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, returns the last available drive letter, null otherwise.</returns>
+      /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
       [SecurityCritical]
       public static string ConnectDrive(string localName, string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
@@ -223,13 +223,13 @@ namespace Alphaleonis.Win32.Network
       }
       
       /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
-      /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
+      /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
       /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
-      /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, returns the last available drive letter, null otherwise.</returns>
+      /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
       [SecurityCritical]
       public static string ConnectDrive(string localName, string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
@@ -247,14 +247,14 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
-      /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
+      /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
       /// <param name="userName">The user name for making the connection. If <paramref name="userName"/> is <c>null</c>, the function uses the default user name. (The user context for the process provides the default user name)</param>
       /// <param name="password">The password to be used for making the network connection. If <paramref name="password"/> is <c>null</c>, the function uses the current default password associated with the user specified by <paramref name="userName"/>.</param>
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
-      /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, returns the last available drive letter, null otherwise.</returns>
+      /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
       [SecurityCritical]
       public static string ConnectDrive(IntPtr winOwner, string localName, string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
@@ -274,13 +274,13 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
-      /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
+      /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
       /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
-      /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.empty</c>, returns the last available drive letter, null otherwise.</returns>
+      /// <returns>If <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
       [SecurityCritical]
       public static string ConnectDrive(IntPtr winOwner, string localName, string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
@@ -784,7 +784,7 @@ namespace Alphaleonis.Win32.Network
       #region ConnectDisconnectInternal
 
       /// <summary>Unified method ConnectDisconnectInternal() to connect to/disconnect from a network resource. The function can redirect a local device to a network resource.</summary>
-      /// <returns>If <see cref="T:ConnectDisconnectArguments.LocalName"/> is <c>null</c> or <c>string.empty</c>, returns the last available drive letter, null otherwise.</returns>
+      /// <returns>If <see cref="T:ConnectDisconnectArguments.LocalName"/> is <c>null</c> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       [SecurityCritical]
