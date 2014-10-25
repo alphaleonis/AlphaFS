@@ -861,6 +861,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsUncPath
 
+      #region IsValidName
+
+      /// <summary>Check if file or folder name has any invalid characters.
+      /// <para>&#160;</para>
+      /// <returns><c>true</c> or <c>false</c></returns>
+      /// </summary>
+      /// <param name="name">File or folder name.</param>
+      public static bool IsValidName(string name)
+      {
+         if (name == null)
+            throw new ArgumentNullException("name");
+
+         return name.IndexOfAny(GetInvalidFileNameChars()) < 0;
+      }
+
+      #endregion // IsValidName
+
       #region LocalToUnc
 
       /// <summary>[AlphaFS] Converts a local path to a network share path.
