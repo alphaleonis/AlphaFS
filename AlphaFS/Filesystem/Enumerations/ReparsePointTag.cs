@@ -19,6 +19,8 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Enumeration specifying the different reparse point tags.
@@ -29,6 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// <para>Clients should treat associated reparse data as opaque data.</para>
    /// </remarks>
    /// </summary>
+   [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
    public enum ReparsePointTag : uint
    {
       /// <summary>(0x00000000) The entry is not a reparse point.</summary>
@@ -44,24 +47,30 @@ namespace Alphaleonis.Win32.Filesystem
       DriverExtender = 2147483653,
 
       /// <summary>(0x80000013) IO_REPARSE_TAG_DEDUP</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dedup")]
       Dedup = 2147483667,
 
       /// <summary>(0x8000000A) IO_REPARSE_TAG_DFS - Used by the DFS filter.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       Dfs = 2147483658,
 
       /// <summary>(0x80000012) IO_REPARSE_TAG_DFSR - Used by the DFS filter.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfsr")]
       Dfsr = 2147483666,
 
       /// <summary>(0x8000000B) IO_REPARSE_TAG_FILTER_MANAGER - Used by filter manager test harness.</summary>
       FilterManager = 2147483659,
 
       /// <summary>(0xC0000004) IO_REPARSE_TAG_HSM - Obsolete. Used by legacy Hierarchical Storage Manager Product.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hsm")]
       Hsm = 3221225476,
 
       /// <summary>(0x80000006) IO_REPARSE_TAG_HSM2 - Obsolete. Used by legacy Hierarchical Storage Manager Product.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hsm")]
       Hsm2 = 2147483654,
 
       /// <summary>(0x80000014) IO_REPARSE_TAG_NFS - NFS symlinks, Windows 8 / SMB3 and later.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nfs")]
       Nfs = 2147483668,
       
       /// <summary>(0xA0000003) IO_REPARSE_TAG_MOUNT_POINT - Used for mount point support.</summary>
@@ -71,9 +80,11 @@ namespace Alphaleonis.Win32.Filesystem
       Sis = 2147483655,
 
       /// <summary>(0xA000000C) IO_REPARSE_TAG_SYMLINK - Used for symbolic link support.</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sym")]
       SymLink = 2684354572,
 
       /// <summary>(0x80000008) IO_REPARSE_TAG_WIM</summary>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Wim")]
       Wim = 2147483656
    }
 }
