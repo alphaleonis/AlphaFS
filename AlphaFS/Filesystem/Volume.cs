@@ -266,6 +266,17 @@ namespace Alphaleonis.Win32.Filesystem
       
       #endregion // GetDriveNameForNtDeviceName
 
+      #region GetCurrentDriveType
+      /// <summary>Determines, based on the root of the current directory, whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.</summary>
+      /// <returns>A <see cref="DriveType"/> object.</returns>
+      [SecurityCritical]
+      public static DriveType GetCurrentDriveType()
+      {
+         return GetDriveType(null);
+      }
+
+      #endregion // GetCurrentDriveType
+
       #region GetDriveType
 
       /// <summary>Determines whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.</summary>
