@@ -187,7 +187,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Create()
       {
-         return File.CreateFileInternal(Transaction, LongFullName, NativeMethods.DefaultFileBufferSize, EFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, null);
+         return File.CreateFileInternal(Transaction, LongFullName, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, null);
       }
 
       #endregion // .NET
@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamWriter CreateText()
       {
-         return new StreamWriter(File.CreateFileInternal(Transaction, LongFullName, NativeMethods.DefaultFileBufferSize, EFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, null), NativeMethods.DefaultFileEncoding);
+         return new StreamWriter(File.CreateFileInternal(Transaction, LongFullName, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, null), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -349,7 +349,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, FileAccess.Read, FileShare.None, EFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null);
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access.</summary>
@@ -359,7 +359,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, FileShare.None, EFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, null);
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -370,7 +370,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access, FileShare share)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, share, EFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, share, ExtendedFileAttributes.Normal, null);
       }
 
       #endregion // .NET
@@ -384,7 +384,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, FileShare.None, EFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, FileShare.None, ExtendedFileAttributes.Normal, null);
       }
 
       /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -395,7 +395,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights, FileShare share)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, share, EFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, share, ExtendedFileAttributes.Normal, null);
       }
 
       #endregion // AlphaFS
@@ -412,7 +412,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream OpenRead()
       {
-         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, null);
       }
 
       #endregion // .NET
@@ -429,7 +429,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText()
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, EFileAttributes.Normal, null), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -443,7 +443,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText(Encoding encoding)
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, EFileAttributes.Normal, null), encoding);
+         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null), encoding);
       }
 
       #endregion // AlphaFS
@@ -459,7 +459,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream OpenWrite()
       {
-         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, null);
       }
 
       #endregion // .NET

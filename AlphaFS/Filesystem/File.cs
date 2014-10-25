@@ -641,7 +641,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path)
       {
-         return CreateFileInternal(null, path, NativeMethods.DefaultFileBufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
+         return CreateFileInternal(null, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
       /// <summary>Creates or overwrites the specified file.</summary>
@@ -651,7 +651,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize)
       {
-         return CreateFileInternal(null, path, bufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
+         return CreateFileInternal(null, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
       /// <summary>Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
@@ -662,7 +662,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options)
       {
-         return CreateFileInternal(null, path, bufferSize, (EFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
+         return CreateFileInternal(null, path, bufferSize, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
       /// <summary>Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
@@ -674,7 +674,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
-         return CreateFileInternal(null, path, bufferSize, (EFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
+         return CreateFileInternal(null, path, bufferSize, (ExtendedFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
       #endregion // .NET
@@ -694,7 +694,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, bool? isFullPath)
       {
-         return CreateFileInternal(null, path, NativeMethods.DefaultFileBufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
+         return CreateFileInternal(null, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
       /// <summary>[AlphaFS] Creates or overwrites the specified file.</summary>
@@ -709,7 +709,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, bool? isFullPath)
       {
-         return CreateFileInternal(null, path, bufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
+         return CreateFileInternal(null, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
       /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
@@ -725,7 +725,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, bool? isFullPath)
       {
-         return CreateFileInternal(null, path, bufferSize, (EFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
+         return CreateFileInternal(null, path, bufferSize, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
       /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
@@ -742,7 +742,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, bool? isFullPath)
       {
-         return CreateFileInternal(null, path, bufferSize, (EFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
+         return CreateFileInternal(null, path, bufferSize, (ExtendedFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -758,7 +758,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path)
       {
-         return CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
+         return CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
       /// <summary>[AlphaFS] Creates or overwrites the specified file.</summary>
@@ -769,7 +769,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize)
       {
-         return CreateFileInternal(transaction, path, bufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
+         return CreateFileInternal(transaction, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
       /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
@@ -781,7 +781,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options)
       {
-         return CreateFileInternal(transaction, path, bufferSize, (EFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
+         return CreateFileInternal(transaction, path, bufferSize, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
       /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
@@ -794,7 +794,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
-         return CreateFileInternal(transaction, path, bufferSize, (EFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
+         return CreateFileInternal(transaction, path, bufferSize, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
       #endregion // .NET
@@ -813,7 +813,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
+         return CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
       /// <summary>[AlphaFS] Creates or overwrites the specified file.</summary>
@@ -829,7 +829,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, bool? isFullPath)
       {
-         return CreateFileInternal(transaction, path, bufferSize, EFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
+         return CreateFileInternal(transaction, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
       /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
@@ -846,7 +846,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, bool? isFullPath)
       {
-         return CreateFileInternal(transaction, path, bufferSize, (EFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
+         return CreateFileInternal(transaction, path, bufferSize, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
       
       /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
@@ -864,7 +864,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, bool? isFullPath)
       {
-         return CreateFileInternal(transaction, path, bufferSize, (EFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
+         return CreateFileInternal(transaction, path, bufferSize, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2131,7 +2131,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode)
       {
-         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, EFileAttributes.Normal, false);
+         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, false);
       }
 
       /// <summary>Opens a <see cref="T:FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2142,7 +2142,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access)
       {
-         return OpenInternal(null, path, mode, 0, access, FileShare.None, EFileAttributes.Normal, false);
+         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, false);
       }
 
       /// <summary>Opens a <see cref="T:FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -2154,7 +2154,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share)
       {
-         return OpenInternal(null, path, mode, 0, access, share, EFileAttributes.Normal, false);
+         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, false);
       }
 
       #endregion // .NET
@@ -2175,7 +2175,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, bool? isFullPath)
       {
-         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, EFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="T:FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2191,7 +2191,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, bool? isFullPath)
       {
-         return OpenInternal(null, path, mode, 0, access, FileShare.None, EFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="T:FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -2208,7 +2208,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
       {
-         return OpenInternal(null, path, mode, 0, access, share, EFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2225,7 +2225,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode)
       {
-         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, EFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, false);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="T:FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2237,7 +2237,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access)
       {
-         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, EFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, false);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="T:FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -2250,7 +2250,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share)
       {
-         return OpenInternal(transaction, path, mode, 0, access, share, EFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, false);
       }
 
       #endregion // .NET
@@ -2270,7 +2270,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, bool? isFullPath)
       {
-         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, EFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="T:FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2287,7 +2287,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, bool? isFullPath)
       {
-         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, EFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="T:FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -2305,7 +2305,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
       {
-         return OpenInternal(transaction, path, mode, 0, access, share, EFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2327,7 +2327,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(string path)
       {
-         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, false);
+         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false);
       }
 
       #endregion // .NET
@@ -2348,7 +2348,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(string path, bool? isFullPath)
       {
-         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2365,7 +2365,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false);
       }
 
       #endregion //.NET
@@ -2385,7 +2385,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2407,7 +2407,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, false), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -2428,7 +2428,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path, bool? isFullPath)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing <see cref="T:Encoding"/> encoded text file for reading.</summary>
@@ -2444,7 +2444,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path, Encoding encoding, bool? isFullPath)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath), encoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), encoding);
       }
 
       #endregion // IsFullPath
@@ -2457,7 +2457,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path, Encoding encoding)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, false), encoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), encoding);
       }
 
       #region Transacted
@@ -2471,7 +2471,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, false), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -2490,7 +2490,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing <see cref="T:Encoding"/> encoded text file for reading.</summary>
@@ -2506,7 +2506,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, isFullPath), encoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), encoding);
       }
 
       #endregion // IsFullPath
@@ -2519,7 +2519,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.Normal, false), encoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), encoding);
       }
 
       #endregion // Transacted
@@ -2538,7 +2538,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(string path)
       {
-         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, false);
+         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, false);
       }
 
       #endregion // .NET
@@ -2558,7 +2558,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(string path, bool? isFullPath)
       {
-         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2574,7 +2574,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, false);
       }
 
       #endregion // .NET
@@ -2593,7 +2593,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -6243,7 +6243,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static StreamWriter AppendTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
-         FileStream fs = OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, EFileAttributes.Normal, isFullPath);
+         FileStream fs = OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
 
          try
          {
@@ -6392,7 +6392,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <param name="attributes">The <see cref="T:EFileAttributes"/> additional advanced options to create a file.</param>
+      /// <param name="attributes">The <see cref="T:ExtendedFileAttributes"/> additional advanced options to create a file.</param>
       /// <param name="fileSecurity">A <see cref="T:FileSecurity"/> instance that determines the access control and audit security for the file.</param>
       /// <param name="mode">The <see cref="T:FileMode"/> option gives you more precise control over how you want to create a file.</param>
       /// <param name="access">The <see cref="T:FileAccess"/> allow you additionally specify to default read/write capability - just write, bypassing any cache.</param>
@@ -6404,10 +6404,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static FileStream CreateFileInternal(KernelTransaction transaction, string path, int bufferSize, EFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
+      internal static FileStream CreateFileInternal(KernelTransaction transaction, string path, int bufferSize, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
       {
          SafeFileHandle handle = CreateFileInternal(true, transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, isFullPath);
-         return new FileStream(handle, access, bufferSize, (attributes & EFileAttributes.Overlapped) != 0);
+         return new FileStream(handle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
       }
 
       /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or open a file, directory or I/O device.
@@ -6419,7 +6419,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="isFile"><c>null</c> indicates a device. <c>true</c> indicates a file object. <c>false</c> indicates a folder object.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file or directory to create.</param>
-      /// <param name="attributes">One of the <see cref="T:EFileAttributes"/> values that describes how to create or overwrite the file or directory.</param>
+      /// <param name="attributes">One of the <see cref="T:ExtendedFileAttributes"/> values that describes how to create or overwrite the file or directory.</param>
       /// <param name="fileSecurity">A <see cref="T:FileSecurity"/> instance that determines the access control and audit security for the file or directory.</param>
       /// <param name="fileMode">A <see cref="T:FileMode"/> constant that determines how to open or create the file or directory.</param>
       /// <param name="fileSystemRights">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file or directory.</param>
@@ -6431,7 +6431,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, EFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool? isFullPath)
+      internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
@@ -6617,7 +6617,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static StreamWriter CreateTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
-         return new StreamWriter(CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, EFileAttributes.SequentialScan, null, FileMode.Create, FileAccess.Write, FileShare.Read, isFullPath), encoding);
+         return new StreamWriter(CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.SequentialScan, null, FileMode.Create, FileAccess.Write, FileShare.Read, isFullPath), encoding);
       }
 
       #endregion // CreateTextInternal
@@ -7304,7 +7304,7 @@ namespace Alphaleonis.Win32.Filesystem
                   ? Path.GetLongPathInternal(path, false, false, false, false)
                   : Path.GetFullPathInternal(transaction, path, true, false, false, true, false);
 
-            safeHandle = CreateFileInternal(!isFolder, transaction, pathLp, isFolder ? EFileAttributes.BackupSemantics : EFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, null);
+            safeHandle = CreateFileInternal(!isFolder, transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, null);
          }
 
          
@@ -7514,7 +7514,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static LinkTargetInfo GetLinkTargetInfoInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         using (SafeFileHandle handle = CreateFileInternal(true, transaction, path, EFileAttributes.OpenReparsePoint | EFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, isFullPath))
+         using (SafeFileHandle handle = CreateFileInternal(true, transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, isFullPath))
             return Device.GetLinkTargetInfoInternal(handle);
       }
 
@@ -7551,7 +7551,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false);
 
-            safeHandle = CreateFileInternal(true, transaction, pathLp, EFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, null);
+            safeHandle = CreateFileInternal(true, transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, null);
          }
          
 
@@ -7582,7 +7582,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="rights">A <see cref="T:FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten along with additional options.</param>
       /// <param name="access">A <see cref="T:FileAccess"/> value that specifies the operations that can be performed on the file.</param>
       /// <param name="share">A <see cref="T:FileShare"/> value specifying the type of access other threads have to the file.</param>
-      /// <param name="attributes">Advanced <see cref="T:EFileAttributes"/> options for this file.</param>
+      /// <param name="attributes">Advanced <see cref="T:ExtendedFileAttributes"/> options for this file.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -7591,7 +7591,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An <see cref="T:FileStream"/> instance on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, EFileAttributes attributes, bool? isFullPath)
+      internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, ExtendedFileAttributes attributes, bool? isFullPath)
       {
          SafeFileHandle handle = CreateFileInternal(true, transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights) access, share, isFullPath);
 
@@ -7618,7 +7618,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          byte[] buffer;
 
-         using (FileStream fs = OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.None, isFullPath))
+         using (FileStream fs = OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.None, isFullPath))
          {
             int offset = 0;
             long length = fs.Length;
@@ -7658,7 +7658,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static IEnumerable<string> ReadAllLinesInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.SequentialScan, isFullPath), encoding))
+         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, isFullPath), encoding))
          {
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -7684,7 +7684,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string ReadAllTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.SequentialScan, isFullPath), encoding))
+         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, isFullPath), encoding))
             return sr.ReadToEnd();
       }
 
@@ -7706,7 +7706,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static IEnumerable<string> ReadLinesInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, EFileAttributes.SequentialScan, isFullPath), encoding))
+         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, isFullPath), encoding))
          {
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -7980,7 +7980,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (SafeGlobalMemoryBufferHandle creationTime = SafeGlobalMemoryBufferHandle.CreateFromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastAccessTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastWriteTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?)null))
-         using (SafeFileHandle safeHandle = CreateFileInternal(!isFolder, transaction, path, isFolder ? EFileAttributes.BackupSemantics : EFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, isFullPath))
+         using (SafeFileHandle safeHandle = CreateFileInternal(!isFolder, transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, isFullPath))
             if (!NativeMethods.SetFileTime(safeHandle, creationTime, lastAccessTime, lastWriteTime))
                NativeError.ThrowException(path);
       }
@@ -8029,7 +8029,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (bytes == null)
             throw new ArgumentNullException("bytes");
 
-         using (FileStream fs = OpenInternal(transaction, path, FileMode.Create, 0, FileAccess.Write, FileShare.Read, EFileAttributes.None, isFullPath))
+         using (FileStream fs = OpenInternal(transaction, path, FileMode.Create, 0, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.None, isFullPath))
             fs.Write(bytes, 0, bytes.Length);
       }
 
@@ -8063,7 +8063,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("encoding");
 
 
-         using (FileStream stream = OpenInternal(transaction, path, (isAppend ? FileMode.OpenOrCreate : FileMode.Create), FileSystemRights.AppendData, FileAccess.Write, FileShare.ReadWrite, EFileAttributes.None, isFullPath))
+         using (FileStream stream = OpenInternal(transaction, path, (isAppend ? FileMode.OpenOrCreate : FileMode.Create), FileSystemRights.AppendData, FileAccess.Write, FileShare.ReadWrite, ExtendedFileAttributes.None, isFullPath))
          {
             if (isAppend)
                stream.Seek(0, SeekOrigin.End);

@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode)
-         : this(File.CreateFileInternal(true, null, path, EFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, false), FileSystemRights.Read | FileSystemRights.Write)
+         : this(File.CreateFileInternal(true, null, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, false), FileSystemRights.Read | FileSystemRights.Write)
       {
       }
 
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access)
-         : this(File.CreateFileInternal(true, null, path, EFileAttributes.Normal, null, mode, access, FileShare.None, false), access)
+         : this(File.CreateFileInternal(true, null, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, false), access)
       {
       }
 
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share)
-         : this(File.CreateFileInternal(true, null, path, EFileAttributes.Normal, null, mode, access, share, false), access)
+         : this(File.CreateFileInternal(true, null, path, ExtendedFileAttributes.Normal, null, mode, access, share, false), access)
       {
       }
 
@@ -84,10 +84,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
       /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
       /// <param name="share">A <see cref="T:FileShare"/> constant that determines how the file will be shared by processes.</param>
-      /// <param name="attributes">A <see cref="T:EFileAttributes"/> constant that specifies additional file attributes.</param>
+      /// <param name="attributes">A <see cref="T:ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, EFileAttributes attributes)
+      public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
          : this(File.CreateFileInternal(true, null, path, attributes, null, mode, access, share, false), access)
       {
       }
@@ -97,11 +97,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
       /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
       /// <param name="share">A <see cref="T:FileShare"/> constant that determines how the file will be shared by processes.</param>
-      /// <param name="attributes">A <see cref="T:EFileAttributes"/> constant that specifies additional file attributes.</param>
+      /// <param name="attributes">A <see cref="T:ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
       /// <param name="security">A <see cref="T:FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <c>null</c>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, EFileAttributes attributes, FileSecurity security)
+      public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
          : this(File.CreateFileInternal(true, null, path, attributes, security, mode, access, share, false), access)
       {
       }
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode)
-         : this(File.CreateFileInternal(true, transaction, path, EFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, false), FileSystemRights.Read | FileSystemRights.Write)
+         : this(File.CreateFileInternal(true, transaction, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, false), FileSystemRights.Read | FileSystemRights.Write)
       {
       }
 
@@ -129,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access)
-         : this(File.CreateFileInternal(true, transaction, path, EFileAttributes.Normal, null, mode, access, FileShare.None, false), access)
+         : this(File.CreateFileInternal(true, transaction, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, false), access)
       {
       }
 
@@ -142,7 +142,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share)
-         : this(File.CreateFileInternal(true, transaction, path, EFileAttributes.Normal, null, mode, access, share, false), access)
+         : this(File.CreateFileInternal(true, transaction, path, ExtendedFileAttributes.Normal, null, mode, access, share, false), access)
       {
       }
 
@@ -152,10 +152,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
       /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
       /// <param name="share">A <see cref="T:FileShare"/> constant that determines how the file will be shared by processes.</param>
-      /// <param name="attributes">A <see cref="T:EFileAttributes"/> constant that specifies additional file attributes.</param>
+      /// <param name="attributes">A <see cref="T:ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, EFileAttributes attributes)
+      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
          : this(File.CreateFileInternal(true, transaction, path, attributes, null, mode, access, share, false), access)
       {
       }
@@ -166,11 +166,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
       /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
       /// <param name="share">A <see cref="T:FileShare"/> constant that determines how the file will be shared by processes.</param>
-      /// <param name="attributes">A <see cref="T:EFileAttributes"/> constant that specifies additional file attributes.</param>
+      /// <param name="attributes">A <see cref="T:ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
       /// <param name="security">A <see cref="T:FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <c>null</c>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, EFileAttributes attributes, FileSecurity security)
+      public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
          : this(File.CreateFileInternal(true, transaction, path, attributes, security, mode, access, share, false), access)
       {
       }

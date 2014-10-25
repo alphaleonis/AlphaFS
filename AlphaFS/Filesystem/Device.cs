@@ -406,7 +406,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, bool? isFullPath)
       {
-         using (SafeFileHandle handle = File.CreateFileInternal(!isFolder, transaction, path, isFolder ? EFileAttributes.BackupSemantics : EFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, isFullPath))
+         using (SafeFileHandle handle = File.CreateFileInternal(!isFolder, transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, isFullPath))
          {
             // DeviceIoControlMethod.Buffered = 0,
             // DeviceIoControlFileDevice.FileSystem = 9

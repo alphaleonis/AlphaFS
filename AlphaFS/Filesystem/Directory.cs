@@ -6133,7 +6133,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false);
 
-            safeHandle = File.CreateFileInternal(false, transaction, pathLp, EFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, null);
+            safeHandle = File.CreateFileInternal(false, transaction, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, null);
          }
 
 
