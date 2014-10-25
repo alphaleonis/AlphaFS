@@ -632,14 +632,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetLongPath
 
-      #region GetLongFrom83Path
+      #region GetLongFrom83ShortPath
 
       /// <summary>[AlphaFS] Converts the specified existing path to its regular long form.</summary>
       /// <param name="path">An existing path to a folder or file.</param>
       /// <returns>The regular full path.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static string GetLongFrom83Path(string path)
+      public static string GetLongFrom83ShortPath(string path)
       {
          return GetLongShort83PathInternal(null, path, false);
       }
@@ -652,14 +652,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The regular full path.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static string GetLongFrom83Path(KernelTransaction transaction, string path)
+      public static string GetLongFrom83ShortPath(KernelTransaction transaction, string path)
       {
          return GetLongShort83PathInternal(transaction, path, false);
       }
 
       #endregion // Transacted
 
-      #endregion // GetLongFrom83Path
+      #endregion // GetLongFrom83ShortPath
 
       #region GetMappedConnectionName
 

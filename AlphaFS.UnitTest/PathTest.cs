@@ -181,14 +181,14 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(isShort83Path);
             Assert.IsTrue(hasTilde); // A bit tricky if fullPath is already a shortPath.
 
-            // GetLongFrom83Path()
+            // GetLongFrom83ShortPath()
             StopWatcher(true);
-            string longFrom83Path = Path.GetLongFrom83Path(short83Path);
+            string longFrom83Path = Path.GetLongFrom83ShortPath(short83Path);
             reporter = Reporter(true);
             bool isLongFrom83Path = !string.IsNullOrWhiteSpace(longFrom83Path) && !longFrom83Path.Equals(short83Path) && Directory.Exists(longFrom83Path);
             bool noTilde = !string.IsNullOrWhiteSpace(longFrom83Path) && longFrom83Path.IndexOf('~') == -1;
 
-            Console.WriteLine("\n\t{0, 20} == [{1}]: [{2}]: [{3}]\n\t{4}\n", "GetLongFrom83Path()", TextTrue, isLongFrom83Path, longFrom83Path, reporter);
+            Console.WriteLine("\n\t{0, 20} == [{1}]: [{2}]: [{3}]\n\t{4}\n", "GetLongFrom83ShortPath()", TextTrue, isLongFrom83Path, longFrom83Path, reporter);
             Assert.IsTrue(isLongFrom83Path);
             Assert.IsTrue(noTilde);
          }
@@ -1068,18 +1068,18 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetLongPath
 
-      #region GetLongFrom83Path
+      #region GetLongFrom83ShortPath
 
       [TestMethod]
       public void AlphaFS_GetLongFrom83Path()
       {
-         Console.WriteLine("Path.GetLongFrom83Path()");
+         Console.WriteLine("Path.GetLongFrom83ShortPath()");
 
          Dump83Path(StartupFolder);
          Dump83Path(Path.LocalToUnc(StartupFolder));
       }
 
-      #endregion // GetLongFrom83Path
+      #endregion // GetLongFrom83ShortPath
 
       #region GetMappedConnectionName
 
