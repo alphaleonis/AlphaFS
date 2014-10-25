@@ -210,7 +210,6 @@
     <Compile Include="Filesystem\Enumerations\MoveOptions.cs" />
     <Compile Include="Filesystem\Exceptions\NotAReparsePointException.cs" />
     <Compile Include="Filesystem\Path.cs" />
-    <Compile Include="Filesystem\Enumerations\BackupStreamAttributes.cs" />
     <Compile Include="Filesystem\Shell32.cs" />
     <Compile Include="Filesystem\Structures\MountPointReparseBuffer.cs" />
     <Compile Include="Filesystem\Structures\ReparseDataBufferHeader.cs" />
