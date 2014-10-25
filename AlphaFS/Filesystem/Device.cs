@@ -356,7 +356,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             switch (header.ReparseTag)
             {
-               case NativeMethods.ReparsePointTag.MountPoint:
+               case ReparsePointTag.MountPoint:
                   NativeMethods.MountPointReparseBuffer mprb = NativeMethods.GetStructure<NativeMethods.MountPointReparseBuffer>(0, new IntPtr(buffer.ToInt64() + marshalReparseBuffer.ToInt64()));
 
                   dataPos = new IntPtr(marshalReparseBuffer.ToInt64() + Marshal.OffsetOf(toMountPointReparseBuffer, "data").ToInt64());
@@ -369,7 +369,7 @@ namespace Alphaleonis.Win32.Filesystem
                      Encoding.Unicode.GetString(dataBuffer, mprb.PrintNameOffset, mprb.PrintNameLength));
 
                
-               case NativeMethods.ReparsePointTag.SymLink:
+               case ReparsePointTag.SymLink:
                   NativeMethods.SymbolicLinkReparseBuffer slrb = NativeMethods.GetStructure<NativeMethods.SymbolicLinkReparseBuffer>(0, new IntPtr(buffer.ToInt64() + marshalReparseBuffer.ToInt64()));
 
                   dataPos = new IntPtr(marshalReparseBuffer.ToInt64() + Marshal.OffsetOf(toSymbolicLinkReparseBuffer, "data").ToInt64());

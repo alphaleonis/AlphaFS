@@ -21,33 +21,59 @@
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   internal static partial class NativeMethods
+   /// <summary>Enumeration specifying the different reparse point tags.
+   /// <para>&#160;</para>
+   /// <remarks>
+   /// <para>Reparse tags, with the exception of IO_REPARSE_TAG_SYMLINK, are processed on the server</para>
+   /// <para>and are not processed by a client after transmission over the wire.</para>
+   /// <para>Clients should treat associated reparse data as opaque data.</para>
+   /// </remarks>
+   /// </summary>
+   public enum ReparsePointTag : uint
    {
-      /// <summary>Enumeration specifying the different reparse point tags.</summary>
-      internal enum ReparsePointTag : uint
-      {
-         /// <summary>The entry is not a reparse point.</summary>
-         None = 0,
+      /// <summary>(0x00000000) The entry is not a reparse point.</summary>
+      None = 0,
 
-         /// <summary>IO_REPARSE_TAG_DRIVER_EXTENDER (0x80000005) - Used by Home server drive extender.</summary>
-         TagDriverExtender = 2147483653,
+      /// <summary>(0xC0000014) IO_REPARSE_APPXSTREAM</summary>
+      AppXStream = 3221225492,
 
-         /// <summary>IO_REPARSE_TAG_SIS (0x80000007) - Used by single-instance storage (SIS) filter driver.</summary>
-         Sis = 2147483655,
+      /// <summary>(0x80000009) IO_REPARSE_TAG_CSV</summary>
+      Csv = 2147483657,
 
-         /// <summary>IO_REPARSE_TAG_DFS (0x8000000A) - Used by the DFS filter.</summary>
-         Dfs = 2147483658,
+      /// <summary>(0x80000005) IO_REPARSE_TAG_DRIVER_EXTENDER - Used by Home server drive extender.</summary>
+      DriverExtender = 2147483653,
 
-         /// <summary>IO_REPARSE_TAG_DFSR (0x80000012) - Used by the DFS filter.</summary>
-         Dfsr = 2147483666,
+      /// <summary>(0x80000013) IO_REPARSE_TAG_DEDUP</summary>
+      Dedup = 2147483667,
 
-         /// <summary>IO_REPARSE_TAG_MOUNT_POINT (0xA0000003) - Used for mount point support.
-         /// To determine if the reparse point is a mounted folder (and not some other form of reparse point), test whether the tag value equals the value IO_REPARSE_TAG_MOUNT_POINT.
-         /// </summary>
-         MountPoint = 2684354563,
+      /// <summary>(0x8000000A) IO_REPARSE_TAG_DFS - Used by the DFS filter.</summary>
+      Dfs = 2147483658,
 
-         /// <summary>IO_REPARSE_TAG_SYMLINK (0xA000000C) - Used for symbolic link support.</summary>
-         SymLink = 2684354572
-      }
+      /// <summary>(0x80000012) IO_REPARSE_TAG_DFSR - Used by the DFS filter.</summary>
+      Dfsr = 2147483666,
+
+      /// <summary>(0x8000000B) IO_REPARSE_TAG_FILTER_MANAGER - Used by filter manager test harness.</summary>
+      FilterManager = 2147483659,
+
+      /// <summary>(0xC0000004) IO_REPARSE_TAG_HSM - Obsolete. Used by legacy Hierarchical Storage Manager Product.</summary>
+      Hsm = 3221225476,
+
+      /// <summary>(0x80000006) IO_REPARSE_TAG_HSM2 - Obsolete. Used by legacy Hierarchical Storage Manager Product.</summary>
+      Hsm2 = 2147483654,
+
+      /// <summary>(0x80000014) IO_REPARSE_TAG_NFS - NFS symlinks, Windows 8 / SMB3 and later.</summary>
+      Nfs = 2147483668,
+      
+      /// <summary>(0xA0000003) IO_REPARSE_TAG_MOUNT_POINT - Used for mount point support.</summary>
+      MountPoint = 2684354563,
+
+      /// <summary>(0x80000007) IO_REPARSE_TAG_SIS - Used by single-instance storage (SIS) filter driver.</summary>
+      Sis = 2147483655,
+
+      /// <summary>(0xA000000C) IO_REPARSE_TAG_SYMLINK - Used for symbolic link support.</summary>
+      SymLink = 2684354572,
+
+      /// <summary>(0x80000008) IO_REPARSE_TAG_WIM</summary>
+      Wim = 2147483656
    }
 }

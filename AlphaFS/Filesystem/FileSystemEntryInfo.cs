@@ -132,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value><c>true</c> if this instance is a mount point; otherwise, <c>false</c>.</value>
       public bool IsMountPoint
       {
-         get { return ReparsePointTag == NativeMethods.ReparsePointTag.MountPoint; }
+         get { return ReparsePointTag == ReparsePointTag.MountPoint; }
       }
 
       #endregion // IsMountPoint
@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value><c>true</c> if this instance is a symbolic link; otherwise, <c>false</c>.</value>
       public bool IsSymbolicLink
       {
-         get { return ReparsePointTag == NativeMethods.ReparsePointTag.SymLink; }
+         get { return ReparsePointTag == ReparsePointTag.SymLink; }
       }
 
       #endregion // IsSymbolicLink
@@ -198,9 +198,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the reparse point tag of this entry.</summary>
       /// <value>The reparse point tag of this entry.</value>
-      internal NativeMethods.ReparsePointTag ReparsePointTag
+      internal ReparsePointTag ReparsePointTag
       {
-         get { return IsReparsePoint ? _win32FindData.Reserved0 : NativeMethods.ReparsePointTag.None; }
+         get { return IsReparsePoint ? _win32FindData.Reserved0 : ReparsePointTag.None; }
       }
 
       #endregion // ReparsePointTag
