@@ -267,8 +267,13 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // GetDriveNameForNtDeviceName
 
       #region GetCurrentDriveType
-      /// <summary>Determines, based on the root of the current directory, whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.</summary>
+
+      /// <summary>Determines, based on the root of the current directory,
+      /// <para>&#160;</para>
+      /// whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.
       /// <returns>A <see cref="DriveType"/> object.</returns>
+      /// </summary>
+      [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
       public static DriveType GetCurrentDriveType()
       {
@@ -328,6 +333,19 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Drive
 
       #region Volume
+
+      #region DeleteCurrentVolumeLabel
+
+      /// <summary>Deletes the label of the file system volume that is the root of the current directory.
+      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
+      /// <exception cref="NativeError.ThrowException()"></exception>
+      /// </summary>
+      [SecurityCritical]
+      public static void DeleteCurrentVolumeLabel()
+      {
+         SetVolumeLabel(null, null);
+      }
+      #endregion // DeleteCurrentVolumeLabel
 
       #region DeleteVolumeLabel
 
@@ -851,16 +869,39 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsVolume
 
+      #region SetCurrentVolumeLabel
+
+      /// <summary>Sets the label of the file system volume that is the root of the current directory
+      /// <exception cref="ArgumentNullException"><paramref name="volumeName"/> is a <see langword="null"/> reference.</exception>        
+      /// </summary>
+      /// <param name="volumeName">A name for the volume.</param>
+      [SecurityCritical]
+      public static void SetCurrentVolumeLabel(string volumeName)
+      {
+         if (Utils.IsNullOrWhiteSpace(volumeName))
+            throw new ArgumentNullException("volumeName");
+
+         if (!NativeMethods.SetVolumeLabel(null, volumeName))
+            Marshal.ThrowExceptionForHR(Marshal.GetHRForLastWin32Error());
+      }
+
+      #endregion // SetCurrentVolumeLabel
+
       #region SetVolumeLabel
 
-      /// <summary>Sets the label of a file system volume.</summary>
-      /// <param name="volumePath">A path to a volume. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</param>
+      /// <summary>Sets the label of a file system volume.
+      /// <exception cref="NativeError.ThrowException()"></exception>
+      /// </summary>
+      /// <param name="volumePath">
+      /// <para>A path to a volume. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</para>
+      /// <para>&#160;</para>
+      /// <para>If this parameter is <c>null</c>, the function uses the current drive.</para>
+      /// </param>
       /// <param name="volumeName">
-      /// <para>The new label for the volume, name for the volume.</para>
+      /// <para>A name for the volume.</para>
       /// <para>If this parameter is <c>null</c>, the function deletes any existing label</para>
       /// <para>from the specified volume and does not assign a new label.</para>
       ///</param>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static void SetVolumeLabel(string volumePath, string volumeName)
       {
@@ -933,6 +974,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // SetVolumeMountPoint
 
       #endregion // Volume
+
 
       #region Unified Internals
 
