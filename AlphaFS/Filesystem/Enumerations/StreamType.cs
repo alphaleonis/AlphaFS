@@ -27,37 +27,37 @@ namespace Alphaleonis.Win32.Filesystem
 
    public enum StreamType
    {
-      /// <summary>This indicates an error.</summary>
+      /// <summary>(0) This indicates an error.</summary>
       None = 0,
 
-      /// <summary>BACKUP_DATA - Standard data. This corresponds to the NTFS $DATA stream type on the default (unnamed) data stream.</summary>
+      /// <summary>(1) BACKUP_DATA - Standard data. This corresponds to the NTFS $DATA stream type on the default (unnamed) data stream.</summary>
       Data = 1,
 
-      /// <summary>BACKUP_EA_DATA - Extended attribute data. This corresponds to the NTFS $EA stream type.</summary>
+      /// <summary>(2) BACKUP_EA_DATA - Extended attribute data. This corresponds to the NTFS $EA stream type.</summary>
       ExtendedAttributesData = 2,
 
       /// <summary>BACKUP_SECURITY_DATA - Security descriptor data.</summary>
       SecurityData = 3,
 
-      /// <summary>BACKUP_ALTERNATE_DATA - Alternative data streams. This corresponds to the NTFS $DATA stream type on a named data stream.</summary>
+      /// <summary>(4) BACKUP_ALTERNATE_DATA - Alternative data streams. This corresponds to the NTFS $DATA stream type on a named data stream.</summary>
       AlternateData = 4,
 
-      /// <summary>BACKUP_LINK - Hard link information. This corresponds to the NTFS $FILE_NAME stream type.</summary>
+      /// <summary>(5) BACKUP_LINK - Hard link information. This corresponds to the NTFS $FILE_NAME stream type.</summary>
       Link = 5,
 
-      /// <summary>BACKUP_PROPERTY_DATA - Property data.</summary>
+      /// <summary>(6) BACKUP_PROPERTY_DATA - Property data.</summary>
       PropertyData = 6,
 
-      /// <summary>BACKUP_OBJECT_ID - Objects identifiers. This corresponds to the NTFS $OBJECT_ID stream type.</summary>
+      /// <summary>(7) BACKUP_OBJECT_ID - Objects identifiers. This corresponds to the NTFS $OBJECT_ID stream type.</summary>
       ObjectId = 7,
 
-      /// <summary>BACKUP_REPARSE_DATA - Reparse points. This corresponds to the NTFS $REPARSE_POINT stream type.</summary>
+      /// <summary>(8) BACKUP_REPARSE_DATA - Reparse points. This corresponds to the NTFS $REPARSE_POINT stream type.</summary>
       ReparseData = 8,
 
-      /// <summary>BACKUP_SPARSE_BLOCK - Sparse file. This corresponds to the NTFS $DATA stream type for a sparse file.</summary>
+      /// <summary>(9) BACKUP_SPARSE_BLOCK - Sparse file. This corresponds to the NTFS $DATA stream type for a sparse file.</summary>
       SparseBlock = 9,
 
-      /// <summary>BACKUP_TXFS_DATA - Transactional NTFS (TxF) data stream.</summary>
+      /// <summary>(10) BACKUP_TXFS_DATA - Transactional NTFS (TxF) data stream.</summary>
       /// <remarks>Windows Server 2003 and Windows XP:  This value is not supported.</remarks>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Txfs")]
       TxfsData = 10

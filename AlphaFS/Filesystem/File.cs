@@ -5947,8 +5947,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transacted
 
       #endregion // OpenBackupRead
-
-
+      
       #region RemoveStream
 
       #region IsFullPath
@@ -7656,7 +7655,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region OpenInternal
 
-      /// <summary>[AlphaFS] Unified method OpenInternal() to opens a <see cref="T:FileStream"/> on the specified path, having the specified mode with read, write, or read/write access, the specified sharing option and additional options specified.</summary>
+      /// <summary>[AlphaFS] Unified method OpenInternal() to open a <see cref="T:FileStream"/> on the specified path, having the specified mode with
+      /// <para>read, write, or read/write access, the specified sharing option and additional options specified.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>A <see cref="T:FileStream"/> instance on the specified path, having the specified mode with</para>
+      /// <para>read, write, or read/write access and the specified sharing option.</para>
+      /// </returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">A <see cref="T:FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
@@ -7669,7 +7675,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An <see cref="T:FileStream"/> instance on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, ExtendedFileAttributes attributes, bool? isFullPath)

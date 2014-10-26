@@ -1590,10 +1590,10 @@ namespace AlphaFS.UnitTest
 
       #region OperatingSystem
 
-      #region Class_OperatingSystemInfo
+      #region Class_OperatingSystem
 
       [TestMethod]
-      public void Class_OperatingSystemInfo()
+      public void Class_OperatingSystem()
       {
          Console.WriteLine("Class Win32.OperatingSystem()\n");
 
@@ -1606,7 +1606,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("IsWow64Process       : [{0}]", OperatingSystem.IsWow64Process);
          Console.WriteLine("ProcessorArchitecture: [{0}]", OperatingSystem.ProcessorArchitecture);
 
-         Console.WriteLine("\nOperatingSystemInfo.IsAtLeast()\n");
+         Console.WriteLine("\nOperatingSystem.IsAtLeast()\n");
 
          Console.WriteLine("\tOS Earlier           : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Earlier));
          Console.WriteLine("\tWindows 2000         : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows2000));
@@ -1628,7 +1628,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(Reporter());
       }
 
-      #endregion // Class_OperatingSystemInfo
+      #endregion // Class_OperatingSystem
 
       #endregion // OperatingSystem
 
