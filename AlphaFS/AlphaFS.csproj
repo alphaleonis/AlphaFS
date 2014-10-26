@@ -189,7 +189,7 @@
     <Compile Include="Filesystem\File.cs" />
     <Compile Include="Filesystem\BackupFileStream.cs" />
     <Compile Include="Filesystem\Enumerations\FileEncryptionStatus.cs" />
-    <Compile Include="Filesystem\FileInfoByHandle.cs" />
+    <Compile Include="Filesystem\ByHandleFileInfo.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />
@@ -202,7 +202,7 @@
     <Compile Include="Filesystem\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
     <Compile Include="Filesystem\Structures\FileBasicInfo.cs" />
-    <Compile Include="Filesystem\Structures\FileInfoByHandle.cs" />
+    <Compile Include="Filesystem\Structures\ByHandleFileInfo.cs" />
     <Compile Include="Filesystem\Structures\ChangeErrorMode.cs" />
     <Compile Include="Filesystem\Structures\FileIdBothDirInfo.cs" />
     <Compile Include="Filesystem\Structures\FileTime.cs" />

@@ -570,7 +570,39 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpClassAlternateDataStreamInfo
-      
+
+      #region DumpClassByHandleFileInfo
+
+      private void DumpClassByHandleFileInfo(bool isLocal)
+      {
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string tempPath = Path.GetTempPath(" File.GetFileInfoByHandle()-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+
+         FileStream stream = File.Create(tempPath);
+         stream.WriteByte(1);
+
+         StopWatcher(true);
+         ByHandleFileInfo bhfi = File.GetFileInfoByHandle(stream.SafeFileHandle);
+         Console.WriteLine(Reporter());
+
+         Assert.IsTrue(Dump(bhfi, -18));
+
+         Assert.AreEqual(System.IO.File.GetCreationTime(tempPath), bhfi.CreationTime);
+         Assert.AreEqual(System.IO.File.GetLastAccessTime(tempPath), bhfi.LastAccessTime);
+         Assert.AreEqual(System.IO.File.GetLastWriteTime(tempPath), bhfi.LastWriteTime);
+
+         stream.Close();
+
+         File.Delete(tempPath, true);
+         Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
+      }
+
+      #endregion // DumpClassByHandleFileInfo
+
       #region DumpClassDeviceInfo
 
       private void DumpClassDeviceInfo(string host)
@@ -1101,44 +1133,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpClassFileInfo
-
-      #region DumpClassFileInfoByHandle
-
-      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-      private void DumpClassFileInfoByHandle(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tempPath = Path.GetTempPath("File-Class.FileInfoByHandle()-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
-
-         using (FileStream stream = File.Create(tempPath))
-         {
-            stream.WriteByte(1);
-
-            string streamName = stream.Name;
-
-            StopWatcher(true);
-            FileInfoByHandle info = File.GetFileInfoByHandle(stream.SafeFileHandle);
-            Console.WriteLine(Reporter());
-
-            Assert.IsTrue(Dump(info, -18));
-
-            stream.Close();
-
-            Assert.AreEqual(System.IO.File.GetCreationTime(tempPath), info.CreationTime);
-            Assert.AreEqual(System.IO.File.GetLastAccessTime(tempPath), info.LastAccessTime);
-            Assert.AreEqual(System.IO.File.GetLastWriteTime(tempPath).ToString(), info.LastWriteTime.ToString()); // Curious
-
-            File.Delete(tempPath, true);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
-      }
-
-      #endregion // DumpClassFileInfoByHandle
-
+      
       #region DumpClassFileSystemEntryInfo
 
       private void DumpClassFileSystemEntryInfo(bool isLocal)
@@ -1410,7 +1405,20 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Filesystem_Class_BackupFileStream
-      
+
+      #region Filesystem_Class_ByHandleFileInfo
+
+      [TestMethod]
+      public void Filesystem_Class_ByHandleFileInfo()
+      {
+         Console.WriteLine("Class Filesystem.ByHandleFileInfo()");
+
+         DumpClassByHandleFileInfo(true);
+         DumpClassByHandleFileInfo(false);
+      }
+
+      #endregion // Filesystem_Class_ByHandleFileInfo
+
       #region Filesystem_Class_DeviceInfo
 
       [TestMethod]
@@ -1477,20 +1485,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Filesystem_Class_FileInfo
-
-      #region Filesystem_Class_FileInfoByHandle
-
-      [TestMethod]
-      public void Filesystem_Class_FileInfoByHandle()
-      {
-         Console.WriteLine("Class Filesystem.FileInfoByHandle()");
-
-         DumpClassFileInfoByHandle(true);
-         DumpClassFileInfoByHandle(false);
-      }
-
-      #endregion // Filesystem_Class_FileInfoByHandle
-
+      
       #region Filesystem_Class_FileSystemEntryInfo
 
       [TestMethod]

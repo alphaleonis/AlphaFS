@@ -1456,7 +1456,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves file information for the specified file.</summary>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero and file information data is contained in the buffer pointed to by the lpFileInformation parameter.
+      /// If the function succeeds, the return value is nonzero and file information data is contained in the buffer pointed to by the lpByHandleFileInformation parameter.
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
       /// <remarks>
@@ -1468,7 +1468,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetFileInformationByHandle(SafeFileHandle hFile, [MarshalAs(UnmanagedType.Struct)] out FileInfoByHandle lpFileInformation);
+      internal static extern bool GetFileInformationByHandle(SafeFileHandle hFile, [MarshalAs(UnmanagedType.Struct)] out ByHandleFileInfo lpByHandleFileInformation);
 
       #endregion // GetFileInformationByHandle
 
@@ -1477,7 +1477,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Retrieves file information for the specified file.
       /// <para>&#160;</para>
       /// <returns>
-      /// <para>If the function succeeds, the return value is nonzero and file information data is contained in the buffer pointed to by the lpFileInformation parameter.</para>
+      /// <para>If the function succeeds, the return value is nonzero and file information data is contained in the buffer pointed to by the lpByHandleFileInformation parameter.</para>
       /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
       /// <para>&#160;</para>

@@ -5379,19 +5379,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves file information for the specified <see cref="T:SafeFileHandle"/>.</summary>
       /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information.</param>
-      /// <returns>A <see cref="T:FileInfoByHandle"/> object containing the requested information.</returns>
+      /// <returns>A <see cref="T:ByHandleFileInfo"/> object containing the requested information.</returns>
       /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
-      public static FileInfoByHandle GetFileInfoByHandle(SafeFileHandle handle)
+      public static ByHandleFileInfo GetFileInfoByHandle(SafeFileHandle handle)
       {
          NativeMethods.IsValidHandle(handle);
 
-         NativeMethods.FileInfoByHandle info;
+         NativeMethods.ByHandleFileInfo info;
 
          if (!NativeMethods.GetFileInformationByHandle(handle, out info))
             NativeError.ThrowException(Marshal.GetLastWin32Error());
 
-         return new FileInfoByHandle(info);
+         return new ByHandleFileInfo(info);
       }
 
       #endregion // GetFileInfoByHandle
