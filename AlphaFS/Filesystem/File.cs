@@ -4893,7 +4893,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An enumerable collection of <see cref="T:String"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <returns>An enumerable collection of <see cref="T:string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(string path, bool? isFullPath)
@@ -4905,7 +4905,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
       /// <param name="path">The name of the file.</param>
-      /// <returns>An enumerable collection of <see cref="T:String"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <returns>An enumerable collection of <see cref="T:string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(string path)
@@ -4925,7 +4925,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An enumerable collection of <see cref="T:String"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <returns>An enumerable collection of <see cref="T:string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path, bool? isFullPath)
@@ -4938,7 +4938,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
-      /// <returns>An enumerable collection of <see cref="T:String"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <returns>An enumerable collection of <see cref="T:string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path)
@@ -5868,6 +5868,87 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion GetStreamSize
 
+      #region OpenBackupRead
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.
+      /// <para>&#160;</para>
+      /// This method is simpler to use then BackupFileStream to read only file's data stream.
+      /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The file path to open.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static FileStream OpenBackupRead(string path, bool? isFullPath)
+      {
+         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.
+      /// <para>&#160;</para>
+      /// This method is simpler to use then BackupFileStream to read only file's data stream.
+      /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
+      /// </summary>
+      /// <param name="path">The file path to open.</param>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static FileStream OpenBackupRead(string path)
+      {
+         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null);
+      }
+
+      #region Transacted
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.
+      /// <para>&#160;</para>
+      /// This method is simpler to use then BackupFileStream to read only file's data stream.
+      /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file path to open.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static FileStream OpenBackupRead(KernelTransaction transaction, string path, bool? isFullPath)
+      {
+         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.
+      /// <para>&#160;</para>
+      /// This method is simpler to use then BackupFileStream to read only file's data stream.
+      /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file path to open.</param>
+      [SecurityCritical]
+      public static FileStream OpenBackupRead(KernelTransaction transaction, string path)
+      {
+         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null);
+      }
+
+      #endregion // Transacted
+
+      #endregion // OpenBackupRead
+
+
       #region RemoveStream
 
       #region IsFullPath
@@ -6740,7 +6821,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An enumerable collection of <see cref="T:String"/> of all the hard links to the specified <paramref name="path"/></returns>
+      /// <returns>An enumerable collection of <see cref="T:string"/> of all the hard links to the specified <paramref name="path"/></returns>
       internal static IEnumerable<string> EnumerateHardlinksInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
