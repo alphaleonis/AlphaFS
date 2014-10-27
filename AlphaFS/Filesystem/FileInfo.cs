@@ -859,8 +859,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       private long _length = -1;
 
-      /// <summary>Gets the size, in bytes, of the current file.</summary>
-      /// <returns>The size of the current file in bytes.</returns>
+      /// <summary>Gets the size, in bytes, of the current file.
+      /// <para>&#160;</para>
+      /// <exception cref="System.IO.FileNotFoundException"></exception>
+      /// </summary>
+      [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = ".NET also throws FileNotFoundException().")]
       public long Length
       {
          get
@@ -868,8 +871,10 @@ namespace Alphaleonis.Win32.Filesystem
             if (_length == -1)
                Refresh();
 
-            _length = EntryInfo != null ? EntryInfo.FileSize : -1;
+            if (EntryInfo == null || EntryInfo.IsDirectory)
+               throw new FileNotFoundException(LongFullName);
 
+            _length = EntryInfo.FileSize;
             return _length;
          }
       }
