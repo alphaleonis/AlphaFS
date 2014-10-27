@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Represents a wrapper class for a handle used by the FindFirstVolume/FindNextVolume methods of the Win32 API.</summary>
    [SecurityCritical]
-   internal sealed class SafeFindVolumeHandle : SafeHandleZeroOrMinusOneIsInvalid
+   public sealed class SafeFindVolumeHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
       /// <summary>Initializes a new instance of the <see cref="T:SafeFindVolumeHandle"/> class.</summary>
       private SafeFindVolumeHandle()
