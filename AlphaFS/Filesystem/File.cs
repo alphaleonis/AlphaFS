@@ -6556,7 +6556,7 @@ namespace Alphaleonis.Win32.Filesystem
                switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_PATH_NOT_FOUND:
-                     if (pathLp.Equals(Path.GetPathRoot(pathLp), StringComparison.OrdinalIgnoreCase))
+                     if (pathLp.Equals(Path.GetPathRoot(pathLp, false), StringComparison.OrdinalIgnoreCase))
                         lastError = 5;
                      break;
 

@@ -849,6 +849,23 @@ namespace AlphaFS.UnitTest
          bool allOk = true;
          int errorCnt = 0;
 
+
+         string root = Path.GetPathRoot(null);
+         Assert.AreEqual(null, root, "root should be null.");
+
+
+         bool success = true;
+         try
+         {
+            root = Path.GetPathRoot("");
+         }
+         catch (Exception)
+         {
+            success = false;
+         }
+         Assert.IsFalse(success, "Success should be false because of empty path string.");
+
+
          StopWatcher(true);
          foreach (string input in InputPaths)
          {

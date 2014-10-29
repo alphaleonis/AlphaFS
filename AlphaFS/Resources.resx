@@ -247,4 +247,7 @@
   <data name="HandleDangerousRef" xml:space="preserve">
     <value>SafeGlobalMemoryBufferHandle DangerousAddRef / DangerousRelease failure.</value>
   </data>
+  <data name="PathCannotBeEmpty" xml:space="preserve">
+    <value>The path cannot be an empty string.</value>
+  </data>
 </root>

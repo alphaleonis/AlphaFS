@@ -395,28 +395,45 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Gets the root directory information of the specified path.</summary>
+      /// <summary>Gets the root directory information of the specified path.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns the root directory of <paramref name="path"/>, such as "C:\", or <c>null</c> if <paramref name="path"/> is <c>null</c>, </para>
+      /// <para>or an empty string if <paramref name="path"/> does not contain root directory information.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <exception cref="ArgumentException"></exception>
+      /// </summary>
       /// <param name="path">The path from which to obtain root directory information.</param>
-      /// <returns>The root directory of <paramref name="path"/>, such as "C:\", or <c>null</c> if <paramref name="path"/> is <c>null</c>, or <c>string.Empty</c> if <paramref name="path"/> does not contain root directory information.</returns>
       [SecurityCritical]
       public static string GetPathRoot(string path)
       {
-         return GetPathRoot(path, false);
+         return GetPathRoot(path, true);
       }
 
       #endregion // .NET
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Gets the root directory information of the specified path.</summary>
+      /// <summary>[AlphaFS] Gets the root directory information of the specified path.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns the root directory of <paramref name="path"/>, such as "C:\", or <c>null</c> if <paramref name="path"/> is <c>null</c>, </para>
+      /// <para>or an empty string if <paramref name="path"/> does not contain root directory information.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <exception cref="ArgumentException"></exception>
+      /// </summary>
       /// <param name="path">The path from which to obtain root directory information.</param>
       /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
-      /// <returns>The root directory of <paramref name="path"/>, such as "C:\", or <c>null</c> if <paramref name="path"/> is <c>null</c>, or <c>string.Empty</c> if <paramref name="path"/> does not contain root directory information.</returns>
       [SecurityCritical]
       public static string GetPathRoot(string path, bool checkInvalidChars)
       {
          if (path == null)
             return null;
+
+         if (path.Trim().Length == 0)
+            throw new ArgumentException(Resources.PathCannotBeEmpty);
 
          return path.Substring(0, GetRootLength(path, checkInvalidChars));
       }

@@ -314,6 +314,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The path cannot be an empty string..
+        /// </summary>
+        internal static string PathCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("PathCannotBeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to name cannot be empty.
         /// </summary>
         internal static string Privilege_Privilege_name_cannot_be_empty {
