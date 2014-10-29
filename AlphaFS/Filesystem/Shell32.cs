@@ -570,7 +570,8 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(filePath))
             return IntPtr.Zero;
 
-         return (GetFileInfoInternal(filePath, System.IO.FileAttributes.Normal, FileAttributes.Icon | iconAttributes, true)).IconHandle;
+         FileInfo fileInfo = GetFileInfoInternal(filePath, System.IO.FileAttributes.Normal, FileAttributes.Icon | iconAttributes, true);
+         return fileInfo.IconHandle == IntPtr.Zero ? IntPtr.Zero : fileInfo.IconHandle; 
       }
 
       #endregion // GetFileIcon
