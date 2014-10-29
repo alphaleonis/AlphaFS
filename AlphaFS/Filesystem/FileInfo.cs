@@ -674,8 +674,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetStreamSize
 
-      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
-      /// <returns>The number of bytes used by all data streams.</returns>
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).</summary>
+      /// <returns>The number of bytes used by all streams.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public long GetStreamSize()
@@ -904,13 +904,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LengthStreams
 
-      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
-      /// <returns>The number of bytes used by all data streams.</returns>
+      private long _lengthStreams = -1;
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).</summary>
+      /// <returns>The number of bytes used by all streams.</returns>
+      [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = "We do the same for FileInfo.Length property.")]
       public long LengthStreams
       {
          get
          {
-            return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, null, null);
+            if (_lengthStreams == -1)
+               Refresh();
+
+            if (EntryInfo == null || EntryInfo.IsDirectory)
+               throw new FileNotFoundException(LongFullName);
+
+            _lengthStreams = AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, null, null);
+            return _lengthStreams;
          }
       }
 
