@@ -205,26 +205,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // ReparsePointTag
 
-      #region VirtualFullPath
-
-      /// <summary>This property is intended to be used with in the future versions of the library
-      /// to store a full path that is relative to a parent symbolic link or junction point.
-      /// It will be correctly set by enumerating methods.
-      /// </summary>
-      /// <remarks>
-      /// <code>
-      /// Parent Symbolic Directory Link Pointed
-      /// From: C:\Users\Novels\Application Data
-      /// To: C:\Users\Novels\AppData\Roaming
-      /// so the entry info for vlc-qt-interface.ini file will have following values
-      /// FullPath: \\?\C:\Users\Novels\AppData\Roaming\vlc\vlc-qt-interface.ini
-      /// VirtualFullPath: C:\Users\Novels\Application Data\vlc\vlc-qt-interface.ini
-      /// </code>  
-      /// </remarks>
-      public string VirtualFullPath { get; set; }
-
-      #endregion // VirtualFullPath
-
       #region Win32FindData
       
       private readonly NativeMethods.Win32FindData _win32FindData;
