@@ -33,7 +33,11 @@ using System.Security.AccessControl;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Class that retrieves the NTFS alternate data streams from a file or directory.</summary>
+   /// <summary>Provides properties and instance methods for the enumeration,
+   /// <para>creation and deletion of NTFS Alternate Data Streams.</para>
+   /// <para>&#160;</para>
+   /// <remarks>This class cannot be inherited.</remarks>
+   /// </summary>
    [SerializableAttribute]
    public sealed class AlternateDataStreamInfo
    {
@@ -78,11 +82,11 @@ namespace Alphaleonis.Win32.Filesystem
          Type = stream.StreamType;
          Size = (long) stream.StreamSize;
 
-         FullPath = path;
+         FullName = path + Name;
 
          if (isFolder == null)
          {
-            FileAttributes attrs = File.GetAttributesInternal(false, null, LongFullPath, true, false, null);
+            FileAttributes attrs = File.GetAttributesInternal(false, null, LongFullName, true, false, null);
             IsDirectory = (attrs & FileAttributes.Directory) == FileAttributes.Directory;
          }
          else
@@ -102,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
-         AddStreamInternal(false, null, LongFullPath, name, contents, null);
+         AddStreamInternal(false, null, LongFullName, name, contents, null);
       }
 
       #endregion // AddStream
@@ -114,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return EnumerateStreamsInternal(null, null, null, LongFullPath, null, null, null);
+         return EnumerateStreamsInternal(null, null, null, LongFullName, null, null, null);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file or directory.</summary>
@@ -123,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
-         return EnumerateStreamsInternal(null, null, null, LongFullPath, null, streamType, null);
+         return EnumerateStreamsInternal(null, null, null, LongFullName, null, streamType, null);
       }
 
       #endregion // EnumerateStreams
@@ -137,7 +141,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream()
       {
-         RemoveStreamInternal(null, null, LongFullPath, null, null);
+         RemoveStreamInternal(null, null, LongFullName, null, null);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file or directory.</summary>
@@ -148,7 +152,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream(string name)
       {
-         RemoveStreamInternal(null, null, LongFullPath, name, null);
+         RemoveStreamInternal(null, null, LongFullName, name, null);
       }
 
       #endregion // RemoveStreams
@@ -407,23 +411,24 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Attributes
 
-      #region FullPath
+      #region FullName
 
       private readonly bool? _isFullPath = false;
-      private string _fullPath;
+      private string _fullName;
 
       /// <summary>The source path of the stream.</summary>
-      public string FullPath
+      public string FullName
       {
-         get { return _fullPath; }
-         set
+         get { return _fullName; }
+
+         private set
          {
-            LongFullPath = value;
-            _fullPath = Path.GetRegularPathInternal(LongFullPath, false, false, false, false);
+            LongFullName = value;
+            _fullName = Path.GetRegularPathInternal(LongFullName, false, false, false, false);
          }
       }
 
-      #endregion // FullPath
+      #endregion // FullName
 
       #region Type
 
@@ -441,21 +446,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsDirectory
 
-      #region LongFullPath
+      #region LongFullName
 
-      private string _longFullPath;
+      private string _longFullName;
 
       /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
-      internal string LongFullPath
+      public string LongFullName
       {
-         get { return _longFullPath; }
+         get { return _longFullName; }
+
          private set
          {
-            _longFullPath = _isFullPath == null ? value : Path.GetLongPathInternal(value, false, false, false, false);
+            _longFullName = _isFullPath == null ? value : Path.GetLongPathInternal(value, false, false, false, false);
          }
       }
 
-      #endregion // LongFullPath
+      #endregion // LongFullName
 
       #region Name
 

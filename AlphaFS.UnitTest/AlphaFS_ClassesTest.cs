@@ -413,7 +413,7 @@ namespace AlphaFS.UnitTest
          // Enumerate all streams from the file.
          foreach (AlternateDataStreamInfo stream in fi.EnumerateStreams())
          {
-            Assert.IsTrue(Dump(stream, -11));
+            Assert.IsTrue(Dump(stream, -12));
 
             // The default stream, a file as you know it.
             if (stream.Type == StreamType.Data)
@@ -515,7 +515,7 @@ namespace AlphaFS.UnitTest
 
          // Enumerate all streams from the directory.
          foreach (AlternateDataStreamInfo stream in di.EnumerateStreams())
-            Assert.IsTrue(Dump(stream, -11));
+            Assert.IsTrue(Dump(stream, -12));
 
          Console.WriteLine("\n\n\tCurrent stream Count(): [{0}]    {1}", newNumberofStreams, reporter);
          Assert.AreEqual(newNumberofStreams, File.EnumerateStreams(tempPath).Count(), "Total amount of streams do not match.");
