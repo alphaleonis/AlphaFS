@@ -1193,7 +1193,7 @@ namespace AlphaFS.UnitTest
 
          
          StopWatcher(true);
-         Shell32Info shell32Info = Shell32.GetShell32Information(tempPath);
+         Shell32Info shell32Info = Shell32.GetShell32Info(tempPath);
          string report = Reporter();
 
          Console.WriteLine("\tMethod: Shell32Info.Refresh()");

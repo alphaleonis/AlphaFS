@@ -220,7 +220,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (_attributes == Shell32.GetAttributesOf.None)
             {
-               Shell32.FileInfo fileInfo = Shell32.GetFileInformationInternal(FullPath, FileAttributes.Normal, Shell32.FileAttributes.Attributes, true);
+               Shell32.FileInfo fileInfo = Shell32.GetFileInfoInternal(FullPath, FileAttributes.Normal, Shell32.FileAttributes.Attributes, true);
                _attributes = fileInfo.Attributes;
             }
 

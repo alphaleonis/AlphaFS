@@ -175,7 +175,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\t\tGetFileVerbCommand()    : [{0}]", verbCommand);
             
             StopWatcher(true);
-            Shell32Info shell32Info = Shell32.GetShell32Information(file);
+            Shell32Info shell32Info = Shell32.GetShell32Info(file);
             string report = Reporter(true);
 
             string cmd = "print";
@@ -191,7 +191,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpGetAssociation
 
-      private static void DumpGetFileInformation(bool isLocal)
+      private static void DumpGetFileInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
@@ -203,9 +203,9 @@ namespace AlphaFS.UnitTest
          StopWatcher(true);
          foreach (string file in Directory.EnumerateFiles(path))
          {
-            Shell32Info shell32Info = Shell32.GetShell32Information(file);
+            Shell32Info shell32Info = Shell32.GetShell32Info(file);
             collectStrings += shell32Info.FriendlyDocName;
-            //Shell32.FileInfo fileInfo = Shell32.GetFileInformation(file);
+            //Shell32.FileInfo fileInfo = Shell32.GetFileInfo(file);
             //collectStrings += fileInfo.TypeName;
 
             //Console.WriteLine("\t#{0:000}\t[{1}]\n\t\tTypeName   : [{2}]\n\t\tDisplayName: [{3}]\n\t\tAttributes : [{4}]\n",
@@ -252,7 +252,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetFileAssociation
 
-      #region GetFileVerbCommand
+      #region GetFileVerbCommand (Empty)
 
       [TestMethod]
       public void GetFileVerbCommand()
@@ -261,9 +261,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
       }
 
-      #endregion // GetFileVerbCommand
+      #endregion // GetFileVerbCommand (Empty)
 
-      #region GetFileContentType
+      #region GetFileContentType (Empty)
 
       [TestMethod]
       public void GetFileContentType()
@@ -272,9 +272,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
       }
 
-      #endregion // GetFileContentType
+      #endregion // GetFileContentType (Empty)
 
-      #region GetFileDefaultIcon
+      #region GetFileDefaultIcon (Empty)
 
       [TestMethod]
       public void GetFileDefaultIcon()
@@ -283,9 +283,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
       }
 
-      #endregion // GetFileDefaultIcon
-      
-      #region GetFileFriendlyAppName
+      #endregion // GetFileDefaultIcon (Empty)
+
+      #region GetFileFriendlyAppName (Empty)
 
       [TestMethod]
       public void GetFileFriendlyAppName()
@@ -294,9 +294,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
       }
 
-      #endregion // GetFileFriendlyAppName
+      #endregion // GetFileFriendlyAppName (Empty)
 
-      #region GetFileFriendlyDocName
+      #region GetFileFriendlyDocName (Empty)
 
       [TestMethod]
       public void GetFileFriendlyDocName()
@@ -305,7 +305,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
       }
 
-      #endregion // GetFileFriendlyDocName
+      #endregion // GetFileFriendlyDocName (Empty)
 
       #region GetFileIcon
 
@@ -327,7 +327,20 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetFileIcon
 
-      #region GetFileOpenWithAppName
+      #region GetFileInfo
+
+      [TestMethod]
+      public void GetFileInfo()
+      {
+         Console.WriteLine("Filesystem.Shell32.GetFileInfo()");
+
+         DumpGetFileInfo(true);
+         DumpGetFileInfo(false);
+      }
+
+      #endregion // GetFileInfo
+
+      #region GetFileOpenWithAppName (Empty)
 
       [TestMethod]
       public void GetFileOpenWithAppName()
@@ -336,8 +349,8 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
       }
 
-      #endregion // GetFileOpenWithAppName
-      
+      #endregion // GetFileOpenWithAppName (Empty)
+
       #region PathCreateFromUrl
 
       [TestMethod]
@@ -414,20 +427,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // PathFileExists
-
-      #region GetFileInformation
-
-      [TestMethod]
-      public void GetFileInformation()
-      {
-         Console.WriteLine("Filesystem.Shell32.GetFileInformation()");
-
-         DumpGetFileInformation(true);
-         DumpGetFileInformation(false);
-      }
-
-      #endregion // GetFileInformation
-
+      
       #region UrlCreateFromPath
 
       [TestMethod]
@@ -470,40 +470,37 @@ namespace AlphaFS.UnitTest
 
       #endregion // UrlIs
 
-      #region UrlIsFileUrl
+      #region UrlIsFileUrl (Empty)
 
       [TestMethod]
       public void UrlIsFileUrl()
       {
          Console.WriteLine("Filesystem.Shell32.UrlIsFileUrl()");
-
-         UrlIs();
+         Console.WriteLine("\nPlease see unit test: UrlIs()");
       }
 
-      #endregion // UrlIsFileUrl
+      #endregion // UrlIsFileUrl (Empty)
 
-      #region UrlIsNoHistory
+      #region UrlIsNoHistory (Empty)
 
       [TestMethod]
       public void UrlIsNoHistory()
       {
          Console.WriteLine("Filesystem.Shell32.UrlIsNoHistory()");
-
-         UrlIs();
+         Console.WriteLine("\nPlease see unit test: UrlIs()");
       }
 
-      #endregion // UrlIsNoHistory
+      #endregion // UrlIsNoHistory (Empty)
 
-      #region UrlIsOpaque
+      #region UrlIsOpaque (Empty)
 
       [TestMethod]
       public void UrlIsOpaque()
       {
          Console.WriteLine("Filesystem.Shell32.UrlIsOpaque()");
-
-         UrlIs();
+         Console.WriteLine("\nPlease see unit test: UrlIs()");
       }
 
-      #endregion // UrlIsOpaque
+      #endregion // UrlIsOpaque (Empty)
    }
 }

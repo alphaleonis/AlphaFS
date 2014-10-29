@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Provides information for the IQueryAssociations interface methods, used by Shell32.</summary>
       [Flags]
-      internal enum AssociationAttributes
+      public enum AssociationAttributes
       {
          /// <summary>None.</summary>
          None = 0,
@@ -78,6 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
          RemapRunDll = 128,
 
          /// <summary>Instructs IQueryAssociations methods not to fix errors in the registry, such as the friendly name of a function not matching the one found in the .exe file.</summary>
+         [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "FixUps")]
          NoFixUps = 256,
 
          /// <summary>Specifies that the BaseClass value should be ignored.</summary>
@@ -127,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AssociationString
 
       /// <summary>ASSOCSTR enumeration - Used by the AssocQueryString() function to define the type of string that is to be returned.</summary>
-      internal enum AssociationString
+      public enum AssociationString
       {
          /// <summary>None.</summary>
          None = 0,
@@ -155,15 +156,19 @@ namespace Alphaleonis.Win32.Filesystem
          ShellNewValue = 6,
 
          /// <summary>A template for DDE commands.</summary>
+         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dde")]
          DdeCommand = 7,
 
          /// <summary>The DDE command to use to create a process.</summary>
+         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dde")]
          DdeIfExec = 8,
 
          /// <summary>The application name in a DDE broadcast.</summary>
+         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dde")]
          DdeApplication = 9,
 
          /// <summary>The topic name in a DDE broadcast.</summary>
+         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dde")]
          DdeTopic = 10,
 
          /// <summary>
@@ -456,7 +461,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region UrlType
 
       /// <summary>Used by method UrlIs() to define a URL type.</summary>
-      internal enum UrlType
+      public enum UrlType
       {
          /// <summary>Is the URL valid?</summary>
          IsUrl = 0,
@@ -471,13 +476,14 @@ namespace Alphaleonis.Win32.Filesystem
          IsFileUrl = 3,
 
          /// <summary>Attempt to determine a valid scheme for the URL.</summary>
+         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Appliable")]
          IsAppliable = 4,
 
          /// <summary>Does the URL string end with a directory?</summary>
          IsDirectory = 5,
 
          /// <summary>Does the URL have an appended query string?</summary>
-         IsHasquery = 6
+         IsHasQuery = 6
       }
 
       #endregion // UrlType
@@ -564,13 +570,12 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(filePath))
             return IntPtr.Zero;
 
-         FileInfo fileInfo = GetFileInformationInternal(filePath, System.IO.FileAttributes.Normal, FileAttributes.Icon | iconAttributes, true);
-         return fileInfo.IconHandle == IntPtr.Zero ? IntPtr.Zero : fileInfo.IconHandle;
+         return (GetFileInfoInternal(filePath, System.IO.FileAttributes.Normal, FileAttributes.Icon | iconAttributes, true)).IconHandle;
       }
 
       #endregion // GetFileIcon
 
-      #region GetFileInformation
+      #region GetFileInfo
 
       /// <summary>Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
       /// <param name="filePath">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
@@ -582,25 +587,25 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>LongPath is not supported.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static FileInfo GetFileInformation(string filePath, System.IO.FileAttributes attributes, FileAttributes fileAttributes, bool continueOnException)
+      public static FileInfo GetFileInfo(string filePath, System.IO.FileAttributes attributes, FileAttributes fileAttributes, bool continueOnException)
       {
-         return GetFileInformationInternal(filePath, attributes, fileAttributes, continueOnException);
+         return GetFileInfoInternal(filePath, attributes, fileAttributes, continueOnException);
       }
 
-      #endregion // GetFileInformation
+      #endregion // GetFileInfo
 
-      #region GetShell32Information
+      #region GetShell32Info
 
       /// <summary></summary>
       /// <param name="path">A path to the file.</param>
       /// <returns>A <see cref="T:Shell32Info"/> class instance.</returns>
       [SecurityCritical]
-      public static Shell32Info GetShell32Information(string path)
+      public static Shell32Info GetShell32Info(string path)
       {
          return new Shell32Info(path);
       }
 
-      #endregion // GetShell32Information
+      #endregion // GetShell32Info
 
       #region GetFileOpenWithAppName
 
@@ -847,9 +852,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetFileAssociationInternal
 
-      #region GetFileInformationInternal
+      #region GetFileInfoInternal
 
-      /// <summary>Unified method GetFileInformationInternal() to retrieve information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
+      /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
       /// <param name="path">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
       /// <param name="attributes">A <see cref="T:System.IO.FileAttributes"/> attribute.</param>
       /// <param name="fileAttributes">A <see cref="T:FileAttributes"/> attribute.</param>
@@ -859,7 +864,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>LongPaths not supported.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static FileInfo GetFileInformationInternal(string path, System.IO.FileAttributes attributes, FileAttributes fileAttributes, bool continueOnException)
+      internal static FileInfo GetFileInfoInternal(string path, System.IO.FileAttributes attributes, FileAttributes fileAttributes, bool continueOnException)
       {
          // Prevent possible crash.
          FileInfo fileInfo = new FileInfo
@@ -886,7 +891,7 @@ namespace Alphaleonis.Win32.Filesystem
          return fileInfo;
       }
 
-      #endregion // GetFileInformationInternal
+      #endregion // GetFileInfoInternal
 
       #endregion // Unified Internals
 
