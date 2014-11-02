@@ -6391,8 +6391,8 @@ namespace Alphaleonis.Win32.Filesystem
                   throw new NotSupportedException(destFileName);
             }
          }
-
          
+
          string sourceFileNameLp = isFullPath == null
             ? sourceFileName
             : (bool) isFullPath
@@ -6425,7 +6425,7 @@ namespace Alphaleonis.Win32.Filesystem
          int cancel;
          bool doCopy = !isMove && copyOptions != null && moveOptions == null;
          bool doMove = isMove && moveOptions != null && copyOptions == null;
-         
+
          if (ExistsInternal(false, transaction, destFileNameLp, null))
          {
             bool overwrite = doCopy
@@ -6444,8 +6444,8 @@ namespace Alphaleonis.Win32.Filesystem
                // MSDN: .NET 3.5+ IOException: MoveTo() An I/O error occurs, such as the destination file already exists or the destination device is not ready.
                NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destFileNameLp, true);
          }
-         
-         
+
+
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
             ? doMove
                // MoveFileWithProgress() / MoveFileTransacted()
@@ -6741,7 +6741,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region DeleteFileInternal
 
-      /// <summary>[AlphaFS] Unified method DeleteFileInternal() to delete a Non-/Transacted file.</summary>
+      /// <summary>[AlphaFS] Unified method DeleteFileInternal() to delete a Non-/Transacted file.
+      /// <para>&#160;</para>
+      /// <remarks><para>If the file to be deleted does not exist, no exception is thrown.</para></remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="T:FileAttributes"/> of the file.</param>
@@ -6750,8 +6754,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       internal static void DeleteFileInternal(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
       {
@@ -6764,12 +6766,24 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false);
-
-
+         
+         
          // Reset file attributes.
          // MSDN: This function fails with ERROR_ACCESS_DENIED if the destination file already exists and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
          if (ignoreReadOnly)
             SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, null);
+
+         else
+         {
+            FileAttributes attrs = GetAttributesInternal(false, transaction, pathLp, false, true, null);
+
+            if (attrs != (FileAttributes) (-1) && (attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+            {
+               // MSDN: .NET 3.5+: UnauthorizedAccessException: path specified a read-only file.
+               Exception exception = Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(Win32Errors.ERROR_FILE_READ_ONLY));
+               throw new UnauthorizedAccessException(NativeError.FormatError(exception.Message, pathLp), exception);
+            }
+         }
 
          // If the path points to a symbolic link, the symbolic link is deleted, not the target.
          

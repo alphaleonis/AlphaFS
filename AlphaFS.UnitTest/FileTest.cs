@@ -376,7 +376,8 @@ namespace AlphaFS.UnitTest
       private void DumpDelete(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tempPath = Path.GetTempPath("File-Delete-" + Path.GetRandomFileName());
+         string tempFolder = Path.GetTempPath();
+         string tempPath = Path.Combine(tempFolder, "File-Delete-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
 
@@ -386,66 +387,70 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput Path: [{0}]\n\n\tfilestream.Length = [{1}]", tempPath, NativeMethods.UnitSizeToText(fs.Length));
          }
          Assert.IsTrue(File.Exists(tempPath));
-
-
+         
+         #region IOException
+         
          FileStream streamCreate2 = File.Open(tempPath, FileMode.Open);
-
-         // Fail #1; Filestream still open.
          bool exception = false;
          try
          {
-            File.Delete(tempPath, true);
+            Console.WriteLine("\n\nFail: File in use.");
+            File.Delete(tempPath);
          }
-         catch (Exception ex)
+         catch (IOException ex)
          {
             exception = true;
-            Console.WriteLine("\n\tFile.Delete(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
          }
-         Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "An Exception was expected.");
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "Exception should have been caught.");
 
          streamCreate2.Close();
 
+         #endregion // IOException
 
-         // Fail #2; File ReadOnly attribute is set.
-         bool success = false;
-         try
-         {
-            File.SetAttributes(tempPath, FileAttributes.ReadOnly);
-            success = true;
-         }
-         catch { }
-         Console.WriteLine("\n\n\tReadOnly Attribute set (Should be True): [{0}]", success);
-         Assert.IsTrue(success);
-
+         #region UnauthorizedAccessException #1
 
          exception = false;
-         bool deleteOk = false;
          try
          {
-            StopWatcher(true);
-            File.Delete(tempPath);
-            deleteOk = true;
+            Console.WriteLine("\n\nFail: File path is a directory.");
+            File.Delete(tempFolder, true);
          }
-         catch (Exception ex)
+         catch (UnauthorizedAccessException ex)
          {
             exception = true;
-            Console.WriteLine("\n\tFile.Delete(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tUnauthorizedAccessException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
          }
-         Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception);
+         Console.WriteLine("\n\tCaught UnauthorizedAccessException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "Exception should have been caught.");
 
+         #endregion // UnauthorizedAccessException #1
 
+         #region UnauthorizedAccessException #2
 
-         Console.WriteLine("\n\n\tFile.Delete() (Should be False): [{0}]{1}\n", deleteOk, Reporter());
-         Assert.IsFalse(deleteOk, "File should not be deleted because it is read-only.");
+         File.SetAttributes(tempPath, FileAttributes.ReadOnly);
+         exception = false;
+         try
+         {
+            Console.WriteLine("\n\nFail: File ReadOnly attribute is set.");
+            File.Delete(tempPath);
+         }
+         catch (UnauthorizedAccessException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tUnauthorizedAccessException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+         }
+         Console.WriteLine("\n\tCaught UnauthorizedAccessException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "Exception should have been caught.");
 
+         #endregion // UnauthorizedAccessException #2
 
-         // Success, forceOverrideReadOnly = true.
+         // Success, ignoreReadOnly = true.
+         Console.WriteLine("\n\nSuccess: File.Delete(, true);");
          File.Delete(tempPath, true);
-         success = !File.Exists(tempPath);
-         Console.WriteLine("\tFile.Delete() success (Should be True): [{0}]\n\n\n", success);
-         Assert.IsTrue(success);
+         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
       }
 
       #endregion // DumpDelete

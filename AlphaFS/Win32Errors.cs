@@ -1046,7 +1046,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_NO_USER_KEYS = 6006;
       //public const uint ERROR_FILE_NOT_ENCRYPTED = 6007;
       //public const uint ERROR_NOT_EXPORT_FORMAT = 6008;
-      //public const uint ERROR_FILE_READ_ONLY = 6009;
+      public const uint ERROR_FILE_READ_ONLY = 6009;
       //public const uint ERROR_DIR_EFS_DISALLOWED = 6010;
       //public const uint ERROR_EFS_SERVER_NOT_TRUSTED = 6011;
       public const uint ERROR_BAD_RECOVERY_POLICY = 6012;
