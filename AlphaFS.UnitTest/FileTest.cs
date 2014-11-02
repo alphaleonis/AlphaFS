@@ -330,7 +330,7 @@ namespace AlphaFS.UnitTest
          {
             string newFile = Path.Combine(tempPath, Path.GetFileName(file, true));
             File.Copy(file, newFile);
-            Console.WriteLine("\t#{0:000}\tCopy() == [{1}]", ++cnt, newFile);
+            Console.WriteLine("\t#{0:000}\tCopy: [{1}]", ++cnt, newFile);
             Assert.IsTrue(File.Exists(newFile));
          }
          Console.WriteLine("\n\tTotal Size: [{0}]{1}", NativeMethods.UnitSizeToText(Directory.GetProperties(tempPath)["Size"]), Reporter());
@@ -339,36 +339,28 @@ namespace AlphaFS.UnitTest
 
          #region Copy, Exception
 
-         // Catch Exception: The file exists. (Exception from HRESULT: 0x80070050)
-
          bool exception = false;
          foreach (string file in Directory.EnumerateFiles(path))
          {
             string newFile = Path.Combine(tempPath, Path.GetFileName(file, true));
 
+            Console.WriteLine("\n\tCopy same file again, should throw IOException.");
             try
             {
                File.Copy(file, newFile);
                break;
             }
-            catch (AlreadyExistsException ex)
+            catch (IOException ex)
             {
                exception = true;
-               Console.WriteLine("\n\tCopy() Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
 
                Assert.IsTrue(!string.IsNullOrWhiteSpace(newFile) && File.Exists(newFile), "newFile should not be deleted.");
                break;
             }
-            catch
-            {
-               Assert.IsTrue(!string.IsNullOrWhiteSpace(newFile) && File.Exists(newFile), "newFile should not be deleted.");
-               break;
-            }
-
          }
-
-         Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception);
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "IOException should have been caught.");
 
          #endregion // Copy, Exception
 
@@ -963,9 +955,7 @@ namespace AlphaFS.UnitTest
 
          #endregion // Copy (For safety)
 
-         // Catch Exception: The file exists. (Exception from HRESULT: 0x80070050)
-         // Catch Exception: Cannot create a file when that file already exists. (Exception from HRESULT: 0x800700B7)
-
+         Console.WriteLine("\n\tMove same file again, should throw IOException.");
          bool exception = false;
          foreach (string file in Directory.EnumerateFiles(tempPath))
          {
@@ -973,14 +963,12 @@ namespace AlphaFS.UnitTest
 
             try
             {
-               StopWatcher(true);
                File.Move(file, newFile);
-               break;
             }
-            catch (AlreadyExistsException ex)
+            catch (IOException ex)
             {
                exception = true;
-               Console.WriteLine("\n\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
                break;
             }
             catch
@@ -988,8 +976,8 @@ namespace AlphaFS.UnitTest
                break;
             }
          }
-         Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception);
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "IOException should have been caught.");
 
          #endregion // Exception Test
 
@@ -998,6 +986,7 @@ namespace AlphaFS.UnitTest
 
          Directory.Delete(tempPath, true, true);
          Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+         Console.WriteLine();
       }
 
       #endregion // DumpMove

@@ -1167,7 +1167,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method <c>false</c> false regardless of the existence of path.
       /// </returns>
       /// <remarks>If path describes a directory, this method returns <c>false</c>.</remarks>
-      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
+      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
       /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(string path)
@@ -1194,7 +1194,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method <c>false</c> false regardless of the existence of path.
       /// </returns>
       /// <remarks>If path describes a directory, this method returns <c>false</c>.</remarks>
-      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
+      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
       /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(string path, bool? isFullPath)
@@ -1217,7 +1217,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method <c>false</c> false regardless of the existence of path.
       /// </returns>
       /// <remarks>If path describes a directory, this method returns <c>false</c>.</remarks>
-      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
+      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
       /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
@@ -1243,7 +1243,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the caller does not have sufficient permissions to read the specified file, no exception is thrown and the method <c>false</c> false regardless of the existence of path.
       /// </returns>
       /// <remarks>If path describes a directory, this method returns <c>false</c>.</remarks>
-      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
+      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
       /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
@@ -6342,7 +6342,18 @@ namespace Alphaleonis.Win32.Filesystem
       #region CopyMoveInternal
 
       /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children.
-      /// You can provide a callback function that receives progress notifications.</summary>
+      /// <para>&#160;</para>
+      /// <returns>Return <c>true</c> when successfully copied or moved, <c>false</c> otherwise or the operation was aborted.</returns>
+      /// <para>&#160;</para>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <remarks>
+      /// <para>You can provide a callback function that receives progress notifications.</para>
+      /// <para>&#160;</para>
+      /// <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
+      /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
+      /// <para>You cannot use the Move method to overwrite an existing file.</para>
+      /// </remarks>
+      /// </summary>
       /// <param name="isMove"><c>true</c> indicates a file move, <c>false</c> indicates a file copy.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The source directory path.</param>
@@ -6357,26 +6368,41 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
-      /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
-      /// get an IOException. You cannot use the Move method to overwrite an existing file.</remarks>
-      /// <returns><c>true</c> when successfully copied or moved, <c>false</c> otherwise or the operation was aborted.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static void CopyMoveInternal(bool isMove, KernelTransaction transaction, string sourceFileName, string destFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(sourceFileName))
-            throw new ArgumentNullException("sourceFileName");
+         if (isFullPath != null)
+         {
+            if (Utils.IsNullOrWhiteSpace(sourceFileName))
+               throw new ArgumentNullException("sourceFileName");
 
-         if (Utils.IsNullOrWhiteSpace(destFileName))
-            throw new ArgumentNullException("destFileName");
+            if (Utils.IsNullOrWhiteSpace(destFileName))
+               throw new ArgumentNullException("destFileName");
 
+            if ((bool) !isFullPath)
+            {
+               // MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
+
+               if (!Path.IsLongPath(sourceFileName) && sourceFileName.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+                  throw new NotSupportedException(sourceFileName);
+
+               if (!Path.IsLongPath(destFileName) && destFileName.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+                  throw new NotSupportedException(destFileName);
+            }
+         }
+
+         
          string sourceFileNameLp = isFullPath == null
             ? sourceFileName
             : (bool) isFullPath
             ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
             : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true, false);
+
+         //if (!ExistsInternal(false, transaction, sourceFileNameLp, null))
+         //   // MSDN: .NET 3.5+ IOException: The destination file already exists or sourceFileName was not found.
+         //   NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, sourceFileNameLp, true);
+
 
          string destFileNameLp = isFullPath == null
             ? destFileName
@@ -6399,35 +6425,45 @@ namespace Alphaleonis.Win32.Filesystem
          int cancel;
          bool doCopy = !isMove && copyOptions != null && moveOptions == null;
          bool doMove = isMove && moveOptions != null && copyOptions == null;
-         bool overwrite = doCopy
-            ? ((CopyOptions) copyOptions & CopyOptions.FailIfExists) == CopyOptions.None  // copyOptions does NOT contain CopyOptions.FailIfExists.
-            : doMove && ((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) != MoveOptions.None;  // moveOptions does NOT contain MoveOptions.ReplaceExisting.
+         
+         if (ExistsInternal(false, transaction, destFileNameLp, null))
+         {
+            bool overwrite = doCopy
+            ? ((CopyOptions)copyOptions & CopyOptions.FailIfExists) == CopyOptions.None  // copyOptions does NOT contain CopyOptions.FailIfExists.
+            : doMove && ((MoveOptions)moveOptions & MoveOptions.ReplaceExisting) != MoveOptions.None;  // moveOptions does NOT contain MoveOptions.ReplaceExisting.
 
+            if (overwrite)
+               // Remove file read-only attribute, if applicable.
+               // If the file is read-only, the function can fail with ERROR_ACCESS_DENIED.
+               DeleteFileInternal(transaction, destFileNameLp, true, null);
 
-         // Remove file read-only attribute, if applicable.
-         // If the file is read-only, the function can fail with ERROR_ACCESS_DENIED.
-         if (overwrite)
-            DeleteFileInternal(transaction, destFileNameLp, true, null);
-
-
+            else
+               // MSDN: .NET 3.5+ IOException: Copy() An I/O error has occurred or destFileName exists and overwrite is false.
+               // MSDN: .NET 3.5+ IOException: CopyTo() An error occurs, or the destination file already exists.
+               // MSDN: .NET 3.5+ IOException: Move() The destination file already exists or sourceFileName was not found.
+               // MSDN: .NET 3.5+ IOException: MoveTo() An I/O error occurs, such as the destination file already exists or the destination device is not ready.
+               NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destFileNameLp, true);
+         }
+         
+         
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
-                  ? doMove
-                        // MoveFileWithProgress() / MoveFileTransacted()
-                        // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                        // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-                        // 2013-04-15: MSDN confirms LongPath usage.
+            ? doMove
+               // MoveFileWithProgress() / MoveFileTransacted()
+               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2013-04-15: MSDN confirms LongPath usage.
 
-                        // CopyFileEx() / CopyFileTransacted()
-                        // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                        // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-                        // 2013-04-15: MSDN confirms LongPath usage.
+               // CopyFileEx() / CopyFileTransacted()
+               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2013-04-15: MSDN confirms LongPath usage.
 
-                       ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
-                       : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, copyOptions ?? CopyOptions.FailIfExists)
-                  : doMove
-
-                       ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
-                       : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, copyOptions ?? CopyOptions.FailIfExists, transaction.SafeHandle)))
+               ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
+               : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, copyOptions ?? CopyOptions.FailIfExists)
+            
+            : doMove
+               ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
+               : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, copyOptions ?? CopyOptions.FailIfExists, transaction.SafeHandle)))
          {
             int lastError = Marshal.GetLastWin32Error();
 
@@ -6513,8 +6549,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
+         if (isFullPath != null)
+            if (Utils.IsNullOrWhiteSpace(path))
+               throw new ArgumentNullException("path");
 
          PrivilegeEnabler privilegeEnabler = null;
          try
@@ -6718,16 +6755,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteFileInternal(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
+         if (isFullPath != null)
+            if (Utils.IsNullOrWhiteSpace(path))
+               throw new ArgumentNullException("path");
 
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false);
-         
-         
+
+
          // Reset file attributes.
          // MSDN: This function fails with ERROR_ACCESS_DENIED if the destination file already exists and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
          if (ignoreReadOnly)
@@ -7011,7 +7049,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region ExistsInternal
 
-      /// <summary>[AlphaFS] Unified method ExistsInternal() to determine whether the given path refers to an existing file or directory on disk.</summary>
+      /// <summary>[AlphaFS] Unified method ExistsInternal() to determine whether the given path refers to an existing file or directory on disk.
+      /// <para>&#160;</para>
+      /// <returns>Returns <c>true</c> on success, <c>false</c> otherwise.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Note that this file may contain wildcards, such as '*'</para>
+      /// <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</para>
+      /// <para>MSDN: .NET 3.5+: Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</para>
+      /// <para>&#160;</para>
+      /// <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
+      /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
+      /// </remarks>
+      /// </summary>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
@@ -7020,11 +7071,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <remarks>Note that this files may contain wildcards, such as '*'</remarks>
-      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
-      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the <paramref name="path"/> parameter before determining if the file exists.</remarks>
-      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -7034,8 +7080,8 @@ namespace Alphaleonis.Win32.Filesystem
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, true, false, true, true);
 
-         // MSDN: .NET 2+ Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
-         // MSDN: .NET 2+ Trailing spaces are removed from the path parameter before determining if the file exists.
+         // MSDN: .NET 3.5+: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
+         // MSDN: .NET 3.5+: Trailing spaces are removed from the path parameter before determining if the file exists.
 
          if (pathLp == null)
             return false;
@@ -7068,8 +7114,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static T GetAccessControlInternal<T>(bool isFolder, string path, AccessControlSections includeSections, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
+         if (isFullPath != null)
+            if (Utils.IsNullOrWhiteSpace(path))
+               throw new ArgumentNullException("path");
 
          SecurityInformation securityInfo = 0;
          PrivilegeEnabler privilegeEnabler = null;
@@ -7311,8 +7358,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static long GetCompressedSizeInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
+         if (isFullPath != null)
+            if (Utils.IsNullOrWhiteSpace(path))
+               throw new ArgumentNullException("path");
 
          string pathLp = isFullPath == null
             ? path
@@ -7375,8 +7423,9 @@ namespace Alphaleonis.Win32.Filesystem
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
+            if (isFullPath != null)
+               if (Utils.IsNullOrWhiteSpace(path))
+                  throw new ArgumentNullException("path");
 
             string pathLp = isFullPath == null
                ? path
@@ -7473,8 +7522,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static FileEncryptionStatus GetEncryptionStatusInternal(string path, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
+         if (isFullPath != null)
+            if (Utils.IsNullOrWhiteSpace(path))
+               throw new ArgumentNullException("path");
 
          string pathLp = isFullPath == null
             ? path
@@ -7622,8 +7672,9 @@ namespace Alphaleonis.Win32.Filesystem
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
+            if (isFullPath != null)
+               if (Utils.IsNullOrWhiteSpace(path))
+                  throw new ArgumentNullException("path");
 
             string pathLp = isFullPath == null
                ? path
@@ -7821,11 +7872,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void ReplaceInternal(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(sourceFileName))
-            throw new ArgumentNullException("sourceFileName");
+         if (isFullPath != null)
+         {
+            if (Utils.IsNullOrWhiteSpace(sourceFileName))
+               throw new ArgumentNullException("sourceFileName");
 
-         if (Utils.IsNullOrWhiteSpace(destinationFileName))
-            throw new ArgumentNullException("destinationFileName");
+            if (Utils.IsNullOrWhiteSpace(destinationFileName))
+               throw new ArgumentNullException("destinationFileName");
+         }
 
          // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
 
@@ -7895,7 +7949,7 @@ namespace Alphaleonis.Win32.Filesystem
             SecurityDescriptorControl control;
             uint revision;
             if (!Security.NativeMethods.GetSecurityDescriptorControl(hDescriptor, out control, out revision))
-               NativeError.ThrowException(Marshal.GetLastWin32Error());
+               NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
 
             PrivilegeEnabler privilegeEnabler = null;
             try
@@ -7907,7 +7961,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   bool daclDefaulted, daclPresent;
                   if (!Security.NativeMethods.GetSecurityDescriptorDacl(hDescriptor, out daclPresent, out pDacl, out daclDefaulted))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error());
+                     NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
 
                   if (daclPresent)
                   {
@@ -7923,7 +7977,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   bool saclDefaulted, saclPresent;
                   if (!Security.NativeMethods.GetSecurityDescriptorSacl(hDescriptor, out saclPresent, out pSacl, out saclDefaulted))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error());
+                     NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
 
                   if (saclPresent)
                   {
@@ -7941,7 +7995,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   bool ownerDefaulted;
                   if (!Security.NativeMethods.GetSecurityDescriptorOwner(hDescriptor, out pOwner, out ownerDefaulted))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error());
+                     NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
 
                   if (pOwner != IntPtr.Zero)
                      securityInfo |= SecurityInformation.Owner;
@@ -7952,7 +8006,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   bool groupDefaulted;
                   if (!Security.NativeMethods.GetSecurityDescriptorGroup(hDescriptor, out pGroup, out groupDefaulted))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error());
+                     NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
 
                   if (pGroup != IntPtr.Zero)
                      securityInfo |= SecurityInformation.Group;
@@ -8013,8 +8067,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
+         if (isFullPath != null)
+            if (Utils.IsNullOrWhiteSpace(path))
+               throw new ArgumentNullException("path");
 
          string pathLp = isFullPath == null
             ? path
@@ -8139,8 +8194,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void WriteAppendAllLinesInternal(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool isAppend, bool addNewLine, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
+         if (isFullPath != null)
+            if (Utils.IsNullOrWhiteSpace(path))
+               throw new ArgumentNullException("path");
 
          if (contents == null)
             throw new ArgumentNullException("contents");

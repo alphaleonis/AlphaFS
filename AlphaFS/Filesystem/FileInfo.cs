@@ -314,7 +314,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void MoveTo(string destFileName)
       {
-         CopyToMoveToInternal(true, destFileName, null, NativeMethods.MoveOptionsReplace, null, null, false);
+         CopyToMoveToInternal(true, destFileName, null, MoveOptions.CopyAllowed, null, null, false);
       }
 
       #endregion // .NET
@@ -332,7 +332,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void MoveTo(string destFileName, CopyMoveProgressCallback moveProgress, object userProgressData)
       {
-         CopyToMoveToInternal(true, destFileName, null, NativeMethods.MoveOptionsReplace, moveProgress, userProgressData, false);
+         CopyToMoveToInternal(true, destFileName, null, MoveOptions.CopyAllowed, moveProgress, userProgressData, false);
       }
 
       #endregion // AlphaFS
@@ -761,9 +761,9 @@ namespace Alphaleonis.Win32.Filesystem
          string destFileNameLp = isFullPath == null
             ? destFileName
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-            : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, true, false);
-
+               ? Path.GetLongPathInternal(destFileName, false, false, false, false)
+               : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, true, false);
+         
          File.CopyMoveInternal(isMove, Transaction, LongFullName, destFileNameLp, false, copyOptions, moveOptions, copyProgress, userProgressData, null);
 
          if (isMove)

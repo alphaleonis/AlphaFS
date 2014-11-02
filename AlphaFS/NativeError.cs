@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32
    {
       #region FormatError
 
-      private static string FormatError(string message, string path)
+      public static string FormatError(string message, string path)
       {
          return string.Format(CultureInfo.CurrentCulture, "{0}{1}[{2}]", (message ?? string.Empty),
             (!Utils.IsNullOrWhiteSpace(message) && !Utils.IsNullOrWhiteSpace(path)) ? ": " : string.Empty, (path ?? string.Empty));
@@ -57,21 +57,21 @@ namespace Alphaleonis.Win32
       #region int
 
       [SecurityCritical]
-      public static void ThrowException(int errorCode)
+      public static void ThrowException(int errorCode, bool isIoException = false)
       {
-         ThrowException((uint) errorCode, null, null);
+         ThrowException((uint) errorCode, null, null, isIoException);
       }
 
       [SecurityCritical]
-      public static void ThrowException(int errorCode, string readPath)
+      public static void ThrowException(int errorCode, string readPath, bool isIoException = false)
       {
-         ThrowException((uint) errorCode, readPath, null);
+         ThrowException((uint)errorCode, readPath, null, isIoException);
       }
 
       [SecurityCritical]
-      public static void ThrowException(int errorCode, string readPath, string writePath)
+      public static void ThrowException(int errorCode, string readPath, string writePath, bool isIoException = false)
       {
-         ThrowException((uint) errorCode, readPath, writePath);
+         ThrowException((uint)errorCode, readPath, writePath, isIoException);
       }
 
       #endregion // int
@@ -79,24 +79,27 @@ namespace Alphaleonis.Win32
       #region uint
 
       [SecurityCritical]
-      public static void ThrowException(uint errorCode)
+      public static void ThrowException(uint errorCode, bool isIoException = false)
       {
-         ThrowException(errorCode, null, null);
+         ThrowException(errorCode, null, null, isIoException);
       }
 
       [SecurityCritical]
-      public static void ThrowException(uint errorCode, string readPath)
+      public static void ThrowException(uint errorCode, string readPath, bool isIoException = false)
       {
-         ThrowException(errorCode, readPath, null);
+         ThrowException(errorCode, readPath, null, isIoException);
       }
 
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      public static void ThrowException(uint errorCode, string readPath, string writePath)
+      public static void ThrowException(uint errorCode, string readPath, string writePath, bool isIoException = false)
       {
          // Generate an exception representing the error from Marshal. We embed
          // this as an inner exception if we decide to generate our own exception.
          Exception e = Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode));
+
+         if (isIoException)
+            throw new IOException(FormatError(e.Message, readPath ?? writePath), e);
 
          switch (errorCode)
          {
@@ -189,15 +192,15 @@ namespace Alphaleonis.Win32
       #region string
 
       [SecurityCritical]
-      public static void ThrowException(string readPath)
+      public static void ThrowException(string readPath, bool isIoException = false)
       {
-         ThrowException((uint) Marshal.GetLastWin32Error(), readPath, null);
+         ThrowException((uint) Marshal.GetLastWin32Error(), readPath, null, isIoException);
       }
 
       [SecurityCritical]
-      public static void ThrowException(string readPath, string writePath)
+      public static void ThrowException(string readPath, string writePath, bool isIoException = false)
       {
-         ThrowException((uint) Marshal.GetLastWin32Error(), readPath, writePath);
+         ThrowException((uint) Marshal.GetLastWin32Error(), readPath, writePath, isIoException);
       }
 
       #endregion // string

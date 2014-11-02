@@ -489,21 +489,21 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\t\tTotal size       : [{0}]\n\t\tTotal directories: [{1}]\n\t\tTotal files      : [{2}]", NativeMethods.UnitSizeToText(props3rdDirCopy["Size"]), props3rdDirCopy["Directory"], props3rdDirCopy["File"]);
 
 
-         Console.WriteLine("\n\tCopy same directories again, should throw AlreadyExistsException.");
+         Console.WriteLine("\n\tCopy same directories again, should throw IOException.");
          bool exception = false;
          try
          {
             sourceDir.CopyTo(thirdCopy.FullName);
             //Directory.Copy(sourceDir.FullName, thirdCopy.FullName);
          }
-         catch (AlreadyExistsException ex)
+         catch (IOException ex)
          {
             exception = true;
-            Console.WriteLine("\n\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
          }
 
-         Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception);
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "IOException should have been caught.");
 
          Console.WriteLine("\n\tTry again: Directory.Copy(,,true)");
          Directory.Copy(sourceDir.FullName, thirdCopy.FullName, true);
