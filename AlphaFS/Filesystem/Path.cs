@@ -278,6 +278,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(string path)
       {
+         if (path != null && (!IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1))
+            throw new NotSupportedException(path);
+
          return GetFullPathInternal(null, path, false, false, false, false, false);
       }
 
@@ -313,6 +316,8 @@ namespace Alphaleonis.Win32.Filesystem
       
       #region Transacted
 
+      #region .NET
+
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
@@ -322,8 +327,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(KernelTransaction transaction, string path)
       {
+         if (path != null && (!IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1))
+            throw new NotSupportedException(path);
+
          return GetFullPathInternal(transaction, path, false, false, false, false, false);
       }
+
+      #endregion // .NET
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -1331,11 +1341,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetFullPathInternal(KernelTransaction transaction, string path, bool asLongPath, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator, bool continueOnNotExist)
       {
-         if (path == null)
-            return null;
+         if (Utils.IsNullOrWhiteSpace(path))
+            throw new ArgumentNullException("path");
 
          string pathLp = GetLongPathInternal(path, true, trimEnd, addDirectorySeparator, removeDirectorySeparator);
-         uint bufferSize = NativeMethods.MaxPathUnicode;
+         uint bufferSize = NativeMethods.MaxPathUnicode/32;
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -1368,7 +1378,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                NativeError.ThrowException(pathLp);
             }
-
+            
             return asLongPath
                ? GetLongPathInternal(buffer.ToString(), false, false, false, false)
                : GetRegularPathInternal(buffer.ToString(), false, false, false, false);

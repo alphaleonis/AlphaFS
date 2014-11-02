@@ -778,8 +778,20 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Path.GetFullPath()");
 
          int pathCnt = 0;
-         bool allOk = true;
+         bool allOk = false;
          int errorCnt = 0;
+
+
+         try
+         {
+            Path.GetFullPath(@"C:\dev\test\aaa:aaa.txt");
+         }
+         catch (NotSupportedException)
+         {
+            allOk = true;
+         }
+         Assert.IsTrue(allOk, "NotSupportedException should have been caught.");
+         
 
          StopWatcher(true);
          foreach (string input in InputPaths)

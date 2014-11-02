@@ -179,10 +179,10 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void AddStreamInternal(bool isFolder, KernelTransaction transaction, string path, string name, IEnumerable<string> contents, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException(path);
+            throw new ArgumentNullException("path");
 
          if (Utils.IsNullOrWhiteSpace(name))
-            throw new ArgumentNullException(name);
+            throw new ArgumentNullException("name");
 
          if (name.Contains(Path.StreamSeparator))
             throw new ArgumentException(Resources.StreamNameWithColon);
@@ -384,7 +384,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void RemoveStreamInternal(bool? isFolder, KernelTransaction transaction, string path, string name, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException(path);
+            throw new ArgumentNullException("path");
 
          string pathLp = isFullPath == null
             ? path
