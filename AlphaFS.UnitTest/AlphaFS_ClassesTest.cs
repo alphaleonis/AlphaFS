@@ -773,7 +773,7 @@ namespace AlphaFS.UnitTest
          #endregion // Non-Existing Directory
 
          #region Existing Directory
-         tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+         tempPath = Path.Combine(Path.GetTempPath(), "DirectoryInfo()-Directory-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          Directory.CreateDirectory(tempPath);
@@ -1086,7 +1086,7 @@ namespace AlphaFS.UnitTest
 
          #region Existing File
 
-         tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+         tempPath = Path.Combine(Path.GetTempPath(), "FileInfo()-File-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          using (File.Create(tempPath))

@@ -457,6 +457,37 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsDirectory
 
+      #region LengthStreams
+
+      private long _lengthStreams = -1;
+
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).</summary>
+      /// <returns>The number of bytes used by all streams.</returns>
+      [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = "We do the same for FileInfo.Length property.")]
+      public long LengthStreams
+      {
+         get
+         {
+            if (_lengthStreams == -1)
+               Refresh();
+
+            bool isFolder = IsDirectory || Name == Path.CurrentDirectoryPrefix;
+
+            if (_entryInfo == null)
+            {
+               if (isFolder)
+                  throw new DirectoryNotFoundException(LongFullName);
+
+               throw new FileNotFoundException(LongFullName);
+            }
+
+            _lengthStreams = AlternateDataStreamInfo.GetStreamSizeInternal(isFolder, Transaction, null, LongFullName, null, null, null);
+            return _lengthStreams;
+         }
+      }
+
+      #endregion // LengthStreams
+
       #region LongFullName
 
       /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>

@@ -1,3 +1,6 @@
+Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+
+
 Version 1.6
 
     * New: The public key of AlphaFS.dll has changed, delay-signing is no longer used.
@@ -21,6 +24,8 @@ Version 1.6
 	* New: Supports networking by enumerating hosts and shares (SMB/DFS) and connect/disconnect to/from network resources (AlphaFS.Network.Host() class).
 	
 	* New: Supports working with NTFS ADS (Alternate Data Streams) on files and directories (AlphaFS.Filesystem.AlternateDataStreamInfo() class).
+
+	* New: Supports enumerating connected PnP devices (AlphaFS.Filesystem.Device() / AlphaFS.Filesystem.DeviceInfo() classes).
 	
 	* New: Supports extracting icons from files and folders (AlphaFS.Filesystem.Shell32Info() class).
 	
@@ -36,23 +41,19 @@ Version 1.6
 
 	* Mod: Added public read only properties to class FileSystemInfo()
 
-		DirectoryInfo() / FileInfo()
+		Available for: DirectoryInfo() / FileInfo()
 			EntryInfo	 : Instance of the FileSystemEntryInfo() class.
+			LengthStreams: Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).
 			LongFullName : The Unicode absolute path of the file system object.
 			Transaction  : Represents the KernelTransaction that was passed to the constructor.
-
-		FileInfo()
-			LengthStreams: Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).
 	
 	* Mod: Rewrote Path() class.
 
-	* Mod: Removed classes PathInfoXxx().
+	
+	* Breaking: Removed classes PathInfoXxx().
 
-    * New: Added static Class Filesystem.Device();
-
-    * New: Added instance Class Filesystem.DeviceInfo();
     
-   * New: Added "Cached LazyLoading" to class: FileSystemInfo() improving performance for classes: DirectoryInfo() and FileInfo().
+    * New: Added "Cached LazyLoading" to class: FileSystemInfo() improving performance for classes: DirectoryInfo() and FileInfo().
 
 
 Version 1.5
