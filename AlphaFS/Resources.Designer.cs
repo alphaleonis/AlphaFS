@@ -242,6 +242,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Illegal characters in path.
+        /// </summary>
+        internal static string IllegalCharactersInPath {
+            get {
+                return ResourceManager.GetString("IllegalCharactersInPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Illegal path.
         /// </summary>
         internal static string IllegalPath {

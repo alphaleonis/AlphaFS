@@ -191,34 +191,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpGetAssociation
 
-      private static void DumpGetFileInfo(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
-
-         string collectStrings = string.Empty;
-         int cnt = 0;
-         StopWatcher(true);
-         foreach (string file in Directory.EnumerateFiles(path))
-         {
-            Shell32Info shell32Info = Shell32.GetShell32Info(file);
-            collectStrings += shell32Info.FriendlyDocName;
-            //Shell32.FileInfo fileInfo = Shell32.GetFileInfo(file);
-            //collectStrings += fileInfo.TypeName;
-
-            //Console.WriteLine("\t#{0:000}\t[{1}]\n\t\tTypeName   : [{2}]\n\t\tDisplayName: [{3}]\n\t\tAttributes : [{4}]\n",
-               //++cnt, file, shell32Info.FriendlyDocName, shell32Info.FriendlyAppName, shell32Info.Attributes);
-            ++cnt;
-            Dump(shell32Info, -15);
-            Console.WriteLine("\n");
-         }
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
-         Assert.IsTrue(cnt > 0, "No files enumerated.");
-         Assert.IsTrue(!string.IsNullOrWhiteSpace(collectStrings));
-      }
-
       private static void DumpPathFileExists(string path, bool doesExist)
       {
          Console.WriteLine("\n\tPath: [{0}]\n", path);
@@ -314,10 +286,13 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Filesystem.Shell32.GetFileIcon()");
 
-         Console.WriteLine("\nExample usage:");
+         string notepad = Path.Combine(SysRoot32, "notepad.exe");
+         Console.WriteLine("\nInput File Path: [{0}]\n", notepad);
+
+         Console.WriteLine("Example usage:");
          Console.WriteLine("\n\tIntPtr icon = Shell32.GetFileIcon(file, FileAttributes.SmallIcon | FileAttributes.AddOverlays);");
 
-         string notepad = Path.Combine(SysRoot32, "notepad.exe");
+         
          IntPtr icon = Shell32.GetFileIcon(notepad, Shell32.FileAttributes.SmallIcon | Shell32.FileAttributes.AddOverlays);
 
          Console.WriteLine("\n\tIcon Handle: [{0}]", icon);
@@ -333,9 +308,7 @@ namespace AlphaFS.UnitTest
       public void GetFileInfo()
       {
          Console.WriteLine("Filesystem.Shell32.GetFileInfo()");
-
-         DumpGetFileInfo(true);
-         DumpGetFileInfo(false);
+         Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
       }
 
       #endregion // GetFileInfo

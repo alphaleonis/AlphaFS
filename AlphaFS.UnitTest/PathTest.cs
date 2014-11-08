@@ -450,7 +450,7 @@ namespace AlphaFS.UnitTest
             try
             {
                bool actual = Path.IsLocalPath(input);
-               Console.WriteLine("\t#{0:000}\tIsLocalPath(): [{1}]\t\tInput Path: [{2}]", ++cnt, actual, input);
+               Console.WriteLine("\t#{0:000}\tIsLocalPath(): [{1}]    \tInput Path: [{2}]", ++cnt, actual, input);
 
                if (actual)
                   isLocalPath++;
@@ -780,6 +780,19 @@ namespace AlphaFS.UnitTest
          int pathCnt = 0;
          bool allOk = false;
          int errorCnt = 0;
+
+         try
+         {
+            Path.GetFullPath(@"C:\?test.txt");
+            //Path.GetFullPath(@"C:\*test.txt");
+            //Path.GetFullPath(@"C:\\test.txt");
+            //Path.GetFullPath(@"C:\/test.txt");
+         }
+         catch (ArgumentException)
+         {
+            allOk = true;
+         }
+         Assert.IsTrue(allOk, "ArgumentException should have been caught.");
 
 
          try
