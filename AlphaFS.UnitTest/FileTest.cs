@@ -181,7 +181,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, string.Empty);
+               propValue = ex.Message.Replace(Environment.NewLine, "  ");
             }
 
             Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
@@ -353,7 +353,7 @@ namespace AlphaFS.UnitTest
             catch (IOException ex)
             {
                exception = true;
-               Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
 
                Assert.IsTrue(!string.IsNullOrWhiteSpace(newFile) && File.Exists(newFile), "newFile should not be deleted.");
                break;
@@ -371,6 +371,52 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpCopy
 
+      #region DumpCreate
+
+      private void DumpCreate(bool isLocal)
+      {
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string tempFolder = Path.GetTempPath();
+         string tempPath = Path.Combine(tempFolder, "File-Create-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         using (FileStream fs = File.Create(tempPath))
+         {
+            int ten = TenNumbers.Length;
+
+            // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
+            fs.Write(StringToByteArray(TenNumbers), 0, ten);
+
+            long fileSize = fs.Length;
+            bool isTen = fileSize == ten;
+
+            Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+            Console.WriteLine("\n\tFilestream.Name   == [{0}]", fs.Name);
+            Console.WriteLine("\n\tFilestream.Length == [{0}] (Should be True): [{2}]", NativeMethods.UnitSizeToText(ten), TextTrue, isTen);
+
+            Assert.IsTrue(File.Exists(tempPath), "File should exist.");
+            Assert.IsTrue(isTen, "File should be [{0}] bytes in size.", ten);
+
+            Assert.IsTrue(Dump(fs, -14));
+            Assert.IsTrue(Dump(fs.SafeFileHandle, -9));
+         }
+         
+         using (StreamReader stream = File.OpenText(tempPath))
+         {
+            Console.WriteLine("\n\n\tEncoding: [{0}]", stream.CurrentEncoding.EncodingName);
+
+            string line;
+            while (!string.IsNullOrWhiteSpace((line = stream.ReadLine())))
+               Console.WriteLine("\tContent : [{0}]", line);
+         }
+         
+         File.Delete(tempPath);
+         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
+      }
+
+      #endregion // DumpCreate
+
       #region DumpDelete
 
       private void DumpDelete(bool isLocal)
@@ -384,7 +430,7 @@ namespace AlphaFS.UnitTest
          using (FileStream fs = File.Create(tempPath))
          {
             fs.WriteByte(1);
-            Console.WriteLine("\nInput Path: [{0}]\n\n\tfilestream.Length = [{1}]", tempPath, NativeMethods.UnitSizeToText(fs.Length));
+            Console.WriteLine("\nInput File Path: [{0}]\n\n\tfilestream.Length = [{1}]", tempPath, NativeMethods.UnitSizeToText(fs.Length));
          }
          Assert.IsTrue(File.Exists(tempPath));
          
@@ -400,7 +446,7 @@ namespace AlphaFS.UnitTest
          catch (IOException ex)
          {
             exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
          Assert.IsTrue(exception, "Exception should have been caught.");
@@ -420,7 +466,7 @@ namespace AlphaFS.UnitTest
          catch (UnauthorizedAccessException ex)
          {
             exception = true;
-            Console.WriteLine("\n\tUnauthorizedAccessException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tUnauthorizedAccessException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught UnauthorizedAccessException (Should be True): [{0}]", exception);
          Assert.IsTrue(exception, "Exception should have been caught.");
@@ -439,7 +485,7 @@ namespace AlphaFS.UnitTest
          catch (UnauthorizedAccessException ex)
          {
             exception = true;
-            Console.WriteLine("\n\tUnauthorizedAccessException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tUnauthorizedAccessException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught UnauthorizedAccessException (Should be True): [{0}]", exception);
          Assert.IsTrue(exception, "Exception should have been caught.");
@@ -718,7 +764,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             report = Reporter(true);
-            Console.WriteLine("\n\tFile.Compress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tFile.Compress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          
@@ -772,7 +818,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             report = Reporter(true);
-            Console.WriteLine("\n\tFile.Decompress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tFile.Decompress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          
@@ -973,7 +1019,7 @@ namespace AlphaFS.UnitTest
             catch (IOException ex)
             {
                exception = true;
-               Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                break;
             }
             catch
@@ -1044,7 +1090,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                allOk = false;
-               Console.WriteLine("\n\tFile.SetAttributes(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\tFile.SetAttributes(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
          Console.WriteLine("\n{0}\n", Reporter());
@@ -1072,7 +1118,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                allOk = false;
-               Console.WriteLine("\n\tFile.SetAttributes(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\tFile.SetAttributes(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
          Console.WriteLine("\n{0}\n", Reporter());
@@ -1390,7 +1436,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             allOk = false;
-            Console.WriteLine("\n\tFile.WriteAllBytes(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tFile.WriteAllBytes(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(File.Exists(tempPath), "File.WriteAllBytes(): File was not created.");
          long fileSize = File.GetSize(tempPath);
@@ -1411,7 +1457,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             allOk = false;
-            Console.WriteLine("\n\tFile.ReadAllBytes(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tFile.ReadAllBytes(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Assert.AreEqual(readAllAlphaFS.Length, fileSize, "File.ReadAllBytes(): Number of bytes are different.");
@@ -1934,48 +1980,8 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("File.Create()");
 
-         bool fileExists;
-         int ten = TenNumbers.Length;
-         string path = Path.GetTempPath("AlphaFS Create().");
-
-         //File.Delete(path);
-         File.Delete(path, false, true);
-
-         StopWatcher(true);
-
-         using (FileStream stream = File.Create(path))
-         {
-            Console.WriteLine("\n\tFilestream: [{0}]\n{1}", path, Reporter(true));
-
-            // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-            stream.Write(StringToByteArray(TenNumbers), 0, ten);
-
-            long fileSize = stream.Length;
-            bool isTen = fileSize == ten;
-
-            Console.WriteLine("\n\tFilestream.Name   == [{0}]", stream.Name);
-            Console.WriteLine("\n\tFilestream.Length == [{0}] == [{1}]: {2}", NativeMethods.UnitSizeToText(ten), TextTrue, isTen);
-
-            fileExists = File.Exists(path) && stream.Length == ten;
-
-            Assert.IsTrue(Dump(stream, -14));
-            Assert.IsTrue(Dump(stream.SafeFileHandle, -9));
-         }
-
-         using (StreamReader stream = File.OpenText(path))
-         {
-            Console.WriteLine("\n\tEncoding: [{0}]", stream.CurrentEncoding.EncodingName);
-
-            string line;
-            while (!string.IsNullOrWhiteSpace((line = stream.ReadLine())))
-            {
-               Console.WriteLine("\n\tContent : [{0}]", line);
-            }
-         }
-
-         File.Delete(path, true);
-         Assert.IsFalse(File.Exists(path), "Cleanup failed: File should have been removed.");
-         Assert.IsTrue(fileExists);
+         DumpCreate(true);
+         DumpCreate(false);
       }
 
       [TestMethod]
@@ -2079,7 +2085,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          encryptionStatus = File.GetEncryptionStatus(tempFile);
          Console.WriteLine("\n\tFile.Encrypt() (Should be True): [{0}]", encryptOk);
@@ -2095,7 +2101,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          FileEncryptionStatus decryptionStatus = File.GetEncryptionStatus(tempFile);
          Console.WriteLine("\n\tFile.Decrypt() (Should be True): [{0}]:", decryptOk);
@@ -2452,7 +2458,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
       }
 

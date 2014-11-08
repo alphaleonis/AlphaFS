@@ -184,7 +184,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, string.Empty);
+               propValue = ex.Message.Replace(Environment.NewLine, "  ");
             }
 
             Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
@@ -633,7 +633,7 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  Console.WriteLine("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+                  Console.WriteLine("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
             Console.WriteLine("\n{0}", Reporter());
@@ -662,7 +662,7 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  Console.WriteLine("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+                  Console.WriteLine("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
             Console.WriteLine("\n{0}\n", Reporter());
@@ -673,7 +673,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\tCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\tCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Assert.IsTrue(allOk, "Could (probably) not connect to host: [{0}]", host);
@@ -724,7 +724,7 @@ namespace AlphaFS.UnitTest
                catch (Exception ex)
                {
                   errorCnt++;
-                  Console.WriteLine("\n\t\tProperty cnt #{0}\tCaught Exception: [{1}]", (cnt + 1), ex.Message.Replace(Environment.NewLine, string.Empty));
+                  Console.WriteLine("\n\t\tProperty cnt #{0}\tCaught Exception: [{1}]", (cnt + 1), ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
          }
@@ -858,7 +858,7 @@ namespace AlphaFS.UnitTest
               }
               catch (Exception ex)
               {
-                  Console.Write("\n\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+                  Console.Write("\n\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
               }
           }
 
@@ -1032,7 +1032,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                errorCnt++;
-               Console.WriteLine("\n\t\t\tProperty cnt #{0}\tCaught Exception: [{1}]", (cnt + 1), ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\t\t\tProperty cnt #{0}\tCaught Exception: [{1}]", (cnt + 1), ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
 
@@ -1236,7 +1236,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("#{0:000}\tLogical Drive: [{1}]\n\tCaught Exception: [{2}]\n\n", ++cnt, tempPath, ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("#{0:000}\tLogical Drive: [{1}]\n\tCaught Exception: [{2}]\n\n", ++cnt, tempPath, ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
 
@@ -1285,7 +1285,7 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  Console.Write("\nCaught Exception: [{0}]\n\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+                  Console.Write("\nCaught Exception: [{0}]\n\n", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
             Console.Write("\n{0}", Reporter());
@@ -1293,7 +1293,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));

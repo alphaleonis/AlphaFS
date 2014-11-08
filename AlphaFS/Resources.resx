@@ -253,4 +253,7 @@
   <data name="IllegalCharactersInPath" xml:space="preserve">
     <value>Illegal characters in path</value>
   </data>
+  <data name="PathIsZeroLengthOrOnlyWhiteSpace" xml:space="preserve">
+    <value>Path is a zero-length string or contains only white space.</value>
+  </data>
 </root>

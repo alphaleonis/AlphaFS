@@ -97,7 +97,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, string.Empty);
+               propValue = ex.Message.Replace(Environment.NewLine, "  ");
             }
 
             Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
@@ -131,7 +131,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
 

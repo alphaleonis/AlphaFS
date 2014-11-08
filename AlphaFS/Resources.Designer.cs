@@ -332,6 +332,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Path is a zero-length string or contains only white space..
+        /// </summary>
+        internal static string PathIsZeroLengthOrOnlyWhiteSpace {
+            get {
+                return ResourceManager.GetString("PathIsZeroLengthOrOnlyWhiteSpace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to name cannot be empty.
         /// </summary>
         internal static string Privilege_Privilege_name_cannot_be_empty {

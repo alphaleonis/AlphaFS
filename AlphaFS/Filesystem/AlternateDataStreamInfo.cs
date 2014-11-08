@@ -219,9 +219,6 @@ namespace Alphaleonis.Win32.Filesystem
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
-
             pathLp = isFullPath == null
                ? path
                : (bool) isFullPath
@@ -383,9 +380,6 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void RemoveStreamInternal(bool? isFolder, KernelTransaction transaction, string path, string name, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
-
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath

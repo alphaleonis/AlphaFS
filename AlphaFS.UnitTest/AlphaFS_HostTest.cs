@@ -106,7 +106,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, string.Empty);
+               propValue = ex.Message.Replace(Environment.NewLine, "  ");
             }
 
             Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
@@ -136,7 +136,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                caughtException = true;
-               Console.Write("Caught Exception (As expected): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.Write("Caught Exception (As expected): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
             Console.WriteLine("\n\t{0}\n", Reporter(true));
             Assert.IsTrue(caughtException, "No Exception was caught.");
@@ -182,7 +182,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                caughtException = true;
-               Console.Write("Caught Exception (As expected): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.Write("Caught Exception (As expected): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
             Console.Write("\t{0}", Reporter(true));
             Assert.IsTrue(caughtException, "No Exception was caught.");
@@ -238,7 +238,7 @@ namespace AlphaFS.UnitTest
          {
             connectOk = false;
             Console.WriteLine("\nFailed ConnectDrive(): [{0}] to: [{1}]", drive, share);
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Assert.IsTrue(connectOk);
@@ -265,7 +265,7 @@ namespace AlphaFS.UnitTest
             {
                disconnectOk = false;
                Console.WriteLine("\nFailed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
-               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
 
@@ -291,7 +291,7 @@ namespace AlphaFS.UnitTest
          {
             connectOk = false;
             Console.WriteLine("\nFailed ConnectDrive(): [{0}] to: [{1}]", drive, share);
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
             
          Assert.IsTrue(connectOk);
@@ -318,7 +318,7 @@ namespace AlphaFS.UnitTest
             {
                disconnectOk = false;
                Console.WriteLine("\nFailed DisconnectDrive(): [{0}] from: [{1}]", drive, share);
-               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
 
@@ -353,7 +353,7 @@ namespace AlphaFS.UnitTest
          {
             connectOk = false;
             Console.WriteLine("\nFailed ConnectTo(): [{0}]", share);
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Assert.IsTrue(connectOk);
@@ -380,7 +380,7 @@ namespace AlphaFS.UnitTest
             {
                disconnectOk = false;
                Console.WriteLine("\nFailed DisconnectFrom(): [{0}]", share);
-               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
 
@@ -405,7 +405,7 @@ namespace AlphaFS.UnitTest
          {
             connectOk = false;
             Console.WriteLine("\nFailed ConnectTo(): [{0}]", share);
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Assert.IsTrue(connectOk);
@@ -432,7 +432,7 @@ namespace AlphaFS.UnitTest
             {
                disconnectOk = false;
                Console.WriteLine("\nFailed DisconnectFrom(): [{0}]", share);
-               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
 
@@ -489,7 +489,7 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  Console.Write("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+                  Console.Write("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
 
                Console.WriteLine();
@@ -497,7 +497,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
@@ -546,7 +546,7 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  Console.Write("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+                  Console.Write("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
 
@@ -555,7 +555,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
@@ -583,7 +583,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
@@ -671,7 +671,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
@@ -745,7 +745,7 @@ namespace AlphaFS.UnitTest
          {
             connectOk = false;
             Console.WriteLine("\nFailed DriveConnection() to: [{0}]", share);
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Assert.IsTrue(connectOk);

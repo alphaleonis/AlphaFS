@@ -38,6 +38,7 @@ using StreamWriter = System.IO.StreamWriter;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides static methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="T:FileStream"/> objects.</summary>
+   [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
    public static class File
    {
       #region .NET
@@ -46,21 +47,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
+      /// <summary>Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.
+      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
+      /// </summary>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
       public static void AppendAllLines(string path, IEnumerable<string> contents)
       {
          WriteAppendAllLinesInternal(null, path, contents, NativeMethods.DefaultFileEncoding, true, false, false);
       }
 
-      /// <summary>Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
+      /// <summary>Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.
+      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
+      /// </summary>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
       public static void AppendAllLines(string path, IEnumerable<string> contents, Encoding encoding)
       {
@@ -73,7 +76,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
+      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.
+      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
+      /// </summary>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="isFullPath">
@@ -81,14 +86,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
       public static void AppendAllLines(string path, IEnumerable<string> contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(null, path, contents, NativeMethods.DefaultFileEncoding, true, false, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
+      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.
+      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
+      /// </summary>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
@@ -97,7 +103,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
       public static void AppendAllLines(string path, IEnumerable<string> contents, Encoding encoding, bool? isFullPath)
       {
@@ -110,23 +115,25 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
+      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.
+      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
       public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, NativeMethods.DefaultFileEncoding, true, false, false);
       }
 
-      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
+      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.
+      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
       public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding)
       {
@@ -137,7 +144,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
+      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.
+      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
@@ -146,14 +155,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
       public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, bool? isFullPath)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, NativeMethods.DefaultFileEncoding, true, false, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
+      /// <summary>[AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.
+      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
@@ -163,7 +173,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       [SecurityCritical]
       public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool? isFullPath)
       {
@@ -310,9 +319,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
-      /// <param name="path">The path to the file to append to.</param>
+      /// <summary>Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
       /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// </summary>
+      /// <param name="path">The path to the file to append to.</param>
       [SecurityCritical]
       public static StreamWriter AppendText(string path)
       {
@@ -325,21 +335,24 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// </summary>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SecurityCritical]
       public static StreamWriter AppendText(string path, bool? isFullPath)
       {
          return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// </summary>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
       /// <param name="isFullPath">
@@ -347,7 +360,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SecurityCritical]
       public static StreamWriter AppendText(string path, Encoding encoding, bool? isFullPath)
       {
@@ -356,10 +368,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsFullPath
 
-      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// </summary>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SecurityCritical]
       public static StreamWriter AppendText(string path, Encoding encoding)
       {
@@ -370,10 +383,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
-      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path)
       {
@@ -384,7 +398,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="isFullPath">
@@ -392,14 +408,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
@@ -408,7 +426,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
       {
@@ -417,11 +434,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsFullPath
       
-      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <summary>[AlphaFS] Creates a <see cref="T:StreamWriter"/> that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <returns>A stream writer that appends <see cref="T:NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding)
       {
@@ -438,12 +456,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
+      /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is not allowed.
       /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destFileName)
@@ -451,13 +470,14 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, null, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, false);
       }
 
-      /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
+      /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.
       /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destFileName, bool overwrite)
@@ -471,7 +491,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file.</summary>
+      /// <summary>[AlphaFS] Copies an existing file to a new file.
+      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
       /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
@@ -481,8 +504,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destFileName, bool overwrite, bool preserveDates, bool? isFullPath)
@@ -490,7 +511,10 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, notifying the application of its progress through a callback function.</summary>
+      /// <summary>[AlphaFS] Copies an existing file to a new file, notifying the application of its progress through a callback function.
+      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
       /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
@@ -502,8 +526,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destFileName, bool overwrite, bool preserveDates, CopyMoveProgressCallback copyProgress, object userProgressData, bool? isFullPath)
@@ -513,15 +535,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsFullPath
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, notifying the application of its progress through a callback function.</summary>
+      /// <summary>[AlphaFS] Copies an existing file to a new file, notifying the application of its progress through a callback function.
+      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
       /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destFileName, bool overwrite, bool preserveDates, CopyMoveProgressCallback copyProgress, object userProgressData)
@@ -533,13 +556,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.
       /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
       /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName)
@@ -547,14 +571,15 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, false);
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file.</summary>
+      /// <summary>[AlphaFS] Copies an existing file to a new file.
+      /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
+      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy.</param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="overwrite"><c>true</c> if the destination file should be overwritten; otherwise, <c>false</c>.</param>
-      /// <remarks>The attributes of the original file are retained in the copied file.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite)
@@ -566,7 +591,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file.</summary>
+      /// <summary>[AlphaFS] Copies an existing file to a new file.
+      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
@@ -577,8 +605,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite, bool preserveDates, bool? isFullPath)
@@ -586,7 +612,9 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, notifying the application of its progress through a callback function.</summary>
+      /// <summary>[AlphaFS] Copies an existing file to a new file, notifying the application of its progress through a callback function.
+      /// <returns><c>true</c> if the file was completely copied, or <c>false</c> if the copy operation was aborted/failed.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
@@ -599,7 +627,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns><c>true</c> if the file was completely copied, or <c>false</c> if the copy operation was aborted/failed.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite, bool preserveDates, CopyMoveProgressCallback copyProgress, object userProgressData, bool? isFullPath)
@@ -609,7 +636,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsFullPath
       
-      /// <summary>[AlphaFS] Copies an existing file to a new file, notifying the application of its progress through a callback function.</summary>
+      /// <summary>[AlphaFS] Copies an existing file to a new file, notifying the application of its progress through a callback function.
+      /// <returns><c>true</c> if the file was completely copied, or <c>false</c> if the copy operation was aborted/failed.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of an existing file.</param>
       /// <param name="destFileName">The name of the new file.</param>
@@ -617,7 +646,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <returns><c>true</c> if the file was completely copied, or <c>false</c> if the copy operation was aborted/failed.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName,  bool overwrite, bool preserveDates, CopyMoveProgressCallback copyProgress, object userProgressData)
@@ -635,42 +663,46 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates or overwrites a file in the specified path.</summary>
-      /// <param name="path">The path and name of the file to create.</param>
+      /// <summary>Creates or overwrites a file in the specified path.
       /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// </summary>
+      /// <param name="path">The path and name of the file to create.</param>
       [SecurityCritical]
       public static FileStream Create(string path)
       {
          return CreateFileInternal(null, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
-      /// <summary>Creates or overwrites the specified file.</summary>
+      /// <summary>Creates or overwrites the specified file.
+      /// <returns>A <see cref="T:FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// </summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <returns>A <see cref="T:FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize)
       {
          return CreateFileInternal(null, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
-      /// <summary>Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
+      /// <summary>Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.
+      /// <returns>A new file with the specified buffer size.</returns>
+      /// </summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="T:FileOptions"/> values that describes how to create or overwrite the file.</param>
-      /// <returns>A new file with the specified buffer size.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options)
       {
          return CreateFileInternal(null, path, bufferSize, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
-      /// <summary>Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
+      /// <summary>Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.
+      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
+      /// </summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="T:FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <param name="fileSecurity">One of the <see cref="T:FileSecurity"/> values that determines the access control and audit security for the file.</param>
-      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
@@ -683,21 +715,24 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.
+      /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// </summary>
       /// <param name="path">The path and name of the file to create.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, bool? isFullPath)
       {
          return CreateFileInternal(null, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates or overwrites the specified file.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites the specified file.
+      /// <returns>A <see cref="T:FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// </summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="isFullPath">
@@ -705,14 +740,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A <see cref="T:FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, bool? isFullPath)
       {
          return CreateFileInternal(null, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.
+      /// <returns>A new file with the specified buffer size.</returns>
+      /// </summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="T:FileOptions"/> values that describes how to create or overwrite the file.</param>
@@ -721,14 +757,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A new file with the specified buffer size.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, bool? isFullPath)
       {
          return CreateFileInternal(null, path, bufferSize, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.
+      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
+      /// </summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="T:FileOptions"/> values that describes how to create or overwrite the file.</param>
@@ -738,7 +775,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, bool? isFullPath)
       {
@@ -751,46 +787,50 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.
+      /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file to create.</param>
-      /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path)
       {
          return CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
-      /// <summary>[AlphaFS] Creates or overwrites the specified file.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites the specified file.
+      /// <returns>A <see cref="T:FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <returns>A <see cref="T:FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize)
       {
          return CreateFileInternal(transaction, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
-      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.
+      /// <returns>A new file with the specified buffer size.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="T:FileOptions"/> values that describes how to create or overwrite the file.</param>
-      /// <returns>A new file with the specified buffer size.</returns>
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options)
       {
          return CreateFileInternal(transaction, path, bufferSize, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
       }
 
-      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.
+      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="T:FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <param name="fileSecurity">One of the <see cref="T:FileSecurity"/> values that determines the access control and audit security for the file.</param>
-      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
@@ -801,7 +841,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.
+      /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file to create.</param>
       /// <param name="isFullPath">
@@ -809,14 +851,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A <see cref="T:FileStream"/> that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates or overwrites the specified file.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites the specified file.
+      /// <returns>A <see cref="T:FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
@@ -825,14 +868,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A <see cref="T:FileStream"/> with the specified buffer size that provides read/write access to the file specified in <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, bool? isFullPath)
       {
          return CreateFileInternal(transaction, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.
+      /// <returns>A new file with the specified buffer size.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
@@ -842,14 +886,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A new file with the specified buffer size.</returns>
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, bool? isFullPath)
       {
          return CreateFileInternal(transaction, path, bufferSize, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
       }
       
-      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.</summary>
+      /// <summary>[AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a <see cref="T:FileOptions"/> value that describes how to create or overwrite the file.
+      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
@@ -860,7 +905,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, bool? isFullPath)
       {
@@ -6374,11 +6418,19 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (isFullPath != null)
          {
-            if (Utils.IsNullOrWhiteSpace(sourceFileName))
+            if (sourceFileName == null)
                throw new ArgumentNullException("sourceFileName");
 
-            if (Utils.IsNullOrWhiteSpace(destFileName))
+            if (sourceFileName.Length == 0 || Utils.IsNullOrWhiteSpace(sourceFileName))
+               throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "sourceFileName");
+
+
+            if (destFileName == null)
                throw new ArgumentNullException("destFileName");
+
+            if (destFileName.Length == 0 || Utils.IsNullOrWhiteSpace(destFileName))
+               throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "destFileName");
+
 
             if ((bool) !isFullPath)
             {
@@ -6530,6 +6582,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.</remarks>
       /// <remarks>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe.</remarks>
       /// <returns>A <see cref="T:SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException"></exception>
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
       /// <param name="isFile"><c>null</c> indicates a device. <c>true</c> indicates a file object. <c>false</c> indicates a folder object.</param>
@@ -6549,10 +6603,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool? isFullPath)
       {
-         if (isFullPath != null)
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
+         // When isFile == null, we're working with a device.
+         // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
+         // the path string should be the following form: "\\.\X:"
+         // Do not use a trailing backslash (\), which indicates the root.
 
+         string pathLp = isFullPath == null
+            ? path
+            : (bool)isFullPath
+               ? Path.GetLongPathInternal(path, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
+
+         
          PrivilegeEnabler privilegeEnabler = null;
          try
          {
@@ -6568,17 +6630,6 @@ namespace Alphaleonis.Win32.Filesystem
 
             using (Security.NativeMethods.SecurityAttributes securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
             {
-               // When isFile == null, we're working with a device.
-               // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
-               // the path string should be the following form: "\\.\X:"
-               // Do not use a trailing backslash (\), which indicates the root.
-
-               string pathLp = isFullPath == null
-                  ? path
-                  : (bool) isFullPath
-                     ? Path.GetLongPathInternal(path, false, false, false, false)
-                     : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
-
                SafeFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
                   // CreateFile() / CreateFileTransacted()
@@ -6757,10 +6808,6 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteFileInternal(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
       {
-         if (isFullPath != null)
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
-
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
@@ -7085,14 +7132,24 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
       {
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, true, false, true, true, false);
+         string pathLp;
+
+         try
+         {
+            pathLp = isFullPath == null
+               ? path
+               : (bool) isFullPath
+                  ? Path.GetLongPathInternal(path, false, false, false, false)
+                  : Path.GetFullPathInternal(transaction, path, true, true, false, true, true, false);
+         }
+         catch
+         {
+            return false;
+         }
 
          // MSDN: .NET 3.5+: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
          // MSDN: .NET 3.5+: Trailing spaces are removed from the path parameter before determining if the file exists.
@@ -7113,6 +7170,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Unified method GetAccessControlInternal() to get an <see cref="T:ObjectSecurity"/> object for a particular file or directory.
       /// <returns>An <see cref="T:ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the <paramref name="path"/> parameter. </returns>
+      /// <exception cref="SEHException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
@@ -7123,14 +7181,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
+      [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static T GetAccessControlInternal<T>(bool isFolder, string path, AccessControlSections includeSections, bool? isFullPath)
       {
          if (isFullPath != null)
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
+            if (path == null)
+               throw new SEHException(string.Format(CultureInfo.CurrentCulture, "{0}  Path: {1}", Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path"));
 
          SecurityInformation securityInfo = 0;
          PrivilegeEnabler privilegeEnabler = null;
@@ -7886,18 +7945,6 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void ReplaceInternal(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
       {
-         if (isFullPath != null)
-         {
-            if (Utils.IsNullOrWhiteSpace(sourceFileName))
-               throw new ArgumentNullException("sourceFileName");
-
-            if (Utils.IsNullOrWhiteSpace(destinationFileName))
-               throw new ArgumentNullException("destinationFileName");
-         }
-
-         // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
-
-
          string sourceFileNameLp = isFullPath == null
             ? sourceFileName
             : (bool) isFullPath
@@ -7909,6 +7956,8 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
                ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
                : Path.GetFullPathInternal(null, destinationFileName, true, false, false, true, false, true);
+
+         // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
 
          string destinationBackupFileNameLp = isFullPath == null
             ? destinationBackupFileName
@@ -7949,21 +7998,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
+      [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
       [SecurityCritical]
       internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, bool? isFullPath)
       {
+         if (isFullPath != null)
+            if (path == null)
+               throw new SEHException(string.Format(CultureInfo.CurrentCulture, "{0}  Path: {1}", Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path"));
+         
          if (objectSecurity == null)
             throw new ArgumentNullException("objectSecurity");
 
          byte[] managedDescriptor = objectSecurity.GetSecurityDescriptorBinaryForm();
          using (SafeGlobalMemoryBufferHandle hDescriptor = new SafeGlobalMemoryBufferHandle(managedDescriptor.Length))
          {
+            string pathLp = isFullPath == null
+               ? path
+               : (bool) isFullPath
+                  ? Path.GetLongPathInternal(path, false, false, false, false)
+                  : Path.GetFullPathInternal(null, path, true, false, false, true, false, true);
+
             hDescriptor.CopyFrom(managedDescriptor, 0, managedDescriptor.Length);
 
             SecurityDescriptorControl control;
             uint revision;
             if (!Security.NativeMethods.GetSecurityDescriptorControl(hDescriptor, out control, out revision))
-               NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
+               NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
             PrivilegeEnabler privilegeEnabler = null;
             try
@@ -7975,7 +8036,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   bool daclDefaulted, daclPresent;
                   if (!Security.NativeMethods.GetSecurityDescriptorDacl(hDescriptor, out daclPresent, out pDacl, out daclDefaulted))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
+                     NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
                   if (daclPresent)
                   {
@@ -7991,7 +8052,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   bool saclDefaulted, saclPresent;
                   if (!Security.NativeMethods.GetSecurityDescriptorSacl(hDescriptor, out saclPresent, out pSacl, out saclDefaulted))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
+                     NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
                   if (saclPresent)
                   {
@@ -8009,7 +8070,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   bool ownerDefaulted;
                   if (!Security.NativeMethods.GetSecurityDescriptorOwner(hDescriptor, out pOwner, out ownerDefaulted))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
+                     NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
                   if (pOwner != IntPtr.Zero)
                      securityInfo |= SecurityInformation.Owner;
@@ -8020,7 +8081,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   bool groupDefaulted;
                   if (!Security.NativeMethods.GetSecurityDescriptorGroup(hDescriptor, out pGroup, out groupDefaulted))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
+                     NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
                   if (pGroup != IntPtr.Zero)
                      securityInfo |= SecurityInformation.Group;
@@ -8028,14 +8089,8 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                uint lastError;
-               if (!Utils.IsNullOrWhiteSpace(path))
+               if (!Utils.IsNullOrWhiteSpace(pathLp))
                {
-                  string pathLp = isFullPath == null
-                     ? path
-                     : (bool) isFullPath
-                        ? Path.GetLongPathInternal(path, false, false, false, false)
-                        : Path.GetFullPathInternal(null, path, true, false, false, true, false, true);
-
                   // SetNamedSecurityInfo()
                   // In the ANSI version of this function, the name is limited to MAX_PATH characters.
                   // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
@@ -8081,10 +8136,6 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, bool? isFullPath)
       {
-         if (isFullPath != null)
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
-
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
@@ -8208,10 +8259,6 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void WriteAppendAllLinesInternal(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool isAppend, bool addNewLine, bool? isFullPath)
       {
-         if (isFullPath != null)
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
-
          if (contents == null)
             throw new ArgumentNullException("contents");
 

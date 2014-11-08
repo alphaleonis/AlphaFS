@@ -457,7 +457,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
 
                // Exception to the Exception.
                if (input != null && !input.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
@@ -521,7 +521,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
 
                // Exception to the Exception.
                if (input != null && !input.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
@@ -601,7 +601,7 @@ namespace AlphaFS.UnitTest
                }
                catch (Exception ex)
                {
-                  Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+                  Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
 
                   // Exception to the Exception.
                   //if (input != null && !input.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
@@ -642,7 +642,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
 
                // Exception to the Exception.
                if (input != null && !input.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
@@ -683,7 +683,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
 
                allOk = false;
                errorCnt++;
@@ -720,7 +720,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
 
                allOk = false;
                errorCnt++;
@@ -757,7 +757,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
 
                allOk = false;
                errorCnt++;
@@ -819,7 +819,7 @@ namespace AlphaFS.UnitTest
             catch (ArgumentException) { }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                allOk = false;
                errorCnt++;
             }
@@ -904,7 +904,7 @@ namespace AlphaFS.UnitTest
             catch (ArgumentException) { }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                allOk = false;
                errorCnt++;
             }
@@ -1174,7 +1174,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
 
                // Exception to the Exception.
                if (input != null &&

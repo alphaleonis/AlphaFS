@@ -151,7 +151,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, string.Empty);
+               propValue = ex.Message.Replace(Environment.NewLine, "  ");
             }
 
             Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
@@ -267,7 +267,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
 
             string drive = isLocal ? drv : Path.LocalToUnc(drv);
@@ -807,7 +807,7 @@ namespace AlphaFS.UnitTest
                      try { guid = Volume.GetVolumeGuid(Path.Combine(drive, mountPoint)); }
                      catch (Exception ex)
                      {
-                        Console.Write("\n\tCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+                        Console.Write("\n\tCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                      }
 
                      Console.WriteLine("\t#{0:000}\tLogical Drive: [{1}]\tGUID: [{2}]\n\t\tDestination  : [{3}]\n\t{4}", ++cnt, drive, guid ?? "null", mountPoint, Reporter(true));
@@ -816,7 +816,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.Write("\n\tCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.Write("\n\tCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
 
@@ -1148,7 +1148,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(isLabelSet);
 
@@ -1170,7 +1170,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(isLabelRemoved);
 
@@ -1192,7 +1192,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(isLabelSet);
 
@@ -1246,7 +1246,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
             }
 
             Console.WriteLine("\n\nVolume.DeleteVolumeMountPoint() (Should be True): [{0}]\tFolder: [{1}]\n{2}\n", deleteOk, destFolder, Reporter());
@@ -1258,7 +1258,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
             cnt = 0;
          }
 

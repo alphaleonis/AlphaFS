@@ -184,7 +184,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, string.Empty);
+               propValue = ex.Message.Replace(Environment.NewLine, "  ");
             }
 
             Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
@@ -369,7 +369,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tDirectory.Compress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tDirectory.Compress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
             Directory.Delete(tempPath, true);
          }
          Console.WriteLine("\n\nDirectory compressed recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
@@ -402,7 +402,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
             Directory.Delete(tempPath, true);
          }
          Console.WriteLine("\n\nDirectory decompressed recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
@@ -499,7 +499,7 @@ namespace AlphaFS.UnitTest
          catch (IOException ex)
          {
             exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
@@ -543,7 +543,7 @@ namespace AlphaFS.UnitTest
          catch (IOException ex)
          {
             exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
          Assert.IsTrue(exception, "IOException should have been caught.");
@@ -564,7 +564,7 @@ namespace AlphaFS.UnitTest
          catch (DirectoryNotFoundException ex)
          {
             exception = true;
-            Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
          Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
@@ -582,7 +582,7 @@ namespace AlphaFS.UnitTest
          catch (NotSupportedException ex)
          {
             exception = true;
-            Console.WriteLine("\n\tNotSupportedException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tNotSupportedException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught NotSupportedException (Should be True): [{0}]", exception);
          Assert.IsTrue(exception, "NotSupportedException should have been caught.");
@@ -662,7 +662,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             exception = true;
-            Console.WriteLine("\nDirectory.Delete() Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\nDirectory.Delete() Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\nCaught Exception (Should be True): [{0}]", exception);
          Assert.IsTrue(exception, "Exception should have been caught.");
@@ -709,7 +709,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {Console.WriteLine("\n");
-            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\nEnableCompression() successful (Should be True): [{0}]", action);
          Console.WriteLine("Attributes: [{0}]\n\t{1}", actual, report);
@@ -727,7 +727,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\nDisableCompression() successful (Should be True): [{0}]", action);
          Console.WriteLine("Attributes: [{0}]\n\t{1}", actual, report);
@@ -774,7 +774,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(action, "Encryption should be True");
 
@@ -805,7 +805,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(action, "Encryption should be True");
 
@@ -889,7 +889,7 @@ namespace AlphaFS.UnitTest
          {
             action = false;
             report = Reporter();
-            Console.WriteLine("\n\tDirectory.Encrypt(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tDirectory.Encrypt(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(action, "Unexpected Exception");
 
@@ -927,7 +927,7 @@ namespace AlphaFS.UnitTest
          {
             action = false;
             report = Reporter();
-            Console.WriteLine("\n\tDirectory.Decrypt(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tDirectory.Decrypt(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(action, "Unexpected Exception");
 
@@ -2000,7 +2000,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\t{0} Exception: [{1}]", method, ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\t{0} Exception: [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
 
                // Exception to the Exception.
                if (path != null && !path.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) &&
@@ -2138,7 +2138,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.WriteLine("\n\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
 
                // Exception to the Exception.
                if (path != null && !path.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
@@ -2452,7 +2452,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             gotException = true;
-            Console.WriteLine("\n\tDirectory.CountDirectories(): Caught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tDirectory.CountDirectories(): Caught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", gotException);
          Assert.IsTrue(gotException);
@@ -2508,7 +2508,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             gotException = true;
-            Console.WriteLine("\n\tDirectory.CountFiles(): Caught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+            Console.WriteLine("\n\tDirectory.CountFiles(): Caught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", gotException);
          Assert.IsTrue(gotException);
@@ -2737,7 +2737,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.Write("\t#{0:000}\tCaught Exception for directory: [{1}]\t[{2}]\n", cnt, dir, ex.Message.Replace(Environment.NewLine, string.Empty));
+               Console.Write("\t#{0:000}\tCaught Exception for directory: [{1}]\t[{2}]\n", cnt, dir, ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
          Console.Write("\n{0}", Reporter());
