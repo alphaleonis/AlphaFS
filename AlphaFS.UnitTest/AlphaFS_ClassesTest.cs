@@ -19,14 +19,12 @@
  *  THE SOFTWARE.
  */
 
-using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -636,7 +634,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
-            Console.WriteLine("\n{0}", Reporter());
+            Console.WriteLine(Reporter());
             Console.WriteLine();
 
             #endregion // DeviceGuid.Volume
@@ -665,7 +663,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
-            Console.WriteLine("\n{0}\n", Reporter());
+            Console.WriteLine(Reporter());
 
             #endregion // DeviceGuid.Disk
 
@@ -948,7 +946,7 @@ namespace AlphaFS.UnitTest
 
          Dump(actual.VolumeInfo, -26);
 
-         Console.WriteLine("\n{0}", Reporter());
+         Console.WriteLine(Reporter());
          Console.WriteLine();
       }
 
@@ -1315,7 +1313,7 @@ namespace AlphaFS.UnitTest
          foreach (OpenConnectionInfo connectionInfo in Host.EnumerateOpenConnections(host, "IPC$", false))
             Dump(connectionInfo, -17);
 
-         Console.WriteLine("\n{0}", Reporter());
+         Console.WriteLine(Reporter());
          Console.WriteLine();
       }
       

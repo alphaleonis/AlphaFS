@@ -963,21 +963,50 @@ namespace AlphaFS.UnitTest
       private void DumpEnumerateDirectories(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         int cntAlphaFS = 0;
+         int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
+
+         #region IOException
+
+         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         using (FileStream fs = File.Create(tempPath)) { }
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nFail: path is a file name.");
+            Directory.EnumerateDirectories(tempPath, searchPattern, searchOption).Any();
+         }
+         catch (IOException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "Exception should have been caught.");
+
+         File.Delete(tempPath);
+         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
+
+         #endregion // IOException
+
+         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate directories, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
-         foreach (string dir in Directory.EnumerateDirectories(path, searchPattern, searchOption))
-            Console.WriteLine("\t#{0:000}\t[{1}]", ++cntAlphaFS, dir);
+         foreach (string file in Directory.EnumerateDirectories(path, searchPattern, searchOption))
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, file);
 
-         Console.WriteLine("\n\t{0}\n", Reporter());
-         Assert.IsTrue(cntAlphaFS > 0, "Nothing was enumerated.");
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine();
       }
 
       #endregion // DumpEnumerateDirectories
@@ -987,21 +1016,50 @@ namespace AlphaFS.UnitTest
       private void DumpEnumerateFiles(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         int cntAlphaFS = 0;
+         int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
+
+         #region IOException
+
+         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         using (FileStream fs = File.Create(tempPath)) { }
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nFail: path is a file name.");
+            Directory.EnumerateFiles(tempPath, searchPattern, searchOption).Any();
+         }
+         catch (IOException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "Exception should have been caught.");
+
+         File.Delete(tempPath);
+         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
+
+         #endregion // IOException
+
+         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate files, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
          foreach (string file in Directory.EnumerateFiles(path, searchPattern, searchOption))
-            Console.WriteLine("\t#{0:000}\t[{1}]", ++cntAlphaFS, file);
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, file);
 
-         Console.WriteLine("\n\t{0}\n", Reporter());
-         Assert.IsTrue(cntAlphaFS > 0, "Nothing was enumerated.");
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine();
       }
 
       #endregion // DumpEnumerateFiles
@@ -1011,24 +1069,50 @@ namespace AlphaFS.UnitTest
       private void DumpEnumerateFileSystemEntries(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         int cntAlphaFs = 0;
+         int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
+         #region IOException
+
+         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         using (FileStream fs = File.Create(tempPath)) { }
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nFail: path is a file name.");
+            Directory.EnumerateFileSystemEntries(tempPath, searchPattern, searchOption).Any();
+         }
+         catch (IOException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "Exception should have been caught.");
+
+         File.Delete(tempPath);
+         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
+
+         #endregion // IOException
+
+         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
-         Console.WriteLine("\tEnumerate directories and files, using \"SearchOption.{0}\"\n", searchOption);
+         Console.WriteLine("\tEnumerate file system entries, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
-         foreach (string dir in Directory.EnumerateFileSystemEntries(path, searchPattern, searchOption, true))
-            Console.WriteLine("\t#{0:000}\t{1}\t[{2}]", ++cntAlphaFs,
-               ((File.GetAttributes(dir) & FileAttributes.Directory) == FileAttributes.Directory)
-                  ? "[Directory]"
-                  : "[File]\t", dir);
+         foreach (string file in Directory.EnumerateFileSystemEntries(path, searchPattern, searchOption))
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, file);
 
-         Console.WriteLine("\n\t{0}\n", Reporter());
-         Assert.IsTrue(cntAlphaFs > 0, "Nothing was enumerated.");
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine();
       }
 
       #endregion // DumpEnumerateFileSystemEntries
@@ -1106,21 +1190,50 @@ namespace AlphaFS.UnitTest
       private void DumpGetDirectories(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         int cntAlphaFS = 0;
+         int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
-         Console.WriteLine("\nInput Path: [{0}]\n", path);
+         #region IOException
+
+         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         using (FileStream fs = File.Create(tempPath)) { }
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nFail: path is a file name.");
+            Directory.GetDirectories(tempPath, searchPattern, searchOption);
+         }
+         catch (IOException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "Exception should have been caught.");
+
+         File.Delete(tempPath);
+         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
+
+         #endregion // IOException
+
+         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet directories, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
-         foreach (string dir in Directory.GetDirectories(path, searchPattern, searchOption))
-            Console.WriteLine("\t#{0:000}\t[{1}]\t[{2}]", ++cntAlphaFS, File.GetAttributes(dir), dir);
+         foreach (string folder in Directory.GetDirectories(path, searchPattern, searchOption))
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, folder);
 
-         Console.WriteLine("\n\t{0}\n", Reporter());
-         Assert.IsTrue(cntAlphaFS > 0);
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine();
       }
 
       #endregion // DumpGetDirectories
@@ -1162,21 +1275,50 @@ namespace AlphaFS.UnitTest
       private void DumpGetFiles(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         int cntAlphaFS = 0;
+         int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
-         Console.WriteLine("\nInput Path: [{0}]\n", path);
+         #region IOException
+
+         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         using (FileStream fs = File.Create(tempPath)) { }
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nFail: path is a file name.");
+            Directory.GetFiles(tempPath, searchPattern, searchOption);
+         }
+         catch (IOException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "Exception should have been caught.");
+
+         File.Delete(tempPath);
+         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
+
+         #endregion // IOException
+         
+         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+         
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet files, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
          foreach (string file in Directory.GetFiles(path, searchPattern, searchOption))
-            Console.WriteLine("\t#{0:000}\t[{1}]\t[{2}]", ++cntAlphaFS, File.GetAttributes(file), file);
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, file);
 
-         Console.WriteLine("\n\t{0}\n", Reporter());
-         Assert.IsTrue(cntAlphaFS > 0);
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine();
       }
 
       #endregion // DumpGetFiles
@@ -1355,21 +1497,50 @@ namespace AlphaFS.UnitTest
       private void DumpGetFileSystemEntries(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         int cntAlphaFS = 0;
+         int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
-         Console.WriteLine("\nInput Path: [{0}]\n", path);
-         Console.WriteLine("\tEnumerate directories and files, using \"SearchOption.{0}\"\n", searchOption);
+         #region IOException
+
+         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         using (FileStream fs = File.Create(tempPath)) { }
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nFail: path is a file name.");
+            Directory.GetFileSystemEntries(tempPath, searchPattern, searchOption);
+         }
+         catch (IOException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "Exception should have been caught.");
+
+         File.Delete(tempPath);
+         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
+
+         #endregion // IOException
+
+         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("\tGet FileSystemEntries, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
-         foreach (string file in Directory.GetFileSystemEntries(path, searchPattern, searchOption))
-            Console.WriteLine("\t#{0:000}\t[{1}]\t[{2}]", ++cntAlphaFS, File.GetAttributes(file), file);
+         foreach (string folder in Directory.GetFileSystemEntries(path, searchPattern, searchOption))
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, folder);
 
-         Console.WriteLine("\n\t{0}\n", Reporter());
-         Assert.IsTrue(cntAlphaFS > 0);
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine();
       }
 
       #endregion // DumpGetFileSystemEntries

@@ -923,7 +923,8 @@ namespace AlphaFS.UnitTest
             foreach (string hardLink in File.EnumerateHardlinks(tempPath))
                Console.WriteLine("\t#{0:000}\tHardlink: [{1}]", ++cnt, hardLink);
 
-            Console.WriteLine("\n{0}", Reporter());
+            Console.WriteLine();
+            Console.WriteLine(Reporter());
             Assert.AreEqual(numCreate, cnt);
             Console.WriteLine();
          }
@@ -1093,7 +1094,8 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\tFile.SetAttributes(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
-         Console.WriteLine("\n{0}\n", Reporter());
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
 
          
          apply = FileAttributes.Normal;
@@ -1121,7 +1123,8 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\tFile.SetAttributes(): Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
-         Console.WriteLine("\n{0}\n", Reporter());
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
 
 
          Directory.Delete(tempPath, true);

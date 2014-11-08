@@ -1772,8 +1772,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Returns the names of subdirectories (including their paths) in the specified directory.</summary>
-      /// <param name="path">The directory to search.</param>
+      /// <summary>Returns the names of subdirectories (including their paths) in the specified directory.
       /// <returns>An array of the full names (including paths) of subdirectories in the specified path, or an empty array if no directories are found.</returns>
       /// <remarks>The names returned by this method are prefixed with the directory information provided in path.</remarks>
       /// <remarks>
@@ -1781,40 +1780,50 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
       [SecurityCritical]
       public static string[] GetDirectories(string path)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.</summary>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <summary>Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.
       /// <returns>An array of the full names (including paths) of the subdirectories that match the search pattern in the specified directory, or an empty array if no directories are found.</returns>
       /// <remarks>
       /// The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
       /// before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       [SecurityCritical]
       public static string[] GetDirectories(string path, string searchPattern)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.</summary>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <summary>Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.
       /// <returns>An array of the full names (including paths) of the subdirectories that match the specified criteria, or an empty array if no directories are found.</returns>
       /// <remarks>
       /// The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
       /// before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
       [SecurityCritical]
       public static string[] GetDirectories(string path, string searchPattern, SearchOption searchOption)
       {
@@ -1827,9 +1836,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transacted
 
-      /// <summary>Returns the names of subdirectories (including their paths) in the specified directory.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory to search.</param>
+      /// <summary>Returns the names of subdirectories (including their paths) in the specified directory.
       /// <returns>An array of the full names (including paths) of subdirectories in the specified path, or an empty array if no directories are found.</returns>
       /// <remarks>The names returned by this method are prefixed with the directory information provided in path.</remarks>
       /// <remarks>
@@ -1837,42 +1844,53 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
       [SecurityCritical]
       public static string[] GetDirectories(KernelTransaction transaction, string path)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <summary>Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.
       /// <returns>An array of the full names (including paths) of the subdirectories that match the search pattern in the specified directory, or an empty array if no directories are found.</returns>
       /// <remarks>
       /// The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
       /// before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       [SecurityCritical]
       public static string[] GetDirectories(KernelTransaction transaction, string path, string searchPattern)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <summary>Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.
       /// <returns>An array of the full names (including paths) of the subdirectories that match the specified criteria, or an empty array if no directories are found.</returns>
       /// <remarks>
       /// The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
       /// before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
       [SecurityCritical]
       public static string[] GetDirectories(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
@@ -1965,8 +1983,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Returns the names of files (including their paths) in the specified directory.</summary>
-      /// <param name="path">The directory to search.</param>
+      /// <summary>Returns the names of files (including their paths) in the specified directory.
       /// <returns>An array of the full names (including paths) for the files in the specified directory, or an empty array if no files are found.</returns>
       /// <remarks>The returned file names are appended to the supplied <paramref name="path"/> parameter.</remarks>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required. </remarks>
@@ -1975,15 +1992,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
       [SecurityCritical]
       public static string[] GetFiles(string path)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Returns the names of files (including their paths) that match the specified search pattern in the specified directory.</summary>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <summary>Returns the names of files (including their paths) that match the specified search pattern in the specified directory.
       /// <returns>An array of the full names (including paths) for the files in the specified directory that match the specified search pattern, or an empty array if no files are found.</returns>
       /// <remarks>The returned file names are appended to the supplied <paramref name="path"/> parameter.</remarks>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required. </remarks>
@@ -1992,16 +2012,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       [SecurityCritical]
       public static string[] GetFiles(string path, string searchPattern)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Gets the names of the subdirectories (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.</summary>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <summary>Gets the names of the subdirectories (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.
       /// <returns>An array of the full names (including paths) for the files in the specified directory that match the specified search pattern and option, or an empty array if no files are found.</returns>
       /// <remarks>The returned file names are appended to the supplied <paramref name="path"/> parameter.</remarks>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required. </remarks>
@@ -2010,6 +2033,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
       [SecurityCritical]
       public static string[] GetFiles(string path, string searchPattern, SearchOption searchOption)
       {
@@ -2022,9 +2052,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transacted
 
-      /// <summary>Returns the names of files (including their paths) in the specified directory.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory to search.</param>
+      /// <summary>Returns the names of files (including their paths) in the specified directory.
       /// <returns>An array of the full names (including paths) for the files in the specified directory, or an empty array if no files are found.</returns>
       /// <remarks>The returned file names are appended to the supplied <paramref name="path"/> parameter.</remarks>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required. </remarks>
@@ -2033,16 +2061,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
       [SecurityCritical]
       public static string[] GetFiles(KernelTransaction transaction, string path)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Returns the names of files (including their paths) that match the specified search pattern in the specified directory.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <summary>Returns the names of files (including their paths) that match the specified search pattern in the specified directory.
       /// <returns>An array of the full names (including paths) for the files in the specified directory that match the specified search pattern, or an empty array if no files are found.</returns>
       /// <remarks>The returned file names are appended to the supplied <paramref name="path"/> parameter.</remarks>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required. </remarks>
@@ -2051,17 +2082,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       [SecurityCritical]
       public static string[] GetFiles(KernelTransaction transaction, string path, string searchPattern)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Gets the names of the subdirectories (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <summary>Gets the names of the subdirectories (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.
       /// <returns>An array of the full names (including paths) for the files in the specified directory that match the specified search pattern and option, or an empty array if no files are found.</returns>
       /// <remarks>The returned file names are appended to the supplied <paramref name="path"/> parameter.</remarks>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required. </remarks>
@@ -2070,6 +2104,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
       [SecurityCritical]
       public static string[] GetFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
@@ -2086,8 +2128,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Returns the names of all files and subdirectories in the specified directory.</summary>
-      /// <param name="path">The directory for which file and subdirectory names are returned.</param>
+      /// <summary>Returns the names of all files and subdirectories in the specified directory.
       /// <returns>An string[] array of the names of files and subdirectories in the specified directory.</returns>
       /// <remarks>
       /// The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
@@ -2095,15 +2136,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// you must wait for the whole array of entries to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The directory for which file and subdirectory names are returned.</param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Returns an array of file system entries that match the specified search criteria.</summary>
-      /// <param name="path">The path to be searched.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <summary>Returns an array of file system entries that match the specified search criteria.
       /// <returns>An string[] array of file system entries that match the specified search criteria.</returns>
       /// <remarks>
       /// The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
@@ -2111,16 +2155,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// you must wait for the whole array of entries to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The path to be searched.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path, string searchPattern)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <summary>Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.
       /// <returns>An string[] array of file system entries that match the specified search criteria.</returns>
       /// <remarks>
       /// The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
@@ -2128,6 +2175,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// you must wait for the whole array of entries to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path, string searchPattern, SearchOption searchOption)
       {
@@ -2140,9 +2194,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transacted
 
-      /// <summary>Returns the names of all files and subdirectories in the specified directory.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory for which file and subdirectory names are returned.</param>
+      /// <summary>Returns the names of all files and subdirectories in the specified directory.
       /// <returns>An string[] array of the names of files and subdirectories in the specified directory.</returns>
       /// <remarks>
       /// The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
@@ -2150,16 +2202,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// you must wait for the whole array of entries to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory for which file and subdirectory names are returned.</param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(KernelTransaction transaction, string path)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Returns an array of file system entries that match the specified search criteria.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to be searched.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <summary>Returns an array of file system entries that match the specified search criteria.
       /// <returns>An string[] array of file system entries that match the specified search criteria.</returns>
       /// <remarks>
       /// The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
@@ -2167,17 +2222,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// you must wait for the whole array of entries to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to be searched.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(KernelTransaction transaction, string path, string searchPattern)
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
       }
 
-      /// <summary>Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <summary>Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.
       /// <returns>An string[] array of file system entries that match the specified search criteria.</returns>
       /// <remarks>
       /// The EnumerateFileSystemEntries and GetFileSystemEntries methods differ as follows: When you use EnumerateFileSystemEntries,
@@ -2185,6 +2243,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// you must wait for the whole array of entries to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {

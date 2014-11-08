@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && IsFolder)
                   lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
 
-               NativeError.ThrowException(lastError, pathLp);
+               NativeError.ThrowException(lastError, pathLp, true);
             }
          }
 
@@ -321,9 +321,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          set
          {
-            if (Utils.IsNullOrWhiteSpace(value))
-               throw new ArgumentNullException("value");
-
             _inputPath = IsFullPath == null
                ? value
                : (bool) IsFullPath
@@ -377,11 +374,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Specifies whether the <see cref="T:SearchOption"/> should include only the current directory or should include all subdirectories.</summary>
       /// <value>One of the <see cref="T:SearchOption"/> enumeration values.</value>
+      /// <exception cref="ArgumentOutOfRangeException">searchOption is not a valid <see cref="T:SearchOption"/> value.</exception>
       public SearchOption SearchOption
       {
          get { return _searchOption; }
          set
          {
+            if (value != SearchOption.TopDirectoryOnly && value != SearchOption.AllDirectories)
+               throw new ArgumentOutOfRangeException("value");
+
             _searchOption = value;
             _searchAllDirs = value == SearchOption.AllDirectories;
          }
@@ -402,6 +403,9 @@ namespace Alphaleonis.Win32.Filesystem
 
          set
          {
+            if (value == null)
+               throw new ArgumentNullException("value");
+
             if (!Utils.IsNullOrWhiteSpace(value))
                _searchPattern = value;
 
