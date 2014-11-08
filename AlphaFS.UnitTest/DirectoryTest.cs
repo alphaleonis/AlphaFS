@@ -531,6 +531,65 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
+         #region IOException
+
+         using (File.Create(tempPath)) { }
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\n\nFail: File already exist with same name.");
+            Directory.CreateDirectory(tempPath);
+         }
+         catch (IOException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+         }
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "IOException should have been caught.");
+         
+         File.Delete(tempPath);
+
+         #endregion // IOException
+
+         #region DirectoryNotFoundException
+
+         exception = false;
+         try
+         {
+            Console.WriteLine("\n\nFail: The specified path is invalid (for example, it is on an unmapped drive).");
+            char letter = DriveInfo.GetFreeDriveLetter();
+            Directory.CreateDirectory(letter + @":\shouldFail");
+         }
+         catch (DirectoryNotFoundException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+         }
+         Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
+
+         #endregion // DirectoryNotFoundException
+
+         #region NotSupportedException
+
+         exception = false;
+         try
+         {
+            Console.WriteLine("\n\nFail: Path contains a colon character (:) that is not part of a drive label (C:\\).");
+            Directory.CreateDirectory(@"C:\dev\test\aaa:aaa.txt");
+         }
+         catch (NotSupportedException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tNotSupportedException: [{0}]", ex.Message.Replace(Environment.NewLine, string.Empty));
+         }
+         Console.WriteLine("\n\tCaught NotSupportedException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "NotSupportedException should have been caught.");
+
+         #endregion // NotSupportedException
+
+
          DirectoryInfo dirInfo = new DirectoryInfo(tempPath);
          System.IO.DirectoryInfo dirInfoSysIo = new System.IO.DirectoryInfo(tempPath);
          Assert.AreEqual(dirInfoSysIo.Exists, dirInfo.Exists, "Exists AlphaFS != System.IO");
@@ -543,7 +602,7 @@ namespace AlphaFS.UnitTest
          dirInfo.Create(true);  // Create compressed directory.
          string report = Reporter();
          bool exist = dirInfo.Exists;
-         Console.WriteLine("\nCreateDirectory() (Should be True): [{0}]\n\t{1}\n", exist, report);
+         Console.WriteLine("\n\nCreateDirectory() (Should be True): [{0}]\n\t{1}\n", exist, report);
          
          
          bool compressed = (dirInfo.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed;
@@ -595,7 +654,7 @@ namespace AlphaFS.UnitTest
 
 
          // Fail; directory is not empty;
-         bool exception = false;
+         exception = false;
          try
          {
             Directory.Delete(tempPath);
@@ -2159,6 +2218,7 @@ namespace AlphaFS.UnitTest
 
          Directory.Delete(path, true);
          Assert.IsFalse(Directory.Exists(path), "Cleanup failed: Directory should have been removed.");
+         Console.WriteLine();
       }
 
       #endregion // Move

@@ -1453,7 +1453,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Determines whether the given path refers to an existing directory on disk.</summary>
       /// <param name="path">The path to test.</param>
       /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
       /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(string path)
@@ -1475,7 +1475,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
       /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(string path, bool? isFullPath)
@@ -1493,7 +1493,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
       /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
       /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
@@ -1514,7 +1514,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>MSDN: .NET 2+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
+      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
       /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
@@ -5724,7 +5724,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="copyMoveProgress">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isSameVolume"><c>null</c> same volume is unknown and will be retrieved. <c>true</c> it is assumed that the source and destination paths as are on thge same volume.</param>
+      /// <param name="isSameVolume"><c>null</c> same volume is unknown and will be retrieved. <c>true</c> it is assumed that the source and destination paths as are on the same volume.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -5735,17 +5735,31 @@ namespace Alphaleonis.Win32.Filesystem
       /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
       /// get an IOException. You cannot use the Move method to overwrite an existing file.</remarks>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying/moving the directory.</remarks>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static void CopyMoveInternal(bool isMove, KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveSecurity, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool? isSameVolume, bool? isFullPath)
       {
-         if (isFullPath != null && (bool) !isFullPath)
+         if (isFullPath != null)
          {
             if (Utils.IsNullOrWhiteSpace(sourcePath))
                throw new ArgumentNullException("sourcePath");
 
             if (Utils.IsNullOrWhiteSpace(destinationPath))
                throw new ArgumentNullException("destinationPath");
+
+            if ((bool) !isFullPath)
+            {
+               // MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
+
+               if (!Path.IsLongPath(sourcePath) && sourcePath.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+                  throw new NotSupportedException(sourcePath);
+
+               if (!Path.IsLongPath(destinationPath) && destinationPath.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+                  throw new NotSupportedException(destinationPath);
+            }
          }
          
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
@@ -5774,7 +5788,10 @@ namespace Alphaleonis.Win32.Filesystem
          //if (isSameVolume == null)
             //isSameVolume = Volume.IsSameVolume(sourcePathLp, destinationPathLp);
 
-         
+
+         if (sourcePathLp.Equals(destinationPathLp, StringComparison.OrdinalIgnoreCase))
+            throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.SameSourceDestination, sourcePathLp));
+
          // Determine Copy or Move action.
          bool doCopy = !isMove && copyOptions != null && moveOptions == null;
          bool doMove = isMove && moveOptions != null && copyOptions == null;
@@ -5859,14 +5876,29 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="IOException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryInternal(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
-         
+         if (isFullPath != null)
+         {
+            if (Utils.IsNullOrWhiteSpace(path))
+               throw new ArgumentNullException("path");
+
+            if ((bool) !isFullPath)
+            {
+               // MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
+               
+               if (!Path.IsLongPath(path) && path.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+                  throw new NotSupportedException(path);
+
+               if (templatePath != null && !Path.IsLongPath(templatePath) && templatePath.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+                  throw new NotSupportedException(templatePath);
+            }
+         }
+
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
@@ -5889,6 +5921,10 @@ namespace Alphaleonis.Win32.Filesystem
                // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
                : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true, false);
 #endif
+         // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
+         if (File.ExistsInternal(false, transaction, pathLp, null))
+            NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp, true);
+
          #region Construct Full Path
 
          path = Path.GetRegularPathInternal(pathLp, false, false, false, false);
@@ -5943,12 +5979,19 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   int lastError = Marshal.GetLastWin32Error();
 
-                  // Throw exception if a file exists with the same name as the requested directory.
-                  if (lastError == Win32Errors.ERROR_ALREADY_EXISTS)
-                     createOk = !File.ExistsInternal(true, transaction, folderLp, null);
+                  switch ((uint) lastError)
+                  {
+                     // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
+                     // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
+                     case Win32Errors.ERROR_ALREADY_EXISTS:
+                        if (File.ExistsInternal(false, transaction, pathLp, null))
+                           NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp, true);
+                        break;
 
-                  if (!createOk)
-                     NativeError.ThrowException(lastError, folderLp);
+                     default:
+                        NativeError.ThrowException(lastError, folderLp);
+                        break;
+                  }
                }
                else if (compress)
                   Device.ToggleCompressionInternal(true, transaction, folderLp, true, null);
@@ -6378,7 +6421,7 @@ namespace Alphaleonis.Win32.Filesystem
                      yield break;
 
                   default:
-                     NativeError.ThrowException(lastError);
+                     NativeError.ThrowException(lastError, path);
                      break;
                }
             }
