@@ -1917,7 +1917,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destFileName)
       {
-         CopyMoveInternal(true, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, false);
       }
 
       #endregion // .NET
@@ -1941,7 +1941,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destFileName, bool? isFullPath)
       {
-         CopyMoveInternal(true, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -1960,7 +1960,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destFileName, MoveOptions options, bool? isFullPath)
       {
-         CopyMoveInternal(true, null, sourceFileName, destFileName, false, null, options, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, options, null, null, isFullPath);
       }
 
       /// <summary>[AlphaFS] Moves a file or directory, including its children. You can provide a callback function that receives progress notifications.</summary>
@@ -1993,7 +1993,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destFileName, MoveOptions options, CopyMoveProgressCallback moveProgress, object userProgressData, bool? isFullPath)
       {
-         CopyMoveInternal(true, null, sourceFileName, destFileName, false, null, options, moveProgress, userProgressData, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, options, moveProgress, userProgressData, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2023,11 +2023,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destFileName, MoveOptions options, CopyMoveProgressCallback moveProgress, object userProgressData)
       {
-         CopyMoveInternal(true, null, sourceFileName, destFileName, false, null, options, moveProgress, userProgressData, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, options, moveProgress, userProgressData, false);
       }
 
       #region Transacted
-
+      
       #region .NET
 
       /// <summary>[AlphaFS] Moves a specified file to a new location as part of a transaction, providing the option to specify a new file name.</summary>
@@ -2042,7 +2042,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName)
       {
-         CopyMoveInternal(true, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, false);
       }
 
       #endregion // .NET
@@ -2066,7 +2066,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, bool? isFullPath)
       {
-         CopyMoveInternal(true, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
       }
 
       /// <summary>[AlphaFS] Moves a file or directory  as part of a transaction, including its children.</summary>
@@ -2094,7 +2094,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions options, bool? isFullPath)
       {
-         CopyMoveInternal(true, transaction, sourceFileName, destFileName, false, null, options, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, options, null, null, isFullPath);
       }
 
       /// <summary>[AlphaFS] Moves a file or directory as part of a transaction, including its children. You can provide a callback function that receives progress notifications.</summary>
@@ -2126,7 +2126,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions options, CopyMoveProgressCallback moveProgress, object userProgressData, bool? isFullPath)
       {
-         CopyMoveInternal(true, transaction, sourceFileName, destFileName, false, null, options, moveProgress, userProgressData, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, options, moveProgress, userProgressData, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2155,7 +2155,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions options, CopyMoveProgressCallback moveProgress, object userProgressData)
       {
-         CopyMoveInternal(true, transaction, sourceFileName, destFileName, false, null, options, moveProgress, userProgressData, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, options, moveProgress, userProgressData, false);
       }
 
       #endregion // Transacted
@@ -6447,7 +6447,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? Path.GetLongPathInternal(destFileName, false, false, false, false)
             : Path.GetFullPathInternal(transaction, destFileName, true, false, false, true, false, true);
 
-         
+
          // Setup callback function for progress notifications.
          NativeMethods.CopyMoveProgressDelegate routine = (copyMoveProgress != null)
             ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, hSourceFile, hDestinationFile, lpData) =>
@@ -6485,15 +6485,15 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
             ? doMove
-            // MoveFileWithProgress() / MoveFileTransacted()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-            // 2013-04-15: MSDN confirms LongPath usage.
+               // MoveFileWithProgress() / MoveFileTransacted()
+               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2013-04-15: MSDN confirms LongPath usage.
 
                // CopyFileEx() / CopyFileTransacted()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-            // 2013-04-15: MSDN confirms LongPath usage.
+               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2013-04-15: MSDN confirms LongPath usage.
 
                ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
                : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, copyOptions ?? CopyOptions.FailIfExists)
