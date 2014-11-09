@@ -2027,7 +2027,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #region Transacted
-      
+
       #region .NET
 
       /// <summary>[AlphaFS] Moves a specified file to a new location as part of a transaction, providing the option to specify a new file name.</summary>
@@ -6398,7 +6398,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>You cannot use the Move method to overwrite an existing file.</para>
       /// </remarks>
       /// </summary>
-      /// <param name="isMove"><c>true</c> indicates a file move, <c>false</c> indicates a file copy.</param>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="isFolder">Specifies that action is applied to files or directories.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The source directory path.</param>
       /// <param name="destFileName">The destination directory path.</param>
@@ -6414,36 +6417,22 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static void CopyMoveInternal(bool isMove, KernelTransaction transaction, string sourceFileName, string destFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool? isFullPath)
+      internal static void CopyMoveInternal(bool isFolder, KernelTransaction transaction, string sourceFileName, string destFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool? isFullPath)
       {
-         if (isFullPath != null)
+         #region NotSupportedException
+
+         if (isFullPath != null && (bool) !isFullPath)
          {
-            if (sourceFileName == null)
-               throw new ArgumentNullException("sourceFileName");
+            // MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
 
-            if (sourceFileName.Length == 0 || Utils.IsNullOrWhiteSpace(sourceFileName))
-               throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "sourceFileName");
+            if (sourceFileName != null && !Path.IsLongPath(sourceFileName) && sourceFileName.Length > 0 && sourceFileName.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+               throw new NotSupportedException(sourceFileName);
 
-
-            if (destFileName == null)
-               throw new ArgumentNullException("destFileName");
-
-            if (destFileName.Length == 0 || Utils.IsNullOrWhiteSpace(destFileName))
-               throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "destFileName");
-
-
-            if ((bool) !isFullPath)
-            {
-               // MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-
-               if (!Path.IsLongPath(sourceFileName) && sourceFileName.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
-                  throw new NotSupportedException(sourceFileName);
-
-               if (!Path.IsLongPath(destFileName) && destFileName.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
-                  throw new NotSupportedException(destFileName);
-            }
+            if (destFileName != null && !Path.IsLongPath(destFileName) && destFileName.Length > 0 && destFileName.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+               throw new NotSupportedException(destFileName);
          }
-         
+
+         #endregion // NotSupportedException
 
          string sourceFileNameLp = isFullPath == null
             ? sourceFileName
@@ -6451,11 +6440,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
             : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true, false, true);
 
-         //if (!ExistsInternal(false, transaction, sourceFileNameLp, null))
-         //   // MSDN: .NET 3.5+ IOException: The destination file already exists or sourceFileName was not found.
-         //   NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, sourceFileNameLp, true);
-
-
+         
          string destFileNameLp = isFullPath == null
             ? destFileName
             : (bool) isFullPath
@@ -6475,8 +6460,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Determine Copy or Move action.
          int cancel;
-         bool doCopy = !isMove && copyOptions != null && moveOptions == null;
-         bool doMove = isMove && moveOptions != null && copyOptions == null;
+         bool doCopy = copyOptions != null && moveOptions == null;
+         bool doMove = moveOptions != null && copyOptions == null;
 
          if (ExistsInternal(false, transaction, destFileNameLp, null))
          {
@@ -6500,19 +6485,19 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
             ? doMove
-               // MoveFileWithProgress() / MoveFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-04-15: MSDN confirms LongPath usage.
+            // MoveFileWithProgress() / MoveFileTransacted()
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // 2013-04-15: MSDN confirms LongPath usage.
 
                // CopyFileEx() / CopyFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-04-15: MSDN confirms LongPath usage.
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // 2013-04-15: MSDN confirms LongPath usage.
 
                ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
                : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, copyOptions ?? CopyOptions.FailIfExists)
-            
+
             : doMove
                ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
                : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, copyOptions ?? CopyOptions.FailIfExists, transaction.SafeHandle)))
@@ -6531,6 +6516,9 @@ namespace Alphaleonis.Win32.Filesystem
 
             if ((uint) lastError == Win32Errors.ERROR_REQUEST_ABORTED)
                return;
+
+            if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && isFolder)
+               lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
 
             NativeError.ThrowException(lastError, sourceFileName, destFileName);
          }
@@ -7626,7 +7614,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFileSystemEntryInfoInternal
 
-      /// <summary>[AlphaFS] Unified method GetFileSystemEntryInfoInternal() to get a FileSystemEntryInfo from a Non-/Transacted directory/file.</summary>
+      /// <summary>[AlphaFS] Unified method GetFileSystemEntryInfoInternal() to get a FileSystemEntryInfo from a Non-/Transacted directory/file.
+      /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the file or directory, or <c>null</c> on Exception when <paramref name="continueOnException"/> is <c>true</c>.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
@@ -7637,8 +7630,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the file or directory, or <c>null</c> on Exception when <paramref name="continueOnException"/> is <c>true</c>.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       internal static FileSystemEntryInfo GetFileSystemEntryInfoInternal(bool isFolder, KernelTransaction transaction, string path, bool fallback, bool continueOnException, bool? isFullPath)
       {

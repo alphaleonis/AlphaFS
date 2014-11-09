@@ -290,8 +290,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(string path)
       {
+         #region NotSupportedException
+
          if (path != null && (!IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1))
             throw new NotSupportedException(path);
+
+         #endregion // NotSupportedException
 
          return GetFullPathInternal(null, path, false, false, false, false, false, true);
       }
@@ -1433,15 +1437,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFullPathInternal
 
-      /// <summary>[AlphaFS] Unified method GetFullPathInternal() to retrieve the absolute path for the specified path string.
-      /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
-      /// <remarks>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</remarks>
-      /// <remarks>GetFullPath does not work reliable with relative paths.</remarks>
-      /// <remarks>GetFullPath is not recommended for multithreaded applications or shared library code.</remarks>
+      /// <summary>[AlphaFS] Unified method GetFullPathInternal() to retrieve the absolute path for the specified <paramref name="path"/> string.
+      /// <para>&#160;</para>
+      /// <returns>Returns the fully qualified location of <paramref name="path"/>, such as "C:\MyFile.txt".</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
+      /// <para>GetFullPath does not work reliable with relative paths.</para>
+      /// <para>GetFullPath is not recommended for multithreaded applications or shared library code.</para>
+      /// </remarks>
+      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       /// <param name="asLongPath"><c>true</c> returns the path in long path (Unicode) format, when <c>false</c> returns the path as a regular path.</param>
@@ -1501,11 +1509,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetLongPathInternal
 
       /// <summary>[AlphaFS] Unified method GetLongPathInternal() to get a long path (Unicode path) of the specified <paramref name="path"/>.
-      /// <returns>The <paramref name="path"/> as a long path.</returns>
+      /// <para>&#160;</para>
+      /// <returns>Returns the <paramref name="path"/> as a long path, such as "\\?\C:\MyFile.txt".</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
+      /// </remarks>
+      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="path">The path to the file or directory, this may also be an UNC path.</param>
       /// <param name="checkInvalidChars">Checks that the path contains only valid path-characters.</param>
       /// <param name="trimEnd"><c>true</c> removes trailing whitespace from <paramref name="path"/>.</param>
@@ -1608,12 +1621,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetRegularPathInternal
 
-      /// <summary>[AlphaFS] Unified method GetRegularPathInternal() to get the regular path from long prefixed one. i.e.: \\?\C:\Temp\file.txt to C:\Temp\file.txt or: \\?\UNC\Server\share\file.txt to \\Server\share\file.txt
-      /// <returns>The <paramref name="path"/> as a regular path.</returns>
+      /// <summary>[AlphaFS] Unified method GetRegularPathInternal() to get the regular path from a long path.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns the regular form of a long <paramref name="path"/>.</para>
+      /// <para>For example: "\\?\C:\Temp\file.txt" to: "C:\Temp\file.txt", or: "\\?\UNC\Server\share\file.txt" to: "\\Server\share\file.txt".</para>
+      /// </returns>
+      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="path">The path.</param>
       /// <param name="checkInvalidChars">Checks that the path contains only valid path-characters.</param>
       /// <param name="trimEnd"><c>true</c> removes trailing whitespace from <paramref name="path"/>.</param>

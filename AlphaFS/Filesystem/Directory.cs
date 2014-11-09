@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(null, path, templatePath, null, compress, false);
       }
-      
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
@@ -195,7 +195,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(null, path, null, directorySecurity, compress, false);
       }
-      
+
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
@@ -210,7 +210,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(null, path, templatePath, directorySecurity, compress, false);
       }
-      
+
       #endregion // Compress
 
       #region Transacted
@@ -268,7 +268,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(transaction, path, null, null, compress, isFullPath);
       }
-      
+
       /// <summary>[AlphaFS] Creates a new directory as a transacted operation, with the attributes of a specified template directory.</summary> 
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
@@ -332,7 +332,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       /// <summary>[AlphaFS] Creates all the directories in a specified path as a transacted operation.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
@@ -346,7 +346,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(transaction, path, null, null, compress, false);
       }
-      
+
       /// <summary>[AlphaFS] Creates a new directory as a transacted operation, with the attributes of a specified template directory.</summary> 
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
@@ -361,7 +361,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(transaction, path, templatePath, null, compress, false);
       }
-      
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path as a transacted operation, applying the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -463,7 +463,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DeleteDirectoryInternal(null, null, path, recursive, ignoreReadOnly, !recursive, false, false);
       }
-      
+
       #region Transacted
 
       #region .NET
@@ -514,7 +514,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
@@ -527,7 +527,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DeleteDirectoryInternal(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -602,7 +602,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
       }
-      
+
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
@@ -618,7 +618,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
       }
-      
+
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
@@ -750,7 +750,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
       }
-      
+
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
@@ -767,7 +767,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
       }
-      
+
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
@@ -831,7 +831,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, continueOnException, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -922,7 +922,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, isFullPath);
       }
-      
+
       /// <summary>[AlphaFS] Returns an enumerable collection of file names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
@@ -1023,7 +1023,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       #region IsFullPath
-      
+
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
@@ -1054,7 +1054,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, isFullPath);
       }
-      
+
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
@@ -1135,7 +1135,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, continueOnException, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1607,7 +1607,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="T:System.DateTime"/> structure set to the creation date and time for the specified directory. This value is expressed in local time.</returns>
       [SecurityCritical]
       public static DateTime GetCreationTime(string path)
-      {         
+      {
          return File.GetCreationTimeInternal(true, null, path, false, false).ToLocalTime();
       }
 
@@ -1743,7 +1743,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1972,7 +1972,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2332,7 +2332,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2484,7 +2484,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2560,7 +2560,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2687,7 +2687,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath)
       {
-         CopyMoveInternal(true, null, sourcePath, destinationPath, false, null, MoveOptions.CopyAllowed, null, null, null, false);
+         CopyMoveInternal(true, null, sourcePath, destinationPath, false, null, MoveOptions.CopyAllowed, null, null, false);
       }
 
       #endregion // .NET
@@ -2713,7 +2713,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath, bool overwrite, bool preserveSecurity, bool? isFullPath)
       {
-         CopyMoveInternal(true, null, sourcePath, destinationPath, preserveSecurity, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, null, isFullPath);
+         CopyMoveInternal(true, null, sourcePath, destinationPath, preserveSecurity, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, isFullPath);
       }
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
@@ -2735,7 +2735,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath, MoveOptions moveOptions, bool preserveSecurity, CopyMoveProgressCallback moveProgress, object userProgressData, bool? isFullPath)
       {
-         CopyMoveInternal(true, null, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, null, isFullPath);
+         CopyMoveInternal(true, null, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2751,9 +2751,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath, bool overwrite)
       {
-         CopyMoveInternal(true, null, sourcePath, destinationPath, false, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, null, false);
+         CopyMoveInternal(true, null, sourcePath, destinationPath, false, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, false);
       }
-      
+
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
       /// <param name="sourcePath">The source directory path, of type string</param>
       /// <param name="destinationPath">The destination directory path, of type string</param>
@@ -2768,9 +2768,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath, MoveOptions moveOptions, bool preserveSecurity, CopyMoveProgressCallback moveProgress, object userProgressData)
       {
-         CopyMoveInternal(true, null, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, null, false);
+         CopyMoveInternal(true, null, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, false);
       }
-      
+
       #region Transacted
 
       #region .NET
@@ -2786,7 +2786,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         CopyMoveInternal(true, transaction, sourcePath, destinationPath, false, null, MoveOptions.CopyAllowed, null, null, null, false);
+         CopyMoveInternal(true, transaction, sourcePath, destinationPath, false, null, MoveOptions.CopyAllowed, null, null, false);
       }
 
       #endregion // .NET
@@ -2811,7 +2811,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite, bool preserveSecurity, bool? isFullPath)
       {
-         CopyMoveInternal(true, transaction, sourcePath, destinationPath, preserveSecurity, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, null, isFullPath);
+         CopyMoveInternal(true, transaction, sourcePath, destinationPath, preserveSecurity, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, isFullPath);
       }
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
@@ -2834,11 +2834,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, bool preserveSecurity, CopyMoveProgressCallback moveProgress, object userProgressData, bool? isFullPath)
       {
-         CopyMoveInternal(true, transaction, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, null, isFullPath);
+         CopyMoveInternal(true, transaction, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, isFullPath);
       }
 
       #endregion // IsFullPath
-      
+
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The path of the file or directory to move.</param>
@@ -2851,9 +2851,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite)
       {
-         CopyMoveInternal(true, transaction, sourcePath, destinationPath, false, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, null, false);
+         CopyMoveInternal(true, transaction, sourcePath, destinationPath, false, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, false);
       }
-      
+
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path, of type string</param>
@@ -2869,9 +2869,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, bool preserveSecurity, CopyMoveProgressCallback moveProgress, object userProgressData)
       {
-         CopyMoveInternal(true, transaction, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, null, false);
+         CopyMoveInternal(true, transaction, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3109,7 +3109,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3132,7 +3132,7 @@ namespace Alphaleonis.Win32.Filesystem
          // System.IO SetCurrentDirectory() does not handle long paths.
          System.IO.Directory.SetCurrentDirectory(Path.GetRegularPathInternal(path, true, false, false, false));
       }
-      
+
       #endregion // .NET
 
       #endregion // SetCurrentDirectory (.NET)
@@ -3290,7 +3290,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3370,7 +3370,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3450,7 +3450,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3579,7 +3579,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, false, false);
       }
-      
+
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
@@ -3590,7 +3590,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressInternal(null, path, searchPattern, searchOption, true, false, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -3640,7 +3640,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, false, false);
       }
-      
+
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
@@ -3652,7 +3652,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressInternal(transaction, path, searchPattern, searchOption, true, false, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // Compress
@@ -3678,7 +3678,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourcePath, string destinationPath, bool overwrite, bool preserveSecurity, bool? isFullPath)
       {
-         CopyMoveInternal(false, null, sourcePath, destinationPath, preserveSecurity, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourcePath, destinationPath, preserveSecurity, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, isFullPath);
       }
 
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
@@ -3699,7 +3699,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressCallback copyProgress, object userProgressData, bool? isFullPath)
       {
-         CopyMoveInternal(false, null, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, null, isFullPath);
+         CopyMoveInternal(false, null, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -3713,7 +3713,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourcePath, string destinationPath)
       {
-         CopyMoveInternal(false, null, sourcePath, destinationPath, false, NativeMethods.CopyOptionsFail, null, null, null, null, false);
+         CopyMoveInternal(false, null, sourcePath, destinationPath, false, NativeMethods.CopyOptionsFail, null, null, null, false);
       }
 
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
@@ -3726,9 +3726,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourcePath, string destinationPath, bool overwrite)
       {
-         CopyMoveInternal(false, null, sourcePath, destinationPath, false, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, null, false);
+         CopyMoveInternal(false, null, sourcePath, destinationPath, false, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, false);
       }
-      
+
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
       /// <param name="sourcePath">The source directory path, of type string</param>
       /// <param name="destinationPath">The destination directory path, of type string</param>
@@ -3742,9 +3742,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressCallback copyProgress, object userProgressData)
       {
-         CopyMoveInternal(false, null, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, null, false);
+         CopyMoveInternal(false, null, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -3766,7 +3766,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite, bool preserveSecurity, bool? isFullPath)
       {
-         CopyMoveInternal(false, transaction, sourcePath, destinationPath, preserveSecurity, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourcePath, destinationPath, preserveSecurity, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, isFullPath);
       }
 
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
@@ -3788,7 +3788,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressCallback copyProgress, object userProgressData, bool? isFullPath)
       {
-         CopyMoveInternal(false, transaction, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -3803,7 +3803,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         CopyMoveInternal(false, transaction, sourcePath, destinationPath, false, NativeMethods.CopyOptionsFail, null, null, null, null, false);
+         CopyMoveInternal(false, transaction, sourcePath, destinationPath, false, NativeMethods.CopyOptionsFail, null, null, null, false);
       }
 
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
@@ -3817,9 +3817,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite)
       {
-         CopyMoveInternal(false, transaction, sourcePath, destinationPath, false, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, null, false);
+         CopyMoveInternal(false, transaction, sourcePath, destinationPath, false, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, false);
       }
-      
+
       /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path, of type string</param>
@@ -3834,9 +3834,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressCallback copyProgress, object userProgressData)
       {
-         CopyMoveInternal(false, transaction, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, null, false);
+         CopyMoveInternal(false, transaction, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // Copy
@@ -3891,7 +3891,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).Count();
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -3945,7 +3945,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).Count();
       }
-      
+
       #endregion // Transacted
 
       #endregion // CountDirectories
@@ -4000,7 +4000,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).Count();
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -4054,7 +4054,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).Count();
       }
-      
+
       #endregion // Transacted
 
       #endregion // CountFiles
@@ -4091,7 +4091,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Device.ToggleCompressionInternal(true, null, path, false, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -4126,7 +4126,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Device.ToggleCompressionInternal(true, transaction, path, false, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // DisableCompression
@@ -4173,7 +4173,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressInternal(null, path, searchPattern, searchOption, false, false, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -4219,7 +4219,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressInternal(transaction, path, searchPattern, searchOption, false, false, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // Decompress
@@ -4277,7 +4277,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          EncryptDecryptDirectoryInternal(path, false, recursive, false);
       }
-      
+
       #endregion // Decrypt
 
       #region DeleteEmpty
@@ -4319,7 +4319,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DeleteEmptyDirectoryInternal(null, null, path, recursive, ignoreReadOnly, true, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -4362,7 +4362,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DeleteEmptyDirectoryInternal(null, transaction, path, recursive, ignoreReadOnly, true, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // DeleteEmpty
@@ -4397,7 +4397,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          EnableDisableEncryptionInternal(path, false, false);
       }
-      
+
       #endregion // DisableEncryption
 
       #region EnableCompression
@@ -4432,7 +4432,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Device.ToggleCompressionInternal(true, null, path, true, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -4467,7 +4467,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Device.ToggleCompressionInternal(true, transaction, path, true, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion //EnableCompression
@@ -4502,7 +4502,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          EnableDisableEncryptionInternal(path, true, false);
       }
-      
+
       #endregion // EnableEncryption
 
       #region EnumerateFileIdBothDirectoryInfo
@@ -4551,7 +4551,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return EnumerateFileIdBothDirectoryInfoInternal(null, null, path, FileShare.ReadWrite, false, false);
       }
-      
+
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="T:FileShare"/> mode.</summary>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="T:FileShare"/> mode with which to open a handle to the directory.</param>
@@ -4562,7 +4562,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return EnumerateFileIdBothDirectoryInfoInternal(null, null, path, shareMode, false, false);
       }
-      
+
       /// <summary>[AlphaFS] Retrieves information about files in the directory handle specified.</summary>
       /// <param name="handle">An open handle to the directory from which to retrieve information.</param>
       /// <returns>An IEnumerable of <see cref="T:FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
@@ -4623,7 +4623,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, FileShare.ReadWrite, false, false);
       }
-      
+
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="T:FileShare"/> mode.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
@@ -4635,11 +4635,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, shareMode, false, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // EnumerateFileIdBothDirectoryInfo
-      
+
       #region EnumerateLogicalDrives
 
       /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on a computer.</summary>
@@ -4779,11 +4779,11 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transacted
 
       #endregion // EnumerateStreams
-      
+
       #region Encrypt
 
       #region IsFullPath
-      
+
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
       /// <param name="isFullPath">
@@ -5074,7 +5074,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetPropertiesInternal(null, path, searchOption, false, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -5142,7 +5142,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetPropertiesInternal(transaction, path, searchOption, false, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // GetProperties
@@ -5181,7 +5181,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return AlternateDataStreamInfo.GetStreamSizeInternal(true, null, null, path, name, StreamType.Data, isFullPath);
       }
-      
+
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="T:StreamType"/> data streams (NTFS ADS).</summary>
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="type">The <see cref="T:StreamType"/> of the stream to retrieve.</param>
@@ -5386,7 +5386,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
       }
-      
+
       #endregion // HasInheritedPermissions
 
       #region RemoveStream
@@ -5553,7 +5553,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetFsoDateTimeInternal(true, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -5590,7 +5590,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetFsoDateTimeInternal(true, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // SetTimestamps
@@ -5629,7 +5629,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetFsoDateTimeInternal(true, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -5666,7 +5666,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetFsoDateTimeInternal(true, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // SetTimestampsUtc
@@ -5701,7 +5701,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.TransferTimestampsInternal(true, null, sourcePath, destinationPath, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -5736,7 +5736,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.TransferTimestampsInternal(true, transaction, sourcePath, destinationPath, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // TransferTimestamps
@@ -5780,7 +5780,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region CopyMoveInternal
 
       /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children.
-      /// You can provide a callback function that receives progress notifications.</summary>
+      /// You can provide a callback function that receives progress notifications.
+      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
+      /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
+      /// get an IOException. You cannot use the Move method to overwrite an existing file.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying/moving the directory.</remarks>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       /// <param name="isMove"><c>true</c> indicates a directory move, <c>false</c> indicates a directory copy.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
@@ -5790,74 +5799,58 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="copyMoveProgress">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isSameVolume"><c>null</c> same volume is unknown and will be retrieved. <c>true</c> it is assumed that the source and destination paths as are on the same volume.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
-      /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
-      /// get an IOException. You cannot use the Move method to overwrite an existing file.</remarks>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying/moving the directory.</remarks>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static void CopyMoveInternal(bool isMove, KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveSecurity, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool? isSameVolume, bool? isFullPath)
+      internal static void CopyMoveInternal(bool isMove, KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveSecurity, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool? isFullPath)
       {
-         if (isFullPath != null)
+         #region NotSupportedException
+
+         if (isFullPath != null && (bool) !isFullPath)
          {
-            if (Utils.IsNullOrWhiteSpace(sourcePath))
-               throw new ArgumentNullException("sourcePath");
+            // MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
 
-            if (Utils.IsNullOrWhiteSpace(destinationPath))
-               throw new ArgumentNullException("destinationPath");
+            if (sourcePath != null && !Path.IsLongPath(sourcePath) && sourcePath.Length > 0 && sourcePath.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+               throw new NotSupportedException(sourcePath);
 
-            if ((bool) !isFullPath)
-            {
-               // MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-
-               if (!Path.IsLongPath(sourcePath) && sourcePath.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
-                  throw new NotSupportedException(sourcePath);
-
-               if (!Path.IsLongPath(destinationPath) && destinationPath.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
-                  throw new NotSupportedException(destinationPath);
-            }
+            if (destinationPath != null && !Path.IsLongPath(destinationPath) && destinationPath.Length > 0 && destinationPath.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+               throw new NotSupportedException(destinationPath);
          }
          
+         #endregion // NotSupportedException
+
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
          // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
 
          string sourcePathLp = isFullPath == null
             ? sourcePath
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(sourcePath, false, false, false, false)
+               ? Path.GetLongPathInternal(sourcePath, false, false, false, false)
 #if NET35
                : Path.GetFullPathInternal(transaction, sourcePath, true, false, false, true, false, true);
 #else
                : Path.GetFullPathInternal(transaction, sourcePath, true, true, false, true, false, true);
 #endif
 
-
          string destinationPathLp = isFullPath == null
             ? destinationPath
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
+               ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
 #if NET35
                : Path.GetFullPathInternal(transaction, destinationPath, true, false, false, true, false, true);
 #else
                : Path.GetFullPathInternal(transaction, destinationPath, true, true, false, true, false, true);
 #endif
-         //if (isSameVolume == null)
-            //isSameVolume = Volume.IsSameVolume(sourcePathLp, destinationPathLp);
-
 
          if (sourcePathLp.Equals(destinationPathLp, StringComparison.OrdinalIgnoreCase))
             throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.SameSourceDestination, sourcePathLp));
 
+         
+         
          // Determine Copy or Move action.
          bool doCopy = !isMove && copyOptions != null && moveOptions == null;
          bool doMove = isMove && moveOptions != null && copyOptions == null;
@@ -5908,9 +5901,9 @@ namespace Alphaleonis.Win32.Filesystem
             string newDestinationPathLp = Path.CombineInternal(false, destinationPathLp, fsei.FileName);
 
             if (fsei.IsDirectory)
-               CopyMoveInternal(doMove, transaction, fsei.LongFullPath, newDestinationPathLp, preserveSecurity, copyOptions, moveOptions, copyMoveProgress, userProgressData, isSameVolume, null);
+               CopyMoveInternal(doMove, transaction, fsei.LongFullPath, newDestinationPathLp, preserveSecurity, copyOptions, moveOptions, copyMoveProgress, userProgressData, null);
             else
-               File.CopyMoveInternal(isMove, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, moveOptions, copyMoveProgress, userProgressData, null);
+               File.CopyMoveInternal(true, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, moveOptions, copyMoveProgress, userProgressData, null);
          }
 
          
@@ -5948,22 +5941,20 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryInternal(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, bool? isFullPath)
       {
-         if (isFullPath != null)
+         #region NotSupportedException
+
+         if (isFullPath != null && (bool)!isFullPath)
          {
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
+            // MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
 
-            if ((bool) !isFullPath)
-            {
-               // MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-               
-               if (!Path.IsLongPath(path) && path.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
-                  throw new NotSupportedException(path);
+            if (path != null && !Path.IsLongPath(path) && path.Length > 0 && path.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+               throw new NotSupportedException(path);
 
-               if (templatePath != null && !Path.IsLongPath(templatePath) && templatePath.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
-                  throw new NotSupportedException(templatePath);
-            }
+            if (templatePath != null && !Path.IsLongPath(templatePath) && templatePath.Length > 0 && templatePath.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
+               throw new NotSupportedException(templatePath);
          }
+
+         #endregion // NotSupportedException
 
          string pathLp = isFullPath == null
             ? path
@@ -6133,7 +6124,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region DeleteDirectoryInternal
 
-      /// <summary>[AlphaFS] Unified method DeleteDirectoryInternal() to delete a Non-/Transacted directory.</summary>
+      /// <summary>[AlphaFS] Unified method DeleteDirectoryInternal() to delete a Non-/Transacted directory.
+      /// <remarks>The RemoveDirectory function marks a directory for deletion on close. Therefore, the directory is not removed until the last handle to the directory is closed.</remarks>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
       /// <param name="fileSystemEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fileSystemEntryInfo"/> or <paramref name="path"/>, not both.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove. Use either <paramref name="path"/> or <paramref name="fileSystemEntryInfo"/>, not both.</param>
@@ -6146,17 +6143,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>The RemoveDirectory function marks a directory for deletion on close. Therefore, the directory is not removed until the last handle to the directory is closed.</remarks>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       internal static void DeleteDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool requireEmpty, bool continueOnNotExist, bool? isFullPath)
       {
          if (fileSystemEntryInfo == null)
          {
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
-
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
                isFullPath == null
                   ? path

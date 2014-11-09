@@ -764,7 +764,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? Path.GetLongPathInternal(destFileName, false, false, false, false)
                : Path.GetFullPathInternal(Transaction, destFileName, true, false, false, true, false, true);
          
-         File.CopyMoveInternal(isMove, Transaction, LongFullName, destFileNameLp, false, copyOptions, moveOptions, copyProgress, userProgressData, null);
+         File.CopyMoveInternal(false, Transaction, LongFullName, destFileNameLp, false, copyOptions, moveOptions, copyProgress, userProgressData, null);
 
          if (isMove)
          {

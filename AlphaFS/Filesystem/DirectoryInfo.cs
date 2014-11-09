@@ -1365,7 +1365,7 @@ namespace Alphaleonis.Win32.Filesystem
 #endif
 
 
-         Directory.CopyMoveInternal(isMove, Transaction, LongFullName, destinationPathLp, preserveSecurity, copyOptions, moveOptions, copyProgress, userProgressData, null, null);
+         Directory.CopyMoveInternal(isMove, Transaction, LongFullName, destinationPathLp, preserveSecurity, copyOptions, moveOptions, copyProgress, userProgressData, null);
 
          if (isMove)
          {

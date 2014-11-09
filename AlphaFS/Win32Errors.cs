@@ -23,6 +23,8 @@ namespace Alphaleonis.Win32
 {
    internal static class Win32Errors
    {
+      /// <summary>Use this to translate error codes like the above into HRESULTs like 0x80070006 for ERROR_INVALID_HANDLE</summary>
+      /// <param name="errorCode"></param>
       public static int GetHRFromWin32Error(uint errorCode)
       {
          unchecked
@@ -365,7 +367,7 @@ namespace Alphaleonis.Win32
       public const uint ERROR_BAD_DEVICE = 1200;
       //public const uint ERROR_CONNECTION_UNAVAIL = 1201;
       //public const uint ERROR_DEVICE_ALREADY_REMEMBERED = 1202;
-      public const uint ERROR_NO_NET_OR_BAD_PATH = 1203;
+      //public const uint ERROR_NO_NET_OR_BAD_PATH = 1203;
       //public const uint ERROR_BAD_PROVIDER = 1204;
       //public const uint ERROR_CANNOT_OPEN_PROFILE = 1205;
       //public const uint ERROR_BAD_PROFILE = 1206;
@@ -384,7 +386,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_SESSION_CREDENTIAL_CONFLICT = 1219;
       //public const uint ERROR_REMOTE_SESSION_LIMIT_EXCEEDED = 1220;
       //public const uint ERROR_DUP_DOMAINNAME = 1221;
-      public const uint ERROR_NO_NETWORK = 1222;
+      //public const uint ERROR_NO_NETWORK = 1222;
       //public const uint ERROR_CANCELLED = 1223;
       //public const uint ERROR_USER_MAPPED_FILE = 1224;
       //public const uint ERROR_CONNECTION_REFUSED = 1225;
