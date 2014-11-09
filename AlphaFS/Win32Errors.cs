@@ -212,9 +212,9 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_INVALID_EA_NAME = 254;
       //public const uint ERROR_EA_LIST_INCONSISTENT = 255;
       //public const uint WAIT_TIMEOUT = 258;    // dderror
-      public const uint ERROR_NO_MORE_ITEMS = 259;
+      //public const uint ERROR_NO_MORE_ITEMS = 259;
       //public const uint ERROR_CANNOT_COPY = 266;
-      public const uint ERROR_DIRECTORY = 267;
+      //public const uint ERROR_DIRECTORY = 267;
       //public const uint ERROR_EAS_DIDNT_FIT = 275;
       //public const uint ERROR_EA_FILE_CORRUPT = 276;
       //public const uint ERROR_EA_TABLE_FULL = 277;

@@ -6249,12 +6249,12 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   if (requireEmpty)
-                     throw new DirectoryNotEmptyException(string.Format(CultureInfo.CurrentCulture, Resources.DirectoryNotEmpty, pathLp));
+                     NativeError.ThrowException(lastError, pathLp, true);
 
                   goto startRemoveDirectory;
             }
 
-            NativeError.ThrowException(lastError, pathLp);
+            NativeError.ThrowException(lastError, pathLp, true);
          }
 
          #endregion // Remove

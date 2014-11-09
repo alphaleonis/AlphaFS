@@ -531,6 +531,8 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
+         #region Directory.CreateDirectory
+
          #region IOException
 
          using (File.Create(tempPath)) { }
@@ -602,7 +604,7 @@ namespace AlphaFS.UnitTest
          dirInfo.Create(true);  // Create compressed directory.
          string report = Reporter();
          bool exist = dirInfo.Exists;
-         Console.WriteLine("\n\nCreateDirectory() (Should be True): [{0}]\n\t{1}\n", exist, report);
+         Console.WriteLine("\n\nCreateDirectory() (Should be True): [{0}]\t{1}\n", exist, report);
          
          
          bool compressed = (dirInfo.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed;
@@ -623,7 +625,7 @@ namespace AlphaFS.UnitTest
          string pathSub = dirInfo.CreateSubdirectory("A Sub Directory").FullName;
          report = Reporter();
 
-         Console.WriteLine("CreateSubdirectory(): [{0}]\n\t{1}\n", pathSub, report);
+         Console.WriteLine("CreateSubdirectory(): [{0}]\n{1}\n", pathSub, report);
 
          // After the refresh, should be true.
          dirInfo.Refresh();
@@ -644,7 +646,7 @@ namespace AlphaFS.UnitTest
          StopWatcher(true);
          dirInfo = Directory.CreateDirectory(root);
          report = Reporter();
-         Console.WriteLine("Created directory structure (Should be True): [{0}]\n\t{1}", dirInfo != null, report);
+         Console.WriteLine("Created directory structure (Should be True): [{0}]\n{1}", dirInfo != null, report);
          Console.WriteLine("\nSubdirectory depth: [{0}], path length: [{1}] characters.\n", level, root.Length);
 
          
@@ -652,30 +654,57 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(compressed, "Compression should be True");
          Assert.IsTrue(Directory.Exists(root), "Directory should exist.");
 
+         #endregion // Directory.CreateDirectory
 
-         // Fail; directory is not empty;
+         #region Directory.Delete
+
+         #region IOException #1
+
          exception = false;
          try
          {
+            Console.WriteLine("\nFail: Directory.Delete(): Directory is not empty");
             Directory.Delete(tempPath);
          }
-         catch (Exception ex)
+         catch (IOException ex)
          {
             exception = true;
-            Console.WriteLine("\nDirectory.Delete() Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
-         Console.WriteLine("\nCaught Exception (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "Exception should have been caught.");
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "IOException should have been caught.");
 
+         #endregion IOException #1
 
+         #region IOException #2
+
+         File.SetAttributes(tempPath, FileAttributes.ReadOnly);
+         exception = false;
+         try
+         {
+            Console.WriteLine("\n\nFail: Directory ReadOnly attribute is set.");
+            Directory.Delete(tempPath, true);
+         }
+         catch (IOException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "IOException should have been caught.");
+
+         #endregion // IOException #2
+         
          StopWatcher(true);
-         Directory.Delete(tempPath, true);
+         Directory.Delete(tempPath, true, true);
          report = Reporter();
          exist = Directory.Exists(tempPath);
 
          Console.WriteLine("\n\nDirectory.Delete() (Should be True): [{0}]\n\t{1}", !exist, report);
          Assert.IsFalse(exist, "Cleanup failed: Directory should have been removed.");
          Console.WriteLine();
+
+         #endregion // Directory.Delete
       }
 
       #endregion // DumpCreateDirectory

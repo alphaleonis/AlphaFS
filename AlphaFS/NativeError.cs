@@ -116,9 +116,6 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_PATH_NOT_FOUND:
                throw new DirectoryNotFoundException(FormatError(e.Message, readPath ?? writePath), e);
 
-            case Win32Errors.ERROR_DIRECTORY:
-               throw new NotSupportedException(FormatError(e.Message, readPath ?? writePath), e);
-
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
                throw new DirectoryNotEmptyException(FormatError(e.Message, writePath), e);
 

@@ -299,7 +299,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public override void Delete()
       {
+         if (!Exists)
+            throw new DirectoryNotFoundException(LongFullName);
+
          Directory.DeleteDirectoryInternal(EntryInfo, Transaction, null, false, false, true, false, null);
+         
          Reset();
       }
 
@@ -313,6 +317,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive)
       {
+         if (!Exists)
+            throw new DirectoryNotFoundException(LongFullName);
+
          Directory.DeleteDirectoryInternal(EntryInfo, Transaction, null, recursive, false, !recursive, false, null);
          Reset();
       }

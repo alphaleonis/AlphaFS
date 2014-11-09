@@ -768,6 +768,25 @@ namespace AlphaFS.UnitTest
 
          // Compare values of both instances.
          CompareDirectoryInfos(expected, actual);
+
+         #region DirectoryNotFoundException
+
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nFail: DirectoryInfo.Delete(): The directory does not exist or could not be found.");
+            actual.Delete();
+         }
+         catch (DirectoryNotFoundException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
+
+         #endregion DirectoryNotFoundException
+
          #endregion // Non-Existing Directory
 
          #region Existing Directory
@@ -776,7 +795,7 @@ namespace AlphaFS.UnitTest
 
          Directory.CreateDirectory(tempPath);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
+         Console.WriteLine("\n\nInput Directory Path: [{0}]\n", tempPath);
 
          StopWatcher(true);
          expected = new System.IO.DirectoryInfo(tempPath);
