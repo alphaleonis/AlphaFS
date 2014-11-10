@@ -6018,13 +6018,17 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   int lastError = Marshal.GetLastWin32Error();
 
-                  switch ((uint) lastError)
+                  switch ((uint)lastError)
                   {
                      // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
                         if (File.ExistsInternal(false, transaction, pathLp, null))
-                           NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp, true);
+                           NativeError.ThrowException(lastError, pathLp, true);
+                        break;
+
+                     case Win32Errors.ERROR_BAD_NET_NAME:
+                        NativeError.ThrowException(lastError, pathLp, true);
                         break;
 
                      default:

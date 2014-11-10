@@ -489,10 +489,10 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\t\tTotal size       : [{0}]\n\t\tTotal directories: [{1}]\n\t\tTotal files      : [{2}]", NativeMethods.UnitSizeToText(props3rdDirCopy["Size"]), props3rdDirCopy["Directory"], props3rdDirCopy["File"]);
 
 
-         Console.WriteLine("\n\tCopy same directories again, should throw IOException.");
          bool exception = false;
          try
          {
+            Console.WriteLine("\n\tFail: Copy same directories again.");
             sourceDir.CopyTo(thirdCopy.FullName);
             //Directory.Copy(sourceDir.FullName, thirdCopy.FullName);
          }
@@ -533,7 +533,7 @@ namespace AlphaFS.UnitTest
 
          #region Directory.CreateDirectory
 
-         #region IOException
+         #region IOException 1
 
          using (File.Create(tempPath)) { }
          bool exception = false;
@@ -552,42 +552,70 @@ namespace AlphaFS.UnitTest
          
          File.Delete(tempPath);
 
-         #endregion // IOException
+         #endregion // IOException 1
 
          #region DirectoryNotFoundException
 
-         exception = false;
-         try
+         if (isLocal)
          {
-            Console.WriteLine("\n\nFail: The specified path is invalid (for example, it is on an unmapped drive).");
-            char letter = DriveInfo.GetFreeDriveLetter();
-            Directory.CreateDirectory(letter + @":\shouldFail");
+            exception = false;
+            try
+            {
+               Console.WriteLine("\n\nFail: The specified path is invalid (for example, it is on an unmapped drive).");
+               char letter = DriveInfo.GetFreeDriveLetter();
+               Directory.CreateDirectory(letter + @":\shouldFail");
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+               exception = true;
+               Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
+            Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
          }
-         catch (DirectoryNotFoundException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
 
          #endregion // DirectoryNotFoundException
 
+         #region IOException 2
+
+         if (!isLocal)
+         {
+            exception = false;
+            try
+            {
+               Console.WriteLine("\n\nFail: The network name cannot be found.");
+               char letter = DriveInfo.GetFreeDriveLetter();
+               Directory.CreateDirectory(Path.LocalToUnc(letter + @":\shouldFail"));
+            }
+            catch (IOException ex)
+            {
+               exception = true;
+               Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+            Assert.IsTrue(exception, "IOException should have been caught.");
+         }
+
+         #endregion // IOException 2
+
          #region NotSupportedException
 
-         exception = false;
-         try
+         if (isLocal)
          {
-            Console.WriteLine("\n\nFail: Path contains a colon character (:) that is not part of a drive label (C:\\).");
-            Directory.CreateDirectory(@"C:\dev\test\aaa:aaa.txt");
+            exception = false;
+            try
+            {
+               Console.WriteLine("\n\nFail: Path contains a colon character (:) that is not part of a drive label (C:\\).");
+               Directory.CreateDirectory(@"C:\dev\test\aaa:aaa.txt");
+            }
+            catch (NotSupportedException ex)
+            {
+               exception = true;
+               Console.WriteLine("\n\tNotSupportedException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\n\tCaught NotSupportedException (Should be True): [{0}]", exception);
+            Assert.IsTrue(exception, "NotSupportedException should have been caught.");
          }
-         catch (NotSupportedException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tNotSupportedException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught NotSupportedException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "NotSupportedException should have been caught.");
 
          #endregion // NotSupportedException
 
