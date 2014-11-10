@@ -6419,33 +6419,24 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CopyMoveInternal(bool isFolder, KernelTransaction transaction, string sourceFileName, string destFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool? isFullPath)
       {
-         #region NotSupportedException
-
          if (isFullPath != null && (bool) !isFullPath)
          {
-            // MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-
-            if (sourceFileName != null && !Path.IsLongPath(sourceFileName) && sourceFileName.Length > 0 && sourceFileName.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
-               throw new NotSupportedException(sourceFileName);
-
-            if (destFileName != null && !Path.IsLongPath(destFileName) && destFileName.Length > 0 && destFileName.IndexOf(Path.VolumeSeparatorChar, 2) != -1)
-               throw new NotSupportedException(destFileName);
+            Path.CheckValidPath(sourceFileName);
+            Path.CheckValidPath(destFileName);
          }
-
-         #endregion // NotSupportedException
 
          string sourceFileNameLp = isFullPath == null
             ? sourceFileName
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true, false, true);
+               ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true, false, true);
 
-         
+
          string destFileNameLp = isFullPath == null
             ? destFileName
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, destFileName, true, false, false, true, false, true);
+               ? Path.GetLongPathInternal(destFileName, false, false, false, false)
+               : Path.GetFullPathInternal(transaction, destFileName, true, false, false, true, false, true);
 
 
          // Setup callback function for progress notifications.
@@ -6485,15 +6476,15 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
             ? doMove
-               // MoveFileWithProgress() / MoveFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-04-15: MSDN confirms LongPath usage.
+            // MoveFileWithProgress() / MoveFileTransacted()
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // 2013-04-15: MSDN confirms LongPath usage.
 
                // CopyFileEx() / CopyFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-04-15: MSDN confirms LongPath usage.
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // 2013-04-15: MSDN confirms LongPath usage.
 
                ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
                : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, copyOptions ?? CopyOptions.FailIfExists)
@@ -6527,7 +6518,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (preserveDates && doCopy)
          {
             NativeMethods.Win32FileAttributeData originalAttrs = GetAttributesExInternal(false, transaction, sourceFileNameLp, true, false, null);
-            
+
             SetFsoDateTimeInternal(false, transaction, destFileNameLp,
                DateTime.FromFileTimeUtc(originalAttrs.CreationTime),
                DateTime.FromFileTimeUtc(originalAttrs.LastAccessTime),

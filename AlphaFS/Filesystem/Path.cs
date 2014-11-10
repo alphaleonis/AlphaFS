@@ -290,12 +290,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(string path)
       {
-         #region NotSupportedException
-
-         if (path != null && (!IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1))
-            throw new NotSupportedException(path);
-
-         #endregion // NotSupportedException
+         CheckValidPath(path);
 
          return GetFullPathInternal(null, path, false, false, false, false, false, true);
       }
@@ -353,8 +348,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(KernelTransaction transaction, string path)
       {
-         if (path != null && (!IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1))
-            throw new NotSupportedException(path);
+         CheckValidPath(path);
 
          return GetFullPathInternal(transaction, path, false, false, false, false, false, true);
       }
@@ -1079,6 +1073,19 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       #region Internal Utility
+
+      #region CheckValidPath
+
+      /// <summary>MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").</summary>
+      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <param name="path">A path to the file or directory.</param>
+      internal static void CheckValidPath(string path)
+      {
+         if (!Utils.IsNullOrWhiteSpace(path) && !IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1)
+            throw new NotSupportedException(path);
+      }
+
+      #endregion // CheckValidPath
 
       #region CheckInvalidPathChars
 
