@@ -7164,16 +7164,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static T GetAccessControlInternal<T>(bool isFolder, string path, AccessControlSections includeSections, bool? isFullPath)
       {
-         if (isFullPath != null)
-            if (path == null)
-               throw new SEHException(string.Format(CultureInfo.CurrentCulture, "{0}  Path: {1}", Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path"));
-
          SecurityInformation securityInfo = 0;
          PrivilegeEnabler privilegeEnabler = null;
 
@@ -7985,14 +7980,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
-      [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
       [SecurityCritical]
       internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, bool? isFullPath)
       {
-         if (isFullPath != null)
-            if (path == null)
-               throw new SEHException(string.Format(CultureInfo.CurrentCulture, "{0}  Path: {1}", Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path"));
-         
          if (objectSecurity == null)
             throw new ArgumentNullException("objectSecurity");
 
