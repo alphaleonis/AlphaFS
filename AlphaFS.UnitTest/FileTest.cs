@@ -479,7 +479,7 @@ namespace AlphaFS.UnitTest
          exception = false;
          try
          {
-            Console.WriteLine("\n\nFail: File ReadOnly attribute is set.");
+            Console.WriteLine("\n\nFail: File read-only attribute is set.");
             File.Delete(tempPath);
          }
          catch (UnauthorizedAccessException ex)

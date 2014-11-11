@@ -872,7 +872,7 @@ namespace Alphaleonis.Win32.Filesystem
                Refresh();
 
             if (EntryInfo == null || EntryInfo.IsDirectory)
-               throw new FileNotFoundException(LongFullName);
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
 
             _length = EntryInfo.FileSize;
             return _length;

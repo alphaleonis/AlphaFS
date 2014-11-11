@@ -521,6 +521,8 @@ namespace AlphaFS.UnitTest
 
       private void DumpCreateDirectory(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
 
          // Directory depth level.
@@ -529,63 +531,27 @@ namespace AlphaFS.UnitTest
          string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
+         string report;
+         bool exist;
+
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
-         #region Directory.CreateDirectory
+         #endregion // Setup
 
-         #region IOException 1
-
-         using (File.Create(tempPath)) { }
-         bool exception = false;
          try
          {
-            Console.WriteLine("\n\nFail: File already exist with same name.");
-            Directory.CreateDirectory(tempPath);
-         }
-         catch (IOException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "IOException should have been caught.");
-         
-         File.Delete(tempPath);
+            #region Directory.CreateDirectory
 
-         #endregion // IOException 1
+            #region IOException 1
 
-         #region DirectoryNotFoundException
-
-         if (isLocal)
-         {
-            exception = false;
+            using (File.Create(tempPath))
+            {
+            }
+            bool exception = false;
             try
             {
-               Console.WriteLine("\n\nFail: The specified path is invalid (for example, it is on an unmapped drive).");
-               char letter = DriveInfo.GetFreeDriveLetter();
-               Directory.CreateDirectory(letter + @":\shouldFail");
-            }
-            catch (DirectoryNotFoundException ex)
-            {
-               exception = true;
-               Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
-            Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
-         }
-
-         #endregion // DirectoryNotFoundException
-
-         #region IOException 2
-
-         if (!isLocal)
-         {
-            exception = false;
-            try
-            {
-               Console.WriteLine("\n\nFail: The network name cannot be found.");
-               char letter = DriveInfo.GetFreeDriveLetter();
-               Directory.CreateDirectory(Path.LocalToUnc(letter + @":\shouldFail"));
+               Console.WriteLine("\n\nFail: Directory.CreateDirectory(): File already exist with same name.");
+               Directory.CreateDirectory(tempPath);
             }
             catch (IOException ex)
             {
@@ -594,145 +560,214 @@ namespace AlphaFS.UnitTest
             }
             Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
             Assert.IsTrue(exception, "IOException should have been caught.");
-         }
 
-         #endregion // IOException 2
+            File.Delete(tempPath);
 
-         #region NotSupportedException
+            #endregion // IOException 1
 
-         if (isLocal)
-         {
+            #region DirectoryNotFoundException
+
+            if (isLocal)
+            {
+               exception = false;
+               try
+               {
+                  Console.WriteLine(
+                     "\n\nFail: Directory.CreateDirectory(): The specified path is invalid (for example, it is on an unmapped drive).");
+                  char letter = DriveInfo.GetFreeDriveLetter();
+                  Directory.CreateDirectory(letter + @":\shouldFail");
+               }
+               catch (DirectoryNotFoundException ex)
+               {
+                  exception = true;
+                  Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]",
+                     ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
+               Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
+            }
+
+            #endregion // DirectoryNotFoundException
+
+            #region IOException 2
+
+            if (!isLocal)
+            {
+               exception = false;
+               try
+               {
+                  Console.WriteLine("\n\nFail: Directory.CreateDirectory(): The network name cannot be found.");
+                  char letter = DriveInfo.GetFreeDriveLetter();
+                  Directory.CreateDirectory(Path.LocalToUnc(letter + @":\shouldFail"));
+               }
+               catch (IOException ex)
+               {
+                  exception = true;
+                  Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+               Assert.IsTrue(exception, "IOException should have been caught.");
+            }
+
+            #endregion // IOException 2
+
+            #region NotSupportedException
+
+            if (isLocal)
+            {
+               exception = false;
+               try
+               {
+                  Console.WriteLine(
+                     "\n\nFail: Directory.CreateDirectory(): Path contains a colon character (:) that is not part of a drive label (C:\\).");
+                  Directory.CreateDirectory(@"C:\dev\test\aaa:aaa.txt");
+               }
+               catch (NotSupportedException ex)
+               {
+                  exception = true;
+                  Console.WriteLine("\n\tNotSupportedException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               Console.WriteLine("\n\tCaught NotSupportedException (Should be True): [{0}]", exception);
+               Assert.IsTrue(exception, "NotSupportedException should have been caught.");
+            }
+
+            #endregion // NotSupportedException
+
+
+            DirectoryInfo dirInfo = new DirectoryInfo(tempPath);
+            System.IO.DirectoryInfo dirInfoSysIo = new System.IO.DirectoryInfo(tempPath);
+            Assert.AreEqual(dirInfoSysIo.Exists, dirInfo.Exists, "Exists AlphaFS != System.IO");
+
+            // Should be false.
+            Assert.IsFalse(dirInfo.Exists, "Directory should not exist: [{0}]", tempPath);
+
+
+            StopWatcher(true);
+            dirInfo.Create(true); // Create compressed directory.
+            report = Reporter();
+            exist = dirInfo.Exists;
+            Console.WriteLine("\n\nCreateDirectory() (Should be True): [{0}]\t{1}\n", exist, report);
+
+
+            bool compressed = (dirInfo.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed;
+            Console.WriteLine("Is compressed (Should be True): [{0}]\n", compressed);
+            Assert.IsTrue(compressed, "Compression should be True");
+
+
+            // dirInfoSysIO does not know about the new directory at this point.
+            Assert.AreNotEqual(dirInfoSysIo.Exists, dirInfo.Exists, "Exists AlphaFS should != System.IO");
+
+
+            // Notify dirInfoSysIO that the directory now exists.
+            dirInfoSysIo.Refresh();
+            Assert.IsTrue(dirInfoSysIo.Exists, "Exists System.IO in error??!");
+
+
+            StopWatcher(true);
+            string pathSub = dirInfo.CreateSubdirectory("A Sub Directory").FullName;
+            report = Reporter();
+
+            Console.WriteLine("CreateSubdirectory(): [{0}]\n{1}\n", pathSub, report);
+
+            // After the refresh, should be true.
+            dirInfo.Refresh();
+            exist = dirInfo.Exists;
+
+            Assert.IsFalse(Utils.IsNullOrWhiteSpace(pathSub));
+            Assert.IsTrue(exist, "Directory should exist.");
+            Assert.IsTrue(!pathSub.StartsWith(Path.LongPathPrefix), "Directory should not start with LongPath prefix.");
+
+
+
+            string root = Path.Combine(tempPath, "Another Sub Directory");
+
+            // MAX_PATH hit the road.
+            for (int i = 0; i < level; i++)
+               root = Path.Combine(root, "-" + (i + 1) + "-subdir");
+
+            StopWatcher(true);
+            dirInfo = Directory.CreateDirectory(root);
+            report = Reporter();
+            Console.WriteLine("Created directory structure (Should be True): [{0}]\n{1}", dirInfo != null, report);
+            Console.WriteLine("\nSubdirectory depth: [{0}], path length: [{1}] characters.\n", level, root.Length);
+
+
+            compressed = (dirInfo.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed;
+            Assert.IsTrue(compressed, "Compression should be True");
+            Assert.IsTrue(Directory.Exists(root), "Directory should exist.");
+
+            #endregion // Directory.CreateDirectory
+
+            #region Directory.Delete
+
+            #region DirectoryNotFoundException
+
             exception = false;
             try
             {
-               Console.WriteLine("\n\nFail: Path contains a colon character (:) that is not part of a drive label (C:\\).");
-               Directory.CreateDirectory(@"C:\dev\test\aaa:aaa.txt");
+               Console.WriteLine("\nFail: Directory.Delete(): DirectoryNotFoundException");
+               Directory.Delete(@"c:\Non-Existing-Folder-" + Path.GetRandomFileName());
             }
-            catch (NotSupportedException ex)
+            catch (DirectoryNotFoundException ex)
             {
                exception = true;
-               Console.WriteLine("\n\tNotSupportedException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\n\tCaught NotSupportedException (Should be True): [{0}]", exception);
-            Assert.IsTrue(exception, "NotSupportedException should have been caught.");
+            Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
+            Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
+
+            #endregion // DirectoryNotFoundException
+
+            #region IOException #1
+
+            exception = false;
+            try
+            {
+               Console.WriteLine("\n\nFail: Directory.Delete(): Directory is not empty");
+               Directory.Delete(tempPath);
+            }
+            catch (IOException ex)
+            {
+               exception = true;
+               Console.WriteLine("\n\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+            Assert.IsTrue(exception, "IOException should have been caught.");
+
+            #endregion IOException #1
+
+            #region IOException #2
+
+            File.SetAttributes(tempPath, FileAttributes.ReadOnly);
+            exception = false;
+            try
+            {
+               Console.WriteLine("\n\nFail: Directory.Delete(): Directory read-only attribute is set.");
+               Directory.Delete(tempPath, true);
+            }
+            catch (IOException ex)
+            {
+               exception = true;
+               Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
+            Assert.IsTrue(exception, "IOException should have been caught.");
+
+            #endregion // IOException #2
+
+            #endregion // Directory.Delete
          }
-
-         #endregion // NotSupportedException
-
-
-         DirectoryInfo dirInfo = new DirectoryInfo(tempPath);
-         System.IO.DirectoryInfo dirInfoSysIo = new System.IO.DirectoryInfo(tempPath);
-         Assert.AreEqual(dirInfoSysIo.Exists, dirInfo.Exists, "Exists AlphaFS != System.IO");
-
-         // Should be false.
-         Assert.IsFalse(dirInfo.Exists, "Directory should not exist: [{0}]", tempPath);
-
-         
-         StopWatcher(true);
-         dirInfo.Create(true);  // Create compressed directory.
-         string report = Reporter();
-         bool exist = dirInfo.Exists;
-         Console.WriteLine("\n\nCreateDirectory() (Should be True): [{0}]\t{1}\n", exist, report);
-         
-         
-         bool compressed = (dirInfo.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed;
-         Console.WriteLine("Is compressed (Should be True): [{0}]\n", compressed);
-         Assert.IsTrue(compressed, "Compression should be True");
-
-         
-         // dirInfoSysIO does not know about the new directory at this point.
-         Assert.AreNotEqual(dirInfoSysIo.Exists, dirInfo.Exists, "Exists AlphaFS should != System.IO");
-
-         
-         // Notify dirInfoSysIO that the directory now exists.
-         dirInfoSysIo.Refresh();
-         Assert.IsTrue(dirInfoSysIo.Exists, "Exists System.IO in error??!");
-
-
-         StopWatcher(true);
-         string pathSub = dirInfo.CreateSubdirectory("A Sub Directory").FullName;
-         report = Reporter();
-
-         Console.WriteLine("CreateSubdirectory(): [{0}]\n{1}\n", pathSub, report);
-
-         // After the refresh, should be true.
-         dirInfo.Refresh();
-         exist = dirInfo.Exists;
-         
-         Assert.IsFalse(Utils.IsNullOrWhiteSpace(pathSub));
-         Assert.IsTrue(exist, "Directory should exist.");
-         Assert.IsTrue(!pathSub.StartsWith(Path.LongPathPrefix), "Directory should not start with LongPath prefix.");
-         
-
-         
-         string root = Path.Combine(tempPath, "Another Sub Directory");
-
-         // MAX_PATH hit the road.
-         for (int i = 0; i < level; i++)
-            root = Path.Combine(root, "-" + (i + 1) + "-subdir");
-         
-         StopWatcher(true);
-         dirInfo = Directory.CreateDirectory(root);
-         report = Reporter();
-         Console.WriteLine("Created directory structure (Should be True): [{0}]\n{1}", dirInfo != null, report);
-         Console.WriteLine("\nSubdirectory depth: [{0}], path length: [{1}] characters.\n", level, root.Length);
-
-         
-         compressed = (dirInfo.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed;
-         Assert.IsTrue(compressed, "Compression should be True");
-         Assert.IsTrue(Directory.Exists(root), "Directory should exist.");
-
-         #endregion // Directory.CreateDirectory
-
-         #region Directory.Delete
-
-         #region IOException #1
-
-         exception = false;
-         try
+         finally
          {
-            Console.WriteLine("\nFail: Directory.Delete(): Directory is not empty");
-            Directory.Delete(tempPath);
+            StopWatcher(true);
+            Directory.Delete(tempPath, true, true);
+            report = Reporter();
+            exist = Directory.Exists(tempPath);
+
+            Console.WriteLine("\n\nDirectory.Delete() (Should be True): [{0}]\n\t{1}", !exist, report);
+            Assert.IsFalse(exist, "Cleanup failed: Directory should have been removed.");
+            Console.WriteLine();
          }
-         catch (IOException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "IOException should have been caught.");
-
-         #endregion IOException #1
-
-         #region IOException #2
-
-         File.SetAttributes(tempPath, FileAttributes.ReadOnly);
-         exception = false;
-         try
-         {
-            Console.WriteLine("\n\nFail: Directory ReadOnly attribute is set.");
-            Directory.Delete(tempPath, true);
-         }
-         catch (IOException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "IOException should have been caught.");
-
-         #endregion // IOException #2
-         
-         StopWatcher(true);
-         Directory.Delete(tempPath, true, true);
-         report = Reporter();
-         exist = Directory.Exists(tempPath);
-
-         Console.WriteLine("\n\nDirectory.Delete() (Should be True): [{0}]\n\t{1}", !exist, report);
-         Assert.IsFalse(exist, "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
-
-         #endregion // Directory.Delete
       }
 
       #endregion // DumpCreateDirectory

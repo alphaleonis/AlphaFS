@@ -300,7 +300,7 @@ namespace Alphaleonis.Win32.Filesystem
       public override void Delete()
       {
          if (!Exists)
-            throw new DirectoryNotFoundException(LongFullName);
+            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, LongFullName);
 
          Directory.DeleteDirectoryInternal(EntryInfo, Transaction, null, false, false, true, false, null);
          
@@ -318,7 +318,7 @@ namespace Alphaleonis.Win32.Filesystem
       public void Delete(bool recursive)
       {
          if (!Exists)
-            throw new DirectoryNotFoundException(LongFullName);
+            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, LongFullName);
 
          Directory.DeleteDirectoryInternal(EntryInfo, Transaction, null, recursive, false, !recursive, false, null);
          Reset();

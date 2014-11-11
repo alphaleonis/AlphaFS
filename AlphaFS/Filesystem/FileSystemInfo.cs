@@ -476,11 +476,11 @@ namespace Alphaleonis.Win32.Filesystem
             if (_entryInfo == null)
             {
                if (isFolder)
-                  throw new DirectoryNotFoundException(LongFullName);
+                  NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, LongFullName);
 
-               throw new FileNotFoundException(LongFullName);
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
             }
-
+            
             _lengthStreams = AlternateDataStreamInfo.GetStreamSizeInternal(isFolder, Transaction, null, LongFullName, null, null, null);
             return _lengthStreams;
          }
