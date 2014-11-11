@@ -1082,7 +1082,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void CheckValidPath(string path)
       {
          if (!Utils.IsNullOrWhiteSpace(path) && !IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1)
-            throw new NotSupportedException(path);
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
       }
 
       #endregion // CheckValidPath

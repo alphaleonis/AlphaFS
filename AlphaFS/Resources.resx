@@ -256,4 +256,7 @@
   <data name="PathIsZeroLengthOrOnlyWhiteSpace" xml:space="preserve">
     <value>Path is a zero-length string or contains only white space.</value>
   </data>
+  <data name="PathFormatUnsupported" xml:space="preserve">
+    <value>The given path's format is not supported: [{0}]</value>
+  </data>
 </root>
