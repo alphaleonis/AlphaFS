@@ -187,7 +187,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (name.Contains(Path.StreamSeparator))
             throw new ArgumentException(Resources.StreamNameWithColon);
 
-         using (SafeFileHandle handle = File.CreateFileInternal(!isFolder, transaction, path + Path.StreamSeparator + name, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Create, FileSystemRights.Write, FileShare.ReadWrite, isFullPath))
+         using (SafeFileHandle handle = File.CreateFileInternal(!isFolder, transaction, path + Path.StreamSeparator + name, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Create, FileSystemRights.Write, FileShare.ReadWrite, false, isFullPath))
          using (StreamWriter writer = new StreamWriter(new FileStream(handle, FileAccess.Write), NativeMethods.DefaultFileEncoding))
             foreach (string line in contents)
                writer.WriteLine(line);
@@ -231,7 +231,7 @@ namespace Alphaleonis.Win32.Filesystem
                isFolder = (attrs & FileAttributes.Directory) == FileAttributes.Directory;
             }
 
-            safeHandle = File.CreateFileInternal(null, transaction, pathLp, (bool) isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Read, FileShare.ReadWrite, null);
+            safeHandle = File.CreateFileInternal(null, transaction, pathLp, (bool) isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Read, FileShare.ReadWrite, false, null);
          }
          else
             NativeMethods.IsValidHandle(safeHandle);

@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode)
-         : this(File.CreateFileInternal(true, null, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, false), FileSystemRights.Read | FileSystemRights.Write)
+         : this(File.CreateFileInternal(true, null, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, false), FileSystemRights.Read | FileSystemRights.Write)
       {
       }
 
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access)
-         : this(File.CreateFileInternal(true, null, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, false), access)
+         : this(File.CreateFileInternal(true, null, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, false), access)
       {
       }
 
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share)
-         : this(File.CreateFileInternal(true, null, path, ExtendedFileAttributes.Normal, null, mode, access, share, false), access)
+         : this(File.CreateFileInternal(true, null, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, false), access)
       {
       }
 
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
-         : this(File.CreateFileInternal(true, null, path, attributes, null, mode, access, share, false), access)
+         : this(File.CreateFileInternal(true, null, path, attributes, null, mode, access, share, true, false), access)
       {
       }
 
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
-         : this(File.CreateFileInternal(true, null, path, attributes, security, mode, access, share, false), access)
+         : this(File.CreateFileInternal(true, null, path, attributes, security, mode, access, share, true, false), access)
       {
       }
 
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode)
-         : this(File.CreateFileInternal(true, transaction, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, false), FileSystemRights.Read | FileSystemRights.Write)
+         : this(File.CreateFileInternal(true, transaction, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, false), FileSystemRights.Read | FileSystemRights.Write)
       {
       }
 
@@ -129,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access)
-         : this(File.CreateFileInternal(true, transaction, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, false), access)
+         : this(File.CreateFileInternal(true, transaction, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, false), access)
       {
       }
 
@@ -142,7 +142,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share)
-         : this(File.CreateFileInternal(true, transaction, path, ExtendedFileAttributes.Normal, null, mode, access, share, false), access)
+         : this(File.CreateFileInternal(true, transaction, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, false), access)
       {
       }
 
@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
-         : this(File.CreateFileInternal(true, transaction, path, attributes, null, mode, access, share, false), access)
+         : this(File.CreateFileInternal(true, transaction, path, attributes, null, mode, access, share, true, false), access)
       {
       }
 
@@ -171,7 +171,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
-         : this(File.CreateFileInternal(true, transaction, path, attributes, security, mode, access, share, false), access)
+         : this(File.CreateFileInternal(true, transaction, path, attributes, security, mode, access, share, true, false), access)
       {
       }
 

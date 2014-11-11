@@ -5932,7 +5932,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryInternal(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, bool? isFullPath)
       {
-         if (isFullPath != null && (bool)!isFullPath)
+         if (isFullPath != null && (bool) !isFullPath)
          {
             Path.CheckValidPath(path);
             Path.CheckValidPath(templatePath);
@@ -6400,7 +6400,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
 
-            safeHandle = File.CreateFileInternal(false, transaction, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, null);
+            safeHandle = File.CreateFileInternal(false, transaction, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, true, null);
          }
 
 

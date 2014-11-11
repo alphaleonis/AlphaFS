@@ -6553,8 +6553,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static FileStream CreateFileInternal(KernelTransaction transaction, string path, int bufferSize, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
       {
-         SafeFileHandle handle = CreateFileInternal(true, transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, isFullPath);
-         return new FileStream(handle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
+         SafeFileHandle safeHandle = CreateFileInternal(true, transaction, path, attributes, fileSecurity, mode, (FileSystemRights)access, share, true, isFullPath);
+         return new FileStream(safeHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
       }
 
       /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or open a file, directory or I/O device.
@@ -6573,6 +6573,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileMode">A <see cref="T:FileMode"/> constant that determines how to open or create the file or directory.</param>
       /// <param name="fileSystemRights">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file or directory.</param>
       /// <param name="fileShare">A <see cref="T:FileShare"/> constant that determines how the file or directory will be shared by processes.</param>
+      /// <param name="checkPath"></param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -6580,8 +6581,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool? isFullPath)
+      internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, bool? isFullPath)
       {
+         if (checkPath && isFullPath != null && (bool)!isFullPath)
+            Path.CheckValidPath(path);
+
          // When isFile == null, we're working with a device.
          // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
          // the path string should be the following form: "\\.\X:"
@@ -6787,6 +6791,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteFileInternal(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
       {
+         if (isFullPath != null && (bool) !isFullPath)
+            Path.CheckValidPath(path);
+
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
@@ -7164,11 +7171,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
+      [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static T GetAccessControlInternal<T>(bool isFolder, string path, AccessControlSections includeSections, bool? isFullPath)
       {
+         if (isFullPath != null)
+            if (path == null)
+               throw new SEHException(string.Format(CultureInfo.CurrentCulture, "{0}  Path: {1}", Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path"));
+
          SecurityInformation securityInfo = 0;
          PrivilegeEnabler privilegeEnabler = null;
 
@@ -7258,6 +7270,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static FileAttributes GetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, bool fallBack, bool continueOnNotExist, bool? isFullPath)
       {
+         if (isFullPath != null && (bool) !isFullPath)
+            Path.CheckValidPath(path);
+
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
@@ -7326,6 +7341,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static NativeMethods.Win32FileAttributeData GetAttributesExInternal(bool isFolder, KernelTransaction transaction, string path, bool fallBack, bool continueOnNotExist, bool? isFullPath)
       {
+         if (isFullPath != null && (bool) !isFullPath)
+            Path.CheckValidPath(path);
+
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
@@ -7484,7 +7502,7 @@ namespace Alphaleonis.Win32.Filesystem
                   ? Path.GetLongPathInternal(path, false, false, false, false)
                   : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
 
-            safeHandle = CreateFileInternal(!isFolder, transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, null);
+            safeHandle = CreateFileInternal(!isFolder, transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, null);
          }
 
          
@@ -7698,8 +7716,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static LinkTargetInfo GetLinkTargetInfoInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         using (SafeFileHandle handle = CreateFileInternal(true, transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, isFullPath))
-            return Device.GetLinkTargetInfoInternal(handle);
+         using (SafeFileHandle safeHandle = CreateFileInternal(true, transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, true, isFullPath))
+            return Device.GetLinkTargetInfoInternal(safeHandle);
       }
 
       #endregion // GetLinkTargetInfoInternal
@@ -7726,17 +7744,13 @@ namespace Alphaleonis.Win32.Filesystem
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            if (isFullPath != null)
-               if (Utils.IsNullOrWhiteSpace(path))
-                  throw new ArgumentNullException("path");
-
             string pathLp = isFullPath == null
                ? path
                : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
 
-            safeHandle = CreateFileInternal(true, transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, null);
+            safeHandle = CreateFileInternal(true, transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, null);
          }
          
 
@@ -7784,11 +7798,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, ExtendedFileAttributes attributes, bool? isFullPath)
       {
-         SafeFileHandle handle = CreateFileInternal(true, transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights) access, share, isFullPath);
+         SafeFileHandle safeHandle = CreateFileInternal(true, transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights)access, share, true, isFullPath);
 
          return rights != 0
-            ? new FileStream(handle, FileAccess.Write)
-            : new FileStream(handle, access);
+            ? new FileStream(safeHandle, FileAccess.Write)
+            : new FileStream(safeHandle, access);
       }
 
       #endregion // OpenInternal
@@ -7979,10 +7993,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, bool? isFullPath)
       {
+         if (isFullPath != null)
+            if (path == null)
+               throw new SEHException(string.Format(CultureInfo.CurrentCulture, "{0}  Path: {1}", Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path"));
+
          if (objectSecurity == null)
             throw new ArgumentNullException("objectSecurity");
 
@@ -8162,7 +8181,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (SafeGlobalMemoryBufferHandle creationTime = SafeGlobalMemoryBufferHandle.CreateFromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastAccessTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastWriteTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?)null))
-         using (SafeFileHandle safeHandle = CreateFileInternal(!isFolder, transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, isFullPath))
+         using (SafeFileHandle safeHandle = CreateFileInternal(!isFolder, transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, true, isFullPath))
             if (!NativeMethods.SetFileTime(safeHandle, creationTime, lastAccessTime, lastWriteTime))
                NativeError.ThrowException(path);
       }
