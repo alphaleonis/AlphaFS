@@ -6130,6 +6130,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
+      [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke")]
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static void DeleteDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool requireEmpty, bool continueOnNotExist, bool? isFullPath)
@@ -6158,7 +6159,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (continueOnNotExist)
                return;
 
-            NativeError.ThrowException();
+            NativeError.ThrowException(Marshal.GetLastWin32Error());
          }
 
          string pathLp = fileSystemEntryInfo.LongFullPath;
@@ -6527,7 +6528,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          uint lastError = NativeMethods.GetLogicalDrives();
          if (lastError == Win32Errors.ERROR_SUCCESS)
-            NativeError.ThrowException(lastError);
+            NativeError.ThrowException((int) lastError);
 
          uint drives = lastError;
          int count = 0;

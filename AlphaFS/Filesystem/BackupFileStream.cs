@@ -489,7 +489,7 @@ namespace Alphaleonis.Win32.Filesystem
          try
          {
             if (lastError != Win32Errors.ERROR_SUCCESS)
-               NativeError.ThrowException(lastError);
+               NativeError.ThrowException((int) lastError);
 
             if (pSecurityDescriptor.IsInvalid)
                throw new IOException(Resources.InvalidSecurityDescriptorReturnedFromSystem);

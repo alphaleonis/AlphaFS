@@ -967,7 +967,7 @@ namespace Alphaleonis.Win32.Filesystem
                // GetLastError returns ERROR_DIR_NOT_EMPTY, even if the directory is empty.
 
                if (lastError != Win32Errors.ERROR_DIR_NOT_EMPTY)
-                  NativeError.ThrowException(lastError, null, volumeGuid);
+                  NativeError.ThrowException(lastError, volumeGuid);
             }
       }
 

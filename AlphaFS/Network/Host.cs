@@ -897,7 +897,7 @@ namespace Alphaleonis.Win32.Network
 
 
          if (lastError != Win32Errors.NO_ERROR)
-            NativeError.ThrowException(lastError);
+            NativeError.ThrowException((int) lastError);
 
          return arguments.IsDeviceMap ? buffer.ToString() : null;
 
@@ -1127,7 +1127,7 @@ namespace Alphaleonis.Win32.Network
          } while (lastError == Win32Errors.ERROR_MORE_DATA);
 
          if (lastError != Win32Errors.NO_ERROR && !continueOnException)
-            NativeError.ThrowException(lastError);
+            NativeError.ThrowException((int) lastError);
       }
 
       #endregion // EnumerateNetworkObjectInternal
@@ -1237,7 +1237,7 @@ namespace Alphaleonis.Win32.Network
             }
 
             if (lastError != Win32Errors.NERR_Success)
-               NativeError.ThrowException(lastError);
+               NativeError.ThrowException((int) lastError);
          }
 
          return null;

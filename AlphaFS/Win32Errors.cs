@@ -23,8 +23,7 @@ namespace Alphaleonis.Win32
 {
    internal static class Win32Errors
    {
-      /// <summary>Use this to translate error codes like the above into HRESULTs like 0x80070006 for ERROR_INVALID_HANDLE</summary>
-      /// <param name="errorCode"></param>
+      /// <summary>Use this to translate error codes into HRESULTs like 0x80070006 for ERROR_INVALID_HANDLE</summary>
       public static int GetHRFromWin32Error(uint errorCode)
       {
          unchecked
@@ -88,7 +87,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_NO_SPOOL_SPACE = 62;
       //public const uint ERROR_PRINT_CANCELLED = 63;
       //public const uint ERROR_NETNAME_DELETED = 64;
-      //public const uint ERROR_NETWORK_ACCESS_DENIED = 65;
+      public const uint ERROR_NETWORK_ACCESS_DENIED = 65;
       //public const uint ERROR_BAD_DEV_TYPE = 66;
       public const uint ERROR_BAD_NET_NAME = 67;
       //public const uint ERROR_TOO_MANY_NAMES = 68;

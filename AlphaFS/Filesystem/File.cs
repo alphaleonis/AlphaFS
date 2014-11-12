@@ -6813,8 +6813,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (attrs != (FileAttributes) (-1) && (attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
             {
                // MSDN: .NET 3.5+: UnauthorizedAccessException: path specified a read-only file.
-               Exception exception = Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(Win32Errors.ERROR_FILE_READ_ONLY));
-               throw new UnauthorizedAccessException(NativeError.FormatError(exception.Message, pathLp), exception);
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, pathLp);
             }
          }
 
@@ -8095,7 +8094,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   lastError = Security.NativeMethods.SetSecurityInfo(handle, ObjectType.FileObject, securityInfo, pOwner, pGroup, pDacl, pSacl);
                   if (lastError != Win32Errors.ERROR_SUCCESS)
-                     NativeError.ThrowException(lastError);
+                     NativeError.ThrowException((int) lastError);
                }
             }
             finally

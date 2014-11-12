@@ -21,6 +21,7 @@
 
 using Alphaleonis.Win32.Filesystem;
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -32,16 +33,6 @@ namespace Alphaleonis.Win32
 {
    internal static class NativeError
    {
-      #region FormatError
-
-      public static string FormatError(string message, string path)
-      {
-         return string.Format(CultureInfo.CurrentCulture, "{0}{1}[{2}]", (message ?? string.Empty),
-            (!Utils.IsNullOrWhiteSpace(message) && !Utils.IsNullOrWhiteSpace(path)) ? ": " : string.Empty, (path ?? string.Empty));
-      }
-
-      #endregion // FormatError
-
       #region ThrowException
 
       #region void
@@ -79,12 +70,6 @@ namespace Alphaleonis.Win32
       #region uint
 
       [SecurityCritical]
-      public static void ThrowException(uint errorCode, bool isIoException = false)
-      {
-         ThrowException(errorCode, null, null, isIoException);
-      }
-
-      [SecurityCritical]
       public static void ThrowException(uint errorCode, string readPath, bool isIoException = false)
       {
          ThrowException(errorCode, readPath, null, isIoException);
@@ -94,75 +79,73 @@ namespace Alphaleonis.Win32
       [SecurityCritical]
       public static void ThrowException(uint errorCode, string readPath, string writePath, bool isIoException = false)
       {
-         // Generate an exception representing the error from Marshal. We embed
-         // this as an inner exception if we decide to generate our own exception.
-         Exception e = Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode));
+         string errorMessage = string.Format(CultureInfo.CurrentCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message);
 
+         if (!Utils.IsNullOrWhiteSpace(readPath))
+            errorMessage = string.Format(CultureInfo.CurrentCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath);
+
+         if (!Utils.IsNullOrWhiteSpace(writePath))
+            errorMessage = string.Format(CultureInfo.CurrentCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), writePath);
+
+         
          if (isIoException)
-            throw new IOException(FormatError(e.Message, readPath ?? writePath), e);
+            throw new IOException(errorMessage, (int) errorCode);
 
          switch (errorCode)
          {
             case Win32Errors.ERROR_FILE_NOT_FOUND:
-               throw new FileNotFoundException(FormatError(e.Message, readPath ?? writePath), e);
-
-            case Win32Errors.ERROR_SHARING_VIOLATION:
-               throw new IOException(FormatError(e.Message, readPath ?? writePath), e);
+               throw new FileNotFoundException(errorMessage);
 
             case Win32Errors.ERROR_ALREADY_EXISTS:
             case Win32Errors.ERROR_FILE_EXISTS:
-               throw new AlreadyExistsException(FormatError(e.Message, writePath), e);
+               throw new AlreadyExistsException(errorMessage);
 
             case Win32Errors.ERROR_PATH_NOT_FOUND:
-               throw new DirectoryNotFoundException(FormatError(e.Message, readPath ?? writePath), e);
+               throw new DirectoryNotFoundException(errorMessage);
+
+            case Win32Errors.ERROR_FILE_READ_ONLY:
+               throw new UnauthorizedAccessException(errorMessage);
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
-               throw new DirectoryNotEmptyException(FormatError(e.Message, writePath), e);
-
+               throw new DirectoryNotEmptyException(errorMessage);
 
             case Win32Errors.ERROR_BAD_DEVICE:
             case Win32Errors.ERROR_BAD_NET_NAME:
-               throw new DeviceNotReadyException(FormatError(e.Message, readPath ?? writePath), e);
-
             case Win32Errors.NERR_NetNameNotFound:
-               //This shared resource does not exist.
-               throw new DeviceNotReadyException(FormatError(e.Message, readPath ?? writePath), e);
-
             case Win32Errors.NERR_UseNotFound:
-               throw new DeviceNotReadyException(FormatError(e.Message, readPath ?? writePath), e);
+               throw new DeviceNotReadyException(errorMessage);
 
             case Win32Errors.ERROR_BAD_RECOVERY_POLICY:
-               throw new PolicyException(FormatError(e.Message, readPath ?? writePath), e);
-               
+               throw new PolicyException(errorMessage);
 
             #region Transacted
 
             case Win32Errors.ERROR_INVALID_TRANSACTION:
-               throw new InvalidTransactionException(Resources.InvalidTransaction, e);
+               throw new InvalidTransactionException(Resources.InvalidTransaction, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_ALREADY_COMMITTED:
-               throw new TransactionAlreadyCommittedException(Resources.TransactionAlreadyCommitted, e);
+               throw new TransactionAlreadyCommittedException(Resources.TransactionAlreadyCommitted, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_ALREADY_ABORTED:
-               throw new TransactionAlreadyAbortedException(Resources.TransactionAlreadyAborted, e);
+               throw new TransactionAlreadyAbortedException(Resources.TransactionAlreadyAborted, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTIONAL_CONFLICT:
-               throw new TransactionalConflictException(Resources.TransactionalConflict, e);
+               throw new TransactionalConflictException(Resources.TransactionalConflict, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_NOT_ACTIVE:
-               throw new TransactionException(Resources.TransactionNotActive, e);
+               throw new TransactionException(Resources.TransactionNotActive, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_NOT_REQUESTED:
-               throw new TransactionException(Resources.TransactionNotRequested, e);
+               throw new TransactionException(Resources.TransactionNotRequested, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_REQUEST_NOT_VALID:
-               throw new TransactionException(Resources.InvalidTransactionRequest, e);
+               throw new TransactionException(Resources.InvalidTransactionRequest, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTIONS_UNSUPPORTED_REMOTE:
-               throw new UnsupportedRemoteTransactionException(Resources.InvalidTransactionRequest, e);
+               throw new UnsupportedRemoteTransactionException(Resources.InvalidTransactionRequest, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
-               throw new NotAReparsePointException(Resources.NotAReparsePoint, e);
+               throw new NotAReparsePointException(Resources.NotAReparsePoint, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
 
             #endregion // Transacted
 
@@ -173,14 +156,15 @@ namespace Alphaleonis.Win32
                // We should really never get here, throwing an exception for a successful operation.
                throw new NotImplementedException(string.Format(CultureInfo.CurrentCulture,
                   Resources.AlphaFSInternalError + ": " + Resources.AttemptingToGenerateExceptionFromSuccessfulOperation +
-                  Resources.ErrorCodeWas0 + ": " + errorCode), e);
+                  Resources.ErrorCodeWas0 + ": " + errorCode), Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_ACCESS_DENIED:
-               throw new UnauthorizedAccessException(FormatError(e.Message, readPath), e);
+            case Win32Errors.ERROR_NETWORK_ACCESS_DENIED:
+               throw new UnauthorizedAccessException(errorMessage);
 
             default:
                // We don't have a specific exception to generate for this error.
-               throw e;
+               throw Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode));
          }
       }
 
