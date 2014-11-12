@@ -25,6 +25,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
@@ -303,7 +304,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Creates a connection to a network resource.</summary>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static void ConnectTo(string remoteName)
       {
@@ -317,7 +318,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static void ConnectTo(string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
@@ -338,7 +339,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static void ConnectTo(string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
@@ -360,7 +361,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static void ConnectTo(IntPtr winOwner, string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
@@ -383,7 +384,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static void ConnectTo(IntPtr winOwner, string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
@@ -472,7 +473,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Enumerates the DFS Links from a DFS namespace.</summary>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       /// <returns>Returns <see cref="T:IEnumerable{DfsInfo}"/> of DFS namespaces.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
       [SecurityCritical]
@@ -497,7 +498,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Enumerates the DFS namespaces from the local host.</summary>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from the local host.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDfsRoot()
@@ -509,7 +510,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="host">The DNS or NetBIOS name of a remote host.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a remote host.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDfsRoot(string host, bool continueOnException)
@@ -523,7 +524,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Enumerates the DFS namespaces from the domain.</summary>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from the domain.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDomainDfsRoot()
@@ -535,7 +536,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="domain">A domain name.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDomainDfsRoot(string domain, bool continueOnException)
@@ -636,18 +637,18 @@ namespace Alphaleonis.Win32.Network
       
       #endregion // EnumerateShares
 
-      #region GetDfsClientInformation
+      #region GetDfsClientInfo
 
       /// <summary>Gets information about a DFS root or link from the cache maintained by the DFS client.</summary>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       /// <returns>Returns a <see cref="T:DfsInfo"/> instance.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
       [SecurityCritical]
-      public static DfsInfo GetDfsClientInformation(string dfsName)
+      public static DfsInfo GetDfsClientInfo(string dfsName)
       {
-         return GetDfsInformationInternal(true, dfsName, null, null);
+         return GetDfsInfoInternal(true, dfsName, null, null);
       }
 
       /// <summary>Gets information about a DFS root or link from the cache maintained by the DFS client.</summary>
@@ -655,32 +656,32 @@ namespace Alphaleonis.Win32.Network
       /// <param name="serverName">The name of the DFS root target or link target server.</param>
       /// <param name="shareName">The name of the share corresponding to the DFS root target or link target.</param>
       /// <returns>Returns a <see cref="T:DfsInfo"/> instance.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
       [SecurityCritical]
-      public static DfsInfo GetDfsClientInformation(string dfsName, string serverName, string shareName)
+      public static DfsInfo GetDfsClientInfo(string dfsName, string serverName, string shareName)
       {
-         return GetDfsInformationInternal(true, dfsName, serverName, shareName);
+         return GetDfsInfoInternal(true, dfsName, serverName, shareName);
       }
 
-      #endregion // GetDfsClientInformation
+      #endregion // GetDfsClientInfo
 
-      #region GetDfsInformation
+      #region GetDfsInfo
 
       /// <summary>Gets information about a specified DFS root or link in a DFS namespace.</summary>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       /// <returns>Returns a <see cref="T:DfsInfo"/> instance.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
       [SecurityCritical]
-      public static DfsInfo GetDfsInformation(string dfsName)
+      public static DfsInfo GetDfsInfo(string dfsName)
       {
-         return GetDfsInformationInternal(false, dfsName, null, null);
+         return GetDfsInfoInternal(false, dfsName, null, null);
       }
 
-      #endregion // GetDfsInformation
+      #endregion // GetDfsInfo
 
       #region GetHostShareFromPath
 
@@ -703,17 +704,17 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // GetHostShareFromPath
 
-      #region GetShareInformation
+      #region GetShareInfo
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
       /// <param name="uncPath">The share in the format: \\host\share</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>A <see cref="T:ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
       [SecurityCritical]
-      public static ShareInfo GetShareInformation(string uncPath, bool continueOnException)
+      public static ShareInfo GetShareInfo(string uncPath, bool continueOnException)
       {
          string[] unc = GetHostShareFromPath(uncPath);
-         return GetShareInformationInternal(503, unc[0], unc[1], continueOnException);
+         return GetShareInfoInternal(503, unc[0], unc[1], continueOnException);
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
@@ -722,10 +723,10 @@ namespace Alphaleonis.Win32.Network
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>A <see cref="T:ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
       [SecurityCritical]
-      public static ShareInfo GetShareInformation(int structureLevel, string uncPath, bool continueOnException)
+      public static ShareInfo GetShareInfo(int structureLevel, string uncPath, bool continueOnException)
       {
          string[] unc = GetHostShareFromPath(uncPath);
-         return GetShareInformationInternal(structureLevel, unc[0], unc[1], continueOnException);
+         return GetShareInfoInternal(structureLevel, unc[0], unc[1], continueOnException);
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
@@ -734,9 +735,9 @@ namespace Alphaleonis.Win32.Network
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>A <see cref="T:ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
       [SecurityCritical]
-      public static ShareInfo GetShareInformation(string host, string share, bool continueOnException)
+      public static ShareInfo GetShareInfo(string host, string share, bool continueOnException)
       {
-         return GetShareInformationInternal(503, host, share, continueOnException);
+         return GetShareInfoInternal(503, host, share, continueOnException);
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
@@ -746,12 +747,12 @@ namespace Alphaleonis.Win32.Network
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>A <see cref="T:ShareInfo"/> class, or <see cref="T:null"/> on failure or when not available.</returns>
       [SecurityCritical]
-      public static ShareInfo GetShareInformation(int structureLevel, string host, string share, bool continueOnException)
+      public static ShareInfo GetShareInfo(int structureLevel, string host, string share, bool continueOnException)
       {
-         return GetShareInformationInternal(structureLevel, host, share, continueOnException);
+         return GetShareInfoInternal(structureLevel, host, share, continueOnException);
       }
 
-      #endregion // GetShareInformation
+      #endregion // GetShareInfo
 
       #region GetUncName
 
@@ -785,7 +786,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Unified method ConnectDisconnectInternal() to connect to/disconnect from a network resource. The function can redirect a local device to a network resource.</summary>
       /// <returns>If <see cref="T:ConnectDisconnectArguments.LocalName"/> is <c>null</c> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       [SecurityCritical]
       private static string ConnectDisconnectInternal(ConnectDisconnectArguments arguments)
@@ -810,7 +811,7 @@ namespace Alphaleonis.Win32.Network
             lastError = NativeMethods.WNetCancelConnection(target, arguments.UpdateProfile ? NativeMethods.Connect.UpdateProfile : NativeMethods.Connect.None, force);
 
             if (lastError != Win32Errors.NO_ERROR)
-               NativeError.ThrowException(lastError, arguments.IsDeviceMap ? arguments.LocalName : arguments.RemoteName);
+               throw new NetworkInformationException((int) lastError);
 
             return null;
          }
@@ -897,7 +898,7 @@ namespace Alphaleonis.Win32.Network
 
 
          if (lastError != Win32Errors.NO_ERROR)
-            NativeError.ThrowException((int) lastError);
+            throw new NetworkInformationException((int)lastError);
 
          return arguments.IsDeviceMap ? buffer.ToString() : null;
 
@@ -912,7 +913,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="host">The DNS or NetBIOS name of a remote host.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a remote host.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDfsRootInternal(string host, bool continueOnException)
@@ -938,7 +939,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="domain">A domain name.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDomainDfsRootInternal(string domain, bool continueOnException)
@@ -1127,7 +1128,7 @@ namespace Alphaleonis.Win32.Network
          } while (lastError == Win32Errors.ERROR_MORE_DATA);
 
          if (lastError != Win32Errors.NO_ERROR && !continueOnException)
-            NativeError.ThrowException((int) lastError);
+            throw new NetworkInformationException((int) lastError);
       }
 
       #endregion // EnumerateNetworkObjectInternal
@@ -1182,7 +1183,7 @@ namespace Alphaleonis.Win32.Network
       
       #endregion // EnumerateSharesInternal
 
-      #region GetDfsInformationInternal
+      #region GetDfsInfoInternal
 
       /// <summary>Retrieves information about a specified DFS root or link in a DFS namespace.</summary>
       /// <param name="getFromClient">
@@ -1193,12 +1194,12 @@ namespace Alphaleonis.Win32.Network
       /// <param name="serverName">The name of the DFS root target or link target server. If <paramref name="getFromClient"/> is <c>false</c>, this parameter is always <c>null</c>.</param>
       /// <param name="shareName">The name of the share corresponding to the DFS root target or link target. If <paramref name="getFromClient"/> is <c>false</c>, this parameter is always <c>null</c>.</param>
       /// <returns>Returns <see cref="T:IEnumerable{DfsInfo}"/></returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
       [SecurityCritical]
-      private static DfsInfo GetDfsInformationInternal(bool getFromClient, string dfsName, string serverName, string shareName)
+      private static DfsInfo GetDfsInfoInternal(bool getFromClient, string dfsName, string serverName, string shareName)
       {
          if (Utils.IsNullOrWhiteSpace(dfsName))
             throw new ArgumentNullException("dfsName");
@@ -1237,13 +1238,13 @@ namespace Alphaleonis.Win32.Network
             }
 
             if (lastError != Win32Errors.NERR_Success)
-               NativeError.ThrowException((int) lastError);
+               throw new NetworkInformationException((int) lastError);
          }
 
          return null;
       }
 
-      #endregion // GetDfsInformationInternal
+      #endregion // GetDfsInfoInternal
 
       #region GetRemoteNameInfoInternal
 
@@ -1252,7 +1253,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>A <see cref="T:NativeMethods.RemoteNameInfo"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid: http://alphafs.codeplex.com/discussions/316583</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
       [SecurityCritical]
       internal static NativeMethods.RemoteNameInfo GetRemoteNameInfoInternal(string path, bool continueOnException)
@@ -1317,7 +1318,7 @@ namespace Alphaleonis.Win32.Network
          } while (lastError == Win32Errors.ERROR_MORE_DATA);
 
          if (!continueOnException && lastError != Win32Errors.NO_ERROR)
-            NativeError.ThrowException(lastError, path);
+            throw new NetworkInformationException((int)lastError);
 
          // Return an empty structure (all fields set to null).
          return new NativeMethods.RemoteNameInfo();
@@ -1325,19 +1326,19 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // GetRemoteNameInfoInternal
 
-      #region GetShareInformationInternal
+      #region GetShareInfoInternal
 
-      /// <summary>Unified method GetShareInformationInternal() to get the <see cref="T:ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
+      /// <summary>Unified method GetShareInfoInternal() to get the <see cref="T:ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
       /// <param name="structureLevel">Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>,  <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <returns>A <see cref="T:ShareInfo"/> class, or <see cref="T:null"/> on failure or when not available.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
       [SecurityCritical]
-      internal static ShareInfo GetShareInformationInternal(int structureLevel, string host, string share, bool continueOnException)
+      internal static ShareInfo GetShareInfoInternal(int structureLevel, string host, string share, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(share))
             return null;
@@ -1411,14 +1412,14 @@ namespace Alphaleonis.Win32.Network
 
                default:
                   if (!continueOnException)
-                     NativeError.ThrowException(lastError, host, share);
+                     throw new NetworkInformationException((int)lastError);
                   break;
             }
 
          return null;
       }
 
-      #endregion // GetShareInformationInternal
+      #endregion // GetShareInfoInternal
       
       #endregion // Unified Internals
    }

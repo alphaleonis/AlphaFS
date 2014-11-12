@@ -19,6 +19,7 @@
  *  THE SOFTWARE.
  */
 
+using System.Net.NetworkInformation;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -487,17 +488,25 @@ namespace AlphaFS.UnitTest
                   foreach (DfsInfo dfsInfo in Host.EnumerateDfsLinks(dfsNamespace).OrderBy(d => d.EntryPath))
                   Console.Write("\n\t#{0:000}\tDFS Link: [{1}]", ++cnt2, dfsInfo.EntryPath);
                }
+               catch (NetworkInformationException ex)
+               {
+                  Console.WriteLine("\n\tNetworkInformationException #1: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               }
                catch (Exception ex)
                {
-                  Console.Write("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tException (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
 
                Console.WriteLine();
             }
          }
+         catch (NetworkInformationException ex)
+         {
+            Console.WriteLine("\n\tNetworkInformationException #2: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
          catch (Exception ex)
          {
-            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tException (2): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
@@ -528,7 +537,7 @@ namespace AlphaFS.UnitTest
 
                try
                {
-                  DfsInfo dfsInfo = Host.GetDfsInformation(dfsName);
+                  DfsInfo dfsInfo = Host.GetDfsInfo(dfsName);
 
                   foreach (DfsStorage storage in dfsInfo.NumberOfStorages)
                   {
@@ -539,23 +548,31 @@ namespace AlphaFS.UnitTest
                      {
                         Console.Write("\t#{0:000}\tDFS Root: [{1}]\n", ++cnt2, dfsNamespace);
 
-                        //ShareInfo share = Host.GetShareInformation(storage.ServerName, storage.ShareName, true);
+                        //ShareInfo share = Host.GetShareInfo(storage.ServerName, storage.ShareName, true);
                         //Dump(share, -18);
                      }
                   }
                }
+               catch (NetworkInformationException ex)
+               {
+                  Console.WriteLine("\n\tNetworkInformationException #1: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               }
                catch (Exception ex)
                {
-                  Console.Write("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tException (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
 
             Console.Write("\n\t{0}", Reporter(true));
             Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          }
+         catch (NetworkInformationException ex)
+         {
+            Console.WriteLine("\n\tNetworkInformationException #2: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
          catch (Exception ex)
          {
-            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tException (2): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
@@ -581,9 +598,13 @@ namespace AlphaFS.UnitTest
             foreach (string dfsNamespace in Host.EnumerateDomainDfsRoot())
                Console.Write("\n\t#{0:000}\tDFS Root: [{1}]", ++cnt, dfsNamespace);
          }
+         catch (NetworkInformationException ex)
+         {
+            Console.WriteLine("\n\tNetworkInformationException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
          catch (Exception ex)
          {
-            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
@@ -640,12 +661,12 @@ namespace AlphaFS.UnitTest
 
       #endregion // EnumerateShares
 
-      #region GetDfsClientInformation
+      #region GetDfsClientInfo
 
       [TestMethod]
-      public void GetDfsClientInformation()
+      public void GetDfsClientInfo()
       {
-         Console.WriteLine("Network.Host.GetDfsClientInformation()");
+         Console.WriteLine("Network.Host.GetDfsClientInfo()");
 
          int cnt = 0;
          StopWatcher(true);
@@ -659,19 +680,28 @@ namespace AlphaFS.UnitTest
                   {
                      Console.Write("\n#{0:000}\tDFS Target Directory: [{1}]\n", ++cnt, dir);
                      StopWatcher(true);
-                     Dump(Host.GetDfsClientInformation(dir).NumberOfStorages.First(), -10);
+                     Dump(Host.GetDfsClientInfo(dir).NumberOfStorages.First(), -10);
                      Console.Write("\n\t{0}\n", Reporter(true));
                      break;
                   }
                }
-               catch
+               catch (NetworkInformationException ex)
                {
+                  Console.WriteLine("\n\tNetworkInformationException #1: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               catch (Exception ex)
+               {
+                  Console.WriteLine("\n\tException (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
          }
+         catch (NetworkInformationException ex)
+         {
+            Console.WriteLine("\n\tNetworkInformationException #2: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
          catch (Exception ex)
          {
-            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tException (2): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
@@ -680,29 +710,29 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // GetDfsClientInformation
+      #endregion // GetDfsClientInfo
 
-      #region GetDfsInformation
+      #region GetDfsInfo
 
       [TestMethod]
-      public void GetDfsInformation()
+      public void GetDfsInfo()
       {
-         Console.WriteLine("Network.Host.GetDfsInformation()");
+         Console.WriteLine("Network.Host.GetDfsInfo()");
          Console.WriteLine("\nPlease see unit test: EnumerateDfsRoot()()");
       }
 
-      #endregion // GetDfsInformation
+      #endregion // GetDfsInfo
 
-      #region GetShareInformation
+      #region GetShareInfo
 
       [TestMethod]
-      public void GetShareInformation()
+      public void GetShareInfo()
       {
-         Console.WriteLine("Network.Host.GetShareInformation()");
+         Console.WriteLine("Network.Host.GetShareInfo()");
          Console.WriteLine("\nPlease see unit test: Network_Class_ShareInfo()");
       }
 
-      #endregion // GetShareInformation
+      #endregion // GetShareInfo
 
       #region GetUncName
 

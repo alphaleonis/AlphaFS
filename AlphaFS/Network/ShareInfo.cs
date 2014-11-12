@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32.Network
          get
          {
             if (_shareResourceType == ShareResourceTypes.None && !Utils.IsNullOrWhiteSpace(NetName))
-               _shareResourceType = (Host.GetShareInformationInternal(1005, ServerName, NetName, true)).ResourceType;
+               _shareResourceType = (Host.GetShareInfoInternal(1005, ServerName, NetName, true)).ResourceType;
 
             return _shareResourceType;
          }

@@ -28,6 +28,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Security.Principal;
 using System.Text;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
@@ -1283,7 +1284,7 @@ namespace AlphaFS.UnitTest
                {
                   Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsNamespace);
 
-                  DfsInfo dfsInfo = Host.GetDfsInformation(dfsNamespace);
+                  DfsInfo dfsInfo = Host.GetDfsInfo(dfsNamespace);
 
                   Console.Write("\nDirectory contents:\tSubdirectories: [{0}]\tFiles: [{1}]\n",
                      dfsInfo.DirectoryInfo.CountDirectories(true), dfsInfo.DirectoryInfo.CountFiles(true));
@@ -1297,22 +1298,30 @@ namespace AlphaFS.UnitTest
                      Dump(store, -10);
 
                      // DFS shares (non SMB) cannot be retrieved.
-                     ShareInfo share = Host.GetShareInformation(1005, store.ServerName, store.ShareName, true);
+                     ShareInfo share = Host.GetShareInfo(1005, store.ServerName, store.ShareName, true);
                      Dump(share, -18);
                      Console.Write("\n");
                   }
                }
+               catch (NetworkInformationException ex)
+               {
+                  Console.WriteLine("\n\tNetworkInformationException #1: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               }
                catch (Exception ex)
                {
-                  Console.Write("\nCaught Exception: [{0}]\n\n", ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tException (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
             Console.Write("\n{0}", Reporter());
             Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          }
+         catch (NetworkInformationException ex)
+         {
+            Console.WriteLine("\n\tNetworkInformationException #2: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
          catch (Exception ex)
          {
-            Console.Write("\nCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tException (2): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
