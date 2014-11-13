@@ -1748,6 +1748,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// If a logical drive points to a network share path, the share path will be returned.
       /// <returns>A UNC path or <c>null</c> when <paramref name="localPath"/> is <c>string.Empty</c> or <c>null</c>.</returns>
       /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <param name="localPath">A local path, e.g.: "C:\Windows"</param>
       /// <param name="asLongPath"><c>true</c> returns the path in long path (Unicode) format, when <c>false</c> returns the path as a regular path.</param>
       /// <param name="trimEnd"><c>true</c> removes trailing whitespace from <paramref name="localPath"/>.</param>
@@ -1756,7 +1758,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string LocalToUncInternal(string localPath, bool asLongPath, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator)
       {
-         localPath = (localPath.Equals(CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
+         localPath = (localPath[0] == CurrentDirectoryPrefixChar) || !IsPathRooted(localPath, false)
             ? GetFullPathInternal(null, localPath, asLongPath, trimEnd, addDirectorySeparator, removeDirectorySeparator, false, true)
             : GetRegularPathInternal(localPath, true, trimEnd, addDirectorySeparator, removeDirectorySeparator);
 
