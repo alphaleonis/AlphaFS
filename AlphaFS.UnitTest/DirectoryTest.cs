@@ -611,6 +611,27 @@ namespace AlphaFS.UnitTest
 
             #endregion // IOException 2
 
+            #region ArgumentException
+
+            if (isLocal)
+            {
+               exception = false;
+               try
+               {
+                  Console.WriteLine("\n\nFail: Directory.CreateDirectory(): Path is prefixed with, or contains, only a colon character (:).");
+                  Directory.CreateDirectory(@":AAAAAAAAAA");
+               }
+               catch (ArgumentException ex)
+               {
+                  exception = true;
+                  Console.WriteLine("\n\tArgumentException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               Console.WriteLine("\n\tCaught ArgumentException (Should be True): [{0}]", exception);
+               Assert.IsTrue(exception, "ArgumentException should have been caught.");
+            }
+
+            #endregion // ArgumentException
+
             #region NotSupportedException
 
             if (isLocal)

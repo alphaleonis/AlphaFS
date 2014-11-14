@@ -1458,7 +1458,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path)
       {
-         return File.ExistsInternal(true, null, path, false);
+         return File.ExistsInternal(true, null, path, true, false);
       }
 
       #endregion // .NET
@@ -1480,7 +1480,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path, bool? isFullPath)
       {
-         return File.ExistsInternal(true, null, path, isFullPath);
+         return File.ExistsInternal(true, null, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -1498,7 +1498,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
       {
-         return File.ExistsInternal(true, transaction, path, false);
+         return File.ExistsInternal(true, transaction, path, true, false);
       }
 
       #endregion // .NET
@@ -1519,7 +1519,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.ExistsInternal(true, transaction, path, isFullPath);
+         return File.ExistsInternal(true, transaction, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -5934,6 +5934,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (isFullPath != null && (bool) !isFullPath)
          {
+            if (path[0] == Path.VolumeSeparatorChar)
+               throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
+
             Path.CheckValidPath(path);
             Path.CheckValidPath(templatePath);
          }
@@ -5943,11 +5946,17 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
+ : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
 #else
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
                : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, true);
 #endif
+
+         // Return DirectoryInfo instance if the directory specified by path already exists.
+         if (File.ExistsInternal(true, transaction, pathLp, true, null))
+            return new DirectoryInfo(transaction, pathLp, true);
+
+
          string templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
             ? null
             : isFullPath == null
@@ -5955,17 +5964,20 @@ namespace Alphaleonis.Win32.Filesystem
                : (bool) isFullPath
                ? Path.GetLongPathInternal(templatePath, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true, false, true);
+ : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true, false, true);
 #else
                // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
                : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true, false, true);
 #endif
+
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
-         if (File.ExistsInternal(false, transaction, pathLp, null))
+         if (File.ExistsInternal(false, transaction, pathLp, true, null))
             NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp, true);
+
 
          #region Construct Full Path
 
+         string longPathPrefix = Path.IsUncPath(path, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
          path = Path.GetRegularPathInternal(pathLp, false, false, false, false);
 
          int length = path.Length;
@@ -5985,9 +5997,10 @@ namespace Alphaleonis.Win32.Filesystem
             for (int index = length - 1; index >= rootLength; --index)
             {
                string path1 = path.Substring(0, index + 1);
+               string path2 = longPathPrefix + path1.TrimStart('\\');
 
-               if (File.GetAttributesInternal(true, transaction, path1, true, true, true) == (FileAttributes) (-1))
-                  list.Push(path1);
+               if (!File.ExistsInternal(true, transaction, path2, false, null))
+                  list.Push(path2);
 
                while (index > rootLength && !Path.IsDVsc(path[index], false))
                   --index;
@@ -6002,7 +6015,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Create the directory paths.
             while (list.Count > 0)
             {
-               string folderLp = Path.GetLongPathInternal(list.Pop(), false, false, false, false);
+               string folderLp = list.Pop();
 
                // In the ANSI version of this function, the name is limited to 248 characters.
                // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
@@ -6023,7 +6036,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
-                        if (File.ExistsInternal(false, transaction, pathLp, null))
+                        if (File.ExistsInternal(false, transaction, pathLp, true, null))
                            NativeError.ThrowException(lastError, pathLp, true);
                         break;
 
@@ -6137,7 +6150,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (fileSystemEntryInfo == null)
          {
-            if (!File.ExistsInternal(true, transaction, path, isFullPath) && !continueOnNotExist)
+            if (!File.ExistsInternal(true, transaction, path, true, isFullPath) && !continueOnNotExist)
                NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
 
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
@@ -6270,7 +6283,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (fileSystemEntryInfo == null)
          {
-            if (!File.ExistsInternal(true, transaction, path, isFullPath))
+            if (!File.ExistsInternal(true, transaction, path, true, isFullPath))
                NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
 
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,

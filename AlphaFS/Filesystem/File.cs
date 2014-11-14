@@ -1216,7 +1216,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path)
       {
-         return ExistsInternal(false, null, path, false);
+         return ExistsInternal(false, null, path, true, false);
       }
 
       #endregion // .NET
@@ -1243,7 +1243,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path, bool? isFullPath)
       {
-         return ExistsInternal(false, null, path, isFullPath);
+         return ExistsInternal(false, null, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -1266,7 +1266,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
       {
-         return ExistsInternal(false, transaction, path, false);
+         return ExistsInternal(false, transaction, path, true, false);
       }
 
       #endregion // .NET
@@ -1292,7 +1292,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return ExistsInternal(false, transaction, path, isFullPath);
+         return ExistsInternal(false, transaction, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -6454,7 +6454,7 @@ namespace Alphaleonis.Win32.Filesystem
          bool doCopy = copyOptions != null && moveOptions == null;
          bool doMove = moveOptions != null && copyOptions == null;
 
-         if (ExistsInternal(false, transaction, destFileNameLp, null))
+         if (ExistsInternal(false, transaction, destFileNameLp, true, null))
          {
             bool overwrite = doCopy
             ? ((CopyOptions)copyOptions & CopyOptions.FailIfExists) == CopyOptions.None  // copyOptions does NOT contain CopyOptions.FailIfExists.
@@ -7116,6 +7116,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
+      /// <param name="fallBack"><c>true</c> fallback on function FindFirstFileXxx() in case function GetFileAttributesXxx() fails.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -7123,7 +7124,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
+      internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, bool fallBack, bool? isFullPath)
       {
          string pathLp;
 
@@ -7131,24 +7132,21 @@ namespace Alphaleonis.Win32.Filesystem
          {
             pathLp = isFullPath == null
                ? path
-               : (bool) isFullPath
+               : (bool)isFullPath
                   ? Path.GetLongPathInternal(path, false, false, false, false)
                   : Path.GetFullPathInternal(transaction, path, true, true, false, true, true, false);
+
+            // MSDN: .NET 3.5+: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
+            // MSDN: .NET 3.5+: Trailing spaces are removed from the path parameter before determining if the file exists.
          }
          catch
          {
             return false;
          }
 
-         // MSDN: .NET 3.5+: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
-         // MSDN: .NET 3.5+: Trailing spaces are removed from the path parameter before determining if the file exists.
+         FileAttributes attrs = GetAttributesInternal(isFolder, transaction, pathLp, fallBack, true, null);
 
-         if (pathLp == null)
-            return false;
-
-         FileAttributes attrs = GetAttributesInternal(isFolder, transaction, pathLp, true, true, null);
-
-         return attrs != (FileAttributes) (-1) && (isFolder
+         return attrs != (FileAttributes)(-1) && (isFolder
             ? (attrs & FileAttributes.Directory) == FileAttributes.Directory
             : (attrs & FileAttributes.Directory) != FileAttributes.Directory);
       }

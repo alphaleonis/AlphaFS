@@ -436,7 +436,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public bool IsReady
       {
-         get { return File.ExistsInternal(true, null, Name, false); }
+         get { return File.ExistsInternal(true, null, Name, true, false); }
       }
 
       #endregion // IsReady
