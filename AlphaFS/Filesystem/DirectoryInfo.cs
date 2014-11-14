@@ -1357,11 +1357,11 @@ namespace Alphaleonis.Win32.Filesystem
          string destinationPathLp = isFullPath == null
             ? destinationPath
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
+               ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(null, destinationPath, true, false, false, true, false, true);
+               : Path.GetFullPathInternal(null, destinationPath, true, false, false, true, false, true, true);
 #else
-               : Path.GetFullPathInternal(null, destinationPath, true, true, false, true, false, true);
+               : Path.GetFullPathInternal(null, destinationPath, true, true, false, true, false, true, true);
 #endif
 
 

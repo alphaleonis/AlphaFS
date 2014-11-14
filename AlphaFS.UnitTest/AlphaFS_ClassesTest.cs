@@ -429,7 +429,7 @@ namespace AlphaFS.UnitTest
          {
             Console.WriteLine("\n\tStream name: [{0}]", streamName);
 
-            // Because of the colon, you must use isFullPath = true or a NotSupportedException is thrown: path is in an invalid format.
+            // Because of the colon, you must supply a full path and use isFullPath = true or a NotSupportedException is thrown: path is in an invalid format.
             foreach (string line in File.ReadAllLines(tempPath + ":" + streamName, true))
                Console.WriteLine("\t\t{0}", line);
          }
@@ -526,7 +526,7 @@ namespace AlphaFS.UnitTest
          {
             Console.WriteLine("\n\tStream name: [{0}]", streamName);
 
-            // Because of the colon, you must use isFullPath = true or a NotSupportedException is thrown: path is in an invalid format.
+            // Because of the colon, you must supply a full path and use isFullPath = true or a NotSupportedException is thrown: path is in an invalid format.
             foreach (string line in File.ReadAllLines(tempPath + ":" + streamName, true))
                Console.WriteLine("\t\t{0}", line);
          }

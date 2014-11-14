@@ -185,7 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, !isFolder, true, true);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, !isFolder, true, true, true);
 
          FullPath = Path.GetRegularPathInternal(LongFullName, false, false, false, false);
 
