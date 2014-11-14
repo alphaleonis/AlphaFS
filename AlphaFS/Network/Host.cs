@@ -919,7 +919,7 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<string> EnumerateDfsRootInternal(string host, bool continueOnException)
       {
          // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
 
          FunctionData fd = new FunctionData();
          return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo300 structure, SafeNetApiBuffer safeBuffer) =>
@@ -945,7 +945,7 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<string> EnumerateDomainDfsRootInternal(string domain, bool continueOnException)
       {
          // The UNC prefix: \\ is not required and always removed.
-         domain = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathInternal(domain, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
+         domain = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathInternal(domain, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
 
          FunctionData fd = new FunctionData();
          return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo200 structure, SafeNetApiBuffer safeBuffer) =>
@@ -969,7 +969,7 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<string> EnumerateDrivesInternal(string host, bool continueOnException)
       {
          // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
 
          FunctionData fd = new FunctionData {EnumType = 1};
          return EnumerateNetworkObjectInternal(fd, (string structure, SafeNetApiBuffer safeBuffer) =>
@@ -994,7 +994,7 @@ namespace Alphaleonis.Win32.Network
             throw new ArgumentNullException("share");
 
          // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, "");
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, "");
 
          FunctionData fd = new FunctionData {ExtraData1 = share};
          return EnumerateNetworkObjectInternal(fd, (NativeMethods.ConnectionInfo1 structure, SafeNetApiBuffer safeBuffer) =>
@@ -1020,11 +1020,11 @@ namespace Alphaleonis.Win32.Network
          // However, the resulting OpenResourceInfo.Host property will be empty.
          // So, explicitly state Environment.MachineName to prevent this.
          // Furthermore, the UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
 
          basePath = Utils.IsNullOrWhiteSpace(basePath)
             ? null
-            : Path.GetRegularPathInternal(basePath, true, false, false, false);
+            : Path.GetRegularPathInternal(basePath, false, false, false, true);
 
          typeName = Utils.IsNullOrWhiteSpace(typeName) ? null : typeName;
 
@@ -1143,7 +1143,7 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<ShareInfo> EnumerateSharesInternal(string host, bool continueOnException)
       {
          // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
 
          FunctionData fd = new FunctionData();
          bool hasItems = false;
@@ -1261,7 +1261,7 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         path = Path.GetRegularPathInternal(path, true, false, false, false); 
+         path = Path.GetRegularPathInternal(path, false, false, false, true); 
 
          // If path already is a network share path, we fill the RemoteNameInfo structure ourselves.
          if (Path.IsUncPath(path, false))
@@ -1344,7 +1344,7 @@ namespace Alphaleonis.Win32.Network
             return null;
 
          // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, true, false, false, false).Replace(Path.UncPrefix, string.Empty);
+         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
          
          bool fallback = false;
          

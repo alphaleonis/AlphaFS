@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
          FullPath = isFullPath == null
             ? fileName
             : (bool) isFullPath
-               ? Path.GetRegularPathInternal(fileName, false, false, false, true)
+               ? Path.GetRegularPathInternal(fileName, false, false, true, false)
                : Path.GetFullPathInternal(null, fileName, false, false, false, true, false, true);
 
          Initialize();

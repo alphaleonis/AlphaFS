@@ -6421,22 +6421,22 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (isFullPath != null && (bool) !isFullPath)
          {
-            Path.CheckValidPath(sourceFileName);
-            Path.CheckValidPath(destFileName);
+            Path.CheckValidPath(sourceFileName, true, true);
+            Path.CheckValidPath(destFileName, true, true);
          }
 
          string sourceFileNameLp = isFullPath == null
             ? sourceFileName
             : (bool) isFullPath
                ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true, false, true);
+               : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true, false, false);
 
 
          string destFileNameLp = isFullPath == null
             ? destFileName
             : (bool) isFullPath
                ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, destFileName, true, false, false, true, false, true);
+               : Path.GetFullPathInternal(transaction, destFileName, true, false, false, true, false, false);
 
 
          // Setup callback function for progress notifications.
@@ -6584,7 +6584,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, bool? isFullPath)
       {
          if (checkPath && isFullPath != null && (bool)!isFullPath)
-            Path.CheckValidPath(path);
+            Path.CheckValidPath(path, true, true);
 
          // When isFile == null, we're working with a device.
          // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
@@ -6595,7 +6595,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool)isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false);
 
          
          PrivilegeEnabler privilegeEnabler = null;
@@ -6792,13 +6792,13 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void DeleteFileInternal(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
       {
          if (isFullPath != null && (bool) !isFullPath)
-            Path.CheckValidPath(path);
+            Path.CheckValidPath(path, true, true);
 
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false);
          
          
          // Reset file attributes.
@@ -7263,13 +7263,13 @@ namespace Alphaleonis.Win32.Filesystem
       internal static FileAttributes GetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, bool fallBack, bool continueOnNotExist, bool? isFullPath)
       {
          if (isFullPath != null && (bool) !isFullPath)
-            Path.CheckValidPath(path);
+            Path.CheckValidPath(path, true, true);
 
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
+            : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false);
 
          // GetFileAttributes()
          // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -7334,13 +7334,13 @@ namespace Alphaleonis.Win32.Filesystem
       internal static NativeMethods.Win32FileAttributeData GetAttributesExInternal(bool isFolder, KernelTransaction transaction, string path, bool fallBack, bool continueOnNotExist, bool? isFullPath)
       {
          if (isFullPath != null && (bool) !isFullPath)
-            Path.CheckValidPath(path);
+            Path.CheckValidPath(path, true, true);
 
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
+            : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false);
 
          NativeMethods.Win32FileAttributeData win32AttrData;
 
@@ -7993,7 +7993,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, bool? isFullPath)
       {
          if (isFullPath != null && (bool)!isFullPath)
-            Path.CheckValidPath(path);
+            Path.CheckValidPath(path, true, true);
 
          if (objectSecurity == null)
             throw new ArgumentNullException("objectSecurity");
@@ -8005,7 +8005,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? path
                : (bool) isFullPath
                   ? Path.GetLongPathInternal(path, false, false, false, false)
-                  : Path.GetFullPathInternal(null, path, true, false, false, true, false, true);
+                  : Path.GetFullPathInternal(null, path, true, false, false, true, false, false);
 
             hDescriptor.CopyFrom(managedDescriptor, 0, managedDescriptor.Length);
 
@@ -8173,7 +8173,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          // Because we already check here, use false for CreateFileInternal() to prevent another check.
          if (isFullPath != null && (bool) !isFullPath)
-            Path.CheckValidPath(path);
+            Path.CheckValidPath(path, false, false);
 
          using (SafeGlobalMemoryBufferHandle creationTime = SafeGlobalMemoryBufferHandle.CreateFromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastAccessTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))

@@ -149,15 +149,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
       /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      public static string GetExtension(string path, bool checkInvalidChars)
+      public static string GetExtension(string path, bool checkInvalidPathChars)
       {
          if (path == null)
             return null;
 
-         if (checkInvalidChars)
-            CheckInvalidPathChars(path);
+         if (checkInvalidPathChars)
+            CheckInvalidPathChars(path, false);
 
          int length = path.Length;
          int index = length;
@@ -202,13 +202,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
       /// <param name="path">The path string from which to obtain the file name and extension.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
-      public static string GetFileName(string path, bool checkInvalidChars)
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      public static string GetFileName(string path, bool checkInvalidPathChars)
       {
          if (path != null)
          {
-            if (checkInvalidChars)
-               CheckInvalidPathChars(path);
+            if (checkInvalidPathChars)
+               CheckInvalidPathChars(path, false);
 
             int length = path.Length;
             int index = length;
@@ -251,11 +251,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
       /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      public static string GetFileNameWithoutExtension(string path, bool checkInvalidChars)
+      public static string GetFileNameWithoutExtension(string path, bool checkInvalidPathChars)
       {
-         path = GetFileName(path, checkInvalidChars);
+         path = GetFileName(path, checkInvalidPathChars);
 
          if (path != null)
          {
@@ -290,9 +290,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(string path)
       {
-         CheckValidPath(path);
+         CheckValidPath(path, true, true);
 
-         return GetFullPathInternal(null, path, false, false, false, false, false, true);
+         return GetFullPathInternal(null, path, false, false, false, false, false, false);
       }
 
       #endregion // .NET
@@ -348,9 +348,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(KernelTransaction transaction, string path)
       {
-         CheckValidPath(path);
+         CheckValidPath(path, true, true);
 
-         return GetFullPathInternal(transaction, path, false, false, false, false, false, true);
+         return GetFullPathInternal(transaction, path, false, false, false, false, false, false);
       }
 
       #endregion // .NET
@@ -463,9 +463,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
       /// <param name="path">The path from which to obtain root directory information.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      public static string GetPathRoot(string path, bool checkInvalidChars)
+      public static string GetPathRoot(string path, bool checkInvalidPathChars)
       {
          if (path == null)
             return null;
@@ -473,7 +473,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path.Trim().Length == 0)
             throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
 
-         return path.Substring(0, GetRootLength(path, checkInvalidChars));
+         return path.Substring(0, GetRootLength(path, checkInvalidPathChars));
       }
 
       #endregion // AlphaFS
@@ -597,14 +597,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// </summary>
       /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      public static bool IsPathRooted(string path, bool checkInvalidChars)
+      public static bool IsPathRooted(string path, bool checkInvalidPathChars)
       {
          if (path != null)
          {
-            if (checkInvalidChars)
-               CheckInvalidPathChars(path);
+            if (checkInvalidPathChars)
+               CheckInvalidPathChars(path, false);
 
             int length = path.Length;
 
@@ -729,7 +729,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetLongPath(string path)
       {
-         return GetLongPathInternal(path, true, false, false, false);
+         return GetLongPathInternal(path, false, false, false, false);
       }
 
       #endregion // GetLongPath
@@ -807,7 +807,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetRegularPath(string path)
       {
-         return GetRegularPathInternal(path, true, false, false, false);
+         return GetRegularPathInternal(path, false, false, false, true);
       }
 
       #endregion // GetRegularPath
@@ -925,14 +925,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// </summary>
       /// <param name="path">The path to check.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      public static bool IsLocalPath(string path, bool checkInvalidChars)
+      public static bool IsLocalPath(string path, bool checkInvalidPathChars)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             return false;
 
-         path = GetRegularPathInternal(path, checkInvalidChars, false, false, false);
+         path = GetRegularPathInternal(path, false, false, false, checkInvalidPathChars);
 
          // Don't use char.IsLetter() here as that can be misleading.
          // The only valid drive letters are: a-z and A-Z.
@@ -973,12 +973,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns><c>true</c> if the specified path is a Universal Naming Convention (UNC) path, <c>false</c> otherwise.</returns>
       /// </summary>
       /// <param name="path">The path to check.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      public static bool IsUncPath(string path, bool checkInvalidChars)
+      public static bool IsUncPath(string path, bool checkInvalidPathChars)
       {
          Uri uri;
-         return Uri.TryCreate(GetRegularPathInternal(path, checkInvalidChars, false, false, false), UriKind.Absolute, out uri) && uri.IsUnc;
+         return Uri.TryCreate(GetRegularPathInternal(path, false, false, false, checkInvalidPathChars), UriKind.Absolute, out uri) && uri.IsUnc;
       }
 
       #endregion // IsUncPath
@@ -1079,8 +1079,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").</summary>
       /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <param name="path">A path to the file or directory.</param>
-      internal static void CheckValidPath(string path)
+      /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
+      /// <param name="checkAdditional"></param>
+      internal static void CheckValidPath(string path, bool checkInvalidPathChars, bool checkAdditional)
       {
+         if (checkInvalidPathChars && path != null)
+            CheckInvalidPathChars(path, checkAdditional);
+
          if (!Utils.IsNullOrWhiteSpace(path) && !IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1)
             throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
       }
@@ -1096,7 +1101,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to the file or directory.</param>
       /// <param name="checkAdditional"><c>true</c> also checks for ? and * characters.</param>
       [SecurityCritical]
-      private static void CheckInvalidPathChars(string path, bool checkAdditional = false)
+      private static void CheckInvalidPathChars(string path, bool checkAdditional)
       {
          if (path == null)
             throw new ArgumentNullException("path");
@@ -1181,10 +1186,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetRootLength
 
       [SecurityCritical]
-      internal static int GetRootLength(string path, bool checkInvalidChars)
+      internal static int GetRootLength(string path, bool checkInvalidPathChars)
       {
-         if (checkInvalidChars)
-            CheckInvalidPathChars(path);
+         if (checkInvalidPathChars)
+            CheckInvalidPathChars(path, false);
 
          int index = 0;
          int length = path.Length;
@@ -1254,9 +1259,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException">One of the strings in the array is <c>null</c>.</exception>
       /// </summary>
       /// <param name="paths">An array of parts of the path.</param>
-      /// <param name="checkInvalidChars"><c>true</c> will not check <paramref name="paths"/> for invalid path characters.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will not check <paramref name="paths"/> for invalid path characters.</param>
       [SecurityCritical]
-      internal static string CombineInternal(bool checkInvalidChars, params string[] paths)
+      internal static string CombineInternal(bool checkInvalidPathChars, params string[] paths)
       {
          if (paths == null)
             throw new ArgumentNullException("paths");
@@ -1270,7 +1275,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (paths[index].Length != 0)
             {
-               if (IsPathRooted(paths[index], checkInvalidChars))
+               if (IsPathRooted(paths[index], checkInvalidPathChars))
                {
                   num = index;
                   capacity = paths[index].Length;
@@ -1470,7 +1475,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CheckInvalidPathChars(path, checkAdditional);
 
-         string pathLp = GetLongPathInternal(path, false, trimEnd, addDirectorySeparator, removeDirectorySeparator);
+         string pathLp = GetLongPathInternal(path, trimEnd, addDirectorySeparator, removeDirectorySeparator, false);
          uint bufferSize = NativeMethods.MaxPathUnicode/32;
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
@@ -1527,15 +1532,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="path">The path to the file or directory, this may also be an UNC path.</param>
-      /// <param name="checkInvalidChars">Checks that the path contains only valid path-characters.</param>
       /// <param name="trimEnd"><c>true</c> removes trailing whitespace from <paramref name="path"/>.</param>
       /// <param name="addDirectorySeparator"><c>true</c> adds a directory separator to that path.</param>
       /// <param name="removeDirectorySeparator"><c>true</c> removes any directory separator to that path.</param>
+      /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
       [SecurityCritical]
-      internal static string GetLongPathInternal(string path, bool checkInvalidChars, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator)
+      internal static string GetLongPathInternal(string path, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator, bool checkInvalidPathChars)
       {
-         if (checkInvalidChars)
-            CheckInvalidPathChars(path);
+         if (checkInvalidPathChars)
+            CheckInvalidPathChars(path, false);
          else
          {
             if (path == null)
@@ -1639,15 +1644,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="path">The path.</param>
-      /// <param name="checkInvalidChars">Checks that the path contains only valid path-characters.</param>
       /// <param name="trimEnd"><c>true</c> removes trailing whitespace from <paramref name="path"/>.</param>
       /// <param name="addDirectorySeparator"><c>true</c> adds a directory separator to that path.</param>
       /// <param name="removeDirectorySeparator"><c>true</c> removes any directory separator to that path.</param>
+      /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
       [SecurityCritical]
-      internal static string GetRegularPathInternal(string path, bool checkInvalidChars, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator)
+      internal static string GetRegularPathInternal(string path, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator, bool checkInvalidPathChars)
       {
-         if (checkInvalidChars)
-            CheckInvalidPathChars(path);
+         if (checkInvalidPathChars)
+            CheckInvalidPathChars(path, false);
          else
          {
             if (path == null)
@@ -1760,7 +1765,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          localPath = (localPath[0] == CurrentDirectoryPrefixChar) || !IsPathRooted(localPath, false)
             ? GetFullPathInternal(null, localPath, asLongPath, trimEnd, addDirectorySeparator, removeDirectorySeparator, false, true)
-            : GetRegularPathInternal(localPath, true, trimEnd, addDirectorySeparator, removeDirectorySeparator);
+            : GetRegularPathInternal(localPath, trimEnd, addDirectorySeparator, removeDirectorySeparator, true);
 
          if (IsUncPath(localPath, false))
             return localPath;

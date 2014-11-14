@@ -3130,7 +3130,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("path");
 
          // System.IO SetCurrentDirectory() does not handle long paths.
-         System.IO.Directory.SetCurrentDirectory(Path.GetRegularPathInternal(path, true, false, false, false));
+         System.IO.Directory.SetCurrentDirectory(Path.GetRegularPathInternal(path, false, false, false, true));
       }
       
       #endregion // .NET
@@ -5810,8 +5810,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (isFullPath != null && (bool) !isFullPath)
          {
-            Path.CheckValidPath(sourcePath);
-            Path.CheckValidPath(destinationPath);
+            Path.CheckValidPath(sourcePath, true, true);
+            Path.CheckValidPath(destinationPath, true, true);
          }
          
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
@@ -5934,11 +5934,14 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (isFullPath != null && (bool) !isFullPath)
          {
-            if (path[0] == Path.VolumeSeparatorChar)
+            if (path != null && path[0] == Path.VolumeSeparatorChar)
                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
 
-            Path.CheckValidPath(path);
-            Path.CheckValidPath(templatePath);
+            if (templatePath != null && templatePath[0] == Path.VolumeSeparatorChar)
+               throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, templatePath));
+
+            Path.CheckValidPath(path, true, true);
+            Path.CheckValidPath(templatePath, true, true);
          }
 
          string pathLp = isFullPath == null
@@ -5946,10 +5949,10 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
- : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false);
 #else
             // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
-               : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, true);
+               : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false);
 #endif
 
          // Return DirectoryInfo instance if the directory specified by path already exists.
@@ -5962,12 +5965,12 @@ namespace Alphaleonis.Win32.Filesystem
             : isFullPath == null
                ? templatePath
                : (bool) isFullPath
-               ? Path.GetLongPathInternal(templatePath, false, false, false, false)
+                  ? Path.GetLongPathInternal(templatePath, false, false, false, false)
 #if NET35
- : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true, false, true);
+                  : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true, false, false);
 #else
-               // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
-               : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true, false, true);
+                  // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
+                  : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true, false, false);
 #endif
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
@@ -6080,7 +6083,7 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
-               ?  Path.GetLongPathInternal(path, false, false, false, false)
+               ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, false, false, false);
 
          pathLp = Path.GetRegularPathInternal(pathLp, false, false, false, false);
