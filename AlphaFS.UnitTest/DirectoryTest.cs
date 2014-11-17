@@ -544,9 +544,7 @@ namespace AlphaFS.UnitTest
 
             #region IOException 1
 
-            using (File.Create(tempPath))
-            {
-            }
+            using (File.Create(tempPath)) {}
             bool exception = false;
             try
             {
@@ -572,16 +570,14 @@ namespace AlphaFS.UnitTest
                exception = false;
                try
                {
-                  Console.WriteLine(
-                     "\n\nFail: Directory.CreateDirectory(): The specified path is invalid (for example, it is on an unmapped drive).");
+                  Console.WriteLine("\n\nFail: Directory.CreateDirectory(): The specified path is invalid (for example, it is on an unmapped drive).");
                   char letter = DriveInfo.GetFreeDriveLetter();
                   Directory.CreateDirectory(letter + @":\shouldFail");
                }
                catch (DirectoryNotFoundException ex)
                {
                   exception = true;
-                  Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]",
-                     ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
                Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
                Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
@@ -639,8 +635,7 @@ namespace AlphaFS.UnitTest
                exception = false;
                try
                {
-                  Console.WriteLine(
-                     "\n\nFail: Directory.CreateDirectory(): Path contains a colon character (:) that is not part of a drive label (C:\\).");
+                  Console.WriteLine("\n\nFail: Directory.CreateDirectory(): Path contains a colon character (:) that is not part of a drive label (C:\\).");
                   Directory.CreateDirectory(@"C:\dev\test\aaa:aaa.txt");
                }
                catch (NotSupportedException ex)
@@ -775,6 +770,32 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "IOException should have been caught.");
 
             #endregion // IOException #2
+
+            #region ArgumentException
+
+            string expectedException = "System.ArgumentException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: Directory.CreateDirectory(): [{0}]: Path is a zero-length string, contains only white space, or contains one or more invalid characters.", expectedException);
+               Directory.Delete(@"C:\<>");
+            }
+            catch (Exception ex)
+            {
+               string exceptionTypeName = ex.GetType().FullName;
+
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // ArgumentException
 
             #endregion // Directory.Delete
          }

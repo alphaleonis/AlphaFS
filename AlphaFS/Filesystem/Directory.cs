@@ -6127,8 +6127,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region DeleteDirectoryInternal
 
       /// <summary>[AlphaFS] Unified method DeleteDirectoryInternal() to delete a Non-/Transacted directory.
-      /// <remarks>The RemoveDirectory function marks a directory for deletion on close. Therefore, the directory is not removed until the last handle to the directory is closed.</remarks>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The RemoveDirectory function marks a directory for deletion on close. Therefore, the directory is not removed until the last handle to the directory is closed.</para>
+      /// <para>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</para>
+      /// </remarks>
       /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
@@ -6151,8 +6154,16 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool requireEmpty, bool continueOnNotExist, bool? isFullPath)
       {
+         if (isFullPath != null && (bool)!isFullPath)
+            Path.CheckValidPath(path, true, false);
+
          if (fileSystemEntryInfo == null)
          {
+            // MSDN: .NET 3.5+: DirectoryNotFoundException:
+            // Path does not exist or could not be found.
+            // Path refers to a file instead of a directory.
+            // The specified path is invalid (for example, it is on an unmapped drive). 
+
             if (!File.ExistsInternal(true, transaction, path, true, isFullPath) && !continueOnNotExist)
                NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
 
@@ -6162,12 +6173,12 @@ namespace Alphaleonis.Win32.Filesystem
                   : (bool) isFullPath
                      ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
-                     : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true),
+ : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true),
 #else
-   // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+                     // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
                      : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, true, true),
 #endif
-               true, continueOnNotExist, null);
+ true, continueOnNotExist, null);
          }
 
          if (fileSystemEntryInfo == null)
@@ -6179,20 +6190,20 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          string pathLp = fileSystemEntryInfo.LongFullPath;
-       
-  
-         // Ensure path is a directory.
+
+
          if (!fileSystemEntryInfo.IsDirectory)
+            // MSDN: .NET 3.5+: IOException: A file with the same name and location specified by path exists.
             throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameAsDirectory, pathLp));
 
-         
+
          // Do not follow mount points nor symbolic links, but do delete the reparse point itself.
-         
+
          // If directory is reparse point, disable recursion.
          if (recursive && fileSystemEntryInfo.IsReparsePoint)
             recursive = false;
 
-         
+
          // Check to see if this is a mount point, and unmount it.
          if (fileSystemEntryInfo.IsMountPoint)
          {
@@ -6203,7 +6214,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // Now it is safe to delete the actual directory.
          }
-         
+
 
          if (recursive)
          {
@@ -6224,7 +6235,7 @@ namespace Alphaleonis.Win32.Filesystem
             File.SetAttributesInternal(true, transaction, pathLp, FileAttributes.Normal, continueOnNotExist, null);
 
 
-         startRemoveDirectory:
+      startRemoveDirectory:
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -6248,11 +6259,18 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   if (requireEmpty)
+                     // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory. 
                      NativeError.ThrowException(lastError, pathLp, true);
 
                   goto startRemoveDirectory;
             }
 
+            // MSDN: .NET 3.5+: IOException:
+            // A file with the same name and location specified by path exists.
+            // The directory specified by path is read-only, or recursive is false and path is not an empty directory. 
+            // The directory is the application's current working directory. 
+            // The directory contains a read-only file.
+            // The directory is being used by another process.
             NativeError.ThrowException(lastError, pathLp, true);
          }
 
@@ -6295,7 +6313,7 @@ namespace Alphaleonis.Win32.Filesystem
                   : (bool) isFullPath
                      ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
-                     : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true),
+ : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true),
 #else
                      : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, true, true),
 #endif
