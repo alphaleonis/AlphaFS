@@ -1086,7 +1086,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (checkInvalidPathChars && path != null)
             CheckInvalidPathChars(path, checkAdditional);
 
-         if (!Utils.IsNullOrWhiteSpace(path) && !IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1)
+         if (!Utils.IsNullOrWhiteSpace(path) && path.Length >= 2 && !IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1)
             throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
       }
 
