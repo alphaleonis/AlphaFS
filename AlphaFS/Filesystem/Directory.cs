@@ -1931,7 +1931,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public static string GetDirectoryRoot(string path, bool isFullPath)
+      public static string GetDirectoryRoot(string path, bool? isFullPath)
       {
          return GetDirectoryRootInternal(null, path, isFullPath);
       }
@@ -1966,7 +1966,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public static string GetDirectoryRoot(KernelTransaction transaction, string path, bool isFullPath)
+      public static string GetDirectoryRoot(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetDirectoryRootInternal(transaction, path, isFullPath);
       }
@@ -2625,7 +2625,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public static DirectoryInfo GetParent(string path, bool isFullPath)
+      public static DirectoryInfo GetParent(string path, bool? isFullPath)
       {
          return GetParentInternal(null, path, isFullPath);
       }
@@ -2660,7 +2660,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public static DirectoryInfo GetParent(KernelTransaction transaction, string path, bool isFullPath)
+      public static DirectoryInfo GetParent(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return GetParentInternal(transaction, path, isFullPath);
       }
@@ -4668,7 +4668,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, bool isFullPath)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, bool? isFullPath)
       {
          return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, isFullPath);
       }
@@ -4683,7 +4683,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType, bool isFullPath)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType, bool? isFullPath)
       {
          return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, isFullPath);
       }
@@ -4732,7 +4732,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, bool isFullPath)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, isFullPath);
       }
@@ -4748,7 +4748,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType, bool isFullPath)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType, bool? isFullPath)
       {
          return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, isFullPath);
       }
@@ -5161,7 +5161,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The number of bytes used by all data streams.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static long GetStreamSize(string path, bool isFullPath)
+      public static long GetStreamSize(string path, bool? isFullPath)
       {
          return AlternateDataStreamInfo.GetStreamSizeInternal(true, null, null, path, null, null, isFullPath);
       }
@@ -5177,7 +5177,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The number of bytes used by a named stream.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static long GetStreamSize(string path, string name, bool isFullPath)
+      public static long GetStreamSize(string path, string name, bool? isFullPath)
       {
          return AlternateDataStreamInfo.GetStreamSizeInternal(true, null, null, path, name, StreamType.Data, isFullPath);
       }
@@ -5193,7 +5193,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static long GetStreamSize(string path, StreamType type, bool isFullPath)
+      public static long GetStreamSize(string path, StreamType type, bool? isFullPath)
       {
          return AlternateDataStreamInfo.GetStreamSizeInternal(true, null, null, path, null, type, isFullPath);
       }
@@ -5269,7 +5269,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The number of bytes used by all data streams.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, bool isFullPath)
+      public static long GetStreamSize(KernelTransaction transaction, string path, bool? isFullPath)
       {
          return AlternateDataStreamInfo.GetStreamSizeInternal(true, transaction, null, path, null, null, isFullPath);
       }
@@ -5286,7 +5286,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The number of bytes used by a named stream.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, string name, bool isFullPath)
+      public static long GetStreamSize(KernelTransaction transaction, string path, string name, bool? isFullPath)
       {
          return AlternateDataStreamInfo.GetStreamSizeInternal(true, transaction, null, path, name, StreamType.Data, isFullPath);
       }
@@ -5303,7 +5303,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type, bool isFullPath)
+      public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type, bool? isFullPath)
       {
          return AlternateDataStreamInfo.GetStreamSizeInternal(true, transaction, null, path, null, type, isFullPath);
       }
