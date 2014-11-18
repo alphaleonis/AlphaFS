@@ -6154,7 +6154,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool requireEmpty, bool continueOnNotExist, bool? isFullPath)
       {
-         if (isFullPath != null && (bool)!isFullPath)
+         if (isFullPath != null && (bool) !isFullPath)
             Path.CheckValidPath(path, true, false);
 
          if (fileSystemEntryInfo == null)
@@ -6263,6 +6263,26 @@ namespace Alphaleonis.Win32.Filesystem
                      NativeError.ThrowException(lastError, pathLp, true);
 
                   goto startRemoveDirectory;
+
+               case Win32Errors.ERROR_ACCESS_DENIED:
+                  // Reset directory attributes.
+                  if (ignoreReadOnly)
+                  {
+                     File.SetAttributesInternal(true, transaction, pathLp, FileAttributes.Normal, true, null);
+                     goto startRemoveDirectory;
+                  }
+
+                  FileAttributes attrs = File.GetAttributesInternal(true, transaction, pathLp, false, true, null);
+                  if (attrs != (FileAttributes)(-1))
+                  {
+                     // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory.
+                     // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
+                     // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
+                     if ((attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                        NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, pathLp, true);
+                  }
+
+                  break;
             }
 
             // MSDN: .NET 3.5+: IOException:
