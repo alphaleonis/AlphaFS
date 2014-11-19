@@ -44,7 +44,6 @@ namespace AlphaFS.UnitTest
       private static readonly string SysRoot32 = Path.Combine(Environment.GetEnvironmentVariable("SystemRoot"), "System32");
       private static readonly string AppData = Environment.GetEnvironmentVariable("AppData");
 
-      private const string SpecificX3 = "Windows XP and Windows Server 2003 specific.";
       private const string TextTrue = "IsTrue";
       private const string TextFalse = "IsFalse";
 
@@ -329,7 +328,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void PathCreateFromUrl()
       {
-         Console.WriteLine("Filesystem.Shell32.PathCreateFromUrl() - {0}", SpecificX3);
+         Console.WriteLine("Filesystem.Shell32.PathCreateFromUrl()");
 
          string urlPath = Shell32.UrlCreateFromPath(AppData);
          string filePath = Shell32.PathCreateFromUrl(urlPath);

@@ -47,10 +47,24 @@ Version 1.6
 			LongFullName : The Unicode absolute path of the file system object.
 			Transaction  : Represents the KernelTransaction that was passed to the constructor.
 	
-	* Mod: Rewrote Path() class.
+	* Mod: Refactored Path() class.
 
-	
-	* Breaking: Removed classes PathInfoXxx().
+	* Mod: Add more reparse point tag entries to enum ReparsePointTag.
+
+	* Breaking
+		-Removed classes PathInfoXxx().
+		-Removed AlphaFS implementation of enum FileAccess in favor of System.IO.FileAccess enum.
+		-Removed AlphaFS implementation of enum FileAttributes in favor of System.IO.FileAttributes enum
+		-Removed AlphaFS implementation of enum FileMode in favor of System.IO.FileMode enum
+		-Removed AlphaFS implementation of enum FileOptions in favor of System.IO.FileOptions enum
+		-Removed AlphaFS implementation of enum FileShare in favor of System.IO.FileShare enum
+		-Removed AlphaFS implementation of enum FileSystemRights in favor of System.Security.AccessControl.FileSystemRights enum
+		-Removed AlphaFS implementation of enum FileType, now obsolete.
+
+		-Renamed CopyProgressCallbackReason to CopyMoveProgressCallbackReason.
+		-Renamed CopyProgressResult to CopyMoveProgressResult.
+		-Renamed enum MoveFileOptions to MoveOptions.
+		
 
     
     * New: Added "Cached LazyLoading" to class: FileSystemInfo() improving performance for classes: DirectoryInfo() and FileInfo().

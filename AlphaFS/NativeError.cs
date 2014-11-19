@@ -164,6 +164,7 @@ namespace Alphaleonis.Win32
 
             default:
                // We don't have a specific exception to generate for this error.
+               // Throw a System.Runtime.InteropServices.COMException.
                throw Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode));
          }
       }

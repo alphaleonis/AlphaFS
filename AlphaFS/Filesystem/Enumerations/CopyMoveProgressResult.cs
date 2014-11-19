@@ -21,7 +21,9 @@
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The <see cref="T:CopyMoveProgressCallback"/> function should return one of the following values.</summary>
+   /// <summary>Used by CopyFileXxx and MoveFileXxx.
+   /// <para>The <see cref="T:CopyMoveProgressCallback"/> function should return one of the following values.</para>
+   /// </summary>
    public enum CopyMoveProgressResult 
    {
       /// <summary>(0) PROGRESS_CONTINUE - Continue the copy operation.</summary>

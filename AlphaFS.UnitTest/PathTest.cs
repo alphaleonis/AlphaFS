@@ -46,7 +46,6 @@ namespace AlphaFS.UnitTest
       private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
       private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
 
-      private const string SpecificX3 = "Windows XP and Windows Server 2003 specific.";
       private const string TextTrue = "IsTrue";
       private const string TextFalse = "IsFalse";
 
@@ -98,38 +97,38 @@ namespace AlphaFS.UnitTest
          Path.VolumePrefix + @"{12345678-aac3-31de-3321-3124565341ed}\Program Files\notepad.exe",
 
          @"Program Files\Microsoft Office",
-         @"C",
-         @"C:",
-         @"C:\",
-         @"C:\a",
-         @"C:\a\",
-         @"C:\a\b",
-         @"C:\a\b\",
-         @"C:\a\b\c",
-         @"C:\a\b\c\",
-         @"C:\a\b\c\f",
-         @"C:\a\b\c\f.",
-         @"C:\a\b\c\f.t",
-         @"C:\a\b\c\f.tx",
-         @"C:\a\b\c\f.txt",
+         SysDrive[0].ToString(CultureInfo.InvariantCulture),
+         SysDrive,
+         SysDrive + @"\",
+         SysDrive + @"\a",
+         SysDrive + @"\a\",
+         SysDrive + @"\a\b",
+         SysDrive + @"\a\b\",
+         SysDrive + @"\a\b\c",
+         SysDrive + @"\a\b\c\",
+         SysDrive + @"\a\b\c\f",
+         SysDrive + @"\a\b\c\f.",
+         SysDrive + @"\a\b\c\f.t",
+         SysDrive + @"\a\b\c\f.tx",
+         SysDrive + @"\a\b\c\f.txt",
 
          //"C:\\ ", "Hello World!",  // Path.Combine() result: "C:\ \Hello World!"
 
          Path.LongPathPrefix + @"Program Files\Microsoft Office",
-         Path.LongPathPrefix + "C",
-         Path.LongPathPrefix + @"C:",
-         Path.LongPathPrefix + @"C:\",
-         Path.LongPathPrefix + @"C:\a",
-         Path.LongPathPrefix + @"C:\a\",
-         Path.LongPathPrefix + @"C:\a\b",
-         Path.LongPathPrefix + @"C:\a\b\",
-         Path.LongPathPrefix + @"C:\a\b\c",
-         Path.LongPathPrefix + @"C:\a\b\c\",
-         Path.LongPathPrefix + @"C:\a\b\c\f",
-         Path.LongPathPrefix + @"C:\a\b\c\f.",
-         Path.LongPathPrefix + @"C:\a\b\c\f.t",
-         Path.LongPathPrefix + @"C:\a\b\c\f.tx",
-         Path.LongPathPrefix + @"C:\a\b\c\f.txt",
+         Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
+         Path.LongPathPrefix + SysDrive,
+         Path.LongPathPrefix + SysDrive + @"\",
+         Path.LongPathPrefix + SysDrive + @"\a",
+         Path.LongPathPrefix + SysDrive + @"\a\",
+         Path.LongPathPrefix + SysDrive + @"\a\b",
+         Path.LongPathPrefix + SysDrive + @"\a\b\",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
 
          Path.UncPrefix + @"Server\Share\",
          Path.UncPrefix + @"Server\Share\d",
@@ -785,10 +784,10 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            Path.GetFullPath(@"C:\?test.txt");
-            //Path.GetFullPath(@"C:\*test.txt");
-            //Path.GetFullPath(@"C:\\test.txt");
-            //Path.GetFullPath(@"C:\/test.txt");
+            Path.GetFullPath(SysDrive + @"\?test.txt");
+            //Path.GetFullPath(SysDrive + @"\*test.txt");
+            //Path.GetFullPath(SysDrive + @"\\test.txt");
+            //Path.GetFullPath(SysDrive + @"\/test.txt");
          }
          catch (ArgumentException)
          {
@@ -799,7 +798,7 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            Path.GetFullPath(@"C:\dev\test\aaa:aaa.txt");
+            Path.GetFullPath(SysDrive + @"\dev\test\aaa:aaa.txt");
          }
          catch (NotSupportedException)
          {
@@ -818,7 +817,12 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, actual, expected);
                Assert.AreEqual(expected, actual);
             }
-            catch (ArgumentException) { }
+            catch (ArgumentException ex)
+            {
+               Console.WriteLine("\n\t\tCaught ArgumentException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               //allOk = false;
+               //errorCnt++;
+            }
             catch (Exception ex)
             {
                Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));

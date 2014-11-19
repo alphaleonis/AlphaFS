@@ -21,6 +21,6 @@
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Callback used by CopyFile and MoveFile to report progress about the operation.</summary>
+   /// <summary>Callback used by CopyFileXxx and MoveFileXxx to report progress about the copy/move operation.</summary>
    public delegate CopyMoveProgressResult CopyMoveProgressCallback(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, uint streamNumber, CopyMoveProgressCallbackReason callbackReason, object userData);
 }
