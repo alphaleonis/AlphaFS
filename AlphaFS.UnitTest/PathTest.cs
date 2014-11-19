@@ -113,6 +113,8 @@ namespace AlphaFS.UnitTest
          @"C:\a\b\c\f.tx",
          @"C:\a\b\c\f.txt",
 
+         //"C:\\ ", "Hello World!",  // Path.Combine() result: "C:\ \Hello World!"
+
          Path.LongPathPrefix + @"Program Files\Microsoft Office",
          Path.LongPathPrefix + "C",
          Path.LongPathPrefix + @"C:",

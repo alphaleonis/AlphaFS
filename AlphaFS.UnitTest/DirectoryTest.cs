@@ -528,7 +528,13 @@ namespace AlphaFS.UnitTest
          // Directory depth level.
          int level = new Random().Next(1, 1000);
 
+#if NET35
+         string emspace = "\u3000";
+         string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + Path.GetRandomFileName() + emspace);
+#else
+         // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
          string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + Path.GetRandomFileName());
+#endif
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          string report;
@@ -572,7 +578,12 @@ namespace AlphaFS.UnitTest
                {
                   Console.WriteLine("\n\nFail: Directory.CreateDirectory(): The specified path is invalid (for example, it is on an unmapped drive).");
                   char letter = DriveInfo.GetFreeDriveLetter();
+#if NET35
+                  Directory.CreateDirectory(letter + @":\shouldFail" + emspace);
+#else
+                  // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
                   Directory.CreateDirectory(letter + @":\shouldFail");
+#endif
                }
                catch (DirectoryNotFoundException ex)
                {
@@ -676,7 +687,13 @@ namespace AlphaFS.UnitTest
 
             // Notify dirInfoSysIO that the directory now exists.
             dirInfoSysIo.Refresh();
-            Assert.IsTrue(dirInfoSysIo.Exists, "Exists System.IO in error??!");
+            //Assert.IsTrue(dirInfoSysIo.Exists, "Exists System.IO in error??!");
+
+            // This seems to happen. Bottom line, through observation,
+            // is that most methods in .NET 3.5 do NOT TrimEnd() on paths, while .NET 4+ DOES TrimEnd() on paths.
+            // It seems that the MSDN documentation about TrimEnd() is not always clear, available or just incorrect.
+            //
+            // AlphaFS rule: NO TrimEnd() for .NET 3.5, YES TrimEnd() .NET 4+
 
 
             StopWatcher(true);

@@ -6593,11 +6593,15 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = isFullPath == null
             ? path
-            : (bool)isFullPath
+            : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, false);
+#if NET35
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false);
+#else
+               // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+               : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false);
+#endif
 
-         
          PrivilegeEnabler privilegeEnabler = null;
          try
          {
@@ -6798,9 +6802,13 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, false);
-         
-         
+#if NET35
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false);
+#else
+               // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the file.
+               : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false);
+#endif
+
          // Reset file attributes.
          // MSDN: This function fails with ERROR_ACCESS_DENIED if the destination file already exists and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
          if (ignoreReadOnly)
@@ -7132,12 +7140,17 @@ namespace Alphaleonis.Win32.Filesystem
          {
             pathLp = isFullPath == null
                ? path
-               : (bool)isFullPath
+               : (bool) isFullPath
                   ? Path.GetLongPathInternal(path, false, false, false, false)
+#if NET35
+                  : Path.GetFullPathInternal(transaction, path, true, false, false, true, true, true, false);
+#else
+               // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
                   : Path.GetFullPathInternal(transaction, path, true, true, false, true, true, true, false);
-
-            // MSDN: .NET 3.5+: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
-            // MSDN: .NET 3.5+: Trailing spaces are removed from the path parameter before determining if the file exists.
+#endif
+            // Seems MSDN is incorrect for directories?
+            // .NET 3.5+: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
+            // .NET 3.5+: Trailing spaces are removed from the path parameter before determining if the file exists.
          }
          catch
          {

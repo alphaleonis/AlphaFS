@@ -185,7 +185,12 @@ namespace Alphaleonis.Win32.Filesystem
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
+#if NET35
                : Path.GetFullPathInternal(transaction, path, true, false, false, !isFolder, true, true, true);
+#else
+               // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the FileSystemInfo instance.
+               : Path.GetFullPathInternal(transaction, path, true, true, false, !isFolder, true, true, true);
+#endif
 
          FullPath = Path.GetRegularPathInternal(LongFullName, false, false, false, false);
 

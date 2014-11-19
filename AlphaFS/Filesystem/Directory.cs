@@ -5949,15 +5949,19 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, false);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false);
 #else
-            // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
-               : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, true, false);
+               // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
+               : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false);
 #endif
 
          // Return DirectoryInfo instance if the directory specified by path already exists.
          if (File.ExistsInternal(true, transaction, pathLp, true, null))
             return new DirectoryInfo(transaction, pathLp, true);
+
+         // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
+         if (File.ExistsInternal(false, transaction, pathLp, true, null))
+            NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp, true);
 
 
          string templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
@@ -5967,17 +5971,12 @@ namespace Alphaleonis.Win32.Filesystem
                : (bool) isFullPath
                   ? Path.GetLongPathInternal(templatePath, false, false, false, false)
 #if NET35
-                  : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true, false, true, false);
+                  : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true, false, false, false);
 #else
                   // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
-                  : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true, false, true, false);
+                  : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true, false, false, false);
 #endif
-
-         // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
-         if (File.ExistsInternal(false, transaction, pathLp, true, null))
-            NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp, true);
-
-
+         
          #region Construct Full Path
 
          string longPathPrefix = Path.IsUncPath(path, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
@@ -6173,12 +6172,12 @@ namespace Alphaleonis.Win32.Filesystem
                   : (bool) isFullPath
                      ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
- : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true),
+                     : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false),
 #else
                      // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-                     : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, true, true),
+                     : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false),
 #endif
- true, continueOnNotExist, null);
+               true, continueOnNotExist, null);
          }
 
          if (fileSystemEntryInfo == null)

@@ -1254,10 +1254,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Unified method Combine() to combine an array of strings into a path.
-      /// <returns>The combined paths.</returns>
+      /// <para>&#160;</para>
+      /// <returns>Returns the combined paths.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The parameters are not parsed if they have white space.</para>
+      /// <para>Therefore, if path2 includes white space (for example, " c:\\ "), the Combine method appends path2 to path1 instead of returning only path2.</para>
+      /// </remarks>
+      /// </summary>
       /// <exception cref="ArgumentException">One of the strings in the array contains one or more of the invalid characters defined in <see cref="T:GetInvalidPathChars"/>.</exception>
       /// <exception cref="ArgumentNullException">One of the strings in the array is <c>null</c>.</exception>
-      /// </summary>
       /// <param name="paths">An array of parts of the path.</param>
       /// <param name="checkInvalidPathChars"><c>true</c> will not check <paramref name="paths"/> for invalid path characters.</param>
       [SecurityCritical]
