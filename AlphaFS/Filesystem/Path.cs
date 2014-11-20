@@ -723,7 +723,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetLongPath
 
       /// <summary>[AlphaFS] Makes a Unicode path (LongPath) of the specified <paramref name="path"/> by prefixing <see cref="T:LongPathPrefix"/>.
-      /// <returns>The <paramref name="path"/> prefixed with a <see cref="T:LongPathPrefix"/>.</returns>
+      /// <para>&#160;</para>
+      /// <returns>Returns the <paramref name="path"/> prefixed with a <see cref="T:LongPathPrefix"/>.</returns>
       /// </summary>
       /// <param name="path">The local or UNC path to the file or directory.</param>
       [SecurityCritical]
@@ -944,8 +945,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsLongPath
 
-      /// <summary>[AlphaFS] Determines whether the specified path is starts with <see cref="T:LongPathPrefix"/> or <see cref="T:LongPathUncPrefix"/>.
-      /// <returns><c>true</c> if the specified path has a long path (UNC) prefix, <c>false</c> otherwise.</returns>
+      /// <summary>[AlphaFS] Determines whether the specified path starts with a <see cref="T:LongPathPrefix"/> or <see cref="T:LongPathUncPrefix"/>.
+      /// <para>&#160;</para>
+      /// <returns>Returns <c>true</c> if the specified path has a long path (UNC) prefix, <c>false</c> otherwise.</returns>
       /// </summary>
       /// <param name="path">The path to the file or directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
@@ -960,7 +962,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsUncPath
 
       /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path.
-      /// <returns><c>true</c> if the specified path is a Universal Naming Convention (UNC) path, <c>false</c> otherwise.</returns>
+      /// <para>&#160;</para>
+      /// <returns>Returns <c>true</c> if the specified path is a Universal Naming Convention (UNC) path, <c>false</c> otherwise.</returns>
       /// </summary>
       /// <param name="path">The path to check.</param>
       [SecurityCritical]
@@ -970,7 +973,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path.
-      /// <returns><c>true</c> if the specified path is a Universal Naming Convention (UNC) path, <c>false</c> otherwise.</returns>
+      /// <para>&#160;</para>
+      /// <returns>Returns <c>true</c> if the specified path is a Universal Naming Convention (UNC) path, <c>false</c> otherwise.</returns>
       /// </summary>
       /// <param name="path">The path to check.</param>
       /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
@@ -987,7 +991,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Check if file or folder name has any invalid characters.
       /// <para>&#160;</para>
-      /// <returns><c>true</c> or <c>false</c></returns>
+      /// <returns>Returns <c>true</c> if name contains any invalid characters. Otherwise <c>false</c></returns>
       /// </summary>
       /// <param name="name">File or folder name.</param>
       public static bool IsValidName(string name)
@@ -1003,9 +1007,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region LocalToUnc
 
       /// <summary>[AlphaFS] Converts a local path to a network share path.
-      /// A Local path, e.g.: "C:\Windows" will be returned as: "\\localhostname\C$\Windows"
-      /// If a logical drive points to a network share path, the share path will be returned.
-      /// <returns>A UNC path or <c>null</c> when <paramref name="localPath"/> is <c>string.Empty</c> or <c>null</c>.</returns>
+      /// <para>&#160;</para>
+      /// <para>A Local path, e.g.: "C:\Windows" will be returned as: "\\localhostname\C$\Windows"</para>
+      /// <para>If a logical drive points to a network share path, the share path will be returned.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a UNC path or <c>null</c> when <paramref name="localPath"/> is an empty string or <c>null</c>.</returns>
       /// </summary>
       /// <param name="localPath">A local path, e.g.: "C:\Windows"</param>
       [SecurityCritical]
@@ -1015,9 +1021,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Converts a local path to a network share path.
-      /// A Local path, e.g.: "C:\Windows" will be returned as: "\\localhostname\C$\Windows"
-      /// If a logical drive points to a network share path, the share path will be returned.
-      /// <returns>A UNC path or <c>null</c> when <paramref name="localPath"/> is <c>string.Empty</c> or <c>null</c>.</returns>
+      /// <para>&#160;</para>
+      /// <para>A Local path, e.g.: "C:\Windows" will be returned as: "\\localhostname\C$\Windows"</para>
+      /// <para>If a logical drive points to a network share path, the share path will be returned.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a UNC path in long path format or <c>null</c> when <paramref name="localPath"/> is an empty string or <c>null</c>.</returns>
       /// </summary>
       /// <param name="localPath">A local path, e.g.: "C:\Windows"</param>
       /// <param name="asLongPath"><c>true</c> returns the path in long path (Unicode) format, when <c>false</c> returns the path as a regular path.</param>
@@ -1028,14 +1036,17 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Converts a local path to a network share path.
-      /// A Local path, e.g.: "C:\Windows" will be returned as: "\\localhostname\C$\Windows"
-      /// If a logical drive points to a network share path, the share path will be returned.
+      /// <para>&#160;</para>
+      /// <para>A Local path, e.g.: "C:\Windows" will be returned as: "\\localhostname\C$\Windows"</para>
+      /// <para>If a logical drive points to a network share path, the share path will be returned.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a UNC path in long path format or <c>null</c> when <paramref name="localPath"/> is an empty string or <c>null</c>.</returns>
       /// </summary>
       /// <param name="localPath">A local path, e.g.: "C:\Windows"</param>
       /// <param name="asLongPath"><c>true</c> returns the path in long path (Unicode) format, when <c>false</c> returns the path as a regular path.</param>
       /// <param name="addDirectorySeparator"><c>true</c> adds a directory separator to that path.</param>
       /// <param name="removeDirectorySeparator"><c>true</c> removes any directory separator to that path.</param>
-      /// <returns>A UNC path or <c>null</c> when <paramref name="localPath"/> is <c>string.Empty</c> or <c>null</c>.</returns>
+      
       [SecurityCritical]
       public static string LocalToUnc(string localPath, bool asLongPath, bool addDirectorySeparator, bool removeDirectorySeparator)
       {
@@ -1047,7 +1058,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region RemoveDirectorySeparator
 
       /// <summary>[AlphaFS] Removes the <see cref="T:DirectorySeparatorChar"/> character from the string.
-      /// <returns>A text string where the suffixed <see cref="T:DirectorySeparatorChar"/> has been removed. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns A text string where the suffixed <see cref="T:DirectorySeparatorChar"/> has been removed.</para>
+      /// <para>The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</para>
+      /// </returns>
       /// </summary>
       /// <param name="path">A text string from which the <see cref="T:DirectorySeparatorChar"/> is to be removed.</param>
       [SecurityCritical]
@@ -1109,16 +1124,19 @@ namespace Alphaleonis.Win32.Filesystem
          if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
 
-         for (int index = 0, l = path.Length; index < l; ++index)
+         // Will fail on a Unicode path.
+         string pathRp = GetRegularPathInternal(path, false, false, false, false);
+
+         for (int index = 0, l = pathRp.Length; index < l; ++index)
          {
-            int num = path[index];
+            int num = pathRp[index];
             switch (num)
             {
                case 34:    // "  (quote)
                case 60:    // <  (less than)
                case 62:    // >  (greater than)
                case 124:   // |  (pipe)
-                  throw new ArgumentException(Resources.IllegalCharactersInPath, path);
+                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.IllegalCharactersInPath, (char) num), pathRp);
 
                default:
                   // 32: space
@@ -1759,7 +1777,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Unified method LocalToUncInternal() to converts a local path to a network share path.
       /// A Local path, e.g.: "C:\Windows" will be returned as: "\\localhostname\C$\Windows"
       /// If a logical drive points to a network share path, the share path will be returned.
-      /// <returns>A UNC path or <c>null</c> when <paramref name="localPath"/> is <c>string.Empty</c> or <c>null</c>.</returns>
+      /// <returns>A UNC path or <c>null</c> when <paramref name="localPath"/> is an empty string or <c>null</c>.</returns>
       /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
