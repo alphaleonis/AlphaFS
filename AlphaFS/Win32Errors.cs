@@ -215,7 +215,10 @@ namespace Alphaleonis.Win32
       //public const uint WAIT_TIMEOUT = 258;    // dderror
       //public const uint ERROR_NO_MORE_ITEMS = 259;
       //public const uint ERROR_CANNOT_COPY = 266;
-      //public const uint ERROR_DIRECTORY = 267;
+      
+      /// <summary>(267) The directory name is invalid.</summary>
+      public const uint ERROR_DIRECTORY = 267;
+
       //public const uint ERROR_EAS_DIDNT_FIT = 275;
       //public const uint ERROR_EA_FILE_CORRUPT = 276;
       //public const uint ERROR_EA_TABLE_FULL = 277;

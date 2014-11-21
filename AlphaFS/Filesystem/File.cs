@@ -6424,6 +6424,12 @@ namespace Alphaleonis.Win32.Filesystem
             Path.CheckValidPath(sourceFileName, true, true);
             Path.CheckValidPath(destFileName, true, true);
          }
+         else
+         {
+            // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
+            Path.CheckValidPath(sourceFileName, false, false);
+            Path.CheckValidPath(destFileName, false, false);
+         }
 
          string sourceFileNameLp = isFullPath == null
             ? sourceFileName

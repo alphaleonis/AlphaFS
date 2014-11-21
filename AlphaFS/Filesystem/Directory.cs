@@ -47,6 +47,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path)
@@ -59,6 +65,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -85,6 +97,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -104,6 +122,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -124,6 +148,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -144,6 +174,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -159,6 +195,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -173,6 +215,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -180,7 +228,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(null, path, templatePath, null, compress, false);
       }
-      
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
@@ -188,6 +236,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -195,7 +249,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(null, path, null, directorySecurity, compress, false);
       }
-      
+
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
@@ -203,6 +257,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -210,7 +270,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(null, path, templatePath, directorySecurity, compress, false);
       }
-      
+
       #endregion // Compress
 
       #region Transacted
@@ -222,6 +282,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -236,6 +302,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -261,6 +333,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -268,7 +346,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(transaction, path, null, null, compress, isFullPath);
       }
-      
+
       /// <summary>[AlphaFS] Creates a new directory as a transacted operation, with the attributes of a specified template directory.</summary> 
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
@@ -281,6 +359,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -302,6 +386,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -323,6 +413,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -332,13 +428,19 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       /// <summary>[AlphaFS] Creates all the directories in a specified path as a transacted operation.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -346,7 +448,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(transaction, path, null, null, compress, false);
       }
-      
+
       /// <summary>[AlphaFS] Creates a new directory as a transacted operation, with the attributes of a specified template directory.</summary> 
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
@@ -354,6 +456,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -361,7 +469,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(transaction, path, templatePath, null, compress, false);
       }
-      
+
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path as a transacted operation, applying the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -370,6 +478,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -386,6 +500,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -5024,6 +5144,51 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="path">The target directory.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      [SecurityCritical]
+      public static Dictionary<string, long> GetProperties(string path, bool? isFullPath)
+      {
+         return GetPropertiesInternal(null, path, SearchOption.TopDirectoryOnly, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
+      /// Properties include aggregated info from <see cref="T:FileAttributes"/> of each encountered file system object.
+      /// Plus additional ones: Total, File, Size, Error
+      /// <para><b>Total:</b> is the total number of enumerated objects.</para>
+      /// <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="T:FileAttributes.Directory"/> nor <see cref="T:FileAttributes.ReparsePoint"/>.</para>
+      /// <para><b>Size:</b> is the total size of enumerated objects.</para>
+      /// <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
+      /// </summary>
+      /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
+      /// <param name="path">The target directory.</param>
+      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      [SecurityCritical]
+      public static Dictionary<string, long> GetProperties(string path, SearchOption searchOption, bool? isFullPath)
+      {
+         return GetPropertiesInternal(null, path, searchOption, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
+      /// Properties include aggregated info from <see cref="T:FileAttributes"/> of each encountered file system object.
+      /// Plus additional ones: Total, File, Size, Error
+      /// <para><b>Total:</b> is the total number of enumerated objects.</para>
+      /// <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="T:FileAttributes.Directory"/> nor <see cref="T:FileAttributes.ReparsePoint"/>.</para>
+      /// <para><b>Size:</b> is the total size of enumerated objects.</para>
+      /// <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
+      /// </summary>
+      /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
+      /// <param name="path">The target directory.</param>
       /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
       /// <param name="isFullPath">
@@ -5074,10 +5239,76 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetPropertiesInternal(null, path, searchOption, false, false);
       }
-      
+
+      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
+      /// Properties include aggregated info from <see cref="T:FileAttributes"/> of each encountered file system object.
+      /// Plus additional ones: Total, File, Size, Error
+      /// <para><b>Total:</b> is the total number of enumerated objects.</para>
+      /// <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="T:FileAttributes.Directory"/> nor <see cref="T:FileAttributes.ReparsePoint"/>.</para>
+      /// <para><b>Size:</b> is the total size of enumerated objects.</para>
+      /// <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
+      /// </summary>
+      /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
+      /// <param name="path">The target directory.</param>
+      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      [SecurityCritical]
+      public static Dictionary<string, long> GetProperties(string path, SearchOption searchOption, bool continueOnException)
+      {
+         return GetPropertiesInternal(null, path, searchOption, continueOnException, false);
+      }
+
       #region Transacted
 
       #region IsFullPath
+
+      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
+      /// Properties include aggregated info from <see cref="T:FileAttributes"/> of each encountered file system object.
+      /// Plus additional ones: Total, File, Size, Error
+      /// <para><b>Total:</b> is the total number of enumerated objects.</para>
+      /// <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="T:FileAttributes.Directory"/> nor <see cref="T:FileAttributes.ReparsePoint"/>.</para>
+      /// <para><b>Size:</b> is the total size of enumerated objects.</para>
+      /// <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
+      /// </summary>
+      /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The target directory.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      [SecurityCritical]
+      public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, bool? isFullPath)
+      {
+         return GetPropertiesInternal(transaction, path, SearchOption.TopDirectoryOnly, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
+      /// Properties include aggregated info from <see cref="T:FileAttributes"/> of each encountered file system object.
+      /// Plus additional ones: Total, File, Size, Error
+      /// <para><b>Total:</b> is the total number of enumerated objects.</para>
+      /// <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="T:FileAttributes.Directory"/> nor <see cref="T:FileAttributes.ReparsePoint"/>.</para>
+      /// <para><b>Size:</b> is the total size of enumerated objects.</para>
+      /// <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
+      /// </summary>
+      /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The target directory.</param>
+      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      [SecurityCritical]
+      public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, SearchOption searchOption, bool? isFullPath)
+      {
+         return GetPropertiesInternal(transaction, path, searchOption, false, isFullPath);
+      }
 
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
       /// Properties include aggregated info from <see cref="T:FileAttributes"/> of each encountered file system object.
@@ -5142,7 +5373,27 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetPropertiesInternal(transaction, path, searchOption, false, false);
       }
-      
+
+      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
+      /// Properties include aggregated info from <see cref="T:FileAttributes"/> of each encountered file system object.
+      /// Plus additional ones: Total, File, Size, Error
+      /// <para><b>Total:</b> is the total number of enumerated objects.</para>
+      /// <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="T:FileAttributes.Directory"/> nor <see cref="T:FileAttributes.ReparsePoint"/>.</para>
+      /// <para><b>Size:</b> is the total size of enumerated objects.</para>
+      /// <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
+      /// </summary>
+      /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The target directory.</param>
+      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      [SecurityCritical]
+      public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, SearchOption searchOption, bool continueOnException)
+      {
+         return GetPropertiesInternal(transaction, path, searchOption, continueOnException, false);
+      }
+
       #endregion // Transacted
 
       #endregion // GetProperties
@@ -5813,7 +6064,13 @@ namespace Alphaleonis.Win32.Filesystem
             Path.CheckValidPath(sourcePath, true, true);
             Path.CheckValidPath(destinationPath, true, true);
          }
-         
+         else
+         {
+            // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
+            Path.CheckValidPath(sourcePath, false, false);
+            Path.CheckValidPath(destinationPath, false, false);
+         }
+
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
          // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
 
@@ -5910,10 +6167,25 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateDirectoryInternal
 
       /// <summary>[AlphaFS] Unified method CreateDirectoryInternal() to create a new directory with the attributes of a specified template directory (if one is specified). 
-      /// If the underlying file system supports security on files and directories, the function 
-      /// applies the specified security descriptor to the new directory. The new directory retains 
-      /// the other attributes of the specified template directory.
+      /// <para>&#160;</para>
+      /// <para>If the underlying file system supports security on files and directories, the function</para>
+      /// <para>applies the specified security descriptor to the new directory. The new directory retains</para>
+      /// <para>the other attributes of the specified template directory.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an object that represents the directory at the specified path.</para>
+      /// <para>This object is returned regardless of whether a directory at the specified path already exists.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory. May be <c>null</c> to indicate that no template should be used.</param>
@@ -5924,10 +6196,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryInternal(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, bool? isFullPath)
@@ -5943,6 +6211,9 @@ namespace Alphaleonis.Win32.Filesystem
             Path.CheckValidPath(path, true, true);
             Path.CheckValidPath(templatePath, true, true);
          }
+         else
+            // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
+            Path.CheckValidPath(path, false, false);
 
          string pathLp = isFullPath == null
             ? path
@@ -5951,7 +6222,7 @@ namespace Alphaleonis.Win32.Filesystem
 #if NET35
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false);
 #else
-               // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
+               // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before creating the directory.
                : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false);
 #endif
 
@@ -5973,10 +6244,10 @@ namespace Alphaleonis.Win32.Filesystem
 #if NET35
                   : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true, false, false, false);
 #else
-                  // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the directory.
+                  // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before creating the directory.
                   : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true, false, false, false);
 #endif
-         
+
          #region Construct Full Path
 
          string longPathPrefix = Path.IsUncPath(path, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
@@ -6045,6 +6316,10 @@ namespace Alphaleonis.Win32.Filesystem
                      case Win32Errors.ERROR_BAD_NET_NAME:
                         NativeError.ThrowException(lastError, pathLp, true);
                         break;
+
+                     case Win32Errors.ERROR_DIRECTORY:
+                        // MSDN: .NET 3.5+: NotSupportedException: path contains a colon character (:) that is not part of a drive label ("C:\").
+                        throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
 
                      default:
                         NativeError.ThrowException(lastError, folderLp);

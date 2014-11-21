@@ -1098,11 +1098,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="checkAdditional"></param>
       internal static void CheckValidPath(string path, bool checkInvalidPathChars, bool checkAdditional)
       {
+         if (!Utils.IsNullOrWhiteSpace(path) && path.Length >= 2)
+         {
+            string regularPath = GetRegularPathInternal(path, false, false, false, false);
+
+            if (regularPath.Length >= 2 && regularPath.IndexOf(VolumeSeparatorChar, 2) != -1)
+               throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, regularPath));
+         }
+
          if (checkInvalidPathChars && path != null)
             CheckInvalidPathChars(path, checkAdditional);
-
-         if (!Utils.IsNullOrWhiteSpace(path) && path.Length >= 2 && !IsLongPath(path) && path.IndexOf(VolumeSeparatorChar, 2) != -1)
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
       }
 
       #endregion // CheckValidPath
