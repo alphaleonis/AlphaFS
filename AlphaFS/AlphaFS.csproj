@@ -159,7 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
-    <Compile Include="Filesystem\Delegates\CopyMoveProgressResult.cs" />
+    <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
     <Compile Include="Filesystem\DeviceInfo.cs" />
     <Compile Include="Filesystem\DiskSpaceInfo.cs" />
     <Compile Include="Filesystem\DriveInfo.cs" />
@@ -201,6 +201,7 @@
     <Compile Include="Filesystem\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Filesystem\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
+    <Compile Include="Filesystem\Structures\CopyMoveResult.cs" />
     <Compile Include="Filesystem\Structures\FileBasicInfo.cs" />
     <Compile Include="Filesystem\Structures\ByHandleFileInfo.cs" />
     <Compile Include="Filesystem\Structures\ChangeErrorMode.cs" />
@@ -308,6 +309,9 @@
       <Link>AlphaFS.snk</Link>
     </None>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Filesystem\Delegates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

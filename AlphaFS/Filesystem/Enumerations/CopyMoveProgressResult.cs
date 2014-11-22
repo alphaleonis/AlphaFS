@@ -22,7 +22,7 @@
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Used by CopyFileXxx and MoveFileXxx.
-   /// <para>The <see cref="T:CopyMoveProgressCallback"/> function should return one of the following values.</para>
+   /// <para>The <see cref="T:CopyMoveProgressRoutine"/> function should return one of the following values.</para>
    /// </summary>
    public enum CopyMoveProgressResult 
    {
@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>(2) PROGRESS_STOP - Stop the copy operation. It can be restarted at a later time.</summary>
       Stop = 2,
 
-      /// <summary>(3) PROGRESS_QUIET - Continue the copy operation, but stop invoking <see cref="T:CopyMoveProgressCallback"/> to report progress.</summary>
+      /// <summary>(3) PROGRESS_QUIET - Continue the copy operation, but stop invoking <see cref="T:CopyMoveProgressRoutine"/> to report progress.</summary>
       Quiet = 3
    }
 }

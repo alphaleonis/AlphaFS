@@ -157,7 +157,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // CopyTo
-
+      
       #region Create
 
       [TestMethod]
@@ -234,7 +234,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // MoveTo
-
+      
       #region Open
 
       [TestMethod]
@@ -340,6 +340,17 @@ namespace AlphaFS.UnitTest
 
       #endregion // Compress
 
+      #region CopyTo1
+
+      [TestMethod]
+      public void AlphaFS_CopyTo1()
+      {
+         Console.WriteLine("FileInfo.CopyTo1()");
+         Console.WriteLine("\nPlease see unit tests from class: File().");
+      }
+
+      #endregion // CopyTo1
+
       #region Decompress
 
       [TestMethod]
@@ -372,6 +383,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetStreamSize
+
+      #region MoveTo1
+
+      [TestMethod]
+      public void AlphaFS_MoveTo1()
+      {
+         Console.WriteLine("FileInfo.MoveTo1()");
+         Console.WriteLine("\nPlease see unit tests from class: File().");
+      }
+
+      #endregion // MoveTo1
 
       #region RemoveStream
 

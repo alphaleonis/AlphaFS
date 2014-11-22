@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    [Flags]
    public enum CopyOptions
    {
-      /// <summary>(0) No CopyOptions used.</summary>
+      /// <summary>(0) No CopyOptions used, this allows overwriting the file.</summary>
       None = 0,
 
       /// <summary>(1) COPY_FILE_FAIL_IF_EXISTS - The copy operation fails immediately if the target file already exists.</summary>

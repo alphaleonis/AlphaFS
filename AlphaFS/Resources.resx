@@ -220,9 +220,6 @@
   <data name="FileExists" xml:space="preserve">
     <value>File exists</value>
   </data>
-  <data name="SameSourceDestination" xml:space="preserve">
-    <value>Source- and destinationPath cannot be the same.</value>
-  </data>
   <data name="CannotCreateDirectory" xml:space="preserve">
     <value>Cannot create directory</value>
   </data>
@@ -232,8 +229,8 @@
   <data name="RequiresWindowsVistaOrHigher" xml:space="preserve">
     <value>This method requires Windows Vista or higher.</value>
   </data>
-  <data name="FileExistsWithSameNameAsDirectory" xml:space="preserve">
-    <value>A file with the same name and location specified by path exists: [{0}]</value>
+  <data name="FileExistsWithSameNameSpecifiedByPath" xml:space="preserve">
+    <value>The target directory is a file, not a directory: [{0}]</value>
   </data>
   <data name="DevicesAreNotSupported" xml:space="preserve">
     <value>Devices are not supported.</value>
@@ -251,12 +248,21 @@
     <value>The path cannot be an empty string.</value>
   </data>
   <data name="IllegalCharactersInPath" xml:space="preserve">
-    <value>Illegal characters in path</value>
+    <value>Illegal characters: [{0}] in path.</value>
   </data>
   <data name="PathIsZeroLengthOrOnlyWhiteSpace" xml:space="preserve">
     <value>Path is a zero-length string or contains only white space.</value>
   </data>
   <data name="PathFormatUnsupported" xml:space="preserve">
     <value>The given path's format is not supported: [{0}]</value>
+  </data>
+  <data name="DirectoryExistsWithSameNameSpecifiedByPath" xml:space="preserve">
+    <value>The target file is a directory, not a file: [{0}]</value>
+  </data>
+  <data name="FileHidden" xml:space="preserve">
+    <value>The specified file is hidden: [{0}]</value>
+  </data>
+  <data name="UndeterminedCopyMoveAction" xml:space="preserve">
+    <value>Could not determine Copy or Move action.</value>
   </data>
 </root>

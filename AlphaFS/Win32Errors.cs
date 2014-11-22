@@ -32,17 +32,33 @@ namespace Alphaleonis.Win32
          }
       }
 
+      // System Error Codes
+      // http://msdn.microsoft.com/en-us/library/windows/desktop/ms681381%28v=vs.85%29.aspx
+      
       public const uint ERROR_INVALID_FILE_SIZE = 0xFFFFFFFF;
+
+      /// <summary>(0) The operation completed successfully.</summary>
       public const uint ERROR_SUCCESS = 0;
-      public const uint NO_ERROR = 0; // dderror
-      public const uint ERROR_INVALID_FUNCTION = 1; // dderror
+
+      /// <summary>(0) The operation completed successfully.</summary>
+      public const uint NO_ERROR = 0;
+
+      /// <summary>(1) Incorrect function.</summary>
+      public const uint ERROR_INVALID_FUNCTION = 1;
+
+      /// <summary>(2) The system cannot find the file specified.</summary>
       public const uint ERROR_FILE_NOT_FOUND = 2;
+
+      /// <summary>(3) The system cannot find the path specified.</summary>
       public const uint ERROR_PATH_NOT_FOUND = 3;
       //public const uint ERROR_TOO_MANY_OPEN_FILES = 4;
+
+      /// <summary>(5) Access is denied.</summary>
       public const uint ERROR_ACCESS_DENIED = 5;
+
       //public const uint ERROR_INVALID_HANDLE = 6;
       //public const uint ERROR_ARENA_TRASHED = 7;
-      //public const uint ERROR_NOT_ENOUGH_MEMORY = 8;    // dderror
+      //public const uint ERROR_NOT_ENOUGH_MEMORY = 8;   
       //public const uint ERROR_INVALID_BLOCK = 9;
       //public const uint ERROR_BAD_ENVIRONMENT = 10;
       //public const uint ERROR_BAD_FORMAT = 11;
@@ -51,33 +67,49 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_OUTOFMEMORY = 14;
       //public const uint ERROR_INVALID_DRIVE = 15;
       //public const uint ERROR_CURRENT_DIRECTORY = 16;
-      //public const uint ERROR_NOT_SAME_DEVICE = 17;
+
+      /// <summary>(17) The system cannot move the file to a different disk drive.</summary>
+      public const uint ERROR_NOT_SAME_DEVICE = 17;
+
+      /// <summary>(18) There are no more files.</summary>
       public const uint ERROR_NO_MORE_FILES = 18;
       //public const uint ERROR_WRITE_PROTECT = 19;
       //public const uint ERROR_BAD_UNIT = 20;
+
+      /// <summary>(21) The device is not ready.</summary>
       public const uint ERROR_NOT_READY = 21;
+
       //public const uint ERROR_BAD_COMMAND = 22;
       //public const uint ERROR_CRC = 23;
       //public const uint ERROR_BAD_LENGTH = 24;
+
+      /// <summary>(25) The drive cannot locate a specific area or track on the disk.</summary>
       public const uint ERROR_SEEK = 25;
+
       //public const uint ERROR_NOT_DOS_DISK = 26;
       //public const uint ERROR_SECTOR_NOT_FOUND = 27;
       //public const uint ERROR_OUT_OF_PAPER = 28;
       //public const uint ERROR_WRITE_FAULT = 29;
       //public const uint ERROR_READ_FAULT = 30;
       //public const uint ERROR_GEN_FAILURE = 31;
-      public const uint ERROR_SHARING_VIOLATION = 32;
+      //public const uint ERROR_SHARING_VIOLATION = 32;
       //public const uint ERROR_LOCK_VIOLATION = 33;
       //public const uint ERROR_WRONG_DISK = 34;
       //public const uint ERROR_SHARING_BUFFER_EXCEEDED = 36;
+
+      /// <summary>(38) Reached the end of the file.</summary>
       public const uint ERROR_HANDLE_EOF = 38;
+
       //public const uint ERROR_HANDLE_DISK_FULL = 39;
       //public const uint ERROR_NOT_SUPPORTED = 50;
       //public const uint ERROR_REM_NOT_LIST = 51;
       //public const uint ERROR_DUP_NAME = 52;
+
+      /// <summary>(53) The network path was not found.</summary>
       public const uint ERROR_BAD_NETPATH = 53;
+
       //public const uint ERROR_NETWORK_BUSY = 54;
-      //public const uint ERROR_DEV_NOT_EXIST = 55;    // dderror
+      //public const uint ERROR_DEV_NOT_EXIST = 55;   
       //public const uint ERROR_TOO_MANY_CMDS = 56;
       //public const uint ERROR_ADAP_HDW_ERR = 57;
       //public const uint ERROR_BAD_NET_RESP = 58;
@@ -87,21 +119,33 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_NO_SPOOL_SPACE = 62;
       //public const uint ERROR_PRINT_CANCELLED = 63;
       //public const uint ERROR_NETNAME_DELETED = 64;
+
+      /// <summary>(65) Network access is denied.</summary>
       public const uint ERROR_NETWORK_ACCESS_DENIED = 65;
+
       //public const uint ERROR_BAD_DEV_TYPE = 66;
+
+      /// <summary>(67) The network name cannot be found.</summary>
       public const uint ERROR_BAD_NET_NAME = 67;
+
       //public const uint ERROR_TOO_MANY_NAMES = 68;
       //public const uint ERROR_TOO_MANY_SESS = 69;
       //public const uint ERROR_SHARING_PAUSED = 70;
       //public const uint ERROR_REQ_NOT_ACCEP = 71;
       //public const uint ERROR_REDIR_PAUSED = 72;
+
+      /// <summary>(80) The file exists.</summary>
       public const uint ERROR_FILE_EXISTS = 80;
+
       //public const uint ERROR_CANNOT_MAKE = 82;
       //public const uint ERROR_FAIL_I24 = 83;
       //public const uint ERROR_OUT_OF_STRUCTURES = 84;
       //public const uint ERROR_ALREADY_ASSIGNED = 85;
       //public const uint ERROR_INVALID_PASSWORD = 86;
-      public const uint ERROR_INVALID_PARAMETER = 87; // dderror
+
+      /// <summary>(87) The parameter is incorrect.</summary>
+      public const uint ERROR_INVALID_PARAMETER = 87;
+
       //public const uint ERROR_NET_WRITE_FAULT = 88;
       //public const uint ERROR_NO_PROC_SLOTS = 89;
       //public const uint ERROR_TOO_MANY_SEMAPHORES = 100;
@@ -124,8 +168,13 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_BAD_DRIVER_LEVEL = 119;
       //public const uint ERROR_CALL_NOT_IMPLEMENTED = 120;
       //public const uint ERROR_SEM_TIMEOUT = 121;
-      public const uint ERROR_INSUFFICIENT_BUFFER = 122; // dderror
-      public const uint ERROR_INVALID_NAME = 123; // dderror
+
+      /// <summary>(122) The data area passed to a system call is too small.</summary>
+      public const uint ERROR_INSUFFICIENT_BUFFER = 122;
+
+      /// <summary>(123) The filename, directory name, or volume label syntax is incorrect.</summary>
+      public const uint ERROR_INVALID_NAME = 123;
+
       //public const uint ERROR_INVALID_LEVEL = 124;
       //public const uint ERROR_NO_VOLUME_LABEL = 125;
       //public const uint ERROR_INVALID_FILE_ATTRIBUTES = 0xFFFFFFFF;
@@ -146,9 +195,15 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_JOIN_TO_SUBST = 140;
       //public const uint ERROR_SUBST_TO_JOIN = 141;
       //public const uint ERROR_BUSY_DRIVE = 142;
-      //public const uint ERROR_SAME_DRIVE = 143;
+
+      /// <summary>(143) The system cannot join or substitute a drive to or for a directory on the same drive.</summary>
+      public const uint ERROR_SAME_DRIVE = 143;
+
       //public const uint ERROR_DIR_NOT_ROOT = 144;
+
+      /// <summary>(145) The directory is not empty.</summary>
       public const uint ERROR_DIR_NOT_EMPTY = 145;
+
       //public const uint ERROR_IS_SUBST_PATH = 146;
       //public const uint ERROR_IS_JOIN_PATH = 147;
       //public const uint ERROR_PATH_BUSY = 148;
@@ -168,12 +223,15 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_SIGNAL_PENDING = 162;
       //public const uint ERROR_MAX_THRDS_REACHED = 164;
       //public const uint ERROR_LOCK_FAILED = 167;
-      //public const uint ERROR_BUSY = 170;    // dderror
+      //public const uint ERROR_BUSY = 170;   
       //public const uint ERROR_CANCEL_VIOLATION = 173;
       //public const uint ERROR_ATOMIC_LOCKS_NOT_SUPPORTED = 174;
       //public const uint ERROR_INVALID_SEGMENT_NUMBER = 180;
       //public const uint ERROR_INVALID_ORDINAL = 182;
+
+      /// <summary>(183) Cannot create a file when that file already exists.</summary>
       public const uint ERROR_ALREADY_EXISTS = 183;
+
       //public const uint ERROR_INVALID_FLAG_NUMBER = 186;
       //public const uint ERROR_SEM_NOT_FOUND = 187;
       //public const uint ERROR_INVALID_STARTING_CODESEG = 188;
@@ -208,14 +266,18 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_PIPE_BUSY = 231;
       //public const uint ERROR_NO_DATA = 232;
       //public const uint ERROR_PIPE_NOT_CONNECTED = 233;
-      public const uint ERROR_MORE_DATA = 234; // dderror
+
+      /// <summary>(234) More data is available.</summary>
+      public const uint ERROR_MORE_DATA = 234;
+
       //public const uint ERROR_VC_DISCONNECTED = 240;
       //public const uint ERROR_INVALID_EA_NAME = 254;
       //public const uint ERROR_EA_LIST_INCONSISTENT = 255;
-      //public const uint WAIT_TIMEOUT = 258;    // dderror
+      //public const uint WAIT_TIMEOUT = 258;   
       //public const uint ERROR_NO_MORE_ITEMS = 259;
       //public const uint ERROR_CANNOT_COPY = 266;
-      
+
+
       /// <summary>(267) The directory name is invalid.</summary>
       public const uint ERROR_DIRECTORY = 267;
 
@@ -240,7 +302,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_EA_ACCESS_DENIED = 994;
       //public const uint ERROR_OPERATION_ABORTED = 995;
       //public const uint ERROR_IO_INCOMPLETE = 996;
-      //public const uint ERROR_IO_PENDING = 997;    // dderror
+      //public const uint ERROR_IO_PENDING = 997;   
       //public const uint ERROR_NOACCESS = 998;
       //public const uint ERROR_SWAPERROR = 999;
       //public const uint ERROR_STACK_OVERFLOW = 1001;
@@ -349,7 +411,7 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_DESTINATION_ELEMENT_FULL = 1161;
       //public const uint ERROR_ILLEGAL_ELEMENT_ADDRESS = 1162;
       //public const uint ERROR_MAGAZINE_NOT_PRESENT = 1163;
-      //public const uint ERROR_DEVICE_REINITIALIZATION_NEEDED = 1164;    // dderror
+      //public const uint ERROR_DEVICE_REINITIALIZATION_NEEDED = 1164;   
       //public const uint ERROR_DEVICE_REQUIRES_CLEANING = 1165;
       //public const uint ERROR_DEVICE_DOOR_OPEN = 1166;
       //public const uint ERROR_DEVICE_NOT_CONNECTED = 1167;
@@ -366,7 +428,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_JOURNAL_NOT_ACTIVE = 1179;
       //public const uint ERROR_POTENTIAL_FILE_FOUND = 1180;
       //public const uint ERROR_JOURNAL_ENTRY_DELETED = 1181;
+
+      /// <summary>(1200) The specified device name is invalid.</summary>
       public const uint ERROR_BAD_DEVICE = 1200;
+
       //public const uint ERROR_CONNECTION_UNAVAIL = 1201;
       //public const uint ERROR_DEVICE_ALREADY_REMEMBERED = 1202;
       //public const uint ERROR_NO_NET_OR_BAD_PATH = 1203;
@@ -401,7 +466,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_HOST_UNREACHABLE = 1232;
       //public const uint ERROR_PROTOCOL_UNREACHABLE = 1233;
       //public const uint ERROR_PORT_UNREACHABLE = 1234;
+
+      /// <summary>(1235) The request was aborted.</summary>
       public const uint ERROR_REQUEST_ABORTED = 1235;
+
       //public const uint ERROR_CONNECTION_ABORTED = 1236;
       //public const uint ERROR_RETRY = 1237;
       //public const uint ERROR_CONNECTION_COUNT_LIMIT = 1238;
@@ -412,9 +480,9 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_SERVICE_NOT_FOUND = 1243;
       //public const uint ERROR_NOT_AUTHENTICATED = 1244;
       //public const uint ERROR_NOT_LOGGED_ON = 1245;
-      //public const uint ERROR_CONTINUE = 1246;    // dderror
+      //public const uint ERROR_CONTINUE = 1246;   
       //public const uint ERROR_ALREADY_INITIALIZED = 1247;
-      //public const uint ERROR_NO_MORE_DEVICES = 1248;    // dderror
+      //public const uint ERROR_NO_MORE_DEVICES = 1248;   
       //public const uint ERROR_NO_SUCH_SITE = 1249;
       //public const uint ERROR_DOMAIN_CONTROLLER_EXISTS = 1250;
       //public const uint ERROR_ONLY_IF_CONNECTED = 1251;
@@ -654,7 +722,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_PRODUCT_VERSION = 1638;
       //public const uint ERROR_INVALID_COMMAND_LINE = 1639;
       //public const uint ERROR_INSTALL_REMOTE_DISALLOWED = 1640;
+
+      /// <summary>(1641) The requested operation completed successfully. The system will be restarted so the changes can take effect.</summary>
       public const uint ERROR_SUCCESS_REBOOT_INITIATED = 1641;
+
       //public const uint ERROR_PATCH_TARGET_NOT_FOUND = 1642;
       //public const uint ERROR_PATCH_PACKAGE_REJECTED = 1643;
       //public const uint ERROR_INSTALL_TRANSFORM_REJECTED = 1644;
@@ -738,7 +809,10 @@ namespace Alphaleonis.Win32
       //public const uint RPC_X_NULL_REF_POINTER = 1780;
       //public const uint RPC_X_ENUM_VALUE_OUT_OF_RANGE = 1781;
       //public const uint RPC_X_BYTE_COUNT_TOO_SMALL = 1782;
+
+      /// <summary>(1783) The stub received bad data.</summary>
       public const uint RPC_X_BAD_STUB_DATA = 1783;
+
       //public const uint ERROR_INVALID_USER_BUFFER = 1784;
       //public const uint ERROR_UNRECOGNIZED_MEDIA = 1785;
       //public const uint ERROR_NO_TRUST_LSA_SECRET = 1786;
@@ -858,8 +932,13 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_INVALID_PRINT_MONITOR = 3007;
       //public const uint ERROR_PRINT_MONITOR_IN_USE = 3008;
       //public const uint ERROR_PRINTER_HAS_JOBS_QUEUED = 3009;
+
+      /// <summary>(3010) The requested operation is successful. Changes will not be effective until the system is rebooted.</summary>
       public const uint ERROR_SUCCESS_REBOOT_REQUIRED = 3010;
+
+      /// <summary>(3011) The requested operation is successful. Changes will not be effective until the service is restarted.</summary>
       public const uint ERROR_SUCCESS_RESTART_REQUIRED = 3011;
+
       //public const uint ERROR_PRINTER_NOT_FOUND = 3012;
       //public const uint ERROR_PRINTER_DRIVER_WARNED = 3013;
       //public const uint ERROR_PRINTER_DRIVER_BLOCKED = 3014;
@@ -931,7 +1010,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_FILE_OFFLINE = 4350;
       //public const uint ERROR_REMOTE_STORAGE_NOT_ACTIVE = 4351;
       //public const uint ERROR_REMOTE_STORAGE_MEDIA_ERROR = 4352;
+
+      /// <summary>(4390) The file or directory is not a reparse point.</summary>
       public const uint ERROR_NOT_A_REPARSE_POINT = 4390;
+
       //public const uint ERROR_REPARSE_ATTRIBUTE_CONFLICT = 4391;
       //public const uint ERROR_INVALID_REPARSE_DATA = 4392;
       //public const uint ERROR_REPARSE_TAG_INVALID = 4393;
@@ -1050,32 +1132,46 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_NO_USER_KEYS = 6006;
       //public const uint ERROR_FILE_NOT_ENCRYPTED = 6007;
       //public const uint ERROR_NOT_EXPORT_FORMAT = 6008;
+
+
+      /// <summary>(6009) The specified file is read only.</summary>
       public const uint ERROR_FILE_READ_ONLY = 6009;
+
       //public const uint ERROR_DIR_EFS_DISALLOWED = 6010;
       //public const uint ERROR_EFS_SERVER_NOT_TRUSTED = 6011;
+
+      /// <summary>(6012) Recovery policy configured for this system contains invalid recovery certificate.</summary>
       public const uint ERROR_BAD_RECOVERY_POLICY = 6012;
+
       //public const uint ERROR_EFS_ALG_BLOB_TOO_BIG = 6013;
       //public const uint ERROR_VOLUME_NOT_SUPPORT_EFS = 6014;
       //public const uint ERROR_EFS_DISABLED = 6015;
       //public const uint ERROR_EFS_VERSION_NOT_SUPPORT = 6016;
       //public const uint ERROR_NO_BROWSER_SERVERS_FOUND = 6118;
       //public const uint SCHED_E_SERVICE_NOT_LOCALSYSTEM = 6200;
+
+      /// <summary>(6700) The transaction handle associated with this operation is not valid.</summary>
       public const uint ERROR_INVALID_TRANSACTION = 6700;
 
-      /// <summary>The requested operation was made in the context of a transaction that is no longer active.</summary>
+      /// <summary>(6701) The requested operation was made in the context of a transaction that is no longer active.</summary>
       public const uint ERROR_TRANSACTION_NOT_ACTIVE = 6701;
 
-      /// <summary>The requested operation is not valid on the Transaction object in its current state.</summary>
+      /// <summary>(6702) The requested operation is not valid on the Transaction object in its current state.</summary>
       public const uint ERROR_TRANSACTION_REQUEST_NOT_VALID = 6702;
 
+      /// <summary>(6703) The caller has called a response API, but the response is not expected because the TM did not issue the corresponding request to the caller.</summary>
       public const uint ERROR_TRANSACTION_NOT_REQUESTED = 6703;
+
+      /// <summary>(6704) It is too late to perform the requested operation, since the Transaction has already been aborted.</summary>
       public const uint ERROR_TRANSACTION_ALREADY_ABORTED = 6704;
+
+      /// <summary>(6705) It is too late to perform the requested operation, since the Transaction has already been committed.</summary>
       public const uint ERROR_TRANSACTION_ALREADY_COMMITTED = 6705;
 
-      /// <summary>The function attempted to use a name that is reserved for use by another transaction.</summary>
+      /// <summary>(6800) The function attempted to use a name that is reserved for use by another transaction.</summary>
       public const uint ERROR_TRANSACTIONAL_CONFLICT = 6800;
 
-      /// <summary>The remote server or share does not support transacted file operations.</summary>
+      /// <summary>(6805) The remote server or share does not support transacted file operations.</summary>
       public const uint ERROR_TRANSACTIONS_UNSUPPORTED_REMOTE = 6805;
 
       //public const uint ERROR_CTX_WINSTATION_NAME_INVALID = 7001;
@@ -1956,7 +2052,10 @@ namespace Alphaleonis.Win32
       //public const uint CO_E_THREADPOOL_CONFIG = 0x80004031;
       //public const uint CO_E_SXS_CONFIG = 0x80004032;
       //public const uint CO_E_MALFORMED_SPN = 0x80004033;
+
+      /// <summary>(0) The operation completed successfully.</summary>
       public const uint S_OK = 0x00000000;
+
       //public const uint S_FALSE = 0x00000001;
       //public const uint OLE_E_FIRST = 0x80040000;
       //public const uint OLE_E_LAST = 0x800400FF;
@@ -3083,7 +3182,7 @@ namespace Alphaleonis.Win32
 
       // http://msdn.microsoft.com/en-us/library/windows/desktop/aa370674%28v=vs.85%29.aspx
 
-      /// <summary>The operation completed successfully.</summary>
+      /// <summary>(0) The operation completed successfully.</summary>
       public const uint NERR_Success = 0;
 
       ///// <summary>The workstation driver is not installed.</summary>
@@ -3416,7 +3515,7 @@ namespace Alphaleonis.Win32
       ///// <summary>This replicant database is outdated; synchronization is required.</summary>
       //public const uint NERR_SyncRequired = 2249;
 
-      ///// <summary>The network connection could not be found.</summary>
+      /// <summary>(2250) The network connection could not be found.</summary>
       public const uint NERR_UseNotFound = 2250;
 
       ///// <summary>This asg_type is invalid.</summary>
@@ -3503,7 +3602,7 @@ namespace Alphaleonis.Win32
       ///// <summary>This operation is not supported on computers with multiple networks.</summary>
       //public const uint NERR_MultipleNets = 2300;
 
-      ///// <summary>This shared resource does not exist.</summary>
+      /// <summary>(2310) This shared resource does not exist.</summary>
       public const uint NERR_NetNameNotFound = 2310;
 
       ///// <summary>This device is not shared.</summary>
@@ -3512,7 +3611,7 @@ namespace Alphaleonis.Win32
       ///// <summary>A session does not exist with that computer name.</summary>
       //public const uint NERR_ClientNameNotFound = 2312;
 
-      ///// <summary>There is not an open file with that identification number.</summary>
+      /// <summary>(2314) There is not an open file with that identification number.</summary>
       public const uint NERR_FileIdNotFound = 2314;
 
       ///// <summary>A failure occurred when executing a remote administration command.</summary>
@@ -4050,7 +4149,9 @@ namespace Alphaleonis.Win32
 
       #region Configuration Manager Error Codes
 
+      /// <summary>(0) The operation completed successfully.</summary>
       public const uint CR_SUCCESS = 0;
+
       //public const uint CR_DEFAULT = 1;
       //public const uint CR_OUT_OF_MEMORY = 2;
       //public const uint CR_INVALID_POINTER = 3;

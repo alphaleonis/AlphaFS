@@ -22,14 +22,14 @@
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Used by CopyFileXxx and MoveFileXxx.
-   /// <para>The reason that <see cref="T:CopyMoveProgressCallback"/> was called.</para>
+   /// <para>The reason that <see cref="T:CopyMoveProgressRoutine"/> was called.</para>
    /// </summary>
    public enum CopyMoveProgressCallbackReason
    {
-      /// <summary>(0) Another part of the data file was copied.</summary>
+      /// <summary>(0) CALLBACK_CHUNK_FINISHED - Another part of the data file was copied.</summary>
       ChunkFinished = 0,
 
-      /// <summary>(1) Another stream was created and is about to be copied.
+      /// <summary>(1) CALLBACK_STREAM_SWITCH - Another stream was created and is about to be copied.
       /// <para>This is the callback reason given when the callback routine is first invoked.</para>
       /// </summary>
       StreamSwitch = 1

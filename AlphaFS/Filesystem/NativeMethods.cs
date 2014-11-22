@@ -57,20 +57,6 @@ namespace Alphaleonis.Win32.Filesystem
       internal static readonly Encoding DefaultFileEncoding = Encoding.UTF8;
 
       #endregion // DefaultFileEncoding
-
-      #region CopyOptionsFail
-
-      /// <summary>Combination of <see cref="T:CopyOptions.FailIfExists"/> and <see cref="T:CopyOptions.NoBuffering"/></summary>
-      internal const CopyOptions CopyOptionsFail = CopyOptions.FailIfExists | CopyOptions.NoBuffering;
-
-      #endregion // CopyOptionsFail
-
-      #region CopyOptionsNone
-
-      /// <summary>Combination of <see cref="T:CopyOptions.None"/> and <see cref="T:CopyOptions.NoBuffering"/></summary>
-      internal const CopyOptions CopyOptionsNone = CopyOptions.None | CopyOptions.NoBuffering;
-
-      #endregion // CopyOptionsNone
       
       #region MaxPath
 
@@ -88,13 +74,6 @@ namespace Alphaleonis.Win32.Filesystem
       internal const int MaxPathUnicode = 32000;
 
       #endregion // MaxPathUnicode
-
-      #region MoveOptionsReplace
-
-      /// <summary>Combination of <see cref="T:MoveOptions.ReplaceExisting"/> and <see cref="T:MoveOptions.CopyAllowed"/></summary>
-      internal const MoveOptions MoveOptionsReplace = MoveOptions.ReplaceExisting | MoveOptions.CopyAllowed;
-
-      #endregion // MoveOptionsReplace
 
       #endregion // Fields
 
@@ -943,49 +922,56 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CopyFileEx
 
-      /// <summary>Copies an existing file to a new file, notifying the application of its progress through a callback function.</summary>
+      /// <summary>Copies an existing file to a new file, notifying the application of its progress through a callback function.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>This function fails with ERROR_ACCESS_DENIED if the destination file already exists and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.</remarks>
-      /// <remarks>This function preserves extended attributes, OLE structured storage, NTFS file system alternate data streams, security resource attributes, and file attributes.</remarks>
-      /// <remarks>Windows 7, Windows Server 2008 R2, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:  Security resource attributes (ATTRIBUTE_SECURITY_INFORMATION) for the existing file are not copied to the new file until Windows 8 and Windows Server 2012.</remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This function fails with ERROR_ACCESS_DENIED if the destination file already exists and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.</para>
+      /// <para>This function preserves extended attributes, OLE structured storage, NTFS file system alternate data streams, security resource attributes, and file attributes.</para>
+      /// <para>Windows 7, Windows Server 2008 R2, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:
+      /// <para>Security resource attributes (ATTRIBUTE_SECURITY_INFORMATION) for the existing file are not copied to the new file until Windows 8 and Windows Server 2012.</para></para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CopyFileExW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool CopyFileEx([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, CopyMoveProgressDelegate lpProgressRoutine, IntPtr lpData, out int pbCancel, CopyOptions dwCopyFlags);
+      internal static extern bool CopyFileEx([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.Bool)] out bool pbCancel, CopyOptions dwCopyFlags);
 
       #endregion // CopyFileEx
 
       #region CopyFileTransacted
 
-      /// <summary>Copies an existing file to a new file as a transacted operation, notifying the application of its progress through a callback function.</summary>
+      /// <summary>Copies an existing file to a new file as a transacted operation, notifying the application of its progress through a callback function.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>This function fails with ERROR_ACCESS_DENIED if the destination file already exists and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.</remarks>
-      /// <remarks>This function preserves extended attributes, OLE structured storage, NTFS file system alternate data streams, security attributes, and file attributes.</remarks>
-      /// <remarks>Windows 7, Windows Server 2008 R2, Windows Server 2008, and Windows Vista:  Security resource attributes (ATTRIBUTE_SECURITY_INFORMATION) for the existing file are not copied to the new file until Windows 8 and Windows Server 2012.</remarks>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This function fails with ERROR_ACCESS_DENIED if the destination file already exists and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.</para>
+      /// <para>This function preserves extended attributes, OLE structured storage, NTFS file system alternate data streams, security resource attributes, and file attributes.</para>
+      /// <para>Windows 7, Windows Server 2008 R2, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:
+      /// <para>Security resource attributes (ATTRIBUTE_SECURITY_INFORMATION) for the existing file are not copied to the new file until Windows 8 and Windows Server 2012.</para></para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows Vista [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2008 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CopyFileTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool CopyFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, CopyMoveProgressDelegate lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.I4)] out int pbCancel, CopyOptions dwCopyFlags, SafeHandle hTransaction);
+      internal static extern bool CopyFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.Bool)] out bool pbCancel, CopyOptions dwCopyFlags, SafeHandle hTransaction);
 
       #endregion // CopyFileTransacted
-
-      #region CopyMoveProgressDelegate
-
-      /// <summary>Delegate used by CopyFileEx()/CopyFileTransacted() and MoveFileWithProgress()/MoveFileTransacted() to report progress about the operation.</summary>
-      internal delegate CopyMoveProgressResult CopyMoveProgressDelegate(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, [MarshalAs(UnmanagedType.U4)] uint streamNumber, CopyMoveProgressCallbackReason callbackReason, IntPtr sourceFile, IntPtr destinationFile, IntPtr data);
-
-      #endregion // CopyMoveProgressDelegate
-
+      
       #region CreateFile
 
       /// <summary>Creates or opens a file or I/O device. The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe.</summary>
@@ -1588,35 +1574,60 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region MoveFileWithProgress
 
-      /// <summary>Moves a file or directory, including its children. You can provide a callback function that receives progress notifications.</summary>
+      /// <summary>Moves a file or directory, including its children.
+      /// <para>You can provide a callback function that receives progress notifications.</para>
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows XP</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The MoveFileWithProgress function coordinates its operation with the link tracking service, so link sources can be tracked as they are moved.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "MoveFileWithProgressW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool MoveFileWithProgress([MarshalAs(UnmanagedType.LPWStr)] string existingFileName, [MarshalAs(UnmanagedType.LPWStr)] string newFileName, CopyMoveProgressDelegate lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.U4)] MoveOptions dwFlags);
+      internal static extern bool MoveFileWithProgress([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.U4)] MoveOptions dwFlags);
 
       #endregion // MoveFileWithProgress
 
       #region MoveFileTransacted
 
-      /// <summary>Moves an existing file or a directory, including its children, as a transacted operation.</summary>
+      /// <summary>Moves an existing file or a directory, including its children, as a transacted operation.
+      /// <para>You can provide a callback function that receives progress notifications.</para>
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows Vista [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2008 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "MoveFileTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool MoveFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, CopyMoveProgressDelegate lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.U4)] MoveOptions dwCopyFlags, SafeHandle hTransaction);
+      internal static extern bool MoveFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.U4)] MoveOptions dwCopyFlags, SafeHandle hTransaction);
 
       #endregion // MoveFileTransacted
+
+      #region NativeCopyMoveProgressRoutine
+
+      /// <summary>An application-defined callback function used with the CopyFileEx, MoveFileTransacted, and MoveFileWithProgress functions.
+      /// <para>It is called when a portion of a copy or move operation is completed.</para>
+      /// <para>The LPPROGRESS_ROUTINE type defines a pointer to this callback function.</para>
+      /// <para>NativeCopyMoveProgressRoutine (NativeCopyMoveProgressRoutine) is a placeholder for the application-defined function name.</para>
+      /// </summary>
+      internal delegate CopyMoveProgressResult NativeCopyMoveProgressRoutine(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, [MarshalAs(UnmanagedType.U4)] uint dwStreamNumber, CopyMoveProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);
+
+      #endregion // NativeCopyMoveProgressRoutine
 
       #region PathFileExists
 

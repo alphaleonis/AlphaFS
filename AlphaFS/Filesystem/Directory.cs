@@ -228,7 +228,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(null, path, templatePath, null, compress, false);
       }
-
+      
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
@@ -249,7 +249,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(null, path, null, directorySecurity, compress, false);
       }
-
+      
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
@@ -270,7 +270,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(null, path, templatePath, directorySecurity, compress, false);
       }
-
+      
       #endregion // Compress
 
       #region Transacted
@@ -346,7 +346,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(transaction, path, null, null, compress, isFullPath);
       }
-
+      
       /// <summary>[AlphaFS] Creates a new directory as a transacted operation, with the attributes of a specified template directory.</summary> 
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
@@ -428,7 +428,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-
+      
       /// <summary>[AlphaFS] Creates all the directories in a specified path as a transacted operation.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
@@ -448,7 +448,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(transaction, path, null, null, compress, false);
       }
-
+      
       /// <summary>[AlphaFS] Creates a new directory as a transacted operation, with the attributes of a specified template directory.</summary> 
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
@@ -469,7 +469,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(transaction, path, templatePath, null, compress, false);
       }
-
+      
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path as a transacted operation, applying the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -2797,17 +2797,27 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Moves a file or a directory and its contents to a new location.</summary>
-      /// <param name="sourcePath">The path of the file or directory to move.</param>
-      /// <param name="destinationPath">The path to the new location for sourcePath. If sourcePath is a file, then destinationPath must also be a file name.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <summary>Moves a file or a directory and its contents to a new location.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath)
       {
-         CopyMoveInternal(true, null, sourcePath, destinationPath, false, null, MoveOptions.CopyAllowed, null, null, false);
+         CopyMoveInternal(null, sourcePath, destinationPath, null, MoveOptions.None, null, null, false);
       }
 
       #endregion // .NET
@@ -2816,180 +2826,93 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      [SecurityCritical]
-      public static void Move(string sourcePath, string destinationPath, bool overwrite, bool preserveSecurity, bool? isFullPath)
-      {
-         CopyMoveInternal(true, null, sourcePath, destinationPath, preserveSecurity, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, isFullPath);
-      }
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="moveProgress">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Move(string sourcePath, string destinationPath, MoveOptions moveOptions, bool preserveSecurity, CopyMoveProgressCallback moveProgress, object userProgressData, bool? isFullPath)
+      public static void Move(string sourcePath, string destinationPath, bool? isFullPath)
       {
-         CopyMoveInternal(true, null, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, isFullPath);
+         CopyMoveInternal(null, sourcePath, destinationPath, null, MoveOptions.None, null, null, isFullPath);
       }
 
       #endregion // IsFullPath
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
-      /// <param name="sourcePath">The path of the file or directory to move.</param>
-      /// <param name="destinationPath">The path to the new location for sourcePath. If sourcePath is a file, then destinationPath must also be a file name.</param>
-      /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      [SecurityCritical]
-      public static void Move(string sourcePath, string destinationPath, bool overwrite)
-      {
-         CopyMoveInternal(true, null, sourcePath, destinationPath, false, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, false);
-      }
-      
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="moveProgress">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      [SecurityCritical]
-      public static void Move(string sourcePath, string destinationPath, MoveOptions moveOptions, bool preserveSecurity, CopyMoveProgressCallback moveProgress, object userProgressData)
-      {
-         CopyMoveInternal(true, null, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, false);
-      }
       
       #region Transacted
 
-      #region .NET
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The path of the file or directory to move.</param>
-      /// <param name="destinationPath">The path to the new location for sourcePath. If sourcePath is a file, then destinationPath must also be a file name.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath)
-      {
-         CopyMoveInternal(true, transaction, sourcePath, destinationPath, false, null, MoveOptions.CopyAllowed, null, null, false);
-      }
-
-      #endregion // .NET
-
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite, bool preserveSecurity, bool? isFullPath)
-      {
-         CopyMoveInternal(true, transaction, sourcePath, destinationPath, preserveSecurity, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, isFullPath);
-      }
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="moveProgress">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, bool preserveSecurity, CopyMoveProgressCallback moveProgress, object userProgressData, bool? isFullPath)
+      public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath, bool? isFullPath)
       {
-         CopyMoveInternal(true, transaction, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, isFullPath);
+         CopyMoveInternal(transaction, sourcePath, destinationPath, null, MoveOptions.None, null, null, isFullPath);
       }
 
       #endregion // IsFullPath
-      
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The path of the file or directory to move.</param>
-      /// <param name="destinationPath">The path to the new location for sourcePath. If sourcePath is a file, then destinationPath must also be a file name.</param>
-      /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Move will fail on existing directories or files.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite)
-      {
-         CopyMoveInternal(true, transaction, sourcePath, destinationPath, false, null, overwrite ? NativeMethods.MoveOptionsReplace : MoveOptions.CopyAllowed, null, null, false);
-      }
-      
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="moveProgress">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before moving the directory.</remarks>
-      /// <remarks>This method works across disk volumes.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
       [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, bool preserveSecurity, CopyMoveProgressCallback moveProgress, object userProgressData)
+      public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         CopyMoveInternal(true, transaction, sourcePath, destinationPath, preserveSecurity, null, moveOptions, moveProgress, userProgressData, false);
+         CopyMoveInternal(transaction, sourcePath, destinationPath, null, MoveOptions.None, null, null, false);
       }
       
       #endregion // Transacted
@@ -3777,189 +3700,357 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Compress
 
-      #region Copy
+      #region Copy1
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <remarks>Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       [SecurityCritical]
-      public static void Copy(string sourcePath, string destinationPath, bool overwrite, bool preserveSecurity, bool? isFullPath)
+      public static void Copy1(string sourcePath, string destinationPath, bool? isFullPath)
       {
-         CopyMoveInternal(false, null, sourcePath, destinationPath, preserveSecurity, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, isFullPath);
+         CopyMoveInternal(null, sourcePath, destinationPath, CopyOptions.FailIfExists, null, null, null, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static void Copy1(string sourcePath, string destinationPath, CopyOptions copyOptions, bool? isFullPath)
+      {
+         CopyMoveInternal(null, sourcePath, destinationPath, copyOptions, null, null, null, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressCallback copyProgress, object userProgressData, bool? isFullPath)
+      public static CopyMoveResult Copy1(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
-         CopyMoveInternal(false, null, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, isFullPath);
+         return CopyMoveInternal(null, sourcePath, destinationPath, copyOptions, null, progressHandler, userProgressData, isFullPath);
       }
 
       #endregion // IsFullPath
 
-      /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
       [SecurityCritical]
-      public static void Copy(string sourcePath, string destinationPath)
+      public static void Copy1(string sourcePath, string destinationPath)
       {
-         CopyMoveInternal(false, null, sourcePath, destinationPath, false, NativeMethods.CopyOptionsFail, null, null, null, false);
+         CopyMoveInternal(null, sourcePath, destinationPath, CopyOptions.FailIfExists, null, null, null, false);
       }
 
-      /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public static void Copy(string sourcePath, string destinationPath, bool overwrite)
+      public static void Copy1(string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         CopyMoveInternal(false, null, sourcePath, destinationPath, false, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, false);
+         CopyMoveInternal(null, sourcePath, destinationPath, copyOptions, null, null, null, false);
       }
       
-      /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public static void Copy(string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressCallback copyProgress, object userProgressData)
+      public static CopyMoveResult Copy1(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         CopyMoveInternal(false, null, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, false);
+         return CopyMoveInternal(null, sourcePath, destinationPath, copyOptions, null, progressHandler, userProgressData, false);
       }
       
       #region Transacted
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite, bool preserveSecurity, bool? isFullPath)
+      public static void Copy1(KernelTransaction transaction, string sourcePath, string destinationPath, bool? isFullPath)
       {
-         CopyMoveInternal(false, transaction, sourcePath, destinationPath, preserveSecurity, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, isFullPath);
+         CopyMoveInternal(transaction, sourcePath, destinationPath, CopyOptions.FailIfExists, null, null, null, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static void Copy1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool? isFullPath)
+      {
+         CopyMoveInternal(transaction, sourcePath, destinationPath, copyOptions, null, null, null, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="sourcePath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressCallback copyProgress, object userProgressData, bool? isFullPath)
+      public static CopyMoveResult Copy1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
-         CopyMoveInternal(false, transaction, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, isFullPath);
+         return CopyMoveInternal(transaction, sourcePath, destinationPath, copyOptions, null, progressHandler, userProgressData, isFullPath);
       }
 
       #endregion // IsFullPath
 
-      /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath)
+      public static void Copy1(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         CopyMoveInternal(false, transaction, sourcePath, destinationPath, false, NativeMethods.CopyOptionsFail, null, null, null, false);
+         CopyMoveInternal(transaction, sourcePath, destinationPath, CopyOptions.FailIfExists, null, null, null, false);
       }
 
-      /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="overwrite"><c>true</c> Delete destination directory if it exists; <c>false</c> Copy will fail on existing directories or files.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite)
+      public static void Copy1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
-         CopyMoveInternal(false, transaction, sourcePath, destinationPath, false, overwrite ? NativeMethods.CopyOptionsNone : NativeMethods.CopyOptionsFail, null, null, null, false);
+         CopyMoveInternal(transaction, sourcePath, destinationPath, copyOptions, null, null, null, false);
       }
       
-      /// <summary>[AlphaFS] Recursive copying of directories and files from one root to another.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path, of type string</param>
-      /// <param name="destinationPath">The destination directory path, of type string</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
-      /// <param name="copyProgress">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying the directory.</remarks>
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
+      /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool preserveSecurity, CopyMoveProgressCallback copyProgress, object userProgressData)
+      public static CopyMoveResult Copy1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         CopyMoveInternal(false, transaction, sourcePath, destinationPath, preserveSecurity, copyOptions, null, copyProgress, userProgressData, false);
+         return CopyMoveInternal(transaction, sourcePath, destinationPath, copyOptions, null, progressHandler, userProgressData, false);
       }
       
       #endregion // Transacted
 
-      #endregion // Copy
+      #endregion // Copy1
 
       #region CountDirectories
 
@@ -5239,7 +5330,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetPropertiesInternal(null, path, searchOption, false, false);
       }
-
+      
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
       /// Properties include aggregated info from <see cref="T:FileAttributes"/> of each encountered file system object.
       /// Plus additional ones: Total, File, Size, Error
@@ -5373,7 +5464,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetPropertiesInternal(transaction, path, searchOption, false, false);
       }
-
+      
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
       /// Properties include aggregated info from <see cref="T:FileAttributes"/> of each encountered file system object.
       /// Plus additional ones: Total, File, Size, Error
@@ -5639,6 +5730,382 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       #endregion // HasInheritedPermissions
+
+      #region Move1
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static CopyMoveResult Move1(string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      {
+         return CopyMoveInternal(null, sourcePath, destinationPath, null, MoveOptions.None, progressHandler, userProgressData, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static void Move1(string sourcePath, string destinationPath, MoveOptions moveOptions, bool? isFullPath)
+      {
+         CopyMoveInternal(null, sourcePath, destinationPath, null, moveOptions, null, null, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static CopyMoveResult Move1(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      {
+         return CopyMoveInternal(null, sourcePath, destinationPath, null, moveOptions, progressHandler, userProgressData, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move1(string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveInternal(null, sourcePath, destinationPath, null, MoveOptions.None, progressHandler, userProgressData, false);
+      }
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      [SecurityCritical]
+      public static void Move1(string sourcePath, string destinationPath, MoveOptions moveOptions)
+      {
+         CopyMoveInternal(null, sourcePath, destinationPath, null, moveOptions, null, null, false);
+      }
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move1(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveInternal(null, sourcePath, destinationPath, null, moveOptions, progressHandler, userProgressData, false);
+      }
+
+      #region Transacted
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static CopyMoveResult Move1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      {
+         return CopyMoveInternal(transaction, sourcePath, destinationPath, null, MoveOptions.None, progressHandler, userProgressData, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static void Move1(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, bool? isFullPath)
+      {
+         CopyMoveInternal(transaction, sourcePath, destinationPath, null, moveOptions, null, null, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      public static CopyMoveResult Move1(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      {
+         return CopyMoveInternal(transaction, sourcePath, destinationPath, null, moveOptions, progressHandler, userProgressData, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveInternal(transaction, sourcePath, destinationPath, null, MoveOptions.None, progressHandler, userProgressData, false);
+      }
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      [SecurityCritical]
+      public static void Move1(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions)
+      {
+         CopyMoveInternal(transaction, sourcePath, destinationPath, null, moveOptions, null, null, false);
+      }
+
+      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move1(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveInternal(transaction, sourcePath, destinationPath, null, moveOptions, progressHandler, userProgressData, false);
+      }
+
+      #endregion // Transacted
+
+      #endregion // Move1
 
       #region RemoveStream
 
@@ -5931,7 +6398,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
@@ -5963,7 +6430,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
@@ -6030,34 +6497,41 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CopyMoveInternal
 
-      /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children.
-      /// You can provide a callback function that receives progress notifications.
-      /// <remarks>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method. If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior</remarks>
-      /// <remarks>This Move method works across disk volumes, and it does not throw an exception if the source and destination are
-      /// the same. Note that if you attempt to replace a file by moving a file of the same name into that directory, you
-      /// get an IOException. You cannot use the Move method to overwrite an existing file.</remarks>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="sourcePath"/> and <paramref name="destinationPath"/> parameters before copying/moving the directory.</remarks>
+      /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
+      /// <para><see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,</para>
+      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      /// <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
+      /// <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
+      /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
-      /// <param name="isMove"><c>true</c> indicates a directory move, <c>false</c> indicates a directory copy.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="preserveSecurity"><c>true</c> Preserves directory ACLs information.</param>
       /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="copyMoveProgress">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static void CopyMoveInternal(bool isMove, KernelTransaction transaction, string sourcePath, string destinationPath, bool preserveSecurity, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressCallback copyMoveProgress, object userProgressData, bool? isFullPath)
+      internal static CopyMoveResult CopyMoveInternal(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
          if (isFullPath != null && (bool) !isFullPath)
          {
@@ -6079,9 +6553,9 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
                ? Path.GetLongPathInternal(sourcePath, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(transaction, sourcePath, true, false, false, true, false, true, true);
+               : Path.GetFullPathInternal(transaction, sourcePath, true, false, false, true, false, false, false);
 #else
-               : Path.GetFullPathInternal(transaction, sourcePath, true, true, false, true, false, true, true);
+               : Path.GetFullPathInternal(transaction, sourcePath, true, true, false, true, false, false, false);
 #endif
 
          string destinationPathLp = isFullPath == null
@@ -6089,77 +6563,75 @@ namespace Alphaleonis.Win32.Filesystem
             : (bool) isFullPath
                ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(transaction, destinationPath, true, false, false, true, false, true, true);
+               : Path.GetFullPathInternal(transaction, destinationPath, true, false, false, true, false, false, false);
 #else
-               : Path.GetFullPathInternal(transaction, destinationPath, true, true, false, true, false, true, true);
+               : Path.GetFullPathInternal(transaction, destinationPath, true, true, false, true, false, false, false);
 #endif
 
+         // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
          if (sourcePathLp.Equals(destinationPathLp, StringComparison.OrdinalIgnoreCase))
-            throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.SameSourceDestination, sourcePathLp));
+            NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPathLp, true);
 
-         
-         
+
          // Determine Copy or Move action.
-         bool doCopy = !isMove && copyOptions != null && moveOptions == null;
-         bool doMove = isMove && moveOptions != null && copyOptions == null;
+         bool doCopy = copyOptions != null;
+         bool doMove = !doCopy && moveOptions != null;
+
+         if ((!doCopy && !doMove) || (doCopy && doMove))
+            throw new NotSupportedException(Resources.UndeterminedCopyMoveAction);
+
          bool overwrite = doCopy
-            ? ((CopyOptions) copyOptions & CopyOptions.FailIfExists) == CopyOptions.None  // copyOptions does NOT contain CopyOptions.FailIfExists.
-            : doMove && ((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) != MoveOptions.None;  // moveOptions does NOT contain MoveOptions.ReplaceExisting.
+            ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
+            : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
 
-         // Check if "old" directory needs to be removed first.
-         if (overwrite)
-               DeleteDirectoryInternal(null, transaction, destinationPathLp, true, true, false, true, null);
+         CopyMoveResult cmr = new CopyMoveResult(sourcePathLp, destinationPathLp, true, doMove, false, (int) Win32Errors.ERROR_SUCCESS);
 
-         
-         #region Move, Same Drive
 
-         // Moving of files and directories + children is only possible if it's performed on the same drive.
-         if (doMove)
+         #region Copy
+
+         if (doCopy)
          {
-            string sourceRoot = Path.GetPathRoot(sourcePathLp, false);
-            string destRoot = Path.GetPathRoot(destinationPathLp, false);
+            CreateDirectoryInternal(transaction, destinationPathLp, null, null, false, null);
 
-            if (destRoot.StartsWith(sourceRoot, StringComparison.OrdinalIgnoreCase)) //|| (bool) isSameVolume)
+            foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, true, false, false, null))
             {
-               File.CopyMoveInternal(true, transaction, sourcePathLp, destinationPathLp, false, null, moveOptions, copyMoveProgress, userProgressData, null);
-               return;
+               string newDestinationPathLp = Path.CombineInternal(false, destinationPathLp, fsei.FileName);
+               
+               cmr = fsei.IsDirectory
+                  ? CopyMoveInternal(transaction, fsei.LongFullPath, newDestinationPathLp, copyOptions, null, progressHandler, userProgressData, null)
+                  : File.CopyMoveInternal(false, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, null, progressHandler, userProgressData, null);
+
+               if (cmr.IsCanceled)
+                  return cmr;
             }
          }
 
-         // Seems that the destination is located on another drive.
-         // We perform a "copy all/delete all" instead of throwing an exception like: "source and destination must be on the same drive.";
+         #endregion // Copy
 
-         #endregion // Move, Same Drive
+         #region Move
 
-         #region Copy/Move, Different Drive
-
-         // Preserves directory ACL information.
-         DirectorySecurity dirSecurity = preserveSecurity
-            ? File.GetAccessControlInternal<DirectorySecurity>(true, sourcePathLp, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, null)
-            : null;
-
-
-         CreateDirectoryInternal(transaction, destinationPathLp, null, dirSecurity, false, null);
-
-         
-         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, true, false, false, null))
+         else
          {
-            //if (fsei.IsReparsePoint) continue;
+            // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
+            if (((MoveOptions) moveOptions & MoveOptions.CopyAllowed) != MoveOptions.CopyAllowed)
+               if (!Path.GetPathRoot(sourcePathLp, false).Equals(Path.GetPathRoot(destinationPathLp, false), StringComparison.OrdinalIgnoreCase))
+                  NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, destinationPathLp, true);
 
-            string newDestinationPathLp = Path.CombineInternal(false, destinationPathLp, fsei.FileName);
 
-            if (fsei.IsDirectory)
-               CopyMoveInternal(doMove, transaction, fsei.LongFullPath, newDestinationPathLp, preserveSecurity, copyOptions, moveOptions, copyMoveProgress, userProgressData, null);
-            else
-               File.CopyMoveInternal(true, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, moveOptions, copyMoveProgress, userProgressData, null);
+            // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
+            if (overwrite && File.ExistsInternal(true, transaction, destinationPathLp, true, null))
+               DeleteDirectoryInternal(null, transaction, destinationPathLp, true, true, false, true, null);
+
+
+            // Moves a file or directory, including its children.
+            // Copies an existing directory, including its children to a new directory.
+            cmr = File.CopyMoveInternal(true, transaction, sourcePathLp, destinationPathLp, false, null, moveOptions, progressHandler, userProgressData, null);
          }
 
-         
-         // Remove directory which should now be empty.
-         if (doMove)
-            DeleteDirectoryInternal(null, transaction, sourcePathLp, false, true, true, true, null);
+         #endregion // Move
 
-         #endregion // Copy/Move, Different Drive
+         // The copy/move operation succeeded or was canceled.
+         return cmr;
       }
 
       #endregion // CopyMoveInternal
@@ -6247,7 +6719,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before creating the directory.
                   : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true, false, false, false);
 #endif
-
+         
          #region Construct Full Path
 
          string longPathPrefix = Path.IsUncPath(path, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
@@ -6449,7 +6921,7 @@ namespace Alphaleonis.Win32.Filesystem
 #if NET35
                      : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false),
 #else
-                     // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+                     // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before deleting the directory.
                      : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false),
 #endif
                true, continueOnNotExist, null);
@@ -6468,7 +6940,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!fileSystemEntryInfo.IsDirectory)
             // MSDN: .NET 3.5+: IOException: A file with the same name and location specified by path exists.
-            throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameAsDirectory, pathLp));
+            throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp));
 
 
          // Do not follow mount points nor symbolic links, but do delete the reparse point itself.
@@ -6623,7 +7095,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Ensure path is a directory.
          if (!fileSystemEntryInfo.IsDirectory)
-            throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameAsDirectory, pathLp));
+            throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp));
 
          foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly, true, null, true, false, false, null))
             DeleteEmptyDirectoryInternal(fsei, transaction, null, recursive, ignoreReadOnly, false, null);

@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    [Flags]
    public enum MoveOptions
    {
-      /// <summary>(0) No MoveOptions used.</summary>
+      /// <summary>(0) No MoveOptions used, this fails when the file name already exists.</summary>
       None = 0,
 
       /// <summary>(1) MOVE_FILE_REPLACE_EXISTSING - If the destination file name already exists,

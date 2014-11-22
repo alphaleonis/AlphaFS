@@ -61,8 +61,7 @@ Version 1.6
 		-Removed AlphaFS implementation of enum FileSystemRights in favor of System.Security.AccessControl.FileSystemRights enum
 		-Removed AlphaFS implementation of enum FileType, now obsolete.
 
-		-Renamed CopyProgressCallbackReason to CopyMoveProgressCallbackReason.
-		-Renamed CopyProgressResult to CopyMoveProgressResult.
+		-Renamed enum CopyProgressResult to CopyMoveProgressResult.
 		-Renamed enum MoveFileOptions to MoveOptions.
 		
 

@@ -19,8 +19,11 @@
  *  THE SOFTWARE.
  */
 
+using System.Runtime.InteropServices;
 using Alphaleonis;
+using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
+using Alphaleonis.Win32.Network;
 using Alphaleonis.Win32.Security;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -209,36 +212,36 @@ namespace AlphaFS.UnitTest
          Path.VolumePrefix + @"{12345678-aac3-31de-3321-3124565341ed}\Program Files\notepad.exe",
 
          @"Program Files\Microsoft Office",
-         @"C",
-         @"C:",
-         @"C:\",
-         @"C:\a",
-         @"C:\a\",
-         @"C:\a\b",
-         @"C:\a\b\",
-         @"C:\a\b\c",
-         @"C:\a\b\c\",
-         @"C:\a\b\c\f",
-         @"C:\a\b\c\f.",
-         @"C:\a\b\c\f.t",
-         @"C:\a\b\c\f.tx",
-         @"C:\a\b\c\f.txt",
+         SysDrive[0].ToString(CultureInfo.InvariantCulture),
+         SysDrive,
+         SysDrive + @"\",
+         SysDrive + @"\a",
+         SysDrive + @"\a\",
+         SysDrive + @"\a\b",
+         SysDrive + @"\a\b\",
+         SysDrive + @"\a\b\c",
+         SysDrive + @"\a\b\c\",
+         SysDrive + @"\a\b\c\f",
+         SysDrive + @"\a\b\c\f.",
+         SysDrive + @"\a\b\c\f.t",
+         SysDrive + @"\a\b\c\f.tx",
+         SysDrive + @"\a\b\c\f.txt",
 
          Path.LongPathPrefix + @"Program Files\Microsoft Office",
-         Path.LongPathPrefix + "C",
-         Path.LongPathPrefix + @"C:",
-         Path.LongPathPrefix + @"C:\",
-         Path.LongPathPrefix + @"C:\a",
-         Path.LongPathPrefix + @"C:\a\",
-         Path.LongPathPrefix + @"C:\a\b",
-         Path.LongPathPrefix + @"C:\a\b\",
-         Path.LongPathPrefix + @"C:\a\b\c",
-         Path.LongPathPrefix + @"C:\a\b\c\",
-         Path.LongPathPrefix + @"C:\a\b\c\f",
-         Path.LongPathPrefix + @"C:\a\b\c\f.",
-         Path.LongPathPrefix + @"C:\a\b\c\f.t",
-         Path.LongPathPrefix + @"C:\a\b\c\f.tx",
-         Path.LongPathPrefix + @"C:\a\b\c\f.txt",
+         Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
+         Path.LongPathPrefix + SysDrive,
+         Path.LongPathPrefix + SysDrive + @"\",
+         Path.LongPathPrefix + SysDrive + @"\a",
+         Path.LongPathPrefix + SysDrive + @"\a\",
+         Path.LongPathPrefix + SysDrive + @"\a\b",
+         Path.LongPathPrefix + SysDrive + @"\a\b\",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
 
          Path.UncPrefix + @"Server\Share\",
          Path.UncPrefix + @"Server\Share\d",
@@ -429,93 +432,177 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpCompressDecompress
 
-      #region DumpCopy
+      #region DumpCopy1
 
-      private void DumpCopy(bool isLocal)
+      private void DumpCopy1(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tempPath = Path.Combine(Path.GetTempPath(), "Directory.Copy()-" + Path.GetRandomFileName());
+         string tempPath = Path.GetTempPath("Directory.Copy()-") + Path.GetRandomFileName();
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         DirectoryInfo sourceDir = new DirectoryInfo(Path.GetTempPath(tempPath + @"\sourceDir"));
-         Assert.IsFalse(sourceDir.Exists, "Directory should not exist.");
-         sourceDir.Create();
-         Assert.IsTrue(sourceDir.Exists, "Directory should exist.");
+         string tempPathSource = Path.Combine(tempPath, "Source");
+         string tempPathDestination = Path.Combine(tempPath, "Destination");
 
-         // Create some directories and files.
-         CreateDirectoriesAndFiles(sourceDir.FullName, 10, true);
+         bool exception;
+         int expectedLastError;
+         string expectedException;
+         string report;
 
-         Console.WriteLine("\nInput Directory Path: [{0}]", sourceDir.FullName);
+         string letter = DriveInfo.GetFreeDriveLetter() + @":\";
+         if (!isLocal) letter = Path.LocalToUnc(letter);
 
-         #region 1st: DirectoryInfo.CopyTo()
+         string random = Path.GetRandomFileName();
+         string fileSource = @"file-source-" + random + ".exe";
+         string fileDestination = @"file-destination-" + random + ".exe";
 
-         StopWatcher(true);
-         DirectoryInfo firstCopy = sourceDir.CopyTo(tempPath + @"\1stCopy");
-         Console.WriteLine("\n\t1st: DirectoryInfo.CopyTo()\n\n\t  Source:      [{0}]\n\t  Destination: [{1}]\n\t{2}", sourceDir.FullName, firstCopy.FullName, Reporter());
-         Dictionary<string, long> props1stCopy = Directory.GetProperties(sourceDir.FullName, SearchOption.AllDirectories);
+         string folderSource = @"folder-source-" + random;
+         string folderDestination = @"folder-destination-" + random;
 
-         Dictionary<string, long> propsSourceDir = Directory.GetProperties(sourceDir.FullName, SearchOption.AllDirectories);
-         Console.WriteLine("\n\t\tTotal size       : [{0}]\n\t\tTotal directories: [{1}]\n\t\tTotal files      : [{2}]", NativeMethods.UnitSizeToText(props1stCopy["Size"]), props1stCopy["Directory"], props1stCopy["File"]);
+         string fullPathSource = Path.Combine(tempPath, folderSource, fileSource);
+         string fullPathDestination = Path.Combine(tempPath, folderDestination, fileDestination); 
+         if (!isLocal) fullPathSource = Path.LocalToUnc(fullPathSource);
+         if (!isLocal) fullPathDestination = Path.LocalToUnc(fullPathDestination);
 
-         Assert.AreEqual(propsSourceDir["Size"], props1stCopy["Size"], "Total directory size should be equal.");
-         Assert.AreEqual(propsSourceDir["Directory"], props1stCopy["Directory"], "Total number of directories should be equal.");
-         Assert.AreEqual(propsSourceDir["File"], props1stCopy["File"], "Total number of files should be equal.");
+         #endregion // Setup
          
-         #endregion // 1st: DirectoryInfo.CopyTo()
-
-         #region 2nd: Directory.Copy()
-
-         string secondCopy = Path.GetTempPath(tempPath + @"\2ndCopy");
-         StopWatcher(true);
-         Directory.Copy(firstCopy.FullName, secondCopy);
-         Console.WriteLine("\n\n\t2nd: Directory.Copy()\n\n\t  Source:      [{0}]\n\t  Destination: [{1}]\n\t{2}", firstCopy.FullName, secondCopy, Reporter());
-
-         Dictionary<string, long> props2ndDirCopy = Directory.GetProperties(secondCopy, SearchOption.AllDirectories);
-         Console.WriteLine("\n\t\tTotal size       : [{0}]\n\t\tTotal directories: [{1}]\n\t\tTotal files      : [{2}]", NativeMethods.UnitSizeToText(props2ndDirCopy["Size"]), props2ndDirCopy["Directory"], props2ndDirCopy["File"]);
-
-         Assert.AreEqual(propsSourceDir["Size"], props2ndDirCopy["Size"], "Total directory size should be equal.");
-         Assert.AreEqual(propsSourceDir["Directory"], props2ndDirCopy["Directory"], "Total number of directories should be equal.");
-         Assert.AreEqual(propsSourceDir["File"], props2ndDirCopy["File"], "Total number of files should be equal.");
-
-         #endregion // 2nd: Directory.Copy()
-
-         #region 3rd: Directory.Copy()/DirectoryInfo.CopyTo(), Exception/Overwrite
-
-         StopWatcher(true);
-         DirectoryInfo thirdCopy = sourceDir.CopyTo(tempPath + @"\3rdCopy");
-         Console.WriteLine("\n\n\t3rd: Directory.Copy()/DirectoryInfo.CopyTo(), Exception/Overwrite\n\n\t  Source:      [{0}]\n\t  Destination: [{1}]\n\t{2}", sourceDir.FullName, thirdCopy.FullName, Reporter());
-
-         Dictionary<string, long> props3rdDirCopy = Directory.GetProperties(thirdCopy.FullName, SearchOption.AllDirectories);
-         Console.WriteLine("\n\t\tTotal size       : [{0}]\n\t\tTotal directories: [{1}]\n\t\tTotal files      : [{2}]", NativeMethods.UnitSizeToText(props3rdDirCopy["Size"]), props3rdDirCopy["Directory"], props3rdDirCopy["File"]);
-
-
-         bool exception = false;
          try
          {
-            Console.WriteLine("\n\tFail: Copy same directories again.");
-            sourceDir.CopyTo(thirdCopy.FullName);
-            //Directory.Copy(sourceDir.FullName, thirdCopy.FullName);
+            #region DirectoryNotFoundException (Local) / IOException (Network)
+
+            expectedLastError = (int) (isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+            expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive).", expectedException);
+               Directory.Copy1(letter + folderSource, letter + folderDestination);
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+
+            #region IOException
+
+            expectedLastError = (int) Win32Errors.ERROR_SAME_DRIVE;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The sourceDirName and destDirName parameters refer to the same file or directory.", expectedException);
+               Directory.Move(letter + folderDestination, letter + folderDestination);
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex.InnerException);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+               
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // IOException
+
+            #region Copy
+
+            CreateDirectoriesAndFiles(tempPathSource, 10, true);
+
+            Dictionary<string, long> props = Directory.GetProperties(tempPathSource, SearchOption.AllDirectories);
+            long sourceFolder = props["Directory"];
+            long sourceFile = props["File"];
+            long sourceSize = props["Size"];
+
+            Console.WriteLine("\nCopy from Source Path: [{0}]", tempPathSource);
+            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, NativeMethods.UnitSizeToText(sourceSize));
+            
+            StopWatcher(true);
+            Directory.Copy1(tempPathSource, tempPathDestination);
+            report = Reporter();
+            
+            props = Directory.GetProperties(tempPathDestination, SearchOption.AllDirectories);
+            long destinationFolder = props["Directory"];
+            long destinationFile = props["File"];
+            long destinationSize = props["Size"];
+
+            Console.WriteLine("\nCopied to Destination Path: [{0}]", tempPathDestination);
+            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]{3}", destinationFolder, destinationFile, NativeMethods.UnitSizeToText(destinationSize), report);
+
+            #region IOException
+
+            expectedLastError = (int) Win32Errors.ERROR_FILE_EXISTS;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+                  Console.WriteLine("\n\nCatch: [{0}]: Copy same directory again: destDirName already exists.", expectedException);
+                  Directory.Copy1(tempPathSource, tempPathDestination);
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // IOException
+
+            // Overwrite.
+            StopWatcher(true);
+            Directory.Copy1(tempPathSource, tempPathDestination, CopyOptions.None | CopyOptions.NoBuffering);
+            report = Reporter();
+
+            Console.WriteLine("\nCopy again with overwrite enabled: Directory.Copy(,, true)\n{0}", report);
+
+            #endregion // Copy
          }
-         catch (IOException ex)
+         finally
          {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            if (Directory.Exists(tempPath))
+            {
+               Directory.Delete(tempPath, true, true);
+               Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            }
+            Console.WriteLine();
          }
-
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "IOException should have been caught.");
-
-         Console.WriteLine("\n\tTry again: Directory.Copy(,,true)");
-         Directory.Copy(sourceDir.FullName, thirdCopy.FullName, true);
-
-         #endregion // 3rd: Directory.Copy()/DirectoryInfo.CopyTo(), Exception/Overwrite
-
-         Directory.Delete(tempPath, true, true);
-         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
       }
 
-      #endregion // DumpCopy
+      #endregion // DumpCopy1
 
       #region DumpCreateDirectory
 
@@ -537,10 +624,12 @@ namespace AlphaFS.UnitTest
 #endif
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
+         int expectedLastError;
+         string expectedException;
          string report;
          bool exist;
 
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
 
          #endregion // Setup
 
@@ -548,115 +637,135 @@ namespace AlphaFS.UnitTest
          {
             #region Directory.CreateDirectory
 
-            #region IOException 1
+            #region IOException
 
             using (File.Create(tempPath)) {}
+
+            expectedLastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
+            expectedException = "System.IO.IOException";
             bool exception = false;
             try
             {
-               Console.WriteLine("\n\nFail: Directory.CreateDirectory(): File already exist with same name.");
+               Console.WriteLine("\nCatch: Directory.CreateDirectory(): [{0}]: File already exist with same name.", expectedException);
                Directory.CreateDirectory(tempPath);
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
-               exception = true;
-               Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-            Assert.IsTrue(exception, "IOException should have been caught.");
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
 
             File.Delete(tempPath);
 
-            #endregion // IOException 1
+            #endregion // IOException
 
-            #region DirectoryNotFoundException
+            #region DirectoryNotFoundException (Local) / IOException (Network)
 
-            if (isLocal)
+            expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+            expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
+            exception = false;
+            try
             {
-               exception = false;
-               try
-               {
-                  Console.WriteLine("\n\nFail: Directory.CreateDirectory(): The specified path is invalid (for example, it is on an unmapped drive).");
-                  char letter = DriveInfo.GetFreeDriveLetter();
+               Console.WriteLine("\n\nFail: Directory.CreateDirectory(): The specified path is invalid (for example, it is on an unmapped drive).");
 #if NET35
-                  Directory.CreateDirectory(letter + @":\shouldFail" + emspace);
+               string letter = DriveInfo.GetFreeDriveLetter() + @":\shouldFail" + emspace;
 #else
-                  // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
-                  Directory.CreateDirectory(letter + @":\shouldFail");
+               // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before deleting the directory.
+               string letter = DriveInfo.GetFreeDriveLetter() + @":\shouldFail";
 #endif
-               }
-               catch (DirectoryNotFoundException ex)
-               {
-                  exception = true;
-                  Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
-               Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
+               if (!isLocal) letter = Path.LocalToUnc(letter);
+
+               Directory.CreateDirectory(letter);
             }
-
-            #endregion // DirectoryNotFoundException
-
-            #region IOException 2
-
-            if (!isLocal)
+            catch (Exception ex)
             {
-               exception = false;
-               try
-               {
-                  Console.WriteLine("\n\nFail: Directory.CreateDirectory(): The network name cannot be found.");
-                  char letter = DriveInfo.GetFreeDriveLetter();
-                  Directory.CreateDirectory(Path.LocalToUnc(letter + @":\shouldFail"));
-               }
-               catch (IOException ex)
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
                {
                   exception = true;
-                  Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
-               Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-               Assert.IsTrue(exception, "IOException should have been caught.");
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
 
-            #endregion // IOException 2
+            #endregion // DirectoryNotFoundException (Local) / IOException (Network)
 
             #region ArgumentException
 
-            if (isLocal)
+            expectedException = "System.ArgumentException";
+            exception = false;
+            try
             {
-               exception = false;
-               try
-               {
-                  Console.WriteLine("\n\nFail: Directory.CreateDirectory(): Path is prefixed with, or contains, only a colon character (:).");
-                  Directory.CreateDirectory(@":AAAAAAAAAA");
-               }
-               catch (ArgumentException ex)
+               Console.WriteLine("\nCatch: Directory.CreateDirectory(): [{0}]: Path is prefixed with, or contains, only a colon character (:).", expectedException);
+               Directory.CreateDirectory(@":AAAAAAAAAA");
+            }
+            catch (Exception ex)
+            {
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
                {
                   exception = true;
-                  Console.WriteLine("\n\tArgumentException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
-               Console.WriteLine("\n\tCaught ArgumentException (Should be True): [{0}]", exception);
-               Assert.IsTrue(exception, "ArgumentException should have been caught.");
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
 
             #endregion // ArgumentException
 
             #region NotSupportedException
 
-            if (isLocal)
+            expectedLastError = (int) (isLocal ? Win32Errors.ERROR_FILE_EXISTS : Win32Errors.NERR_UseNotFound);
+            expectedException = "System.NotSupportedException";
+            exception = false;
+            try
             {
-               exception = false;
-               try
+               Console.WriteLine("\nCatch: Directory.CreateDirectory(): [{0}]: Path contains a colon character (:) that is not part of a drive label (C:\\).", expectedException);
+               string invalidPath = SysDrive + @"\dev\test\aaa:aaa.txt";
+               if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + ":aaa.txt";
+               Directory.CreateDirectory(invalidPath);
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0 for local.
+               if (!isLocal)
                {
-                  Console.WriteLine("\n\nFail: Directory.CreateDirectory(): Path contains a colon character (:) that is not part of a drive label (C:\\).");
-                  Directory.CreateDirectory(@"C:\dev\test\aaa:aaa.txt");
+                  Win32Exception win32Error = new Win32Exception("", ex);
+                  Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                }
-               catch (NotSupportedException ex)
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
                {
                   exception = true;
-                  Console.WriteLine("\n\tNotSupportedException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
-               Console.WriteLine("\n\tCaught NotSupportedException (Should be True): [{0}]", exception);
-               Assert.IsTrue(exception, "NotSupportedException should have been caught.");
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
 
             #endregion // NotSupportedException
 
@@ -689,7 +798,7 @@ namespace AlphaFS.UnitTest
             dirInfoSysIo.Refresh();
             //Assert.IsTrue(dirInfoSysIo.Exists, "Exists System.IO in error??!");
 
-            // This seems to happen. Bottom line, through observation,
+            // This seems to happen. Bottom line, through observation and testing,
             // is that most methods in .NET 3.5 do NOT TrimEnd() on paths, while .NET 4+ DOES TrimEnd() on paths.
             // It seems that the MSDN documentation about TrimEnd() is not always clear, available or just incorrect.
             //
@@ -733,74 +842,57 @@ namespace AlphaFS.UnitTest
 
             #region Directory.Delete
 
-            #region DirectoryNotFoundException
-
-            exception = false;
-            try
-            {
-               Console.WriteLine("\nFail: Directory.Delete(): DirectoryNotFoundException");
-               Directory.Delete(@"c:\Non-Existing-Folder-" + Path.GetRandomFileName());
-            }
-            catch (DirectoryNotFoundException ex)
-            {
-               exception = true;
-               Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
-            Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
-
-            #endregion // DirectoryNotFoundException
-
-            #region IOException #1
-
-            exception = false;
-            try
-            {
-               Console.WriteLine("\n\nFail: Directory.Delete(): Directory is not empty");
-               Directory.Delete(tempPath);
-            }
-            catch (IOException ex)
-            {
-               exception = true;
-               Console.WriteLine("\n\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-            Assert.IsTrue(exception, "IOException should have been caught.");
-
-            #endregion IOException #1
-
-            #region IOException #2
-
-            File.SetAttributes(tempPath, FileAttributes.ReadOnly);
-            exception = false;
-            try
-            {
-               Console.WriteLine("\n\nFail: Directory.Delete(): Directory read-only attribute is set.");
-               Directory.Delete(tempPath, true);
-            }
-            catch (IOException ex)
-            {
-               exception = true;
-               Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-            Assert.IsTrue(exception, "IOException should have been caught.");
-
-            #endregion // IOException #2
-
             #region ArgumentException
 
-            string expectedException = "System.ArgumentException";
+            expectedException = "System.ArgumentException";
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: Directory.CreateDirectory(): [{0}]: Path is a zero-length string, contains only white space, or contains one or more invalid characters.", expectedException);
-               Directory.Delete(@"C:\<>");
+               Console.WriteLine("\nCatch: Directory.Delete(): [{0}]: Path is a zero-length string, contains only white space, or contains one or more invalid characters.", expectedException);
+               
+               string invalidPath = SysDrive;
+               if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath);
+               invalidPath += @"\<>";
+
+               Directory.Delete(invalidPath);
             }
             catch (Exception ex)
             {
                string exceptionTypeName = ex.GetType().FullName;
 
+               if (exceptionTypeName.Equals(expectedException))
+               {
+               exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // ArgumentException
+
+            #region DirectoryNotFoundException
+
+            expectedLastError = (int) Win32Errors.ERROR_FILE_NOT_FOUND;
+            expectedException = "System.IO.DirectoryNotFoundException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: Directory.Delete(): [{0}]: Path does not exist or could not be found, or path refers to a file instead of a directory, or The specified path is invalid (for example, it is on an unmapped drive).", expectedException);
+
+               string nonExistingFolder = SysDrive + @"\Non-Existing-Folder-" + Path.GetRandomFileName();
+               if (!isLocal) nonExistingFolder = Path.LocalToUnc(nonExistingFolder);
+
+               Directory.Delete(nonExistingFolder);
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+
+               string exceptionTypeName = ex.GetType().FullName;
                if (exceptionTypeName.Equals(expectedException))
                {
                   exception = true;
@@ -812,12 +904,74 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
 
-            #endregion // ArgumentException
+            #endregion // DirectoryNotFoundException
+
+            #region IOException #1
+
+            expectedLastError = (int) Win32Errors.ERROR_DIR_NOT_EMPTY;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: Directory.Delete(): [{0}]: The directory is not empty.", expectedException);
+               Directory.Delete(tempPath);
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion IOException #1
+
+            #region IOException #2
+
+            File.SetAttributes(tempPath, FileAttributes.ReadOnly);
+
+            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: Directory.Delete(): [{0}]: The directory specified by path is read-only.", expectedException);
+                Directory.Delete(tempPath, true);
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // IOException #2
 
             #endregion // Directory.Delete
          }
          finally
          {
+            if (Directory.Exists(tempPath))
+            {
             StopWatcher(true);
             Directory.Delete(tempPath, true, true);
             report = Reporter();
@@ -825,6 +979,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("\n\nDirectory.Delete() (Should be True): [{0}]\n\t{1}", !exist, report);
             Assert.IsFalse(exist, "Cleanup failed: Directory should have been removed.");
+            }
             Console.WriteLine();
          }
       }
@@ -1128,7 +1283,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          try
          {
-            Console.WriteLine("\nFail: path is a file name.");
+            Console.WriteLine("\nCatch: path is a file name.");
             Directory.EnumerateDirectories(tempPath, searchPattern, searchOption).Any();
          }
          catch (IOException ex)
@@ -1162,6 +1317,48 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpEnumerateDirectories
 
+      #region DumpEnumerateFileIdBothDirectoryInfo
+
+      private void DumpEnumerateFileIdBothDirectoryInfo(bool isLocal)
+      {
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string tempPath = SysRoot;
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
+
+         string searchPattern = Path.WildcardStarMatchAll;
+         SearchOption searchOption = SearchOption.TopDirectoryOnly;
+
+         long directories = Directory.CountDirectories(tempPath, searchPattern, searchOption, true, false);
+         long files = Directory.CountFiles(tempPath, searchPattern, searchOption, true, false);
+         Console.WriteLine("\tDirectories: [{0}], Files: [{1}]", directories, files);
+
+         bool foundFse = false;
+         long numDirectories = 0;
+         long numFiles = 0;
+
+         StopWatcher(true);
+         foreach (FileIdBothDirectoryInfo fibdi in Directory.EnumerateFileIdBothDirectoryInfo(tempPath))
+         {
+            if ((fibdi.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
+               numDirectories++;
+            else
+               numFiles++;
+
+            foundFse = Dump(fibdi, -22);
+         }
+         string report = Reporter();
+
+         bool matchAll = directories == numDirectories && files == numFiles;
+         Console.WriteLine("\n\tDirectories = [{0}], Files = [{1}]\n{2}", numDirectories, numFiles, report);
+         Assert.IsTrue(foundFse, "Nothing was enumerated.");
+         Assert.IsTrue(matchAll, "Number of directories and/or files don't match.");
+         Console.WriteLine();
+      }
+
+      #endregion // DumpEnumerateFileIdBothDirectoryInfo
+
       #region DumpEnumerateFiles
 
       private void DumpEnumerateFiles(bool isLocal)
@@ -1181,7 +1378,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          try
          {
-            Console.WriteLine("\nFail: path is a file name.");
+            Console.WriteLine("\nCatch: path is a file name.");
             Directory.EnumerateFiles(tempPath, searchPattern, searchOption).Any();
          }
          catch (IOException ex)
@@ -1234,7 +1431,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          try
          {
-            Console.WriteLine("\nFail: path is a file name.");
+            Console.WriteLine("\nCatch: path is a file name.");
             Directory.EnumerateFileSystemEntries(tempPath, searchPattern, searchOption).Any();
          }
          catch (IOException ex)
@@ -1355,7 +1552,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          try
          {
-            Console.WriteLine("\nFail: path is a file name.");
+            Console.WriteLine("\nCatch: path is a file name.");
             Directory.GetDirectories(tempPath, searchPattern, searchOption);
          }
          catch (IOException ex)
@@ -1440,7 +1637,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          try
          {
-            Console.WriteLine("\nFail: path is a file name.");
+            Console.WriteLine("\nCatch: path is a file name.");
             Directory.GetFiles(tempPath, searchPattern, searchOption);
          }
          catch (IOException ex)
@@ -1601,48 +1798,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpGetXxxTime
 
-      #region DumpEnumerateFileIdBothDirectoryInfo
-
-      private void DumpEnumerateFileIdBothDirectoryInfo(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tempPath = SysRoot;
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-
-         string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.TopDirectoryOnly;
-
-         long directories = Directory.CountDirectories(tempPath, searchPattern, searchOption, true, false);
-         long files = Directory.CountFiles(tempPath, searchPattern, searchOption, true, false);
-         Console.WriteLine("\tDirectories: [{0}], Files: [{1}]", directories, files);
-
-         bool foundFse = false;
-         long numDirectories = 0;
-         long numFiles = 0;
-
-         StopWatcher(true);
-         foreach (FileIdBothDirectoryInfo fibdi in Directory.EnumerateFileIdBothDirectoryInfo(tempPath))
-         {
-            if ((fibdi.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
-               numDirectories++;
-            else
-               numFiles++;
-
-            foundFse = Dump(fibdi, -22);
-         }
-         string report = Reporter();
-
-         bool matchAll = directories == numDirectories && files == numFiles;
-         Console.WriteLine("\n\tDirectories = [{0}], Files = [{1}]\n{2}", numDirectories, numFiles, report);
-         Assert.IsTrue(foundFse, "Nothing was enumerated.");
-         Assert.IsTrue(matchAll, "Number of directories and/or files don't match.");
-         Console.WriteLine();
-      }
-
-      #endregion // DumpEnumerateFileIdBothDirectoryInfo
-
       #region DumpGetFileSystemEntries
 
       private void DumpGetFileSystemEntries(bool isLocal)
@@ -1662,7 +1817,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          try
          {
-            Console.WriteLine("\nFail: path is a file name.");
+            Console.WriteLine("\nCatch: path is a file name.");
             Directory.GetFileSystemEntries(tempPath, searchPattern, searchOption);
          }
          catch (IOException ex)
@@ -1730,6 +1885,223 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpGetProperties
 
+      #region DumpMove
+
+      private void DumpMove(bool isLocal)
+      {
+         #region Setup
+
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string tempPath = Path.GetTempPath("Directory.Move()-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         string tempPathSource = Path.Combine(tempPath, "Source");
+         string tempPathSource0 = Path.Combine(tempPath, "Source0");
+         string tempPathDestination = Path.Combine(tempPath, "Destination");
+
+         bool exception;
+         int expectedLastError;
+         string expectedException;
+         string report;
+
+         string random = Path.GetRandomFileName();
+         string fileSource = @"file-source-" + random + ".exe";
+         string fileDestination = @"file-destination-" + random + ".exe";
+
+         string folderSource = @"folder-source-" + random;
+         string folderDestination = @"folder-destination-" + random;
+
+         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
+         string letter = originalLetter + @"\";
+         string otherDisk = letter + folderDestination;
+
+         Volume.DefineDosDevice(originalLetter, Path.GetDirectoryName(tempPathDestination));
+         if (!isLocal) letter = Path.LocalToUnc(letter);
+
+         string fullPathSource = Path.Combine(tempPath, folderSource, fileSource);
+         string fullPathDestination = Path.Combine(tempPath, folderDestination, fileDestination);
+         if (!isLocal) fullPathSource = Path.LocalToUnc(fullPathSource);
+         if (!isLocal) fullPathDestination = Path.LocalToUnc(fullPathDestination);
+         
+         #endregion // Setup
+
+         try
+         {
+            #region DirectoryNotFoundException
+
+            expectedLastError = (int) (isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+            expectedException = "System.IO.DirectoryNotFoundException"; // Exception is the same, even though last error is different.
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive).", expectedException);
+               Directory.Move(letter + folderSource, letter + folderDestination);
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // DirectoryNotFoundException
+
+            #region IOException #1
+
+            expectedLastError = (int) Win32Errors.ERROR_SAME_DRIVE;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The sourceDirName and destDirName parameters refer to the same file or directory.", expectedException);
+               Directory.Move(letter + folderDestination, letter + folderDestination);
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // IOException #1
+            
+            #region IOException #2
+
+            expectedLastError = (int) Win32Errors.ERROR_NOT_SAME_DEVICE;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: An attempt was made to move a directory to a different volume. ", expectedException);
+               Directory.Move(SysDrive + @"\" + folderSource, otherDisk);
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // IOException #2
+
+            #region Move
+            
+            CreateDirectoriesAndFiles(tempPathSource0, 10, true);
+            Directory.Copy1(tempPathSource0, otherDisk);
+
+            Dictionary<string, long> props = Directory.GetProperties(otherDisk, SearchOption.AllDirectories);
+            long sourceFolder = props["Directory"];
+            long sourceFile = props["File"];
+            long sourceSize = props["Size"];
+
+            Console.WriteLine("\nMove from Source Path: [{0}]", otherDisk);
+            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, NativeMethods.UnitSizeToText(sourceSize));
+
+            StopWatcher(true);
+            Directory.Move1(otherDisk, tempPathSource, MoveOptions.CopyAllowed);
+            report = Reporter();
+
+            props = Directory.GetProperties(tempPathSource, SearchOption.AllDirectories);
+            long destinationFolder = props["Directory"];
+            long destinationFile = props["File"];
+            long destinationSize = props["Size"];
+
+            Console.WriteLine("\nMoved to Destination Path: [{0}]", tempPathSource);
+            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]{3}", destinationFolder, destinationFile, NativeMethods.UnitSizeToText(destinationSize), report);
+
+            Assert.AreEqual(sourceFolder, destinationFolder, "Total number of directories should match.");
+            Assert.AreEqual(sourceFile, destinationFile, "Total number of files should match.");
+            Assert.AreEqual(sourceSize, destinationSize, "Total number of bytes should match.");
+
+            #region IOException
+
+            Directory.Copy1(tempPathSource0, otherDisk);
+
+            expectedLastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\n\nCatch: [{0}]: Move same directory again: destDirName already exists.", expectedException);
+               Directory.Move1(otherDisk, tempPathSource, MoveOptions.CopyAllowed);
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex.InnerException);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // IOException
+
+            // Overwrite.
+            StopWatcher(true);
+            Directory.Move1(otherDisk, tempPathSource, MoveOptions.CopyAllowed | MoveOptions.ReplaceExisting);
+            report = Reporter();
+
+            Console.WriteLine("\nMove again with overwrite enabled and other volume allowed.\n{0}", report);
+
+            #endregion // Move
+         }
+         finally
+         {
+            Volume.DeleteDosDevice(originalLetter);
+
+            if (Directory.Exists(tempPath))
+            {
+               Directory.Delete(tempPath, true, true);
+               Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            }
+            Console.WriteLine();
+         }
+      }
+
+      #endregion // DumpMove
+
       #region DumpSetTimestamps
 
       private void DumpSetTimestamps(bool isLocal)
@@ -1747,11 +2119,11 @@ namespace AlphaFS.UnitTest
          DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
          Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
          Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
          Console.WriteLine("\nSet timestamps to:\n");
@@ -1835,69 +2207,69 @@ namespace AlphaFS.UnitTest
          DateTime actual = Directory.GetCreationTime(path);
          System.IO.Directory.SetCreationTime(path, creationTime);
          DateTime expected = System.IO.Directory.GetCreationTime(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
 
          Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
          Console.WriteLine("\n\tSetCreationTimeUtc() to: [{0} {1}]", creationTime, creationTime.ToLongTimeString());
          Directory.SetCreationTimeUtc(path, creationTime);
          actual = Directory.GetCreationTimeUtc(path);
          System.IO.Directory.SetCreationTimeUtc(path, creationTime);
          expected = System.IO.Directory.GetCreationTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
          #endregion // SetCreationTime/Utc
 
          #region SetLastAccessTime/Utc
          Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
          Console.WriteLine("\n\tSetLastAccessTime() to: [{0} {1}]", lastAccessTime, lastAccessTime.ToLongTimeString());
          Directory.SetLastAccessTime(path, lastAccessTime);
          actual = Directory.GetLastAccessTime(path);
          System.IO.Directory.SetLastAccessTime(path, lastAccessTime);
          expected = System.IO.Directory.GetLastAccessTime(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
 
          Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
          Console.WriteLine("\n\tSetLastAccessTimeUtc() to: [{0} {1}]", lastAccessTime, lastAccessTime.ToLongTimeString());
          Directory.SetLastAccessTimeUtc(path, lastAccessTime);
          actual = Directory.GetLastAccessTimeUtc(path);
          System.IO.Directory.SetLastAccessTimeUtc(path, lastAccessTime);
          expected = System.IO.Directory.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
          #endregion // SetLastAccessTime/Utc
 
          #region SetLastWriteTime/Utc
          Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
          Console.WriteLine("\n\tSetLastWriteTime() to: [{0} {1}]", lastWriteTime, lastWriteTime.ToLongTimeString());
          Directory.SetLastWriteTime(path, lastWriteTime);
          actual = Directory.GetLastWriteTime(path);
          System.IO.Directory.SetLastWriteTime(path, lastWriteTime);
          expected = System.IO.Directory.GetLastWriteTime(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
 
          Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
          Console.WriteLine("\n\tSetLastWriteTimeUtc() to: [{0} {1}]", lastWriteTime, lastWriteTime.ToLongTimeString());
          Directory.SetLastWriteTimeUtc(path, lastWriteTime);
          actual = Directory.GetLastWriteTimeUtc(path);
          System.IO.Directory.SetLastWriteTimeUtc(path, lastWriteTime);
          expected = System.IO.Directory.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\t\tAlphaFS  : [{0}]\n    System.IO: [{1}]", actual, expected);
+         Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
          #endregion // SetLastWriteTime/Utc
 
@@ -1934,11 +2306,11 @@ namespace AlphaFS.UnitTest
          DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
          Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
          Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
          Directory.SetTimestamps(path, creationTime, lastAccessTime, lastWriteTime);
@@ -2447,14 +2819,14 @@ namespace AlphaFS.UnitTest
 
                if (diActual == null || diExpected == null)
                {
-                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n    System.IO : [{3}]", ++pathCnt, input, diActual, diExpected);
+                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, diActual, diExpected);
                   Assert.AreEqual(diActual, diExpected);
                }
                else
                {
                   string actual = diActual.FullName;
                   string expected = diExpected.FullName;
-                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n    System.IO : [{3}]", ++pathCnt, input, diActual.FullName, diExpected.FullName);
+                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, diActual.FullName, diExpected.FullName);
                   Assert.AreEqual(expected, actual);
                }
             }
@@ -2483,68 +2855,12 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Directory.Move()");
 
-         string path = Path.GetTempPath("Directory.Move()-" + Path.GetRandomFileName());
-
-         DirectoryInfo sourceDir = new DirectoryInfo(Path.GetTempPath(path + @"\sourceDir"));
-         DirectoryInfo destDir = new DirectoryInfo(Path.GetTempPath(path + @"\destinationDir"));
-         string the3rdDir = Path.LocalToUnc(Path.GetTempPath(path + @"\the3rdDirectory"));
-
-         // Create some directories and files.
-         CreateDirectoriesAndFiles(sourceDir.FullName, 10, true);
-
-         Console.WriteLine("\n\tSRC directory: [{0}]", sourceDir.FullName);
-
-         #region MoveTo
-
-         StopWatcher(true);
-         sourceDir.MoveTo(destDir.FullName);
-         Console.WriteLine("\n\tDirectoryInfo.MoveTo()");
-         Console.WriteLine("\t\tDST directory: [{0}]\n\t{1}", destDir.FullName, Reporter());
-
-         Assert.IsTrue(sourceDir.Exists, "Source directory should exist.");
-         Assert.IsTrue(destDir.Exists, "Destination directory should exist.");
-         Assert.AreEqual(sourceDir.LongFullName, destDir.LongFullName);
-
-         #endregion // MoveTo
-
-         #region Move
-
-         string pathUnc = Path.LocalToUnc(destDir.FullName);
-         Assert.IsTrue(Directory.Exists(pathUnc), "Share inaccessible: {0}\n", pathUnc);
-
-         StopWatcher(true);
-         Directory.Move(destDir.FullName, the3rdDir);
-         Console.WriteLine("\n\tDirectory.Move()");
-         Console.WriteLine("\t\t3RD directoriy: [{0}]\n\t{1}", the3rdDir, Reporter());
-         Assert.IsTrue(Directory.Exists(the3rdDir));
-         Directory.Delete(the3rdDir, true);
-         Assert.IsFalse(Directory.Exists(the3rdDir), "Cleanup failed: Directory should have been removed.");
-
-         #endregion // Move
-
-         #region Move, delete destination first.
-
-         // Create some directories and files.
-         CreateDirectoriesAndFiles(sourceDir.FullName, 10, true);
-
-         StopWatcher(true);
-         sourceDir.MoveTo(new DirectoryInfo(the3rdDir).FullName, true);
-         Console.WriteLine("\n\tDirectory.MoveTo()");
-         Console.WriteLine("\t\t3RD directory: [{0}]\n\t{1}", the3rdDir, Reporter());
-         Assert.IsTrue(Directory.Exists(the3rdDir));
-
-         #endregion // Move, delete destination first.
-
-         Assert.IsTrue(sourceDir.Exists, "Source directory should exist.");
-         Assert.IsTrue(destDir.Exists, "Destination directory should exist.");
-
-         Directory.Delete(path, true);
-         Assert.IsFalse(Directory.Exists(path), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
+         DumpMove(true);
+         DumpMove(false);
       }
 
       #endregion // Move
-
+      
       #region SetAccessControl
 
       [TestMethod]
@@ -2736,18 +3052,18 @@ namespace AlphaFS.UnitTest
 
       #endregion Compress/Decompress
 
-      #region Copy
+      #region Copy1
 
       [TestMethod]
-      public void AlphaFS_Copy()
+      public void AlphaFS_Copy1()
       {
-         Console.WriteLine("Directory.Copy()");
+         Console.WriteLine("Directory.Copy1()");
 
-         DumpCopy(true);
-         DumpCopy(false);
+         DumpCopy1(true);
+         DumpCopy1(false);
       }
 
-      #endregion // Copy
+      #endregion // Copy1
 
       #region CountDirectories
 
@@ -3066,6 +3382,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // HasInheritedPermissions
+
+      #region AlphaFS_Move1
+
+      [TestMethod]
+      public void AlphaFS_Move1()
+      {
+         Console.WriteLine("Directory.Move1()");
+         Console.WriteLine("\nPlease see unit test: Move()");
+      }
+
+      #endregion // AlphaFS_Move1
 
       #region RemoveStream
 

@@ -138,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       #region AlphaFS
-      
+
       #region VerifyObjectExists
 
       /// <summary>[AlphaFS] Performs a <see cref="T:Refresh()"/> and checks that the file system object (folder, file) exists. If the file system object is not found, a <see cref="T:DirectoryNotFoundException"/> or <see cref="T:FileNotFoundException"/> is thrown.</summary>
@@ -178,9 +178,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
       {
-         if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException(isFolder ? "path" : "filename");
-
          LongFullName = isFullPath == null
             ? path
             : (bool) isFullPath

@@ -543,7 +543,7 @@ namespace AlphaFS.UnitTest
       private void DumpLocalToUnc(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
-         string path = SysDrive;
+         string path = SysRoot;
          if (!isLocal) path = Path.LocalToUnc(path);
 
          Console.WriteLine("\nInput Path: [{0}]", path);

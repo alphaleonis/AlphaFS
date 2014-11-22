@@ -313,12 +313,12 @@ namespace AlphaFS.UnitTest
 
       #endregion // AddStream
 
-      #region CopyTo
+      #region CopyTo1
 
       [TestMethod]
-      public void AlphaFS_CopyTo()
+      public void AlphaFS_CopyTo1()
       {
-         Console.WriteLine("DirectoryInfo.CopyTo()");
+         Console.WriteLine("DirectoryInfo.CopyTo1()");
          Console.WriteLine("\nPlease see unit tests from class: Directory().");
       }
 
@@ -466,6 +466,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetStreamSize
+
+      #region AlphaFS_MoveTo1
+
+      [TestMethod]
+      public void AlphaFS_MoveTo1()
+      {
+         Console.WriteLine("DirectoryInfo.MoveTo1()");
+         Console.WriteLine("\nPlease see unit tests from class: Directory().");
+      }
+
+      #endregion // AlphaFS_MoveTo1
 
       #region RemoveStream
 

@@ -152,6 +152,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The target file is a directory, not a file: [{0}].
+        /// </summary>
+        internal static string DirectoryExistsWithSameNameSpecifiedByPath {
+            get {
+                return ResourceManager.GetString("DirectoryExistsWithSameNameSpecifiedByPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Directory is not empty: [{0}].
         /// </summary>
         internal static string DirectoryNotEmpty {
@@ -188,11 +197,20 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A file with the same name and location specified by path exists: [{0}].
+        ///   Looks up a localized string similar to The target directory is a file, not a directory: [{0}].
         /// </summary>
-        internal static string FileExistsWithSameNameAsDirectory {
+        internal static string FileExistsWithSameNameSpecifiedByPath {
             get {
-                return ResourceManager.GetString("FileExistsWithSameNameAsDirectory", resourceCulture);
+                return ResourceManager.GetString("FileExistsWithSameNameSpecifiedByPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The specified file is hidden: [{0}].
+        /// </summary>
+        internal static string FileHidden {
+            get {
+                return ResourceManager.GetString("FileHidden", resourceCulture);
             }
         }
         
@@ -242,7 +260,7 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Illegal characters in path.
+        ///   Looks up a localized string similar to Illegal characters: [{0}] in path..
         /// </summary>
         internal static string IllegalCharactersInPath {
             get {
@@ -396,15 +414,6 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Source- and destinationPath cannot be the same..
-        /// </summary>
-        internal static string SameSourceDestination {
-            get {
-                return ResourceManager.GetString("SameSourceDestination", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Invalid stream..
         /// </summary>
         internal static string StreamInvalid {
@@ -482,6 +491,15 @@ namespace Alphaleonis.Win32 {
         internal static string UNCPathShouldMatchTheFormatServerShare {
             get {
                 return ResourceManager.GetString("UNCPathShouldMatchTheFormatServerShare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not determine Copy or Move action..
+        /// </summary>
+        internal static string UndeterminedCopyMoveAction {
+            get {
+                return ResourceManager.GetString("UndeterminedCopyMoveAction", resourceCulture);
             }
         }
     }

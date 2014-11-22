@@ -1224,7 +1224,9 @@ namespace AlphaFS.UnitTest
             StopWatcher(true);
 
             Volume.SetVolumeMountPoint(destFolder, guid);
-            Console.WriteLine("\t#{0:000}\tSystem Drive: [{1}]\tGUID: [{2}]\n\t\tDestination : [{3}]\n\t\tCreated Mount Point.\n\t{4}", ++cnt, SysDrive, guid, destFolder, Reporter(true));
+            Console.WriteLine(
+               "\t#{0:000}\tSystem Drive: [{1}]\tGUID: [{2}]\n\t\tDestination : [{3}]\n\t\tCreated Mount Point.\n\t{4}",
+               ++cnt, SysDrive, guid, destFolder, Reporter(true));
 
             Console.WriteLine("\n");
             EnumerateVolumeMountPoints();
@@ -1249,7 +1251,8 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
             }
 
-            Console.WriteLine("\n\nVolume.DeleteVolumeMountPoint() (Should be True): [{0}]\tFolder: [{1}]\n{2}\n", deleteOk, destFolder, Reporter());
+            Console.WriteLine("\n\nVolume.DeleteVolumeMountPoint() (Should be True): [{0}]\tFolder: [{1}]\n{2}\n",
+               deleteOk, destFolder, Reporter());
 
             Directory.Delete(destFolder, true, true);
             Assert.IsTrue(deleteOk && !Directory.Exists(destFolder));
@@ -1260,6 +1263,13 @@ namespace AlphaFS.UnitTest
          {
             Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
             cnt = 0;
+         }
+         finally
+         {
+            // Always remove mount point.
+            // Experienced: CCleaner deletes through mount points!
+            try { Volume.DeleteVolumeMountPoint(destFolder); }
+            catch { }
          }
 
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
