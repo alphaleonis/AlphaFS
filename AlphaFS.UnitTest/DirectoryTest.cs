@@ -778,8 +778,10 @@ namespace AlphaFS.UnitTest
             try
             {
                Console.WriteLine("\nCatch: Directory.CreateDirectory(): [{0}]: Path contains a colon character (:) that is not part of a drive label (C:\\).", expectedException);
+
                string invalidPath = SysDrive + @"\dev\test\aaa:aaa.txt";
                if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + ":aaa.txt";
+
                Directory.CreateDirectory(invalidPath);
             }
             catch (Exception ex)

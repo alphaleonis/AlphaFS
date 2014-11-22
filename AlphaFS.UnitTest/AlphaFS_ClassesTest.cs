@@ -684,6 +684,157 @@ namespace AlphaFS.UnitTest
       #endregion // DumpClassDeviceInfo
 
       #region DumpClassDirectoryInfo
+      
+      private static void DumpClassDirectoryInfo(bool isLocal)
+      {
+         #region Setup
+
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string tempPath = Path.Combine(Path.GetTempPath(), "DirectoryInfo()-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Console.WriteLine("\nInput DirectoryInfo() Path: [{0}]\n", tempPath);
+
+         int expectedLastError;
+         string expectedException;
+
+         #endregion // Setup
+
+         #region NotSupportedException
+
+         expectedLastError = 0;
+         expectedException = "System.NotSupportedException";
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nCatch: DirectoryInfo(): [{0}]: The given path's format is not supported.", expectedException);
+
+            string invalidPath = SysDrive + @"\:a";
+            if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + @":a";
+
+            DirectoryInfo di = new DirectoryInfo(invalidPath);
+         }
+         catch (Exception ex)
+         {
+            // win32Error is always 0
+            //Win32Exception win32Error = new Win32Exception("", ex);
+            //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+
+            string exceptionTypeName = ex.GetType().FullName;
+            if (exceptionTypeName.Equals(expectedException))
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            else
+               Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Console.WriteLine();
+
+         #endregion // NotSupportedException
+
+         #region Current Directory: .
+
+         tempPath = Path.CurrentDirectoryPrefix;
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Console.WriteLine("\nInput Directory Path: [{0}] (dot = Current directory)\n", tempPath);
+
+         StopWatcher(true);
+         System.IO.DirectoryInfo expected = new System.IO.DirectoryInfo(tempPath);
+         Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", Reporter());
+
+         StopWatcher(true);
+         DirectoryInfo actual = new DirectoryInfo(tempPath);
+         Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", Reporter());
+
+         // Compare values of both instances.
+         CompareDirectoryInfos(expected, actual);
+
+         #endregion // Current Directory: .
+
+         #region Non-Existing Directory
+
+         tempPath = string.Format(@"{0}:\Non-Existing-Directory", DriveInfo.GetFreeDriveLetter());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
+
+         StopWatcher(true);
+         expected = new System.IO.DirectoryInfo(tempPath);
+         Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", Reporter());
+
+         StopWatcher(true);
+         actual = new DirectoryInfo(tempPath);
+         Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", Reporter());
+
+         // Compare values of both instances.
+         CompareDirectoryInfos(expected, actual);
+
+         #region DirectoryNotFoundException
+
+         exception = false;
+         try
+         {
+            Console.WriteLine("\nCatch: DirectoryInfo.Delete(): The directory does not exist or could not be found.");
+            actual.Delete();
+         }
+         catch (DirectoryNotFoundException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
+         Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
+
+         #endregion DirectoryNotFoundException
+
+         #endregion // Non-Existing Directory
+
+         #region Existing Directory
+         tempPath = Path.Combine(Path.GetTempPath(), "DirectoryInfo()-Directory-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Directory.CreateDirectory(tempPath);
+
+         Console.WriteLine("\n\nInput Directory Path: [{0}]\n", tempPath);
+
+         StopWatcher(true);
+         expected = new System.IO.DirectoryInfo(tempPath);
+         Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", Reporter());
+
+         StopWatcher(true);
+         actual = new DirectoryInfo(tempPath);
+         Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", Reporter());
+
+         // Compare values of both instances.
+         CompareDirectoryInfos(expected, actual);
+
+         Directory.Delete(tempPath);
+         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+         #endregion // Existing Directory
+
+         #region Method .ToString()
+         Console.WriteLine("\nMethod .ToString()");
+
+         DirectoryInfo dirAlphaFs = new DirectoryInfo("ToString()-TestFolder");
+         System.IO.DirectoryInfo dirSysIo = new System.IO.DirectoryInfo("ToString()-TestFolder");
+
+         string dirAlphaFsToString = dirAlphaFs.ToString();
+         string dirSysIoToString = dirSysIo.ToString();
+
+         Console.WriteLine("\tBoth strings should be the same.");
+         Console.WriteLine("\tAlphaFS  : [{0}]", dirAlphaFsToString);
+         Console.WriteLine("\tSystem.IO: [{0}]", dirSysIoToString);
+
+         Assert.AreEqual(dirSysIoToString, dirAlphaFsToString, false);
+         Console.WriteLine();
+
+         #endregion Method .ToString()
+      }
+
       private static void CompareDirectoryInfos(System.IO.DirectoryInfo expected, DirectoryInfo actual)
       {
          Dump(expected, -17);
@@ -732,106 +883,6 @@ namespace AlphaFS.UnitTest
 
          //Assert.IsTrue(errorCnt == 0, "\tEncountered: [{0}] DirectoryInfo Properties where AlphaFS != System.IO", errorCnt);
          Console.WriteLine();
-      }
-
-      private static void DumpClassDirectoryInfo(bool isLocal)
-      {
-         #region Current Directory: .
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tempPath = Path.CurrentDirectoryPrefix;
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}] (dot = Current directory)\n", tempPath);
-
-         StopWatcher(true);
-         System.IO.DirectoryInfo expected = new System.IO.DirectoryInfo(tempPath);
-         Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", Reporter());
-
-         StopWatcher(true);
-         DirectoryInfo actual = new DirectoryInfo(tempPath);
-         Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", Reporter());
-
-         // Compare values of both instances.
-         CompareDirectoryInfos(expected, actual);
-         #endregion // Current Directory: .
-
-         #region Non-Existing Directory
-         tempPath = string.Format(@"{0}:\Non-Existing-Directory", DriveInfo.GetFreeDriveLetter());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
-
-         StopWatcher(true);
-         expected = new System.IO.DirectoryInfo(tempPath);
-         Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", Reporter());
-
-         StopWatcher(true);
-         actual = new DirectoryInfo(tempPath);
-         Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", Reporter());
-
-         // Compare values of both instances.
-         CompareDirectoryInfos(expected, actual);
-
-         #region DirectoryNotFoundException
-
-         bool exception = false;
-         try
-         {
-            Console.WriteLine("\nCatch: DirectoryInfo.Delete(): The directory does not exist or could not be found.");
-            actual.Delete();
-         }
-         catch (DirectoryNotFoundException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tDirectoryNotFoundException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught DirectoryNotFoundException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "DirectoryNotFoundException should have been caught.");
-
-         #endregion DirectoryNotFoundException
-
-         #endregion // Non-Existing Directory
-
-         #region Existing Directory
-         tempPath = Path.Combine(Path.GetTempPath(), "DirectoryInfo()-Directory-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Directory.CreateDirectory(tempPath);
-
-         Console.WriteLine("\n\nInput Directory Path: [{0}]\n", tempPath);
-
-         StopWatcher(true);
-         expected = new System.IO.DirectoryInfo(tempPath);
-         Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", Reporter());
-
-         StopWatcher(true);
-         actual = new DirectoryInfo(tempPath);
-         Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", Reporter());
-
-         // Compare values of both instances.
-         CompareDirectoryInfos(expected, actual);
-
-         Directory.Delete(tempPath);
-         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         #endregion // Existing Directory
-
-         #region Method .ToString() (Issue-21118)
-         Console.WriteLine("\nMethod .ToString()");
-
-         DirectoryInfo dirAlphaFs = new DirectoryInfo("ToString()-TestFolder");
-         System.IO.DirectoryInfo dirSysIo = new System.IO.DirectoryInfo("ToString()-TestFolder");
-
-         string dirAlphaFsToString = dirAlphaFs.ToString();
-         string dirSysIoToString = dirSysIo.ToString();
-
-         Console.WriteLine("\tBoth strings should be the same.");
-         Console.WriteLine("\tAlphaFS  : [{0}]", dirAlphaFsToString);
-         Console.WriteLine("\tSystem.IO: [{0}]", dirSysIoToString);
-
-         Assert.AreEqual(dirSysIoToString, dirAlphaFsToString, false);
-         Console.WriteLine();
-
-         #endregion Method .ToString()
       }
 
       #endregion // DumpClassDirectoryInfo
@@ -975,97 +1026,61 @@ namespace AlphaFS.UnitTest
       #endregion // DumpClassDriveInfo
 
       #region DumpClassFileInfo
-
-      private static void CompareFileInfos(System.IO.FileInfo expected, FileInfo actual)
-      {
-         if (expected == null || actual == null)
-            Assert.AreEqual(expected, actual, "Mismatch");
-
-         Dump(expected, -17);
-         Dump(actual, -17);
-
-         int errorCnt = 0;
-         int cnt = -1;
-         while (cnt != 15)
-         {
-            cnt++;
-            try
-            {
-               // Compare values of both instances.
-               switch (cnt)
-               {
-                  case 0:
-                     Assert.AreEqual(expected.Attributes, actual.Attributes, "Attributes AlphaFS != System.IO");
-                     break;
-                  case 1:
-                     Assert.AreEqual(expected.CreationTime, actual.CreationTime, "CreationTime AlphaFS != System.IO");
-                     break;
-                  case 2:
-                     Assert.AreEqual(expected.CreationTimeUtc, actual.CreationTimeUtc,
-                        "CreationTimeUtc AlphaFS != System.IO");
-                     break;
-
-                     // Need .ToString() here since the object types are obviously not the same.
-                  case 3:
-                     Assert.AreEqual(expected.Directory.ToString(), actual.Directory.ToString(),
-                        "Directory AlphaFS != System.IO");
-                     break;
-
-                  case 4:
-                     Assert.AreEqual(expected.DirectoryName, actual.DirectoryName, "DirectoryName AlphaFS != System.IO");
-                     break;
-                  case 5:
-                     Assert.AreEqual(expected.Exists, actual.Exists, "Exists AlphaFS != System.IO");
-                     break;
-                  case 6:
-                     Assert.AreEqual(expected.Extension, actual.Extension, "Extension AlphaFS != System.IO");
-                     break;
-                  case 7:
-                     Assert.AreEqual(expected.FullName, actual.FullName, "FullName AlphaFS != System.IO");
-                     break;
-                  case 8:
-                     Assert.AreEqual(expected.IsReadOnly, actual.IsReadOnly, "IsReadOnly AlphaFS != System.IO");
-                     break;
-                  case 9:
-                     Assert.AreEqual(expected.LastAccessTime, actual.LastAccessTime,
-                        "LastAccessTime AlphaFS != System.IO");
-                     break;
-                  case 10:
-                     Assert.AreEqual(expected.LastAccessTimeUtc, actual.LastAccessTimeUtc,
-                        "LastAccessTimeUtc AlphaFS != System.IO");
-                     break;
-                  case 11:
-                     Assert.AreEqual(expected.LastWriteTime, actual.LastWriteTime, "LastWriteTime AlphaFS != System.IO");
-                     break;
-                  case 12:
-                     Assert.AreEqual(expected.LastWriteTimeUtc, actual.LastWriteTimeUtc,
-                        "LastWriteTimeUtc AlphaFS != System.IO");
-                     break;
-                  case 13:
-                     Assert.AreEqual(expected.Length, actual.Length, "Length AlphaFS != System.IO");
-                     break;
-                  case 14:
-                     Assert.AreEqual(expected.Name, actual.Name, "Name AlphaFS != System.IO");
-                     break;
-               }
-            }
-            catch (Exception ex)
-            {
-               errorCnt++;
-               Console.WriteLine("\n\t\t\tProperty cnt #{0}\tCaught Exception: [{1}]", (cnt + 1), ex.Message.Replace(Environment.NewLine, "  "));
-            }
-         }
-
-         //Assert.IsTrue(errorCnt == 0, "\tEncountered: [{0}] FileInfo Properties where AlphaFS != System.IO", errorCnt);
-         Console.WriteLine();
-      }
-
+      
       private static void DumpClassFileInfo(bool isLocal)
       {
+         #region Setup
+
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string tempPath = Path.Combine(Path.GetTempPath(), "FileInfo()-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Console.WriteLine("\nInput FileInfo() Path: [{0}]\n", tempPath);
+
+         int expectedLastError;
+         string expectedException;
+
+         #endregion // Setup
+
+         #region NotSupportedException
+
+         expectedLastError = 0;
+         expectedException = "System.NotSupportedException";
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nCatch: FileInfo(): [{0}]: The given path's format is not supported.", expectedException);
+
+            string invalidPath = SysDrive + @"\:a";
+            if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + @":a";
+
+            FileInfo di = new FileInfo(invalidPath);
+         }
+         catch (Exception ex)
+         {
+            // win32Error is always 0
+            //Win32Exception win32Error = new Win32Exception("", ex);
+            //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+
+            string exceptionTypeName = ex.GetType().FullName;
+            if (exceptionTypeName.Equals(expectedException))
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            else
+               Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Console.WriteLine();
+
+         #endregion // NotSupportedException
+
          #region Current Directory: .
 
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tempPath = Path.CurrentDirectoryPrefix;
+         tempPath = Path.CurrentDirectoryPrefix;
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          Console.WriteLine("\nInput File Path: [{0}] (dot = Current directory)\n", tempPath);
@@ -1132,7 +1147,7 @@ namespace AlphaFS.UnitTest
 
          #endregion // Existing File
 
-         #region Method .ToString() (Issue: 21118)
+         #region Method .ToString()
 
          Console.WriteLine("\nMethod .ToString()");
 
@@ -1150,6 +1165,90 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
 
          #endregion Method .ToString()
+      }
+
+      private static void CompareFileInfos(System.IO.FileInfo expected, FileInfo actual)
+      {
+         if (expected == null || actual == null)
+            Assert.AreEqual(expected, actual, "Mismatch");
+
+         Dump(expected, -17);
+         Dump(actual, -17);
+
+         int errorCnt = 0;
+         int cnt = -1;
+         while (cnt != 15)
+         {
+            cnt++;
+            try
+            {
+               // Compare values of both instances.
+               switch (cnt)
+               {
+                  case 0:
+                     Assert.AreEqual(expected.Attributes, actual.Attributes, "Attributes AlphaFS != System.IO");
+                     break;
+                  case 1:
+                     Assert.AreEqual(expected.CreationTime, actual.CreationTime, "CreationTime AlphaFS != System.IO");
+                     break;
+                  case 2:
+                     Assert.AreEqual(expected.CreationTimeUtc, actual.CreationTimeUtc,
+                        "CreationTimeUtc AlphaFS != System.IO");
+                     break;
+
+                  // Need .ToString() here since the object types are obviously not the same.
+                  case 3:
+                     Assert.AreEqual(expected.Directory.ToString(), actual.Directory.ToString(),
+                        "Directory AlphaFS != System.IO");
+                     break;
+
+                  case 4:
+                     Assert.AreEqual(expected.DirectoryName, actual.DirectoryName, "DirectoryName AlphaFS != System.IO");
+                     break;
+                  case 5:
+                     Assert.AreEqual(expected.Exists, actual.Exists, "Exists AlphaFS != System.IO");
+                     break;
+                  case 6:
+                     Assert.AreEqual(expected.Extension, actual.Extension, "Extension AlphaFS != System.IO");
+                     break;
+                  case 7:
+                     Assert.AreEqual(expected.FullName, actual.FullName, "FullName AlphaFS != System.IO");
+                     break;
+                  case 8:
+                     Assert.AreEqual(expected.IsReadOnly, actual.IsReadOnly, "IsReadOnly AlphaFS != System.IO");
+                     break;
+                  case 9:
+                     Assert.AreEqual(expected.LastAccessTime, actual.LastAccessTime,
+                        "LastAccessTime AlphaFS != System.IO");
+                     break;
+                  case 10:
+                     Assert.AreEqual(expected.LastAccessTimeUtc, actual.LastAccessTimeUtc,
+                        "LastAccessTimeUtc AlphaFS != System.IO");
+                     break;
+                  case 11:
+                     Assert.AreEqual(expected.LastWriteTime, actual.LastWriteTime, "LastWriteTime AlphaFS != System.IO");
+                     break;
+                  case 12:
+                     Assert.AreEqual(expected.LastWriteTimeUtc, actual.LastWriteTimeUtc,
+                        "LastWriteTimeUtc AlphaFS != System.IO");
+                     break;
+                  case 13:
+                     Assert.AreEqual(expected.Length, actual.Length, "Length AlphaFS != System.IO");
+                     break;
+                  case 14:
+                     Assert.AreEqual(expected.Name, actual.Name, "Name AlphaFS != System.IO");
+                     break;
+               }
+            }
+            catch (Exception ex)
+            {
+               errorCnt++;
+               Console.WriteLine("\n\t\t\tProperty cnt #{0}\tCaught Exception: [{1}]", (cnt + 1), ex.Message.Replace(Environment.NewLine, "  "));
+            }
+         }
+
+         //Assert.IsTrue(errorCnt == 0, "\tEncountered: [{0}] FileInfo Properties where AlphaFS != System.IO", errorCnt);
+         Console.WriteLine();
       }
 
       #endregion // DumpClassFileInfo

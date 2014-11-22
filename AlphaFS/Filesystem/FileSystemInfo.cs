@@ -178,15 +178,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
       {
+         if (isFullPath != null && (bool) !isFullPath)
+            Path.CheckValidPath(path, true, true);
+
          LongFullName = isFullPath == null
             ? path
             : (bool) isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
-               : Path.GetFullPathInternal(transaction, path, true, false, false, !isFolder, true, true, true);
+               : Path.GetFullPathInternal(transaction, path, true, false, false, !isFolder, true, false, false);
 #else
                // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the FileSystemInfo instance.
-               : Path.GetFullPathInternal(transaction, path, true, true, false, !isFolder, true, true, true);
+               : Path.GetFullPathInternal(transaction, path, true, true, false, !isFolder, true, false, false);
 #endif
 
          FullPath = Path.GetRegularPathInternal(LongFullName, false, false, false, false);
