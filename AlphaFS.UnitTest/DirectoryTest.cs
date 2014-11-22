@@ -637,7 +637,7 @@ namespace AlphaFS.UnitTest
          {
             #region Directory.CreateDirectory
 
-            #region IOException
+            #region IOException #1
 
             using (File.Create(tempPath)) {}
 
@@ -670,8 +670,44 @@ namespace AlphaFS.UnitTest
 
             File.Delete(tempPath);
 
-            #endregion // IOException
+            #endregion // IOException #1
 
+            #region IOException #2
+
+            using (File.Create(tempPath)) {}
+
+            expectedLastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: Directory.CreateDirectory(): [{0}]: File already exist with same name.", expectedException);
+
+               Directory.CreateDirectory(Path.Combine(tempPath, "abc"));
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+               else
+                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            File.Delete(tempPath);
+
+            #endregion // IOException #2
+            
             #region DirectoryNotFoundException (Local) / IOException (Network)
 
             expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
@@ -679,7 +715,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\n\nFail: Directory.CreateDirectory(): The specified path is invalid (for example, it is on an unmapped drive).");
+               Console.WriteLine("\nCatch: Directory.CreateDirectory(): The specified path is invalid (for example, it is on an unmapped drive).");
 #if NET35
                string letter = DriveInfo.GetFreeDriveLetter() + @":\shouldFail" + emspace;
 #else

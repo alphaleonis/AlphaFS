@@ -6779,10 +6779,13 @@ namespace Alphaleonis.Win32.Filesystem
                   switch ((uint)lastError)
                   {
                      // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
-                     // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
+                     // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
                         if (File.ExistsInternal(false, transaction, pathLp, true, null))
                            NativeError.ThrowException(lastError, pathLp, true);
+                        
+                        if (File.ExistsInternal(false, transaction, folderLp, true, null))
+                           NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, folderLp, true);
                         break;
 
                      case Win32Errors.ERROR_BAD_NET_NAME:
