@@ -98,7 +98,8 @@ namespace Alphaleonis.Win32
 
             case Win32Errors.ERROR_ALREADY_EXISTS:
             case Win32Errors.ERROR_FILE_EXISTS:
-               throw new AlreadyExistsException(errorMessage);
+               //throw new AlreadyExistsException(errorMessage);
+               throw new IOException(errorMessage, (int)errorCode);
 
             case Win32Errors.ERROR_PATH_NOT_FOUND:
                throw new DirectoryNotFoundException(errorMessage);
@@ -107,13 +108,15 @@ namespace Alphaleonis.Win32
                throw new UnauthorizedAccessException(errorMessage);
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
-               throw new DirectoryNotEmptyException(errorMessage);
+               //throw new DirectoryNotEmptyException(errorMessage);
+               throw new IOException(errorMessage, (int)errorCode);
 
             case Win32Errors.ERROR_BAD_DEVICE:
             case Win32Errors.ERROR_BAD_NET_NAME:
             case Win32Errors.NERR_NetNameNotFound:
             case Win32Errors.NERR_UseNotFound:
-               throw new DeviceNotReadyException(errorMessage);
+               //throw new DeviceNotReadyException(errorMessage);
+               throw new IOException(errorMessage, (int)errorCode);
 
             case Win32Errors.ERROR_BAD_RECOVERY_POLICY:
                throw new PolicyException(errorMessage);

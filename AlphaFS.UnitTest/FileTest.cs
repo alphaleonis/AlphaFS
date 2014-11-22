@@ -592,7 +592,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("\nInput File Path: [{0}]", tempPath);
             Console.WriteLine("\n\tFilestream.Name   == [{0}]", fs.Name);
-            Console.WriteLine("\n\tFilestream.Length == [{0}] (Should be True): [{2}]", NativeMethods.UnitSizeToText(ten), TextTrue, isTen);
+            Console.WriteLine("\n\tFilestream.Length == [{0}] (Should be True): [{1}]", NativeMethods.UnitSizeToText(ten), isTen);
 
             Assert.IsTrue(File.Exists(tempPath), "File should exist.");
             Assert.IsTrue(isTen, "File should be [{0}] bytes in size.", ten);

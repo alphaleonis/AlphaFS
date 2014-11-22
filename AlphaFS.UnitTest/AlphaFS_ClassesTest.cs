@@ -695,14 +695,14 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput DirectoryInfo() Path: [{0}]\n", tempPath);
 
-         int expectedLastError;
+         //int expectedLastError;
          string expectedException;
 
          #endregion // Setup
 
          #region NotSupportedException
 
-         expectedLastError = 0;
+         //expectedLastError = 0;
          expectedException = "System.NotSupportedException";
          bool exception = false;
          try
@@ -1037,14 +1037,14 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput FileInfo() Path: [{0}]\n", tempPath);
 
-         int expectedLastError;
+         //int expectedLastError;
          string expectedException;
 
          #endregion // Setup
 
          #region NotSupportedException
 
-         expectedLastError = 0;
+         //expectedLastError = 0;
          expectedException = "System.NotSupportedException";
          bool exception = false;
          try

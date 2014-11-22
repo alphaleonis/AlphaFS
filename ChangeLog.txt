@@ -51,18 +51,24 @@ Version 1.6
 
 	* Mod: Add more reparse point tag entries to enum ReparsePointTag.
 
-	* Breaking
-		-Removed classes PathInfoXxx().
-		-Removed AlphaFS implementation of enum FileAccess in favor of System.IO.FileAccess enum.
-		-Removed AlphaFS implementation of enum FileAttributes in favor of System.IO.FileAttributes enum
-		-Removed AlphaFS implementation of enum FileMode in favor of System.IO.FileMode enum
-		-Removed AlphaFS implementation of enum FileOptions in favor of System.IO.FileOptions enum
-		-Removed AlphaFS implementation of enum FileShare in favor of System.IO.FileShare enum
-		-Removed AlphaFS implementation of enum FileSystemRights in favor of System.Security.AccessControl.FileSystemRights enum
-		-Removed AlphaFS implementation of enum FileType, now obsolete.
+	
+	* Removed classes PathInfoXxx().
+	
+	* Removed AlreadyExistsException.
+	* Removed DeviceNotReadyException.
+	* Removed DirectoryNotEmptyException.
+	* Removed IllegalPathException.
 
-		-Renamed enum CopyProgressResult to CopyMoveProgressResult.
-		-Renamed enum MoveFileOptions to MoveOptions.
+	* Removed enum FileAccess in favor of System.IO.FileAccess enum.
+	* Removed enum FileAttributes in favor of System.IO.FileAttributes enum.
+	* Removed enum FileMode in favor of System.IO.FileMode enum.
+	* Removed enum FileOptions in favor of System.IO.FileOptions enum.
+	* Removed enum FileShare in favor of System.IO.FileShare enum.
+	* Removed enum FileSystemRights in favor of System.Security.AccessControl.FileSystemRights enum.
+	* Removed enum FileType, now obsolete.
+
+	* Renamed enum CopyProgressResult to CopyMoveProgressResult
+	* Renamed enum MoveFileOptions to MoveOptions
 		
 
     

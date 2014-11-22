@@ -178,14 +178,11 @@
     <Compile Include="Filesystem\Enumerations\StreamAttributes.cs" />
     <Compile Include="Filesystem\Enumerations\StreamType.cs" />
     <Compile Include="Filesystem\Enumerations\VolumeInfoAttributes.cs" />
-    <Compile Include="Filesystem\Exceptions\AlreadyExistsException.cs" />
     <Compile Include="Filesystem\Enumerations\CopyOptions.cs" />
     <Compile Include="Filesystem\Enumerations\CopyMoveProgressCallbackReason.cs" />
     <Compile Include="Filesystem\Device.cs" />
-    <Compile Include="Filesystem\Exceptions\DeviceNotReadyException.cs" />
     <Compile Include="Filesystem\Directory.cs" />
     <Compile Include="Filesystem\DirectoryInfo.cs" />
-    <Compile Include="Filesystem\Exceptions\DirectoryNotEmptyException.cs" />
     <Compile Include="Filesystem\File.cs" />
     <Compile Include="Filesystem\BackupFileStream.cs" />
     <Compile Include="Filesystem\Enumerations\FileEncryptionStatus.cs" />
@@ -196,7 +193,6 @@
     <Compile Include="Filesystem\FindFileSystemEntryInfo.cs" />
     <Compile Include="Filesystem\FileSystemEntryInfo.cs" />
     <Compile Include="Filesystem\FileSystemInfo.cs" />
-    <Compile Include="Filesystem\Exceptions\IllegalPathException.cs" />
     <Compile Include="Filesystem\Enumerations\GetFileExInfoLevels.cs" />
     <Compile Include="Filesystem\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Filesystem\SafeSetupDiClassDevsExHandle.cs" />
@@ -323,7 +319,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
