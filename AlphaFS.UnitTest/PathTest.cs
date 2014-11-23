@@ -777,11 +777,11 @@ namespace AlphaFS.UnitTest
       public void GetFullPath()
       {
          Console.WriteLine("Path.GetFullPath()");
-
+         
          int pathCnt = 0;
-         bool allOk = false;
          int errorCnt = 0;
 
+         bool exception = false;
          try
          {
             Path.GetFullPath(SysDrive + @"\?test.txt");
@@ -791,48 +791,64 @@ namespace AlphaFS.UnitTest
          }
          catch (ArgumentException)
          {
-            allOk = true;
+            exception = true;
          }
-         Assert.IsTrue(allOk, "ArgumentException should have been caught.");
+         Assert.IsTrue(exception, "ArgumentException should have been caught.");
 
 
+
+         exception = false;
          try
          {
             Path.GetFullPath(SysDrive + @"\dev\test\aaa:aaa.txt");
          }
          catch (NotSupportedException)
          {
-            allOk = true;
+            exception = true;
          }
-         Assert.IsTrue(allOk, "NotSupportedException should have been caught.");
-         
+         Assert.IsTrue(exception, "NotSupportedException should have been caught.");
+
+
+         exception = false;
+         try
+         {
+            Path.GetFullPath(@"\\\\.txt");
+         }
+         catch (ArgumentException)
+         {
+            exception = true;
+         }
+         Assert.IsTrue(exception, "ArgumentException should have been caught.");
+
+
 
          StopWatcher(true);
          foreach (string input in InputPaths)
          {
             try
             {
-               string actual = Path.GetFullPath(input);
                string expected = System.IO.Path.GetFullPath(input);
+               string actual = Path.GetFullPath(input);
+
                Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, actual, expected);
                Assert.AreEqual(expected, actual);
             }
             catch (ArgumentException ex)
             {
-               Console.WriteLine("\n\t\tCaught ArgumentException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tCaught System IO ArgumentException: [{0}]: [{1}]", ex.Message.Replace(Environment.NewLine, "  "), input);
                //allOk = false;
                //errorCnt++;
             }
             catch (Exception ex)
             {
                Console.WriteLine("\n\t\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
+               exception = false;
                errorCnt++;
             }
          }
          Console.WriteLine("\n\t{0}\n", Reporter(true));
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(true, exception, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
 
       #endregion // GetFullPath

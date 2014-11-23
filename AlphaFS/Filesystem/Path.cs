@@ -308,6 +308,15 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CheckValidPath(path, true, true);
 
+         // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." : Current directory.
+         if (path != null)
+         {
+            string tackle = GetRegularPathInternal(path, false, false, false, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
+
+            if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
+               throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
+         }
+
          return GetFullPathInternal(null, path, false, false, false, false, false, false, false);
       }
 
@@ -327,6 +336,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(string path, bool asLongPath)
       {
+         // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." : Current directory.
+         if (path != null)
+         {
+            string tackle = GetRegularPathInternal(path, false, false, false, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
+
+            if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
+               throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
+         }
+
          return GetFullPathInternal(null, path, asLongPath, false, false, false, false, true, true);
       }
 
@@ -344,6 +362,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(string path, bool asLongPath, bool addDirectorySeparator, bool removeDirectorySeparator)
       {
+         // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." : Current directory.
+         if (path != null)
+         {
+            string tackle = GetRegularPathInternal(path, false, false, false, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
+
+            if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
+               throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
+         }
+
          return GetFullPathInternal(null, path, asLongPath, false, addDirectorySeparator, removeDirectorySeparator, false, true, true);
       }
       
@@ -366,6 +393,15 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CheckValidPath(path, true, true);
 
+         // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." : Current directory.
+         if (path != null)
+         {
+            string tackle = GetRegularPathInternal(path, false, false, false, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
+
+            if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
+               throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
+         }
+
          return GetFullPathInternal(transaction, path, false, false, false, false, false, false, false);
       }
 
@@ -384,6 +420,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(KernelTransaction transaction, string path, bool asLongPath)
       {
+         // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." : Current directory.
+         if (path != null)
+         {
+            string tackle = GetRegularPathInternal(path, false, false, false, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
+
+            if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
+               throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
+         }
+
          return GetFullPathInternal(transaction, path, asLongPath, false, false, false, false, true, true);
       }
 
@@ -402,6 +447,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(KernelTransaction transaction, string path, bool asLongPath, bool addDirectorySeparator, bool removeDirectorySeparator)
       {
+         // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." : Current directory.
+         if (path != null)
+         {
+            string tackle = GetRegularPathInternal(path, false, false, false, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
+
+            if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
+               throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
+         }
+
          return GetFullPathInternal(transaction, path, asLongPath, false, addDirectorySeparator, removeDirectorySeparator, false, true, true);
       }
 
