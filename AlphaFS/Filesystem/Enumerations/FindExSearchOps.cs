@@ -23,30 +23,39 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>FINDEX_SEARCH_OPS - Defines values that are used with the FindFirstFileEx function to specify the type of filtering to perform.</summary>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</remarks>
+      /// <summary>FINDEX_SEARCH_OPS Enumeration - Defines values that are used with the FindFirstFileEx function
+      /// <para>to specify the type of filtering to perform.</para>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
+      /// </remarks>
+      /// </summary>
       internal enum FindExSearchOps
       {
-         /// <summary>
-         /// The search for a file that matches a specified file name.
-         /// The lpSearchFilter parameter of FindFirstFileEx must be NULL when this search operation is used.
+         /// <summary>The search for a file that matches a specified file name.
+         /// <para>The lpSearchFilter parameter of FindFirstFileEx must be NULL when this search operation is used.</para>
          /// </summary>
          SearchNameMatch = 0,
 
-         /// <summary>
-         /// This is an advisory flag. If the file system supports directory filtering, the function searches for a file that matches
-         /// the specified name and is also a directory. If the file system does not support directory filtering, this flag is silently ignored. 
-         /// </summary>
+         /// <summary>This is an advisory flag. If the file system supports directory filtering,
+         /// <para>the function searches for a file that matches the specified name and is also a directory.</para> 
+         /// <para>If the file system does not support directory filtering, this flag is silently ignored.</para>
+         /// <para>&#160;</para>
          /// <remarks>
-         /// The lpSearchFilter parameter of the FindFirstFileEx function must be NULL when this search value is used.
-         /// If directory filtering is desired, this flag can be used on all file systems, but because it is an advisory flag and only affects file systems that support it,
-         /// the application must examine the file attribute data stored in the lpFindFileData parameter of the FindFirstFileEx function to determine whether the function has returned a handle to a directory.
+         /// <para>The lpSearchFilter parameter of the FindFirstFileEx function must be NULL when this search value is used.</para>
+         /// <para>If directory filtering is desired, this flag can be used on all file systems,</para>
+         /// <para>but because it is an advisory flag and only affects file systems that support it,</para>
+         /// <para>the application must examine the file attribute data stored in the lpFindFileData parameter</para>
+         /// <para>of the FindFirstFileEx function to determine whether the function has returned a handle to a directory.</para>
          /// </remarks>
+         /// </summary>
          SearchLimitToDirectories = 1,
 
-         /// <summary>This filtering type is not available.</summary>
+         /// <summary>This filtering type is not available.
+         /// <para>&#160;</para>
          /// <remarks>For more information, see Device Interface Classes.</remarks>
+         /// </summary>
          SearchLimitToDevices = 2
       }
    }

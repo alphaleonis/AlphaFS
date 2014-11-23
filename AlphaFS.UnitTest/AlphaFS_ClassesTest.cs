@@ -729,7 +729,7 @@ namespace AlphaFS.UnitTest
             // win32Error is always 0
             //Win32Exception win32Error = new Win32Exception("", ex);
             //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
             string exceptionTypeName = ex.GetType().FullName;
             if (exceptionTypeName.Equals(expectedException))
@@ -738,7 +738,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             else
-               Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
@@ -1075,7 +1075,7 @@ namespace AlphaFS.UnitTest
             // win32Error is always 0
             //Win32Exception win32Error = new Win32Exception("", ex);
             //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
             string exceptionTypeName = ex.GetType().FullName;
             if (exceptionTypeName.Equals(expectedException))
@@ -1084,7 +1084,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             else
-               Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
@@ -1105,10 +1105,8 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            // win32Error is always 0
             Win32Exception win32Error = new Win32Exception("", ex);
             Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
 
             string exceptionTypeName = ex.GetType().FullName;
             if (exceptionTypeName.Equals(expectedException))
@@ -1117,7 +1115,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             else
-               Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();

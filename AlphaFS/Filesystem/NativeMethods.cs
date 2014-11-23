@@ -41,8 +41,36 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Fields
 
+      #region Operating System
+
       internal static readonly bool IsAtLeastWindows7 = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows7);
       internal static readonly bool IsAtLeastWindowsVista = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.WindowsVista);
+
+      #endregion // Operating System
+
+      #region BasicSearch
+
+      /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The data is returned in a <see cref="T:NativeMethods.Win32FindData"/> structure,</para>
+      /// <para>and cAlternateFileName member is always a NULL string.</para>
+      /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
+      /// </remarks>
+      /// </summary>
+      public static readonly FindExInfoLevels BasicSearch = IsAtLeastWindows7 ? FindExInfoLevels.Basic : FindExInfoLevels.Standard;
+
+      #endregion // BasicSearch
+
+      #region LargeCache
+
+      /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.
+      /// <para>&#160;</para>
+      /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
+      /// </summary>
+      public static readonly FindExAdditionalFlags LargeCache = IsAtLeastWindows7 ? FindExAdditionalFlags.LargeFetch : FindExAdditionalFlags.None;
+
+      #endregion // LargeCache
 
       #region DefaultFileBufferSize
 

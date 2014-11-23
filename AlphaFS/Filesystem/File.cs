@@ -8217,12 +8217,6 @@ namespace Alphaleonis.Win32.Filesystem
             // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             {
-               NativeMethods.FindExInfoLevels basicSearch = NativeMethods.IsAtLeastWindows7
-                  ? NativeMethods.FindExInfoLevels.Basic
-                  : NativeMethods.FindExInfoLevels.Standard;
-
-               NativeMethods.FindExAdditionalFlags largeCache = NativeMethods.IsAtLeastWindows7 ? NativeMethods.FindExAdditionalFlags.LargeFetch : NativeMethods.FindExAdditionalFlags.None;
-
                bool error = false;
 
                SafeFindFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -8233,8 +8227,8 @@ namespace Alphaleonis.Win32.Filesystem
                   // 2013-01-13: MSDN confirms LongPath usage.
 
                   // A trailing backslash is not allowed.
-                  ? NativeMethods.FindFirstFileEx(Path.RemoveDirectorySeparator(pathLp, false), basicSearch, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, largeCache)
-                  : NativeMethods.FindFirstFileTransacted(Path.RemoveDirectorySeparator(pathLp, false), basicSearch, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, largeCache, transaction.SafeHandle);
+                  ? NativeMethods.FindFirstFileEx(Path.RemoveDirectorySeparator(pathLp, false), NativeMethods.BasicSearch, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache)
+                  : NativeMethods.FindFirstFileTransacted(Path.RemoveDirectorySeparator(pathLp, false), NativeMethods.BasicSearch, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache, transaction.SafeHandle);
 
                try
                {

@@ -57,10 +57,26 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (!ContinueOnException)
             {
-               if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && IsFolder)
-                  lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+               // Use path without any search filter.
+               string path = Path.GetDirectoryName(pathLp, false);
 
-               NativeError.ThrowException(lastError, pathLp, true);
+               switch ((uint) lastError)
+               {
+                  case Win32Errors.ERROR_FILE_NOT_FOUND:
+                  case Win32Errors.ERROR_PATH_NOT_FOUND:
+                     // MSDN: .NET 3.5+: DirectoryNotFoundException: path is invalid, such as referring to an unmapped drive.
+                     if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
+                        lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+                     NativeError.ThrowException(lastError, path);
+                     break;
+
+                  case Win32Errors.ERROR_DIRECTORY:
+                     // MSDN: .NET 3.5+: IOException: path is a file name.
+                     NativeError.ThrowException(lastError, path, true);
+                     break;
+               }
+
+               NativeError.ThrowException(lastError, path, true);
             }
          }
 
@@ -246,7 +262,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region BasicSearch
 
-      private NativeMethods.FindExInfoLevels _basicSearch = NativeMethods.IsAtLeastWindows7 ? NativeMethods.FindExInfoLevels.Basic : NativeMethods.FindExInfoLevels.Standard;
+      private NativeMethods.FindExInfoLevels _basicSearch = NativeMethods.BasicSearch;
 
       /// <summary>Gets or sets a value indicating which <see cref="T:NativeMethods.FindExInfoLevels"/> to use.</summary>
       /// <value><c>true</c> uses <see cref="T:NativeMethods.FindExInfoLevels.Basic"/>, otherwise uses <see cref="T:NativeMethods.FindExInfoLevels.Standard"/></value>
@@ -348,7 +364,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LargeCache
 
-      private NativeMethods.FindExAdditionalFlags _largeCache = NativeMethods.IsAtLeastWindows7 ? NativeMethods.FindExAdditionalFlags.LargeFetch : NativeMethods.FindExAdditionalFlags.None;
+      private NativeMethods.FindExAdditionalFlags _largeCache = NativeMethods.LargeCache;
 
       /// <summary>Gets or sets a value indicating which <see cref="T:NativeMethods.FindExAdditionalFlags"/> to use.</summary>
       /// <value><c>true</c> uses <see cref="T:NativeMethods.FindExAdditionalFlags.LargeFetch"/>, otherwise uses <see cref="T:NativeMethods.FindExAdditionalFlags.None"/></value>

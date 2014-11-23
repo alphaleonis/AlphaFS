@@ -23,17 +23,31 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>FINDEX_INFO_LEVELS - Defines values that are used with the FindFirstFileEx function to specify the information level of the returned data.</summary>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</remarks>
+      /// <summary>FINDEX_INFO_LEVELS Enumeration - Defines values that are used with the FindFirstFileEx function
+      /// <para>to specify the information level of the returned data.</para>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
+      /// </remarks>
+      /// </summary>
       internal enum FindExInfoLevels
       {
-         /// <summary>The FindFirstFileEx function retrieves a standard set of attribute information. The data is returned in a <see cref="T:NativeMethods.Win32FindData"/> structure.</summary>
+         /// <summary>The FindFirstFileEx function retrieves a standard set of attribute information.
+         /// <para>&#160;</para>
+         /// <para>The data is returned in a <see cref="T:NativeMethods.Win32FindData"/> structure.</para>
+         /// </summary>
          Standard = 0,
 
-         /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.</summary>
-         /// <remarks>The data is returned in a <see cref="T:NativeMethods.Win32FindData"/> structure, and cAlternateFileName member is always a NULL string.</remarks>
-         /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
+         /// <summary>The FindFirstFileEx function does not query the short file name,
+         /// <para>improving overall enumeration speed.</para>
+         /// <para>&#160;</para>
+         /// <remarks>
+         /// <para>The data is returned in a <see cref="T:NativeMethods.Win32FindData"/> structure,</para>
+         /// <para>and cAlternateFileName member is always a NULL string.</para>
+         /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
+         /// </remarks>
+         /// </summary>
          Basic = 1
 
          ///// <summary>This value is used for validation. Supported values are less than this value.</summary>

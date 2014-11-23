@@ -491,7 +491,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -513,7 +513,7 @@ namespace AlphaFS.UnitTest
                // win32Error is always 0
                //Win32Exception win32Error = new Win32Exception("", ex.InnerException);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
                
                string exceptionTypeName = ex.GetType().FullName;
                if (exceptionTypeName.Equals(expectedException))
@@ -522,7 +522,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -575,7 +575,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -654,7 +654,7 @@ namespace AlphaFS.UnitTest
                // win32Error is always 0
                //Win32Exception win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
                if (exceptionTypeName.Equals(expectedException))
@@ -663,7 +663,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -690,7 +690,7 @@ namespace AlphaFS.UnitTest
                // win32Error is always 0
                //Win32Exception win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
                if (exceptionTypeName.Equals(expectedException))
@@ -699,7 +699,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -738,7 +738,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -763,7 +763,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -800,7 +800,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -885,7 +885,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -918,7 +918,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -947,7 +947,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -978,7 +978,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -1287,41 +1287,110 @@ namespace AlphaFS.UnitTest
 
       private void DumpEnumerateDirectories(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
-         #region IOException
+         bool exception;
+         int expectedLastError;
+         string expectedException;
 
-         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+         string random = Path.GetRandomFileName();
+         string folderSource = @"folder-source-" + random;
 
-         using (FileStream fs = File.Create(tempPath)) { }
-         bool exception = false;
+         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
+         string letter = originalLetter + @"\";
+
+         #endregion //Setup
+
+         #region DirectoryNotFoundException (Local) / IOException (Network)
+
+         expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+         expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
+         exception = false;
          try
          {
-            Console.WriteLine("\nCatch: path is a file name.");
-            Directory.EnumerateDirectories(tempPath, searchPattern, searchOption).Any();
-         }
-         catch (IOException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "Exception should have been caught.");
+            Console.WriteLine("\nCatch: [{0}]: Path is invalid, such as referring to an unmapped drive.", expectedException);
 
-         File.Delete(tempPath);
-         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            string nonExistingPath = letter + folderSource;
+            if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
+
+            Directory.EnumerateDirectories(nonExistingPath).Any();
+         }
+         catch (Exception ex)
+         {
+            // win32Error is always 0
+            Win32Exception win32Error = new Win32Exception("", ex);
+            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+            string exceptionTypeName = ex.GetType().FullName;
+            if (exceptionTypeName.Equals(expectedException))
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            else
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
+
+         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+
+         #region IOException
+
+         string tempPath = Path.GetTempPath("Directory.EnumerateDirectories-file-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         try
+         {
+            using (File.Create(tempPath)) {}
+
+            expectedLastError = (int) Win32Errors.ERROR_DIRECTORY;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
+
+               new DirectoryInfo(tempPath).EnumerateDirectories().Any();
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
 
          #endregion // IOException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("Input Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate directories, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
@@ -1382,41 +1451,110 @@ namespace AlphaFS.UnitTest
 
       private void DumpEnumerateFiles(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
-         #region IOException
+         bool exception;
+         int expectedLastError;
+         string expectedException;
 
-         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+         string random = Path.GetRandomFileName();
+         string folderSource = @"folder-source-" + random;
 
-         using (FileStream fs = File.Create(tempPath)) { }
-         bool exception = false;
+         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
+         string letter = originalLetter + @"\";
+
+         #endregion //Setup
+
+         #region DirectoryNotFoundException (Local) / IOException (Network)
+
+         expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+         expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
+         exception = false;
          try
          {
-            Console.WriteLine("\nCatch: path is a file name.");
-            Directory.EnumerateFiles(tempPath, searchPattern, searchOption).Any();
-         }
-         catch (IOException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "Exception should have been caught.");
+            Console.WriteLine("\nCatch: [{0}]: Path is invalid, such as referring to an unmapped drive.", expectedException);
 
-         File.Delete(tempPath);
-         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            string nonExistingPath = letter + folderSource;
+            if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
+
+            Directory.EnumerateFiles(nonExistingPath).Any();
+         }
+         catch (Exception ex)
+         {
+            // win32Error is always 0
+            Win32Exception win32Error = new Win32Exception("", ex);
+            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+            string exceptionTypeName = ex.GetType().FullName;
+            if (exceptionTypeName.Equals(expectedException))
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            else
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
+
+         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+
+         #region IOException
+
+         string tempPath = Path.GetTempPath("Directory.EnumerateFiles-file-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         try
+         {
+            using (File.Create(tempPath)) { }
+
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
+
+               new DirectoryInfo(tempPath).EnumerateFiles().Any();
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
 
          #endregion // IOException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("Input Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate files, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
@@ -1435,41 +1573,110 @@ namespace AlphaFS.UnitTest
 
       private void DumpEnumerateFileSystemEntries(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
-         #region IOException
+         bool exception;
+         int expectedLastError;
+         string expectedException;
 
-         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+         string random = Path.GetRandomFileName();
+         string folderSource = @"folder-source-" + random;
 
-         using (FileStream fs = File.Create(tempPath)) { }
-         bool exception = false;
+         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
+         string letter = originalLetter + @"\";
+
+         #endregion //Setup
+
+         #region DirectoryNotFoundException (Local) / IOException (Network)
+
+         expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+         expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
+         exception = false;
          try
          {
-            Console.WriteLine("\nCatch: path is a file name.");
-            Directory.EnumerateFileSystemEntries(tempPath, searchPattern, searchOption).Any();
-         }
-         catch (IOException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "Exception should have been caught.");
+            Console.WriteLine("\nCatch: [{0}]: Path is invalid, such as referring to an unmapped drive.", expectedException);
 
-         File.Delete(tempPath);
-         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            string nonExistingPath = letter + folderSource;
+            if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
+
+            Directory.EnumerateFileSystemEntries(nonExistingPath).Any();
+         }
+         catch (Exception ex)
+         {
+            // win32Error is always 0
+            Win32Exception win32Error = new Win32Exception("", ex);
+            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+            string exceptionTypeName = ex.GetType().FullName;
+            if (exceptionTypeName.Equals(expectedException))
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            else
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
+
+         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+
+         #region IOException
+
+         string tempPath = Path.GetTempPath("Directory.EnumerateFileSystemEntries-file-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         try
+         {
+            using (File.Create(tempPath)) { }
+
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
+
+               new DirectoryInfo(tempPath).EnumerateFileSystemInfos().Any();
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
 
          #endregion // IOException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("Input Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate file system entries, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
@@ -1556,41 +1763,110 @@ namespace AlphaFS.UnitTest
 
       private void DumpGetDirectories(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
+         
+         bool exception;
+         int expectedLastError;
+         string expectedException;
+
+         string random = Path.GetRandomFileName();
+         string folderSource = @"folder-source-" + random;
+
+         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
+         string letter = originalLetter + @"\";
+
+         #endregion //Setup
+
+         #region DirectoryNotFoundException (Local) / IOException (Network)
+
+         expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+         expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
+         exception = false;
+         try
+         {
+            Console.WriteLine("\nCatch: [{0}]: The specified path is invalid (for example, it is on an unmapped drive).", expectedException);
+
+            string nonExistingPath = letter + folderSource;
+            if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
+
+            Directory.GetDirectories(nonExistingPath);
+         }
+         catch (Exception ex)
+         {
+            // win32Error is always 0
+            Win32Exception win32Error = new Win32Exception("", ex);
+            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+            string exceptionTypeName = ex.GetType().FullName;
+            if (exceptionTypeName.Equals(expectedException))
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            else
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Console.WriteLine();
+
+         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
 
          #region IOException
 
-         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
+         string tempPath = Path.GetTempPath("Directory.GetDirectories-file-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         using (FileStream fs = File.Create(tempPath)) { }
-         bool exception = false;
          try
          {
-            Console.WriteLine("\nCatch: path is a file name.");
-            Directory.GetDirectories(tempPath, searchPattern, searchOption);
-         }
-         catch (IOException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "Exception should have been caught.");
+            using (File.Create(tempPath)) { }
 
-         File.Delete(tempPath);
-         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-         Console.WriteLine();
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
+
+               new DirectoryInfo(tempPath).GetDirectories();
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
 
          #endregion // IOException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("Input Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet directories, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
@@ -1641,41 +1917,110 @@ namespace AlphaFS.UnitTest
 
       private void DumpGetFiles(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
-         #region IOException
+         bool exception;
+         int expectedLastError;
+         string expectedException;
 
-         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+         string random = Path.GetRandomFileName();
+         string folderSource = @"folder-source-" + random;
 
-         using (FileStream fs = File.Create(tempPath)) { }
-         bool exception = false;
+         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
+         string letter = originalLetter + @"\";
+
+         #endregion //Setup
+
+         #region DirectoryNotFoundException (Local) / IOException (Network)
+
+         expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+         expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
+         exception = false;
          try
          {
-            Console.WriteLine("\nCatch: path is a file name.");
-            Directory.GetFiles(tempPath, searchPattern, searchOption);
-         }
-         catch (IOException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "Exception should have been caught.");
+            Console.WriteLine("\nCatch: [{0}]: The specified path is not found or is invalid (for example, it is on an unmapped drive).", expectedException);
 
-         File.Delete(tempPath);
-         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            string nonExistingPath = letter + folderSource;
+            if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
+
+            Directory.GetFiles(nonExistingPath);
+         }
+         catch (Exception ex)
+         {
+            // win32Error is always 0
+            Win32Exception win32Error = new Win32Exception("", ex);
+            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+            string exceptionTypeName = ex.GetType().FullName;
+            if (exceptionTypeName.Equals(expectedException))
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            else
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
 
+         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+
+         #region IOException
+
+         string tempPath = Path.GetTempPath("Directory.GetDirectories-file-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         try
+         {
+            using (File.Create(tempPath)) { }
+
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
+
+               new DirectoryInfo(tempPath).GetFiles();
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
+
          #endregion // IOException
-         
+
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
          
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("Input Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet files, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
@@ -1821,41 +2166,110 @@ namespace AlphaFS.UnitTest
 
       private void DumpGetFileSystemEntries(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
-         #region IOException
+         bool exception;
+         int expectedLastError;
+         string expectedException;
 
-         string tempPath = Path.Combine(Path.GetTempPath(), "File-Create-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+         string random = Path.GetRandomFileName();
+         string folderSource = @"folder-source-" + random;
 
-         using (FileStream fs = File.Create(tempPath)) { }
-         bool exception = false;
+         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
+         string letter = originalLetter + @"\";
+
+         #endregion //Setup
+
+         #region DirectoryNotFoundException (Local) / IOException (Network)
+
+         expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+         expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
+         exception = false;
          try
          {
-            Console.WriteLine("\nCatch: path is a file name.");
-            Directory.GetFileSystemEntries(tempPath, searchPattern, searchOption);
-         }
-         catch (IOException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "Exception should have been caught.");
+            Console.WriteLine("\nCatch: [{0}]: The specified path is invalid (for example, it is on an unmapped drive).", expectedException);
 
-         File.Delete(tempPath);
-         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            string nonExistingPath = letter + folderSource;
+            if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
+
+            Directory.GetFileSystemEntries(nonExistingPath);
+         }
+         catch (Exception ex)
+         {
+            // win32Error is always 0
+            Win32Exception win32Error = new Win32Exception("", ex);
+            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+            string exceptionTypeName = ex.GetType().FullName;
+            if (exceptionTypeName.Equals(expectedException))
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            else
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
+
+         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+
+         #region IOException
+
+         string tempPath = Path.GetTempPath("Directory.GetDirectories-file-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         try
+         {
+            using (File.Create(tempPath)) { }
+
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
+
+               new DirectoryInfo(tempPath).GetFileSystemInfos();
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
 
          #endregion // IOException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
+         Console.WriteLine("Input Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet FileSystemEntries, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
@@ -1968,7 +2382,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -1990,7 +2404,7 @@ namespace AlphaFS.UnitTest
                // win32Error is always 0
                //Win32Exception win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
                if (exceptionTypeName.Equals(expectedException))
@@ -1999,7 +2413,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -2021,7 +2435,7 @@ namespace AlphaFS.UnitTest
                // win32Error is always 0
                //Win32Exception win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
                if (exceptionTypeName.Equals(expectedException))
@@ -2030,7 +2444,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -2090,7 +2504,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
                else
-                  Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
