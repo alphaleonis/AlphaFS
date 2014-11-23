@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>The file attributes of a file.</summary>
          [MarshalAs(UnmanagedType.I4)]
-         public readonly FileAttributes FileAttributes;
+         public FileAttributes FileAttributes;
 
          #endregion // FileAttributes
 
@@ -113,12 +113,10 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region FileSize
 
+         /// <summary>The file size.</summary>
          public long FileSize
          {
-            get
-            {
-               return ToLong(FileSizeHigh, FileSizeLow);
-            }
+            get { return ToLong(FileSizeHigh, FileSizeLow); }
          }
 
          #endregion // FileSize

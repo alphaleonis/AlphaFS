@@ -287,6 +287,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An attempt to set an invalid file attribute failed..
+        /// </summary>
+        internal static string InvalidFileAttribute {
+            get {
+                return ResourceManager.GetString("InvalidFileAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid security descriptor returned from system..
         /// </summary>
         internal static string InvalidSecurityDescriptorReturnedFromSystem {

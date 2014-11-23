@@ -6866,7 +6866,7 @@ namespace Alphaleonis.Win32.Filesystem
                : Path.GetFullPathInternal(transaction, path, true, false, false, false, false, true, false);
 
          pathLp = Path.GetRegularPathInternal(pathLp, false, false, false, false);
-         string dirName = Path.GetDirectoryName(pathLp);
+         string dirName = Path.GetDirectoryName(pathLp, false);
 
          return Utils.IsNullOrWhiteSpace(dirName) ? null : new DirectoryInfo(transaction, dirName, false);
       }
@@ -6903,8 +6903,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool requireEmpty, bool continueOnNotExist, bool? isFullPath)
       {
+         #region Setup
+
          if (isFullPath != null && (bool) !isFullPath)
-            Path.CheckValidPath(path, true, false);
+            Path.CheckValidPath(path, true, true);
 
          if (fileSystemEntryInfo == null)
          {
@@ -6945,6 +6947,7 @@ namespace Alphaleonis.Win32.Filesystem
             // MSDN: .NET 3.5+: IOException: A file with the same name and location specified by path exists.
             throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp));
 
+         #endregion // Setup
 
          // Do not follow mount points nor symbolic links, but do delete the reparse point itself.
 
@@ -6952,7 +6955,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (recursive && fileSystemEntryInfo.IsReparsePoint)
             recursive = false;
 
-
+         
          // Check to see if this is a mount point, and unmount it.
          if (fileSystemEntryInfo.IsMountPoint)
          {
@@ -6979,12 +6982,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region Remove
 
-         // Reset directory attributes.
-         if (ignoreReadOnly)
-            File.SetAttributesInternal(true, transaction, pathLp, FileAttributes.Normal, continueOnNotExist, null);
-
-
-      startRemoveDirectory:
+         startRemoveDirectory:
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -7006,6 +7004,7 @@ namespace Alphaleonis.Win32.Filesystem
                      return;
                   break;
 
+
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   if (requireEmpty)
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory. 
@@ -7013,22 +7012,31 @@ namespace Alphaleonis.Win32.Filesystem
 
                   goto startRemoveDirectory;
 
-               case Win32Errors.ERROR_ACCESS_DENIED:
-                  // Reset directory attributes.
-                  if (ignoreReadOnly)
-                  {
-                     File.SetAttributesInternal(true, transaction, pathLp, FileAttributes.Normal, true, null);
-                     goto startRemoveDirectory;
-                  }
 
+               case Win32Errors.ERROR_ACCESS_DENIED:
                   FileAttributes attrs = File.GetAttributesInternal(true, transaction, pathLp, false, true, null);
-                  if (attrs != (FileAttributes)(-1))
+                  if (attrs != (FileAttributes) (-1))
                   {
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory.
                      // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                      // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                     if ((attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
-                        NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, pathLp, true);
+
+                     bool isReadOnly = ((attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly);
+                     bool isHidden = ((attrs & FileAttributes.Hidden) == FileAttributes.Hidden);
+
+                     if (ignoreReadOnly && (isReadOnly || isHidden))
+                     {
+                        // Reset directory attributes.
+                        File.SetAttributesInternal(true, transaction, pathLp, FileAttributes.Normal, true, null);
+                        goto startRemoveDirectory;
+                     }
+
+                     // MSDN: .NET 3.5+: UnauthorizedAccessException: path specified a read-only file.
+                     NativeError.ThrowException(isReadOnly
+                        ? Win32Errors.ERROR_FILE_READ_ONLY
+                        : fileSystemEntryInfo.IsDirectory
+                           ? Win32Errors.ERROR_PATH_NOT_FOUND
+                           : Win32Errors.ERROR_FILE_NOT_FOUND, fileSystemEntryInfo.LongFullPath, true);
                   }
 
                   break;

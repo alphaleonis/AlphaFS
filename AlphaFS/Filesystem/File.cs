@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System.ComponentModel;
 using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System;
@@ -7785,9 +7786,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Unified method DeleteFileInternal() to delete a Non-/Transacted file.
       /// <para>&#160;</para>
-      /// <remarks><para>If the file to be deleted does not exist, no exception is thrown.</para></remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <remarks>If the file to be deleted does not exist, no exception is thrown</remarks>
       /// </summary>
+      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="T:FileAttributes"/> of the file.</param>
@@ -7799,6 +7800,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteFileInternal(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
       {
+         #region Setup
+
          if (isFullPath != null && (bool) !isFullPath)
             Path.CheckValidPath(path, true, true);
 
@@ -7812,25 +7815,13 @@ namespace Alphaleonis.Win32.Filesystem
                // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the file.
                : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false);
 #endif
-         
-         // Reset file attributes.
-         // MSDN: This function fails with ERROR_ACCESS_DENIED if the destination file already exists and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-         if (ignoreReadOnly)
-            SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, null);
-
-         else
-         {
-            FileAttributes attrs = GetAttributesInternal(false, transaction, pathLp, false, true, null);
-
-            if (attrs != (FileAttributes) (-1) && (attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
-            {
-               // MSDN: .NET 3.5+: UnauthorizedAccessException: path specified a read-only file.
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, pathLp);
-            }
-         }
 
          // If the path points to a symbolic link, the symbolic link is deleted, not the target.
-         
+
+         #endregion // Setup
+
+         startDeleteFile:
+
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // DeleteFile() / DeleteFileTransacted()
@@ -7842,10 +7833,46 @@ namespace Alphaleonis.Win32.Filesystem
             : NativeMethods.DeleteFileTransacted(pathLp, transaction.SafeHandle)))
          {
             int lastError = Marshal.GetLastWin32Error();
+            switch ((uint) lastError)
+            {
+               case Win32Errors.ERROR_FILE_NOT_FOUND:
+                  // MSDN: .NET 3.5+: If the file to be deleted does not exist, no exception is thrown.
+                  return;
 
-            // MSDN: If the file to be deleted does not exist, no exception is thrown.
-            if (lastError != Win32Errors.ERROR_FILE_NOT_FOUND)
-               NativeError.ThrowException(lastError, pathLp);
+               case Win32Errors.ERROR_ACCESS_DENIED:
+                  FileAttributes attrs = GetAttributesInternal(false, transaction, pathLp, false, true, null);
+                  if (attrs != (FileAttributes) (-1))
+                  {
+                     // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory.
+                     // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
+                     // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
+
+                     bool isFolder = ((attrs & FileAttributes.Directory) == FileAttributes.Directory);
+                     bool isReadOnly = ((attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly);
+                     bool isHidden = ((attrs & FileAttributes.Hidden) == FileAttributes.Hidden);
+
+                     if (ignoreReadOnly && (isReadOnly || isHidden))
+                     {
+                        // Reset file attributes.
+                        SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, null);
+                        goto startDeleteFile;
+                     }
+
+                     // MSDN: .NET 3.5+: UnauthorizedAccessException: path specified a read-only file.
+                     if (isReadOnly)
+                        throw new UnauthorizedAccessException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}: [{2}]",
+                           Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message, pathLp));
+
+                     if (isHidden)
+                        throw new UnauthorizedAccessException(isFolder
+                           ? new DirectoryNotFoundException().Message
+                           : new FileNotFoundException().Message);
+                  }
+
+                  break;
+            }
+
+            NativeError.ThrowException(lastError, pathLp);
          }
       }
 
@@ -8170,6 +8197,127 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion ExistsInternal
 
+      #region FillAttributeInfo
+
+      // Returns 0 on success, otherwise a Win32 error code.
+      // Note that classes should use -1 as the uninitialized state for dataInitialized.
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+      [SecurityCritical]
+      internal static int FillAttributeInfo(KernelTransaction transaction, string pathLp, ref NativeMethods.Win32FileAttributeData win32AttrData, bool tryagain, bool returnErrorOnNotFound)
+      {
+         int dataInitialised = 0;
+
+         #region Try Again
+
+         // Someone has a handle to the file open, or other error.
+         if (tryagain) 
+         {
+            NativeMethods.Win32FindData findData;
+
+            // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
+            using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
+            {
+               NativeMethods.FindExInfoLevels basicSearch = NativeMethods.IsAtLeastWindows7
+                  ? NativeMethods.FindExInfoLevels.Basic
+                  : NativeMethods.FindExInfoLevels.Standard;
+
+               NativeMethods.FindExAdditionalFlags largeCache = NativeMethods.IsAtLeastWindows7 ? NativeMethods.FindExAdditionalFlags.LargeFetch : NativeMethods.FindExAdditionalFlags.None;
+
+               bool error = false;
+
+               SafeFindFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
+
+                  // FindFirstFileEx() / FindFirstFileTransacted()
+                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+                  // 2013-01-13: MSDN confirms LongPath usage.
+
+                  // A trailing backslash is not allowed.
+                  ? NativeMethods.FindFirstFileEx(Path.RemoveDirectorySeparator(pathLp, false), basicSearch, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, largeCache)
+                  : NativeMethods.FindFirstFileTransacted(Path.RemoveDirectorySeparator(pathLp, false), basicSearch, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, largeCache, transaction.SafeHandle);
+
+               try
+               {
+                  if (handle.IsInvalid)
+                  {
+                     error = true;
+                     dataInitialised = Marshal.GetLastWin32Error();
+
+                     if (dataInitialised == Win32Errors.ERROR_FILE_NOT_FOUND ||
+                         dataInitialised == Win32Errors.ERROR_PATH_NOT_FOUND ||
+                         dataInitialised == Win32Errors.ERROR_NOT_READY) // Floppy device not ready.
+                     {
+                        if (!returnErrorOnNotFound)
+                        {
+                           // Return default value for backward compatibility
+                           dataInitialised = 0;
+                           win32AttrData.FileAttributes = (FileAttributes) (-1);
+                        }
+                     }
+                     return dataInitialised;
+                  }
+               }
+               finally
+               {
+                  try
+                  {
+                     // Close the Win32 handle.
+                     handle.Close();
+                  }
+                  catch
+                  {
+                     // If we're already returning an error, don't throw another one.
+                     if (!error)
+                        NativeError.ThrowException(dataInitialised, pathLp);
+                  }
+               }
+            }
+
+            // Copy the information to data.
+            win32AttrData = new NativeMethods.Win32FileAttributeData(findData.FileAttributes, findData.CreationTime, findData.LastAccessTime, findData.LastWriteTime, findData.FileSizeHigh, findData.FileSizeLow);
+         }
+
+         #endregion // Try Again
+
+         else
+         {
+            using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
+            {
+               if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
+
+                  // GetFileAttributesEx() / GetFileAttributesTransacted()
+                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+                  // 2013-01-13: MSDN confirms LongPath usage.
+
+                  ? NativeMethods.GetFileAttributesEx(pathLp, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out win32AttrData)
+                  : NativeMethods.GetFileAttributesTransacted(pathLp, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out win32AttrData, transaction.SafeHandle)))
+               {
+                  dataInitialised = Marshal.GetLastWin32Error();
+
+                  if (dataInitialised != Win32Errors.ERROR_FILE_NOT_FOUND &&
+                      dataInitialised != Win32Errors.ERROR_PATH_NOT_FOUND &&
+                      dataInitialised != Win32Errors.ERROR_NOT_READY) // Floppy device not ready.
+                  {
+                     // In case someone latched onto the file. Take the perf hit only for failure.
+                     return FillAttributeInfo(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
+                  }
+
+                  if (!returnErrorOnNotFound)
+                  {
+                     // Return default value for backward compbatibility.
+                     dataInitialised = 0;
+                     win32AttrData.FileAttributes = (FileAttributes) (-1);
+                  }
+               }
+            }
+         }
+
+         return dataInitialised;
+      }
+
+      #endregion //FillAttributeInfo
+
       #region GetAccessControlInternal
 
       /// <summary>[AlphaFS] Unified method GetAccessControlInternal() to get an <see cref="T:ObjectSecurity"/> object for a particular file or directory.</summary>
@@ -8378,7 +8526,7 @@ namespace Alphaleonis.Win32.Filesystem
                 lastError == Win32Errors.ERROR_NOT_READY)
             {
                if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && isFolder)
-                  lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
+                  lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
 
                if (!fallBack && !continueOnNotExist)
                   NativeError.ThrowException(lastError, pathLp);
@@ -9160,9 +9308,23 @@ namespace Alphaleonis.Win32.Filesystem
             if (continueOnNotExist)
                return;
 
-            int lastError = Marshal.GetLastWin32Error();
-            if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && isFolder)
-               lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
+            uint lastError = (uint) Marshal.GetLastWin32Error();
+
+            switch (lastError)
+            {
+               // MSDN: .NET 3.5+: ArgumentException: FileSystemInfo().Attributes
+               case Win32Errors.ERROR_INVALID_PARAMETER:
+                  throw new ArgumentException(Resources.InvalidFileAttribute);
+
+               case Win32Errors.ERROR_FILE_NOT_FOUND:
+                  if (isFolder)
+                     lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+
+                  // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid, (for example, it is on an unmapped drive).
+                  // MSDN: .NET 3.5+: FileNotFoundException: The file cannot be found.
+                  NativeError.ThrowException(lastError, pathLp);
+                  break;
+            }
 
             NativeError.ThrowException(lastError, pathLp);
          }

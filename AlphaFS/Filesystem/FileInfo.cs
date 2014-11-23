@@ -320,13 +320,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Permanently deletes a file.</summary>
+      /// <summary>Permanently deletes a file.
+      /// <para>&#160;</para>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <exception cref="IOException"></exception>
       public override void Delete()
       {
          File.DeleteFileInternal(Transaction, LongFullName, false, null);
-         Reset();
       }
 
       #endregion // .NET
@@ -340,7 +341,6 @@ namespace Alphaleonis.Win32.Filesystem
       public void Delete(bool ignoreReadOnly)
       {
          File.DeleteFileInternal(Transaction, LongFullName, ignoreReadOnly, null);
-         Reset();
       }
 
       #endregion // AlphaFS
@@ -1572,15 +1572,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Directory
 
-      /// <summary>Gets an instance of the parent directory.</summary>
-      /// <returns>A <see cref="T:DirectoryInfo"/> object representing the parent directory of this file.</returns>
+      /// <summary>Gets an instance of the parent directory.
+      /// <para>&#160;</para>
+      /// <value>A <see cref="T:DirectoryInfo"/> object representing the parent directory of this file.</value>
+      /// <para>&#160;</para>
       /// <remarks>To get the parent directory as a string, use the DirectoryName property.</remarks>
+      /// </summary>
+      /// <exception cref="DirectoryNotFoundException">The specified path is invalid, such as being on an unmapped drive.</exception>
       public DirectoryInfo Directory
       {
          get
          {
             string dirName = DirectoryName;
-            return dirName == null ? null : new DirectoryInfo(Transaction, dirName, false);
+            return dirName == null ? null : new DirectoryInfo(Transaction, dirName, true);
          }
       }
 
@@ -1588,43 +1592,82 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region DirectoryName
 
-      /// <summary>Gets the directory's full path.</summary>
-      /// <returns>The directory's full path.</returns>
+      /// <summary>Gets a string representing the directory's full path.
+      /// <para>&#160;</para>
+      /// <value>A string representing the directory's full path.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>To get the parent directory as a DirectoryInfo object, use the Directory property.</para>
+      /// <para>When first called, FileInfo calls Refresh and caches information about the file.</para>
+      /// <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="ArgumentNullException">null was passed in for the directory name.</exception>
       public string DirectoryName
       {
-         get { return Path.GetDirectoryName(FullPath); }
+         [SecurityCritical] get { return Path.GetDirectoryName(FullPath, false); }
       }
 
       #endregion // DirectoryName
 
       #region Exists
 
-      /// <summary>Gets a value indicating whether the file exists.</summary>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
+      /// <summary>Gets a value indicating whether the file exists.
+      /// <para>&#160;</para>
+      /// <value><c>true</c> if the file exists; otherwise, <c>false</c>.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The <see cref="T:Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
+      /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
+      /// </remarks>
+      /// </summary>
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       public override bool Exists
       {
-         get { return (EntryInfo != null && !EntryInfo.IsDirectory); }
+         [SecurityCritical]
+         get
+         {
+            try
+            {
+               if (DataInitialised == -1)
+                  Refresh();
+
+               return DataInitialised == 0 && (Win32AttributeData.FileAttributes & FileAttributes.Directory) == 0;
+            }
+            catch
+            {
+               return false;
+            }
+         }
       }
 
       #endregion // Exists
 
       #region IsReadOnly
 
-      /// <summary>Gets or sets a value that determines if the current file is read only.</summary>
-      /// <returns><c>true</c> if the current file is read only, <c>false</c> otherwise.</returns>
+      /// <summary>Gets or sets a value that determines if the current file is read only.
+      /// <para>&#160;</para>
+      /// <value><c>true</c> if the current file is read only; otherwise, <c>false</c>.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>Use the IsReadOnly property to quickly determine or change whether the current file is read only.</para>
+      /// <para>When first called, FileInfo calls Refresh and caches information about the file.</para>
+      /// <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="FileNotFoundException">The file described by the current FileInfo object could not be found.</exception>
+      /// <exception cref="IOException">An I/O error occurred while opening the file.</exception>
       public bool IsReadOnly
       {
-         get
-         {
-            return Attributes == (FileAttributes) (-1) || (Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly;
-         }
+         get { return (Attributes & FileAttributes.ReadOnly) != 0; }
 
          set
          {
-            FileInfo fileInfo = this;
-            fileInfo.Attributes = value
-               ? (fileInfo.Attributes | FileAttributes.ReadOnly)
-               : (fileInfo.Attributes & ~FileAttributes.ReadOnly);
+            if (value)
+               Attributes |= FileAttributes.ReadOnly;
+            else
+               Attributes &= ~FileAttributes.ReadOnly;
          }
       }
 
@@ -1632,25 +1675,37 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Length
 
-      private long _length = -1;
-
       /// <summary>Gets the size, in bytes, of the current file.
       /// <para>&#160;</para>
-      /// <exception cref="System.IO.FileNotFoundException"></exception>
+      /// <value>The size of the current file in bytes.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The value of the Length property is pre-cached</para>
+      /// <para>To get the latest value, call the Refresh method.</para>
+      /// </remarks>
+      /// <exception cref="System.IO.FileNotFoundException">The file does not exist or the Length property is called for a directory.</exception>
+      /// <exception cref="System.IO.IOException"/>
       /// </summary>
       [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = ".NET also throws FileNotFoundException().")]
       public long Length
       {
+         [SecurityCritical]
          get
          {
-            if (_length == -1)
+            if (DataInitialised == -1)
+            {
+               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
                Refresh();
+            }
 
-            if (EntryInfo == null || EntryInfo.IsDirectory)
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
+            // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
+            if (DataInitialised != 0)
+               NativeError.ThrowException(DataInitialised, DisplayPath, true);
 
-            _length = EntryInfo.FileSize;
-            return _length;
+            if ((Win32AttributeData.FileAttributes & FileAttributes.Directory) != 0)
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, DisplayPath, true);
+
+            return Win32AttributeData.FileSize;
          }
       }
 
@@ -1660,12 +1715,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       private string _name;
 
-      /// <summary>Gets the name of the file.</summary>
-      /// <returns>The name of the file.</returns>
+      /// <summary>Gets the name of the file.
+      /// <para>&#160;</para>
+      /// <value>The name of the file.</value>
+      /// <para>&#160;</para>
       /// <remarks>
-      /// The name of the file includes the file extension.
-      /// When first called, FileInfo calls Refresh and caches information about the file. On subsequent calls, you must call Refresh to get the latest copy of the information.
+      /// <para>The name of the file includes the file extension.</para>
+      /// <para>When first called, <see cref="T:FileInfo"/> calls Refresh and caches information about the file.</para>
+      /// <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
+      /// <para>The name of the file includes the file extension.</para>
       /// </remarks>
+      /// </summary>
       public override string Name
       {
          get { return _name; }

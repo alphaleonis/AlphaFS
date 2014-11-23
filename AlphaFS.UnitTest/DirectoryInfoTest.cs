@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class DirectoryInfoTest
    {
-      #region DirectoryInfoTest Helpers
+      #region Unit Test Helpers
 
       private static Stopwatch _stopWatcher;
 
@@ -146,13 +146,121 @@ namespace AlphaFS.UnitTest
             Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
          }
       }
-      
-      #endregion // DirectoryInfoTest Helpers
+
+      #region Fields
+
+      private readonly string LocalHost = Environment.MachineName;
+      private readonly string LocalHostShare = Environment.SystemDirectory;
+      private readonly bool _testMyServer = Environment.UserName.Equals(@"jjangli", StringComparison.OrdinalIgnoreCase);
+      private const string MyServer = "yomodo";
+      private const string MyServerShare = @"\\" + MyServer + @"\video";
+      private const string Local = @"LOCAL";
+      private const string Network = @"NETWORK";
+
+      private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
+      private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
+      private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
+
+      private const string TextTrue = "IsTrue";
+      private const string TenNumbers = "0123456789";
+      private const string TextHelloWorld = "Hëllõ Wørld!";
+      private const string TextGoodByeWorld = "GóödByé Wôrld!";
+      private const string TextAppend = "GóödByé Wôrld!";
+      private const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
+
+      #endregion // Fields
+
+      #endregion // Unit Test Helpers
+
+      #region Unit Tests
+
+      #region DumpRefresh
+
+      private void DumpRefresh(bool isLocal)
+      {
+         #region Setup
+
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+
+         string tempPathSysIo = Path.GetTempPath("DirectoryInfo.Refresh()-directory-SysIo-" + Path.GetRandomFileName());
+         string tempPath = Path.GetTempPath("DirectoryInfo.Refresh()-directory-AlphaFS-" + Path.GetRandomFileName());
+         if (!isLocal) tempPathSysIo = Path.LocalToUnc(tempPathSysIo);
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
+
+         #endregion // Setup
+
+         #region Refresh
+
+         try
+         {
+            System.IO.DirectoryInfo diSysIo = new System.IO.DirectoryInfo(tempPathSysIo);
+            DirectoryInfo di = new DirectoryInfo(tempPath);
+
+            bool existsSysIo = diSysIo.Exists;
+            bool exists = di.Exists;
+            Console.WriteLine("\nnew DirectoryInfo(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // false
+            Assert.AreEqual(existsSysIo, exists);
+
+            diSysIo.Create();
+            di.Create();
+            existsSysIo = diSysIo.Exists;
+            exists = di.Exists;
+            Console.WriteLine("\ndi.Create(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // false
+            Assert.AreEqual(existsSysIo, exists);
+
+            diSysIo.Refresh();
+            di.Refresh();
+            existsSysIo = diSysIo.Exists;
+            exists = di.Exists;
+            Console.WriteLine("\ndi.Refresh(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // true
+            Assert.AreEqual(existsSysIo, exists);
+
+            diSysIo.Delete();
+            di.Delete();
+            existsSysIo = diSysIo.Exists;
+            exists = di.Exists;
+            Console.WriteLine("\ndi.Delete(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // true
+            Assert.AreEqual(existsSysIo, exists);
+
+            diSysIo.Refresh();
+            di.Refresh();
+            existsSysIo = diSysIo.Exists;
+            exists = di.Exists;
+            Console.WriteLine("\ndi.Refresh(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // false
+            Assert.AreEqual(existsSysIo, exists);
+         }
+         finally
+         {
+            if (Directory.Exists(tempPathSysIo))
+            {
+               Directory.Delete(tempPathSysIo);
+               Assert.IsFalse(Directory.Exists(tempPathSysIo), "Cleanup failed: Directory should have been removed.");
+            }
+
+            if (Directory.Exists(tempPath))
+            {
+               Directory.Delete(tempPath);
+               Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            }
+
+            Console.WriteLine();
+         }
+
+         #endregion // Refresh
+      }
+
+      #endregion // DumpRefresh
+
+      #endregion // Unit Tests
+
+      #region Unit Test Callers
+
+      // Note: Most of these unit tests are empty and are here to confirm AlphaFS implementation.
 
       #region .NET
       
-      // Note: These unit tests are empty and are here to confirm AlphaFS implementation.
-
       #region Create
 
       [TestMethod]
@@ -185,6 +293,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Delete
+
+      #region Exists
+
+      [TestMethod]
+      public void Exists()
+      {
+         Console.WriteLine("DirectoryInfo.Exists()");
+         Console.WriteLine("\nPlease see unit test: Refresh().");
+      }
+
+      #endregion // Exists
 
       #region EnumerateDirectories
 
@@ -280,7 +399,9 @@ namespace AlphaFS.UnitTest
       public void Refresh()
       {
          Console.WriteLine("DirectoryInfo.Refresh()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
+
+         DumpRefresh(true);
+         DumpRefresh(false);
       }
 
       #endregion // Refresh
@@ -299,8 +420,6 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
-
-      // Note: These unit tests are empty and are here to confirm AlphaFS implementation.
 
       #region AddStream
 
@@ -594,5 +713,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion
+
+      #endregion // Unit Test Callers
    }
 }

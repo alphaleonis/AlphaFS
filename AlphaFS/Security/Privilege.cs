@@ -441,7 +441,7 @@ namespace Alphaleonis.Win32.Security
 
       #region GetHashCode
 
-      // A random prime number will be picked and added to the HasCode, each time an instance is created.
+      // A random prime number will be picked and added to the HashCode, each time an instance is created.
       [NonSerialized] private readonly int _random = new Random().Next(0, 19);
       [NonSerialized] private static readonly int[] Primes = { 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919 };
 

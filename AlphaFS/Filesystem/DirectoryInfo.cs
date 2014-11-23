@@ -295,16 +295,14 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Deletes this <see cref="T:DirectoryInfo"/> if it is empty.</summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public override void Delete()
       {
-         if (!Exists)
-            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, LongFullName);
-
-         Directory.DeleteDirectoryInternal(EntryInfo, Transaction, null, false, false, true, false, null);
-         
-         Reset();
+         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, false, false, true, false, null);
       }
 
       /// <summary>Deletes this instance of a <see cref="T:DirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
@@ -313,15 +311,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the <see cref="T:DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="T:DirectoryInfo"/> even if <paramref name="recursive"/> is <c>false</c>.
       /// Attempting to delete a <see cref="T:DirectoryInfo"/> that is not empty when <paramref name="recursive"/> is <c>false</c> throws an <see cref="T:IOException"/>.
       /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public void Delete(bool recursive)
       {
-         if (!Exists)
-            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, LongFullName);
-
-         Directory.DeleteDirectoryInternal(EntryInfo, Transaction, null, recursive, false, !recursive, false, null);
-         Reset();
+         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, recursive, false, !recursive, false, null);
       }
 
       #endregion // .NET
@@ -339,8 +336,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly)
       {
-         Directory.DeleteDirectoryInternal(EntryInfo, Transaction, null, recursive, ignoreReadOnly, !recursive, false, null);
-         Reset();
+         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, !recursive, false, null);
       }
 
       #endregion // AlphaFS
@@ -1871,20 +1867,49 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Exists
 
-      /// <summary>Gets a value indicating whether the directory exists.</summary>
-      /// <returns><c>true</c> if the directory exists; otherwise, <c>false</c>.</returns>
+      /// <summary>Gets a value indicating whether the directory exists.
+      /// <para>&#160;</para>
+      /// <value><c>true</c> if the directory exists; otherwise, <c>false</c>.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The <see cref="T:Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified directory exists.</para>
+      /// <para>This can occur in situations that raise exceptions such as passing a directory name with invalid characters or too many characters,</para>
+      /// <para>a failing or missing disk, or if the caller does not have permission to read the directory.</para>
+      /// </remarks>
+      /// </summary>
+      [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       public override bool Exists
       {
-         get { return (EntryInfo != null && EntryInfo.IsDirectory); }
+         [SecurityCritical]
+         get
+         {
+            try
+            {
+               if (DataInitialised == -1)
+                  Refresh();
+
+               return DataInitialised == 0 && (Win32AttributeData.FileAttributes != (FileAttributes)(-1) && (Win32AttributeData.FileAttributes & FileAttributes.Directory) != 0);
+            }
+            catch
+            {
+               return false;
+            }
+         }
       }
 
       #endregion // Exists
 
       #region Name
 
-      /// <summary>Gets the name of this <see cref="T:DirectoryInfo"/> instance.</summary>
-      /// <returns>The directory name.</returns>
-      /// <remarks>Returns only the name of the directory, such as "Bin". To get the full path, such as "c:\public\Bin", use the FullName property.</remarks>
+      /// <summary>Gets the name of this <see cref="T:DirectoryInfo"/> instance.
+      /// <para>&#160;</para>
+      /// <value>The directory name.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>This Name property returns only the name of the directory, such as "Bin".</para>
+      /// <para>To get the full path, such as "c:\public\Bin", use the FullName property.</para>
+      /// </remarks>
+      /// </summary>
       public override string Name
       {
          get { return GetDirName(FullPath); }
@@ -1894,10 +1919,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Parent
 
-      /// <summary>Gets the parent directory of a specified subdirectory.</summary>
-      /// <returns>The parent directory, or <c>null</c> if the path is null or if the file path denotes a root (such as "\", "C:", or * "\\server\share").</returns>
+      /// <summary>Gets the parent directory of a specified subdirectory.
+      /// <para>&#160;</para>
+      /// <value>The parent directory, or null if the path is null or if the file path denotes a root (such as "\", "C:", or * "\\server\share").</value>
+      /// <para>&#160;</para>
+      /// </summary>
       public DirectoryInfo Parent
       {
+         [SecurityCritical]
          get
          {
             string path = FullPath;
@@ -1905,7 +1934,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (path.Length > 3)
                path = Path.RemoveDirectorySeparator(FullPath, false);
 
-            string dirName = Path.GetDirectoryName(path);
+            string dirName = Path.GetDirectoryName(path, false);
             return dirName == null ? null : new DirectoryInfo(Transaction, dirName, true, true);
          }
       }
@@ -1914,11 +1943,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Root
 
-      /// <summary>Gets the root portion of the directory.</summary>
-      /// <returns>An object that represents the root of the directory.</returns>
+      /// <summary>Gets the root portion of the directory.
+      /// <para>&#160;</para>
+      /// <value>An object that represents the root of the directory.</value>
+      /// <para>&#160;</para>
+      /// </summary>
       public DirectoryInfo Root
       {
-         get { return new DirectoryInfo(Transaction, Path.GetPathRoot(FullPath, false), false); }
+         [SecurityCritical] get { return new DirectoryInfo(Transaction, Path.GetPathRoot(FullPath, false), true); }
       }
 
       #endregion // Root

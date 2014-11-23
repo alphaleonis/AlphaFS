@@ -19,6 +19,7 @@
  *  THE SOFTWARE.
  */
 
+using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -170,23 +171,32 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
 
          bool loopOk = false;
-         foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
+         try
          {
-            string propValue;
-            try
-            {
-               object value = descriptor.GetValue(obj);
-               propValue = (value == null) ? "null" : value.ToString();
 
-               loopOk = true;
-            }
-            catch (Exception ex)
+            foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
             {
-               // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, "  ");
-            }
+               string propValue;
+               try
+               {
+                  object value = descriptor.GetValue(obj);
+                  propValue = (value == null) ? "null" : value.ToString();
 
-            Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
+                  loopOk = true;
+               }
+               catch (Exception ex)
+               {
+                  // Please do tell, oneliner preferably.
+                  propValue = ex.Message.Replace(Environment.NewLine, "  ");
+               }
+
+               Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
+            }
+         }
+         catch (Exception ex)
+         {
+            loopOk = false;
+            Console.WriteLine("\n\tDump Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
          return loopOk;
@@ -837,8 +847,12 @@ namespace AlphaFS.UnitTest
 
       private static void CompareDirectoryInfos(System.IO.DirectoryInfo expected, DirectoryInfo actual)
       {
+         if (expected == null || actual == null)
+            Assert.AreEqual(expected, actual, "Mismatch");
+
          Dump(expected, -17);
          Dump(actual, -17);
+         
 
          int errorCnt = 0;
          int cnt = -1;
@@ -1037,7 +1051,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput FileInfo() Path: [{0}]\n", tempPath);
 
-         //int expectedLastError;
+         int expectedLastError;
          string expectedException;
 
          #endregion // Setup
@@ -1054,7 +1068,7 @@ namespace AlphaFS.UnitTest
             string invalidPath = SysDrive + @"\:a";
             if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + @":a";
 
-            FileInfo di = new FileInfo(invalidPath);
+            FileInfo fi = new FileInfo(invalidPath);
          }
          catch (Exception ex)
          {
@@ -1077,9 +1091,41 @@ namespace AlphaFS.UnitTest
 
          #endregion // NotSupportedException
 
+         #region IOException
+
+         expectedLastError = (int) Win32Errors.ERROR_FILE_NOT_FOUND;
+         expectedException = "System.IO.IOException";
+         exception = false;
+         try
+         {
+            Console.WriteLine("\nCatch: FileInfo().Length: [{0}]: Refresh cannot update the state of the file or directory.", expectedException);
+
+            FileInfo fi = new FileInfo(SysDrive + @"\" + Path.GetRandomFileName());
+            Console.WriteLine(fi.Length);
+         }
+         catch (Exception ex)
+         {
+            // win32Error is always 0
+            Win32Exception win32Error = new Win32Exception("", ex);
+            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error should be: [{0}]", expectedLastError));
+
+            string exceptionTypeName = ex.GetType().FullName;
+            if (exceptionTypeName.Equals(expectedException))
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            else
+               Console.WriteLine("\n\tException Type [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Console.WriteLine();
+
+         #endregion // IOException
+
          #region Current Directory: .
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
          tempPath = Path.CurrentDirectoryPrefix;
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -1174,6 +1220,7 @@ namespace AlphaFS.UnitTest
 
          Dump(expected, -17);
          Dump(actual, -17);
+
 
          int errorCnt = 0;
          int cnt = -1;

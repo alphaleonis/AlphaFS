@@ -807,41 +807,25 @@ namespace AlphaFS.UnitTest
 
             #endregion // NotSupportedException
 
-
-            DirectoryInfo dirInfo = new DirectoryInfo(tempPath);
             System.IO.DirectoryInfo dirInfoSysIo = new System.IO.DirectoryInfo(tempPath);
+            DirectoryInfo dirInfo = new DirectoryInfo(tempPath);
             Assert.AreEqual(dirInfoSysIo.Exists, dirInfo.Exists, "Exists AlphaFS != System.IO");
 
             // Should be false.
-            Assert.IsFalse(dirInfo.Exists, "Directory should not exist: [{0}]", tempPath);
+            Assert.IsFalse(dirInfoSysIo.Exists, "System.IO Directory should not exist: [{0}]", tempPath);
+            Assert.IsFalse(dirInfo.Exists, "AlphaFS Directory should not exist: [{0}]", tempPath);
 
 
             StopWatcher(true);
             dirInfo.Create(true); // Create compressed directory.
-            report = Reporter();
-            exist = dirInfo.Exists;
-            Console.WriteLine("\n\nCreateDirectory() (Should be True): [{0}]\t{1}\n", exist, report);
 
+            // dirInfo.Exists should be false.
+            Assert.AreEqual(dirInfoSysIo.Exists, dirInfo.Exists, "AlphaFS Exists should match System.IO");
 
             bool compressed = (dirInfo.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed;
-            Console.WriteLine("Is compressed (Should be True): [{0}]\n", compressed);
-            Assert.IsTrue(compressed, "Compression should be True");
-
-
-            // dirInfoSysIO does not know about the new directory at this point.
-            Assert.AreNotEqual(dirInfoSysIo.Exists, dirInfo.Exists, "Exists AlphaFS should != System.IO");
-
-
-            // Notify dirInfoSysIO that the directory now exists.
-            dirInfoSysIo.Refresh();
-            //Assert.IsTrue(dirInfoSysIo.Exists, "Exists System.IO in error??!");
-
-            // This seems to happen. Bottom line, through observation and testing,
-            // is that most methods in .NET 3.5 do NOT TrimEnd() on paths, while .NET 4+ DOES TrimEnd() on paths.
-            // It seems that the MSDN documentation about TrimEnd() is not always clear, available or just incorrect.
-            //
-            // AlphaFS rule: NO TrimEnd() for .NET 3.5, YES TrimEnd() .NET 4+
-
+            Console.WriteLine("Created compressed directory (Should be True): [{0}]\n", compressed);
+            Assert.IsTrue(compressed, "Directory should be compressed.");
+            
 
             StopWatcher(true);
             string pathSub = dirInfo.CreateSubdirectory("A Sub Directory").FullName;
@@ -849,14 +833,11 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("CreateSubdirectory(): [{0}]\n{1}\n", pathSub, report);
 
-            // After the refresh, should be true.
+            // After the refresh, dirInfo.Exists should be true.
             dirInfo.Refresh();
-            exist = dirInfo.Exists;
-
+            Assert.IsTrue(dirInfo.Exists, "Directory should exist.");
             Assert.IsFalse(Utils.IsNullOrWhiteSpace(pathSub));
-            Assert.IsTrue(exist, "Directory should exist.");
             Assert.IsTrue(!pathSub.StartsWith(Path.LongPathPrefix), "Directory should not start with LongPath prefix.");
-
 
 
             string root = Path.Combine(tempPath, "Another Sub Directory");
@@ -872,8 +853,8 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nSubdirectory depth: [{0}], path length: [{1}] characters.\n", level, root.Length);
 
 
-            compressed = (dirInfo.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed;
-            Assert.IsTrue(compressed, "Compression should be True");
+            compressed = dirInfo != null && (dirInfo.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed;
+            Assert.IsTrue(compressed, "Directory should be compressed.");
             Assert.IsTrue(Directory.Exists(root), "Directory should exist.");
 
             #endregion // Directory.CreateDirectory
@@ -1828,8 +1809,8 @@ namespace AlphaFS.UnitTest
 
          #endregion // Trigger GetChangeTimeXxx
 
-
          di.Delete();
+         di.Refresh(); // Must Refresh() to get actual state.
          Assert.IsFalse(di.Exists, "Cleanup failed: Directory should have been removed.");
          Console.WriteLine();
       }
@@ -2953,6 +2934,7 @@ namespace AlphaFS.UnitTest
          DumpAccessRules(3, dsSystem, dsAlpha);
 
          diAlpha.Delete();
+         diAlpha.Refresh(); // Must Refresh() to get actual state.
          Assert.IsFalse(diAlpha.Exists);
       }
 

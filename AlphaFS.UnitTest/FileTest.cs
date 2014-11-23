@@ -892,6 +892,7 @@ namespace AlphaFS.UnitTest
 
 
          fi.Delete();
+         fi.Refresh(); // Must Refresh() to get actual state.
          Assert.IsFalse(fi.Exists, "Cleanup failed: File should have been removed.");
          Console.WriteLine();
       }
@@ -1053,6 +1054,7 @@ namespace AlphaFS.UnitTest
          #endregion //Decompress
 
          fi.Delete();
+         fi.Refresh(); // Must Refresh() to get actual state.
          Assert.IsFalse(fi.Exists, "Cleanup failed: File should have been removed.");
          Console.WriteLine();
       }
@@ -2080,6 +2082,7 @@ namespace AlphaFS.UnitTest
             lineAlphaFs = sr.ReadToEnd();
 
          alphaFsFi.Delete();
+         alphaFsFi.Refresh(); // Must Refresh() to get actual state.
          Assert.IsFalse(File.Exists(tempPathDot, true), "File should not exist.");
 
          #endregion // AlphaFS
@@ -2140,6 +2143,7 @@ namespace AlphaFS.UnitTest
             lineAlphaFs = sr.ReadToEnd();
          
          alphaFsFi.Delete();
+         alphaFsFi.Refresh(); // Must Refresh() to get actual state.
          Assert.IsFalse(File.Exists(tempPathSpace, true), "File should not exist.");
 
          #endregion // AlphaFS
@@ -2840,7 +2844,10 @@ namespace AlphaFS.UnitTest
             DumpAccessRules(3, dsSystem, dsAlpha);
 
             fiSystem.Delete();
+            fiSystem.Refresh(); // Must Refresh() to get actual state.
+
             fiAlpha.Delete();
+            fiAlpha.Refresh(); // Must Refresh() to get actual state.
             Assert.IsFalse(fiAlpha.Exists);
          }
          catch (Exception ex)

@@ -46,20 +46,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Refresh
 
-      /// <summary>Refreshes the state of the object.</summary>
+      /// <summary>Refreshes the state of the object.
+      /// <para>&#160;</para>
       /// <remarks>
-      /// FileSystemInfo.Refresh() takes a snapshot of the file from the current file system.
-      /// Refresh cannot correct the underlying file system even if the file system returns incorrect or outdated information.
-      /// This can happen on platforms such as Windows 98.
-      /// Calls must be made to Refresh() before attempting to get the attribute information, or the information will be outdated.
+      /// <para>FileSystemInfo.Refresh() takes a snapshot of the file from the current file system.</para>
+      /// <para>Refresh cannot correct the underlying file system even if the file system returns incorrect or outdated information.</para>
+      /// <para>This can happen on platforms such as Windows 98.</para>
+      /// <para>Calls must be made to Refresh() before attempting to get the attribute information, or the information will be outdated.</para>
       /// </remarks>
+      /// </summary>
       [SecurityCritical]
       protected void Refresh()
       {
-         // .NET uses GetFileAttributesEx() for this.
-
-         _entryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullName, true, true, null);
-         _exists = _entryInfo != null;
+         DataInitialised = File.FillAttributeInfo(Transaction, LongFullName, ref Win32AttributeData, false, false);
       }
 
       #endregion // Refresh
@@ -95,20 +94,30 @@ namespace Alphaleonis.Win32.Filesystem
                                    other.LastWriteTimeUtc.Equals(LastWriteTimeUtc)));
       }
 
+      // A random prime number will be picked and added to the HashCode, each time an instance is created.
+      [NonSerialized] private readonly int _random = new Random().Next(0, 19);
+      [NonSerialized] private static readonly int[] Primes = { 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919 };
+
       /// <summary>Serves as a hash function for a particular type.</summary>
       /// <returns>A hash code for the current Object.</returns>
       public override int GetHashCode()
       {
+         string fullName = FullName;
+         string name = Name;
+
          unchecked
          {
-            int hash = !Utils.IsNullOrWhiteSpace(FullName) ? FullName.GetHashCode() : 17;
+            int hash = Primes[_random];
 
-            if (!Utils.IsNullOrWhiteSpace(Name))
-               hash = hash * 23 + Name.GetHashCode();
+            if (!Utils.IsNullOrWhiteSpace(fullName))
+               hash = hash * Primes[1] + fullName.GetHashCode();
 
-            hash = hash * 23 + Attributes.GetHashCode();
-            hash = hash * 23 + CreationTimeUtc.GetHashCode();
-            hash = hash * 23 + LastWriteTimeUtc.GetHashCode();
+            if (!Utils.IsNullOrWhiteSpace(name))
+               hash = hash * Primes[1] + name.GetHashCode();
+
+            hash = hash * Primes[1] + Attributes.GetHashCode();
+            hash = hash * Primes[1] + CreationTimeUtc.GetHashCode();
+            hash = hash * Primes[1] + LastWriteTimeUtc.GetHashCode();
 
             return hash;
          }
@@ -139,28 +148,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      #region VerifyObjectExists
-
-      /// <summary>[AlphaFS] Performs a <see cref="T:Refresh()"/> and checks that the file system object (folder, file) exists. If the file system object is not found, a <see cref="T:DirectoryNotFoundException"/> or <see cref="T:FileNotFoundException"/> is thrown.</summary>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      private void VerifyObjectExists()
-      {
-         Refresh();
-
-         if (!_exists)
-            NativeError.ThrowException(IsDirectory ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
-      }
-
-      #endregion // VerifyObjectExists
-
       #region Reset
 
       /// <summary>[AlphaFS] Resets the state of the file system object to uninitialized.</summary>
       internal void Reset()
       {
          _entryInfo = null;
-         _exists = false;
       }
 
       #endregion // Reset
@@ -218,27 +211,41 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Attributes
 
-      /// <summary>Gets or sets the attributes for the current file or directory.</summary>
-      /// <returns><see cref="T:System.IO.FileAttributes"/> of the current <see cref="T:FileSystemInfo"/>.</returns>
+      /// <summary>Gets or sets the attributes for the current file or directory.
+      /// <para>&#160;</para>
+      /// <value><see cref="T:FileAttributes"/> of the current <see cref="T:FileSystemInfo"/>.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The value of the CreationTime property is pre-cached</para>
+      /// <para>To get the latest value, call the Refresh method.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="FileNotFoundException">The specified file does not exist.</exception>
+      /// <exception cref="DirectoryNotFoundException">The specified path is invalid; for example, it is on an unmapped drive.</exception>
+      /// <exception cref="IOException">Refresh cannot initialize the data.</exception>
       public FileAttributes Attributes
       {
          [SecurityCritical]
          get
          {
-            if (_entryInfo == null)
+            if (DataInitialised == -1)
+            {
+               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
                Refresh();
+            }
 
-            return _entryInfo != null ? _entryInfo.Attributes : (FileAttributes)(-1);
+            // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
+            if (DataInitialised != 0)
+               NativeError.ThrowException(DataInitialised, DisplayPath, true);
+
+            return Win32AttributeData.FileAttributes;
          }
 
          [SecurityCritical]
          set
          {
-            if (_entryInfo == null)
-               VerifyObjectExists();
-
             File.SetAttributesInternal(IsDirectory, Transaction, LongFullName, value, false, null);
-            Reset();
+            DataInitialised = -1;
          }
       }
 
@@ -246,74 +253,129 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CreationTime
 
-      /// <summary>Gets or sets the creation time of the current file or directory.</summary>
-      /// <returns>The creation date and time of the current <see cref="T:FileSystemInfo"/> object.</returns>
-      /// <remarks>This value is expressed in local time.</remarks>
+      /// <summary>Gets or sets the creation time of the current file or directory.
+      /// <para>&#160;</para>
+      /// <value>The creation date and time of the current <see cref="T:FileSystemInfo"/> object.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The value of the CreationTime property is pre-cached</para>
+      /// <para>To get the latest value, call the Refresh method.</para>
+      /// <para>&#160;</para>
+      /// <para>This method may return an inaccurate value, because it uses native functions</para>
+      /// <para>whose values may not be continuously updated by the operating system.</para>
+      /// <para>&#160;</para>
+      /// <para>If the file described in the FileSystemInfo object does not exist, this property will return</para>
+      /// <para>12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</para>
+      /// <para>&#160;</para>
+      /// <para>NTFS-formatted drives may cache file meta-info, such as file creation time, for a short period of time.</para>
+      /// <para>This process is known as file tunneling. As a result, it may be necessary to explicitly set the creation time</para>
+      /// <para>of a file if you are overwriting or replacing an existing file.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="DirectoryNotFoundException">The specified path is invalid; for example, it is on an unmapped drive.</exception>
+      /// <exception cref="IOException">Refresh cannot initialize the data.</exception>
       public DateTime CreationTime
       {
-         get { return CreationTimeUtc.ToLocalTime(); }
-         set { CreationTimeUtc = value.ToUniversalTime(); }
+         [SecurityCritical] get { return CreationTimeUtc.ToLocalTime(); }
+         [SecurityCritical] set { CreationTimeUtc = value.ToUniversalTime(); }
       }
 
       #endregion // CreationTime
 
       #region CreationTimeUtc
 
-      /// <summary>Gets or sets the creation time, in coordinated universal time (UTC), of the current file or directory.</summary>
-      /// <returns>The creation date and time in UTC format of the current <see cref="T:FileSystemInfo"/> object.</returns>
-      /// <remarks>This value is expressed in UTC time.</remarks>
+      /// <summary>Gets or sets the creation time, in coordinated universal time (UTC), of the current file or directory.
+      /// <para>&#160;</para>
+      /// <value>The creation date and time in UTC format of the current <see cref="T:FileSystemInfo"/> object.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The value of the CreationTimeUtc property is pre-cached</para>
+      /// <para>To get the latest value, call the Refresh method.</para>
+      /// <para>&#160;</para>
+      /// <para>This method may return an inaccurate value, because it uses native functions</para>
+      /// <para>whose values may not be continuously updated by the operating system.</para>
+      /// <para>&#160;</para>
+      /// <para>To get the latest value, call the Refresh method.</para>
+      /// <para>&#160;</para>
+      /// <para>If the file described in the FileSystemInfo object does not exist, this property will return</para>
+      /// <para>12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC).</para>
+      /// <para>&#160;</para>
+      /// <para>NTFS-formatted drives may cache file meta-info, such as file creation time, for a short period of time.</para>
+      /// <para>This process is known as file tunneling. As a result, it may be necessary to explicitly set the creation time</para>
+      /// <para>of a file if you are overwriting or replacing an existing file.</para>
+      /// </remarks>
+      /// <exception cref="DirectoryNotFoundException">The specified path is invalid; for example, it is on an unmapped drive.</exception>
+      /// <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// </summary>
       [ComVisible(false)]
       public DateTime CreationTimeUtc
       {
          [SecurityCritical]
          get
          {
-            if (_entryInfo == null)
+            if (DataInitialised == -1)
+            {
+               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
                Refresh();
+            }
 
-            return DateTime.FromFileTimeUtc(_entryInfo != null
-               ? _entryInfo.Win32FindData.CreationTime.ToLong()
-               : new NativeMethods.Win32FindData().CreationTime.ToLong());
+            // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
+            if (DataInitialised != 0)
+               NativeError.ThrowException(DataInitialised, DisplayPath, true);
+
+            return DateTime.FromFileTimeUtc(Win32AttributeData.CreationTime);
          }
 
+         [SecurityCritical]
          set
          {
-            if (_entryInfo == null)
-               VerifyObjectExists();
-
             File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, value, null, null, null);
-            Reset();
+            DataInitialised = -1;
          }
       }
 
       #endregion // CreationTimeUtc
 
       #region Exists
-      
-      private bool _exists;
 
-      /// <summary>Gets a value indicating whether the file or directory exists.</summary>
-      /// <returns><c>true</c> if the file or directory exists; otherwise, <c>false</c>.</returns>
-      /// <remarks>The <see cref="T:Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file or directory exists. This can occur in situations that raise exceptions such as passing a directory- or file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file or directory.</remarks>
+      /// <summary>Gets a value indicating whether the file or directory exists.
+      /// <para>&#160;</para>
+      /// <value><c>true</c> if the file or directory exists; otherwise, <c>false</c>.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The <see cref="T:Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file or directory exists.</para>
+      /// <para>This can occur in situations that raise exceptions such as passing a directory- or file name with invalid characters or too many characters,</para>
+      /// <para>a failing or missing disk, or if the caller does not have permission to read the file or directory.</para>
+      /// </remarks>
+      /// </summary>
       public abstract bool Exists { get; }
 
       #endregion // Exists
 
       #region Extension
 
-      /// <summary>Gets the extension part of the file.</summary>
-      /// <returns>The <see cref="T:System.IO.FileSystemInfo"/> extension.</returns>
+      /// <summary>Gets the string representing the extension part of the file.
+      /// <para>&#160;</para>
+      /// <value>A string containing the <see cref="T:FileSystemInfo"/> extension.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The Extension property returns the <see cref="T:FileSystemInfo"/> extension, including the period (.).</para>
+      /// <para>For example, for a file c:\NewFile.txt, this property returns ".txt".</para>
+      /// </remarks>
+      /// </summary>
       public string Extension
       {
-         get { return System.IO.Path.GetExtension(FullPath); }
+         get { return Path.GetExtension(FullPath, true); }
       }
 
       #endregion // Extension
 
       #region FullName
 
-      /// <summary>Gets the full path of the file or directory.</summary>
-      /// <returns>The full path.</returns>
+      /// <summary>Gets the full path of the directory or file.
+      /// <para>&#160;</para>
+      /// <value>A string containing the full path.</value>
+      /// </summary>
       public virtual string FullName
       {
          [SecurityCritical]
@@ -324,49 +386,72 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastAccessTime
 
-      /// <summary>Gets or sets the time the current file or directory was last accessed.</summary>
-      /// <returns>The time that the current file or directory was last accessed.</returns>
-      /// <remarks>This value is expressed in local time.</remarks>
-      /// <remarks>When first called, <see cref="T:FileSystemInfo"/> calls Refresh and returns the cached information on APIs to get attributes and so on. On subsequent calls, you must call Refresh to get the latest copy of the information. 
-      /// If the file described in the <see cref="T:FileSystemInfo"/> object does not exist, this property will return 12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time. 
+      /// <summary>Gets or sets the time the current file or directory was last accessed.
+      /// <para>&#160;</para>
+      /// <value>The time that the current file or directory was last accessed.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The value of the LastAccessTime property is pre-cached</para>
+      /// <para>To get the latest value, call the Refresh method.</para>
+      /// <para>&#160;</para>
+      /// <para>This method may return an inaccurate value, because it uses native functions</para>
+      /// <para>whose values may not be continuously updated by the operating system.</para>
+      /// <para>&#160;</para>
+      /// <para>If the file described in the FileSystemInfo object does not exist, this property will return</para>
+      /// <para>12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</para>
       /// </remarks>
+      /// </summary>
+      /// <exception cref="IOException">Refresh cannot initialize the data.</exception>
       public DateTime LastAccessTime
       {
-         get { return LastAccessTimeUtc.ToLocalTime(); }
-         set { LastAccessTimeUtc = value.ToUniversalTime(); }
+         [SecurityCritical] get { return LastAccessTimeUtc.ToLocalTime(); }
+         [SecurityCritical] set { LastAccessTimeUtc = value.ToUniversalTime(); }
       }
 
       #endregion // LastAccessTime
 
       #region LastAccessTimeUtc
 
-      /// <summary>Gets or sets the time, in coordinated universal time (UTC), that the current file or directory was last accessed.</summary>
-      /// <returns>The UTC time that the current file or directory was last accessed.</returns>
-      /// <remarks>This value is expressed in UTC time.</remarks>
-      /// <remarks>When first called, <see cref="T:FileSystemInfo"/> calls Refresh and returns the cached information on APIs to get attributes and so on. On subsequent calls, you must call Refresh to get the latest copy of the information. 
-      /// If the file described in the <see cref="T:FileSystemInfo"/> object does not exist, this property will return 12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time. 
+      /// <summary>Gets or sets the time, in coordinated universal time (UTC), that the current file or directory was last accessed.
+      /// <para>&#160;</para>
+      /// <value>The UTC time that the current file or directory was last accessed.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The value of the LastAccessTimeUtc property is pre-cached</para>
+      /// <para>To get the latest value, call the Refresh method.</para>
+      /// <para>&#160;</para>
+      /// <para>This method may return an inaccurate value, because it uses native functions</para>
+      /// <para>whose values may not be continuously updated by the operating system.</para>
+      /// <para>&#160;</para>
+      /// <para>If the file described in the FileSystemInfo object does not exist, this property will return</para>
+      /// <para>12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</para>
       /// </remarks>
+      /// </summary>
+      /// <exception cref="IOException">Refresh cannot initialize the data.</exception>
       [ComVisible(false)]
       public DateTime LastAccessTimeUtc
       {
          [SecurityCritical]
          get
          {
-            if (_entryInfo == null)
+            if (DataInitialised == -1)
+            {
+               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
                Refresh();
+            }
 
-            return DateTime.FromFileTimeUtc(_entryInfo != null
-               ? _entryInfo.Win32FindData.LastAccessTime.ToLong()
-               : new NativeMethods.Win32FindData().LastAccessTime.ToLong());
+            // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
+            if (DataInitialised != 0)
+               NativeError.ThrowException(DataInitialised, DisplayPath, true);
+
+            return DateTime.FromFileTimeUtc(Win32AttributeData.LastAccessTime);
          }
 
+         [SecurityCritical]
          set
          {
-            if (_entryInfo == null)
-               VerifyObjectExists();
-
             File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, value, null, null);
-            Reset();
+            DataInitialised = -1;
          }
       }
 
@@ -374,9 +459,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastWriteTime
 
-      /// <summary>Gets or sets the time when the current file or directory was last written to.</summary>
-      /// <returns>The time the current file was last written.</returns>
-      /// <remarks>This value is expressed in local time.</remarks>
+      /// <summary>Gets or sets the time when the current file or directory was last written to.
+      /// <para>&#160;</para>
+      /// <value>The time the current file was last written.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The value of the LastWriteTime property is pre-cached</para>
+      /// <para>To get the latest value, call the Refresh method.</para>
+      /// <para>&#160;</para>
+      /// <para>This method may return an inaccurate value, because it uses native functions</para>
+      /// <para>whose values may not be continuously updated by the operating system.</para>
+      /// <para>&#160;</para>
+      /// <para>If the file described in the FileSystemInfo object does not exist, this property will return</para>
+      /// <para>12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="IOException">Refresh cannot initialize the data.</exception>
       public DateTime LastWriteTime
       {
          get { return LastWriteTimeUtc.ToLocalTime(); }
@@ -387,30 +485,46 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastWriteTimeUtc
 
-      /// <summary>Gets or sets the time, in coordinated universal time (UTC), when the current file or directory was last written to.</summary>
-      /// <returns>The UTC time when the current file was last written to.</returns>
-      /// <remarks>This value is expressed in UTC time.</remarks>
+      /// <summary>Gets or sets the time, in coordinated universal time (UTC), when the current file or directory was last written to.
+      /// <para>&#160;</para>
+      /// <value>The UTC time when the current file was last written to.</value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The value of the LastWriteTimeUtc property is pre-cached</para>
+      /// <para>To get the latest value, call the Refresh method.</para>
+      /// <para>&#160;</para>
+      /// <para>This method may return an inaccurate value, because it uses native functions</para>
+      /// <para>whose values may not be continuously updated by the operating system.</para>
+      /// <para>&#160;</para>
+      /// <para>If the file described in the FileSystemInfo object does not exist, this property will return</para>
+      /// <para>12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="IOException">Refresh cannot initialize the data.</exception>
       [ComVisible(false)]
       public DateTime LastWriteTimeUtc
       {
          [SecurityCritical]
          get
          {
-            if (_entryInfo == null)
+            if (DataInitialised == -1)
+            {
+               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
                Refresh();
+            }
 
-            return DateTime.FromFileTimeUtc(_entryInfo != null
-               ? _entryInfo.Win32FindData.LastWriteTime.ToLong()
-               : new NativeMethods.Win32FindData().LastWriteTime.ToLong());
+            // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
+            if (DataInitialised != 0)
+               NativeError.ThrowException(DataInitialised, DisplayPath, true);
+
+            return DateTime.FromFileTimeUtc(Win32AttributeData.LastWriteTime);
          }
 
+         [SecurityCritical]
          set
          {
-            if (_entryInfo == null)
-               VerifyObjectExists();
-
             File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, null, value, null);
-            Reset();
+            DataInitialised = -1;
          }
       }
 
@@ -418,8 +532,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Name
 
-      /// <summary>For files, gets the name of the file. For directories, gets the name of the last directory in the hierarchy if a hierarchy exists. Otherwise, the Name property gets the name of the directory.</summary>
-      /// <returns>The name of the parent directory, the name of the last directory in the hierarchy, or the name of a file, including the file name extension.</returns>
+      /// <summary>For files, gets the name of the file. For directories, gets the name of the last directory in the hierarchy if a hierarchy exists.
+      /// <para>Otherwise, the Name property gets the name of the directory.</para>
+      /// <para>&#160;</para>
+      /// <value>
+      /// <para>A string that is the name of the parent directory, the name of the last directory in the hierarchy,</para>
+      /// <para>or the name of a file, including the file name extension.</para>
+      /// </value>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>For a directory, Name returns only the name of the parent directory, such as Dir, not c:\Dir.</para>
+      /// <para>For a subdirectory, Name returns only the name of the subdirectory, such as Sub1, not c:\Dir\Sub1.</para>
+      /// <para>For a file, Name returns only the file name and file name extension, such as MyFile.txt, not c:\Dir\Myfile.txt.</para>
+      /// </remarks>
+      /// </summary>
       public abstract string Name { get; }
 
       #endregion // Name
@@ -442,6 +568,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the instance of the <see cref="T:FileSystemEntryInfo"/> class.</summary>
       public FileSystemEntryInfo EntryInfo
       {
+         [SecurityCritical]
          get
          {
             if (_entryInfo == null)
@@ -471,6 +598,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = "We do the same for FileInfo.Length property.")]
       public long LengthStreams
       {
+         [SecurityCritical]
          get
          {
             if (_lengthStreams == -1)
@@ -502,8 +630,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transaction
 
-      [NonSerialized]
-      private KernelTransaction _transaction;
+      [NonSerialized] private KernelTransaction _transaction;
 
       /// <summary>[AlphaFS] Represents the KernelTransaction that was passed to the constructor.</summary>
       public KernelTransaction Transaction
@@ -520,10 +647,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Fields
 
+      // We use this field in conjunction with the Refresh methods, if we succeed
+      // we store a zero, on failure we store the HResult in it so that we can
+      // give back a generic error back.
+      [NonSerialized] internal int DataInitialised = -1;
+
+      // The pre-cached FileSystemInfo information.
+      [NonSerialized] internal NativeMethods.Win32FileAttributeData Win32AttributeData;
+
       #region .NET
 
-      /// <summary>Represents the fully qualified path of the file or directory.</summary>
-      /// <remarks>Classes derived from <see cref="T:FileSystemInfo"/> can use the FullPath field to determine the full path of the object being manipulated.</remarks>
+      /// <summary>Represents the fully qualified path of the file or directory.
+      /// <remarks>
+      /// <para>Classes derived from <see cref="T:FileSystemInfo"/> can use the FullPath field</para>
+      /// <para>to determine the full path of the object being manipulated.</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
       protected string FullPath;
 

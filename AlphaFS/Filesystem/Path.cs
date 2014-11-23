@@ -93,9 +93,25 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryName(string path)
       {
+         return GetDirectoryName(path, true);
+      }
+
+      #endregion // .NET
+
+      #region AlphaFS
+
+      /// <summary>[AlphaFS] Returns the directory information for the specified path string.
+      /// <returns>Directory information for <paramref name="path"/>, or <c>null</c> if <paramref name="path"/> denotes a root directory or is <c>null</c>. Returns <see cref="T:string.Empty"/> if <paramref name="path"/> does not contain directory information.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// </summary>
+      /// <param name="path">The path of a file or directory.</param>
+      /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
+      [SecurityCritical]
+      public static string GetDirectoryName(string path, bool checkInvalidPathChars)
+      {
          if (path != null)
          {
-            int rootLength = GetRootLength(path, true);
+            int rootLength = GetRootLength(path, checkInvalidPathChars);
             if (path.Length > rootLength)
             {
                int length = path.Length;
@@ -106,11 +122,11 @@ namespace Alphaleonis.Win32.Filesystem
                return path.Substring(0, length);
             }
          }
-         
+
          return null;
       }
 
-      #endregion // .NET
+      #endregion // AlphaFS
 
       #endregion // GetDirectoryName
 
@@ -197,7 +213,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>Returns the file name and extension of the specified path string.
+      /// <summary>[AlphaFS] Returns the file name and extension of the specified path string.
       /// <returns>The characters after the last directory character in <paramref name="path"/>. If the last character of <paramref name="path"/> is a directory or volume separator character, this method returns <c>string.Empty</c>. If path is null, this method returns null.</returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
@@ -246,7 +262,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>Returns the file name of the specified path string without the extension.
+      /// <summary>[AlphaFS] Returns the file name of the specified path string without the extension.
       /// <returns>The string returned by GetFileName, minus the last period (.) and all characters following it.</returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>

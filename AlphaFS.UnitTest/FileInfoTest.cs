@@ -24,8 +24,11 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
+using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,7 +36,7 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class FileInfoTest
    {
-      #region FileInfoTest Helpers
+      #region Unit Test Helpers
 
       private static Stopwatch _stopWatcher;
 
@@ -54,6 +57,7 @@ namespace AlphaFS.UnitTest
 
          return string.Format(CultureInfo.CurrentCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
       }
+
       private static string Reporter(bool condensed = false, bool onlyTime = false)
       {
          Win32Exception lastError = new Win32Exception();
@@ -101,14 +105,26 @@ namespace AlphaFS.UnitTest
 
             switch (descriptor.Name)
             {
-               case "Directory":
+               case "Parent":
                   if (obj.GetType().Namespace.Equals("Alphaleonis.Win32.Filesystem", StringComparison.OrdinalIgnoreCase))
                   {
                      if (obj != null)
                      {
-                        FileInfo fi = (FileInfo) obj;
-                        if (fi != null && fi.Directory != null)
-                           propValue = fi.Directory.ToString();
+                        DirectoryInfo di = (DirectoryInfo)obj;
+                        if (di != null)
+                           propValue = di.Parent == null ? null : di.Parent.ToString();
+                     }
+                  }
+                  break;
+
+               case "Root":
+                  if (obj.GetType().Namespace.Equals("Alphaleonis.Win32.Filesystem", StringComparison.OrdinalIgnoreCase))
+                  {
+                     if (obj != null)
+                     {
+                        DirectoryInfo di = (DirectoryInfo)obj;
+                        if (di != null)
+                           propValue = di.Root.ToString();
                      }
                   }
                   break;
@@ -118,9 +134,9 @@ namespace AlphaFS.UnitTest
                   {
                      if (obj != null)
                      {
-                        FileInfo fi = (FileInfo) obj;
-                        if (fi != null && fi.EntryInfo != null)
-                           propValue = fi.EntryInfo.FullPath;
+                        DirectoryInfo di = (DirectoryInfo)obj;
+                        if (di != null && di.EntryInfo != null)
+                           propValue = di.EntryInfo.FullPath;
                      }
                   }
                   break;
@@ -129,12 +145,120 @@ namespace AlphaFS.UnitTest
             Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
          }
       }
-      
-      #endregion // FileInfoTest Helpers
+
+      #region Fields
+
+      private readonly string LocalHost = Environment.MachineName;
+      private readonly string LocalHostShare = Environment.SystemDirectory;
+      private readonly bool _testMyServer = Environment.UserName.Equals(@"jjangli", StringComparison.OrdinalIgnoreCase);
+      private const string MyServer = "yomodo";
+      private const string MyServerShare = @"\\" + MyServer + @"\video";
+      private const string Local = @"LOCAL";
+      private const string Network = @"NETWORK";
+
+      private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
+      private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
+      private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
+
+      private const string TextTrue = "IsTrue";
+      private const string TenNumbers = "0123456789";
+      private const string TextHelloWorld = "Hëllõ Wørld!";
+      private const string TextGoodByeWorld = "GóödByé Wôrld!";
+      private const string TextAppend = "GóödByé Wôrld!";
+      private const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
+
+      #endregion // Fields
+
+      #endregion // Unit Test Helpers
+
+      #region Unit Tests
+
+      #region DumpRefresh
+
+      private void DumpRefresh(bool isLocal)
+      {
+         #region Setup
+
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+
+         string tempPathSysIo = Path.GetTempPath("FileInfo.Refresh()-file-SysIo-" + Path.GetRandomFileName());
+         string tempPath = Path.GetTempPath("FileInfo.Refresh()-file-AlphaFS-" + Path.GetRandomFileName());
+         if (!isLocal) tempPathSysIo = Path.LocalToUnc(tempPathSysIo);
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+
+         #endregion // Setup
+
+         #region Refresh
+
+         try
+         {
+            System.IO.FileInfo fiSysIo = new System.IO.FileInfo(tempPathSysIo);
+            FileInfo fi = new FileInfo(tempPath);
+
+            bool existsSysIo = fiSysIo.Exists;
+            bool exists = fi.Exists;
+            Console.WriteLine("\nnew FileInfo(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // false
+            Assert.AreEqual(existsSysIo, exists);
+
+            FileStream fsSysIo = fiSysIo.Create();
+            FileStream fs = fi.Create();
+            existsSysIo = fiSysIo.Exists;
+            exists = fi.Exists;
+            Console.WriteLine("\nfi.Create(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // false
+            Assert.AreEqual(existsSysIo, exists);
+
+            fiSysIo.Refresh();
+            fi.Refresh();
+            existsSysIo = fiSysIo.Exists;
+            exists = fi.Exists;
+            Console.WriteLine("\nfi.Refresh(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // true
+            Assert.AreEqual(existsSysIo, exists);
+
+            fsSysIo.Close();
+            fs.Close();
+            existsSysIo = fiSysIo.Exists;
+            exists = fi.Exists;
+            Console.WriteLine("\nfi.Close(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // true
+            Assert.AreEqual(existsSysIo, exists);
+
+            fiSysIo.Delete();
+            fi.Delete();
+            existsSysIo = fiSysIo.Exists;
+            exists = fi.Exists;
+            Console.WriteLine("\nfi.Delete(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // true
+            Assert.AreEqual(existsSysIo, exists);
+
+            fiSysIo.Refresh();
+            fi.Refresh();
+            existsSysIo = fiSysIo.Exists;
+            exists = fi.Exists;
+            Console.WriteLine("\nfi.Refresh(): Exists (Should be False): [{0}]", exists); // false
+            Assert.AreEqual(existsSysIo, exists);
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+
+            File.Delete(tempPathSysIo);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
+
+         #endregion // Refresh
+      }
+
+      #endregion // DumpRefresh
+
+      #endregion // Unit Tests
+
+      #region Unit Test Callers
+
+      // Note: Most of these unit tests are empty and are here to confirm AlphaFS implementation.
 
       #region .NET
-      
-      // Note: These unit tests are empty and are here to confirm AlphaFS implementation.
 
       #region AppendText
 
@@ -201,6 +325,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Delete
+
+      #region Exists
+
+      [TestMethod]
+      public void Exists()
+      {
+         Console.WriteLine("FileInfo.Exists()");
+         Console.WriteLine("\nPlease see unit test: Refresh().");
+      }
+
+      #endregion // Exists
 
       #region Encrypt
 
@@ -285,7 +420,9 @@ namespace AlphaFS.UnitTest
       public void Refresh()
       {
          Console.WriteLine("FileInfo.Refresh()");
-         Console.WriteLine("\nPlease see unit tests from class: File().");
+
+         DumpRefresh(true);
+         DumpRefresh(false);
       }
 
       #endregion // Refresh
@@ -315,8 +452,6 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
-
-      // Note: These unit tests are empty and are here to confirm AlphaFS implementation.
 
       #region AddStream
 
@@ -407,5 +542,7 @@ namespace AlphaFS.UnitTest
       #endregion // RemoveStream
 
       #endregion // AlphaFS
+
+      #endregion // Unit Test Callers
    }
 }
