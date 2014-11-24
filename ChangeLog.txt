@@ -44,7 +44,6 @@ Version 1.6
 		Available for: DirectoryInfo() / FileInfo()
 			EntryInfo	 : Instance of the FileSystemEntryInfo() class.
 			LengthStreams: Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).
-			LongFullName : The Unicode absolute path of the file system object.
 			Transaction  : Represents the KernelTransaction that was passed to the constructor.
 	
 	* Mod: Refactored Path() class.

@@ -19,6 +19,8 @@
  *  THE SOFTWARE. 
  */
 
+using System.ComponentModel;
+
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Class for CopyMoveResult that contains the results for the Copy or Move action.</summary>
@@ -28,15 +30,27 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>The error code encountered during the Copy or Move action.
       /// <para>&#160;</para>
-      /// <returns>0 (zero) indicates success.</returns>
+      /// <value>0 (zero) indicates success.</value>
       /// </summary>
       public int ErrorCode { get; private set; }
 
       #endregion // ErrorCode
 
+      #region ErrorMessage
+
+      /// <summary>The error message from the <see cref="M:ErrorCode"/> that was encountered during the Copy or Move action.
+      /// <para>&#160;</para>
+      /// </summary>
+      public string ErrorMessage { get; private set; }
+
+      #endregion // ErrorMessage
+
       #region IsCanceled
 
-      /// <summary>Indicates if the Copy or Move action was canceled.</summary>
+      /// <summary>Indicates if the Copy or Move action was canceled.
+      /// <para>&#160;</para>
+      /// <value><c>true</c> when the Copy/Move action was canceled. Otherwise <c>false</c>.</value>
+      /// </summary>
       public bool IsCanceled { get; private set; }
 
       #endregion // IsCanceled
@@ -92,6 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
          IsCanceled = isCanceled;
 
          ErrorCode = errorCode;
+         ErrorMessage = new Win32Exception(errorCode).Message;
       }
    }
 }

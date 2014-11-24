@@ -1334,8 +1334,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteEmpty()
       {
-         Directory.DeleteEmptyDirectoryInternal(EntryInfo, Transaction, null, false, false, true, null);
-         Reset();
+         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, false, false, true, null);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:DirectoryInfo"/> instance.</summary>
@@ -1343,8 +1342,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteEmpty(bool recursive)
       {
-         Directory.DeleteEmptyDirectoryInternal(EntryInfo, Transaction, null, recursive, false, true, null);
-         Reset();
+         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, recursive, false, true, null);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:DirectoryInfo"/> instance.</summary>
@@ -1353,8 +1351,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteEmpty(bool recursive, bool ignoreReadOnly)
       {
-         Directory.DeleteEmptyDirectoryInternal(EntryInfo, Transaction, null, recursive, ignoreReadOnly, true, null);
-         Reset();
+         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, true, null);
       }
 
       #endregion // DeleteEmpty
@@ -1733,6 +1730,17 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // CopyMoveResult
 
       #endregion // MoveTo1
+
+      #region RefreshEntryInfo
+
+      /// <summary>Refreshes the state of the <see cref="T:FileSystemEntryInfo"/> EntryInfo instance.</summary>
+      [SecurityCritical]
+      public new void RefreshEntryInfo()
+      {
+         base.RefreshEntryInfo();
+      }
+
+      #endregion // RefreshEntryInfo
 
       #region RemoveStream
 

@@ -540,12 +540,17 @@ namespace Alphaleonis.Win32.Filesystem
       
       #region GetUniqueVolumeNameForPath
 
-      /// <summary>Get the unique volume name for the given path.</summary>
+      /// <summary>Get the unique volume name for the given path.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns the unique volume name in the form: "\\?\Volume{GUID}\",</para>
+      /// <para>or <c>null</c> on error or if unavailable.</para>
+      /// </returns>
+      /// </summary>
       /// <param name="volumePathName">A path string. Both absolute and relative file and directory names,
       /// for example "..", is acceptable in this path.
       /// If you specify a relative file or directory name without a volume qualifier, GetUniqueVolumeNameForPath returns the Drive letter of the current volume.
       ///</param>
-      /// <returns>The unique volume name of the form: "\\?\Volume{GUID}\", or <c>null</c> on error or if unavailable.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       public static string GetUniqueVolumeNameForPath(string volumePathName)
@@ -690,13 +695,23 @@ namespace Alphaleonis.Win32.Filesystem
          }
          finally
          {
-            int lastError = Marshal.GetLastWin32Error();
+            uint lastError = (uint) Marshal.GetLastWin32Error();
 
-            // (1) When GetVolumeNameForVolumeMountPoint() succeeds,             lastError is set to Win32Errors.ERROR_MORE_DATA.
-            // (2) When volumeMountPoint is a network drive mapping or UNC path, lastError is set to Win32Errors.ERROR_INVALID_PARAMETER.
+            switch (lastError)
+            {
+               case Win32Errors.ERROR_INVALID_NAME:
+                  NativeError.ThrowException(lastError, volumeMountPoint, true);
+                  break;
 
-            if (lastError != Win32Errors.ERROR_MORE_DATA && lastError != Win32Errors.ERROR_INVALID_PARAMETER)
-               NativeError.ThrowException(lastError, volumeMountPoint);
+               default:
+                  // (1) When GetVolumeNameForVolumeMountPoint() succeeds,             lastError is set to Win32Errors.ERROR_MORE_DATA.
+                  // (2) When volumeMountPoint is a network drive mapping or UNC path, lastError is set to Win32Errors.ERROR_INVALID_PARAMETER.
+
+                  if (lastError != Win32Errors.ERROR_MORE_DATA)
+                     NativeError.ThrowException(lastError, volumeMountPoint);
+
+                  break;
+            }
          }
       }
 
@@ -761,35 +776,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetVolumePathName
 
       /// <summary>Retrieves the volume mount point where the specified path is mounted.
-      /// Returns the nearest volume root path for a given directory.
+      /// <returns>
+      /// <para>Returns the nearest volume root path for a given directory.</para>
+      /// <para>The volume path name, for example: "C:\Windows" --> "C:\".</para>
+      /// </returns>
       /// </summary> 
-      /// <param name="path">The path to the volume, for example: C:\Windows</param>
-      /// <returns>The volume path name, for example: C:\windows --> C:\, in case of failure <paramref name="path"/> is returned.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
+      /// <param name="path">The path to the volume, for example: C:\Windows</param>
       [SecurityCritical]
       public static string GetVolumePathName(string path)
       {
-         // For the following set of examples, U: is mapped to the remote computer \\YourComputer\C$, and Q is a local drive. 
-         // Get the root path of the Volume.
-         //    Specified path                      Function returns
-         //    \\YourComputer\C$\Windows           \\YourComputer\C$\
-         //    \\?\UNC\YourComputer\C$\Windows     \\?\UNC\YourComputer\C$\
-         //    Q:\Windows                          Q:\
-         //    \\?\Q:\Windows                      \\?\Q:\
-         //    \\.\Q:\Windows                      \\.\Q:\
-         //    \\?\UNC\W:\Windows                  FALSE with error 123 because a specified remote path was not valid; W$ share does not exist or no user access granted.
-         //    C:\COM2 (which exists)              \\.\COM2\
-         //    C:\COM3 (non-existent)              FALSE with error 123 because a non-existent COM device was specified.
-
-         // For the following set of examples, the paths contain invalid trailing path elements.
-         //    Specified path                                                 Function returns
-         //    G:\invalid (invalid path)	                                    G:\
-         //    \\.\I:\aaa\invalid (invalid path)	                           \\.\I:\
-         //    \\YourComputer\C$\invalid (invalid trailing path element)	   \\YourComputer\C$\
-
-         // If a network share is specified, GetVolumePathName returns the shortest path for which GetDriveType returns DRIVE_REMOTE,
-         // which means that the path is validated as a remote drive that exists, which the current user can access.
-
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 

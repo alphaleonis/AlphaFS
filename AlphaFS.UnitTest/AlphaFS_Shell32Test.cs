@@ -284,8 +284,8 @@ namespace AlphaFS.UnitTest
       public void GetFileIcon()
       {
          Console.WriteLine("Filesystem.Shell32.GetFileIcon()");
-
-         string notepad = Path.Combine(SysRoot32, "notepad.exe");
+         
+         string notepad = Path.Combine(SysRoot, "notepad.exe");
          Console.WriteLine("\nInput File Path: [{0}]\n", notepad);
 
          Console.WriteLine("Example usage:");

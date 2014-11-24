@@ -107,6 +107,9 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_FILE_READ_ONLY:
                throw new UnauthorizedAccessException(errorMessage);
 
+            case Win32Errors.ERROR_INVALID_NAME:
+               throw new IOException(errorMessage, (int)errorCode);
+
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
                //throw new DirectoryNotEmptyException(errorMessage);
                throw new IOException(errorMessage, (int)errorCode);
@@ -168,7 +171,9 @@ namespace Alphaleonis.Win32
             default:
                // We don't have a specific exception to generate for this error.
                // Throw a System.Runtime.InteropServices.COMException.
-               throw Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode));
+               //throw Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode));
+
+               throw new Win32Exception((int) errorCode, errorMessage);
          }
       }
 

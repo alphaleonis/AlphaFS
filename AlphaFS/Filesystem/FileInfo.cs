@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Security;
 using System.Security.AccessControl;
@@ -1465,6 +1466,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // MoveTo1
 
+      #region RefreshEntryInfo
+
+      /// <summary>Refreshes the state of the <see cref="T:FileSystemEntryInfo"/> EntryInfo instance.</summary>
+      [SecurityCritical]
+      public new void RefreshEntryInfo()
+      {
+         base.RefreshEntryInfo();
+      }
+
+      #endregion // RefreshEntryInfo
+
       #region RemoveStream
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the file.</summary>
@@ -1686,7 +1698,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="System.IO.FileNotFoundException">The file does not exist or the Length property is called for a directory.</exception>
       /// <exception cref="System.IO.IOException"/>
       /// </summary>
-      [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = ".NET also throws FileNotFoundException().")]
+      [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
       public long Length
       {
          [SecurityCritical]
@@ -1700,10 +1712,15 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, DisplayPath, true);
+               NativeError.ThrowException(DataInitialised, LongFullName, true);
+            
+            // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
+            if (Win32AttributeData.FileAttributes == (FileAttributes) (-1))
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
 
-            if ((Win32AttributeData.FileAttributes & FileAttributes.Directory) != 0)
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, DisplayPath, true);
+            // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
+            if ((Win32AttributeData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, LongFullName));
 
             return Win32AttributeData.FileSize;
          }

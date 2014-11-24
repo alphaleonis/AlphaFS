@@ -1402,7 +1402,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetCompressedFileSizeTransacted
 
-      #region GetFileAttributesEx
+      #region GetFileAttributes
 
       /// <summary>Retrieves file system attributes for a specified file or directory.</summary>
       /// <returns>
@@ -1416,7 +1416,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern FileAttributes GetFileAttributes([MarshalAs(UnmanagedType.LPWStr)] string lpFileName);
 
-      #endregion // GetFileAttributesEx
+      #endregion // GetFileAttributes
 
       #region GetFileAttributesEx
 
@@ -2283,13 +2283,29 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetVolumePathName
 
-      /// <summary>Retrieves the volume mount point where the specified path is mounted.</summary>
+      /// <summary>Retrieves the volume mount point where the specified path is mounted.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>If a specified path is passed, GetVolumePathName returns the path to the volume mount point,</para>
+      /// <para>which means that it returns the root of the volume where the end point of the specified path is located.</para>
+      /// <para>&#160;</para>
+      /// <para>For example, assume that you have volume D mounted at C:\Mnt\Ddrive and volume E mounted at "C:\Mnt\Ddrive\Mnt\Edrive".</para>
+      /// <para>Also assume that you have a file with the path "E:\Dir\Subdir\MyFile".</para>
+      /// <para>If you pass "C:\Mnt\Ddrive\Mnt\Edrive\Dir\Subdir\MyFile" to GetVolumePathName,</para>
+      /// <para>it returns the path "C:\Mnt\Ddrive\Mnt\Edrive\".</para>
+      /// <para>&#160;</para>
+      /// <para>If a network share is specified, GetVolumePathName returns the shortest path for which GetDriveType returns DRIVE_REMOTE,</para>
+      /// <para>which means that the path is validated as a remote drive that exists, which the current user can access.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetVolumePathNameW")]
       [return: MarshalAs(UnmanagedType.Bool)]

@@ -1570,11 +1570,21 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Determines whether the given path refers to an existing directory on disk.</summary>
+      /// <summary>Determines whether the given path refers to an existing directory on disk.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
+      /// <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</para>
+      /// <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
+      /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
+      /// </remarks>
+      /// </summary>
       /// <param name="path">The path to test.</param>
-      /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
-      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(string path)
       {
@@ -1587,16 +1597,26 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
+      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
+      /// <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</para>
+      /// <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
+      /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
+      /// </remarks>
+      /// </summary>
       /// <param name="path">The path to test.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
-      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(string path, bool? isFullPath)
       {
@@ -1609,12 +1629,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
+      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
+      /// <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</para>
+      /// <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
+      /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
+      /// </remarks>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
-      /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
-      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
       {
@@ -1625,17 +1655,27 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
+      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
+      /// <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      /// </returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</para>
+      /// <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
+      /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
+      /// </remarks>
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns><c>true</c> if path refers to an existing directory, <c>false</c> otherwise.</returns>
-      /// <remarks>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</remarks>
-      /// <remarks>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists. This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters, a failing or missing disk, or if the caller does not have permission to read the file.</remarks>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -6915,9 +6955,6 @@ namespace Alphaleonis.Win32.Filesystem
             // Path refers to a file instead of a directory.
             // The specified path is invalid (for example, it is on an unmapped drive). 
 
-            if (!File.ExistsInternal(true, transaction, path, true, isFullPath) && !continueOnNotExist)
-               NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
-
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
                isFullPath == null
                   ? path
@@ -6941,11 +6978,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          string pathLp = fileSystemEntryInfo.LongFullPath;
-
-
-         if (!fileSystemEntryInfo.IsDirectory)
-            // MSDN: .NET 3.5+: IOException: A file with the same name and location specified by path exists.
-            throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp));
 
          #endregion // Setup
 
@@ -6999,12 +7031,6 @@ namespace Alphaleonis.Win32.Filesystem
             int lastError = Marshal.GetLastWin32Error();
             switch ((uint) lastError)
             {
-               case Win32Errors.ERROR_PATH_NOT_FOUND:
-                  if (continueOnNotExist)
-                     return;
-                  break;
-
-
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   if (requireEmpty)
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory. 
@@ -7013,30 +7039,42 @@ namespace Alphaleonis.Win32.Filesystem
                   goto startRemoveDirectory;
 
 
+               case Win32Errors.ERROR_DIRECTORY:
+                  // MSDN: .NET 3.5+: DirectoryNotFoundException: Path refers to a file instead of a directory.
+                  if (File.ExistsInternal(false, transaction, path, false, null))
+                     throw new DirectoryNotFoundException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}",
+                        Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp)));
+                  break;
+
+                  
+               case Win32Errors.ERROR_PATH_NOT_FOUND:
+                  if (continueOnNotExist)
+                     return;
+                  break;
+               
+               case Win32Errors.ERROR_SHARING_VIOLATION:
+                  // MSDN: .NET 3.5+: IOException: The directory is being used by another process or there is an open handle on the directory.
+                  NativeError.ThrowException(lastError, pathLp, true);
+                  break;
+                  
                case Win32Errors.ERROR_ACCESS_DENIED:
                   FileAttributes attrs = File.GetAttributesInternal(true, transaction, pathLp, false, true, null);
                   if (attrs != (FileAttributes) (-1))
                   {
-                     // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory.
-                     // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
-                     // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-
-                     bool isReadOnly = ((attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly);
-                     bool isHidden = ((attrs & FileAttributes.Hidden) == FileAttributes.Hidden);
-
-                     if (ignoreReadOnly && (isReadOnly || isHidden))
+                     if ((attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                      {
-                        // Reset directory attributes.
-                        File.SetAttributesInternal(true, transaction, pathLp, FileAttributes.Normal, true, null);
-                        goto startRemoveDirectory;
-                     }
+                        // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory.
 
-                     // MSDN: .NET 3.5+: UnauthorizedAccessException: path specified a read-only file.
-                     NativeError.ThrowException(isReadOnly
-                        ? Win32Errors.ERROR_FILE_READ_ONLY
-                        : fileSystemEntryInfo.IsDirectory
-                           ? Win32Errors.ERROR_PATH_NOT_FOUND
-                           : Win32Errors.ERROR_FILE_NOT_FOUND, fileSystemEntryInfo.LongFullPath, true);
+                        if (ignoreReadOnly)
+                        {
+                           // Reset directory attributes.
+                           File.SetAttributesInternal(true, transaction, pathLp, FileAttributes.Normal, true, null);
+                           goto startRemoveDirectory;
+                        }
+
+                        // MSDN: .NET 3.5+: IOException: The directory is read-only or contains a read-only file.
+                        NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, pathLp, true);
+                     }
                   }
 
                   break;
@@ -7048,6 +7086,8 @@ namespace Alphaleonis.Win32.Filesystem
             // The directory is the application's current working directory. 
             // The directory contains a read-only file.
             // The directory is being used by another process.
+
+            // Throws IOException.
             NativeError.ThrowException(lastError, pathLp, true);
          }
 

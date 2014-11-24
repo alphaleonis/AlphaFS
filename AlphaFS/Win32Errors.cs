@@ -92,7 +92,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_WRITE_FAULT = 29;
       //public const uint ERROR_READ_FAULT = 30;
       //public const uint ERROR_GEN_FAILURE = 31;
-      //public const uint ERROR_SHARING_VIOLATION = 32;
+      
+      /// <summary>(32) The process cannot access the file because it is being used by another process.</summary>
+      public const uint ERROR_SHARING_VIOLATION = 32;
+
       //public const uint ERROR_LOCK_VIOLATION = 33;
       //public const uint ERROR_WRONG_DISK = 34;
       //public const uint ERROR_SHARING_BUFFER_EXCEEDED = 36;
@@ -249,7 +252,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_RING2SEG_MUST_BE_MOVABLE = 200;
       //public const uint ERROR_RELOC_CHAIN_XEEDS_SEGLIM = 201;
       //public const uint ERROR_INFLOOP_IN_RELOC_CHAIN = 202;
-      //public const uint ERROR_ENVVAR_NOT_FOUND = 203;
+      
+      /// <summary>(203) The system could not find the environment option that was entered.</summary>
+      public const uint ERROR_ENVVAR_NOT_FOUND = 203;
+
       //public const uint ERROR_NO_SIGNAL_SENT = 205;
       //public const uint ERROR_FILENAME_EXCED_RANGE = 206;
       //public const uint ERROR_RING2_STACK_IN_USE = 207;

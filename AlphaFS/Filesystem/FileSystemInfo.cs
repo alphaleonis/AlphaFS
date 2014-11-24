@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -60,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          DataInitialised = File.FillAttributeInfo(Transaction, LongFullName, ref Win32AttributeData, false, false);
       }
-
+   
       #endregion // Refresh
 
       #region ToString
@@ -148,12 +149,39 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
+      #region RefreshEntryInfo
+
+      /// <summary>Refreshes the state of the <see cref="T:FileSystemEntryInfo"/> EntryInfo instance.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>FileSystemInfo.RefreshEntryInfo() takes a snapshot of the file from the current file system.</para>
+      /// <para>Refresh cannot correct the underlying file system even if the file system returns incorrect or outdated information.</para>
+      /// <para>This can happen on platforms such as Windows 98.</para>
+      /// <para>Calls must be made to Refresh() before attempting to get the attribute information, or the information will be outdated.</para>
+      /// </remarks>
+      /// </summary>
+      [SecurityCritical]
+      protected void RefreshEntryInfo()
+      {
+         _entryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullName, false, false, null);
+   
+         if (_entryInfo == null)
+            DataInitialised = -1;
+         else
+         {
+            DataInitialised = 0;
+            Win32AttributeData = new NativeMethods.Win32FileAttributeData(_entryInfo.Win32FindData.FileAttributes, _entryInfo.Win32FindData.CreationTime, _entryInfo.Win32FindData.LastAccessTime, _entryInfo.Win32FindData.LastWriteTime, _entryInfo.Win32FindData.FileSizeHigh, _entryInfo.Win32FindData.FileSizeLow);
+         }
+      }
+
+      #endregion // RefreshEntryInfo
+
       #region Reset
 
       /// <summary>[AlphaFS] Resets the state of the file system object to uninitialized.</summary>
       internal void Reset()
       {
-         _entryInfo = null;
+         DataInitialised = -1;
       }
 
       #endregion // Reset
@@ -236,7 +264,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, DisplayPath, true);
+               NativeError.ThrowException(DataInitialised, LongFullName, true);
 
             return Win32AttributeData.FileAttributes;
          }
@@ -245,7 +273,7 @@ namespace Alphaleonis.Win32.Filesystem
          set
          {
             File.SetAttributesInternal(IsDirectory, Transaction, LongFullName, value, false, null);
-            DataInitialised = -1;
+            Reset();
          }
       }
 
@@ -321,7 +349,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, DisplayPath, true);
+               NativeError.ThrowException(DataInitialised, LongFullName, true);
 
             return DateTime.FromFileTimeUtc(Win32AttributeData.CreationTime);
          }
@@ -330,7 +358,7 @@ namespace Alphaleonis.Win32.Filesystem
          set
          {
             File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, value, null, null, null);
-            DataInitialised = -1;
+            Reset();
          }
       }
 
@@ -365,7 +393,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       public string Extension
       {
-         get { return Path.GetExtension(FullPath, true); }
+         get { return Path.GetExtension(FullPath, false); }
       }
 
       #endregion // Extension
@@ -442,7 +470,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, DisplayPath, true);
+               NativeError.ThrowException(DataInitialised, LongFullName, true);
 
             return DateTime.FromFileTimeUtc(Win32AttributeData.LastAccessTime);
          }
@@ -451,7 +479,7 @@ namespace Alphaleonis.Win32.Filesystem
          set
          {
             File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, value, null, null);
-            DataInitialised = -1;
+            Reset();
          }
       }
 
@@ -515,7 +543,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, DisplayPath, true);
+               NativeError.ThrowException(DataInitialised, LongFullName, true);
 
             return DateTime.FromFileTimeUtc(Win32AttributeData.LastWriteTime);
          }
@@ -524,7 +552,7 @@ namespace Alphaleonis.Win32.Filesystem
          set
          {
             File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, null, value, null);
-            DataInitialised = -1;
+            Reset();
          }
       }
 
@@ -572,12 +600,22 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             if (_entryInfo == null)
-               Refresh();
+            {
+               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
+               RefreshEntryInfo();
+            }
+
+            // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
+            if (DataInitialised != 0)
+               NativeError.ThrowException(DataInitialised, LongFullName, true);
 
             return _entryInfo;
          }
 
-         internal set { _entryInfo = value; }
+         internal set
+         {
+            _entryInfo = value;
+         }
       }
 
       #endregion // EntryInfo
@@ -601,20 +639,21 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          get
          {
-            if (_lengthStreams == -1)
-               Refresh();
-
-            bool isFolder = IsDirectory || Name == Path.CurrentDirectoryPrefix;
-
-            if (_entryInfo == null)
+            if (DataInitialised == -1)
             {
-               if (isFolder)
-                  NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, LongFullName);
-
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
+               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
+               Refresh();
             }
+
+            // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
+            if (DataInitialised != 0)
+               NativeError.ThrowException(DataInitialised, LongFullName, true);
+
+            
+            bool isFolder = IsDirectory || Name == Path.CurrentDirectoryPrefix;
             
             _lengthStreams = AlternateDataStreamInfo.GetStreamSizeInternal(isFolder, Transaction, null, LongFullName, null, null, null);
+
             return _lengthStreams;
          }
       }
@@ -624,7 +663,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region LongFullName
 
       /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
-      public string LongFullName { get; internal set; }
+      protected string LongFullName { get; set; }
 
       #endregion // LongFullName
 

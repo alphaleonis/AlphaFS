@@ -60,6 +60,7 @@ namespace AlphaFS.UnitTest
       private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
       private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
       private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
+      private static string NotepadExe = Path.Combine(SysRoot, "notepad.exe");
 
       private const string TextTrue = "IsTrue";
       private const string TenNumbers = "0123456789";
@@ -611,95 +612,219 @@ namespace AlphaFS.UnitTest
          }
          
          File.Delete(tempPath);
-         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
          Console.WriteLine();
       }
 
       #endregion // DumpCreate
 
-      #region DumpDelete
+      #region TestDelete
 
-      private void DumpDelete(bool isLocal)
+      private void TestDelete(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
          string tempFolder = Path.GetTempPath();
-         string tempPath = Path.Combine(tempFolder, "File-Delete-" + Path.GetRandomFileName());
+         string tempPath = Path.Combine(tempFolder, "File.Delete-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
+         string notePad = isLocal ? NotepadExe : Path.LocalToUnc(NotepadExe);
 
-         using (FileStream fs = File.Create(tempPath))
-         {
-            fs.WriteByte(1);
-            Console.WriteLine("\nInput File Path: [{0}]\n\n\tfilestream.Length = [{1}]", tempPath, NativeMethods.UnitSizeToText(fs.Length));
-         }
-         Assert.IsTrue(File.Exists(tempPath));
-         
-         #region IOException
-         
-         FileStream streamCreate2 = File.Open(tempPath, FileMode.Open);
-         bool exception = false;
+         string nonExistingFile = SysRoot32 + @"\NonExistingFile-" + Path.GetRandomFileName();
+         if (!isLocal) nonExistingFile = Path.LocalToUnc(nonExistingFile);
+
+         string sysDrive = SysDrive;
+         if (!isLocal) sysDrive = Path.LocalToUnc(sysDrive);
+
+         string sysRoot = SysRoot;
+         if (!isLocal) sysRoot = Path.LocalToUnc(sysRoot);
+
+         string letter = DriveInfo.GetFreeDriveLetter() + @":\";
+         if (!isLocal) letter = Path.LocalToUnc(letter);
+
+         int catchCount = 0;
+         bool exception;
+         int expectedLastError;
+         string expectedException;
+
+         #endregion // Setup
+
          try
          {
-            Console.WriteLine("\n\nCatch: File in use.");
-            File.Delete(tempPath);
+            #region ArgumentException
+
+            expectedException = "System.ArgumentException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch #{0}: [{1}]: Path is a zero-length string, contains only white space, or contains one or more invalid characters.", ++catchCount, expectedException);
+
+               File.Delete(sysDrive + @"\<>");
+            }
+            catch (Exception ex)
+            {
+               string exceptionTypeName = ex.GetType().FullName;
+
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // ArgumentException
+
+            #region DirectoryNotFoundException (Local) / IOException (Network)
+
+            expectedLastError = (int) (isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+            expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch #{0}: [{1}]: The specified path is invalid (for example, it is on an unmapped drive).", ++catchCount, expectedException);
+
+               File.Delete(nonExistingFile.Replace(sysDrive + @"\", letter));
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+
+            #region UnauthorizedAccessException #1
+
+            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch #{0}: [{1}]: Path is a directory.", ++catchCount, expectedException);
+
+               Directory.CreateDirectory(tempPath);
+
+               File.Delete(tempPath);
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + Win32Errors.ERROR_INVALID_PARAMETER + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Directory.Delete(tempPath);
+            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            Console.WriteLine();
+
+            #endregion // UnauthorizedAccessException #1
+
+            #region IOException
+
+            using (File.Create(tempPath))
+            {
+            }
+            FileStream streamCreate2 = File.Open(tempPath, FileMode.Open);
+
+            expectedLastError = (int) Win32Errors.ERROR_SHARING_VIOLATION;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch #{0}: [{1}]: The specified file is in use or there is an open handle on the file.", ++catchCount, expectedException);
+
+               File.Delete(tempPath);
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            streamCreate2.Close();
+            Console.WriteLine();
+
+            #endregion // IOException
+
+            #region UnauthorizedAccessException #2
+            
+            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch #{0}: [{1}]: Path specified a read-only file.", ++catchCount, expectedException);
+
+               File.SetAttributes(tempPath, FileAttributes.ReadOnly);
+
+               File.Delete(tempPath);
+            }
+            catch (Exception ex)
+            {
+               Win32Exception win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + Win32Errors.ERROR_FILE_READ_ONLY + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // UnauthorizedAccessException #2
          }
-         catch (IOException ex)
+         finally
          {
-            exception = true;
-            Console.WriteLine("\n\tIOException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            File.Delete(tempPath, true);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
          }
-         Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "Exception should have been caught.");
 
-         streamCreate2.Close();
-
-         #endregion // IOException
-
-         #region UnauthorizedAccessException #1
-
-         exception = false;
-         try
-         {
-            Console.WriteLine("\n\nCatch: File path is a directory.");
-            File.Delete(tempFolder, true);
-         }
-         catch (UnauthorizedAccessException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tUnauthorizedAccessException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught UnauthorizedAccessException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "Exception should have been caught.");
-
-         #endregion // UnauthorizedAccessException #1
-
-         #region UnauthorizedAccessException #2
-
-         File.SetAttributes(tempPath, FileAttributes.ReadOnly);
-         exception = false;
-         try
-         {
-            Console.WriteLine("\n\nCatch: File read-only attribute is set.");
-            File.Delete(tempPath);
-         }
-         catch (UnauthorizedAccessException ex)
-         {
-            exception = true;
-            Console.WriteLine("\n\tUnauthorizedAccessException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\n\tCaught UnauthorizedAccessException (Should be True): [{0}]", exception);
-         Assert.IsTrue(exception, "Exception should have been caught.");
-
-         #endregion // UnauthorizedAccessException #2
-
-         // Success, ignoreReadOnly = true.
-         Console.WriteLine("\n\nSuccess: File.Delete(, true);");
-         File.Delete(tempPath, true);
-         Assert.IsTrue(!File.Exists(tempPath), "Cleanup failed: File should have been removed.");
          Console.WriteLine();
       }
 
-      #endregion // DumpDelete
+      #endregion // TestDelete
 
       #region DumpExists
 
@@ -1612,7 +1737,7 @@ namespace AlphaFS.UnitTest
          #endregion // SetLastWriteTimeXxx
 
          File.Delete(path);
-         Assert.IsTrue(!File.Exists(path), "Cleanup failed: File should have been removed.");
+         Assert.IsFalse(File.Exists(path), "Cleanup failed: File should have been removed.");
          Console.WriteLine();
       }
 
@@ -1696,7 +1821,7 @@ namespace AlphaFS.UnitTest
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
          File.Delete(path);
-         Assert.IsTrue(!File.Exists(path));
+         Assert.IsFalse(File.Exists(path));
 
          Console.WriteLine("\n");
       }
@@ -1723,45 +1848,51 @@ namespace AlphaFS.UnitTest
          using (File.Create(path)) { }
          using (File.Create(path2)) { }
 
-         Thread.Sleep(new Random().Next(250, 500));
-         int seed = (int) DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
+         try
+         {
+            Thread.Sleep(new Random().Next(250, 500));
+            int seed = (int) DateTime.Now.Ticks & 0x0000FFFF;
+            DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
+            Thread.Sleep(new Random().Next(250, 500));
+            seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+            DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
+            Thread.Sleep(new Random().Next(250, 500));
+            seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+            DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
-         File.SetTimestamps(path, creationTime, lastAccessTime, lastWriteTime);
+            File.SetTimestamps(path, creationTime, lastAccessTime, lastWriteTime);
 
-         Console.WriteLine("\n\tPath1 dates and times:");
-         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
-         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", lastAccessTime.ToLongDateString(), lastAccessTime.ToLongTimeString());
-         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", lastWriteTime.ToLongDateString(), lastWriteTime.ToLongTimeString());
+            Console.WriteLine("\n\tPath1 dates and times:");
+            Console.WriteLine("\t\tCreationTime  : [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
+            Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", lastAccessTime.ToLongDateString(), lastAccessTime.ToLongTimeString());
+            Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", lastWriteTime.ToLongDateString(), lastWriteTime.ToLongTimeString());
 
-         Console.WriteLine("\n\tPath2 current dates and times:");
-         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", File.GetCreationTime(path2).ToLongDateString(), File.GetCreationTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", File.GetLastAccessTime(path2).ToLongDateString(), File.GetLastAccessTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", File.GetLastWriteTime(path2).ToLongDateString(), File.GetLastWriteTime(path2).ToLongTimeString());
+            Console.WriteLine("\n\tPath2 current dates and times:");
+            Console.WriteLine("\t\tCreationTime  : [{0} {1}]", File.GetCreationTime(path2).ToLongDateString(), File.GetCreationTime(path2).ToLongTimeString());
+            Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", File.GetLastAccessTime(path2).ToLongDateString(), File.GetLastAccessTime(path2).ToLongTimeString());
+            Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", File.GetLastWriteTime(path2).ToLongDateString(), File.GetLastWriteTime(path2).ToLongTimeString());
 
-         File.TransferTimestamps(path, path2);
+            File.TransferTimestamps(path, path2);
 
-         Console.WriteLine("\n\tPath2 dates and times after TransferTimestamps():");
-         Console.WriteLine("\t\tCreationTime  : [{0} {1}]", File.GetCreationTime(path2).ToLongDateString(), File.GetCreationTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", File.GetLastAccessTime(path2).ToLongDateString(), File.GetLastAccessTime(path2).ToLongTimeString());
-         Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", File.GetLastWriteTime(path2).ToLongDateString(), File.GetLastWriteTime(path2).ToLongTimeString());
+            Console.WriteLine("\n\tPath2 dates and times after TransferTimestamps():");
+            Console.WriteLine("\t\tCreationTime  : [{0} {1}]", File.GetCreationTime(path2).ToLongDateString(), File.GetCreationTime(path2).ToLongTimeString());
+            Console.WriteLine("\t\tLastAccessTime: [{0} {1}]", File.GetLastAccessTime(path2).ToLongDateString(), File.GetLastAccessTime(path2).ToLongTimeString());
+            Console.WriteLine("\t\tLastWriteTime : [{0} {1}]", File.GetLastWriteTime(path2).ToLongDateString(), File.GetLastWriteTime(path2).ToLongTimeString());
 
-         Assert.AreEqual(File.GetCreationTime(path), File.GetCreationTime(path2));
-         Assert.AreEqual(File.GetLastAccessTime(path), File.GetLastAccessTime(path2));
-         Assert.AreEqual(File.GetLastWriteTime(path), File.GetLastWriteTime(path2));
+            Assert.AreEqual(File.GetCreationTime(path), File.GetCreationTime(path2));
+            Assert.AreEqual(File.GetLastAccessTime(path), File.GetLastAccessTime(path2));
+            Assert.AreEqual(File.GetLastWriteTime(path), File.GetLastWriteTime(path2));
+         }
+         finally
+         { 
+            File.Delete(path);
+            File.Delete(path2);
 
-         File.Delete(path);
-         Assert.IsTrue(!File.Exists(path));
-         File.Delete(path2);
-         Assert.IsTrue(!File.Exists(path2));
+            Assert.IsFalse(File.Exists(path), "Cleanup failed: File should have been removed.");
+            Assert.IsFalse(File.Exists(path), "Cleanup failed: File should have been removed.");
+         }
 
          Console.WriteLine("\n");
       }
@@ -2437,8 +2568,8 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("File.Delete()");
 
-         DumpDelete(true);
-         DumpDelete(false);
+         TestDelete(true);
+         TestDelete(false);
       }
 
       #endregion // Delete

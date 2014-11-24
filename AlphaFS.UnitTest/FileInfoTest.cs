@@ -229,7 +229,7 @@ namespace AlphaFS.UnitTest
             exists = fi.Exists;
             Console.WriteLine("\nfi.Delete(): Exists (Should be {0}): [{1}]", existsSysIo, exists); // true
             Assert.AreEqual(existsSysIo, exists);
-
+            
             fiSysIo.Refresh();
             fi.Refresh();
             existsSysIo = fiSysIo.Exists;
