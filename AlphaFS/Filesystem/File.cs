@@ -7140,35 +7140,43 @@ namespace Alphaleonis.Win32.Filesystem
                         // File.Copy()
                         // File.Move()
                         // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
+                        //   Directory exists with the same name as the file.
                         if (!isFolder && ExistsInternal(true, transaction, destFileNameLp, null))
                               NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, destFileNameLp), true);
                         
                         else
                         {
-                           // Reset file attributes.
-                           if (overwrite)
-                           {
-                              SetAttributesInternal(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, null);
-                              goto startCopyMove;
-                           }
+                           NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
+                           int dataInitialised = FillAttributeInfoInternal(transaction, destFileNameLp, ref data, false, true);
 
-
-                           FileAttributes attrs = GetAttributesExInternal<FileAttributes>(transaction, destFileNameLp, null);
-                           if (attrs != (FileAttributes) (-1))
+                           if (data.FileAttributes != (FileAttributes)(-1))
                            {
-                              // MSDN: .NET 3.5+: UnauthorizedAccessException: destFileName is read-only.
+                              if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                              {
+                                 // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory.
+
+                                 if (overwrite)
+                                 {
+                                    // Reset directory attributes.
+                                    SetAttributesInternal(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, null);
+                                    goto startCopyMove;
+                                 }
+
+                                 // MSDN: .NET 3.5+: UnauthorizedAccessException: destFileName is read-only.
+                                 // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
+                                 // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
+                                 NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, destFileNameLp, true);
+                              }
+
                               // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                               // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                              if ((attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
-                                 NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, destFileNameLp);
-
-
-                              // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
-                              // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                              // IOException
-                              if ((attrs & FileAttributes.Hidden) == FileAttributes.Hidden)
+                              if ((data.FileAttributes & FileAttributes.Hidden) == FileAttributes.Hidden)
                                  NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.FileHidden, destFileNameLp), true);
                            }
+
+                           if (dataInitialised != Win32Errors.ERROR_SUCCESS)
+                              // Throws IOException.
+                              NativeError.ThrowException(dataInitialised, destFileNameLp, true);
                         }
                      }
 
