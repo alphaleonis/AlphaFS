@@ -7096,7 +7096,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // File.Move()
                      // Directory.Move()
                      // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified in sourceFileName or destFileName is invalid (for example, it is on an unmapped drive).
-                        NativeError.ThrowException(lastError, sourceFileNameLp);
+                     NativeError.ThrowException(lastError, sourceFileNameLp);
                      break;
 
                   case Win32Errors.ERROR_FILE_EXISTS:
@@ -7104,7 +7104,6 @@ namespace Alphaleonis.Win32.Filesystem
                      // Directory.Copy() (AlphaFS)
                      NativeError.ThrowException(lastError, destFileNameLp, true);
                      break;
-
 
                   default:
                      // For a number of error codes (sharing violation, path not found, etc)
@@ -7130,7 +7129,7 @@ namespace Alphaleonis.Win32.Filesystem
                      string fileNameLp = destFileNameLp;
 
                      if (!isFolder)
-                        using (SafeFileHandle safeHandle = CreateFileInternal(true, transaction, sourceFileNameLp, ExtendedFileAttributes.None, null, FileMode.Open, 0, FileShare.Read, false, null))
+                        using (SafeFileHandle safeHandle = CreateFileInternal(transaction, sourceFileNameLp, ExtendedFileAttributes.None, null, FileMode.Open, 0, FileShare.Read, false, null))
                            if (safeHandle.IsInvalid)
                               fileNameLp = sourceFileNameLp;
 
@@ -7142,14 +7141,14 @@ namespace Alphaleonis.Win32.Filesystem
                         // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
                         //   Directory exists with the same name as the file.
                         if (!isFolder && ExistsInternal(true, transaction, destFileNameLp, null))
-                              NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, destFileNameLp), true);
-                        
+                           NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, destFileNameLp), true);
+
                         else
                         {
                            NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
                            int dataInitialised = FillAttributeInfoInternal(transaction, destFileNameLp, ref data, false, true);
 
-                           if (data.FileAttributes != (FileAttributes)(-1))
+                           if (data.FileAttributes != (FileAttributes) (-1))
                            {
                               if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                               {
@@ -7179,7 +7178,6 @@ namespace Alphaleonis.Win32.Filesystem
                               NativeError.ThrowException(dataInitialised, destFileNameLp, true);
                         }
                      }
-
 
                      // MSDN: .NET 3.5+: An I/O error has occurred. 
                      // File.Copy(): IOException: destFileName exists and overwrite is false.
@@ -7243,7 +7241,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static FileStream CreateFileInternal(KernelTransaction transaction, string path, int bufferSize, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
       {
-         SafeFileHandle safeHandle = CreateFileInternal(true, transaction, path, attributes, fileSecurity, mode, (FileSystemRights)access, share, true, isFullPath);
+         SafeFileHandle safeHandle = CreateFileInternal(transaction, path, attributes, fileSecurity, mode, (FileSystemRights)access, share, true, isFullPath);
          return new FileStream(safeHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
       }
 
@@ -7255,7 +7253,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"></exception>
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
-      /// <param name="isFile"><c>null</c> indicates a device. <c>true</c> indicates a file object. <c>false</c> indicates a folder object.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file or directory to create.</param>
       /// <param name="attributes">One of the <see cref="T:ExtendedFileAttributes"/> values that describes how to create or overwrite the file or directory.</param>
@@ -7271,9 +7268,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
-      internal static SafeFileHandle CreateFileInternal(bool? isFile, KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, bool? isFullPath)
+      internal static SafeFileHandle CreateFileInternal(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, bool? isFullPath)
       {
-         if (checkPath && isFullPath != null && (bool)!isFullPath)
+         if (checkPath && isFullPath != null && (bool) !isFullPath)
             Path.CheckValidPath(path, true, true);
 
          // When isFile == null, we're working with a device.
@@ -7318,20 +7315,6 @@ namespace Alphaleonis.Win32.Filesystem
                   : NativeMethods.CreateFileTransacted(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero, transaction.SafeHandle, IntPtr.Zero, IntPtr.Zero);
 
                int lastError = Marshal.GetLastWin32Error();
-               switch ((uint) lastError)
-               {
-                  case Win32Errors.ERROR_PATH_NOT_FOUND:
-                     if (pathLp.Equals(Path.GetPathRoot(pathLp, false), StringComparison.OrdinalIgnoreCase))
-                        lastError = 5;
-                     break;
-
-                  case Win32Errors.ERROR_FILE_NOT_FOUND:
-                     lastError = (int) ((isFile == null || (bool) !isFile)
-                        ? Win32Errors.ERROR_PATH_NOT_FOUND
-                        : Win32Errors.ERROR_FILE_NOT_FOUND);
-                     break;
-               }
-
                if (handle.IsInvalid)
                {
                   handle.Close();
@@ -7396,7 +7379,8 @@ namespace Alphaleonis.Win32.Filesystem
                   throw new NotSupportedException(Resources.HardLinksOnNonNTFSPartitionsIsNotSupported);
 
                default:
-                  NativeError.ThrowException(lastError, fileName, existingFileName);
+                  // Throws IOException.
+                  NativeError.ThrowException(lastError, fileNameLp, existingFileName, true);
                   break;
             }
          }
@@ -8153,7 +8137,7 @@ namespace Alphaleonis.Win32.Filesystem
                   ? Path.GetLongPathInternal(path, false, false, false, false)
                   : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
 
-            safeHandle = CreateFileInternal(!isFolder, transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, null);
+            safeHandle = CreateFileInternal(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, null);
          }
 
          
@@ -8367,7 +8351,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static LinkTargetInfo GetLinkTargetInfoInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         using (SafeFileHandle safeHandle = CreateFileInternal(true, transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, true, isFullPath))
+         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, true, isFullPath))
             return Device.GetLinkTargetInfoInternal(safeHandle);
       }
 
@@ -8401,7 +8385,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
 
-            safeHandle = CreateFileInternal(true, transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, null);
+            safeHandle = CreateFileInternal(transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, null);
          }
          
 
@@ -8449,7 +8433,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, ExtendedFileAttributes attributes, bool? isFullPath)
       {
-         SafeFileHandle safeHandle = CreateFileInternal(true, transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights)access, share, true, isFullPath);
+         SafeFileHandle safeHandle = CreateFileInternal(transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights)access, share, true, isFullPath);
 
          return rights != 0
             ? new FileStream(safeHandle, FileAccess.Write)
@@ -8851,7 +8835,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (SafeGlobalMemoryBufferHandle creationTime = SafeGlobalMemoryBufferHandle.CreateFromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastAccessTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastWriteTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?)null))
-         using (SafeFileHandle safeHandle = CreateFileInternal(!isFolder, transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, isFullPath))
+         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, isFullPath))
             if (!NativeMethods.SetFileTime(safeHandle, creationTime, lastAccessTime, lastWriteTime))
                NativeError.ThrowException(path);
       }

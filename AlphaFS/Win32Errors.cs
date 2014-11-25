@@ -23,13 +23,10 @@ namespace Alphaleonis.Win32
 {
    internal static class Win32Errors
    {
-      /// <summary>Use this to translate error codes into HRESULTs like 0x80070006 for ERROR_INVALID_HANDLE</summary>
-      public static int GetHRFromWin32Error(uint errorCode)
+      /// <summary>Use this to translate error codes into HRESULTs like 0x80070006 for ERROR_INVALID_HANDLE.</summary>
+      public static int GetHrFromWin32Error(uint errorCode)
       {
-         unchecked
-         {
-            return (int) (errorCode <= 0 ? errorCode : (errorCode & 0x0000FFFF) | 0x80070000);
-         }
+         return (int) unchecked(((int) 0x80070000) | errorCode);
       }
 
       // System Error Codes
@@ -65,7 +62,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_INVALID_ACCESS = 12;
       //public const uint ERROR_INVALID_DATA = 13;
       //public const uint ERROR_OUTOFMEMORY = 14;
-      //public const uint ERROR_INVALID_DRIVE = 15;
+
+      /// <summary>(15) The system cannot find the drive specified.</summary>
+      public const uint ERROR_INVALID_DRIVE = 15;
+
       //public const uint ERROR_CURRENT_DIRECTORY = 16;
 
       /// <summary>(17) The system cannot move the file to a different disk drive.</summary>
@@ -305,7 +305,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_PIPE_CONNECTED = 535;
       //public const uint ERROR_PIPE_LISTENING = 536;
       //public const uint ERROR_EA_ACCESS_DENIED = 994;
-      //public const uint ERROR_OPERATION_ABORTED = 995;
+
+      /// <summary>(995) The I/O operation has been aborted because of either a thread exit or an application request.</summary>
+      public const uint ERROR_OPERATION_ABORTED = 995;
+
       //public const uint ERROR_IO_INCOMPLETE = 996;
       //public const uint ERROR_IO_PENDING = 997;   
       //public const uint ERROR_NOACCESS = 998;

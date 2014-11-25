@@ -56,13 +56,13 @@ namespace Alphaleonis.Win32
       [SecurityCritical]
       public static void ThrowException(int errorCode, string readPath, bool isIoException = false)
       {
-         ThrowException((uint)errorCode, readPath, null, isIoException);
+         ThrowException((uint) errorCode, readPath, null, isIoException);
       }
 
       [SecurityCritical]
       public static void ThrowException(int errorCode, string readPath, string writePath, bool isIoException = false)
       {
-         ThrowException((uint)errorCode, readPath, writePath, isIoException);
+         ThrowException((uint) errorCode, readPath, writePath, isIoException);
       }
 
       #endregion // int
@@ -87,19 +87,20 @@ namespace Alphaleonis.Win32
          if (!Utils.IsNullOrWhiteSpace(writePath))
             errorMessage = string.Format(CultureInfo.CurrentCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), writePath);
 
-         
+
          if (isIoException)
             throw new IOException(errorMessage, (int) errorCode);
 
          switch (errorCode)
          {
+            case Win32Errors.ERROR_INVALID_DRIVE:
+               throw new DriveNotFoundException(errorMessage);
+
+            case Win32Errors.ERROR_OPERATION_ABORTED:
+               throw new OperationCanceledException(errorMessage);
+
             case Win32Errors.ERROR_FILE_NOT_FOUND:
                throw new FileNotFoundException(errorMessage);
-
-            case Win32Errors.ERROR_ALREADY_EXISTS:
-            case Win32Errors.ERROR_FILE_EXISTS:
-               //throw new AlreadyExistsException(errorMessage);
-               throw new IOException(errorMessage, (int)errorCode);
 
             case Win32Errors.ERROR_PATH_NOT_FOUND:
                throw new DirectoryNotFoundException(errorMessage);
@@ -107,73 +108,63 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_FILE_READ_ONLY:
                throw new UnauthorizedAccessException(errorMessage);
 
-            case Win32Errors.ERROR_INVALID_NAME:
-               throw new IOException(errorMessage, (int)errorCode);
-
-            case Win32Errors.ERROR_DIR_NOT_EMPTY:
-               //throw new DirectoryNotEmptyException(errorMessage);
-               throw new IOException(errorMessage, (int)errorCode);
-
-            case Win32Errors.ERROR_BAD_DEVICE:
-            case Win32Errors.ERROR_BAD_NET_NAME:
-            case Win32Errors.NERR_NetNameNotFound:
-            case Win32Errors.NERR_UseNotFound:
-               //throw new DeviceNotReadyException(errorMessage);
-               throw new IOException(errorMessage, (int)errorCode);
-
             case Win32Errors.ERROR_BAD_RECOVERY_POLICY:
                throw new PolicyException(errorMessage);
+
+            case Win32Errors.ERROR_ACCESS_DENIED:
+            case Win32Errors.ERROR_NETWORK_ACCESS_DENIED:
+               throw new UnauthorizedAccessException(errorMessage);
 
             #region Transacted
 
             case Win32Errors.ERROR_INVALID_TRANSACTION:
-               throw new InvalidTransactionException(Resources.InvalidTransaction, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
+               throw new InvalidTransactionException(Resources.InvalidTransaction,
+                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_ALREADY_COMMITTED:
-               throw new TransactionAlreadyCommittedException(Resources.TransactionAlreadyCommitted, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
+               throw new TransactionAlreadyCommittedException(Resources.TransactionAlreadyCommitted,
+                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_ALREADY_ABORTED:
-               throw new TransactionAlreadyAbortedException(Resources.TransactionAlreadyAborted, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
+               throw new TransactionAlreadyAbortedException(Resources.TransactionAlreadyAborted,
+                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTIONAL_CONFLICT:
-               throw new TransactionalConflictException(Resources.TransactionalConflict, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
+               throw new TransactionalConflictException(Resources.TransactionalConflict,
+                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_NOT_ACTIVE:
-               throw new TransactionException(Resources.TransactionNotActive, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
+               throw new TransactionException(Resources.TransactionNotActive,
+                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_NOT_REQUESTED:
-               throw new TransactionException(Resources.TransactionNotRequested, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
+               throw new TransactionException(Resources.TransactionNotRequested,
+                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_REQUEST_NOT_VALID:
-               throw new TransactionException(Resources.InvalidTransactionRequest, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
+               throw new TransactionException(Resources.InvalidTransactionRequest,
+                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTIONS_UNSUPPORTED_REMOTE:
-               throw new UnsupportedRemoteTransactionException(Resources.InvalidTransactionRequest, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
+               throw new UnsupportedRemoteTransactionException(Resources.InvalidTransactionRequest,
+                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
-               throw new NotAReparsePointException(Resources.NotAReparsePoint, Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
+               throw new NotAReparsePointException(Resources.NotAReparsePoint,
+                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
-            #endregion // Transacted
+               #endregion // Transacted
 
             case Win32Errors.ERROR_SUCCESS:
             case Win32Errors.ERROR_SUCCESS_REBOOT_INITIATED:
             case Win32Errors.ERROR_SUCCESS_REBOOT_REQUIRED:
             case Win32Errors.ERROR_SUCCESS_RESTART_REQUIRED:
                // We should really never get here, throwing an exception for a successful operation.
-               throw new NotImplementedException(string.Format(CultureInfo.CurrentCulture,
-                  Resources.AlphaFSInternalError + ": " + Resources.AttemptingToGenerateExceptionFromSuccessfulOperation +
-                  Resources.ErrorCodeWas0 + ": " + errorCode), Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode)));
-
-            case Win32Errors.ERROR_ACCESS_DENIED:
-            case Win32Errors.ERROR_NETWORK_ACCESS_DENIED:
-               throw new UnauthorizedAccessException(errorMessage);
-
+               throw new NotImplementedException(string.Format(CultureInfo.CurrentCulture, "{0} {1}", Resources.AttemptingToGenerateExceptionFromSuccessfulOperation, errorMessage));
+               
             default:
                // We don't have a specific exception to generate for this error.
-               // Throw a System.Runtime.InteropServices.COMException.
-               //throw Marshal.GetExceptionForHR(Win32Errors.GetHRFromWin32Error(errorCode));
-
-               throw new Win32Exception((int) errorCode, errorMessage);
+               throw new IOException(errorMessage, (int) errorCode);
          }
       }
 

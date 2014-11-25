@@ -312,6 +312,75 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpAccessRules
 
+      #region DumpAppendAllLines
+
+      private void DumpAppendAllLines(bool isLocal)
+      {
+         #region Setup
+
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         string tempFolder = Path.GetTempPath();
+         string tempPath = Path.Combine(tempFolder, "File.Delete-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         // Create file and append text.
+         string tempFile = Path.GetTempFileName();
+         if (!isLocal) tempFile = Path.LocalToUnc(tempFile);
+
+         IEnumerable<string> allLines = new[] { TenNumbers, TextHelloWorld, TextAppend, TextUnicode };
+
+         #endregion // Setup
+
+         try
+         {
+            #region AppendAllLines
+
+            Console.WriteLine("\nDefault AlphaFS Encoding: [{0}]", NativeMethods.DefaultFileEncoding.EncodingName);
+
+            // Create real UTF-8 file.
+            File.AppendAllLines(tempFile, allLines, NativeMethods.DefaultFileEncoding);
+
+            // Read filestream contents.
+            using (StreamReader streamRead = File.OpenText(tempFile))
+            {
+               string line = streamRead.ReadToEnd();
+
+               Console.WriteLine("\nCreated: [{0}] filestream: [{1}]\n\n\tAppendAllLines content:\n{2}", streamRead.CurrentEncoding.EncodingName, tempFile, line);
+
+               foreach (string line2 in allLines)
+                  Assert.IsTrue(line.Contains(line2));
+            }
+
+            // Append
+            File.AppendAllLines(tempFile, new[] { "Append 1" });
+            File.AppendAllLines(tempFile, allLines);
+            File.AppendAllLines(tempFile, new[] { "Append 2" });
+            File.AppendAllLines(tempFile, allLines);
+
+            // Read filestream contents.
+            using (StreamReader streamRead = File.OpenText(tempFile))
+            {
+               string line = streamRead.ReadToEnd();
+
+               Console.WriteLine("AppendAllLines content:\n{0}", line);
+
+               foreach (string line2 in allLines)
+                  Assert.IsTrue(line.Contains(line2));
+            }
+
+            #endregion // AppendAllLines
+         }
+         finally
+         {
+            File.Delete(tempFile, true);
+            Assert.IsFalse(File.Exists(tempFile), "Cleanup failed: File should have been removed.");
+         }
+
+         Console.WriteLine();
+      }
+
+      #endregion // DumpAppendAllLines
+
       #region DumpCopy
 
       private void DumpCopy(bool isLocal)
@@ -678,6 +747,43 @@ namespace AlphaFS.UnitTest
             Console.WriteLine();
 
             #endregion // ArgumentException
+
+            #region NotSupportedException
+
+            expectedLastError = (int)(isLocal ? Win32Errors.ERROR_FILE_EXISTS : Win32Errors.NERR_UseNotFound);
+            expectedException = "System.NotSupportedException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch #{0}: [{1}]: path is in an invalid format.", ++catchCount, expectedException);
+
+               string invalidPath = SysDrive + @"\dev\test\aaa:aaa.txt";
+               if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + ":aaa.txt";
+
+               File.Delete(invalidPath);
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0 for local.
+               if (!isLocal)
+               {
+                  Win32Exception win32Error = new Win32Exception("", ex);
+                  Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               }
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+
+            #endregion // NotSupportedException
 
             #region DirectoryNotFoundException (Local) / IOException (Network)
 
@@ -2281,46 +2387,9 @@ namespace AlphaFS.UnitTest
       public void AppendAllLines()
       {
          Console.WriteLine("File.AppendAllLines()");
-         Console.WriteLine("\n\tDefault AlphaFS Encoding: [{0}]", NativeMethods.DefaultFileEncoding.EncodingName);
 
-         // Create file and append text.
-         string tempFile = Path.GetTempFileName();
-
-         IEnumerable<string> allLines = new[] { TenNumbers, TextHelloWorld, TextAppend, TextUnicode };
-
-         // Create real UTF-8 file.
-         File.AppendAllLines(tempFile, allLines, NativeMethods.DefaultFileEncoding);
-
-         // Read filestream contents.
-         using (StreamReader streamRead = File.OpenText(tempFile))
-         {
-            string line = streamRead.ReadToEnd();
-
-            Console.WriteLine("\n\tCreated: [{0}] filestream: [{1}]\n\n\tAppendAllLines content:\n{2}", streamRead.CurrentEncoding.EncodingName, tempFile, line);
-
-            foreach (string line2 in allLines)
-               Assert.IsTrue(line.Contains(line2));
-         }
-
-         // Append
-         File.AppendAllLines(tempFile, new[] { "Append 1" });
-         File.AppendAllLines(tempFile, allLines);
-         File.AppendAllLines(tempFile, new[] { "Append 2" });
-         File.AppendAllLines(tempFile, allLines);
-
-         // Read filestream contents.
-         using (StreamReader streamRead = File.OpenText(tempFile))
-         {
-            string line = streamRead.ReadToEnd();
-
-            Console.WriteLine("\tAppendAllLines content:\n{0}", line);
-
-            foreach (string line2 in allLines)
-               Assert.IsTrue(line.Contains(line2));
-         }
-
-         File.Delete(tempFile, true);
-         Assert.IsFalse(File.Exists(tempFile), "Cleanup failed: File should have been removed.");
+         DumpAppendAllLines(true);
+         DumpAppendAllLines(false);
       }
 
       #endregion // AppendAllLines
