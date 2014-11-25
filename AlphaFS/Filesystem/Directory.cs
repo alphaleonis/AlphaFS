@@ -664,28 +664,39 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false);
       }
 
       /// <summary>Returns an enumerable collection of directory names that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the directories in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, false, false);
       }
 
       /// <summary>Returns an enumerable collection of directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the directories in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, false, false, false);
       }
 
       #endregion // .NET
@@ -705,12 +716,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, isFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -720,13 +734,20 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
       }
       
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -736,14 +757,24 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
       }
       
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -753,14 +784,24 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -771,32 +812,49 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool skipReparsePoints, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, skipReparsePoints, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, skipReparsePoints, continueOnException, isFullPath);
       }
 
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the directories in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, false);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the directories in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, SearchOption searchOption, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, false, continueOnException, false);
       }
 
       #region Transacted
@@ -810,30 +868,41 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory names that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the directories in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, false, false);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the directories in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, false, false);
       }
 
       #endregion // .NET
@@ -852,13 +921,16 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, isFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -868,14 +940,21 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
       }
       
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -885,15 +964,25 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path, string searchPattern, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, isFullPath);
       }
       
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -903,15 +992,25 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -922,7 +1021,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool skipReparsePoints, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, skipReparsePoints, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, skipReparsePoints, continueOnException, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -930,26 +1029,43 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the directories in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path, string searchPattern, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, continueOnException, false);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the directories in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, continueOnException, false);
       }
       
       #endregion // Transacted
@@ -968,28 +1084,39 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false);
       }
 
       /// <summary>Returns an enumerable collection of file names in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, false, false);
       }
 
       /// <summary>Returns an enumerable collection of file names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, false, false, false);
       }
 
       #endregion // .NET
@@ -1009,12 +1136,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, isFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1024,13 +1154,20 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1040,14 +1177,24 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, isFullPath);
       }
       
       /// <summary>[AlphaFS] Returns an enumerable collection of file names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1057,14 +1204,24 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -1075,32 +1232,49 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool skipReparsePoints, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, skipReparsePoints, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, skipReparsePoints, continueOnException, isFullPath);
       }
 
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, false);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, SearchOption searchOption, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, false, continueOnException, false);
       }
 
       #region Transacted
@@ -1114,30 +1288,41 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, false, false);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, false, false);
       }
 
       #endregion // .NET
@@ -1156,13 +1341,16 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, isFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1172,14 +1360,21 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, isFullPath);
       }
       
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1189,15 +1384,25 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1207,15 +1412,25 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -1226,7 +1441,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool skipReparsePoints, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, skipReparsePoints, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, skipReparsePoints, continueOnException, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -1234,26 +1449,43 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, continueOnException, false);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file instances instances that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, continueOnException, false);
       }
       
       #endregion // Transacted
@@ -1268,32 +1500,43 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an enumerable collection of file names and directory names in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
+      /// <returns>An enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, false);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, false, false);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, null, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, null, true, false, false, false, false);
       }
 
       #endregion // .NET
@@ -1309,32 +1552,42 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
+      /// <returns>An enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, isFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
+      /// <returns>An enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1344,14 +1597,24 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1361,14 +1624,24 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, null, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, null, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -1379,32 +1652,49 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool skipReparsePoints, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, null, true, false, skipReparsePoints, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, null, true, false, skipReparsePoints, continueOnException, isFullPath);
       }
 
       #endregion // IsFullPath
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, false);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of <see cref="T:FileSystemEntryInfo"/> file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, SearchOption searchOption, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, null, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, null, true, false, false, continueOnException, false);
       }
 
       #region Transacted
@@ -1414,34 +1704,45 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of file names and directory names in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
+      /// <returns>An enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, false);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, false, false);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, null, true, false, false, false, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, null, true, false, false, false, false);
       }
 
       #endregion // .NET
@@ -1456,34 +1757,44 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
+      /// <returns>An enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, isFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/>.</returns>
+      /// <returns>An enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1493,15 +1804,25 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1511,15 +1832,25 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, null, true, false, false, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, null, true, false, false, continueOnException, isFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -1530,7 +1861,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool skipReparsePoints, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, null, true, false, skipReparsePoints, continueOnException, isFullPath);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, null, true, false, skipReparsePoints, continueOnException, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -1538,26 +1869,43 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of <see cref="T:FileSystemEntryInfo"/> file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, continueOnException, false);
       }
 
       /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, null, true, false, false, continueOnException, false);
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, null, true, false, false, continueOnException, false);
       }
 
       #endregion // Transacted
@@ -1588,7 +1936,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path)
       {
-         return File.ExistsInternal(true, null, path, true, false);
+         return File.ExistsInternal(true, null, path, false);
       }
 
       #endregion // .NET
@@ -1620,7 +1968,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path, bool? isFullPath)
       {
-         return File.ExistsInternal(true, null, path, true, isFullPath);
+         return File.ExistsInternal(true, null, path, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -1648,7 +1996,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
       {
-         return File.ExistsInternal(true, transaction, path, true, false);
+         return File.ExistsInternal(true, transaction, path, false);
       }
 
       #endregion // .NET
@@ -1679,7 +2027,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.ExistsInternal(true, transaction, path, true, isFullPath);
+         return File.ExistsInternal(true, transaction, path, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -1768,7 +2116,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(string path)
       {         
-         return File.GetCreationTimeInternal(true, null, path, false, false).ToLocalTime();
+         return File.GetCreationTimeInternal(null, path, false, false).ToLocalTime();
       }
 
       #endregion // .NET
@@ -1788,7 +2136,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(string path, bool? isFullPath)
       {
-         return File.GetCreationTimeInternal(true, null, path, false, isFullPath).ToLocalTime();
+         return File.GetCreationTimeInternal(null, path, false, isFullPath).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -1804,7 +2152,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(KernelTransaction transaction, string path)
       {
-         return File.GetCreationTimeInternal(true, transaction, path, false, false).ToLocalTime();
+         return File.GetCreationTimeInternal(transaction, path, false, false).ToLocalTime();
       }
 
       #endregion //.NET
@@ -1823,7 +2171,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.GetCreationTimeInternal(true, transaction, path, false, isFullPath).ToLocalTime();
+         return File.GetCreationTimeInternal(transaction, path, false, isFullPath).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -1844,7 +2192,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(string path)
       {
-         return File.GetCreationTimeInternal(true, null, path, true, false);
+         return File.GetCreationTimeInternal(null, path, true, false);
       }
 
       #endregion // .NET
@@ -1864,7 +2212,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(string path, bool? isFullPath)
       {
-         return File.GetCreationTimeInternal(true, null, path, true, isFullPath);
+         return File.GetCreationTimeInternal(null, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -1880,7 +2228,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path)
       {
-         return File.GetCreationTimeInternal(true, transaction, path, true, false);
+         return File.GetCreationTimeInternal(transaction, path, true, false);
       }
 
       #endregion //.NET
@@ -1899,7 +2247,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.GetCreationTimeInternal(true, transaction, path, true, isFullPath);
+         return File.GetCreationTimeInternal(transaction, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -1948,7 +2296,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectories(string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.
@@ -1963,11 +2311,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetDirectories(string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.
@@ -1982,12 +2334,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetDirectories(string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, false, false, false).ToArray();
       }
 
       #endregion // .NET
@@ -2013,7 +2372,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectories(KernelTransaction transaction, string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Returns the names of subdirectories (including their paths) that match the specified search pattern in the specified directory.
@@ -2029,11 +2388,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetDirectories(KernelTransaction transaction, string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Returns the names of the subdirectories (including their paths) that match the specified search pattern in the specified directory, and optionally searches subdirectories.
@@ -2049,12 +2412,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetDirectories(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, false, false).ToArray();
       }
 
       #endregion // Transacted
@@ -2160,7 +2530,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFiles(string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Returns the names of files (including their paths) that match the specified search pattern in the specified directory.
@@ -2177,11 +2547,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetFiles(string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Gets the names of the subdirectories (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.
@@ -2198,12 +2572,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetFiles(string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, false, false, false).ToArray();
       }
 
       #endregion // .NET
@@ -2230,7 +2611,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFiles(KernelTransaction transaction, string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Returns the names of files (including their paths) that match the specified search pattern in the specified directory.
@@ -2248,11 +2629,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetFiles(KernelTransaction transaction, string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Gets the names of the subdirectories (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.
@@ -2270,12 +2655,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, false, false).ToArray();
       }
 
       #endregion // Transacted
@@ -2304,7 +2696,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Returns an array of file system entries that match the specified search criteria.
@@ -2320,11 +2712,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
       /// <param name="path">The path to be searched.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.
@@ -2340,12 +2736,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, null, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, null, true, false, false, false, false).ToArray();
       }
 
       #endregion // .NET
@@ -2371,7 +2774,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFileSystemEntries(KernelTransaction transaction, string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Returns an array of file system entries that match the specified search criteria.
@@ -2388,11 +2791,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to be searched.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(KernelTransaction transaction, string path, string searchPattern)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, true, false, false, false, false).ToArray();
       }
 
       /// <summary>Gets an array of all the file names and directory names that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.
@@ -2409,12 +2816,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, null, true, false, false, false, false).ToArray();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, null, true, false, false, false, false).ToArray();
       }
 
       #endregion // Transacted
@@ -2433,7 +2847,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(string path)
       {
-         return File.GetLastAccessTimeInternal(true, null, path, false, false).ToLocalTime();
+         return File.GetLastAccessTimeInternal(null, path, false, false).ToLocalTime();
       }
 
       #endregion // .NET
@@ -2453,7 +2867,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(string path, bool? isFullPath)
       {
-         return File.GetLastAccessTimeInternal(true, null, path, false, isFullPath).ToLocalTime();
+         return File.GetLastAccessTimeInternal(null, path, false, isFullPath).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -2469,7 +2883,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(KernelTransaction transaction, string path)
       {
-         return File.GetLastAccessTimeInternal(true, transaction, path, false, false).ToLocalTime();
+         return File.GetLastAccessTimeInternal(transaction, path, false, false).ToLocalTime();
       }
 
       #endregion // .NET
@@ -2488,7 +2902,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.GetLastAccessTimeInternal(true, transaction, path, false, isFullPath).ToLocalTime();
+         return File.GetLastAccessTimeInternal(transaction, path, false, isFullPath).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -2509,7 +2923,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(string path)
       {
-         return File.GetLastAccessTimeInternal(true, null, path, true, false);
+         return File.GetLastAccessTimeInternal(null, path, true, false);
       }
 
       #endregion // .NET
@@ -2529,7 +2943,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(string path, bool? isFullPath)
       {
-         return File.GetLastAccessTimeInternal(true, null, path, true, isFullPath);
+         return File.GetLastAccessTimeInternal(null, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2545,7 +2959,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path)
       {
-         return File.GetLastAccessTimeInternal(true, transaction, path, true, false);
+         return File.GetLastAccessTimeInternal(transaction, path, true, false);
       }
 
       #endregion // .NET
@@ -2564,7 +2978,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.GetLastAccessTimeInternal(true, transaction, path, true, isFullPath);
+         return File.GetLastAccessTimeInternal(transaction, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2585,7 +2999,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path)
       {
-         return File.GetLastWriteTimeInternal(true, null, path, false, false).ToLocalTime();
+         return File.GetLastWriteTimeInternal(null, path, false, false).ToLocalTime();
       }
 
       #endregion //.NET
@@ -2605,7 +3019,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path, bool? isFullPath)
       {
-         return File.GetLastWriteTimeInternal(true, null, path, false, isFullPath).ToLocalTime();
+         return File.GetLastWriteTimeInternal(null, path, false, isFullPath).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -2621,7 +3035,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(KernelTransaction transaction, string path)
       {
-         return File.GetLastWriteTimeInternal(true, transaction, path, false, false).ToLocalTime();
+         return File.GetLastWriteTimeInternal(transaction, path, false, false).ToLocalTime();
       }
 
       #endregion // .NET
@@ -2640,7 +3054,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.GetLastWriteTimeInternal(true, transaction, path, false, isFullPath).ToLocalTime();
+         return File.GetLastWriteTimeInternal(transaction, path, false, isFullPath).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -2661,7 +3075,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path)
       {
-         return File.GetLastWriteTimeInternal(true, null, path, true, false);
+         return File.GetLastWriteTimeInternal(null, path, true, false);
       }
 
       #endregion // .NET
@@ -2681,7 +3095,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path, bool? isFullPath)
       {
-         return File.GetLastWriteTimeInternal(true, null, path, true, isFullPath);
+         return File.GetLastWriteTimeInternal(null, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -2697,7 +3111,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path)
       {
-         return File.GetLastWriteTimeInternal(true, transaction, path, true, false);
+         return File.GetLastWriteTimeInternal(transaction, path, true, false);
       }
 
       #endregion // .NET
@@ -2716,7 +3130,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return File.GetLastWriteTimeInternal(true, transaction, path, true, isFullPath);
+         return File.GetLastWriteTimeInternal(transaction, path, true, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -3637,8 +4051,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="path">A path that describes a directory to compress.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -3665,8 +4086,15 @@ namespace Alphaleonis.Win32.Filesystem
       
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="path">A path that describes a directory to compress.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Compress(string path, string searchPattern, SearchOption searchOption)
@@ -3697,8 +4125,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -3727,8 +4162,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Compress(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
@@ -4098,9 +4540,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Counts directories in a given directory.</summary>
       /// <param name="path">The directory path.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -4110,14 +4562,24 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountDirectories(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, false, continueOnException, isFullPath).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, false, continueOnException, isFullPath).Count();
       }
 
       /// <summary>[AlphaFS] Counts directories in a given directory.</summary>
       /// <param name="path">The directory path.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -4128,7 +4590,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountDirectories(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool skipReparsePoints, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, skipReparsePoints, continueOnException, isFullPath).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, true, true, false, skipReparsePoints, continueOnException, isFullPath).Count();
       }
 
       #endregion // IsFullPath
@@ -4140,7 +4602,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountDirectories(string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).Count();
       }
       
       #region Transacted
@@ -4150,9 +4612,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Counts directories in a given directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -4162,15 +4634,25 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountDirectories(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, continueOnException, isFullPath).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, false, continueOnException, isFullPath).Count();
       }
 
       /// <summary>[AlphaFS] Counts directories in a given directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -4181,7 +4663,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountDirectories(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool skipReparsePoints, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, skipReparsePoints, continueOnException, isFullPath).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, true, true, false, skipReparsePoints, continueOnException, isFullPath).Count();
       }
 
       #endregion // IsFullPath
@@ -4194,7 +4676,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountDirectories(KernelTransaction transaction, string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, true, true, false, false, false, false).Count();
       }
       
       #endregion // Transacted
@@ -4207,9 +4689,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Counts files in a given directory.</summary>
       /// <param name="path">The directory path.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -4219,14 +4711,24 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountFiles(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, false, continueOnException, isFullPath).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, false, continueOnException, isFullPath).Count();
       }
 
       /// <summary>[AlphaFS] Counts files in a given directory.</summary>
       /// <param name="path">The directory path.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -4237,7 +4739,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountFiles(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool skipReparsePoints, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, skipReparsePoints, continueOnException, isFullPath).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, searchPattern, searchOption, false, true, false, skipReparsePoints, continueOnException, isFullPath).Count();
       }
 
       #endregion // IsFullPath
@@ -4249,7 +4751,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountFiles(string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).Count();
       }
       
       #region Transacted
@@ -4259,9 +4761,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Counts files in a given directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -4271,15 +4783,25 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, continueOnException, isFullPath).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, false, continueOnException, isFullPath).Count();
       }
 
       /// <summary>[AlphaFS] Counts files in a given directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -4290,7 +4812,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool skipReparsePoints, bool? isFullPath)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, skipReparsePoints, continueOnException, isFullPath).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, searchPattern, searchOption, false, true, false, skipReparsePoints, continueOnException, isFullPath).Count();
       }
 
       #endregion // IsFullPath
@@ -4303,7 +4825,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long CountFiles(KernelTransaction transaction, string path)
       {
-         return File.EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).Count();
+         return EnumerateFileSystemEntryInfoInternal<string>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, false, true, false, false, false, false).Count();
       }
       
       #endregion // Transacted
@@ -4388,8 +4910,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -4416,8 +4945,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Decompress(string path, string searchPattern, SearchOption searchOption)
@@ -4432,8 +4968,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -4462,8 +5005,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
@@ -4890,7 +5440,539 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transacted
 
       #endregion // EnumerateFileIdBothDirectoryInfo
-      
+
+      #region EnumerateFileSystemEntryInfos
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries in a specified path.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, bool? isFullPath)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, false, false, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, bool? isFullPath)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, null, false, false, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, SearchOption searchOption, bool? isFullPath)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, searchPattern, searchOption, null, null, false, false, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, bool continueOnException, bool? isFullPath)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, null, false, false, continueOnException, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, searchPattern, searchOption, null, null, false, false, continueOnException, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries in a specified path.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, false, false, false, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, null, false, false, false, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, SearchOption searchOption)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, searchPattern, searchOption, null, null, false, false, false, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, bool continueOnException)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, searchPattern, SearchOption.TopDirectoryOnly, null, null, false, false, continueOnException, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(string path, string searchPattern, SearchOption searchOption, bool continueOnException)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(null, path, searchPattern, searchOption, null, null, false, false, continueOnException, false);
+      }
+
+      #region Transacted
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries in a specified path.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, bool? isFullPath)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, false, false, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, bool? isFullPath)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, null, false, false, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool? isFullPath)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, searchPattern, searchOption, null, null, false, false, false, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, bool continueOnException, bool? isFullPath)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, null, false, false, continueOnException, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException, bool? isFullPath)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, searchPattern, searchOption, null, null, false, false, continueOnException, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries in a specified path.
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, false, false, false, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, null, false, false, false, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, searchPattern, searchOption, null, null, false, false, false, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>and that match the specified <paramref name="searchPattern"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, bool continueOnException)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, searchPattern, SearchOption.TopDirectoryOnly, null, null, false, false, continueOnException, false);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> file system entries
+      /// <para>that match a <paramref name="searchPattern"/> in a specified path, and optionally searches subdirectories.</para>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Returns an enumerable collection of <see cref="T:FileSystemEntryInfo"/> entries in the directory specified by <paramref name="path"/></para>
+      /// <para>that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</para>
+      /// </returns>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public static IEnumerable<FileSystemEntryInfo> EnumerateFileSystemEntryInfos(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool continueOnException)
+      {
+         return EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, path, searchPattern, searchOption, null, null, false, false, continueOnException, false);
+      }
+
+      #endregion // Transacted
+
+      #endregion // EnumerateFileSystemEntryInfos
+
       #region EnumerateLogicalDrives
 
       /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on a computer.</summary>
@@ -5261,6 +6343,74 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetChangeTimeUtc
 
+      #region GetFileSystemEntryInfo
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Gets the <see cref="T:FileSystemEntryInfo"/> of the directory on the path.</summary>
+      /// <param name="path">The path to the file or directory.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the directory on the path.</returns>
+      /// <exception cref="NativeError.ThrowException()"></exception>
+      [SecurityCritical]
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool? isFullPath)
+      {
+         return File.GetFileSystemEntryInfoInternal(true, null, path, false, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Gets the <see cref="T:FileSystemEntryInfo"/> of the directory on the path.</summary>
+      /// <param name="path">The path to the file or directory.</param>
+      /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the directory on the path.</returns>
+      /// <exception cref="NativeError.ThrowException()"></exception>
+      [SecurityCritical]
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
+      {
+         return File.GetFileSystemEntryInfoInternal(true, null, path, false, false);
+      }
+
+      #region Transacted
+
+      #region IsFullPath
+
+      /// <summary>[AlphaFS] Gets the <see cref="T:FileSystemEntryInfo"/> of the directory on the path.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the file or directory.</param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the directory on the path.</returns>
+      /// <exception cref="NativeError.ThrowException()"></exception>
+      [SecurityCritical]
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, bool? isFullPath)
+      {
+         return File.GetFileSystemEntryInfoInternal(true, transaction, path, false, isFullPath);
+      }
+
+      #endregion // IsFullPath
+
+      /// <summary>[AlphaFS] Gets the <see cref="T:FileSystemEntryInfo"/> of the directory on the path.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to the file or directory.</param>
+      /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the directory on the path.</returns>
+      /// <exception cref="NativeError.ThrowException()"></exception>
+      [SecurityCritical]
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path)
+      {
+         return File.GetFileSystemEntryInfoInternal(true, transaction, path, false, false);
+      }
+
+      #endregion // Transacted
+
+      #endregion // GetFileSystemEntryInfo
+
       #region GetProperties
 
       #region IsFullPath
@@ -5297,7 +6447,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="path">The target directory.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -5320,8 +6473,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="path">The target directory.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -5363,7 +6522,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="path">The target directory.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(string path, SearchOption searchOption)
@@ -5381,8 +6543,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="path">The target directory.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(string path, SearchOption searchOption, bool continueOnException)
@@ -5428,7 +6596,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -5452,8 +6623,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -5497,7 +6674,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, SearchOption searchOption)
@@ -5516,8 +6696,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, SearchOption searchOption, bool continueOnException)
@@ -6507,10 +7693,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Unified method CompressDecompressInternal() to compress/decompress Non-/Transacted files/directories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
-      /// <param name="searchPattern">The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>) characters, but doesn't support regular expressions.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
       /// <param name="compress"><c>true</c> compress, when <c>false</c> decompress.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -6526,7 +7722,7 @@ namespace Alphaleonis.Win32.Filesystem
             : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
 
          // Process directories and files.
-         foreach (string fso in File.EnumerateFileSystemEntryInfoInternal<string>(transaction, pathLp, searchPattern, searchOption, null, true, true, false, continueOnException, null))
+         foreach (string fso in EnumerateFileSystemEntryInfoInternal<string>(transaction, pathLp, searchPattern, searchOption, null, true, true, false, continueOnException, null))
             Device.ToggleCompressionInternal(true, transaction, fso, compress, null);
 
          // Compress the root directory, the given path.
@@ -6633,7 +7829,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             CreateDirectoryInternal(transaction, destinationPathLp, null, null, false, null);
 
-            foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, true, false, false, null))
+            foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, true, false, false, null))
             {
                string newDestinationPathLp = Path.CombineInternal(false, destinationPathLp, fsei.FileName);
                
@@ -6659,7 +7855,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
-            if (overwrite && File.ExistsInternal(true, transaction, destinationPathLp, true, null))
+            if (overwrite && File.ExistsInternal(true, transaction, destinationPathLp, null))
                DeleteDirectoryInternal(null, transaction, destinationPathLp, true, true, false, true, null);
 
 
@@ -6715,10 +7911,10 @@ namespace Alphaleonis.Win32.Filesystem
          if (isFullPath != null && (bool) !isFullPath)
          {
             if (path != null && path[0] == Path.VolumeSeparatorChar)
-               throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
+               throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
 
             if (templatePath != null && templatePath[0] == Path.VolumeSeparatorChar)
-               throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, templatePath));
+               throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, templatePath));
 
             Path.CheckValidPath(path, true, true);
             Path.CheckValidPath(templatePath, true, true);
@@ -6739,11 +7935,11 @@ namespace Alphaleonis.Win32.Filesystem
 #endif
 
          // Return DirectoryInfo instance if the directory specified by path already exists.
-         if (File.ExistsInternal(true, transaction, pathLp, true, null))
+         if (File.ExistsInternal(true, transaction, pathLp, null))
             return new DirectoryInfo(transaction, pathLp, true);
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
-         if (File.ExistsInternal(false, transaction, pathLp, true, null))
+         if (File.ExistsInternal(false, transaction, pathLp, null))
             NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp, true);
 
 
@@ -6784,7 +7980,7 @@ namespace Alphaleonis.Win32.Filesystem
                string path1 = path.Substring(0, index + 1);
                string path2 = longPathPrefix + path1.TrimStart('\\');
 
-               if (!File.ExistsInternal(true, transaction, path2, false, null))
+               if (!File.ExistsInternal(true, transaction, path2, null))
                   list.Push(path2);
 
                while (index > rootLength && !Path.IsDVsc(path[index], false))
@@ -6821,10 +8017,10 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
-                        if (File.ExistsInternal(false, transaction, pathLp, true, null))
+                        if (File.ExistsInternal(false, transaction, pathLp, null))
                            NativeError.ThrowException(lastError, pathLp, true);
                         
-                        if (File.ExistsInternal(false, transaction, folderLp, true, null))
+                        if (File.ExistsInternal(false, transaction, folderLp, null))
                            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, folderLp, true);
                         break;
 
@@ -6834,7 +8030,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                      case Win32Errors.ERROR_DIRECTORY:
                         // MSDN: .NET 3.5+: NotSupportedException: path contains a colon character (:) that is not part of a drive label ("C:\").
-                        throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
+                        throw new NotSupportedException(String.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
 
                      default:
                         NativeError.ThrowException(lastError, folderLp);
@@ -6966,7 +8162,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before deleting the directory.
                      : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false),
 #endif
-               true, continueOnNotExist, null);
+               continueOnNotExist, null);
          }
 
          if (fileSystemEntryInfo == null)
@@ -6974,7 +8170,8 @@ namespace Alphaleonis.Win32.Filesystem
             if (continueOnNotExist)
                return;
 
-            NativeError.ThrowException(Marshal.GetLastWin32Error());
+            // Throws IOException.
+            NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
          }
 
          string pathLp = fileSystemEntryInfo.LongFullPath;
@@ -7003,7 +8200,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (recursive)
          {
             // Enumerate all file system objects.
-            foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, true, false, false, null))
+            foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, null, true, false, false, null))
             {
                if (fsei.IsDirectory)
                   DeleteDirectoryInternal(fsei, transaction, null, true, ignoreReadOnly, requireEmpty, true, null);
@@ -7041,9 +8238,9 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_DIRECTORY:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: Path refers to a file instead of a directory.
-                  if (File.ExistsInternal(false, transaction, path, false, null))
-                     throw new DirectoryNotFoundException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}",
-                        Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp)));
+                  if (File.ExistsInternal(false, transaction, path, null))
+                     throw new DirectoryNotFoundException(String.Format(CultureInfo.CurrentCulture, "({0}) {1}",
+                        Win32Errors.ERROR_INVALID_PARAMETER, String.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp)));
                   break;
 
                   
@@ -7058,10 +8255,12 @@ namespace Alphaleonis.Win32.Filesystem
                   break;
                   
                case Win32Errors.ERROR_ACCESS_DENIED:
-                  FileAttributes attrs = File.GetAttributesInternal(true, transaction, pathLp, false, true, null);
-                  if (attrs != (FileAttributes) (-1))
+                  NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
+                  int dataInitialised = File.FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
+
+                  if (data.FileAttributes != (FileAttributes) (-1))
                   {
-                     if ((attrs & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                     if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                      {
                         // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory.
 
@@ -7076,6 +8275,10 @@ namespace Alphaleonis.Win32.Filesystem
                         NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, pathLp, true);
                      }
                   }
+
+                  if (dataInitialised != Win32Errors.ERROR_SUCCESS)
+                     // Throws IOException.
+                     NativeError.ThrowException(dataInitialised, pathLp, true);
 
                   break;
             }
@@ -7121,7 +8324,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (fileSystemEntryInfo == null)
          {
-            if (!File.ExistsInternal(true, transaction, path, true, isFullPath))
+            if (!File.ExistsInternal(true, transaction, path, isFullPath))
                NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
 
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
@@ -7130,12 +8333,12 @@ namespace Alphaleonis.Win32.Filesystem
                   : (bool) isFullPath
                      ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
- : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true),
+                     : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true),
 #else
                      : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, true, true),
 #endif
 
- true, false, null);
+               false, null);
          }
 
          if (fileSystemEntryInfo == null)
@@ -7146,12 +8349,12 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Ensure path is a directory.
          if (!fileSystemEntryInfo.IsDirectory)
-            throw new IOException(string.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp));
+            throw new IOException(String.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp));
 
-         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly, true, null, true, false, false, null))
+         foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly, true, null, true, false, false, null))
             DeleteEmptyDirectoryInternal(fsei, transaction, null, recursive, ignoreReadOnly, false, null);
 
-         if (!File.EnumerateFileSystemEntryInfoInternal<string>(transaction, pathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, true, false, false, null).Any())
+         if (!EnumerateFileSystemEntryInfoInternal<string>(transaction, pathLp, Path.WildcardStarMatchAll, SearchOption.TopDirectoryOnly, null, true, true, false, false, null).Any())
          {
             // Prevent deleting path itself.
             if (!initialize)
@@ -7218,7 +8421,7 @@ namespace Alphaleonis.Win32.Filesystem
                : Path.GetFullPathInternal(null, path, true, false, false, true, false, true, true);
 
          // Process folders and files.
-         foreach (string fso in File.EnumerateFileSystemEntryInfoInternal<string>(null, pathLp, Path.WildcardStarMatchAll, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly, null, true, true, false, false, null))
+         foreach (string fso in EnumerateFileSystemEntryInfoInternal<string>(null, pathLp, Path.WildcardStarMatchAll, recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly, null, true, true, false, false, null))
             File.EncryptDecryptFileInternal(true, fso, encrypt, null);
 
          // Process the root folder, the given path.
@@ -7234,7 +8437,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="safeHandle">An open handle to the directory from which to retrieve information.</param>
       /// <param name="path">A path to the directory.</param>
       /// <param name="shareMode">The <see cref="T:FileShare"/> mode with which to open a handle to the directory.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -7340,6 +8546,127 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // EnumerateFileIdBothDirectoryInfoInternal
 
+      #region EnumerateFileSystemEntryInfoInternal
+
+      /// <summary>[AlphaFS] Unified method EnumerateFileSystemEntryInfoInternal() to enumerate Non-/Transacted files/directories.
+      /// <returns>
+      /// If <paramref name="getAsString"/> is <c>null</c> an enumerable <see cref="T:FileSystemEntryInfo"/> collection that match <paramref name="searchPattern"/> and <paramref name="searchOption"/>.
+      /// If <paramref name="getAsString"/> is <c>true</c> an enumerable <see cref="T:string"/> collection of the full pathnames that match searchPattern and searchOption.
+      /// If <paramref name="getAsString"/> is <c>false</c>, an enumerable <see cref="T:FileSystemInfo"/> (<see cref="T:DirectoryInfo"/> / <see cref="T:FileInfo"/>) collection that match <paramref name="searchPattern"/> and <paramref name="searchOption"/>.
+      /// </returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern">
+      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but doesn't support regular expressions.</para>
+      /// </param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="getFolders">
+      ///    <c>true</c> folders will be returned.
+      ///    <c>false</c> files will be returned.
+      ///    <c>null</c> both folders and files will be returned.
+      /// </param>
+      /// <param name="getAsString">
+      ///    <c>true</c> returns the results as an enumerable <see cref="T:string"/> object.
+      ///    <c>false</c> returns the results as an enumerable <see cref="T:FileSystemInfo"/> object.
+      ///    <c>null</c> returns the results as an enumerable <see cref="T:FileSystemEntryInfo"/> object.
+      /// </param>
+      /// <param name="asLongPath"><c>true</c> returns the full path in Unicode (LongPath) format.</param>
+      /// <param name="skipReparsePoints"><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
+      /// <param name="isFullPath">
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      [SecurityCritical]
+      internal static IEnumerable<T> EnumerateFileSystemEntryInfoInternal<T>(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption, bool? getFolders, bool? getAsString, bool asLongPath, bool skipReparsePoints, bool continueOnException, bool? isFullPath)
+      {
+         foreach (FileSystemEntryInfo fsei in new FindFileSystemEntryInfo
+         {
+            IsFullPath = isFullPath,
+            InputPath = path,
+            FileSystemObjectType = getFolders,
+            SearchOption = searchOption,
+            SearchPattern = searchPattern,
+            Transaction = transaction,
+            SkipReparsePoints = skipReparsePoints,
+            ContinueOnException = continueOnException
+
+         }.Enumerate())
+         {
+            // Return FileSystemEntryInfo instance.
+            if (getAsString == null)
+            {
+               switch (getFolders)
+               {
+                  case null:
+                     yield return (T)(object)fsei;
+                     break;
+
+                  case true:
+                     if (fsei.IsDirectory)
+                        yield return (T)(object)fsei;
+                     break;
+
+                  case false:
+                     if (!fsei.IsDirectory)
+                        yield return (T)(object)fsei;
+                     break;
+               }
+            }
+            else
+            {
+               // Return FullPath property as string.
+               if ((bool)getAsString)
+                  yield return (T)(object)(asLongPath ? fsei.LongFullPath : fsei.FullPath);
+
+               else
+               {
+                  // Return a specific instance of type: FileSystemInfo, DirectoryInfo or FileInfo.
+                  // Bonus: the returned FileSystemEntryInfo instance is constructed from a Win32FindData data structure
+                  // with properties already populated by the Win32 FindFirstFile()/FindNextFile() functions.
+                  // This means that the returned DirectoryInfo/FileInfo instance is already .Refresh()-ed.
+                  // I call it: Cached LazyLoading.
+
+                  switch (getFolders)
+                  {
+                     // true = return instance of type: DirectoryInfo.
+                     case true:
+                        yield return
+                           (T)(object)new DirectoryInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei };
+                        break;
+
+                     // false = return instance of type: FileInfo.
+                     case false:
+                        yield return (T)(object)new FileInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei };
+                        break;
+
+                     // null = return instances of type: DirectoryInfo or FileInfo.
+                     default:
+                        yield return (T)(object)(fsei.IsDirectory
+                           ? (FileSystemInfo)new DirectoryInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei }
+                           : new FileInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei });
+                        break;
+                  }
+               }
+            }
+         }
+      }
+
+      #endregion // EnumerateFileSystemEntryInfoInternal
+
       #region EnumerateLogicalDrivesInternal
 
       /// <summary>[AlphaFS] Unified method EnumerateLogicalDrivesInternal() to enumerate the drive names of all logical drives on a computer.</summary>
@@ -7355,7 +8682,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (fromEnvironment)
          {
             IEnumerable<string> drivesEnv = isReady
-               ? Environment.GetLogicalDrives().Where(ld => (File.GetAttributesInternal(true, null, ld, true, true, true) != (FileAttributes)(-1)))
+               ? Environment.GetLogicalDrives().Where(ld => File.ExistsInternal(true, null, ld, true))
                : Environment.GetLogicalDrives().Select(ld => ld);
 
             foreach (string drive in drivesEnv)
@@ -7363,7 +8690,7 @@ namespace Alphaleonis.Win32.Filesystem
                // Optionally check Drive .IsReady.
                if (isReady)
                {
-                  if (File.GetAttributesInternal(true, null, drive, true, true, true) != (FileAttributes)(-1))
+                  if (File.ExistsInternal(true, null, drive, true))
                      yield return new DriveInfo(drive);
                }
                else
@@ -7379,7 +8706,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          uint lastError = NativeMethods.GetLogicalDrives();
          if (lastError == Win32Errors.ERROR_SUCCESS)
-            NativeError.ThrowException((int) lastError);
+            // Throws IOException.
+            NativeError.ThrowException((int) lastError, true);
 
          uint drives = lastError;
          int count = 0;
@@ -7406,7 +8734,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (isReady)
                {
                   // Optionally check Drive .IsReady.
-                  if (File.GetAttributesInternal(true, null, drive, true, true, true) != (FileAttributes) (-1))
+                  if (File.ExistsInternal(true, null, drive, true))
                      yield return new DriveInfo(drive);
                }
                else
@@ -7441,8 +8769,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks><b>Directory:</b> is an object which has <see cref="T:FileAttributes.Directory"/> attribute without <see cref="T:FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
-      /// <param name="searchOption">One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/> should include only the current directory or should include all subdirectories.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="searchOption">
+      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para> should include only the current directory or should include all subdirectories.</para>
+      /// </param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -7467,7 +8801,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? Path.GetLongPathInternal(path, false, false, false, false)
             : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
 
-         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, searchOption, null, null, false, false, continueOnException, null))
+         foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfoInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, searchOption, null, null, false, false, continueOnException, null))
          {
 
             total++;

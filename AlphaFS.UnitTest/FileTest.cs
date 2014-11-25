@@ -60,7 +60,7 @@ namespace AlphaFS.UnitTest
       private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
       private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
       private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
-      private static string NotepadExe = Path.Combine(SysRoot, "notepad.exe");
+      private static string NotepadExe = Path.Combine(SysRoot32, "notepad.exe");
 
       private const string TextTrue = "IsTrue";
       private const string TenNumbers = "0123456789";
@@ -902,7 +902,7 @@ namespace AlphaFS.UnitTest
          #region Setup
 
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = Path.Combine(SysRoot, "notepad.exe");
+         string path = NotepadExe;
          if (!isLocal) path = Path.LocalToUnc(path);
 
          Console.WriteLine("\nInput File Path: [{0}]\n", path);
@@ -1185,31 +1185,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpGetSize
-
-      #region DumpEnumerateFileSystemEntryInfos
-
-      private void DumpEnumerateFileSystemEntryInfos(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
-
-         int cntAlphaFs = 0;
-         string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.TopDirectoryOnly;
-
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
-         Console.WriteLine("\tEnumerate directories and files, using \"SearchOption.{0}\"\n", searchOption);
-
-         StopWatcher(true);
-         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(path, searchPattern, searchOption, true))
-            Console.WriteLine("\t#{0:000}\t{1}\t[{2}]", ++cntAlphaFs, fsei.IsDirectory ? "[Directory]" : "[File]\t", fsei.FullPath);
-
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
-         Assert.IsTrue(cntAlphaFs > 0, "Nothing was enumerated.");
-      }
-
-      #endregion // DumpEnumerateFileSystemEntryInfos
-
+      
       #region DumpEnumerateHardlinks
 
       private void DumpEnumerateHardlinks(bool isLocal)
@@ -1639,6 +1615,7 @@ namespace AlphaFS.UnitTest
          Directory.Delete(tempPath, true);
          Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          Assert.IsTrue(allOk);
+         Console.WriteLine();
       }
 
       #endregion // DumpGetSetAttributes
@@ -3223,20 +3200,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Compress/Decompress
-
-      #region EnumerateFileSystemEntryInfos
-
-      [TestMethod]
-      public void AlphaFS_EnumerateFileSystemEntryInfos()
-      {
-         Console.WriteLine("File.EnumerateFileSystemEntryInfos()");
-
-         DumpEnumerateFileSystemEntryInfos(true);
-         DumpEnumerateFileSystemEntryInfos(false);
-      }
-
-      #endregion // EnumerateFileSystemEntryInfos
-
+      
       #region EnumerateHardlinks
 
       [TestMethod]
@@ -3291,6 +3255,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetEncryptionStatus
+
+      #region GetFileSystemEntryInfo
+
+      [TestMethod]
+      public void AlphaFS_GetFileSystemEntryInfo()
+      {
+         Console.WriteLine("File.GetFileSystemEntryInfo()");
+         Console.WriteLine("\nPlease see unit test: Directory.EnumerateFileSystemEntryInfos()");
+      }
+
+      #endregion // GetFileSystemEntryInfo
 
       #region GetFileInfoByHandle
 

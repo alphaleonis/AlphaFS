@@ -1464,7 +1464,8 @@ namespace Alphaleonis.Win32.Filesystem
             if (NativeMethods.IsAtLeastWindowsVista)
             {
                if (NativeMethods.GetFinalPathNameByHandle(handle, buffer, (uint) buffer.Capacity, finalPath) == Win32Errors.ERROR_SUCCESS)
-                  NativeError.ThrowException(Marshal.GetLastWin32Error());
+                  // Throws IOException.
+                  NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
 
                return buffer.ToString();
             }

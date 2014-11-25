@@ -1402,40 +1402,31 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetCompressedFileSizeTransacted
 
-      #region GetFileAttributes
-
-      /// <summary>Retrieves file system attributes for a specified file or directory.</summary>
-      /// <returns>
-      /// If the function succeeds, the return value contains the attributes of the specified file or directory. For a list of attribute values and their descriptions, see <see cref="T:FileAttributes"/> constants.
-      /// If the function fails, the return value is INVALID_FILE_ATTRIBUTES. To get extended error information, call GetLastError.
-      /// </returns>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFileAttributesW")]
-      [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern FileAttributes GetFileAttributes([MarshalAs(UnmanagedType.LPWStr)] string lpFileName);
-
-      #endregion // GetFileAttributes
-
       #region GetFileAttributesEx
 
-      /// <summary>Retrieves attributes for a specified file or directory.</summary>
+      /// <summary>Retrieves attributes for a specified file or directory.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
+      /// <para>&#160;</para>
       /// <remarks>
-      /// The GetFileAttributes function retrieves file system attribute information. GetFileAttributesEx can obtain other sets of file or directory attribute information.
-      /// Currently, GetFileAttributesEx retrieves a set of standard attributes that is a superset of the file system attribute information.
-      /// When the GetFileAttributesEx function is called on a directory that is a mounted folder, it returns the attributes of the directory, not those of
-      /// the root directory in the volume that the mounted folder associates with the directory. To obtain the attributes of the associated volume,
-      /// call GetVolumeNameForVolumeMountPoint to obtain the name of the associated volume. Then use the resulting name in a call to GetFileAttributesEx.
-      /// The results are the attributes of the root directory on the associated volume.
-      /// Symbolic link behavior: If the path points to a symbolic link, the function returns attributes for the symbolic link.
+      /// <para>The GetFileAttributes function retrieves file system attribute information.</para>
+      /// <para>GetFileAttributesEx can obtain other sets of file or directory attribute information.</para>
+      /// <para>&#160;</para>
+      /// <para>Currently, GetFileAttributesEx retrieves a set of standard attributes that is a superset of the file system attribute information.</para>
+      /// <para>When the GetFileAttributesEx function is called on a directory that is a mounted folder, it returns the attributes of the directory,</para>
+      /// <para>not those of the root directory in the volume that the mounted folder associates with the directory. To obtain the attributes of the associated volume,</para>
+      /// <para>call GetVolumeNameForVolumeMountPoint to obtain the name of the associated volume. Then use the resulting name in a call to GetFileAttributesEx.</para>
+      /// <para>The results are the attributes of the root directory on the associated volume.</para>
+      /// <para>&#160;</para>
+      /// <para>Symbolic link behavior: If the path points to a symbolic link, the function returns attributes for the symbolic link.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFileAttributesExW")]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -1445,20 +1436,35 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFileAttributesTransacted
 
-      /// <summary>Retrieves file system attributes for a specified file or directory as a transacted operation.</summary>
+      /// <summary>Retrieves attributes for a specified file or directory.
+      /// <para>&#160;</para>
       /// <returns>
-      /// If the function succeeds, the return value is nonzero.
-      /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
+      /// <para>If the function succeeds, the return value is nonzero.</para>
+      /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
+      /// <para>&#160;</para>
       /// <remarks>
-      /// Transacted Operations
-      /// If a file is open for modification in a transaction, no other thread can open the file for modification until the transaction is committed.
-      /// Conversely, if a file is open for modification outside of a transaction, no transacted thread can open the file for modification until the
-      /// non-transacted handle is closed. If a non-transacted thread has a handle opened to modify a file, a call to GetFileAttributesTransacted for
-      /// that file will fail with an ERROR_TRANSACTIONAL_CONFLICT error.
+      /// <para>The GetFileAttributes function retrieves file system attribute information.</para>
+      /// <para>GetFileAttributesEx can obtain other sets of file or directory attribute information.</para>
+      /// <para>&#160;</para>
+      /// <para>Currently, GetFileAttributesEx retrieves a set of standard attributes that is a superset of the file system attribute information.</para>
+      /// <para>When the GetFileAttributesEx function is called on a directory that is a mounted folder, it returns the attributes of the directory,</para>
+      /// <para>not those of the root directory in the volume that the mounted folder associates with the directory. To obtain the attributes of the associated volume,</para>
+      /// <para>call GetVolumeNameForVolumeMountPoint to obtain the name of the associated volume. Then use the resulting name in a call to GetFileAttributesEx.</para>
+      /// <para>The results are the attributes of the root directory on the associated volume.</para>
+      /// <para>&#160;</para>
+      /// <para>Symbolic link behavior: If the path points to a symbolic link, the function returns attributes for the symbolic link.</para>
+      /// <para>&#160;</para>
+      /// <para>Transacted Operations</para>
+      /// <para>If a file is open for modification in a transaction, no other thread can open the file for modification until the transaction is committed.</para>
+      /// <para>Conversely, if a file is open for modification outside of a transaction, no transacted thread can open the file for modification until the</para>
+      /// <para>non-transacted handle is closed. If a non-transacted thread has a handle opened to modify a file, a call to GetFileAttributesTransacted for</para>
+      /// <para>that file will fail with an ERROR_TRANSACTIONAL_CONFLICT error.</para>
+      /// <para>&#160;</para>
+      /// <para>Minimum supported client: Windows Vista [desktop apps only]</para>
+      /// <para>Minimum supported server: Windows Server 2008 [desktop apps only]</para>
       /// </remarks>
-      /// <remarks>Minimum supported client: Windows Vista [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only]</remarks>
+      /// </summary>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFileAttributesTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]

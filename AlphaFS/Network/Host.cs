@@ -508,7 +508,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Enumerates the DFS namespaces from a remote host.</summary>
       /// <param name="host">The DNS or NetBIOS name of a remote host.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a remote host.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
@@ -534,7 +537,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Enumerates the DFS namespaces from a domain.</summary>
       /// <param name="domain">A domain name.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
@@ -558,7 +564,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Enumerates local drives from the specified host.</summary>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> drives from the specified host.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDrives(string host, bool continueOnException)
@@ -581,7 +590,10 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Enumerates open connections from the specified host.</summary>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<OpenConnectionInfo> EnumerateOpenConnections(string host, string share, bool continueOnException)
@@ -605,7 +617,10 @@ namespace Alphaleonis.Win32.Network
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="basePath">This parameter may be <c>null</c>. Enumerates only resources that have the value of the basepath parameter as a prefix. (A prefix is the portion of a path that comes before a backslash.)</param>
       /// <param name="typeName">This parameter may be <c>null</c>. The name of the user or the name of the connection; If <paramref name="typeName"/> does not begin with two backslashes ("\\") it indicates the name of the user. If <paramref name="typeName"/> begins with two backslashes ("\\") it indicates the name of the connection,</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<OpenResourceInfo> EnumerateOpenResources(string host, string basePath, string typeName, bool continueOnException)
@@ -627,7 +642,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the specified host.</summary>
       /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(string host, bool continueOnException)
@@ -708,7 +726,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
       /// <param name="uncPath">The share in the format: \\host\share</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>A <see cref="T:ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(string uncPath, bool continueOnException)
@@ -720,7 +741,10 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
       /// <param name="structureLevel">The structure level for the ShareInfo instance. Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>, <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</param>
       /// <param name="uncPath">The share in the format: \\host\share</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>A <see cref="T:ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(int structureLevel, string uncPath, bool continueOnException)
@@ -732,7 +756,10 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
       /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>A <see cref="T:ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(string host, string share, bool continueOnException)
@@ -744,7 +771,10 @@ namespace Alphaleonis.Win32.Network
       /// <param name="structureLevel">Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>,  <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>A <see cref="T:ShareInfo"/> class, or <see cref="T:null"/> on failure or when not available.</returns>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(int structureLevel, string host, string share, bool continueOnException)
@@ -911,7 +941,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Unified method EnumerateDfsRootInternal() to enumerate the DFS namespaces from a remote host.</summary>
       /// <param name="host">The DNS or NetBIOS name of a remote host.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a remote host.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
@@ -937,7 +970,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Unified method EnumerateDomainDfsRootInternal() to enumerate the DFS namespaces from a domain.</summary>
       /// <param name="domain">A domain name.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
@@ -963,7 +999,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Unified method EnumerateDrivesInternal() to enumerate local drives from the specified host.</summary>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> drives from the specified host.</returns>
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDrivesInternal(string host, bool continueOnException)
@@ -985,7 +1024,10 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Unified method EnumerateOpenConnectionsInternal() to enumerate open connections from the specified host.</summary>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
       [SecurityCritical]
       private static IEnumerable<OpenConnectionInfo> EnumerateOpenConnectionsInternal(string host, string share, bool continueOnException)
@@ -1011,7 +1053,10 @@ namespace Alphaleonis.Win32.Network
       /// <param name="host">The DNS or NetBIOS name of the remote server. <c>null</c> refers to the local host.</param>
       /// <param name="basePath">This parameter may be <c>null</c>. Enumerates only resources that have the value of the basepath parameter as a prefix. (A prefix is the portion of a path that comes before a backslash.)</param>
       /// <param name="typeName">This parameter may be <c>null</c>. The name of the user or the name of the connection; If <paramref name="typeName"/> does not begin with two backslashes ("\\") it indicates the name of the user. If <paramref name="typeName"/> begins with two backslashes ("\\") it indicates the name of the connection,</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
       [SecurityCritical]
       private static IEnumerable<OpenResourceInfo> EnumerateOpenResourcesInternal(string host, string basePath, string typeName, bool continueOnException)
@@ -1137,7 +1182,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Unified method EnumerateSharesInternal() to enumerate Server Message Block (SMB) shares from the specified host.</summary>
       /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>Returns <see cref="T:IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       [SecurityCritical]
       private static IEnumerable<ShareInfo> EnumerateSharesInternal(string host, bool continueOnException)
@@ -1250,7 +1298,10 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>This method uses <see cref="T:NativeMethods.RemoteNameInfo"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
       /// <param name="path">The local path with drive name.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>A <see cref="T:NativeMethods.RemoteNameInfo"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid: http://alphafs.codeplex.com/discussions/316583</remarks>
       /// <exception cref="NetworkInformationException"/>
@@ -1332,7 +1383,10 @@ namespace Alphaleonis.Win32.Network
       /// <param name="structureLevel">Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>,  <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as unavailable resources.</para>
+      /// </param>
       /// <returns>A <see cref="T:ShareInfo"/> class, or <see cref="T:null"/> on failure or when not available.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]

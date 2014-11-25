@@ -45,35 +45,43 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a new instance of the <see cref="T:AlternateDataStreamInfo"/> class.</summary>
       /// <param name="path">The path to an existing file or directory.</param>
-      public AlternateDataStreamInfo(string path) 
-         : this(new NativeMethods.Win32StreamId(), path, null, null, null, false)
+      public AlternateDataStreamInfo(string path) : this(new NativeMethods.Win32StreamId(), null, path, null, null, null, false)
+      {
+      }
+
+      /// <summary>Initializes a new instance of the <see cref="T:AlternateDataStreamInfo"/> class.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path to an existing file or directory.</param>
+      public AlternateDataStreamInfo(KernelTransaction transaction, string path) : this(new NativeMethods.Win32StreamId(), transaction, path, null, null, null, false)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="T:AlternateDataStreamInfo"/> class.</summary>
       /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the file or directory from which to retrieve the information.</param>
-      public AlternateDataStreamInfo(SafeFileHandle handle)
-         : this(new NativeMethods.Win32StreamId(), Path.GetFinalPathNameByHandleInternal(handle, FinalPathFormats.None), null, null, null, false)
+      public AlternateDataStreamInfo(SafeFileHandle handle) : this(new NativeMethods.Win32StreamId(), null, Path.GetFinalPathNameByHandleInternal(handle, FinalPathFormats.None), null, null, null, false)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="T:AlternateDataStreamInfo"/> class.</summary>
       /// <param name="stream">The <see cref="T:NativeMethods.Win32StreamId"/> stream ID.</param>
+      /// <param name="transaction"></param>
       /// <param name="path">The path to an existing file or directory.</param>
       /// <param name="name">The originalName of the stream.</param>
       /// <param name="originalName">The alternative data stream name originally specified by the user.</param>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory. <c>null</c> to retrieve automatically.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      private AlternateDataStreamInfo(NativeMethods.Win32StreamId stream, string path, string name, string originalName, bool? isFolder, bool? isFullPath)
+      private AlternateDataStreamInfo(NativeMethods.Win32StreamId stream, KernelTransaction transaction, string path, string name, string originalName, bool? isFolder, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
          _isFullPath = isFullPath;
+
+         Transaction = transaction;
 
          OriginalName = originalName;
          Name = name ?? string.Empty;
@@ -86,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (isFolder == null)
          {
-            FileAttributes attrs = File.GetAttributesInternal(false, null, LongFullName, true, false, null);
+            FileAttributes attrs = File.GetAttributesExInternal<FileAttributes>(transaction, LongFullName, null);
             IsDirectory = (attrs & FileAttributes.Directory) == FileAttributes.Directory;
          }
          else
@@ -106,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
-         AddStreamInternal(false, null, LongFullName, name, contents, null);
+         AddStreamInternal(IsDirectory, Transaction, LongFullName, name, contents, null);
       }
 
       #endregion // AddStream
@@ -118,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return EnumerateStreamsInternal(null, null, null, LongFullName, null, null, null);
+         return EnumerateStreamsInternal(IsDirectory, Transaction, null, LongFullName, null, null, null);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file or directory.</summary>
@@ -127,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
-         return EnumerateStreamsInternal(null, null, null, LongFullName, null, streamType, null);
+         return EnumerateStreamsInternal(IsDirectory, Transaction, null, LongFullName, null, streamType, null);
       }
 
       #endregion // EnumerateStreams
@@ -141,7 +149,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream()
       {
-         RemoveStreamInternal(null, null, LongFullName, null, null);
+         RemoveStreamInternal(IsDirectory, Transaction, LongFullName, null, null);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file or directory.</summary>
@@ -152,7 +160,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream(string name)
       {
-         RemoveStreamInternal(null, null, LongFullName, name, null);
+         RemoveStreamInternal(IsDirectory, Transaction, LongFullName, name, null);
       }
 
       #endregion // RemoveStreams
@@ -163,7 +171,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AddStreamInternal
 
       /// <summary>[AlphaFS] Unified method AddStreamInternal() to add an alternate data stream (NTFS ADS) to an existing file or directory.</summary>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory. <c>null</c> to retrieve automatically.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file or directory.</param>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
@@ -198,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnumerateStreamsInternal
 
       /// <summary>Unified method EnumerateStreamsInternal() to return an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances, associated with a file or directory.</summary>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory. <c>null</c> to retrieve automatically.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeHandle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information. Use either <paramref name="safeHandle"/> or <paramref name="path"/>, not both.</param>
       /// <param name="path">The path to an existing file or directory. Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</param>
@@ -227,11 +235,15 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (isFolder == null)
             {
-               FileAttributes attrs = File.GetAttributesInternal(false, transaction, pathLp, true, false, null);
+               FileAttributes attrs = File.GetAttributesExInternal<FileAttributes>(transaction, pathLp, null);
                isFolder = (attrs & FileAttributes.Directory) == FileAttributes.Directory;
             }
 
-            safeHandle = File.CreateFileInternal(null, transaction, pathLp, (bool) isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Read, FileShare.ReadWrite, false, null);
+            safeHandle = File.CreateFileInternal(null, transaction, pathLp,
+               (bool) isFolder
+                  ? ExtendedFileAttributes.BackupSemantics
+                  : ExtendedFileAttributes.Normal, null,
+               FileMode.Open, FileSystemRights.Read, FileShare.ReadWrite, false, null);
          }
          else
             NativeMethods.IsValidHandle(safeHandle);
@@ -243,7 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
             using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                Type typeWin32Stream = typeof(NativeMethods.Win32StreamId);
-               uint sizeOfType = (uint)Marshal.SizeOf(typeWin32Stream);
+               uint sizeOfType = (uint) Marshal.SizeOf(typeWin32Stream);
                uint numberOfBytesRead;
                IntPtr context;
 
@@ -251,7 +263,8 @@ namespace Alphaleonis.Win32.Filesystem
                while (doLoop)
                {
                   if (!NativeMethods.BackupRead(safeHandle, safeBuffer, sizeOfType, out numberOfBytesRead, false, true, out context))
-                     NativeError.ThrowException(Marshal.GetLastWin32Error());
+                     // Throws IOException.
+                     NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp, true);
 
                   doLoop = numberOfBytesRead == sizeOfType;
                   if (doLoop)
@@ -285,7 +298,8 @@ namespace Alphaleonis.Win32.Filesystem
                         if (stream.StreamNameSize > 0)
                         {
                            if (!NativeMethods.BackupRead(safeHandle, safeBuffer, stream.StreamNameSize, out numberOfBytesRead, false, true, out context))
-                              NativeError.ThrowException(Marshal.GetLastWin32Error());
+                              // Throws IOException.
+                              NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp, true);
 
 
                            // CA2001:AvoidCallingProblematicMethods
@@ -313,7 +327,7 @@ namespace Alphaleonis.Win32.Filesystem
                         }
 
                         if (originalName == null || (streamSearchName != null && streamSearchName.Equals(originalName, StringComparison.OrdinalIgnoreCase)))
-                           yield return new AlternateDataStreamInfo(stream, pathLp ?? path, streamName, originalName ?? streamSearchName, isFolder, isFullPath);
+                           yield return new AlternateDataStreamInfo(stream, transaction, pathLp ?? path, streamName, originalName ?? streamSearchName, isFolder, isFullPath);
                      }
 
                      uint lo, hi;
@@ -321,9 +335,11 @@ namespace Alphaleonis.Win32.Filesystem
                   }
                }
 
-               // MSDN: To release the memory used by the data structure, call BackupRead with the bAbort parameter set to TRUE when the backup operation is complete.
+               // MSDN: To release the memory used by the data structure,
+               // call BackupRead with the bAbort parameter set to TRUE when the backup operation is complete.
                if (!NativeMethods.BackupRead(safeHandle, safeBuffer, 0, out numberOfBytesRead, true, false, out context))
-                  NativeError.ThrowException(Marshal.GetLastWin32Error());
+                  // Throws IOException.
+                  NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp, true);
             }
          }
          finally
@@ -339,7 +355,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetStreamSizeInternal
 
       /// <summary>Retrieves the actual number of bytes of disk storage used by all or a specific alternate data streams (NTFS ADS).</summary>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory. <c>null</c> to retrieve automatically.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information. Use either <paramref name="handle"/> or <paramref name="path"/>, not both.</param>
       /// <param name="path">A path that describes a file. Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</param>
@@ -365,7 +381,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region RemoveStreamInternal
 
       /// <summary>Unified method RemoveStreamInternal() to remove alternate data streams (NTFS ADS) from a file or directory.</summary>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
+      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory. <c>null</c> to retrieve automatically.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file or directory.</param>
       /// <param name="name">The name of the stream to remove. When <c>null</c> all ADS are removed.</param>
@@ -467,7 +483,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region OriginalName
 
       /// <summary>The alternative data stream name originally specified by the user.</summary>
-      internal string OriginalName { get; private set; }
+      private string OriginalName { get; set; }
 
       #endregion // OriginalName
 
@@ -477,6 +493,19 @@ namespace Alphaleonis.Win32.Filesystem
       public long Size { get; private set; }
 
       #endregion // Size
+
+      #region Transaction
+
+      [NonSerialized] private KernelTransaction _transaction;
+
+      /// <summary>[AlphaFS] Represents the KernelTransaction that was passed to the constructor.</summary>
+      public KernelTransaction Transaction
+      {
+         get { return _transaction; }
+         private set { _transaction = value; }
+      }
+
+      #endregion // Transaction
 
       #endregion // Properties
    }

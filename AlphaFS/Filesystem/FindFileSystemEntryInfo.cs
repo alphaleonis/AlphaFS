@@ -217,40 +217,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          using (SafeFindFileHandle handle = FindFirstFile(InputPath, out win32FindData))
          {
-            if (!handle.IsInvalid)
-               return new FileSystemEntryInfo(win32FindData) {FullPath = InputPath};
-            
-            if (!Fallback)
-               return null;
-
-
-            // The handle is invalid, there are couple of common scenarios where this can fail on valid paths like "C:\"
-            // and network root share names like: \\server\sharename, will use function GetFileAttributesXxx() in this case.
-
-            NativeMethods.Win32FileAttributeData win32AttrData = File.GetAttributesExInternal(IsFolder, Transaction, InputPath, false, ContinueOnException, IsFullPath);
-            if (win32AttrData.FileAttributes == (FileAttributes) (-1))
-            {
-               if (ContinueOnException)
-                  return null;
-
-               int lastError = Marshal.GetLastWin32Error();
-
-               if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && IsFolder)
-                  lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
-
-               NativeError.ThrowException(lastError, InputPath);
-            }
-
-            win32FindData.FileName = Path.GetFileName(InputPath, true);
-            win32FindData.AlternateFileName = string.Empty;
-            win32FindData.FileAttributes = win32AttrData.FileAttributes;
-            win32FindData.CreationTime = win32AttrData.CreationTime;
-            win32FindData.LastAccessTime = win32AttrData.LastAccessTime;
-            win32FindData.LastWriteTime = win32AttrData.LastWriteTime;
-            win32FindData.FileSizeHigh = win32AttrData.FileSizeHigh;
-            win32FindData.FileSizeLow = win32AttrData.FileSizeLow;
-
-            return new FileSystemEntryInfo(win32FindData) {FullPath = InputPath};
+            return handle.IsInvalid ? null : new FileSystemEntryInfo(win32FindData) {FullPath = InputPath};
          }
       }
 

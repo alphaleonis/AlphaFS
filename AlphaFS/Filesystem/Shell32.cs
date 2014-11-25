@@ -582,7 +582,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="filePath">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
       /// <param name="attributes">A <see cref="T:System.IO.FileAttributes"/> attribute.</param>
       /// <param name="fileAttributes">One ore more <see cref="T:FileAttributes"/> attributes.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>A <see cref="T:FileInfo"/> struct instance.</returns>
       /// <remarks>You should call this function from a background thread. Failure to do so could cause the UI to stop responding.</remarks>
       /// <remarks>LongPath is not supported.</remarks>
@@ -859,7 +862,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
       /// <param name="attributes">A <see cref="T:System.IO.FileAttributes"/> attribute.</param>
       /// <param name="fileAttributes">A <see cref="T:FileAttributes"/> attribute.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException">
+      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      /// </param>
       /// <returns>A <see cref="T:FileInfo"/> struct instance.</returns>
       /// <remarks>You should call this function from a background thread. Failure to do so could cause the UI to stop responding.</remarks>
       /// <remarks>LongPaths not supported.</remarks>

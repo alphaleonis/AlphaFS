@@ -63,7 +63,7 @@ namespace AlphaFS.UnitTest
       private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
       private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
       private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
-      private static string NotepadExe = Path.Combine(SysRoot, "notepad.exe");
+      private static string NotepadExe = Path.Combine(SysRoot32, "notepad.exe");
 
       private const string TextTrue = "IsTrue";
       private const string TenNumbers = "0123456789";
@@ -380,7 +380,7 @@ namespace AlphaFS.UnitTest
 
          // Check that everything is compressed.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
+         foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Compressed) == FileAttributes.Compressed;
@@ -413,7 +413,7 @@ namespace AlphaFS.UnitTest
 
          // Check that everything is decompressed.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
+         foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Compressed) != FileAttributes.Compressed;
@@ -1296,7 +1296,7 @@ namespace AlphaFS.UnitTest
          
          // Verify that everything is encrypted.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, Path.WildcardStarMatchAll, SearchOption.AllDirectories))
+         foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(tempPath, Path.WildcardStarMatchAll, SearchOption.AllDirectories))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
@@ -1334,7 +1334,7 @@ namespace AlphaFS.UnitTest
          
          // Verify that everything is decrypted.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in File.EnumerateFileSystemEntryInfos(tempPath, Path.WildcardStarMatchAll, SearchOption.AllDirectories))
+         foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(tempPath, Path.WildcardStarMatchAll, SearchOption.AllDirectories))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Encrypted) != FileAttributes.Encrypted;
@@ -1762,6 +1762,131 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpEnumerateFileSystemEntries
+
+      #region DumpEnumerateFileSystemEntryInfos
+
+      private void DumpEnumerateFileSystemEntryInfos(bool isLocal)
+      {
+         #region Setup
+
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+
+         int cnt = 0;
+         string searchPattern = Path.WildcardStarMatchAll;
+         SearchOption searchOption = SearchOption.TopDirectoryOnly;
+
+         bool exception;
+         int expectedLastError;
+         string expectedException;
+
+         string random = Path.GetRandomFileName();
+         string folderSource = @"folder-source-" + random;
+
+         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
+         string letter = originalLetter + @"\";
+
+         #endregion //Setup
+
+         #region DirectoryNotFoundException (Local) / IOException (Network)
+
+         expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+         expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
+         exception = false;
+         try
+         {
+            Console.WriteLine("\nCatch: [{0}]: Path is invalid, such as referring to an unmapped drive.", expectedException);
+
+            string nonExistingPath = letter + folderSource;
+            if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
+
+            Directory.EnumerateFileSystemEntryInfos(nonExistingPath).Any();
+         }
+         catch (Exception ex)
+         {
+            // win32Error is always 0
+            Win32Exception win32Error = new Win32Exception("", ex);
+            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+            string exceptionTypeName = ex.GetType().FullName;
+            if (exceptionTypeName.Equals(expectedException))
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            else
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Console.WriteLine();
+
+         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+
+         #region IOException
+
+         string tempPath = Path.GetTempPath("Directory.EnumerateFileSystemEntries-file-" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         try
+         {
+            using (File.Create(tempPath)) { }
+
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
+
+               new DirectoryInfo(tempPath).EnumerateFileSystemInfos().Any();
+            }
+            catch (Exception ex)
+            {
+               // win32Error is always 0
+               //Win32Exception win32Error = new Win32Exception("", ex);
+               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Console.WriteLine();
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
+
+         #endregion // IOException
+
+         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+
+         Console.WriteLine("Input Directory Path: [{0}]\n", path);
+         Console.WriteLine("\tEnumerate file system entries, using \"SearchOption.{0}\"\n", searchOption);
+
+         StopWatcher(true);
+         foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(path, searchPattern, searchOption))
+         {
+            Console.WriteLine("\t#{0:000}\t[{1}]    [{2}]", ++cnt, fsei.IsDirectory ? "Directory" : "File", fsei.FullPath);
+            Assert.IsTrue(fsei.LongFullPath != null && fsei.LongFullPath.Length > 0);
+         }
+
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine();
+      }
+
+      #endregion // DumpEnumerateFileSystemEntryInfos
 
       #region DumpExists
 
@@ -3087,7 +3212,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // EnumerateFileSystemEntries
-      
+
       #region Exists
 
       [TestMethod]
@@ -3802,6 +3927,19 @@ namespace AlphaFS.UnitTest
 
       #endregion // EnumerateFileIdBothDirectoryInfo
 
+      #region EnumerateFileSystemEntryInfos
+
+      [TestMethod]
+      public void AlphaFS_EnumerateFileSystemEntryInfos()
+      {
+         Console.WriteLine("Directory.EnumerateFileSystemEntryInfos()");
+
+         DumpEnumerateFileSystemEntryInfos(true);
+         DumpEnumerateFileSystemEntryInfos(false);
+      }
+
+      #endregion // EnumerateFileSystemEntryInfos
+
       #region EnumerateLogicalDrives
 
       [TestMethod]
@@ -3834,6 +3972,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetChangeTime
+
+      #region GetFileSystemEntryInfo
+
+      [TestMethod]
+      public void AlphaFS_GetFileSystemEntryInfo()
+      {
+         Console.WriteLine("Directory.GetFileSystemEntryInfo()");
+         Console.WriteLine("\nPlease see unit test: EnumerateFileSystemEntryInfos()");
+      }
+
+      #endregion // GetFileSystemEntryInfo
 
       #region GetProperties
 

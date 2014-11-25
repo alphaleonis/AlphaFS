@@ -309,7 +309,8 @@ namespace Alphaleonis.Win32.Filesystem
             uint numberOfBytesRead;
 
             if (!NativeMethods.BackupRead(SafeFileHandle, safeBuffer, (uint) safeBuffer.Capacity, out numberOfBytesRead, false, processSecurity, out _context))
-               NativeError.ThrowException(Marshal.GetLastWin32Error());
+               // Throws IOException.
+               NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
 
             // See File.GetAccessControlInternal(): .CopyTo() does not work there?
             safeBuffer.CopyTo(buffer, offset, count);
@@ -382,7 +383,8 @@ namespace Alphaleonis.Win32.Filesystem
             uint bytesWritten;
 
             if (!NativeMethods.BackupWrite(SafeFileHandle, safeBuffer, (uint) safeBuffer.Capacity, out bytesWritten, false, processSecurity, out _context))
-               NativeError.ThrowException(Marshal.GetLastWin32Error());
+               // Throws IOException.
+               NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
          }
 
          return true;
@@ -397,7 +399,8 @@ namespace Alphaleonis.Win32.Filesystem
       public override void Flush()
       {
          if (!NativeMethods.FlushFileBuffers(SafeFileHandle))
-            NativeError.ThrowException(Marshal.GetLastWin32Error());
+            // Throws IOException.
+            NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
       }
 
       #endregion // Flush
@@ -457,7 +460,8 @@ namespace Alphaleonis.Win32.Filesystem
 
             // Error Code 25 indicates a seek error, we just skip that here.
             if (lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_SEEK)
-               NativeError.ThrowException(lastError);
+               // Throws IOException.
+               NativeError.ThrowException(lastError, true);
          }
 
          return NativeMethods.ToLong(highSought, lowSought);
@@ -489,7 +493,8 @@ namespace Alphaleonis.Win32.Filesystem
          try
          {
             if (lastError != Win32Errors.ERROR_SUCCESS)
-               NativeError.ThrowException((int) lastError);
+               // Throws IOException.
+               NativeError.ThrowException((int) lastError, true);
 
             if (pSecurityDescriptor.IsInvalid)
                throw new IOException(Resources.InvalidSecurityDescriptorReturnedFromSystem);
@@ -550,7 +555,8 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentOutOfRangeException("length", length, Resources.BackupFileStream_Unlock_Backup_FileStream_Lock_Length_must_not_be_negative_);
 
          if (!NativeMethods.LockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
-            NativeError.ThrowException(Marshal.GetLastWin32Error());
+            // Throws IOException.
+            NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
       }
 
       #endregion // Lock
@@ -573,7 +579,8 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentOutOfRangeException("length", length, Resources.BackupFileStream_Unlock_Backup_FileStream_Lock_Length_must_not_be_negative_);
 
          if (!NativeMethods.UnlockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
-            NativeError.ThrowException(Marshal.GetLastWin32Error());
+            // Throws IOException.
+            NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
       }
 
       #endregion Unlock

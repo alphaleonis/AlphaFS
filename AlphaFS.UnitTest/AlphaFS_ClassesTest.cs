@@ -915,7 +915,7 @@ namespace AlphaFS.UnitTest
           {
               string drive = isLocal ? drv : Path.LocalToUnc(drv);
 
-         StopWatcher(true);
+             StopWatcher(true);
 
               try
               {

@@ -325,7 +325,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsReady(string drivePath)
       {
-         return File.ExistsInternal(true, null, drivePath, true, true);
+         return File.ExistsInternal(true, null, drivePath, true);
       }
 
       #endregion // IsReady
@@ -530,7 +530,8 @@ namespace Alphaleonis.Win32.Filesystem
                   if (lastError == Win32Errors.ERROR_NO_MORE_FILES)
                      yield break;
 
-                  NativeError.ThrowException(lastError);
+                  // Throws IOException.
+                  NativeError.ThrowException(lastError, true);
                }
             }
          }
@@ -703,13 +704,15 @@ namespace Alphaleonis.Win32.Filesystem
                   NativeError.ThrowException(lastError, volumeMountPoint, true);
                   break;
 
+               case Win32Errors.ERROR_MORE_DATA:
+                  // (1) When GetVolumeNameForVolumeMountPoint() succeeds, lastError is set to Win32Errors.ERROR_MORE_DATA.
+                  break;
+
                default:
-                  // (1) When GetVolumeNameForVolumeMountPoint() succeeds,             lastError is set to Win32Errors.ERROR_MORE_DATA.
                   // (2) When volumeMountPoint is a network drive mapping or UNC path, lastError is set to Win32Errors.ERROR_INVALID_PARAMETER.
 
-                  if (lastError != Win32Errors.ERROR_MORE_DATA)
-                     NativeError.ThrowException(lastError, volumeMountPoint);
-
+                  // Throw IOException.
+                  NativeError.ThrowException(lastError, volumeMountPoint, true);
                   break;
             }
          }
@@ -1017,7 +1020,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Unified method DeleteVolumeMountPointInternal() to delete a Drive letter or mounted folder.</summary>
       /// <param name="volumeMountPoint">The Drive letter or mounted folder to be deleted. For example, X:\ or Y:\MountX\.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</param>
+      /// <param name="continueOnException"><c>true</c> suppress any exception that might be thrown a result from a failure, such as unavailable resources.</param>
       /// <remarks>Deleting a mounted folder does not cause the underlying directory to be deleted.</remarks>
       /// <remarks>It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume mount point.</remarks>
       /// <returns>If completed successfully returns <see cref="Win32Errors.ERROR_SUCCESS"/>, otherwise the last error number.</returns>

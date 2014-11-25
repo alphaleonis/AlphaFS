@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void Refresh()
       {
-         DataInitialised = File.FillAttributeInfo(Transaction, LongFullName, ref Win32AttributeData, false, false);
+         DataInitialised = File.FillAttributeInfoInternal(Transaction, LongFullName, ref Win32AttributeData, false, false);
       }
    
       #endregion // Refresh
@@ -163,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void RefreshEntryInfo()
       {
-         _entryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullName, false, false, null);
+         _entryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullName, true, null);
    
          if (_entryInfo == null)
             DataInitialised = -1;
