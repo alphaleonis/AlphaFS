@@ -19,6 +19,7 @@
  *  THE SOFTWARE.
  */
 
+using Alphaleonis;
 using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Network;
@@ -37,7 +38,6 @@ using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
-using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 using OperatingSystem = Alphaleonis.Win32.OperatingSystem;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
@@ -447,7 +447,7 @@ namespace AlphaFS.UnitTest
          
             StopWatcher(true);
          streamsSize = File.GetStreamSize(tempPath);
-         Console.WriteLine("\n\tFile.GetStreamSize(): [{0}] [{1}]{2}", NativeMethods.UnitSizeToText(streamsSize), streamsSize, Reporter());
+         Console.WriteLine("\n\tFile.GetStreamSize(): [{0}] [{1}]{2}", Utils.UnitSizeToText(streamsSize), streamsSize, Reporter());
 
          #endregion // Create Stream
 
@@ -470,7 +470,7 @@ namespace AlphaFS.UnitTest
          
          StopWatcher(true);
          streamsSize = File.GetStreamSize(tempPath);
-         Console.WriteLine("\n\tFile.GetStreamSize(): [{0}] [{1}]{2}", NativeMethods.UnitSizeToText(streamsSize), streamsSize, Reporter());
+         Console.WriteLine("\n\tFile.GetStreamSize(): [{0}] [{1}]{2}", Utils.UnitSizeToText(streamsSize), streamsSize, Reporter());
          Assert.AreEqual(initialStreamsSizeAll, streamsSize);
          Assert.AreEqual(initialStreamSizeData, File.GetStreamSize(tempPath, StreamType.Data));
          
@@ -544,7 +544,7 @@ namespace AlphaFS.UnitTest
          
          StopWatcher(true);
          streamsSize = Directory.GetStreamSize(tempPath);
-         Console.WriteLine("\n\tDirectory.GetStreamSize(): [{0}] [{1}]{2}", NativeMethods.UnitSizeToText(streamsSize), streamsSize, Reporter());
+         Console.WriteLine("\n\tDirectory.GetStreamSize(): [{0}] [{1}]{2}", Utils.UnitSizeToText(streamsSize), streamsSize, Reporter());
 
          #endregion // Create Stream
 
@@ -567,7 +567,7 @@ namespace AlphaFS.UnitTest
 
          StopWatcher(true);
          streamsSize = Directory.GetStreamSize(tempPath);
-         Console.WriteLine("\n\tDirectory.GetStreamSize(): [{0}] [{1}]{2}", NativeMethods.UnitSizeToText(streamsSize), streamsSize, Reporter());
+         Console.WriteLine("\n\tDirectory.GetStreamSize(): [{0}] [{1}]{2}", Utils.UnitSizeToText(streamsSize), streamsSize, Reporter());
          Assert.AreEqual(initialStreamsSizeAll, streamsSize);
          Assert.AreEqual(initialStreamSizeData, Directory.GetStreamSize(tempPath, StreamType.Data));
 

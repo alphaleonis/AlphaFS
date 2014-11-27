@@ -645,7 +645,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-
+      
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.
       /// <para>&#160;</para>
       /// <remarks>
@@ -2065,7 +2065,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // IsFullPath
 
       #region Transacted
-
+      
       #region IsFullPath
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
@@ -5121,7 +5121,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transacted
 
       #endregion // Decompress
-      
+
       #region EnumerateHardlinks
 
       #region IsFullPath
@@ -7002,27 +7002,27 @@ namespace Alphaleonis.Win32.Filesystem
          string sourceFileNameLp = isFullPath == null
             ? sourceFileName
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
+            ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
                : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true, false, false, false);
 
          string destFileNameLp = isFullPath == null
             ? destFileName
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(destFileName, false, false, false, false)
+            ? Path.GetLongPathInternal(destFileName, false, false, false, false)
                : Path.GetFullPathInternal(transaction, destFileName, true, false, false, true, false, false, false);
 
-         
+
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
          // Otherwise, the copy/move operation will continue to completion.
          bool cancel = false;
-
+         
          // Determine Copy or Move action.
          bool doCopy = copyOptions != null;
          bool doMove = !doCopy && moveOptions != null;
 
          if ((!doCopy && !doMove) || (doCopy && doMove))
             throw new NotSupportedException(Resources.UndeterminedCopyMoveAction);
-         
+
          bool overwrite = doCopy
          ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
          : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
@@ -7045,35 +7045,35 @@ namespace Alphaleonis.Win32.Filesystem
          #region Win32 Copy/Move
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
-            ? doMove
-               // MoveFileWithProgress() / MoveFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-04-15: MSDN confirms LongPath usage.
+                  ? doMove
+                        // MoveFileWithProgress() / MoveFileTransacted()
+                        // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+                        // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+                        // 2013-04-15: MSDN confirms LongPath usage.
 
-               // CopyFileEx() / CopyFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-04-15: MSDN confirms LongPath usage.
+                        // CopyFileEx() / CopyFileTransacted()
+                        // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+                        // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+                        // 2013-04-15: MSDN confirms LongPath usage.
 
-               ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
+                       ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
                : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
 
-            : doMove
-               ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
+                  : doMove
+                       ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
                : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle)))
          {
             lastError = (uint) Marshal.GetLastWin32Error();
 
             if (lastError == Win32Errors.ERROR_REQUEST_ABORTED)
             {
-               // If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
-               // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
-               // In this case, the partially copied destination file is deleted.
-               //
-               // If lpProgressRoutine returns PROGRESS_STOP due to the user stopping the operation,
-               // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
-               // In this case, the partially copied destination file is left intact.
+            // If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
+            // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
+            // In this case, the partially copied destination file is deleted.
+            //
+            // If lpProgressRoutine returns PROGRESS_STOP due to the user stopping the operation,
+            // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
+            // In this case, the partially copied destination file is left intact.
 
                cancel = true;
             }
@@ -7165,7 +7165,7 @@ namespace Alphaleonis.Win32.Filesystem
                                  // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                                  // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
                                  NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, destFileNameLp, true);
-                              }
+         }
 
                               // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                               // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
@@ -7202,9 +7202,9 @@ namespace Alphaleonis.Win32.Filesystem
             // Currently preserveDates is only used with files.
             NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
             int dataInitialised = FillAttributeInfoInternal(transaction, sourceFileNameLp, ref data, false, true);
-
+            
             if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1))
-               SetFsoDateTimeInternal(false, transaction, destFileNameLp,
+            SetFsoDateTimeInternal(false, transaction, destFileNameLp,
                   DateTime.FromFileTimeUtc(data.CreationTime), DateTime.FromFileTimeUtc(data.LastAccessTime), DateTime.FromFileTimeUtc(data.LastWriteTime), null);
          }
 
@@ -7220,9 +7220,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or overwrite a file in the specified path.
       /// <para>&#160;</para>
-      /// <returns>
-      /// <para>A <see cref="T:FileStream"/> that provides read/write access to the file specified in path.</para>
-      /// </returns>
+      /// <returns>Returns a <see cref="T:FileStream"/> that provides read/write access to the file specified in path.</returns>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
@@ -7246,13 +7244,17 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or open a file, directory or I/O device.
-      /// <remarks>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.</remarks>
-      /// <remarks>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe.</remarks>
-      /// <returns>A <see cref="T:SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="T:SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
+      /// <remarks>
+      /// <para>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.</para>
+      /// <para>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive,</para>
+      /// <para>communications resource, mailslot, and pipe.</para>
+      /// </remarks>
+      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"></exception>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file or directory to create.</param>
       /// <param name="attributes">One of the <see cref="T:ExtendedFileAttributes"/> values that describes how to create or overwrite the file or directory.</param>
@@ -7484,13 +7486,13 @@ namespace Alphaleonis.Win32.Filesystem
                // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the file.
                : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false);
 #endif
-
+         
          // If the path points to a symbolic link, the symbolic link is deleted, not the target.
-
+         
          #endregion // Setup
 
          startDeleteFile:
-
+         
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // DeleteFile() / DeleteFileTransacted()
@@ -7510,7 +7512,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_PATH_NOT_FOUND:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid (for example, it is on an unmapped drive).
-                  NativeError.ThrowException(lastError, pathLp);
+               NativeError.ThrowException(lastError, pathLp);
                   return;
 
                case Win32Errors.ERROR_SHARING_VIOLATION:
@@ -7537,12 +7539,12 @@ namespace Alphaleonis.Win32.Filesystem
                            // Reset file attributes.
                            SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, null);
                            goto startDeleteFile;
-                        }
+         }
 
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: Path specified a read-only file.
                         throw new UnauthorizedAccessException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}: [{2}]",
                            Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message, pathLp));
-                     }
+      }
                   }
 
                   if (dataInitialised != Win32Errors.ERROR_SUCCESS)
@@ -7742,7 +7744,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
-      {
+         {
          // Will be caught later and be thrown as an ArgumentException or ArgumentNullException.
          // Let's take a shorter route, preventing an Exception from being thrown altogether.
          if (Utils.IsNullOrWhiteSpace(path))
@@ -7760,7 +7762,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          try
-         {
+               {
             string pathLp = isFullPath == null
                ? path
                : (bool) isFullPath
@@ -7782,8 +7784,8 @@ namespace Alphaleonis.Win32.Filesystem
          catch
          {
             return false;
-         }
-      }
+               }
+            }
 
       #endregion ExistsInternal
 
@@ -7810,12 +7812,12 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Someone has a handle to the file open, or other error.
          if (tryagain) 
-         {
+            {
             NativeMethods.Win32FindData findData;
 
             // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-            {
+               {
                bool error = false;
 
                SafeFindFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -7863,13 +7865,13 @@ namespace Alphaleonis.Win32.Filesystem
                      // If we're already returning an error, don't throw another one.
                      if (!error)
                         NativeError.ThrowException(dataInitialised, pathLp, true);
-                  }
                }
             }
+         }
 
             // Copy the attribute information.
             win32AttrData = new NativeMethods.Win32FileAttributeData(findData.FileAttributes, findData.CreationTime, findData.LastAccessTime, findData.LastWriteTime, findData.FileSizeHigh, findData.FileSizeLow);
-         }
+      }
 
          #endregion // Try Again
 
@@ -7886,7 +7888,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   ? NativeMethods.GetFileAttributesEx(pathLp, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out win32AttrData)
                   : NativeMethods.GetFileAttributesTransacted(pathLp, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out win32AttrData, transaction.SafeHandle)))
-               {
+      {
                   dataInitialised = Marshal.GetLastWin32Error();
 
                   if (dataInitialised != Win32Errors.ERROR_FILE_NOT_FOUND &&
@@ -8026,7 +8028,7 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = isFullPath == null
             ? path
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
+            ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, false);
 
          NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
@@ -8039,7 +8041,7 @@ namespace Alphaleonis.Win32.Filesystem
          return (typeof (T) == typeof (FileAttributes)
             ? (T) (object) data.FileAttributes
             : (T) (object) data);
-      }
+         }
 
       #endregion // GetAttributesExInternal
 
@@ -8063,8 +8065,8 @@ namespace Alphaleonis.Win32.Filesystem
       internal static long GetCompressedSizeInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
          if (isFullPath != null)
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
+         if (Utils.IsNullOrWhiteSpace(path))
+            throw new ArgumentNullException("path");
 
          string pathLp = isFullPath == null
             ? path
@@ -8128,8 +8130,8 @@ namespace Alphaleonis.Win32.Filesystem
          if (!callerHandle)
          {
             if (isFullPath != null)
-               if (Utils.IsNullOrWhiteSpace(path))
-                  throw new ArgumentNullException("path");
+            if (Utils.IsNullOrWhiteSpace(path))
+            throw new ArgumentNullException("path");
 
             string pathLp = isFullPath == null
                ? path
@@ -8227,8 +8229,8 @@ namespace Alphaleonis.Win32.Filesystem
       internal static FileEncryptionStatus GetEncryptionStatusInternal(string path, bool? isFullPath)
       {
          if (isFullPath != null)
-            if (Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentNullException("path");
+         if (Utils.IsNullOrWhiteSpace(path))
+            throw new ArgumentNullException("path");
 
          string pathLp = isFullPath == null
             ? path

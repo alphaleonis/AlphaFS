@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static IEnumerable<DeviceInfo> EnumerateDevicesInternal(SafeHandle safeHandle, string hostName, DeviceGuid deviceInterfaceGuid)
       {
          bool callerHandle = safeHandle != null;
-         Guid deviceGuid = new Guid(NativeMethods.GetEnumDescription(deviceInterfaceGuid));
+         Guid deviceGuid = new Guid(Utils.GetEnumDescription(deviceInterfaceGuid));
 
          
          // CM_Connect_Machine()

@@ -19,6 +19,7 @@
  *  THE SOFTWARE.
  */
 
+using Alphaleonis;
 using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Security;
@@ -539,7 +540,7 @@ namespace AlphaFS.UnitTest
             long sourceSize = props["Size"];
 
             Console.WriteLine("\nCopy from Source Path: [{0}]", tempPathSource);
-            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, NativeMethods.UnitSizeToText(sourceSize));
+            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, Utils.UnitSizeToText(sourceSize));
             
             StopWatcher(true);
             Directory.Copy1(tempPathSource, tempPathDestination);
@@ -551,7 +552,7 @@ namespace AlphaFS.UnitTest
             long destinationSize = props["Size"];
 
             Console.WriteLine("\nCopied to Destination Path: [{0}]", tempPathDestination);
-            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]{3}", destinationFolder, destinationFile, NativeMethods.UnitSizeToText(destinationSize), report);
+            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]{3}", destinationFolder, destinationFile, Utils.UnitSizeToText(destinationSize), report);
 
             #region IOException
 
@@ -2698,7 +2699,7 @@ namespace AlphaFS.UnitTest
             long sourceSize = props["Size"];
 
             Console.WriteLine("\nMove from Source Path: [{0}]", otherDisk);
-            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, NativeMethods.UnitSizeToText(sourceSize));
+            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, Utils.UnitSizeToText(sourceSize));
 
             StopWatcher(true);
             Directory.Move1(otherDisk, tempPathSource, MoveOptions.CopyAllowed);
@@ -2710,7 +2711,7 @@ namespace AlphaFS.UnitTest
             long destinationSize = props["Size"];
 
             Console.WriteLine("\nMoved to Destination Path: [{0}]", tempPathSource);
-            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]{3}", destinationFolder, destinationFile, NativeMethods.UnitSizeToText(destinationSize), report);
+            Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]{3}", destinationFolder, destinationFile, Utils.UnitSizeToText(destinationSize), report);
 
             Assert.AreEqual(sourceFolder, destinationFolder, "Total number of directories should match.");
             Assert.AreEqual(sourceFile, destinationFile, "Total number of files should match.");

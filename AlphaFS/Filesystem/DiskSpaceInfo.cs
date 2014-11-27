@@ -197,8 +197,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get
          {
-            double freeSizePct = NativeMethods.PercentCalculate(TotalNumberOfBytes - (TotalNumberOfBytes - TotalNumberOfFreeBytes), 0, TotalNumberOfBytes);
-            return string.Format(CultureInfo.CurrentCulture, "{0:0.00}%", freeSizePct);
+            return string.Format(CultureInfo.CurrentCulture, "{0:0.00}%", Utils.PercentCalculate(TotalNumberOfBytes - (TotalNumberOfBytes - TotalNumberOfFreeBytes), 0, TotalNumberOfBytes));
          }
       }
 
@@ -209,7 +208,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Indicates the amount of available free space on a drive, formatted as a unit size.</summary>
       public string AvailableFreeSpaceUnitSize
       {
-         get { return NativeMethods.UnitSizeToText(TotalNumberOfFreeBytes, UsePercentSuffix); }
+         get { return Utils.UnitSizeToText(TotalNumberOfFreeBytes, UsePercentSuffix); }
       }
 
       #endregion // AvailableFreeSpaceUnitSize
@@ -238,7 +237,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The total number of bytes on a disk that are available to the user who is associated with the calling thread, formatted as a unit size.</summary>
       public string TotalSizeUnitSize
       {
-         get { return NativeMethods.UnitSizeToText(TotalNumberOfBytes, UsePercentSuffix); }
+         get { return Utils.UnitSizeToText(TotalNumberOfBytes, UsePercentSuffix); }
       }
 
       #endregion // TotalSizeUnitSize
@@ -257,8 +256,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          get
          {
-            double usedSizePct = NativeMethods.PercentCalculate(TotalNumberOfBytes - FreeBytesAvailable, 0, TotalNumberOfBytes);
-            return string.Format(CultureInfo.CurrentCulture, "{0:0.00}%", usedSizePct);
+            return string.Format(CultureInfo.CurrentCulture, "{0:0.00}%", Utils.PercentCalculate(TotalNumberOfBytes - FreeBytesAvailable, 0, TotalNumberOfBytes));
          }
       }
 
@@ -269,7 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Indicates the amount of used space on a drive, formatted as a unit size.</summary>
       public string UsedSpaceUnitSize
       {
-         get { return NativeMethods.UnitSizeToText(TotalNumberOfBytes - FreeBytesAvailable, UsePercentSuffix); }
+         get { return Utils.UnitSizeToText(TotalNumberOfBytes - FreeBytesAvailable, UsePercentSuffix); }
       }
 
       #endregion // UsedSpaceUnitSize

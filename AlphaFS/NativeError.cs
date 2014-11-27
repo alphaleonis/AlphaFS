@@ -104,13 +104,11 @@ namespace Alphaleonis.Win32
 
             case Win32Errors.ERROR_PATH_NOT_FOUND:
                throw new DirectoryNotFoundException(errorMessage);
-
-            case Win32Errors.ERROR_FILE_READ_ONLY:
-               throw new UnauthorizedAccessException(errorMessage);
-
+               
             case Win32Errors.ERROR_BAD_RECOVERY_POLICY:
                throw new PolicyException(errorMessage);
 
+            case Win32Errors.ERROR_FILE_READ_ONLY:
             case Win32Errors.ERROR_ACCESS_DENIED:
             case Win32Errors.ERROR_NETWORK_ACCESS_DENIED:
                throw new UnauthorizedAccessException(errorMessage);
@@ -118,40 +116,31 @@ namespace Alphaleonis.Win32
             #region Transacted
 
             case Win32Errors.ERROR_INVALID_TRANSACTION:
-               throw new InvalidTransactionException(Resources.InvalidTransaction,
-                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new InvalidTransactionException(Resources.InvalidTransaction, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_ALREADY_COMMITTED:
-               throw new TransactionAlreadyCommittedException(Resources.TransactionAlreadyCommitted,
-                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionAlreadyCommittedException(Resources.TransactionAlreadyCommitted, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_ALREADY_ABORTED:
-               throw new TransactionAlreadyAbortedException(Resources.TransactionAlreadyAborted,
-                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionAlreadyAbortedException(Resources.TransactionAlreadyAborted, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTIONAL_CONFLICT:
-               throw new TransactionalConflictException(Resources.TransactionalConflict,
-                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionalConflictException(Resources.TransactionalConflict, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_NOT_ACTIVE:
-               throw new TransactionException(Resources.TransactionNotActive,
-                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionException(Resources.TransactionNotActive, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_NOT_REQUESTED:
-               throw new TransactionException(Resources.TransactionNotRequested,
-                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionException(Resources.TransactionNotRequested, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_REQUEST_NOT_VALID:
-               throw new TransactionException(Resources.InvalidTransactionRequest,
-                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionException(Resources.InvalidTransactionRequest, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTIONS_UNSUPPORTED_REMOTE:
-               throw new UnsupportedRemoteTransactionException(Resources.InvalidTransactionRequest,
-                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new UnsupportedRemoteTransactionException(Resources.InvalidTransactionRequest, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
-               throw new NotAReparsePointException(Resources.NotAReparsePoint,
-                  Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new NotAReparsePointException(Resources.NotAReparsePoint, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
                #endregion // Transacted
 
@@ -161,7 +150,7 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_SUCCESS_RESTART_REQUIRED:
                // We should really never get here, throwing an exception for a successful operation.
                throw new NotImplementedException(string.Format(CultureInfo.CurrentCulture, "{0} {1}", Resources.AttemptingToGenerateExceptionFromSuccessfulOperation, errorMessage));
-               
+
             default:
                // We don't have a specific exception to generate for this error.
                throw new IOException(errorMessage, (int) errorCode);

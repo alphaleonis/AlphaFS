@@ -86,9 +86,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
       
       /// <summary>Returns the directory information for the specified path string.
-      /// <returns>Directory information for <paramref name="path"/>, or <c>null</c> if <paramref name="path"/> denotes a root directory or is <c>null</c>. Returns <see cref="T:string.Empty"/> if <paramref name="path"/> does not contain directory information.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <para>&#160;</para>
+      /// <returns>
+      /// <para>Directory information for <paramref name="path"/>, or <c>null</c> if <paramref name="path"/> denotes a root directory or is <c>null</c>.</para>
+      /// <para>Returns <see cref="T:string.Empty"/> if <paramref name="path"/> does not contain directory information.</para>
+      /// </returns>
       /// </summary>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <param name="path">The path of a file or directory.</param>
       [SecurityCritical]
       public static string GetDirectoryName(string path)
@@ -1352,7 +1356,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>The parameters are not parsed if they have white space.</para>
-      /// <para>Therefore, if path2 includes white space (for example, " c:\\ "), the Combine method appends path2 to path1 instead of returning only path2.</para>
+      /// <para>Therefore, if path2 includes white space (for example, " c:\\ "),</para>
+      /// <para>the Combine method appends path2 to path1 instead of returning only path2.</para>
       /// </remarks>
       /// </summary>
       /// <exception cref="ArgumentException">One of the strings in the array contains one or more of the invalid characters defined in <see cref="T:GetInvalidPathChars"/>.</exception>
@@ -1577,7 +1582,11 @@ namespace Alphaleonis.Win32.Filesystem
          if (checkInvalidPathChars)
             CheckInvalidPathChars(path, checkAdditional);
 
-         string pathLp = GetLongPathInternal(path, trimEnd, addDirectorySeparator, removeDirectorySeparator, false);
+         // Do not remove DirectorySeparator when path points to a drive like: "C:\"
+         // In this case, removing DirectorySeparator will point to the current directory.
+
+         string pathLp = GetLongPathInternal(path, trimEnd, addDirectorySeparator, removeDirectorySeparator && path != null && path.Length > 3 && path[1] == VolumeSeparatorChar, false);
+
          uint bufferSize = NativeMethods.MaxPathUnicode/32;
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.

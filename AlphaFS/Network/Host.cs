@@ -640,13 +640,15 @@ namespace Alphaleonis.Win32.Network
          return EnumerateSharesInternal(null, false);
       }
 
-      /// <summary>Enumerates Server Message Block (SMB) shares from the specified host.</summary>
+      /// <summary>Enumerates Server Message Block (SMB) shares from the specified host.
+      /// <para>&#160;</para>
+      /// <returns>Returns <see cref="T:IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// </summary>
       /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="continueOnException">
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(string host, bool continueOnException)
       {
@@ -1160,9 +1162,7 @@ namespace Alphaleonis.Win32.Network
                      }
                      break;
 
-                  // Non-existent host.
                   case Win32Errors.ERROR_BAD_NETPATH:
-                     lastError = Win32Errors.ERROR_BAD_NET_NAME; // Throw more appropriate error.
                      break;
 
                   // Observed when ShareInfo503 is requested, but not supported/possible.

@@ -43,6 +43,7 @@ namespace AlphaFS.UnitTest
       private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
       private static readonly string SysRoot32 = Path.Combine(Environment.GetEnvironmentVariable("SystemRoot"), "System32");
       private static readonly string AppData = Environment.GetEnvironmentVariable("AppData");
+      private static string NotepadExe = Path.Combine(SysRoot32, "notepad.exe");
 
       private const string TextTrue = "IsTrue";
       private const string TextFalse = "IsFalse";
@@ -284,19 +285,18 @@ namespace AlphaFS.UnitTest
       public void GetFileIcon()
       {
          Console.WriteLine("Filesystem.Shell32.GetFileIcon()");
-         
-         string notepad = Path.Combine(SysRoot, "notepad.exe");
-         Console.WriteLine("\nInput File Path: [{0}]\n", notepad);
+
+         Console.WriteLine("\nInput File Path: [{0}]\n", NotepadExe);
 
          Console.WriteLine("Example usage:");
          Console.WriteLine("\n\tIntPtr icon = Shell32.GetFileIcon(file, FileAttributes.SmallIcon | FileAttributes.AddOverlays);");
 
-         
-         IntPtr icon = Shell32.GetFileIcon(notepad, Shell32.FileAttributes.SmallIcon | Shell32.FileAttributes.AddOverlays);
+
+         IntPtr icon = Shell32.GetFileIcon(NotepadExe, Shell32.FileAttributes.SmallIcon | Shell32.FileAttributes.AddOverlays);
 
          Console.WriteLine("\n\tIcon Handle: [{0}]", icon);
 
-         Assert.IsTrue(icon != IntPtr.Zero, "Failed retrieving icon for: [{0}]", notepad);
+         Assert.IsTrue(icon != IntPtr.Zero, "Failed retrieving icon for: [{0}]", NotepadExe);
       }
 
       #endregion // GetFileIcon

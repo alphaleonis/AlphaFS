@@ -106,42 +106,6 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Fields
 
       #region Methods
-
-      #region EnumMemberToList
-
-      internal static IEnumerable<T> EnumMemberToList<T>()
-      {
-         Type enumType = typeof(T);
-
-         // Can't use generic type constraints on value types, so have to do check like this.
-         if (enumType.BaseType != typeof (Enum))
-            throw new ArgumentException("T must be of type System.Enum");
-
-         //Array enumValArray = Enum.GetValues(enumType);
-         //List<T> enumValList = new List<T>(enumValArray.Length);
-         IOrderedEnumerable<T> enumValArray = Enum.GetValues(enumType).Cast<T>().OrderBy(e => e.ToString());
-         List<T> enumValList = new List<T>(enumValArray.Count());
-
-         enumValList.AddRange(enumValArray.Select(val => (T) Enum.Parse(enumType, val.ToString())));
-         return enumValList;
-      }
-
-      #endregion // EnumMemberToList
-
-      #region GetEnumDescription
-
-      /// <summary>Gets an attribute on an enum field value.</summary>
-      /// <param name="enumValue">One of the <see cref="T:DeviceGuid"/> enum types.</param>
-      /// <returns></returns>
-      [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-      internal static string GetEnumDescription(Enum enumValue)
-      {
-         FieldInfo fi = enumValue.GetType().GetField(enumValue.ToString());
-         DescriptionAttribute[] attributes = (DescriptionAttribute[]) fi.GetCustomAttributes(typeof (DescriptionAttribute), false);
-         return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
-      }
-
-      #endregion // GetEnumDescription
       
       #region GetHighOrderDword
 
@@ -281,42 +245,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // ToLong
-
-      #region UnitSizeToText
-
-      /// <summary>Convert a number of type T to string with UnitSize or Percentage suffixed.</summary>
-      internal static string UnitSizeToText<T>(T numberOfBytes, bool usePercent = false)
-      {
-         string template = "{0:0.00}{1}";
-         string sfx = "B";
-
-         double bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
-
-         if (bytes >= 1152921504606846976) { sfx = "EB"; bytes /= 1152921504606846976; }
-         else if (bytes >= 1125899906842624) { sfx = "PB"; bytes /= 1125899906842624; }
-         else if (bytes >= 1099511627776) { sfx = "TB"; bytes /= 1099511627776; }
-         else if (bytes >= 1073741824) { sfx = "GB"; bytes /= 1073741824; }
-         else if (bytes >= 1048576) { sfx = "MB"; bytes /= 1048576; }
-         else if (bytes >= 1024) { sfx = "KB"; bytes /= 1024; }
-
-         else if (!usePercent)
-            // Will return "512 B" instead of "512,00 B".
-            template = "{0:0}{1}";
-
-         return string.Format(CultureInfo.CurrentCulture, template, bytes, usePercent ? "%" : " " + sfx);
-      }
-
-      /// <summary>Calculates a percentage value.</summary>
-      /// <param name="currentValue"></param>
-      /// <param name="minimumValue"></param>
-      /// <param name="maximumValue"></param>
-      internal static double PercentCalculate(double currentValue, double minimumValue, double maximumValue)
-      {
-         return (currentValue < 0 || maximumValue <= 0) ? 0 : currentValue * 100 / (maximumValue - minimumValue);
-      }
-
-      #endregion // UnitSizeToText
-
+      
       #endregion // Methods
       
       #endregion // Internal Utility

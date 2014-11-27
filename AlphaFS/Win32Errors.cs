@@ -310,7 +310,10 @@ namespace Alphaleonis.Win32
       public const uint ERROR_OPERATION_ABORTED = 995;
 
       //public const uint ERROR_IO_INCOMPLETE = 996;
-      //public const uint ERROR_IO_PENDING = 997;   
+      
+      /// <summary>(997) Overlapped I/O operation is in progress.</summary>
+      public const uint ERROR_IO_PENDING = 997;
+
       //public const uint ERROR_NOACCESS = 998;
       //public const uint ERROR_SWAPERROR = 999;
       //public const uint ERROR_STACK_OVERFLOW = 1001;
@@ -461,7 +464,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_SESSION_CREDENTIAL_CONFLICT = 1219;
       //public const uint ERROR_REMOTE_SESSION_LIMIT_EXCEEDED = 1220;
       //public const uint ERROR_DUP_DOMAINNAME = 1221;
-      //public const uint ERROR_NO_NETWORK = 1222;
+
+      /// <summary>(1222) The network is not present or not started.</summary>
+      public const uint ERROR_NO_NETWORK = 1222;
+
       //public const uint ERROR_CANCELLED = 1223;
       //public const uint ERROR_USER_MAPPED_FILE = 1224;
       //public const uint ERROR_CONNECTION_REFUSED = 1225;
@@ -731,7 +737,9 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_INVALID_COMMAND_LINE = 1639;
       //public const uint ERROR_INSTALL_REMOTE_DISALLOWED = 1640;
 
-      /// <summary>(1641) The requested operation completed successfully. The system will be restarted so the changes can take effect.</summary>
+      /// <summary>(1641) The requested operation completed successfully.
+      /// <para>The system will be restarted so the changes can take effect.</para>
+      /// </summary>
       public const uint ERROR_SUCCESS_REBOOT_INITIATED = 1641;
 
       //public const uint ERROR_PATCH_TARGET_NOT_FOUND = 1642;
@@ -941,10 +949,14 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_PRINT_MONITOR_IN_USE = 3008;
       //public const uint ERROR_PRINTER_HAS_JOBS_QUEUED = 3009;
 
-      /// <summary>(3010) The requested operation is successful. Changes will not be effective until the system is rebooted.</summary>
+      /// <summary>(3010) The requested operation is successful.
+      /// <para>Changes will not be effective until the system is rebooted.</para>
+      /// </summary>
       public const uint ERROR_SUCCESS_REBOOT_REQUIRED = 3010;
 
-      /// <summary>(3011) The requested operation is successful. Changes will not be effective until the service is restarted.</summary>
+      /// <summary>(3011) The requested operation is successful.
+      /// <para>Changes will not be effective until the service is restarted.</para>
+      /// </summary>
       public const uint ERROR_SUCCESS_RESTART_REQUIRED = 3011;
 
       //public const uint ERROR_PRINTER_NOT_FOUND = 3012;
@@ -1161,22 +1173,34 @@ namespace Alphaleonis.Win32
       /// <summary>(6700) The transaction handle associated with this operation is not valid.</summary>
       public const uint ERROR_INVALID_TRANSACTION = 6700;
 
-      /// <summary>(6701) The requested operation was made in the context of a transaction that is no longer active.</summary>
+      /// <summary>(6701) The requested operation was made in the context
+      /// <para>of a transaction that is no longer active.</para>
+      /// </summary>
       public const uint ERROR_TRANSACTION_NOT_ACTIVE = 6701;
 
-      /// <summary>(6702) The requested operation is not valid on the Transaction object in its current state.</summary>
+      /// <summary>(6702) The requested operation is not valid
+      /// <para>on the Transaction object in its current state.</para>
+      /// </summary>
       public const uint ERROR_TRANSACTION_REQUEST_NOT_VALID = 6702;
 
-      /// <summary>(6703) The caller has called a response API, but the response is not expected because the TM did not issue the corresponding request to the caller.</summary>
+      /// <summary>(6703) The caller has called a response API, but the response is not expected
+      /// <para>because the TM did not issue the corresponding request to the caller.</para>
+      /// </summary>
       public const uint ERROR_TRANSACTION_NOT_REQUESTED = 6703;
 
-      /// <summary>(6704) It is too late to perform the requested operation, since the Transaction has already been aborted.</summary>
+      /// <summary>(6704) It is too late to perform the requested operation,
+      /// <para>since the Transaction has already been aborted.</para>
+      /// </summary>
       public const uint ERROR_TRANSACTION_ALREADY_ABORTED = 6704;
 
-      /// <summary>(6705) It is too late to perform the requested operation, since the Transaction has already been committed.</summary>
+      /// <summary>(6705) It is too late to perform the requested operation,
+      /// <para>since the Transaction has already been committed.</para>
+      /// </summary>
       public const uint ERROR_TRANSACTION_ALREADY_COMMITTED = 6705;
 
-      /// <summary>(6800) The function attempted to use a name that is reserved for use by another transaction.</summary>
+      /// <summary>(6800) The function attempted to use a name
+      /// <para>that is reserved for use by another transaction.</para>
+      /// </summary>
       public const uint ERROR_TRANSACTIONAL_CONFLICT = 6800;
 
       /// <summary>(6805) The remote server or share does not support transacted file operations.</summary>

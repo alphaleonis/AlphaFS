@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using Alphaleonis;
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -117,7 +118,7 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            foreach (DeviceGuid guid in NativeMethods.EnumMemberToList<DeviceGuid>())
+            foreach (DeviceGuid guid in Utils.EnumMemberToList<DeviceGuid>())
             {
                Console.WriteLine("\n#{0:000}\tClass: [{1}]", ++classCnt, guid);
 

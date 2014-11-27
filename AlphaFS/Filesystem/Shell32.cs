@@ -560,17 +560,17 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetFileIcon
 
       /// <summary>Gets an <see cref="T:IntPtr"/> handle to the Shell icon that represents the file.</summary>
-      /// <param name="filePath">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
-      /// <param name="iconAttributes">Icon size <see cref="T:Shell32.FileAttributes.SmallIcon"/> or <see cref="T:Shell32.FileAttributes.LargeIcon"/>. Can also be combined with <see cref="T:Shell32.FileAttributes.AddOverlays"/> and others.</param>
       /// <returns>An <see cref="T:IntPtr"/> handle to the Shell icon that represents the file, or IntPtr.Zero on failure.</returns>
       /// <remarks>Caller is responsible for destroying this handle with DestroyIcon() when no longer needed.</remarks>
+      /// <param name="filePath">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
+      /// <param name="iconAttributes">Icon size <see cref="T:Shell32.FileAttributes.SmallIcon"/> or <see cref="T:Shell32.FileAttributes.LargeIcon"/>. Can also be combined with <see cref="T:Shell32.FileAttributes.AddOverlays"/> and others.</param>
       [SecurityCritical]
       public static IntPtr GetFileIcon(string filePath, FileAttributes iconAttributes)
       {
          if (Utils.IsNullOrWhiteSpace(filePath))
             return IntPtr.Zero;
 
-         FileInfo fileInfo = GetFileInfoInternal(filePath, System.IO.FileAttributes.Normal, FileAttributes.Icon | iconAttributes, true);
+         FileInfo fileInfo = GetFileInfoInternal(filePath, System.IO.FileAttributes.Normal, FileAttributes.Icon | iconAttributes, true, true);
          return fileInfo.IconHandle == IntPtr.Zero ? IntPtr.Zero : fileInfo.IconHandle; 
       }
 
@@ -578,7 +578,18 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFileInfo
 
-      /// <summary>Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
+      /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system,
+      /// <para>such as a file, folder, directory, or drive root.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="T:Shell32.FileInfo"/> struct instance.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>You should call this function from a background thread.</para>
+      /// <para>Failure to do so could cause the UI to stop responding.</para>
+      /// <para>Unicode path are supported.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="filePath">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
       /// <param name="attributes">A <see cref="T:System.IO.FileAttributes"/> attribute.</param>
       /// <param name="fileAttributes">One ore more <see cref="T:FileAttributes"/> attributes.</param>
@@ -586,14 +597,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
-      /// <returns>A <see cref="T:FileInfo"/> struct instance.</returns>
-      /// <remarks>You should call this function from a background thread. Failure to do so could cause the UI to stop responding.</remarks>
-      /// <remarks>LongPath is not supported.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static FileInfo GetFileInfo(string filePath, System.IO.FileAttributes attributes, FileAttributes fileAttributes, bool continueOnException)
       {
-         return GetFileInfoInternal(filePath, attributes, fileAttributes, continueOnException);
+         return GetFileInfoInternal(filePath, attributes, fileAttributes, true, continueOnException);
       }
 
       #endregion // GetFileInfo
@@ -607,6 +614,20 @@ namespace Alphaleonis.Win32.Filesystem
       public static Shell32Info GetShell32Info(string path)
       {
          return new Shell32Info(path);
+      }
+
+      /// <summary></summary>
+      /// <param name="path">A path to the file.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>A <see cref="T:Shell32Info"/> class instance.</returns>
+      [SecurityCritical]
+      public static Shell32Info GetShell32Info(string path, bool? isFullPath)
+      {
+         return new Shell32Info(path, isFullPath);
       }
 
       #endregion // GetShell32Info
@@ -858,20 +879,28 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFileInfoInternal
 
-      /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
+      /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system,
+      /// <para>such as a file, folder, directory, or drive root.</para>
+      /// <para>&#160;</para>
+      /// <returns>Returns a <see cref="T:Shell32.FileInfo"/> struct instance.</returns>
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>You should call this function from a background thread.</para>
+      /// <para>Failure to do so could cause the UI to stop responding.</para>
+      /// <para>Unicode path are not supported.</para>
+      /// </remarks>
+      /// </summary>
+      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="path">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
       /// <param name="attributes">A <see cref="T:System.IO.FileAttributes"/> attribute.</param>
       /// <param name="fileAttributes">A <see cref="T:FileAttributes"/> attribute.</param>
+      /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
       /// <param name="continueOnException">
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
-      /// <returns>A <see cref="T:FileInfo"/> struct instance.</returns>
-      /// <remarks>You should call this function from a background thread. Failure to do so could cause the UI to stop responding.</remarks>
-      /// <remarks>LongPaths not supported.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      internal static FileInfo GetFileInfoInternal(string path, System.IO.FileAttributes attributes, FileAttributes fileAttributes, bool continueOnException)
+      internal static FileInfo GetFileInfoInternal(string path, System.IO.FileAttributes attributes, FileAttributes fileAttributes, bool checkInvalidPathChars, bool continueOnException)
       {
          // Prevent possible crash.
          FileInfo fileInfo = new FileInfo
@@ -889,7 +918,7 @@ namespace Alphaleonis.Win32.Filesystem
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
             // However, the function fails when using Unicode format.
 
-            IntPtr shGetFileInfo = NativeMethods.ShGetFileInfo(Path.GetRegularPathInternal(path, false, false, false, true), attributes, out fileInfo, (uint)Marshal.SizeOf(fileInfo), fileAttributes);
+            IntPtr shGetFileInfo = NativeMethods.ShGetFileInfo(Path.GetRegularPathInternal(path, false, false, false, checkInvalidPathChars), attributes, out fileInfo, (uint) Marshal.SizeOf(fileInfo), fileAttributes);
 
             if (shGetFileInfo == IntPtr.Zero && !continueOnException)
                NativeError.ThrowException(Marshal.GetLastWin32Error(), path);

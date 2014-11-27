@@ -19,6 +19,7 @@
  *  THE SOFTWARE.
  */
 
+using Alphaleonis;
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.Win32.SafeHandles;
@@ -281,7 +282,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("\nInput Path: [{0}]", tempFile);
             Console.WriteLine("\n\tFilestream.Name  : [{0}]", stream.Name);
-            Console.WriteLine("\tFilestream.Length: [{0}] (Note: For Windows versions < Vista, the file must be > 0 bytes.)\n", NativeMethods.UnitSizeToText(stream.Length));
+            Console.WriteLine("\tFilestream.Length: [{0}] (Note: For Windows versions < Vista, the file must be > 0 bytes.)\n", Utils.UnitSizeToText(stream.Length));
 
             Console.WriteLine("\tFinalPathFormats.None          : [{0}]", fileNameNormalized);
             Console.WriteLine("\tFinalPathFormats.FileNameOpened: [{0}]", fileNameOpened);

@@ -19,6 +19,7 @@
  *  THE SOFTWARE.
  */
 
+using Alphaleonis;
 using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -572,7 +573,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\t#{0:000}\tCopied to: [{1}]", ++cnt, newFile);
                Assert.IsTrue(File.Exists(newFile));
             }
-            Console.WriteLine("\n\tTotal Size: [{0}]{1}", NativeMethods.UnitSizeToText(Directory.GetProperties(tempPath)["Size"]), Reporter());
+            Console.WriteLine("\n\tTotal Size: [{0}]{1}", Utils.UnitSizeToText(Directory.GetProperties(tempPath)["Size"]), Reporter());
             Console.WriteLine();
 
             #endregion // Copy
@@ -662,7 +663,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("\nInput File Path: [{0}]", tempPath);
             Console.WriteLine("\n\tFilestream.Name   == [{0}]", fs.Name);
-            Console.WriteLine("\n\tFilestream.Length == [{0}] (Should be True): [{1}]", NativeMethods.UnitSizeToText(ten), isTen);
+            Console.WriteLine("\n\tFilestream.Length == [{0}] (Should be True): [{1}]", Utils.UnitSizeToText(ten), isTen);
 
             Assert.IsTrue(File.Exists(tempPath), "File should exist.");
             Assert.IsTrue(isTen, "File should be [{0}] bytes in size.", ten);
@@ -1157,13 +1158,13 @@ namespace AlphaFS.UnitTest
          long fileGetCompressedSize = File.GetCompressedSize(tempPath);
          long fiLength = fi.Length;
 
-         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
-         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
+         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
+         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
          
-         Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetSize), fileGetSize);
-         Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
+         Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
+         Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
 
-         Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fiLength), fiLength);
+         Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fiLength), fiLength);
          Console.WriteLine("\tFileInfo().Attributes\t\t== [{0}]", fi.Attributes);
 
          Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != FileAttributes.Compressed, "File should be uncompressed.");
@@ -1209,13 +1210,13 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n\n\tFile.Compress() (Should be True): [{0}]{1}\n", compressOk, report);
          
-         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
-         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
+         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
+         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
          
-         Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetSize), fileGetSize);
-         Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
+         Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
+         Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
          
-         Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fiLength), fiLength);
+         Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fiLength), fiLength);
          Console.WriteLine("\tFileInfo().Attributes\t\t== [{0}]", fi.Attributes);
 
          Assert.IsTrue(compressOk);
@@ -1263,13 +1264,13 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n\n\tFile.Decompress() (Should be True): [{0}]{1}\n", decompressOk, report);
 
-         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
-         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
+         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
+         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
 
-         Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetSize), fileGetSize);
-         Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
+         Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
+         Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
 
-         Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", NativeMethods.UnitSizeToText(fiLength), fiLength);
+         Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fiLength), fiLength);
          Console.WriteLine("\tFileInfo().Attributes\t\t== [{0}]", fi.Attributes);
 
          Assert.IsTrue(decompressOk);
@@ -1566,7 +1567,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\t#{0:000}\tMoved to: [{1}]", ++cnt, newFile);
                Assert.IsTrue(File.Exists(newFile));
             }
-            Console.WriteLine("\n\tTotal Size: [{0}]{1}", NativeMethods.UnitSizeToText(Directory.GetProperties(movePath)["Size"]), Reporter());
+            Console.WriteLine("\n\tTotal Size: [{0}]{1}", Utils.UnitSizeToText(Directory.GetProperties(movePath)["Size"]), Reporter());
             Console.WriteLine();
 
             #endregion // Move
