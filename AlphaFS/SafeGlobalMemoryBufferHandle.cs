@@ -109,7 +109,9 @@ namespace Alphaleonis.Win32
       /// <summary>Called when object is disposed or finalized.</summary>
       protected override bool ReleaseHandle()
       {
-         Marshal.FreeHGlobal(handle);
+         if (handle != IntPtr.Zero)
+            Marshal.FreeHGlobal(handle);
+
          return true;
       }
 

@@ -124,17 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // GetLowOrderDword
-
-      #region GetStructure
-
-      internal static T GetStructure<T>(int offset, IntPtr buffer) where T : struct
-      {
-         T structure = new T();
-         return (T) Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
-      }
-
-      #endregion // GetStructure
-
+      
       #region IsValidHandle
 
       /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>

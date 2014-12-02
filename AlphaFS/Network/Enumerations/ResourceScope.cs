@@ -23,20 +23,42 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>The scope of the enumeration.</summary>
+      /// <summary>NETRESOURCE structure
+      /// <para>&#160;</para>
+      /// <para>ResourceScope: The scope of the enumeration.</para>
+      /// </summary>
       internal enum ResourceScope
       {
-         /// <summary>No ResourceScope options used.</summary>
-         None = 0,
-
-         /// <summary>RESOURCE_CONNECTED - Enumerate currently connected resources.</summary>
+         /// <summary>(1) RESOURCE_CONNECTED
+         /// <para>&#160;</para>
+         /// <para>Enumerate all currently connected resources.</para>
+         /// <para>The function ignores the <see cref="T:ResourceUsage"/> parameter.</para>
+         /// </summary>
          Connected = 1,
 
-         /// <summary>RESOURCE_GLOBALNET - Enumerate all resources on the network.</summary>
-         GlobalNetwork = 2,
+         /// <summary>(2) RESOURCE_GLOBALNET
+         /// <para>&#160;</para>
+         /// <para>Enumerate all resources on the network.</para>
+         /// </summary>
+         GlobalNet = 2,
 
-         /// <summary>RESOURCE_REMEMBERED - Enumerate remembered (persistent) connections.</summary>
-         Remembered = 3
+         /// <summary>(3) RESOURCE_REMEMBERED
+         /// <para>&#160;</para>
+         /// <para>Enumerate all remembered (persistent) connections.</para>
+         /// <para>The function ignores the <see cref="T:ResourceUsage"/> parameter.</para>
+         /// </summary>
+         Remembered = 3,
+
+         /// <summary>(4) RESOURCE_RECENT</summary>
+         Recent = 4,
+
+         /// <summary>(5) RESOURCE_CONTEXT
+         /// <para>&#160;</para>
+         /// <para>Enumerate only resources in the network context of the caller.</para>
+         /// <para>Specify this value for a Network Neighborhood view.</para>
+         /// <para>The function ignores the <see cref="T:ResourceUsage"/> parameter.</para>
+         /// </summary>
+         Context = 5
       }
    }
 }

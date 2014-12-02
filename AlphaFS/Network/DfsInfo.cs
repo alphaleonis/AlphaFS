@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Network
 
          _numberOfStorages = new List<DfsStorage>();
          for (int i = 0; i < structure.NumberOfStorages; i++)
-            _numberOfStorages.Add(new DfsStorage(Filesystem.NativeMethods.GetStructure<NativeMethods.DfsStorageInfo>(i, structure.Storage)));
+            _numberOfStorages.Add(new DfsStorage(Utils.MarshalPtrToStructure<NativeMethods.DfsStorageInfo>(i, structure.Storage)));
       }
 
       #endregion // Constructor

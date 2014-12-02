@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
          return !(left == right);
       }
 
-      #endregion  // Equality
+      #endregion // Equality
 
       #endregion // .NET
 

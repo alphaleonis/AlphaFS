@@ -158,7 +158,7 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // NetServerDiskEnum
 
-      #endregion  // Network Management Functions
+      #endregion // Network Management Functions
       
       #region Network Share Management Functions
 

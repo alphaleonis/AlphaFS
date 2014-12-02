@@ -1054,7 +1054,7 @@ namespace AlphaFS.UnitTest
 
          // My otherVolume is mapped to host.
 
-         const string drive = "Z:";
+         const string drive = "M:";
          const string otherVolume = drive + @"\Movies";
          const string host = @"\\192.168.1.101\video\Movies";
 

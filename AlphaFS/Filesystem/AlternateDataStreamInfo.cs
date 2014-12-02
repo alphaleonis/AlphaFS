@@ -291,7 +291,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // CA2001:AvoidCallingProblematicMethods
 
 
-                     NativeMethods.Win32StreamId stream = NativeMethods.GetStructure<NativeMethods.Win32StreamId>(0, buffer);
+                     NativeMethods.Win32StreamId stream = Utils.MarshalPtrToStructure<NativeMethods.Win32StreamId>(0, buffer);
 
                      if (streamType == null || stream.StreamType == streamType)
                      {

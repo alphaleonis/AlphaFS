@@ -8174,7 +8174,7 @@ namespace Alphaleonis.Win32.Filesystem
                // CA2001:AvoidCallingProblematicMethods
                
 
-               NativeMethods.FileTime changeTime = NativeMethods.GetStructure<NativeMethods.FileBasicInfo>(0, buffer).ChangeTime;
+               NativeMethods.FileTime changeTime = Utils.MarshalPtrToStructure<NativeMethods.FileBasicInfo>(0, buffer).ChangeTime;
 
                return getUtc
                   ? DateTime.FromFileTimeUtc(changeTime)

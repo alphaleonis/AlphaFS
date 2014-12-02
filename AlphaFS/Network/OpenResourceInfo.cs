@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Network
 
       #region Permissions
 
-      /// <summary>The access permissions associated with the opening application. This member can be one or more of the following values.</summary>
+      /// <summary>The access permissions associated with the opening application. This member can be one or more of the following <see cref="T:AccessPermissions"/> values.</summary>
       public AccessPermissions Permissions { get; private set; }
 
       #endregion // Permissions

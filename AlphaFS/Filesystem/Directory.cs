@@ -8506,7 +8506,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   while (buffer != IntPtr.Zero)
                   {
-                     NativeMethods.FileIdBothDirInfo fibdi = NativeMethods.GetStructure<NativeMethods.FileIdBothDirInfo>(0, buffer);
+                     NativeMethods.FileIdBothDirInfo fibdi = Utils.MarshalPtrToStructure<NativeMethods.FileIdBothDirInfo>(0, buffer);
 
                      string fileName = Marshal.PtrToStringUni(new IntPtr(fileNameOffset + buffer.ToInt64()), (int) (fibdi.FileNameLength / 2));
 

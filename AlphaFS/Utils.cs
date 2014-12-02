@@ -26,6 +26,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Alphaleonis
 {
@@ -33,7 +34,7 @@ namespace Alphaleonis
    {
       #region EnumMemberToList
 
-      internal static IEnumerable<T> EnumMemberToList<T>()
+      public static IEnumerable<T> EnumMemberToList<T>()
       {
          Type enumType = typeof(T);
 
@@ -58,7 +59,7 @@ namespace Alphaleonis
       /// <param name="enumValue">One of the <see cref="T:DeviceGuid"/> enum types.</param>
       /// <returns></returns>
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-      internal static string GetEnumDescription(Enum enumValue)
+      public static string GetEnumDescription(Enum enumValue)
       {
          FieldInfo fi = enumValue.GetType().GetField(enumValue.ToString());
          DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
@@ -66,6 +67,16 @@ namespace Alphaleonis
       }
 
       #endregion // GetEnumDescription
+
+      #region MarshalPtrToStructure
+
+      public static T MarshalPtrToStructure<T>(int offset, IntPtr buffer) where T : struct
+      {
+         var structure = new T();
+         return (T) Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
+      }
+
+      #endregion // MarshalPtrToStructure
 
       #region IsNullOrWhiteSpace
 

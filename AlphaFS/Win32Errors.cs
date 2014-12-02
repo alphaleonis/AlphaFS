@@ -280,7 +280,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_INVALID_EA_NAME = 254;
       //public const uint ERROR_EA_LIST_INCONSISTENT = 255;
       //public const uint WAIT_TIMEOUT = 258;   
-      //public const uint ERROR_NO_MORE_ITEMS = 259;
+      
+      /// <summary>(259) No more data is available.</summary>
+      public const uint ERROR_NO_MORE_ITEMS = 259;
+
       //public const uint ERROR_CANNOT_COPY = 266;
       
       /// <summary>(267) The directory name is invalid.</summary>
@@ -450,7 +453,10 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_CANNOT_OPEN_PROFILE = 1205;
       //public const uint ERROR_BAD_PROFILE = 1206;
       //public const uint ERROR_NOT_CONTAINER = 1207;
-      //public const uint ERROR_EXTENDED_ERROR = 1208;
+      
+      /// <summary>(1208) An extended error has occurred.</summary>
+      public const uint ERROR_EXTENDED_ERROR = 1208;
+
       //public const uint ERROR_INVALID_GROUPNAME = 1209;
       //public const uint ERROR_INVALID_COMPUTERNAME = 1210;
       //public const uint ERROR_INVALID_EVENTNAME = 1211;

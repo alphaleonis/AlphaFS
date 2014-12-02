@@ -350,7 +350,7 @@ namespace Alphaleonis.Win32.Filesystem
             Type toSymbolicLinkReparseBuffer = typeof(NativeMethods.SymbolicLinkReparseBuffer);
             IntPtr marshalReparseBuffer = Marshal.OffsetOf(toReparseDataBufferHeader, "data");
 
-            NativeMethods.ReparseDataBufferHeader header = NativeMethods.GetStructure<NativeMethods.ReparseDataBufferHeader>(0, buffer);
+            NativeMethods.ReparseDataBufferHeader header = Utils.MarshalPtrToStructure<NativeMethods.ReparseDataBufferHeader>(0, buffer);
                
             IntPtr dataPos;
             byte[] dataBuffer;
@@ -358,7 +358,7 @@ namespace Alphaleonis.Win32.Filesystem
             switch (header.ReparseTag)
             {
                case ReparsePointTag.MountPoint:
-                  NativeMethods.MountPointReparseBuffer mprb = NativeMethods.GetStructure<NativeMethods.MountPointReparseBuffer>(0, new IntPtr(buffer.ToInt64() + marshalReparseBuffer.ToInt64()));
+                  NativeMethods.MountPointReparseBuffer mprb = Utils.MarshalPtrToStructure<NativeMethods.MountPointReparseBuffer>(0, new IntPtr(buffer.ToInt64() + marshalReparseBuffer.ToInt64()));
 
                   dataPos = new IntPtr(marshalReparseBuffer.ToInt64() + Marshal.OffsetOf(toMountPointReparseBuffer, "data").ToInt64());
                   dataBuffer = new byte[bytesReturned - dataPos.ToInt64()];
@@ -371,7 +371,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                
                case ReparsePointTag.SymLink:
-                  NativeMethods.SymbolicLinkReparseBuffer slrb = NativeMethods.GetStructure<NativeMethods.SymbolicLinkReparseBuffer>(0, new IntPtr(buffer.ToInt64() + marshalReparseBuffer.ToInt64()));
+                  NativeMethods.SymbolicLinkReparseBuffer slrb = Utils.MarshalPtrToStructure<NativeMethods.SymbolicLinkReparseBuffer>(0, new IntPtr(buffer.ToInt64() + marshalReparseBuffer.ToInt64()));
 
                   dataPos = new IntPtr(marshalReparseBuffer.ToInt64() + Marshal.OffsetOf(toSymbolicLinkReparseBuffer, "data").ToInt64());
                   dataBuffer = new byte[bytesReturned - dataPos.ToInt64()];

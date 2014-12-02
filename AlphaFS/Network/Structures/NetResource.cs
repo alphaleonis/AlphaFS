@@ -25,41 +25,94 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>The NETRESOURCE struct contains information about a network resource.</summary>
+      /// <summary>The NETRESOURCE struct contains information about a network resource.
+      /// <para>&#160;</para>
+      /// <para>The NETRESOURCE structure is returned during an enumeration of network resources.</para>
+      /// <para>The NETRESOURCE structure is also specified when making or querying</para>
+      /// <para>a network connection with calls to various Windows Networking functions.</para>
+      /// </summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct NetResource
       {
-         /// <summary>The scope of the enumeration. This member can be one of the following ResourceScope values.</summary>
+         #region Scope
+
+         /// <summary>The scope of the enumeration.
+         /// <para>&#160;</para>
+         /// <para>This member can be one of the following <see cref="T:ResourceScope"/> values.</para>
+         /// </summary>
          [MarshalAs(UnmanagedType.U4)] public ResourceScope Scope;
 
-         /// <summary>The type of resource. This member can be one of the following <see cref="T:ResourceType"/> values.</summary>
+         #endregion // Scope
+
+         #region Type
+
+         /// <summary>The type of resource.
+         /// <para>&#160;</para>
+         /// <para>This member can be one of the following <see cref="T:ResourceType"/> values.</para>
+         /// </summary>
          [MarshalAs(UnmanagedType.U4)] public ResourceType Type;
 
-         /// <summary>The display options for the network object in a network browsing user interface. This member can be one of the following ResourceDisplayType values.</summary>
+         #endregion // Type
+
+         #region DisplayType
+
+         /// <summary>The display options for the network object in a network browsing user interface.
+         /// <para>&#160;</para>
+         /// <para>This member can be one of the following <see cref="T:ResourceDisplayType"/> values.</para>
+         /// </summary>
          [MarshalAs(UnmanagedType.U4)] public ResourceDisplayType DisplayType;
 
-         /// <summary>A set of bit flags describing how the resource can be used. This member can be one of the following ResourceUsage values.</summary>
+         #endregion // DisplayType
+
+         #region Usage
+
+         /// <summary>A set of bit flags describing how the resource can be used.</summary>
          [MarshalAs(UnmanagedType.U4)] public ResourceUsage Usage;
 
-         /// <summary>If the <see cref="T:Scope"/> member is equal to ResourceScope.Connected or ResourceScope.Remembered.
-         /// This member is a pointer to a null-terminated character string that specifies the name of a local device. 
-         /// This member is NULL if the connection does not use a device.
+         #endregion // Usage
+
+         #region LocalName
+
+         /// <summary>If the <see cref="T:Scope"/> member is equal to <see cref="T:ResourceScope.Connected"/> or <see cref="T:ResourceScope.Remembered"/>,
+         /// <para>this member is a pointer to a <c>null</c>-terminated character string that specifies the name of a local device.</para>
+         /// <para>This member is <c>null</c> if the connection does not use a device.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.LPWStr)] public string LocalName;
 
-         /// <summary>If the entry is a network resource, this member is a <see cref="T:string"/> that specifies the remote network name.
-         /// If the entry is a current or persistent connection, <see cref="T:RemoteName"/> member points to the network name associated with the name pointed to by the <see cref="T:LocalName"/> member.
-         /// The string can be <see cref="T:Alphaleonis.Win32.Filesystem.NativeMethods.MaxPath"/> characters in length, and it must follow the network provider's naming conventions.
+         #endregion // LocalName
+
+         #region RemoteName
+
+         /// <summary>If the entry is a network resource, this member is a <see cref="T:string"/>
+         /// <para>that specifies the remote network name.</para>
+         /// <para>&#160;</para>
+         /// <para>If the entry is a current or persistent connection, <see cref="T:RemoteName"/> member points to </para>
+         /// <para>the network name associated with the name pointed to by the <see cref="T:LocalName"/> member.</para>
+         /// <para>&#160;</para>
+         /// <para>The <see cref="T:string"/> can be <see cref="T:Alphaleonis.Win32.Filesystem.NativeMethods.MaxPath"/> characters</para>
+         /// <para>in length, and it must follow the network provider's naming conventions.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.LPWStr)] public string RemoteName;
+
+         #endregion // RemoteName
+
+         #region Comment
 
          /// <summary>A <see cref="T:string"/> that contains a comment supplied by the network provider.</summary>
          [MarshalAs(UnmanagedType.LPWStr)] public string Comment;
 
+         #endregion // Comment
+
+         #region Provider
+
          /// <summary>A <see cref="T:string"/> that contains the name of the provider that owns the resource. 
-         /// This member can be <c>null</c> if the provider name is unknown. To retrieve the provider name, you can call the WNetGetProviderName function.
+         /// <para>&#160;</para>
+         /// <para>This member can be <c>null</c> if the provider name is unknown.</para>
+         /// <para>To retrieve the provider name, you can call the WNetGetProviderName function.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.LPWStr)] public string Provider;
+
+         #endregion // Provider
       }
    }
 }

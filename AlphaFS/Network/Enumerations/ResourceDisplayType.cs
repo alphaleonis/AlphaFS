@@ -26,41 +26,65 @@ namespace Alphaleonis.Win32.Network
       /// <summary>The display options for the network object in a network browsing user interface.</summary>
       internal enum ResourceDisplayType
       {
-         /// <summary>RESOURCEDISPLAYTYPE_GENERIC (0x00000000) - The method used to display the object does not matter.</summary>
+         /// <summary>(0) RESOURCEDISPLAYTYPE_GENERIC
+         /// <para>The method used to display the object does not matter.</para>
+         /// </summary>
          Generic = 0,
 
-         /// <summary>RESOURCEDISPLAYTYPE_DOMAIN (0x00000001) - The object should be displayed as a domain.</summary>
+         /// <summary>(1) RESOURCEDISPLAYTYPE_DOMAIN
+         /// <para>The object should be displayed as a domain.</para>
+         /// </summary>
          Domain = 1,
 
-         /// <summary>RESOURCEDISPLAYTYPE_SERVER (0x00000002) - The object should be displayed as a server.</summary>
+         /// <summary>(2) RESOURCEDISPLAYTYPE_SERVER
+         /// <para>The object should be displayed as a server.</para>
+         /// </summary>
          Server = 2,
 
-         /// <summary>RESOURCEDISPLAYTYPE_SHARE (0x00000003) - The object should be displayed as a share.</summary>
+         /// <summary>(3) RESOURCEDISPLAYTYPE_SHARE
+         /// <para>The object should be displayed as a share</para>
+         /// </summary>
          Share = 3,
 
-         /// <summary>RESOURCEDISPLAYTYPE_FILE (0x00000004) - The object should be displayed as a file.</summary>
+         /// <summary>(4) RESOURCEDISPLAYTYPE_FILE
+         /// <para>The object should be displayed as a file.</para>
+         /// </summary>
          File = 4,
 
-         /// <summary>RESOURCEDISPLAYTYPE_GROUP (0x00000005) - The object should be displayed as a group.</summary>
+         /// <summary>(5) RESOURCEDISPLAYTYPE_GROUP
+         /// <para>The object should be displayed as a group.</para>
+         /// </summary>
          Group = 5,
 
-         /// <summary>RESOURCEDISPLAYTYPE_NETWORK (0x00000006) - The object should be displayed as a network.</summary>
+         /// <summary>(6) RESOURCEDISPLAYTYPE_NETWORK
+         /// <para>The object should be displayed as a network.</para>
+         /// </summary>
          Network = 6,
 
-         /// <summary>RESOURCEDISPLAYTYPE_ROOT (0x00000007) - The object should be displayed as a logical root for the entire network.</summary>
+         /// <summary>(7) RESOURCEDISPLAYTYPE_ROOT
+         /// <para>The object should be displayed as a logical root for the entire network.</para>
+         /// </summary>
          Root = 7,
 
-         /// <summary>RESOURCEDISPLAYTYPE_SHAREADMIN (0x00000008) - The object should be displayed as a administrative share.</summary>
+         /// <summary>(8) RESOURCEDISPLAYTYPE_SHAREADMIN
+         /// <para>The object should be displayed as a administrative share.</para>
+         /// </summary>
          ShareAdmin = 8,
 
-         /// <summary>RESOURCEDISPLAYTYPE_DIRECTORY (0x00000009) - The object should be displayed as a directory.</summary>
+         /// <summary>(9) RESOURCEDISPLAYTYPE_DIRECTORY
+         /// <para>The object should be displayed as a directory.</para>
+         /// </summary>
          Directory = 9,
 
-         /// <summary>RESOURCEDISPLAYTYPE_TREE (0x0000000A) - The object should be displayed as a tree.</summary>
+         /// <summary>(10) RESOURCEDISPLAYTYPE_TREE
+         /// <para>The object should be displayed as a tree.</para>
+         /// </summary>
          Tree = 10,
 
-         /// <summary>RESOURCEDISPLAYTYPE_NDSCONTAINER (0x0000000B) - The object should be displayed as a Netware Directory Service container.</summary>
-         Container = 11
+         /// <summary>(11) RESOURCEDISPLAYTYPE_NDSCONTAINER
+         /// <para>The object should be displayed as a Netware Directory Service container.</para>
+         /// </summary>
+         NdsContainer = 11
       }
    }
 }

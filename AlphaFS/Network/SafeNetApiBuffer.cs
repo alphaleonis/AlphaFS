@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Security;
 using Microsoft.Win32.SafeHandles;
 
@@ -35,7 +36,7 @@ namespace Alphaleonis.Win32.Network
 
       protected override bool ReleaseHandle()
       {
-         return NativeMethods.NetApiBufferFree(handle) == Win32Errors.NERR_Success;
+         return (handle != IntPtr.Zero) && NativeMethods.NetApiBufferFree(handle) == Win32Errors.NERR_Success;
       }
    }
 }

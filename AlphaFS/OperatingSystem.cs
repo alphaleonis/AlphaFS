@@ -78,8 +78,8 @@ namespace Alphaleonis.Win32
          /// <summary>(10) Windows Server 2012 R2.</summary>
          WindowsServer2012R2 = 10,
 
-         /// <summary>(0xffff) A later version of Windows than currently installed.</summary>
-         Later = 0xffff
+         /// <summary>(65535) A later version of Windows than currently installed.</summary>
+         Later = 65535
       }
 
       #endregion // OperatingSystem Name Enum
@@ -93,27 +93,27 @@ namespace Alphaleonis.Win32
       [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
       public enum EnumProcessorArchitecture : ushort
       {
-         /// <summary>The system is running a 32-bit version of Windows.
-         /// <para>Win32: PROCESSOR_ARCHITECTURE_INTEL = 0x00000000</para>
+         /// <summary>(0) PROCESSOR_ARCHITECTURE_INTEL
+         /// <para>The system is running a 32-bit version of Windows.</para>
          /// </summary>
-         X86 = 0x0,
+         X86 = 0,
 
-         /// <summary>The system is running on a Itanium processor.
-         /// <para>Win32: PROCESSOR_ARCHITECTURE_IA64 = 0x00000006</para>
+         /// <summary>(6) PROCESSOR_ARCHITECTURE_IA64
+         /// <para>The system is running on a Itanium processor.</para>
          /// </summary>
          [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
          [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
-         IA64 = 0x6,
+         IA64 = 6,
 
-         /// <summary>The system is running a 64-bit version of Windows.
-         /// <para>Win32: PROCESSOR_ARCHITECTURE_AMD64 = 0x00000009</para>
+         /// <summary>(9) PROCESSOR_ARCHITECTURE_AMD64
+         /// <para>The system is running a 64-bit version of Windows.</para>
          /// </summary>
-         X64 = 0x9,
+         X64 = 9,
 
-         /// <summary>Unknown architecture.
-         /// <para>Win32: PROCESSOR_ARCHITECTURE_UNKNOWN = 0x0000ffff</para>
+         /// <summary>(65535) PROCESSOR_ARCHITECTURE_UNKNOWN
+         /// <para>Unknown architecture.</para>
          /// </summary>
-         Unknown = 0xffff
+         Unknown = 65535
       }
 
       #endregion // ProcessorArchitecture Name enum
@@ -281,7 +281,8 @@ namespace Alphaleonis.Win32
       {
          NativeMethods.OsVersionInfoEx verInfo = new NativeMethods.OsVersionInfoEx();
 
-         // Needed to prevent: System.Runtime.InteropServices.COMException: The data area passed to a system call is too small. (Exception from HRESULT: 0x8007007A)
+         // Needed to prevent: System.Runtime.InteropServices.COMException:
+         // The data area passed to a system call is too small. (Exception from HRESULT: 0x8007007A)
          verInfo.OSVersionInfoSize = Marshal.SizeOf(verInfo);
 
          NativeMethods.SystemInfo sysInfo = new NativeMethods.SystemInfo();
@@ -296,8 +297,7 @@ namespace Alphaleonis.Win32
 
          _processorArchitecture = (EnumProcessorArchitecture)sysInfo.processorArchitecture;
          _servicePackVersion = new Version(verInfo.ServicePackMajor, verInfo.ServicePackMinor);
-         _isServer = verInfo.ProductType == NativeMethods.VerNtDomainController ||
-                     verInfo.ProductType == NativeMethods.VerNtServer;
+         _isServer = verInfo.ProductType == NativeMethods.VerNtDomainController || verInfo.ProductType == NativeMethods.VerNtServer;
 
 
          // http://msdn.microsoft.com/en-us/library/windows/desktop/ms724833%28v=vs.85%29.aspx
@@ -464,7 +464,7 @@ namespace Alphaleonis.Win32
          [SuppressMessage("Microsoft.Usage", "CA2205:UseManagedEquivalentsOfWin32Api")]
          [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetVersionExW")]
          [return: MarshalAs(UnmanagedType.Bool)]
-         public static extern bool GetVersionEx(ref OsVersionInfoEx osvi);
+         public static extern bool GetVersionEx([MarshalAs(UnmanagedType.Struct)] ref OsVersionInfoEx osvi);
 
          #endregion // GetVersionEx
 
@@ -475,8 +475,8 @@ namespace Alphaleonis.Win32
          /// <remarks>Minimum supported client: Windows 2000 Professional [desktop apps only]</remarks>
          /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
          [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-         [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-         public static extern void GetSystemInfo(ref SystemInfo lpSystemInfo);
+         [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
+         public static extern void GetSystemInfo([MarshalAs(UnmanagedType.Struct)] ref SystemInfo lpSystemInfo);
 
          #endregion // GetSystemInfo
 

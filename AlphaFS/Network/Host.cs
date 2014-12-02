@@ -483,13 +483,17 @@ namespace Alphaleonis.Win32.Network
             throw new ArgumentNullException("dfsName");
 
          FunctionData fd = new FunctionData();
+
          return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo4 structure, SafeNetApiBuffer safeBuffer) =>
+
             new DfsInfo(structure),
+
             (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle1) =>
             {
                totalEntries = 0;
                return NativeMethods.NetDfsEnum(dfsName, 4, prefMaxLen, out safeBuffer, out entriesRead, out resumeHandle1);
-            }, true);
+
+            }, false);
       }
 
       #endregion // EnumerateDfsLinks
@@ -919,11 +923,6 @@ namespace Alphaleonis.Win32.Network
 
                   bufferSize = bufferSize*2;
                   break;
-
-                  // Non-existent host.
-               case Win32Errors.ERROR_BAD_NETPATH:
-                  lastError = Win32Errors.ERROR_BAD_NET_NAME; // Throw more appropriate error.
-                  break;
             }
 
          } while (lastError == Win32Errors.ERROR_MORE_DATA);
@@ -953,16 +952,22 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDfsRootInternal(string host, bool continueOnException)
       {
-         // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo300 structure, SafeNetApiBuffer safeBuffer) =>
 
-         FunctionData fd = new FunctionData();
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo300 structure, SafeNetApiBuffer safeBuffer) =>
             new DfsInfo { EntryPath = structure.DfsName },
+
             (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                totalEntries = 0;
-               return NativeMethods.NetDfsEnum(host, 300, prefMaxLen, out safeBuffer, out entriesRead, out resumeHandle);
+
+               // When host == null, the local computer is used.
+               // However, the resulting OpenResourceInfo.Host property will be empty.
+               // So, explicitly state Environment.MachineName to prevent this.
+               // Furthermore, the UNC prefix: \\ is not required and always removed.
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+
+               return NativeMethods.NetDfsEnum(stripUnc, 300, prefMaxLen, out safeBuffer, out entriesRead, out resumeHandle);
+
             }, continueOnException).Select(dfs => dfs.EntryPath);
       }
 
@@ -982,16 +987,22 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDomainDfsRootInternal(string domain, bool continueOnException)
       {
-         // The UNC prefix: \\ is not required and always removed.
-         domain = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathInternal(domain, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo200 structure, SafeNetApiBuffer safeBuffer) =>
 
-         FunctionData fd = new FunctionData();
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo200 structure, SafeNetApiBuffer safeBuffer) =>
             new DfsInfo { EntryPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Path.UncPrefix, NativeMethods.ComputerDomain, Path.DirectorySeparatorChar, structure.FtDfsName) },
+
             (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                totalEntries = 0;
-               return NativeMethods.NetDfsEnum(domain, 200, prefMaxLen, out safeBuffer, out entriesRead, out resumeHandle);
+
+               // When host == null, the local computer is used.
+               // However, the resulting OpenResourceInfo.Host property will be empty.
+               // So, explicitly state Environment.MachineName to prevent this.
+               // Furthermore, the UNC prefix: \\ is not required and always removed.
+               string stripUnc = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathInternal(domain, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+
+               return NativeMethods.NetDfsEnum(stripUnc, 200, prefMaxLen, out safeBuffer, out entriesRead, out resumeHandle);
+
             }, continueOnException).Select(dfs => dfs.EntryPath);
       }
 
@@ -1009,14 +1020,21 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDrivesInternal(string host, bool continueOnException)
       {
-         // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+         return EnumerateNetworkObjectInternal(new FunctionData { EnumType = 1 }, (string structure, SafeNetApiBuffer safeBuffer) =>
 
-         FunctionData fd = new FunctionData {EnumType = 1};
-         return EnumerateNetworkObjectInternal(fd, (string structure, SafeNetApiBuffer safeBuffer) =>
-            structure, (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resume) =>
-               NativeMethods.NetServerDiskEnum(host, 0, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resume),
-            continueOnException);
+            structure,
+
+            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resume) =>
+            {
+               // When host == null, the local computer is used.
+               // However, the resulting OpenResourceInfo.Host property will be empty.
+               // So, explicitly state Environment.MachineName to prevent this.
+               // Furthermore, the UNC prefix: \\ is not required and always removed.
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+
+               return NativeMethods.NetServerDiskEnum(stripUnc, 0, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resume);
+
+            }, continueOnException);
       }
 
       #endregion // EnumerateDrivesInternal
@@ -1037,13 +1055,21 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(share))
             throw new ArgumentNullException("share");
 
-         // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, "");
+         return EnumerateNetworkObjectInternal(new FunctionData { ExtraData1 = share }, (NativeMethods.ConnectionInfo1 structure, SafeNetApiBuffer safeBuffer) =>
 
-         FunctionData fd = new FunctionData {ExtraData1 = share};
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.ConnectionInfo1 structure, SafeNetApiBuffer safeBuffer) =>
-               new OpenConnectionInfo(host, structure), (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-               NativeMethods.NetConnectionEnum(host, functionData.ExtraData1, 1, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
+               new OpenConnectionInfo(host, structure),
+
+            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            {
+               // When host == null, the local computer is used.
+               // However, the resulting OpenResourceInfo.Host property will be empty.
+               // So, explicitly state Environment.MachineName to prevent this.
+               // Furthermore, the UNC prefix: \\ is not required and always removed.
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+
+               return NativeMethods.NetConnectionEnum(stripUnc, functionData.ExtraData1, 1, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
+
+            },
             continueOnException);
       }
 
@@ -1063,22 +1089,27 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static IEnumerable<OpenResourceInfo> EnumerateOpenResourcesInternal(string host, string basePath, string typeName, bool continueOnException)
       {
-         // When host == null, the local computer is used.
-         // However, the resulting OpenResourceInfo.Host property will be empty.
-         // So, explicitly state Environment.MachineName to prevent this.
-         // Furthermore, the UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
-
-         basePath = Utils.IsNullOrWhiteSpace(basePath)
-            ? null
-            : Path.GetRegularPathInternal(basePath, false, false, false, true);
-
+         basePath = Utils.IsNullOrWhiteSpace(basePath) ? null : Path.GetRegularPathInternal(basePath, false, false, false, true);
          typeName = Utils.IsNullOrWhiteSpace(typeName) ? null : typeName;
+         
+         
+         var fd = new FunctionData { ExtraData1 = basePath, ExtraData2 = typeName };
 
-         FunctionData fd = new FunctionData { ExtraData1 = basePath, ExtraData2 = typeName };
          return EnumerateNetworkObjectInternal(fd, (FileInfo3 structure, SafeNetApiBuffer safeBuffer) =>
-            new OpenResourceInfo(host, structure), (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-               NativeMethods.NetFileEnum(host, fd.ExtraData1, fd.ExtraData2, 3, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
+
+            new OpenResourceInfo(host, structure),
+
+            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            {
+               // When host == null, the local computer is used.
+               // However, the resulting OpenResourceInfo.Host property will be empty.
+               // So, explicitly state Environment.MachineName to prevent this.
+               // Furthermore, the UNC prefix: \\ is not required and always removed.
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+
+               return NativeMethods.NetFileEnum(stripUnc, fd.ExtraData1, fd.ExtraData2, 3, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
+
+            },
             continueOnException);
       }
 
@@ -1180,7 +1211,7 @@ namespace Alphaleonis.Win32.Network
 
       #region EnumerateSharesInternal
 
-      /// <summary>Unified method EnumerateSharesInternal() to enumerate Server Message Block (SMB) shares from the specified host.</summary>
+      /// <summary>Unified method EnumerateSharesInternal() to enumerate (hidden) Server Message Block (SMB) shares from the specified host.</summary>
       /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="continueOnException">
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
@@ -1190,15 +1221,19 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static IEnumerable<ShareInfo> EnumerateSharesInternal(string host, bool continueOnException)
       {
-         // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+         // When host == null, the local computer is used.
+         // However, the resulting OpenResourceInfo.Host property will be empty.
+         // So, explicitly state Environment.MachineName to prevent this.
+         // Furthermore, the UNC prefix: \\ is not required and always removed.
+         string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
 
-         FunctionData fd = new FunctionData();
+         var fd = new FunctionData();
          bool hasItems = false;
 
          foreach (ShareInfo si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo503 structure, SafeNetApiBuffer safeBuffer) =>
-               new ShareInfo(host, 503, structure), (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-               NativeMethods.NetShareEnum(host, 503, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
+            new ShareInfo(stripUnc, 503, structure),
+            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+               NativeMethods.NetShareEnum(stripUnc, 503, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
             continueOnException))
          {
             yield return si;
@@ -1209,9 +1244,10 @@ namespace Alphaleonis.Win32.Network
          // Try again with ShareInfo2 structure.
          if (!hasItems)
             foreach (ShareInfo si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo2 structure, SafeNetApiBuffer safeBuffer) =>
-                        new ShareInfo(host, 2, structure), (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                        NativeMethods.NetShareEnum(host, 2, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
-                     continueOnException))
+               new ShareInfo(stripUnc, 2, structure),
+               (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+                  NativeMethods.NetShareEnum(stripUnc, 2, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
+               continueOnException))
             {
                yield return si;
                hasItems = true;
@@ -1221,9 +1257,10 @@ namespace Alphaleonis.Win32.Network
          // Try again with ShareInfo1 structure.
          if (!hasItems)
             foreach (ShareInfo si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo1 structure, SafeNetApiBuffer safeBuffer) =>
-                        new ShareInfo(host, 1, structure), (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                        NativeMethods.NetShareEnum(host, 1, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
-                     continueOnException))
+               new ShareInfo(stripUnc, 1, structure),
+               (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+                  NativeMethods.NetShareEnum(stripUnc, 1, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
+               continueOnException))
             {
                yield return si;
             }
@@ -1282,7 +1319,7 @@ namespace Alphaleonis.Win32.Network
                // CA2001:AvoidCallingProblematicMethods
 
 
-               return new DfsInfo(Filesystem.NativeMethods.GetStructure<NativeMethods.DfsInfo4>(0, buffer));
+               return new DfsInfo(Utils.MarshalPtrToStructure<NativeMethods.DfsInfo4>(0, buffer));
             }
 
             if (lastError != Win32Errors.NERR_Success)
@@ -1358,7 +1395,7 @@ namespace Alphaleonis.Win32.Network
                      // CA2001:AvoidCallingProblematicMethods
 
 
-                     return Filesystem.NativeMethods.GetStructure<NativeMethods.RemoteNameInfo>(0, buffer);
+                     return Utils.MarshalPtrToStructure<NativeMethods.RemoteNameInfo>(0, buffer);
 
                   case Win32Errors.ERROR_MORE_DATA:
                      //bufferSize = Received the required buffer size.
@@ -1397,15 +1434,18 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(share))
             return null;
 
-         // The UNC prefix: \\ is not required and always removed.
-         host = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+         // When host == null, the local computer is used.
+         // However, the resulting OpenResourceInfo.Host property will be empty.
+         // So, explicitly state Environment.MachineName to prevent this.
+         // Furthermore, the UNC prefix: \\ is not required and always removed.
+         string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
          
          bool fallback = false;
          
          startNetShareGetInfo:
 
          SafeNetApiBuffer safeBuffer;
-         uint lastError = NativeMethods.NetShareGetInfo(host, share, (uint)structureLevel, out safeBuffer);
+         uint lastError = NativeMethods.NetShareGetInfo(stripUnc, share, (uint)structureLevel, out safeBuffer);
 
          using (safeBuffer)
             switch (lastError)
@@ -1433,19 +1473,19 @@ namespace Alphaleonis.Win32.Network
                   switch (structureLevel)
                   {
                      case 1005:
-                        return new ShareInfo(host, structureLevel, Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo1005>(0, buffer))
+                        return new ShareInfo(stripUnc, structureLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo1005>(0, buffer))
                         {
-                           NetFullPath = Path.CombineInternal(false, Path.UncPrefix + host, share)
+                           NetFullPath = Path.CombineInternal(false, Path.UncPrefix + stripUnc, share)
                         };
 
                      case 503:
-                        return new ShareInfo(host, structureLevel, Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo503>(0, buffer));
+                        return new ShareInfo(stripUnc, structureLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo503>(0, buffer));
 
                      case 2:
-                        return new ShareInfo(host, structureLevel, Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo2>(0, buffer));
+                        return new ShareInfo(stripUnc, structureLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo2>(0, buffer));
 
                      case 1:
-                        return new ShareInfo(host, structureLevel, Filesystem.NativeMethods.GetStructure<NativeMethods.ShareInfo1>(0, buffer));
+                        return new ShareInfo(stripUnc, structureLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo1>(0, buffer));
                   }
                   break;
                
