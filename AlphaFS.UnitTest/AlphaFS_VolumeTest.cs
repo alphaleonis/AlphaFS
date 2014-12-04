@@ -858,7 +858,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("\t\tIsReady()             : [{0}]", Volume.IsReady(volume));
             Console.WriteLine("\t\tIsVolume()            : [{0}]", Volume.IsVolume(volume));
-            Console.WriteLine("\t\tGetDiskFreeSpace()    : [{0}]", Volume.GetDiskFreeSpace(volume, null).AvailableFreeSpaceUnitSize);
+            Console.WriteLine("\t\tGetDiskFreeSpace()    : [{0}]", Volume.GetDiskFreeSpace(volume).AvailableFreeSpaceUnitSize);
 
             string result = Volume.GetDriveFormat(volume);
             Console.WriteLine("\t\tGetDriveFormat()      : [{0}]", result ?? "null");

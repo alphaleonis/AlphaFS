@@ -737,7 +737,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             // Not reliable.
-            //Win32Exception win32Error = new Win32Exception("", ex);
+            //var win32Error = new Win32Exception("", ex);
             //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -919,8 +919,8 @@ namespace AlphaFS.UnitTest
 
               try
               {
-                  // null == All information.
-                  DiskSpaceInfo dsi = Volume.GetDiskFreeSpace(drive, null);
+                  // null (default) == All information.
+                  DiskSpaceInfo dsi = Volume.GetDiskFreeSpace(drive);
                   string report = Reporter(true);
                   Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
                   Assert.IsTrue(dsi.FreeBytesAvailable != 0 && dsi.TotalNumberOfBytes != 0 && dsi.TotalNumberOfFreeBytes != 0);
@@ -1081,7 +1081,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             // Not reliable.
-            //Win32Exception win32Error = new Win32Exception("", ex);
+            //var win32Error = new Win32Exception("", ex);
             //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1113,7 +1113,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Win32Exception win32Error = new Win32Exception("", ex);
+            var win32Error = new Win32Exception("", ex);
             Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1144,7 +1144,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Win32Exception win32Error = new Win32Exception("", ex);
+            var win32Error = new Win32Exception("", ex);
             Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             //Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1175,7 +1175,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             // win32Error is always 0
-            //Win32Exception win32Error = new Win32Exception("", ex);
+            //var win32Error = new Win32Exception("", ex);
             //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 

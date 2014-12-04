@@ -8612,25 +8612,25 @@ namespace Alphaleonis.Win32.Filesystem
                switch (getFolders)
                {
                   case null:
-                     yield return (T)(object)fsei;
+                     yield return (T) (object) fsei;
                      break;
 
                   case true:
                      if (fsei.IsDirectory)
-                        yield return (T)(object)fsei;
+                        yield return (T) (object) fsei;
                      break;
 
                   case false:
                      if (!fsei.IsDirectory)
-                        yield return (T)(object)fsei;
+                        yield return (T) (object) fsei;
                      break;
                }
             }
             else
             {
                // Return FullPath property as string.
-               if ((bool)getAsString)
-                  yield return (T)(object)(asLongPath ? fsei.LongFullPath : fsei.FullPath);
+               if ((bool) getAsString)
+                  yield return (T) (object) (asLongPath ? fsei.LongFullPath : fsei.FullPath);
 
                else
                {
@@ -8642,22 +8642,22 @@ namespace Alphaleonis.Win32.Filesystem
 
                   switch (getFolders)
                   {
-                     // true = return instance of type: DirectoryInfo.
+                        // true = return instance of type: DirectoryInfo.
                      case true:
                         yield return
-                           (T)(object)new DirectoryInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei };
+                           (T) (object) new DirectoryInfo(transaction, fsei.LongFullPath, true) {EntryInfo = fsei};
                         break;
 
-                     // false = return instance of type: FileInfo.
+                        // false = return instance of type: FileInfo.
                      case false:
-                        yield return (T)(object)new FileInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei };
+                        yield return (T) (object) new FileInfo(transaction, fsei.LongFullPath, true) {EntryInfo = fsei};
                         break;
 
-                     // null = return instances of type: DirectoryInfo or FileInfo.
+                        // null = return instances of type: DirectoryInfo or FileInfo.
                      default:
-                        yield return (T)(object)(fsei.IsDirectory
-                           ? (FileSystemInfo)new DirectoryInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei }
-                           : new FileInfo(transaction, fsei.LongFullPath, true) { EntryInfo = fsei });
+                        yield return (T) (object) (fsei.IsDirectory
+                           ? (FileSystemInfo) new DirectoryInfo(transaction, fsei.LongFullPath, true) {EntryInfo = fsei}
+                           : new FileInfo(transaction, fsei.LongFullPath, true) {EntryInfo = fsei});
                         break;
                   }
                }

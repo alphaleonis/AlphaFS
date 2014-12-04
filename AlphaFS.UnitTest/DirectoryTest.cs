@@ -39,8 +39,8 @@ using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
+using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
 using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
-using NativeMethods = Alphaleonis.Win32.Filesystem.NativeMethods;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
@@ -481,7 +481,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Win32Exception win32Error = new Win32Exception("", ex);
+               var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -566,7 +566,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Win32Exception win32Error = new Win32Exception("", ex);
+               var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -650,7 +650,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // win32Error is always 0
-               //Win32Exception win32Error = new Win32Exception("", ex);
+               //var win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"),
                   string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
@@ -693,7 +693,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Win32Exception win32Error = new Win32Exception("", ex);
+               var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
                string exceptionTypeName = ex.GetType().FullName;
@@ -754,7 +754,7 @@ namespace AlphaFS.UnitTest
                // win32Error is always 0 for local.
                if (!isLocal)
                {
-                  Win32Exception win32Error = new Win32Exception("", ex);
+                  var win32Error = new Win32Exception("", ex);
                   Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                }
 
@@ -909,7 +909,7 @@ namespace AlphaFS.UnitTest
                // win32Error is always 0 for local.
                if (!isLocal)
                {
-                  Win32Exception win32Error = new Win32Exception("", ex);
+                  var win32Error = new Win32Exception("", ex);
                   Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                }
 
@@ -940,7 +940,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Win32Exception win32Error = new Win32Exception("", ex);
+               var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -975,7 +975,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Win32Exception win32Error = new Win32Exception("", ex);
+               var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + Win32Errors.ERROR_INVALID_PARAMETER + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1012,7 +1012,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Win32Exception win32Error = new Win32Exception("", ex);
+               var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1045,7 +1045,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Win32Exception win32Error = new Win32Exception("", ex);
+               var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + Win32Errors.ERROR_FILE_READ_ONLY + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1085,7 +1085,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Win32Exception win32Error = new Win32Exception("", ex);
+               var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + Win32Errors.ERROR_FILE_READ_ONLY + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1428,12 +1428,11 @@ namespace AlphaFS.UnitTest
             string nonExistingPath = letter + folderSource;
             if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
 
-            Directory.EnumerateDirectories(nonExistingPath).Any();
+            new DirectoryInfo(nonExistingPath).EnumerateDirectories().Any();
          }
          catch (Exception ex)
          {
-            // win32Error is always 0
-            Win32Exception win32Error = new Win32Exception("", ex);
+            var win32Error = new Win32Exception("", ex);
             Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1471,9 +1470,51 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               // win32Error is always 0
-               //Win32Exception win32Error = new Win32Exception("", ex);
-               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               var win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
+
+         #endregion // IOException
+
+         #region UnauthorizedAccessException
+
+         tempPath = Path.Combine(SysRoot, "CSC");
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         var di = new DirectoryInfo(tempPath);
+         if (di.Exists)
+         {
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               di.EnumerateDirectories().Any();
+            }
+            catch (Exception ex)
+            {
+               var win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
@@ -1488,25 +1529,18 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
          }
-         finally
-         {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
 
-         #endregion // IOException
+         #endregion // UnauthorizedAccessException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         DirectoryInfo di = new DirectoryInfo(path);
-
-         Console.WriteLine("Input Directory Path: [{0}]\n", path);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate directories, using \"SearchOption.{0}\"\n", searchOption);
-         
+
+         di = new DirectoryInfo(path);
          StopWatcher(true);
-         foreach (string file in Directory.EnumerateDirectories(path, searchPattern, searchOption))
-            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, file);
+         foreach (DirectoryInfo dirInfo in di.EnumerateDirectories(searchPattern, searchOption))
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, dirInfo.FullName);
 
          Console.WriteLine();
          Console.WriteLine(Reporter());
@@ -1594,12 +1628,12 @@ namespace AlphaFS.UnitTest
             string nonExistingPath = letter + folderSource;
             if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
 
-            Directory.EnumerateFiles(nonExistingPath).Any();
+            new DirectoryInfo(nonExistingPath).EnumerateFiles().Any();
          }
          catch (Exception ex)
          {
             // win32Error is always 0
-            Win32Exception win32Error = new Win32Exception("", ex);
+            var win32Error = new Win32Exception("", ex);
             Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1638,8 +1672,50 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // win32Error is always 0
-               //Win32Exception win32Error = new Win32Exception("", ex);
+               //var win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
+
+         #endregion // IOException
+
+         #region UnauthorizedAccessException
+
+         tempPath = Path.Combine(SysRoot, "CSC");
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         if (Directory.Exists(tempPath))
+         {
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               new DirectoryInfo(tempPath).EnumerateFiles().Any();
+            }
+            catch (Exception ex)
+            {
+               var win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
@@ -1654,23 +1730,17 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
          }
-         finally
-         {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
 
-         #endregion // IOException
+         #endregion // UnauthorizedAccessException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("Input Directory Path: [{0}]\n", path);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate files, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
-         foreach (string file in Directory.EnumerateFiles(path, searchPattern, searchOption))
-            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, file);
+         foreach (FileInfo fileInfo in new DirectoryInfo(path).EnumerateFiles(searchPattern, searchOption))
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, fileInfo.FullName);
 
          Console.WriteLine();
          Console.WriteLine(Reporter());
@@ -1716,12 +1786,11 @@ namespace AlphaFS.UnitTest
             string nonExistingPath = letter + folderSource;
             if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
 
-            Directory.EnumerateFileSystemEntries(nonExistingPath).Any();
+            new DirectoryInfo(nonExistingPath).EnumerateFileSystemInfos().Any();
          }
          catch (Exception ex)
          {
-            // win32Error is always 0
-            Win32Exception win32Error = new Win32Exception("", ex);
+            var win32Error = new Win32Exception("", ex);
             Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1760,8 +1829,51 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // win32Error is always 0
-               //Win32Exception win32Error = new Win32Exception("", ex);
+               //var win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
+
+         #endregion // IOException
+
+         #region UnauthorizedAccessException
+
+         tempPath = Path.Combine(SysRoot, "CSC");
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         var di = new DirectoryInfo(tempPath);
+         if (di.Exists)
+         {
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               di.EnumerateFileSystemInfos().Any();
+            }
+            catch (Exception ex)
+            {
+               var win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
@@ -1776,23 +1888,17 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
          }
-         finally
-         {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
 
-         #endregion // IOException
+         #endregion // UnauthorizedAccessException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("Input Directory Path: [{0}]\n", path);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate file system entries, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
-         foreach (string file in Directory.EnumerateFileSystemEntries(path, searchPattern, searchOption))
-            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, file);
+         foreach (FileSystemInfo fsi in new DirectoryInfo(path).EnumerateFileSystemInfos(searchPattern, searchOption))
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, fsi.FullName);
 
          Console.WriteLine();
          Console.WriteLine(Reporter());
@@ -1843,7 +1949,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             // win32Error is always 0
-            Win32Exception win32Error = new Win32Exception("", ex);
+            var win32Error = new Win32Exception("", ex);
             Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -1877,13 +1983,55 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
 
-               new DirectoryInfo(tempPath).EnumerateFileSystemInfos().Any();
+               Directory.EnumerateFileSystemEntryInfos(tempPath).Any();
             }
             catch (Exception ex)
             {
                // win32Error is always 0
-               //Win32Exception win32Error = new Win32Exception("", ex);
+               //var win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
+
+         #endregion // IOException
+
+         #region UnauthorizedAccessException
+
+         tempPath = Path.Combine(SysRoot, "CSC");
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         if (Directory.Exists(tempPath))
+         {
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               Directory.EnumerateFileSystemEntryInfos(tempPath).Any();
+            }
+            catch (Exception ex)
+            {
+               var win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
@@ -1898,25 +2046,19 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
          }
-         finally
-         {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
 
-         #endregion // IOException
+         #endregion // UnauthorizedAccessException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("Input Directory Path: [{0}]\n", path);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate file system entries, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
          foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(path, searchPattern, searchOption))
          {
             Console.WriteLine("\t#{0:000}\t[{1}]    [{2}]", ++cnt, fsei.IsDirectory ? "Directory" : "File", fsei.FullPath);
-            Assert.IsTrue(fsei.LongFullPath != null && fsei.LongFullPath.Length > 0);
+            Assert.IsTrue(!Utils.IsNullOrWhiteSpace(fsei.LongFullPath));
          }
 
          Console.WriteLine();
@@ -2036,7 +2178,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             // win32Error is always 0
-            Win32Exception win32Error = new Win32Exception("", ex);
+            var win32Error = new Win32Exception("", ex);
             Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -2070,13 +2212,55 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
 
-               new DirectoryInfo(tempPath).GetDirectories();
+               Directory.GetDirectories(tempPath);
             }
             catch (Exception ex)
             {
                // win32Error is always 0
-               //Win32Exception win32Error = new Win32Exception("", ex);
+               //var win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
+
+         #endregion // IOException
+
+         #region UnauthorizedAccessException
+
+         tempPath = Path.Combine(SysRoot, "CSC");
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         if (Directory.Exists(tempPath))
+         {
+            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               Directory.GetDirectories(tempPath).Any();
+            }
+            catch (Exception ex)
+            {
+               var win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
@@ -2091,18 +2275,12 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
          }
-         finally
-         {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
 
-         #endregion // IOException
+         #endregion // UnauthorizedAccessException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("Input Directory Path: [{0}]\n", path);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet directories, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
@@ -2190,7 +2368,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             // win32Error is always 0
-            Win32Exception win32Error = new Win32Exception("", ex);
+            var win32Error = new Win32Exception("", ex);
             Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -2224,13 +2402,54 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
 
-               new DirectoryInfo(tempPath).GetFiles();
+               Directory.GetFiles(tempPath);
             }
             catch (Exception ex)
             {
-               // win32Error is always 0
-               //Win32Exception win32Error = new Win32Exception("", ex);
-               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               var win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
+
+         #endregion // IOException
+
+         #region UnauthorizedAccessException
+
+         tempPath = Path.Combine(SysRoot, "CSC");
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         if (Directory.Exists(tempPath))
+         {
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               Directory.GetFiles(tempPath).Any();
+            }
+            catch (Exception ex)
+            {
+               var win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
@@ -2245,18 +2464,12 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
          }
-         finally
-         {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
 
-         #endregion // IOException
+         #endregion // UnauthorizedAccessException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
          
-         Console.WriteLine("Input Directory Path: [{0}]\n", path);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet files, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
@@ -2439,7 +2652,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             // win32Error is always 0
-            Win32Exception win32Error = new Win32Exception("", ex);
+            var win32Error = new Win32Exception("", ex);
             Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -2473,13 +2686,55 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
 
-               new DirectoryInfo(tempPath).GetFileSystemInfos();
+               Directory.GetFileSystemEntries(tempPath).Any();
             }
             catch (Exception ex)
             {
                // win32Error is always 0
-               //Win32Exception win32Error = new Win32Exception("", ex);
+               //var win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         }
+         finally
+         {
+            File.Delete(tempPath);
+            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+            Console.WriteLine();
+         }
+
+         #endregion // IOException
+
+         #region UnauthorizedAccessException
+
+         tempPath = Path.Combine(SysRoot, "CSC");
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         if (Directory.Exists(tempPath))
+         {
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               Directory.GetFileSystemEntries(tempPath).Any();
+            }
+            catch (Exception ex)
+            {
+               var win32Error = new Win32Exception("", ex);
+               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
@@ -2494,18 +2749,12 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
          }
-         finally
-         {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
 
-         #endregion // IOException
+         #endregion // UnauthorizedAccessException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
 
-         Console.WriteLine("Input Directory Path: [{0}]\n", path);
+         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet FileSystemEntries, using \"SearchOption.{0}\"\n", searchOption);
 
          StopWatcher(true);
@@ -2609,7 +2858,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Win32Exception win32Error = new Win32Exception("", ex);
+               var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
                string exceptionTypeName = ex.GetType().FullName;
@@ -2639,7 +2888,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // win32Error is always 0
-               //Win32Exception win32Error = new Win32Exception("", ex);
+               //var win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
@@ -2670,7 +2919,7 @@ namespace AlphaFS.UnitTest
             catch (Exception ex)
             {
                // win32Error is always 0
-               //Win32Exception win32Error = new Win32Exception("", ex);
+               //var win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 

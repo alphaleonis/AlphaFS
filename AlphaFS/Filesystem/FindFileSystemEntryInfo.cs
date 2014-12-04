@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   case Win32Errors.ERROR_FILE_NOT_FOUND:
                   case Win32Errors.ERROR_PATH_NOT_FOUND:
-                     // MSDN: .NET 3.5+: DirectoryNotFoundException: path is invalid, such as referring to an unmapped drive.
+                     // MSDN: .NET 3.5+: DirectoryNotFoundException: Path is invalid, such as referring to an unmapped drive.
                      if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
                         lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
                      NativeError.ThrowException(lastError, path);
@@ -73,6 +73,11 @@ namespace Alphaleonis.Win32.Filesystem
                   case Win32Errors.ERROR_DIRECTORY:
                      // MSDN: .NET 3.5+: IOException: path is a file name.
                      NativeError.ThrowException(lastError, path, true);
+                     break;
+
+                  case Win32Errors.ERROR_ACCESS_DENIED:
+                     // MSDN: .NET 3.5+: UnauthorizedAccessException: The caller does not have the required permission.
+                     NativeError.ThrowException(lastError, path);
                      break;
                }
 
@@ -135,23 +140,16 @@ namespace Alphaleonis.Win32.Filesystem
                         string fullPathLp = path + fileName;
                         bool fseiIsDir = (win32FindData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory;
 
+                        // Or not: Skip on reparse points here to cleanly separate regular directories from links.
+                        if (SkipReparsePoints &&
+                            (win32FindData.FileAttributes & FileAttributes.ReparsePoint) == FileAttributes.ReparsePoint)
+                           continue;
+
                         // If object is a directory, add it to the queue for later traversal.
                         if (fseiIsDir && _searchAllDirs)
-                        {
-                           // Or not: Skip on reparse points here to cleanly separate regular directories from links.
-                           if ((win32FindData.FileAttributes & FileAttributes.ReparsePoint) ==  FileAttributes.ReparsePoint)
-                           {
-                              if (SkipReparsePoints)
-                              {
-                                 //Debug.WriteLine("Skipped ReparsePoint: [" + (path + win32FindData.FileName) + "]");
-                                 break;
-                              }
-                           }
-
                            dirs.Enqueue(fullPathLp);
-                        }
 
-                        
+
                         if (!(_nameFilter == null || (_nameFilter != null && _nameFilter.IsMatch(fileName))))
                            break;
 

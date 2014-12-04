@@ -305,6 +305,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves information about the amount of space that is available on a disk volume, which is the total amount of space, the total amount of free space, and the total amount of free space available to the user that is associated with the calling thread.</summary>
       /// <param name="drivePath">A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</param>
+      /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
+      /// <remarks>The calling application must have FILE_LIST_DIRECTORY access rights for this directory.</remarks>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SecurityCritical]
+      public static DiskSpaceInfo GetDiskFreeSpace(string drivePath)
+      {
+         return new DiskSpaceInfo(drivePath, null, true, true);
+      }
+
+      /// <summary>Retrieves information about the amount of space that is available on a disk volume, which is the total amount of space, the total amount of free space, and the total amount of free space available to the user that is associated with the calling thread.</summary>
+      /// <param name="drivePath">A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</param>
       /// <param name="spaceInfoType"><c>null</c> gets both size- and disk cluster information. <c>true</c> Get only disk cluster information, <c>false</c> Get only size information.</param>
       /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
       /// <remarks>The calling application must have FILE_LIST_DIRECTORY access rights for this directory.</remarks>

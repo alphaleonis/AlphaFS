@@ -461,7 +461,7 @@ namespace Alphaleonis.Win32.Filesystem
       private string _longFullName;
 
       /// <summary>The full path of the file system object in Unicode (LongPath) format.</summary>
-      public string LongFullName
+      internal string LongFullName
       {
          get { return _longFullName; }
 

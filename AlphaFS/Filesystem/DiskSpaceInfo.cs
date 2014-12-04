@@ -52,7 +52,10 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(DriveName))
             throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")");
 
-         // If an exception is thrown, the original drivePath is used.
+         // MSDN:
+         // If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").
+         // Furthermore, a drive specification must have a trailing backslash (for example, "C:\").
+         // The calling application must have FILE_LIST_DIRECTORY access rights for this directory.
          DriveName = Path.AddDirectorySeparator(DriveName, false);
       }
 
@@ -62,8 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="refresh">Refreshes the state of the object.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      public DiskSpaceInfo(string drivePath, bool? spaceInfoType, bool refresh, bool continueOnException)
-         : this(drivePath)
+      public DiskSpaceInfo(string drivePath, bool? spaceInfoType, bool refresh, bool continueOnException) : this(drivePath)
       {
          if (spaceInfoType == null)
             _initGetSpaceInfo = _initGetClusterInfo = true;
