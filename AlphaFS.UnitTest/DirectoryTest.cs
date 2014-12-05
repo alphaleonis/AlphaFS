@@ -41,6 +41,7 @@ using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
 using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
+using OperatingSystem = Alphaleonis.Win32.OperatingSystem;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
@@ -934,8 +935,12 @@ namespace AlphaFS.UnitTest
 
             if (Directory.Exists(cscPath))
             {
-               expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
-               expectedException = "System.UnauthorizedAccessException";
+               // It seems that under Windows 7 x86 Pro, a different Exception is thrown
+               // compared to Windows 8.1 X64 Enterprise.
+               bool isWin8 = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows8);
+
+               expectedLastError = (int) (isWin8 ? Win32Errors.ERROR_ACCESS_DENIED : Win32Errors.ERROR_SHARING_VIOLATION);
+               expectedException = isWin8 ? "System.UnauthorizedAccessException" : "System.IO.IOException";
                exception = false;
                try
                {
