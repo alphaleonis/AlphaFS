@@ -7539,20 +7539,24 @@ namespace Alphaleonis.Win32.Filesystem
                            // Reset file attributes.
                            SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, null);
                            goto startDeleteFile;
-         }
+                        }
 
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: Path specified a read-only file.
                         throw new UnauthorizedAccessException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}: [{2}]",
                            Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message, pathLp));
-      }
+                     }
                   }
 
-                  if (dataInitialised != Win32Errors.ERROR_SUCCESS)
-                     // Throws IOException.
-                     NativeError.ThrowException(dataInitialised, pathLp, true);
+                  if (dataInitialised == Win32Errors.ERROR_SUCCESS)
+                     // MSDN: .NET 3.5+: UnauthorizedAccessException: The caller does not have the required permission.
+                     NativeError.ThrowException(lastError, pathLp);
 
                   break;
             }
+
+            // MSDN: .NET 3.5+: IOException:
+            // The specified file is in use.
+            // There is an open handle on the file, and the operating system is Windows XP or earlier.
 
             // Throws IOException.
             NativeError.ThrowException(lastError, pathLp, true);

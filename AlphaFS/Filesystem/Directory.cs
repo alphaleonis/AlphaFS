@@ -8276,9 +8276,9 @@ namespace Alphaleonis.Win32.Filesystem
                      }
                   }
 
-                  if (dataInitialised != Win32Errors.ERROR_SUCCESS)
-                     // Throws IOException.
-                     NativeError.ThrowException(dataInitialised, pathLp, true);
+                  if (dataInitialised == Win32Errors.ERROR_SUCCESS)
+                     // MSDN: .NET 3.5+: UnauthorizedAccessException: The caller does not have the required permission.
+                     NativeError.ThrowException(lastError, pathLp);
 
                   break;
             }
