@@ -1546,7 +1546,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
 
-               di.EnumerateDirectories().Any();
+               di.EnumerateDirectories(searchPattern, SearchOption.AllDirectories).All(o => o.Exists);
             }
             catch (Exception ex)
             {
@@ -1738,7 +1738,8 @@ namespace AlphaFS.UnitTest
          tempPath = Path.Combine(SysRoot, "CSC");
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         if (Directory.Exists(tempPath))
+         var di = new DirectoryInfo(tempPath);
+         if (di.Exists)
          {
             expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
@@ -1747,7 +1748,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
 
-               new DirectoryInfo(tempPath).EnumerateFiles().Any();
+               di.EnumerateFiles(searchPattern, SearchOption.AllDirectories).All(o => o.Exists);
             }
             catch (Exception ex)
             {
@@ -1905,7 +1906,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
 
-               di.EnumerateFileSystemInfos().Any();
+               di.EnumerateFileSystemInfos(searchPattern, SearchOption.AllDirectories).All(o => o.Exists);
             }
             catch (Exception ex)
             {
@@ -2054,7 +2055,8 @@ namespace AlphaFS.UnitTest
          tempPath = Path.Combine(SysRoot, "CSC");
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         if (Directory.Exists(tempPath))
+         var di = new DirectoryInfo(tempPath);
+         if (di.Exists)
          {
             expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
@@ -2063,7 +2065,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
 
-               Directory.EnumerateFileSystemEntryInfos(tempPath).Any();
+               di.EnumerateFileSystemInfos(searchPattern, SearchOption.AllDirectories).All(o => o.Exists);
             }
             catch (Exception ex)
             {
@@ -2292,7 +2294,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
 
-               Directory.GetDirectories(tempPath).Any();
+               Directory.GetDirectories(tempPath, searchPattern, SearchOption.AllDirectories).Any();
             }
             catch (Exception ex)
             {
@@ -2481,7 +2483,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
 
-               Directory.GetFiles(tempPath).Any();
+               Directory.GetFiles(tempPath, searchPattern, SearchOption.AllDirectories).Any();
             }
             catch (Exception ex)
             {
@@ -2766,7 +2768,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
 
-               Directory.GetFileSystemEntries(tempPath).Any();
+               Directory.GetFileSystemEntries(tempPath, searchPattern, SearchOption.AllDirectories).Any();
             }
             catch (Exception ex)
             {
