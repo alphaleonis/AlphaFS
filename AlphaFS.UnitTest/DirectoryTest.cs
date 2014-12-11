@@ -1582,7 +1582,12 @@ namespace AlphaFS.UnitTest
          di = new DirectoryInfo(path);
          StopWatcher(true);
          foreach (DirectoryInfo dirInfo in di.EnumerateDirectories(searchPattern, searchOption))
+         {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, dirInfo.FullName);
+            
+            // Issue #21601: OverflowException when accessing EntryInfo.
+            var isMountPoint = dirInfo.EntryInfo.IsMountPoint;
+         }
 
          Console.WriteLine();
          Console.WriteLine(Reporter());
@@ -1783,7 +1788,12 @@ namespace AlphaFS.UnitTest
 
          StopWatcher(true);
          foreach (FileInfo fileInfo in new DirectoryInfo(path).EnumerateFiles(searchPattern, searchOption))
+         {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, fileInfo.FullName);
+
+            // Issue #21601: OverflowException when accessing EntryInfo.
+            var isMountPoint = fileInfo.EntryInfo.IsMountPoint;
+         }
 
          Console.WriteLine();
          Console.WriteLine(Reporter());
@@ -1941,7 +1951,13 @@ namespace AlphaFS.UnitTest
 
          StopWatcher(true);
          foreach (FileSystemInfo fsi in new DirectoryInfo(path).EnumerateFileSystemInfos(searchPattern, searchOption))
+         {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, fsi.FullName);
+
+            // Issue #21601: OverflowException when accessing EntryInfo.
+            // (Actually only for DirectoryInfo() and FileInfo())
+            var isMountPoint = fsi.EntryInfo.IsMountPoint;
+         }
 
          Console.WriteLine();
          Console.WriteLine(Reporter());

@@ -7815,13 +7815,13 @@ namespace Alphaleonis.Win32.Filesystem
          #region Try Again
 
          // Someone has a handle to the file open, or other error.
-         if (tryagain) 
-            {
+         if (tryagain)
+         {
             NativeMethods.Win32FindData findData;
 
             // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
-               {
+            {
                bool error = false;
 
                SafeFindFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -7869,13 +7869,13 @@ namespace Alphaleonis.Win32.Filesystem
                      // If we're already returning an error, don't throw another one.
                      if (!error)
                         NativeError.ThrowException(dataInitialised, pathLp, true);
+                  }
                }
             }
-         }
 
             // Copy the attribute information.
-            win32AttrData = new NativeMethods.Win32FileAttributeData(findData.FileAttributes, findData.CreationTime, findData.LastAccessTime, findData.LastWriteTime, findData.FileSizeHigh, findData.FileSizeLow);
-      }
+            win32AttrData = new NativeMethods.Win32FileAttributeData(findData);
+         }
 
          #endregion // Try Again
 
@@ -7892,7 +7892,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   ? NativeMethods.GetFileAttributesEx(pathLp, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out win32AttrData)
                   : NativeMethods.GetFileAttributesTransacted(pathLp, NativeMethods.GetFileExInfoLevels.GetFileExInfoStandard, out win32AttrData, transaction.SafeHandle)))
-      {
+               {
                   dataInitialised = Marshal.GetLastWin32Error();
 
                   if (dataInitialised != Win32Errors.ERROR_FILE_NOT_FOUND &&

@@ -36,24 +36,14 @@ namespace Alphaleonis.Win32.Filesystem
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct Win32FileAttributeData
       {
-         public Win32FileAttributeData(FileAttributes fileAttributes)
+         public Win32FileAttributeData(Win32FindData findData)
          {
-            FileAttributes = fileAttributes;
-            CreationTime = new FileTime();
-            LastAccessTime = new FileTime();
-            LastWriteTime = new FileTime();
-            FileSizeHigh = 0;
-            FileSizeLow = 0;
-         }
-
-         public Win32FileAttributeData(FileAttributes fileAttributes, FileTime creationTime, FileTime lastAccessTime, FileTime lastWriteTime, uint fileSizeHigh, uint fileSizeLow)
-         {
-            FileAttributes = fileAttributes;
-            CreationTime = creationTime;
-            LastAccessTime = lastAccessTime;
-            LastWriteTime = lastWriteTime;
-            FileSizeHigh = fileSizeHigh;
-            FileSizeLow = fileSizeLow;            
+            FileAttributes = findData.FileAttributes;
+            CreationTime = findData.CreationTime;
+            LastAccessTime = findData.LastAccessTime;
+            LastWriteTime = findData.LastWriteTime;
+            FileSizeHigh = findData.FileSizeHigh;
+            FileSizeLow = findData.FileSizeLow;
          }
          
          #region FileAttributes

@@ -170,7 +170,7 @@ namespace Alphaleonis.Win32.Filesystem
          else
          {
             DataInitialised = 0;
-            Win32AttributeData = new NativeMethods.Win32FileAttributeData(_entryInfo.Win32FindData.FileAttributes, _entryInfo.Win32FindData.CreationTime, _entryInfo.Win32FindData.LastAccessTime, _entryInfo.Win32FindData.LastWriteTime, _entryInfo.Win32FindData.FileSizeHigh, _entryInfo.Win32FindData.FileSizeLow);
+            Win32AttributeData = new NativeMethods.Win32FileAttributeData(_entryInfo.Win32FindData);
          }
       }
 
@@ -615,6 +615,11 @@ namespace Alphaleonis.Win32.Filesystem
          internal set
          {
             _entryInfo = value;
+
+            DataInitialised = value == null ? -1 : 0;
+
+            if (DataInitialised == 0)
+               Win32AttributeData = new NativeMethods.Win32FileAttributeData(_entryInfo.Win32FindData);
          }
       }
 

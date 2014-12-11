@@ -908,50 +908,9 @@ namespace Alphaleonis.Win32.Filesystem
       public void MoveTo(string destinationPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, null, MoveOptions.None, null, null, out destinationPathLp, false);
+         CopyToMoveToInternal(destinationPath, null, MoveOptions.None, null, null, out destinationPathLp, true);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
       }
-
-      #region AlphaFS
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Moves a <see cref="T:DirectoryInfo"/> instance and its contents to a new path.
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
-      /// <para>This method does not work across disk volumes.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="destinationPath">
-      /// <para>The name and path to which to move this directory.</para>
-      /// <para>The destination cannot be another disk volume or a directory with the identical name.</para>
-      /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
-      /// </param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      [SecurityCritical]
-      public void MoveTo(string destinationPath, bool? isFullPath)
-      {
-         string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, null, MoveOptions.None, null, null, out destinationPathLp, isFullPath);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
-      }
-
-      #endregion // IsFullPath
-
-      #endregion // AlphaFS
 
       #endregion // MoveTo
 
@@ -2042,7 +2001,8 @@ namespace Alphaleonis.Win32.Filesystem
                if (DataInitialised == -1)
                   Refresh();
 
-               return DataInitialised == 0 && (Win32AttributeData.FileAttributes != (FileAttributes)(-1) && (Win32AttributeData.FileAttributes & FileAttributes.Directory) != 0);
+               FileAttributes attrs = Win32AttributeData.FileAttributes;
+               return DataInitialised == 0 && (attrs != (FileAttributes) (-1) && (attrs & FileAttributes.Directory) != 0);
             }
             catch
             {

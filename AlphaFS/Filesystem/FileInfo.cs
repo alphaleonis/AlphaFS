@@ -418,51 +418,11 @@ namespace Alphaleonis.Win32.Filesystem
       public void MoveTo(string destinationPathFileName)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPathFileName, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, false);
+         CopyToMoveToInternal(destinationPathFileName, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, true);
          CopyToMoveToInternalRefresh(destinationPathFileName, destinationPathLp);
       }
 
       #endregion // .NET
-
-      #region AlphaFS
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing file by default.</para>
-      /// <para>This method works across disk volumes.</para>
-      /// <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="destinationPathFileName">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPathFileName"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPathFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPathFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      [SecurityCritical]
-      public void MoveTo(string destinationPathFileName, bool? isFullPath)
-      {
-         string destinationPathLp;
-         CopyToMoveToInternal(destinationPathFileName, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, isFullPath);
-         CopyToMoveToInternalRefresh(destinationPathFileName, destinationPathLp);
-      }
-
-      #endregion // IsFullPath
-      
-      #endregion // AlphaFS
 
       #endregion // MoveTo
 
@@ -1553,7 +1513,7 @@ namespace Alphaleonis.Win32.Filesystem
          longFullPath = destinationPathLp;
 
          // Returns false when CopyMoveProgressResult is PROGRESS_CANCEL or PROGRESS_STOP.
-         return File.CopyMoveInternal(false, Transaction, LongFullName, destinationPathLp, preserveDates, copyOptions, moveOptions, progressHandler, userProgressData, isFullPath);
+         return File.CopyMoveInternal(false, Transaction, LongFullName, destinationPathLp, preserveDates, copyOptions, moveOptions, progressHandler, userProgressData, null);
       }
 
       private void CopyToMoveToInternalRefresh(string destinationPath, string destinationPathLp)
@@ -1713,13 +1673,15 @@ namespace Alphaleonis.Win32.Filesystem
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName, true);
-            
+
+            FileAttributes attrs = Win32AttributeData.FileAttributes;
+
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
-            if (Win32AttributeData.FileAttributes == (FileAttributes) (-1))
+            if (attrs == (FileAttributes) (-1))
                NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, LongFullName);
 
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
-            if ((Win32AttributeData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
+            if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
                NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, LongFullName));
 
             return Win32AttributeData.FileSize;

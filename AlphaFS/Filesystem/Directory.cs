@@ -8644,20 +8644,19 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                         // true = return instance of type: DirectoryInfo.
                      case true:
-                        yield return
-                           (T) (object) new DirectoryInfo(transaction, fsei.LongFullPath, true) {EntryInfo = fsei};
+                        yield return (T) (object) new DirectoryInfo(transaction, fsei.LongFullPath, null) {EntryInfo = fsei};
                         break;
 
                         // false = return instance of type: FileInfo.
                      case false:
-                        yield return (T) (object) new FileInfo(transaction, fsei.LongFullPath, true) {EntryInfo = fsei};
+                        yield return (T) (object) new FileInfo(transaction, fsei.LongFullPath, null) {EntryInfo = fsei};
                         break;
 
                         // null = return instances of type: DirectoryInfo or FileInfo.
                      default:
                         yield return (T) (object) (fsei.IsDirectory
-                           ? (FileSystemInfo) new DirectoryInfo(transaction, fsei.LongFullPath, true) {EntryInfo = fsei}
-                           : new FileInfo(transaction, fsei.LongFullPath, true) {EntryInfo = fsei});
+                           ? (FileSystemInfo) new DirectoryInfo(transaction, fsei.LongFullPath, null) {EntryInfo = fsei}
+                           : new FileInfo(transaction, fsei.LongFullPath, null) {EntryInfo = fsei});
                         break;
                   }
                }
