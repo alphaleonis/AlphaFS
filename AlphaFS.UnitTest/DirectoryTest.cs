@@ -462,14 +462,78 @@ namespace AlphaFS.UnitTest
          string folderDestination = @"folder-destination-" + random;
 
          string fullPathSource = Path.Combine(tempPath, folderSource, fileSource);
-         string fullPathDestination = Path.Combine(tempPath, folderDestination, fileDestination); 
+         string fullPathDestinationParent = Path.Combine(tempPath, folderDestination);
+         string fullPathDestination = Path.Combine(fullPathDestinationParent, fileDestination);
          if (!isLocal) fullPathSource = Path.LocalToUnc(fullPathSource);
          if (!isLocal) fullPathDestination = Path.LocalToUnc(fullPathDestination);
+
+         DirectoryInfo dirInfoParent = new DirectoryInfo(fullPathDestinationParent);
 
          #endregion // Setup
          
          try
          {
+            #region UnauthorizedAccessException
+
+            DirectoryInfo dirInfo = Directory.CreateDirectory(fullPathSource);
+            Directory.CreateDirectory(fullPathDestinationParent);
+
+            DirectorySecurity dirSecurity;
+
+            string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
+
+            // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
+            // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
+            // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
+            // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
+            // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
+            // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
+
+            FileSystemAccessRule rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
+
+
+            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               // Set DENY for current user.
+               dirSecurity = dirInfoParent.GetAccessControl();
+               dirSecurity.AddAccessRule(rule);
+               dirInfoParent.SetAccessControl(dirSecurity);
+
+               dirInfo.MoveTo(fullPathDestination);
+            }
+            catch (Exception ex)
+            {
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            finally
+            {
+               // Remove DENY for current user.
+               dirSecurity = dirInfoParent.GetAccessControl();
+               dirSecurity.RemoveAccessRule(rule);
+               dirInfoParent.SetAccessControl(dirSecurity, AccessControlSections.Access);
+
+               Directory.Delete(tempPath, true, true);
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+
+            Console.WriteLine();
+
+            #endregion // UnauthorizedAccessException
+
             #region DirectoryNotFoundException (Local) / IOException (Network)
 
             expectedLastError = (int) (isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
@@ -813,7 +877,7 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            if (Directory.Exists(tempPath))
+            if (Directory.Exists(tempPath, true))
             {
                StopWatcher(true);
                Directory.Delete(tempPath, true, true);
@@ -2883,11 +2947,11 @@ namespace AlphaFS.UnitTest
          string report;
 
          string random = Path.GetRandomFileName();
-         string fileSource = @"file-source-" + random + ".exe";
-         string fileDestination = @"file-destination-" + random + ".exe";
+         string fileSource = @"folder2-source-" + random;
+         string fileDestination = @"folder2-destination-" + random;
 
-         string folderSource = @"folder-source-" + random;
-         string folderDestination = @"folder-destination-" + random;
+         string folderSource = @"folder1-source-" + random;
+         string folderDestination = @"folder1-destination-" + random;
 
          string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
          string letter = originalLetter + @"\";
@@ -2896,14 +2960,79 @@ namespace AlphaFS.UnitTest
          if (!isLocal) letter = Path.LocalToUnc(letter);
 
          string fullPathSource = Path.Combine(tempPath, folderSource, fileSource);
-         string fullPathDestination = Path.Combine(tempPath, folderDestination, fileDestination);
+         string fullPathDestinationParent = Path.Combine(tempPath, folderDestination);
+         string fullPathDestination = Path.Combine(fullPathDestinationParent, fileDestination);
          if (!isLocal) fullPathSource = Path.LocalToUnc(fullPathSource);
+         if (!isLocal) fullPathDestinationParent = Path.LocalToUnc(fullPathDestinationParent);
          if (!isLocal) fullPathDestination = Path.LocalToUnc(fullPathDestination);
-         
+
+         DirectoryInfo dirInfoParent = new DirectoryInfo(fullPathDestinationParent);
+
          #endregion // Setup
 
          try
          {
+            #region UnauthorizedAccessException
+
+            DirectoryInfo dirInfo = Directory.CreateDirectory(fullPathSource);
+            Directory.CreateDirectory(fullPathDestinationParent);
+
+            DirectorySecurity dirSecurity;
+
+            string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
+
+            // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
+            // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
+            // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
+            // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
+            // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
+            // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
+
+            FileSystemAccessRule rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
+
+            
+            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.IO.IOException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               // Set DENY for current user.
+               dirSecurity = dirInfoParent.GetAccessControl();
+               dirSecurity.AddAccessRule(rule);
+               dirInfoParent.SetAccessControl(dirSecurity);
+
+               dirInfo.MoveTo(fullPathDestination);
+            }
+            catch (Exception ex)
+            {
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            finally
+            {
+               // Remove DENY for current user.
+               dirSecurity = dirInfoParent.GetAccessControl();
+               dirSecurity.RemoveAccessRule(rule);
+               dirInfoParent.SetAccessControl(dirSecurity, AccessControlSections.Access);
+
+               Directory.Delete(tempPath, true, true);
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+
+            Console.WriteLine();
+
+            #endregion // UnauthorizedAccessException
+
             Volume.DefineDosDevice(originalLetter, Path.GetDirectoryName(tempPathDestination));
 
             #region DirectoryNotFoundException
@@ -3340,6 +3469,8 @@ namespace AlphaFS.UnitTest
 
       private void DumpDirectoryTrailingDotSpace(bool isLocal)
       {
+         #region Setup
+
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? Local : Network);
          const string characterDot = ".";
          const string characterSpace = " ";
@@ -3355,135 +3486,151 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(tempPathDot.EndsWith(characterDot), "Path should have a trailing dot.");
          Assert.IsTrue(tempPathSpace.EndsWith(characterSpace), "Path should have a trailing space.");
 
-         #region Path.GetFullPath(), Path Normalization
+         #endregion // Setup
 
-         string sysIo = System.IO.Path.GetFullPath(tempPathDot);
-         Assert.IsFalse(sysIo.EndsWith(characterDot), "Path should not have a trailing dot.");
+         try
+         {
+            #region Path.GetFullPath(), Path Normalization
 
-         sysIo = System.IO.Path.GetFullPath(tempPathSpace);
-         Assert.IsFalse(sysIo.EndsWith(characterSpace), "Path should not have a trailing space.");
+            string sysIo = System.IO.Path.GetFullPath(tempPathDot);
+            Assert.IsFalse(sysIo.EndsWith(characterDot), "Path should not have a trailing dot.");
 
-
-         string alphaFs = Path.GetFullPath(tempPathDot);
-         Assert.IsFalse(alphaFs.EndsWith(characterDot), "Path should not have a trailing dot.");
-
-         alphaFs = Path.GetFullPath(tempPathSpace);
-         Assert.IsFalse(alphaFs.EndsWith(characterSpace), "Path should not have a trailing space.");
+            sysIo = System.IO.Path.GetFullPath(tempPathSpace);
+            Assert.IsFalse(sysIo.EndsWith(characterSpace), "Path should not have a trailing space.");
 
 
-         Assert.AreEqual(sysIo, alphaFs, "Paths should be the same.");
+            string alphaFs = Path.GetFullPath(tempPathDot);
+            Assert.IsFalse(alphaFs.EndsWith(characterDot), "Path should not have a trailing dot.");
 
-         #endregion // Path.GetFullPath(), Path Normalization
+            alphaFs = Path.GetFullPath(tempPathSpace);
+            Assert.IsFalse(alphaFs.EndsWith(characterSpace), "Path should not have a trailing space.");
 
-         #region Path.GetLongPath(), No Path Normalization
 
-         alphaFs = Path.GetLongPath(tempPathDot);
-         Assert.IsTrue(alphaFs.EndsWith(characterDot), "Path should have a trailing dot.");
+            Assert.AreEqual(sysIo, alphaFs, "Paths should be the same.");
 
-         alphaFs = Path.GetLongPath(tempPathSpace);
-         Assert.IsTrue(alphaFs.EndsWith(characterSpace), "Path should have a trailing space.");
+            #endregion // Path.GetFullPath(), Path Normalization
 
-         Assert.AreNotEqual(alphaFs, sysIo, "Paths should not be the same.");
+            #region Path.GetLongPath(), No Path Normalization
 
-         #endregion // Path.GetLongPath(), No Path Normalization
+            alphaFs = Path.GetLongPath(tempPathDot);
+            Assert.IsTrue(alphaFs.EndsWith(characterDot), "Path should have a trailing dot.");
 
-         #region Path.GetRegularPath(), No Path Normalization
+            alphaFs = Path.GetLongPath(tempPathSpace);
+            Assert.IsTrue(alphaFs.EndsWith(characterSpace), "Path should have a trailing space.");
 
-         alphaFs = Path.GetRegularPath(tempPathDot);
-         Assert.IsTrue(alphaFs.EndsWith(characterDot), "Path should have a trailing dot.");
+            Assert.AreNotEqual(alphaFs, sysIo, "Paths should not be the same.");
 
-         alphaFs = Path.GetRegularPath(tempPathSpace);
-         Assert.IsTrue(alphaFs.EndsWith(characterSpace), "Path should have a trailing space.");
+            #endregion // Path.GetLongPath(), No Path Normalization
 
-         Assert.AreNotEqual(alphaFs, sysIo, "Paths should not be the same.");
+            #region Path.GetRegularPath(), No Path Normalization
 
-         #endregion // Path.GetRegularPath(), No Path Normalization
+            alphaFs = Path.GetRegularPath(tempPathDot);
+            Assert.IsTrue(alphaFs.EndsWith(characterDot), "Path should have a trailing dot.");
 
-         Console.WriteLine();
+            alphaFs = Path.GetRegularPath(tempPathSpace);
+            Assert.IsTrue(alphaFs.EndsWith(characterSpace), "Path should have a trailing space.");
 
-         #region Directory() Class
+            Assert.AreNotEqual(alphaFs, sysIo, "Paths should not be the same.");
 
-         StopWatcher(true);
+            #endregion // Path.GetRegularPath(), No Path Normalization
 
-         #region TrailingDot
+            Console.WriteLine();
 
-         #region System.IO
+            #region Directory() Class
 
-         // tempPathDot contains a trailing dot but gets stripped on path normalization.
-         // System.IO handles the directory without the trailing dot. Therefore, the directory exists.
-         // AlphaFS has the same behaviour as .NET for default methods.
+            StopWatcher(true);
 
-         System.IO.DirectoryInfo sysIoDi = System.IO.Directory.CreateDirectory(tempPathDot);
-         Assert.IsFalse(sysIoDi.Name.EndsWith(characterDot), "Path should not have a trailing dot.");
-         Assert.IsTrue(System.IO.Directory.Exists(tempPathDot), "Directory should exist.");
-         Assert.IsTrue(Directory.Exists(tempPathDot), "Directory should exist.");
+            #region TrailingDot
 
-         System.IO.Directory.Delete(tempPathDot);
-         Assert.IsFalse(System.IO.Directory.Exists(tempPathDot), "Directory should not exist.");
+            #region System.IO
 
-         #endregion // System.IO
+            // tempPathDot contains a trailing dot but gets stripped on path normalization.
+            // System.IO handles the directory without the trailing dot. Therefore, the directory exists.
+            // AlphaFS has the same behaviour as .NET for default methods.
 
-         #region AlphaFS
+            System.IO.DirectoryInfo sysIoDi = System.IO.Directory.CreateDirectory(tempPathDot);
+            Assert.IsFalse(sysIoDi.Name.EndsWith(characterDot), "Path should not have a trailing dot.");
+            Assert.IsTrue(System.IO.Directory.Exists(tempPathDot), "Directory should exist.");
+            Assert.IsTrue(Directory.Exists(tempPathDot), "Directory should exist.");
 
-         DirectoryInfo alphaFsDi = Directory.CreateDirectory(tempPathDot, false, true);
-         Assert.IsTrue(alphaFsDi.Name.EndsWith(characterDot), "Path should have a trailing dot.");
-         Assert.IsFalse(Directory.Exists(tempPathDot), "Directory should not exist.");
-         Assert.IsTrue(Directory.Exists(tempPathDot, true), "Directory should exist.");
+            System.IO.Directory.Delete(tempPathDot);
+            Assert.IsFalse(System.IO.Directory.Exists(tempPathDot), "Directory should not exist.");
 
-         DirectoryInfo alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-dot-" + characterDot, false);
-         Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
+            #endregion // System.IO
 
-         alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-space-" + characterSpace, false);
-         Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
+            #region AlphaFS
 
-         Directory.Delete(tempPathDot, true, true, true);
-         Assert.IsFalse(Directory.Exists(tempPathDot, true), "Directory should not exist.");
+            DirectoryInfo alphaFsDi = Directory.CreateDirectory(tempPathDot, false, true);
+            Assert.IsTrue(alphaFsDi.Name.EndsWith(characterDot), "Path should have a trailing dot.");
+            Assert.IsFalse(Directory.Exists(tempPathDot), "Directory should not exist.");
+            Assert.IsTrue(Directory.Exists(tempPathDot, true), "Directory should exist.");
 
-         #endregion // AlphaFS
+            DirectoryInfo alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-dot-" + characterDot, false);
+            Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
 
-         #endregion // TrailingDot
+            alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-space-" + characterSpace, false);
+            Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
 
-         #region TrailingSpace
+            Directory.Delete(tempPathDot, true, true, true);
+            Assert.IsFalse(Directory.Exists(tempPathDot, true), "Directory should not exist.");
 
-         #region System.IO
+            #endregion // AlphaFS
 
-         // tempPathSpace contains a trailing space but gets stripped on path normalization.
-         // System.IO handles the file without the trailing space. Therefore, the file exists.
-         // AlphaFS has the same behaviour as .NET for default methods.
+            #endregion // TrailingDot
 
-         sysIoDi = System.IO.Directory.CreateDirectory(tempPathSpace);
-         Assert.IsFalse(sysIoDi.Name.EndsWith(characterSpace), "Path should not have a trailing dot.");
-         Assert.IsTrue(System.IO.Directory.Exists(tempPathSpace), "Directory should exist.");
-         Assert.IsTrue(Directory.Exists(tempPathSpace), "Directory should exist.");
+            #region TrailingSpace
 
-         System.IO.Directory.Delete(tempPathSpace);
-         Assert.IsFalse(System.IO.Directory.Exists(tempPathSpace), "Directory should not exist.");
+            #region System.IO
 
-         #endregion // System.IO
+            // tempPathSpace contains a trailing space but gets stripped on path normalization.
+            // System.IO handles the file without the trailing space. Therefore, the file exists.
+            // AlphaFS has the same behaviour as .NET for default methods.
 
-         #region AlphaFS
+            sysIoDi = System.IO.Directory.CreateDirectory(tempPathSpace);
+            Assert.IsFalse(sysIoDi.Name.EndsWith(characterSpace), "Path should not have a trailing dot.");
+            Assert.IsTrue(System.IO.Directory.Exists(tempPathSpace), "Directory should exist.");
+            Assert.IsTrue(Directory.Exists(tempPathSpace), "Directory should exist.");
 
-         alphaFsDi = Directory.CreateDirectory(tempPathSpace, false, true);
-         Assert.IsTrue(alphaFsDi.Name.EndsWith(characterSpace), "Path should have a trailing space.");
-         Assert.IsFalse(Directory.Exists(tempPathSpace), "Directory should exist.");  // Because trailing space is removed.
-         Assert.IsTrue(Directory.Exists(tempPathSpace, true), "Directory should exist.");
+            System.IO.Directory.Delete(tempPathSpace);
+            Assert.IsFalse(System.IO.Directory.Exists(tempPathSpace), "Directory should not exist.");
 
-         alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-space-" + characterSpace, false);
-         Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
+            #endregion // System.IO
 
-         alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-dot-" + characterDot, false);
-         Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
+            #region AlphaFS
 
-         Directory.Delete(tempPathSpace, true, true, true);
-         Assert.IsFalse(Directory.Exists(tempPathSpace, true), "Directory should not exist.");
+            alphaFsDi = Directory.CreateDirectory(tempPathSpace, false, true);
+            Assert.IsTrue(alphaFsDi.Name.EndsWith(characterSpace), "Path should have a trailing space.");
+            Assert.IsFalse(Directory.Exists(tempPathSpace), "Directory should exist.");  // Because trailing space is removed.
+            Assert.IsTrue(Directory.Exists(tempPathSpace, true), "Directory should exist.");
 
-         #endregion // AlphaFS
+            alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-space-" + characterSpace, false);
+            Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
 
-         #endregion // TrailingSpace
+            alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-dot-" + characterDot, false);
+            Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
 
-         Console.WriteLine("\tClass DirectoryInfo()\t{0}", Reporter());
+            Directory.Delete(tempPathSpace, true, true, true);
+            Assert.IsFalse(Directory.Exists(tempPathSpace, true), "Directory should not exist.");
 
-         #endregion // Directory() Class
+            #endregion // AlphaFS
+
+            #endregion // TrailingSpace
+
+            Console.WriteLine("\tClass DirectoryInfo()\t{0}", Reporter());
+
+            #endregion // Directory() Class
+         }
+         finally
+         {
+            if (Directory.Exists(tempPathDot, true))
+               Directory.Delete(tempPathDot, true, true);
+
+            if (Directory.Exists(tempPathSpace, true))
+               Directory.Delete(tempPathSpace, true, true);
+
+            Assert.IsFalse(Directory.Exists(tempPathDot), "Cleanup failed: Directory should have been removed.");
+            Assert.IsFalse(Directory.Exists(tempPathSpace), "Cleanup failed: Directory should have been removed.");
+         }
 
          Console.WriteLine();
       }

@@ -35,6 +35,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
+using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
@@ -408,10 +409,76 @@ namespace AlphaFS.UnitTest
          if (!isLocal) fullPathSource = Path.LocalToUnc(fullPathSource);
          if (!isLocal) fullPathDestination = Path.LocalToUnc(fullPathDestination);
 
+         DirectoryInfo dirInfo = new DirectoryInfo(folderDestination);
+
          #endregion // Setup
 
          try
          {
+            #region UnauthorizedAccessException
+
+            Directory.CreateDirectory(folderSource);
+            Directory.CreateDirectory(folderDestination);
+
+            DirectorySecurity dirSecurity;
+
+            string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
+
+            // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
+            // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
+            // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
+            // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
+            // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
+            // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
+
+            FileSystemAccessRule rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
+
+            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               FileInfo fileInfo = new FileInfo(fullPathSource);
+               using (StreamWriter sw = fileInfo.CreateText())
+                  sw.WriteLine("MoveTo-TestFile");
+
+               // Set DENY for current user.
+               dirSecurity = dirInfo.GetAccessControl();
+               dirSecurity.AddAccessRule(rule);
+               dirInfo.SetAccessControl(dirSecurity);
+
+               fileInfo.CopyTo(fullPathDestination);
+            }
+            catch (Exception ex)
+            {
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            finally
+            {
+               // Remove DENY for current user.
+               dirSecurity = dirInfo.GetAccessControl();
+               dirSecurity.RemoveAccessRule(rule);
+               dirInfo.SetAccessControl(dirSecurity, AccessControlSections.Access);
+
+               Directory.Delete(tempPath, true, true);
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+
+            Console.WriteLine();
+
+            #endregion // UnauthorizedAccessException
+
             #region FileNotFoundException
 
             expectedLastError = (int) Win32Errors.ERROR_FILE_NOT_FOUND;
@@ -1419,10 +1486,78 @@ namespace AlphaFS.UnitTest
          if (!isLocal) fullPathSource = Path.LocalToUnc(fullPathSource);
          if (!isLocal) fullPathDestination = Path.LocalToUnc(fullPathDestination);
 
+         DirectoryInfo dirInfo = new DirectoryInfo(folderDestination);
+
          #endregion // Setup
 
          try
          {
+            #region UnauthorizedAccessException
+
+            Directory.CreateDirectory(folderSource);
+            Directory.CreateDirectory(folderDestination);
+
+            DirectorySecurity dirSecurity;
+
+            string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
+            
+            // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
+            // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
+            // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
+            // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
+            // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
+            // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
+
+            FileSystemAccessRule rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
+
+            
+            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedException = "System.UnauthorizedAccessException";
+            exception = false;
+
+            try
+            {
+               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+
+               FileInfo fileInfo = new FileInfo(fullPathSource);
+               using (StreamWriter sw = fileInfo.CreateText())
+                  sw.WriteLine("MoveTo-TestFile");
+
+               // Set DENY for current user.
+               dirSecurity = dirInfo.GetAccessControl();
+               dirSecurity.AddAccessRule(rule);
+               dirInfo.SetAccessControl(dirSecurity);
+
+               fileInfo.MoveTo(fullPathDestination);
+            }
+            catch (Exception ex)
+            {
+               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
+
+               string exceptionTypeName = ex.GetType().FullName;
+               if (exceptionTypeName.Equals(expectedException))
+               {
+                  exception = true;
+                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               else
+                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            finally
+            {
+               // Remove DENY for current user.
+               dirSecurity = dirInfo.GetAccessControl();
+               dirSecurity.RemoveAccessRule(rule);
+               dirInfo.SetAccessControl(dirSecurity, AccessControlSections.Access);
+
+               Directory.Delete(tempPath, true, true);
+            }
+            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            
+            Console.WriteLine();
+
+            #endregion // UnauthorizedAccessException
+            
             #region FileNotFoundException
 
             expectedLastError = (int) Win32Errors.ERROR_FILE_NOT_FOUND;

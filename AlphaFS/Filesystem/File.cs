@@ -7002,20 +7002,20 @@ namespace Alphaleonis.Win32.Filesystem
          string sourceFileNameLp = isFullPath == null
             ? sourceFileName
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
+               ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
                : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true, false, false, false);
 
          string destFileNameLp = isFullPath == null
             ? destFileName
             : (bool) isFullPath
-            ? Path.GetLongPathInternal(destFileName, false, false, false, false)
+               ? Path.GetLongPathInternal(destFileName, false, false, false, false)
                : Path.GetFullPathInternal(transaction, destFileName, true, false, false, true, false, false, false);
 
 
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
          // Otherwise, the copy/move operation will continue to completion.
          bool cancel = false;
-         
+
          // Determine Copy or Move action.
          bool doCopy = copyOptions != null;
          bool doMove = !doCopy && moveOptions != null;
@@ -7024,8 +7024,8 @@ namespace Alphaleonis.Win32.Filesystem
             throw new NotSupportedException(Resources.UndeterminedCopyMoveAction);
 
          bool overwrite = doCopy
-         ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
-         : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
+            ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
+            : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
 
          bool raiseException = progressHandler == null;
 
@@ -7045,41 +7045,41 @@ namespace Alphaleonis.Win32.Filesystem
          #region Win32 Copy/Move
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
-                  ? doMove
-                        // MoveFileWithProgress() / MoveFileTransacted()
-                        // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                        // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-                        // 2013-04-15: MSDN confirms LongPath usage.
+            ? doMove
+               // MoveFileWithProgress() / MoveFileTransacted()
+               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2013-04-15: MSDN confirms LongPath usage.
 
-                        // CopyFileEx() / CopyFileTransacted()
-                        // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                        // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-                        // 2013-04-15: MSDN confirms LongPath usage.
+               // CopyFileEx() / CopyFileTransacted()
+               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2013-04-15: MSDN confirms LongPath usage.
 
-                       ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
+               ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
                : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
 
-                  : doMove
-                       ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
+            : doMove
+               ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
                : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle)))
          {
             lastError = (uint) Marshal.GetLastWin32Error();
 
             if (lastError == Win32Errors.ERROR_REQUEST_ABORTED)
             {
-            // If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
-            // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
-            // In this case, the partially copied destination file is deleted.
-            //
-            // If lpProgressRoutine returns PROGRESS_STOP due to the user stopping the operation,
-            // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
-            // In this case, the partially copied destination file is left intact.
+               // If lpProgressRoutine returns PROGRESS_CANCEL due to the user canceling the operation,
+               // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
+               // In this case, the partially copied destination file is deleted.
+               //
+               // If lpProgressRoutine returns PROGRESS_STOP due to the user stopping the operation,
+               // CopyFileEx will return zero and GetLastError will return ERROR_REQUEST_ABORTED.
+               // In this case, the partially copied destination file is left intact.
 
                cancel = true;
             }
 
             else if (raiseException)
-            { 
+            {
                #region Win32Errors
 
                switch (lastError)
@@ -7165,7 +7165,7 @@ namespace Alphaleonis.Win32.Filesystem
                                  // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                                  // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
                                  NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, destFileNameLp, true);
-         }
+                              }
 
                               // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                               // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
@@ -7173,9 +7173,10 @@ namespace Alphaleonis.Win32.Filesystem
                                  NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.FileHidden, destFileNameLp), true);
                            }
 
-                           if (dataInitialised != Win32Errors.ERROR_SUCCESS)
-                              // Throws IOException.
-                              NativeError.ThrowException(dataInitialised, destFileNameLp, true);
+
+                           // Observation: .NET 3.5+: For files: UnauthorizedAccessException: The caller does not have the required permission.
+                           // Observation: .NET 3.5+: For directories: IOException: The caller does not have the required permission.
+                           NativeError.ThrowException(lastError, destFileNameLp, isFolder);
                         }
                      }
 
@@ -7202,9 +7203,9 @@ namespace Alphaleonis.Win32.Filesystem
             // Currently preserveDates is only used with files.
             NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
             int dataInitialised = FillAttributeInfoInternal(transaction, sourceFileNameLp, ref data, false, true);
-            
+
             if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1))
-            SetFsoDateTimeInternal(false, transaction, destFileNameLp,
+               SetFsoDateTimeInternal(false, transaction, destFileNameLp,
                   DateTime.FromFileTimeUtc(data.CreationTime), DateTime.FromFileTimeUtc(data.LastAccessTime), DateTime.FromFileTimeUtc(data.LastWriteTime), null);
          }
 
