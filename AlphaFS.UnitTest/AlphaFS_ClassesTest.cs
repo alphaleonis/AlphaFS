@@ -1498,7 +1498,8 @@ namespace AlphaFS.UnitTest
                   DfsInfo dfsInfo = Host.GetDfsInfo(dfsNamespace);
 
                   Console.Write("\nDirectory contents:\tSubdirectories: [{0}]\tFiles: [{1}]\n",
-                     dfsInfo.DirectoryInfo.CountDirectories(true), dfsInfo.DirectoryInfo.CountFiles(true));
+                     dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Folders),
+                     dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Files));
 
                   Dump(dfsInfo, -16);
 

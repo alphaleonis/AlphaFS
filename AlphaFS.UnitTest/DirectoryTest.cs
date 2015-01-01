@@ -358,15 +358,13 @@ namespace AlphaFS.UnitTest
 
 
          // Compress directory recursively.
-         string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.AllDirectories;
          action = false;
          string report = "";
 
          StopWatcher(true);
          try
          {
-            Directory.Compress(tempPath, searchPattern, searchOption);
+            Directory.Compress(tempPath, DirectoryEnumerationOptions.Recursive);
             report = Reporter();
             action = true;
             actual = File.GetAttributes(tempPath);
@@ -382,7 +380,7 @@ namespace AlphaFS.UnitTest
 
          // Check that everything is compressed.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
+         foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Compressed) == FileAttributes.Compressed;
@@ -399,7 +397,7 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            Directory.Decompress(tempPath, searchPattern, searchOption);
+            Directory.Decompress(tempPath, DirectoryEnumerationOptions.Recursive);
             report = Reporter();
             action = true;
             actual = File.GetAttributes(tempPath);
@@ -415,7 +413,7 @@ namespace AlphaFS.UnitTest
 
          // Check that everything is decompressed.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(tempPath, searchPattern, searchOption))
+         foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Compressed) != FileAttributes.Compressed;
@@ -599,7 +597,7 @@ namespace AlphaFS.UnitTest
 
             CreateDirectoriesAndFiles(tempPathSource, 10, true);
 
-            Dictionary<string, long> props = Directory.GetProperties(tempPathSource, SearchOption.AllDirectories);
+            Dictionary<string, long> props = Directory.GetProperties(tempPathSource, DirectoryEnumerationOptions.Recursive);
             long sourceFolder = props["Directory"];
             long sourceFile = props["File"];
             long sourceSize = props["Size"];
@@ -610,8 +608,8 @@ namespace AlphaFS.UnitTest
             StopWatcher(true);
             Directory.Copy1(tempPathSource, tempPathDestination);
             report = Reporter();
-            
-            props = Directory.GetProperties(tempPathDestination, SearchOption.AllDirectories);
+
+            props = Directory.GetProperties(tempPathDestination, DirectoryEnumerationOptions.Recursive);
             long destinationFolder = props["Directory"];
             long destinationFile = props["File"];
             long destinationSize = props["Size"];
@@ -1441,7 +1439,7 @@ namespace AlphaFS.UnitTest
          
          // Verify that everything is encrypted.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(tempPath, Path.WildcardStarMatchAll, SearchOption.AllDirectories))
+         foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
@@ -1479,7 +1477,7 @@ namespace AlphaFS.UnitTest
          
          // Verify that everything is decrypted.
          cnt = 0;
-         foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(tempPath, Path.WildcardStarMatchAll, SearchOption.AllDirectories))
+         foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Encrypted) != FileAttributes.Encrypted;
@@ -1643,14 +1641,35 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate directories, using \"SearchOption.{0}\"\n", searchOption);
 
-         di = new DirectoryInfo(path);
          StopWatcher(true);
-         foreach (DirectoryInfo dirInfo in di.EnumerateDirectories(searchPattern, searchOption))
+         foreach (DirectoryInfo dirInfo in new DirectoryInfo(path).EnumerateDirectories(searchPattern, searchOption))
          {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, dirInfo.FullName);
             
             // Issue #21601: OverflowException when accessing EntryInfo.
             var isMountPoint = dirInfo.EntryInfo.IsMountPoint;
+
+            Assert.IsTrue(dirInfo.EntryInfo.IsDirectory);
+         }
+
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine();
+
+
+         cnt = 0;
+         searchPattern = @"*e*e*";
+         Console.WriteLine("\tsearchPattern: [{0}]\n", searchPattern);
+         StopWatcher(true);
+         foreach (DirectoryInfo dirInfo in new DirectoryInfo(path).EnumerateDirectories(searchPattern, searchOption))
+         {
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, dirInfo.FullName);
+
+            // Issue #21601: OverflowException when accessing EntryInfo.
+            var isMountPoint = dirInfo.EntryInfo.IsMountPoint;
+
+            Assert.IsTrue(dirInfo.EntryInfo.IsDirectory);
          }
 
          Console.WriteLine();
@@ -1672,10 +1691,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
          string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
-         long directories = Directory.CountDirectories(tempPath, searchPattern, searchOption, true, false);
-         long files = Directory.CountFiles(tempPath, searchPattern, searchOption, true, false);
+         long directories = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders);
+         long files = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Files);
          Console.WriteLine("\tDirectories: [{0}], Files: [{1}]", directories, files);
 
          bool foundFse = false;
@@ -1857,6 +1875,28 @@ namespace AlphaFS.UnitTest
 
             // Issue #21601: OverflowException when accessing EntryInfo.
             var isMountPoint = fileInfo.EntryInfo.IsMountPoint;
+
+            Assert.IsFalse(fileInfo.EntryInfo.IsDirectory);
+         }
+
+         Console.WriteLine();
+         Console.WriteLine(Reporter());
+         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Console.WriteLine();
+
+
+         cnt = 0;
+         searchPattern = @"*e*.exe";
+         Console.WriteLine("\tsearchPattern: [{0}]\n", searchPattern);
+         StopWatcher(true);
+         foreach (FileInfo fileInfo in new DirectoryInfo(path).EnumerateFiles(searchPattern, searchOption))
+         {
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, fileInfo.FullName);
+
+            // Issue #21601: OverflowException when accessing EntryInfo.
+            var isMountPoint = fileInfo.EntryInfo.IsMountPoint;
+
+            Assert.IsFalse(fileInfo.EntryInfo.IsDirectory);
          }
 
          Console.WriteLine();
@@ -2027,162 +2067,20 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
-      }
 
-      #endregion // DumpEnumerateFileSystemEntries
 
-      #region DumpEnumerateFileSystemEntryInfos
-
-      private void DumpEnumerateFileSystemEntryInfos(bool isLocal)
-      {
-         #region Setup
-
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-
-         int cnt = 0;
-         string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.TopDirectoryOnly;
-
-         bool exception;
-         int expectedLastError;
-         string expectedException;
-
-         string random = Path.GetRandomFileName();
-         string folderSource = @"folder-source-" + random;
-
-         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
-         string letter = originalLetter + @"\";
-
-         #endregion //Setup
-
-         #region DirectoryNotFoundException (Local) / IOException (Network)
-
-         expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
-         expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
-         exception = false;
-         try
-         {
-            Console.WriteLine("\nCatch: [{0}]: Path is invalid, such as referring to an unmapped drive.", expectedException);
-
-            string nonExistingPath = letter + folderSource;
-            if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
-
-            Directory.EnumerateFileSystemEntryInfos(nonExistingPath).Any();
-         }
-         catch (Exception ex)
-         {
-            // win32Error is always 0
-            var win32Error = new Win32Exception("", ex);
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            string exceptionTypeName = ex.GetType().FullName;
-            if (exceptionTypeName.Equals(expectedException))
-            {
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            else
-               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-         Console.WriteLine();
-
-         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
-
-         #region IOException
-
-         string tempPath = Path.GetTempPath("Directory.EnumerateFileSystemEntries-file-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         try
-         {
-            using (File.Create(tempPath)) { }
-
-            expectedLastError = (int) Win32Errors.ERROR_DIRECTORY;
-            expectedException = "System.IO.IOException";
-            exception = false;
-            try
-            {
-               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
-
-               Directory.EnumerateFileSystemEntryInfos(tempPath).Any();
-            }
-            catch (Exception ex)
-            {
-               // win32Error is always 0
-               //var win32Error = new Win32Exception("", ex);
-               //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-         }
-         finally
-         {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
-
-         #endregion // IOException
-
-         #region UnauthorizedAccessException
-
-         tempPath = Path.Combine(SysRoot, "CSC");
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         var di = new DirectoryInfo(tempPath);
-         if (di.Exists)
-         {
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
-            expectedException = "System.UnauthorizedAccessException";
-            exception = false;
-            try
-            {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
-
-               di.EnumerateFileSystemInfos(searchPattern, SearchOption.AllDirectories).All(o => o.Exists);
-            }
-            catch (Exception ex)
-            {
-               var win32Error = new Win32Exception("", ex);
-               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-            Console.WriteLine();
-         }
-
-         #endregion // UnauthorizedAccessException
-
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
-         Console.WriteLine("\tEnumerate file system entries, using \"SearchOption.{0}\"\n", searchOption);
-
+         cnt = 0;
+         searchPattern = @"*e*e*";
+         Console.WriteLine("\tsearchPattern: [{0}]\n", searchPattern);
          StopWatcher(true);
-         foreach (FileSystemEntryInfo fsei in Directory.EnumerateFileSystemEntryInfos(path, searchPattern, searchOption))
+         foreach (FileSystemInfo fsi in new DirectoryInfo(path).EnumerateDirectories(searchPattern, searchOption))
          {
-            Console.WriteLine("\t#{0:000}\t[{1}]    [{2}]", ++cnt, fsei.IsDirectory ? "Directory" : "File", fsei.FullPath);
-            Assert.IsTrue(!Utils.IsNullOrWhiteSpace(fsei.LongFullPath));
+            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, fsi.FullName);
+
+            // Issue #21601: OverflowException when accessing EntryInfo.
+            var isMountPoint = fsi.EntryInfo.IsMountPoint;
+
+            Assert.IsTrue(fsi.EntryInfo.IsDirectory || !fsi.EntryInfo.IsDirectory);
          }
 
          Console.WriteLine();
@@ -2191,7 +2089,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpEnumerateFileSystemEntryInfos
+      #endregion // DumpEnumerateFileSystemEntries
 
       #region DumpExists
 
@@ -2902,10 +2800,8 @@ namespace AlphaFS.UnitTest
          
          Console.WriteLine("\n\tAggregated properties of file system objects from Directory: [{0}]\n", path);
 
-         SearchOption searchOption = SearchOption.AllDirectories;
-
          StopWatcher(true);
-         Dictionary<string, long> props = Directory.GetProperties(path, searchOption, true, false);
+         Dictionary<string, long> props = Directory.GetProperties(path, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
          string report = Reporter();
 
          long total = props["Total"];
@@ -3131,7 +3027,7 @@ namespace AlphaFS.UnitTest
             CreateDirectoriesAndFiles(tempPathSource0, 10, true);
             Directory.Copy1(tempPathSource0, otherDisk);
 
-            Dictionary<string, long> props = Directory.GetProperties(otherDisk, SearchOption.AllDirectories);
+            Dictionary<string, long> props = Directory.GetProperties(otherDisk, DirectoryEnumerationOptions.Recursive);
             long sourceFolder = props["Directory"];
             long sourceFile = props["File"];
             long sourceSize = props["Size"];
@@ -3143,7 +3039,7 @@ namespace AlphaFS.UnitTest
             Directory.Move1(otherDisk, tempPathSource, MoveOptions.CopyAllowed);
             report = Reporter();
 
-            props = Directory.GetProperties(tempPathSource, SearchOption.AllDirectories);
+            props = Directory.GetProperties(tempPathSource, DirectoryEnumerationOptions.Recursive);
             long destinationFolder = props["Directory"];
             long destinationFile = props["File"];
             long destinationSize = props["Size"];
@@ -4194,18 +4090,22 @@ namespace AlphaFS.UnitTest
 
       #endregion // Copy1
 
-      #region CountDirectories
+      #region CountFileSystemObjects
 
       [TestMethod]
-      public void AlphaFS_CountDirectories()
+      public void AlphaFS_CountFileSystemObjects()
       {
-         Console.WriteLine("Directory.CountDirectories()");
+         Console.WriteLine("Directory.CountFileSystemObjects()");
+
+         long fsoCount = 0;
+
+         #region Count Directories
+
+         Console.WriteLine("\nCount Directories");
 
          string path = SysRoot;
-         long dirs = 0;
-
+         
          string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.AllDirectories;
 
          Console.WriteLine("\n\tsearchPattern: \"{0}\", abort on error.", searchPattern);
 
@@ -4214,98 +4114,93 @@ namespace AlphaFS.UnitTest
          bool gotException = false;
          try
          {
-            dirs = Directory.CountDirectories(path, searchPattern, searchOption, false, false);
+            fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive);
          }
          catch (Exception ex)
          {
             gotException = true;
-            Console.WriteLine("\n\tDirectory.CountDirectories(): Caught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tDirectory.CountFileSystemObjects(): Caught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", gotException);
          Assert.IsTrue(gotException);
-         Console.WriteLine("\n\tdirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, dirs, Reporter());
+         Console.WriteLine("\n\tdirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, fsoCount, Reporter());
 
          #endregion // Exception
 
          searchPattern = Path.WildcardStarMatchAll;
-         searchOption = SearchOption.AllDirectories;
 
          Console.WriteLine("\n\tsearchPattern: \"{0}\", continue on error. Running as Administrator will count more directories.", searchPattern);
 
          StopWatcher(true);
-         dirs = Directory.CountDirectories(path, searchPattern, searchOption, true, false);
-         Console.WriteLine("\n\tdirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, dirs, Reporter());
-         Assert.IsTrue(dirs > 0);
+         fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
+         Console.WriteLine("\n\tdirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, fsoCount, Reporter());
+         Assert.IsTrue(fsoCount > 0);
 
 
          Console.WriteLine("\n\tsearchPattern: \"{0}\", continue on error. Running as Administrator and using PrivilegeEnabler(Privilege.Backup) will count even more directories.", searchPattern);
          StopWatcher(true);
          using (new PrivilegeEnabler(Privilege.Backup))
          {
-            dirs = Directory.CountDirectories(path, searchPattern, searchOption, true, false);
-            Console.WriteLine("\n\tDirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, dirs, Reporter());
-            Assert.IsTrue(dirs > 0);
+            fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
+            Console.WriteLine("\n\tDirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, fsoCount, Reporter());
+            Assert.IsTrue(fsoCount > 0);
          }
+         Console.WriteLine();
 
-      }
+         #endregion // Count Directories
 
-      #endregion // CountDirectories
+         #region Count Files
 
-      #region CountFiles
+         Console.WriteLine("Count Files");
 
-      [TestMethod]
-      public void AlphaFS_CountFiles()
-      {
-         Console.WriteLine("Directory.CountFiles()");
+         searchPattern = Path.WildcardStarMatchAll;
 
-         string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.AllDirectories;
-
-         string path = SysRoot32;
-         long files = 0;
-         Console.WriteLine("\n\t{0}, abort on error.", searchOption);
+         path = SysRoot32;
+         fsoCount = 0;
 
          #region Exception
 
-         bool gotException = false;
+         gotException = false;
          try
          {
-            files = Directory.CountFiles(path, searchPattern, searchOption, false, false);
+            fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive);
          }
          catch (Exception ex)
          {
             gotException = true;
-            Console.WriteLine("\n\tDirectory.CountFiles(): Caught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\n\tDirectory.CountFileSystemObjects(): Caught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", gotException);
          Assert.IsTrue(gotException);
-         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, files, Reporter());
+         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, Reporter());
 
          #endregion // Exception
 
          StopWatcher(true);
-         files = Directory.CountFiles(path, searchPattern, searchOption, true, false);
-         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, files, Reporter());
-         Assert.IsTrue(files > 0);
+         fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
+         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, Reporter());
+         Assert.IsTrue(fsoCount > 0);
 
-         Console.WriteLine("\n\t{0}, continue on error. Running as Administrator will count more files.", searchOption);
+         Console.WriteLine("\n\tContinue on error. Running as Administrator will count more files.");
          StopWatcher(true);
-         files = Directory.CountFiles(path, searchPattern, searchOption, true, false);
-         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, files, Reporter());
-         Assert.IsTrue(files > 0);
+         fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
+         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, Reporter());
+         Assert.IsTrue(fsoCount > 0);
 
-         Console.WriteLine("\n\t{0}, continue on error. Running as Administrator and using PrivilegeEnabler(Privilege.Backup) will count even more files.", searchOption);
+         Console.WriteLine("\n\tContinue on error. Running as Administrator and using PrivilegeEnabler(Privilege.Backup) will count even more files.");
          StopWatcher(true);
          using (new PrivilegeEnabler(Privilege.Backup))
          {
-            files = Directory.CountFiles(path, searchPattern, searchOption, true, false);
-            Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, files, Reporter());
-            Assert.IsTrue(files > 0);
+            fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
+            Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, Reporter());
+            Assert.IsTrue(fsoCount > 0);
          }
+         Console.WriteLine();
 
+         #endregion // Count Files
       }
 
-      #endregion // CountFiles
+      #endregion // CountFileSystemObjects
 
       #region DeleteEmpty
 
@@ -4326,12 +4221,11 @@ namespace AlphaFS.UnitTest
          CreateDirectoriesAndFiles(tempPath, maxDepth, true);
 
          string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.AllDirectories;
 
          StopWatcher(true);
-         dirs0 = Directory.CountDirectories(tempPath, searchPattern, searchOption, true, false);
-         files0 = Directory.CountFiles(tempPath, searchPattern, searchOption, true, false);
-         Console.WriteLine("\nCountDirectories(): [{0}]\nCountFiles()      : [{1}]\n{2}", dirs0, files0, Reporter());
+         dirs0 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
+         files0 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
+         Console.WriteLine("\nCounted Directories: [{0}]\nCounted Files      : [{1}]\n{2}", dirs0, files0, Reporter());
 
          StopWatcher(true);
          bool deleteOk = false;
@@ -4352,12 +4246,11 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(deleteOk, "DeleteEmpty() failed.");
          
          searchPattern = Path.WildcardStarMatchAll;
-         searchOption = SearchOption.AllDirectories;
 
          StopWatcher(true);
-         dirs1 = Directory.CountDirectories(tempPath, searchPattern, searchOption, true, false);
-         files1 = Directory.CountFiles(tempPath, searchPattern, searchOption, true, false);
-         Console.WriteLine("\nCountDirectories() (Should be 60): [{0}]\nCountFiles() (Should be 110)     : [{1}]\n{2}", dirs1, files1, Reporter());
+         dirs1 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
+         files1 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
+         Console.WriteLine("\nCounted Directories (Should be 60): [{0}]\nCounted Files (Should be 110)     : [{1}]\n{2}", dirs1, files1, Reporter());
          Assert.IsTrue(dirs1 != dirs0);
          Assert.IsTrue(dirs1 == remainingDirectories);
          Assert.IsTrue(files1 == files0);
@@ -4429,8 +4322,11 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Directory.EnumerateFileSystemEntryInfos()");
 
-         DumpEnumerateFileSystemEntryInfos(true);
-         DumpEnumerateFileSystemEntryInfos(false);
+         Console.WriteLine("\nThis is the main enumeration function for files and folders.\n");
+
+         Console.WriteLine("\nPlease see unit test: EnumerateDirectories()");
+         Console.WriteLine("\nPlease see unit test: EnumerateFiles()");
+         Console.WriteLine("\nPlease see unit test: EnumerateFileSystemEntries()");
       }
 
       #endregion // EnumerateFileSystemEntryInfos

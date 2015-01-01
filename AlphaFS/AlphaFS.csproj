@@ -164,6 +164,7 @@
     <Compile Include="Filesystem\DiskSpaceInfo.cs" />
     <Compile Include="Filesystem\DriveInfo.cs" />
     <Compile Include="Filesystem\Enumerations\CopyMoveProgressResult.cs" />
+    <Compile Include="Filesystem\Enumerations\DirectoryEnumerationOptions.cs" />
     <Compile Include="Filesystem\Enumerations\DeviceGuid.cs" />
     <Compile Include="Filesystem\Enumerations\DiGetClassFlags.cs" />
     <Compile Include="Filesystem\Enumerations\DosDeviceAttributes.cs" />

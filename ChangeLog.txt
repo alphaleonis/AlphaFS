@@ -53,6 +53,7 @@ Version 1.6
 	
 	* Removed classes PathInfoXxx().
 	
+	* Improved upon the correct exceptions thrown, resulting in the removal of Alpha Exception types:
 	* Removed AlreadyExistsException.
 	* Removed DeviceNotReadyException.
 	* Removed DirectoryNotEmptyException.
