@@ -1,5 +1,3 @@
-_Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex_
-
 Version 1.6
 -----------
 * New: The public key of AlphaFS.dll has changed, delay-signing is no longer used.
