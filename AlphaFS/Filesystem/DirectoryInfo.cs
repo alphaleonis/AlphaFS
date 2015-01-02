@@ -1011,12 +1011,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <returns>Returns a new <see cref="T:DirectoryInfo"/> instance if the directory was completely copied.</returns>
       /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
