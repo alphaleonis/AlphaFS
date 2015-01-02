@@ -19,10 +19,13 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.Win32.SafeHandles;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using Microsoft.Win32.SafeHandles;
+#if NET35
+using System.Security.Permissions;
+#endif
 
 namespace Alphaleonis.Win32
 {
@@ -56,6 +59,9 @@ namespace Alphaleonis.Win32
       /// <param name="source">The one-dimensional array to copy from.</param>
       /// <param name="startIndex">The zero-based index into the array where Copy should start.</param>
       /// <param name="length">The number of array elements to copy.</param>
+#if NET35
+      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
+#endif
       public void CopyFrom(byte[] source, int startIndex, int length)
       {
          Marshal.Copy(source, startIndex, handle, length);
@@ -65,16 +71,19 @@ namespace Alphaleonis.Win32
 
       #region CopyTo
 
+#if NET35
+      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
+#endif
       public void CopyTo(byte[] destination, int destinationOffset, int length)
       {
          if (destination == null)
             throw new ArgumentNullException("destination");
 
          if (destinationOffset < 0)
-            throw new ArgumentOutOfRangeException("destinationOffset", Resources.SafeGlobalMemoryBufferHandle_CopyTo_Destination_offset_must_not_be_negative);
+            throw new ArgumentOutOfRangeException("destinationOffset", Resources.SafeMemoryBufferHandle_CopyTo_Destination_offset_must_not_be_negative);
 
          if (length < 0)
-            throw new ArgumentOutOfRangeException("length", Resources.SafeGlobalMemoryBufferHandle_CopyTo_Length_must_not_be_negative_);
+            throw new ArgumentOutOfRangeException("length", Resources.SafeMemoryBufferHandle_CopyTo_Length_must_not_be_negative);
 
          if (destinationOffset + length > destination.Length)
             throw new ArgumentException("Destination buffer not large enough for the requested operation.");
@@ -107,6 +116,9 @@ namespace Alphaleonis.Win32
       #region ReleaseHandle
 
       /// <summary>Called when object is disposed or finalized.</summary>
+#if NET35
+      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
+#endif
       protected override bool ReleaseHandle()
       {
          if (handle != IntPtr.Zero)

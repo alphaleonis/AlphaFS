@@ -28,17 +28,19 @@ using System.Security.Permissions;
 
 namespace Alphaleonis.Win32.Security
 {
-   /// <summary>IntPtr wrapper which can be used as result of Marshal.AllocHGlobal operation. Calls Marshal.FreeHGlobal when disposed or finalized.</summary>
+   /// <summary>An IntPtr wrapper which can be used as the result of a Marshal.AllocHGlobal operation.
+   /// <para>Calls Marshal.FreeHGlobal when disposed or finalized.</para>
+   /// </summary>
    internal sealed class SafeLocalMemoryBufferHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      #region Constructor
+      #region Constructors
 
       /// <summary>Creates new instance with zero IntPtr.</summary>      
       public SafeLocalMemoryBufferHandle() : base(true)
       {
       }
 
-      #endregion // Constructor
+      #endregion // Constructors
 
       #region Methods
 
@@ -48,12 +50,39 @@ namespace Alphaleonis.Win32.Security
       /// <param name="source">The one-dimensional array to copy from.</param>
       /// <param name="startIndex">The zero-based index into the array where Copy should start.</param>
       /// <param name="length">The number of array elements to copy.</param>      
+#if NET35
+      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
+#endif
       public void CopyFrom(byte[] source, int startIndex, int length)
       {
          Marshal.Copy(source, startIndex, handle, length);
       }
 
       #endregion // CopyFrom
+
+      #region CopyTo
+
+#if NET35
+      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
+#endif
+      public void CopyTo(byte[] destination, int destinationOffset, int length)
+      {
+         if (destination == null)
+            throw new ArgumentNullException("destination");
+
+         if (destinationOffset < 0)
+            throw new ArgumentOutOfRangeException("destinationOffset", Resources.SafeMemoryBufferHandle_CopyTo_Destination_offset_must_not_be_negative);
+
+         if (length < 0)
+            throw new ArgumentOutOfRangeException("length", Resources.SafeMemoryBufferHandle_CopyTo_Length_must_not_be_negative);
+
+         if (destinationOffset + length > destination.Length)
+            throw new ArgumentException("Destination buffer not large enough for the requested operation.");
+
+         Marshal.Copy(handle, destination, destinationOffset, length);
+      }
+
+      #endregion // CopyTo
 
       #region ToByteArray
 
@@ -77,7 +106,7 @@ namespace Alphaleonis.Win32.Security
 #endif
       protected override bool ReleaseHandle()
       {
-         return NativeMethods.LocalFree(handle) == IntPtr.Zero;
+         return handle == IntPtr.Zero || NativeMethods.LocalFree(handle) == IntPtr.Zero;
       }
 
       #endregion // ReleaseHandle

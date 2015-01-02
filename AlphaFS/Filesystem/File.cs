@@ -38,7 +38,9 @@ using StreamWriter = System.IO.StreamWriter;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides static methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="T:FileStream"/> objects.</summary>
+   /// <summary>Provides static methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="T:FileStream"/> objects.
+   /// <para>This class cannot be inherited.</para>
+   /// </summary>
    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
    public static class File
    {
@@ -514,35 +516,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>The attributes of the original file are retained in the copied file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
-      [SecurityCritical]
-      public static void Copy(string sourceFileName, string destFileName, bool? isFullPath)
-      {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, isFullPath);
-      }
+      #region .NET
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
       /// <para>&#160;</para>
@@ -575,42 +549,15 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, null, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, isFullPath);
       }
 
+      #endregion // .NET
+
       #endregion // IsFullPath
 
       #region Transacted
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>The attributes of the original file are retained in the copied file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
-      [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool? isFullPath)
-      {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, isFullPath);
-      }
+      #region .NET
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
       /// <para>&#160;</para>
@@ -644,8 +591,12 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, isFullPath);
       }
 
+      #endregion // .NET
+
       #endregion // IsFullPath
-      
+
+      #region .NET
+
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.
       /// <para>&#160;</para>
       /// <remarks>
@@ -698,7 +649,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, false);
       }
-      
+
+      #endregion // .NET
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2030,6 +1983,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
+      #region .NET
+
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
       /// <para>&#160;</para>
       /// <remarks>
@@ -2062,11 +2017,15 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
       }
 
+      #endregion // .NET
+
       #endregion // IsFullPath
 
       #region Transacted
-      
+
       #region IsFullPath
+
+      #region .NET
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
       /// <para>&#160;</para>
@@ -2101,7 +2060,11 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
       }
 
+      #endregion // .NET
+
       #endregion // IsFullPath
+
+      #region .NET
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
       /// <para>&#160;</para>
@@ -2130,6 +2093,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, false);
       }
+
+      #endregion // .NET
 
       #endregion // Transacted
 
@@ -6089,42 +6054,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, null, null, isFullPath);
       }
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="sourceFileName">The name of the file to move.</param>
-      /// <param name="destFileName">The new path for the file.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
-      [SecurityCritical]
-      public static CopyMoveResult Move1(string sourceFileName, string destFileName, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
-      {
-         return CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, progressHandler, userProgressData, isFullPath);
-      }
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> options,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
@@ -6192,37 +6121,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static void Move1(string sourceFileName, string destFileName, MoveOptions moveOptions)
       {
          CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, null, null, false);
-      }
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="sourceFileName">The name of the file to move.</param>
-      /// <param name="destFileName">The new path for the file.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
-      [SecurityCritical]
-      public static CopyMoveResult Move1(string sourceFileName, string destFileName, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         return CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, progressHandler, userProgressData, false);
       }
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> options,
@@ -6295,43 +6193,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, null, null, isFullPath);
       }
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The name of the file to move.</param>
-      /// <param name="destFileName">The new path for the file.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
-      [SecurityCritical]
-      public static CopyMoveResult Move1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
-      {
-         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, progressHandler, userProgressData, isFullPath);
-      }
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> options,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
@@ -6401,38 +6262,6 @@ namespace Alphaleonis.Win32.Filesystem
       public static void Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, null, null, false);
-      }
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The name of the file to move.</param>
-      /// <param name="destFileName">The new path for the file.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
-      [SecurityCritical]
-      public static CopyMoveResult Move1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, progressHandler, userProgressData, false);
       }
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> options,
@@ -6946,17 +6775,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CopyMoveInternal
 
-      /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children,
+      /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
+      /// <para><see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,</para>
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <para>&#160;</para>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>&#160;</para>
+      /// <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
       /// <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
-      /// <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
       /// </remarks>
       /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -7146,7 +6975,7 @@ namespace Alphaleonis.Win32.Filesystem
                         else
                         {
                            NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
-                           int dataInitialised = FillAttributeInfoInternal(transaction, destFileNameLp, ref data, false, true);
+                           FillAttributeInfoInternal(transaction, destFileNameLp, ref data, false, true);
 
                            if (data.FileAttributes != (FileAttributes) (-1))
                            {

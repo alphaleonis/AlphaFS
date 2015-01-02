@@ -34,7 +34,9 @@ using SearchOption = System.IO.SearchOption;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Exposes static methods for creating, moving, and enumerating through directories and subdirectories. This class cannot be inherited.</summary>
+   /// <summary>Exposes static methods for creating, moving, and enumerating through directories and subdirectories.
+   /// <para>This class cannot be inherited.</para>
+   /// </summary>
    public static class Directory
    {
       #region .NET
@@ -82,37 +84,8 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       #region AlphaFS
-      
+
       #region IsFullPath
-
-      #region .NET
-
-      /// <summary>[AlphaFS] Creates all the directories in the specified path as a transacted operation, applying the specified Windows security.
-      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
-      /// <param name="path">The directory to create.</param>
-      /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-      [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity, bool? isFullPath)
-      {
-         return CreateDirectoryInternal(null, path, null, directorySecurity, false, isFullPath);
-      }
-
-      #endregion // .NET
 
       #region Compress
 
@@ -220,13 +193,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsFullPath
 
-      #region Transacted
-
-      #region IsFullPath
+      #region Compress
 
       #region .NET
 
-      /// <summary>[AlphaFS] Creates all the directories in the specified path as a transacted operation, applying the specified Windows security.
+      /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -236,27 +209,135 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory to create.</param>
-      /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool? isFullPath)
+      public static DirectoryInfo CreateDirectory(string path, bool compress)
       {
-         return CreateDirectoryInternal(transaction, path, null, directorySecurity, false, isFullPath);
+         return CreateDirectoryInternal(null, path, null, null, compress, false);
+      }
+
+      /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="directorySecurity">The access control to apply to the directory.</param>
+      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity, bool compress)
+      {
+         return CreateDirectoryInternal(null, path, null, directorySecurity, compress, false);
       }
 
       #endregion // .NET
 
+      #region Template
+
+      /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
+      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectory(string path, string templatePath, bool compress)
+      {
+         return CreateDirectoryInternal(null, path, templatePath, null, compress, false);
+      }
+      
+      /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
+      /// <param name="directorySecurity">The access control to apply to the directory.</param>
+      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
+      {
+         return CreateDirectoryInternal(null, path, templatePath, directorySecurity, compress, false);
+      }
+
+      #endregion // Template
+
+      #endregion // Compress
+
+      #region Template
+
+      /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectory(string path, string templatePath)
+      {
+         return CreateDirectoryInternal(null, path, templatePath, null, false, false);
+      }
+
+      /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
+      /// <param name="directorySecurity">The access control to apply to the directory.</param>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity)
+      {
+         return CreateDirectoryInternal(null, path, templatePath, directorySecurity, false, false);
+      }
+
+      #endregion // Template
+
+
+      #region Transacted
+
+      #region IsFullPath
+
       #region Compress
 
-      /// <summary>[AlphaFS] Creates all the directories in a specified path as a transacted operation.</summary>
+      #region .NET
+
+      /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
@@ -281,33 +362,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateDirectoryInternal(transaction, path, null, null, compress, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates a new directory as a transacted operation, with the attributes of a specified template directory.</summary> 
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory to create.</param>
-      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
-      /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-      [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, bool compress, bool? isFullPath)
-      {
-         return CreateDirectoryInternal(transaction, path, templatePath, null, compress, isFullPath);
-      }
-      
-      /// <summary>[AlphaFS] Creates all the directories in the specified path as a transacted operation, applying the specified Windows security.</summary>
+      /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
@@ -333,7 +388,37 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateDirectoryInternal(transaction, path, null, directorySecurity, compress, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates a new directory as a transacted operation, with the attributes of a specified template directory and applies the specified Windows security.</summary>
+      #endregion // .NET
+
+      #region Template
+
+      /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
+      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="isFullPath">
+      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, bool compress, bool? isFullPath)
+      {
+         return CreateDirectoryInternal(transaction, path, templatePath, null, compress, isFullPath);
+      }
+
+      /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
@@ -360,13 +445,15 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, compress, isFullPath);
       }
 
+      #endregion // Template
+
       #endregion // Compress
 
       #endregion // IsFullPath
 
       #region .NET
 
-      /// <summary>[AlphaFS] Creates all the directories in a specified path as a transacted operation.</summary>
+      /// <summary>Creates all directories and subdirectories in the specified path unless they already exist.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
@@ -378,14 +465,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path)
       {
          return CreateDirectoryInternal(transaction, path, null, null, false, false);
       }
 
-      /// <summary>[AlphaFS] Creates all the directories in the specified path as a transacted operation, applying the specified Windows security.</summary>
+      /// <summary>Creates all the directories in the specified path, unless the already exist, applying the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
@@ -408,8 +494,10 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       #region Compress
-      
-      /// <summary>[AlphaFS] Creates all the directories in a specified path as a transacted operation.</summary>
+
+      #region .NET
+
+      /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
@@ -428,30 +516,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return CreateDirectoryInternal(transaction, path, null, null, compress, false);
       }
-      
-      /// <summary>[AlphaFS] Creates a new directory as a transacted operation, with the attributes of a specified template directory.</summary> 
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The directory to create.</param>
-      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
-      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
-      [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, bool compress)
-      {
-         return CreateDirectoryInternal(transaction, path, templatePath, null, compress, false);
-      }
-      
 
-      /// <summary>[AlphaFS] Creates all the directories in the specified path as a transacted operation, applying the specified Windows security.</summary>
+      /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
@@ -472,7 +538,32 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateDirectoryInternal(transaction, path, null, directorySecurity, compress, false);
       }
 
-      /// <summary>[AlphaFS] Creates a new directory as a transacted operation, with the attributes of a specified template directory and applies the specified Windows security.</summary>
+      #endregion // .NET
+
+      #region Template
+
+      /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
+      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, bool compress)
+      {
+         return CreateDirectoryInternal(transaction, path, templatePath, null, compress, false);
+      }
+
+      /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
@@ -494,7 +585,54 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, compress, false);
       }
 
+      #endregion // Template
+
       #endregion // Compress
+
+      #region Template
+
+      /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath)
+      {
+         return CreateDirectoryInternal(transaction, path, templatePath, null, false, false);
+      }
+
+      /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory to create.</param>
+      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
+      /// <param name="directorySecurity">The access control to apply to the directory.</param>
+      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="NativeError.ThrowException()"/>
+      [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
+      [SecurityCritical]
+      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity)
+      {
+         return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, false, false);
+      }
+
+      #endregion // Template
 
       #endregion // Transacted
 
@@ -5653,39 +5791,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>This method does not work across disk volumes.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      [SecurityCritical]
-      public static CopyMoveResult Move1(string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
-      {
-         return CopyMoveInternal(null, sourcePath, destinationPath, null, MoveOptions.None, progressHandler, userProgressData, isFullPath);
-      }
-
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
       /// <para>&#160;</para>
       /// <remarks>
@@ -5751,34 +5856,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsFullPath
 
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>This method does not work across disk volumes.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      [SecurityCritical]
-      public static CopyMoveResult Move1(string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         return CopyMoveInternal(null, sourcePath, destinationPath, null, MoveOptions.None, progressHandler, userProgressData, false);
-      }
-
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
       /// <para>&#160;</para>
       /// <remarks>
@@ -5835,40 +5912,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region Transacted
 
       #region IsFullPath
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>This method does not work across disk volumes.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      [SecurityCritical]
-      public static CopyMoveResult Move1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
-      {
-         return CopyMoveInternal(transaction, sourcePath, destinationPath, null, MoveOptions.None, progressHandler, userProgressData, isFullPath);
-      }
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
       /// <para>&#160;</para>
@@ -5936,35 +5979,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-
-      /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>This method does not work across disk volumes.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourcePath">The source directory path.</param>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      [SecurityCritical]
-      public static CopyMoveResult Move1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         return CopyMoveInternal(transaction, sourcePath, destinationPath, null, MoveOptions.None, progressHandler, userProgressData, false);
-      }
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.
       /// <para>&#160;</para>
@@ -6454,6 +6468,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static CopyMoveResult CopyMoveInternal(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
+         #region Setup
+
          if (isFullPath != null && (bool) !isFullPath)
          {
             Path.CheckValidPath(sourcePath, true, true);
@@ -6507,6 +6523,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          CopyMoveResult cmr = new CopyMoveResult(sourcePathLp, destinationPathLp, true, doMove, false, (int) Win32Errors.ERROR_SUCCESS);
 
+         #endregion //Setup
 
          #region Copy
 

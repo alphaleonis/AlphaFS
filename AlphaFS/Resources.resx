@@ -62,10 +62,10 @@
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
+      <xsd:complexDeviceType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
-            <xsd:complexType>
+            <xsd:complexDeviceType>
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
@@ -73,16 +73,16 @@
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
               <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
+            </xsd:complexDeviceType>
           </xsd:element>
           <xsd:element name="assembly">
-            <xsd:complexType>
+            <xsd:complexDeviceType>
               <xsd:attribute name="alias" type="xsd:string" />
               <xsd:attribute name="name" type="xsd:string" />
-            </xsd:complexType>
+            </xsd:complexDeviceType>
           </xsd:element>
           <xsd:element name="data">
-            <xsd:complexType>
+            <xsd:complexDeviceType>
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
@@ -91,18 +91,18 @@
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
               <xsd:attribute ref="xml:space" />
-            </xsd:complexType>
+            </xsd:complexDeviceType>
           </xsd:element>
           <xsd:element name="resheader">
-            <xsd:complexType>
+            <xsd:complexDeviceType>
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
               <xsd:attribute name="name" type="xsd:string" use="required" />
-            </xsd:complexType>
+            </xsd:complexDeviceType>
           </xsd:element>
         </xsd:choice>
-      </xsd:complexType>
+      </xsd:complexDeviceType>
     </xsd:element>
   </xsd:schema>
   <resheader name="resmimetype">
@@ -202,10 +202,10 @@
   <data name="StreamInvalid" xml:space="preserve">
     <value>Invalid stream.</value>
   </data>
-  <data name="SafeGlobalMemoryBufferHandle_CopyTo_Destination_offset_must_not_be_negative" xml:space="preserve">
+  <data name="SafeMemoryBufferHandle_CopyTo_Destination_offset_must_not_be_negative" xml:space="preserve">
     <value>Destination offset must not be negative</value>
   </data>
-  <data name="SafeGlobalMemoryBufferHandle_CopyTo_Length_must_not_be_negative_" xml:space="preserve">
+  <data name="SafeMemoryBufferHandle_CopyTo_Length_must_not_be_negative" xml:space="preserve">
     <value>Length must not be negative.</value>
   </data>
   <data name="SafeGlobalMemoryBufferHandle_CopyTo_Source_offset_and_length_outside_the_bounds_of_the_array" xml:space="preserve">

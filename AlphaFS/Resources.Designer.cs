@@ -395,30 +395,29 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Source offset and length outside the bounds of the array.
+        /// </summary>
+        internal static string SafeGlobalMemoryBufferHandle_CopyTo_Source_offset_and_length_outside_the_bounds_of_the_array {
+            get {
+                return ResourceManager.GetString("SafeGlobalMemoryBufferHandle_CopyTo_Source_offset_and_length_outside_the_bounds_of_the_array", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Destination offset must not be negative.
         /// </summary>
-        internal static string SafeGlobalMemoryBufferHandle_CopyTo_Destination_offset_must_not_be_negative {
+        internal static string SafeMemoryBufferHandle_CopyTo_Destination_offset_must_not_be_negative {
             get {
-                return ResourceManager.GetString("SafeGlobalMemoryBufferHandle_CopyTo_Destination_offset_must_not_be_negative", resourceCulture);
+                return ResourceManager.GetString("SafeMemoryBufferHandle_CopyTo_Destination_offset_must_not_be_negative", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Length must not be negative..
         /// </summary>
-        internal static string SafeGlobalMemoryBufferHandle_CopyTo_Length_must_not_be_negative_ {
+        internal static string SafeMemoryBufferHandle_CopyTo_Length_must_not_be_negative {
             get {
-                return ResourceManager.GetString("SafeGlobalMemoryBufferHandle_CopyTo_Length_must_not_be_negative_", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Source offset and length outside the bounds of the array.
-        /// </summary>
-        internal static string SafeGlobalMemoryBufferHandle_CopyTo_Source_offset_and_length_outside_the_bounds_of_the_array {
-            get {
-                return ResourceManager.GetString("SafeGlobalMemoryBufferHandle_CopyTo_Source_offset_and_length_outside_the_bounds_o" +
-                        "f_the_array", resourceCulture);
+                return ResourceManager.GetString("SafeMemoryBufferHandle_CopyTo_Length_must_not_be_negative", resourceCulture);
             }
         }
         

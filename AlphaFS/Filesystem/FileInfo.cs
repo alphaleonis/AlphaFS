@@ -413,13 +413,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="destinationPathFileName">The path to move the file to, which can specify a different file name.</param>
+      /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
       [SecurityCritical]
-      public void MoveTo(string destinationPathFileName)
+      public void MoveTo(string destinationFullPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPathFileName, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, true);
-         CopyToMoveToInternalRefresh(destinationPathFileName, destinationPathLp);
+         CopyToMoveToInternal(destinationFullPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, true);
+         CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
       }
 
       #endregion // .NET
@@ -1217,62 +1217,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="destinationPathFileName">The path to move the file to, which can specify a different file name.</param>
+      /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
       /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPathFileName"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPathFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPathFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public FileInfo MoveTo1(string destinationPathFileName, MoveOptions moveOptions, bool? isFullPath)
+      public FileInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions, bool? isFullPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPathFileName, false, null, moveOptions, null, null, out destinationPathLp, isFullPath);
+         CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, isFullPath);
          return new FileInfo(Transaction, destinationPathLp, null);
       }
 
       #endregion // FileInfo
 
       #region CopyMoveResult
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing file by default.</para>
-      /// <para>This method works across disk volumes.</para>
-      /// <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="destinationPathFileName">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPathFileName"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPathFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPathFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      [SecurityCritical]
-      public CopyMoveResult MoveTo1(string destinationPathFileName, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
-      {
-         string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPathFileName, false, null, MoveOptions.CopyAllowed, progressHandler, userProgressData, out destinationPathLp, isFullPath);
-         CopyToMoveToInternalRefresh(destinationPathFileName, destinationPathLp);
-         return cmr;
-      }
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
@@ -1295,21 +1257,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="destinationPathFileName">The path to move the file to, which can specify a different file name.</param>
+      /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
       /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPathFileName"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPathFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPathFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public CopyMoveResult MoveTo1(string destinationPathFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPathFileName, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, isFullPath);
-         CopyToMoveToInternalRefresh(destinationPathFileName, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
          return cmr;
       }
 
@@ -1341,52 +1303,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="destinationPathFileName">The path to move the file to, which can specify a different file name.</param>
+      /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
       /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public FileInfo MoveTo1(string destinationPathFileName, MoveOptions moveOptions)
+      public FileInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPathFileName, false, null, moveOptions, null, null, out destinationPathLp, false);
+         CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, true);
          return new FileInfo(Transaction, destinationPathLp, null);
       }
 
       #endregion // FileInfo
 
       #region CopyMoveResult
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing file by default.</para>
-      /// <para>This method works across disk volumes.</para>
-      /// <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// </summary>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="destinationPathFileName">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      [SecurityCritical]
-      public CopyMoveResult MoveTo1(string destinationPathFileName, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPathFileName, false, null, MoveOptions.CopyAllowed, progressHandler, userProgressData, out destinationPathLp, false);
-         CopyToMoveToInternalRefresh(destinationPathFileName, destinationPathLp);
-         return cmr;
-      }
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
@@ -1409,16 +1338,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="destinationPathFileName">The path to move the file to, which can specify a different file name.</param>
+      /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
       /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
-      public CopyMoveResult MoveTo1(string destinationPathFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPathFileName, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, false);
-         CopyToMoveToInternalRefresh(destinationPathFileName, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, true);
+         CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
          return cmr;
       }
 

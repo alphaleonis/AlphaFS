@@ -23,14 +23,14 @@ Version 1.6
 
 	* New: Supports networking by enumerating hosts and shares (SMB/DFS) and connect/disconnect to/from network resources (AlphaFS.Network.Host() class).
 	
-	* New: Supports working with NTFS ADS (Alternate Data Streams) on files and directories (AlphaFS.Filesystem.AlternateDataStreamInfo() class).
+	* New: Supports working with NTFS ADS (Alternate Data Streams) on files and folders (AlphaFS.Filesystem.AlternateDataStreamInfo() class).
 
 	* New: Supports enumerating connected PnP devices (AlphaFS.Filesystem.Device() / AlphaFS.Filesystem.DeviceInfo() classes).
 	
 	* New: Supports extracting icons from files and folders (AlphaFS.Filesystem.Shell32Info() class).
 	
 	* New: Supports isFullPath parameter for numerous methods to control path normalization. This speeds up things internally
-	       (less string processing and GetFullPath() calls) and also enables working with files and directories with a trailing dot or space.
+	       (less string processing and GetFullPath() calls) and also enables working with files and folders with a trailing dot or space:
 
 			false (slow)   : (default) Path will be checked and resolved to an absolute path. Unicode prefix is applied.
 			true  (fast)   : Path is an absolute path. Unicode prefix is applied.
@@ -59,21 +59,26 @@ Version 1.6
 	* Removed DirectoryNotEmptyException.
 	* Removed IllegalPathException.
 
+	* Removed enum DriveType in favor of System.IO.DriveType enum.
 	* Removed enum FileAccess in favor of System.IO.FileAccess enum.
 	* Removed enum FileAttributes in favor of System.IO.FileAttributes enum.
 	* Removed enum FileMode in favor of System.IO.FileMode enum.
 	* Removed enum FileOptions in favor of System.IO.FileOptions enum.
 	* Removed enum FileShare in favor of System.IO.FileShare enum.
 	* Removed enum FileSystemRights in favor of System.Security.AccessControl.FileSystemRights enum.
-	* Removed enum FileType, now obsolete.
-
+	* Removed enum FileType, obsolete.
+	* Removed enum EnumerationExceptionDecision, obsolete.
+	* Removed enum IoControlCode.cs, obsolete.
+	
+	* Renamed enum BackupStreamType to StreamType
 	* Renamed enum CopyProgressResult to CopyMoveProgressResult
 	* Renamed enum MoveFileOptions to MoveOptions
-		
 
-    
-    * New: Added "Cached LazyLoading" to class: FileSystemInfo() improving performance for classes: DirectoryInfo() and FileInfo().
+	* Renamed class BackupStreamInfo to AlternateDataStreamInfo
+	* Renamed class DeviceIo to Device
+	* Renamed delegate CopyProgressResult to CopyMoveProgressResult
 
+	* Changed struct DiskSpaceInfo to class
 
 Version 1.5
    * New: Various file system objects enumeration methods in Directory class.

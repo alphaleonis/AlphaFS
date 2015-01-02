@@ -51,8 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       AllowDecryptedDestination = 8,
 
       /// <summary>(2048) COPY_FILE_COPY_SYMLINK - If the source file is a symbolic link, the destination file is also a symbolic link pointing to the same file that the source symbolic link is pointing to.</summary>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Symlink")]
-      CopySymlink = 2048,
+      CopySymbolicLink = 2048,
 
       /// <summary>(4096) COPY_FILE_NO_BUFFERING - The copy operation is performed using unbuffered I/O, bypassing system I/O cache resources. Recommended for very large file transfers.</summary>
       NoBuffering = 4096
