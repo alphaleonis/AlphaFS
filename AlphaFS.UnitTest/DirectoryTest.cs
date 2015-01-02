@@ -540,7 +540,7 @@ namespace AlphaFS.UnitTest
             try
             {
                Console.WriteLine("\nCatch: [{0}]: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive).", expectedException);
-               Directory.Copy1(letter + folderSource, letter + folderDestination);
+               Directory.Copy1(letter + folderSource, letter + folderDestination, CopyOptions.FailIfExists);
             }
             catch (Exception ex)
             {
@@ -606,7 +606,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, Utils.UnitSizeToText(sourceSize));
             
             StopWatcher(true);
-            Directory.Copy1(tempPathSource, tempPathDestination);
+            Directory.Copy1(tempPathSource, tempPathDestination, CopyOptions.FailIfExists);
             report = Reporter();
 
             props = Directory.GetProperties(tempPathDestination, DirectoryEnumerationOptions.Recursive);
@@ -625,7 +625,7 @@ namespace AlphaFS.UnitTest
             try
             {
                   Console.WriteLine("\n\nCatch: [{0}]: Copy same directory again: destDirName already exists.", expectedException);
-                  Directory.Copy1(tempPathSource, tempPathDestination);
+                  Directory.Copy1(tempPathSource, tempPathDestination, CopyOptions.FailIfExists);
             }
             catch (Exception ex)
             {
@@ -3025,7 +3025,7 @@ namespace AlphaFS.UnitTest
             #region Move
             
             CreateDirectoriesAndFiles(tempPathSource0, 10, true);
-            Directory.Copy1(tempPathSource0, otherDisk);
+            Directory.Copy1(tempPathSource0, otherDisk, CopyOptions.FailIfExists);
 
             Dictionary<string, long> props = Directory.GetProperties(otherDisk, DirectoryEnumerationOptions.Recursive);
             long sourceFolder = props["Directory"];
@@ -3053,7 +3053,7 @@ namespace AlphaFS.UnitTest
 
             #region IOException
 
-            Directory.Copy1(tempPathSource0, otherDisk);
+            Directory.Copy1(tempPathSource0, otherDisk, CopyOptions.FailIfExists);
 
             expectedLastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
             expectedException = "System.IO.IOException";
