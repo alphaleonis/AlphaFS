@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
-      /// <param name="stream">The <see cref="NativeMethods.Win32StreamId"/> stream ID.</param>
+      /// <param name="stream">The NativeMethods.Win32StreamId stream ID.</param>
       /// <param name="transaction"></param>
       /// <param name="path">The path to an existing file or directory.</param>
       /// <param name="name">The originalName of the stream.</param>
@@ -366,6 +366,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
+      /// <returns>The actual number of bytes of disk storage used by all or a specific alternate data streams (NTFS ADS).</returns>
       [SecurityCritical]
       public static long GetStreamSizeInternal(bool? isFolder, KernelTransaction transaction, SafeFileHandle handle, string path, string name, StreamType? streamType, bool? isFullPath)
       {

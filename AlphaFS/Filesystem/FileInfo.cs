@@ -496,8 +496,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates a <see cref="StreamReader"/> with <see cref="NativeMethods.DefaultFileEncoding"/> encoding that reads from an existing text file.</summary>
-      /// <returns>A new <see cref="StreamReader"/> with <see cref="NativeMethods.DefaultFileEncoding"/> encoding.</returns>
+      /// <summary>Creates a <see cref="StreamReader"/> with NativeMethods.DefaultFileEncoding encoding that reads from an existing text file.</summary>
+      /// <returns>A new <see cref="StreamReader"/> with NativeMethods.DefaultFileEncoding encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public StreamReader OpenText()

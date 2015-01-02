@@ -258,7 +258,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// 	<paramref name="buffer"/> is <c>null</c>.</exception>
       /// <exception cref="System.ArgumentOutOfRangeException">
       /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
-      /// <exception cref="NativeError.ThrowException()">An I/O error occurs.</exception>
       /// <exception cref="System.NotSupportedException">The stream does not support reading.</exception>
       /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
       /// <remarks>This method will not backup the access-control list (ACL) data for the file or directory.</remarks>      
@@ -282,7 +281,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// 	<paramref name="buffer"/> is <c>null</c>.</exception>
       /// <exception cref="System.ArgumentOutOfRangeException">
       /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
-      /// <exception cref="NativeError.ThrowException()">An I/O error occurs.</exception>
       /// <exception cref="System.NotSupportedException">The stream does not support reading.</exception>
       /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
@@ -335,7 +333,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// 	<paramref name="buffer"/> is <c>null</c>.</exception>
       /// <exception cref="System.ArgumentOutOfRangeException">
       /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
-      /// <exception cref="NativeError.ThrowException()">An I/O error occurs.</exception>
       /// <exception cref="System.NotSupportedException">The stream does not support writing.</exception>
       /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
       /// <remarks>This method will not process the access-control list (ACL) data for the file or directory.</remarks>      
@@ -357,12 +354,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// 	<paramref name="buffer"/> is <c>null</c>.</exception>
       /// <exception cref="System.ArgumentOutOfRangeException">
       /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
-      /// <exception cref="NativeError.ThrowException()">An I/O error occurs.</exception>
       /// <exception cref="System.NotSupportedException">The stream does not support writing.</exception>
       /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
       [SecurityCritical]
-      public bool Write(byte[] buffer, int offset, int count, bool processSecurity)
+      public void Write(byte[] buffer, int offset, int count, bool processSecurity)
       {
          if (buffer == null)
             throw new ArgumentNullException("buffer");
@@ -385,9 +381,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (!NativeMethods.BackupWrite(SafeFileHandle, safeBuffer, (uint) safeBuffer.Capacity, out bytesWritten, false, processSecurity, out _context))
                // Throws IOException.
                NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
-         }
-
-         return true;
+         }         
       }
 
       #endregion // Write
@@ -395,7 +389,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region Flush
 
       /// <summary>Clears all buffers for this stream and causes any buffered data to be written to the underlying device.</summary>
-      /// <exception cref="NativeError.ThrowException()">An I/O error occurs.</exception>      
       public override void Flush()
       {
          if (!NativeMethods.FlushFileBuffers(SafeFileHandle))
@@ -544,7 +537,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="length">The range to be locked.</param>
       /// <exception cref="ArgumentOutOfRangeException"><paramref name="position"/> or <paramref name="length"/> is negative.</exception>
       /// <exception cref="ObjectDisposedException">The file is closed.</exception>
-      /// <exception cref="NativeError.ThrowException()">The process cannot access the file because another process has locked a portion of the file.</exception>
       [SecurityCritical]
       public virtual void Lock(long position, long length)
       {

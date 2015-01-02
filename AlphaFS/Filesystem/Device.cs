@@ -64,7 +64,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnumerateDevicesInternal
 
       /// <summary>Enumerates all available devices on the local or remote host.</summary>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       internal static IEnumerable<DeviceInfo> EnumerateDevicesInternal(SafeHandle safeHandle, string hostName, DeviceGuid deviceInterfaceGuid)
       {
@@ -282,7 +281,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetLinkTargetInfoInternal
 
       /// <summary>Unified method GetLinkTargetInfoInternal() to get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
@@ -426,7 +424,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateDeviceInfoDataInstance
 
       /// <summary>Builds a DeviceInfo Data structure.</summary>
-      /// <returns>An initialized <see cref="NativeMethods.SpDeviceInfoData"/> instance.</returns>
+      /// <returns>An initialized NativeMethods.SpDeviceInfoData instance.</returns>
       [SecurityCritical]
       private static NativeMethods.SpDeviceInfoData CreateDeviceInfoDataInstance()
       {
@@ -441,7 +439,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateDeviceInterfaceDataInstance
 
       /// <summary>Builds a Device Interface Data structure.</summary>
-      /// <returns>An initialized <see cref="NativeMethods.SpDeviceInterfaceData"/> instance.</returns>
+      /// <returns>An initialized NativeMethods.SpDeviceInterfaceData instance.</returns>
       [SecurityCritical]
       private static NativeMethods.SpDeviceInterfaceData CreateDeviceInterfaceDataInstance()
       {
@@ -456,7 +454,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetDeviceInterfaceDetailDataInstance
 
       /// <summary>Builds a Device Interface Detail Data structure.</summary>
-      /// <returns>An initialized <see cref="NativeMethods.SpDeviceInterfaceDetailData"/> instance.</returns>
+      /// <returns>An initialized NativeMethods.SpDeviceInterfaceDetailData instance.</returns>
       [SecurityCritical]
       private static NativeMethods.SpDeviceInterfaceDetailData GetDeviceInterfaceDetailDataInstance(SafeHandle safeHandle, NativeMethods.SpDeviceInterfaceData deviceInterfaceData, NativeMethods.SpDeviceInfoData deviceInfoData)
       {

@@ -254,8 +254,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       private NativeMethods.FindExInfoLevels _basicSearch = NativeMethods.BasicSearch;
 
-      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExInfoLevels"/> to use.</summary>
-      /// <value><c>true</c> uses <see cref="NativeMethods.FindExInfoLevels.Basic"/>, otherwise uses <see cref="NativeMethods.FindExInfoLevels.Standard"/></value>
+      /// <summary>Gets or sets a value indicating which NativeMethods.FindExInfoLevels to use.</summary>
+      /// <value><c>true</c> uses FindExInfoLevels.Basic, otherwise uses FindExInfoLevels.Standard</value>
       public bool BasicSearch
       {
          get { return _basicSearch == NativeMethods.FindExInfoLevels.Basic; }
@@ -339,7 +339,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFolder
 
-      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExInfoLevels"/> to use.</summary>
+      /// <summary>Gets or sets a value indicating which FindExInfoLevels to use.</summary>
       /// <value><c>null</c> indicates the file system object is unknown, <c>true</c> indicates a folder object, <c>false</c> indicates a file object.</value>
       public bool IsFolder { get; set; }
 
@@ -356,8 +356,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       private NativeMethods.FindExAdditionalFlags _largeCache = NativeMethods.LargeCache;
 
-      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExAdditionalFlags"/> to use.</summary>
-      /// <value><c>true</c> uses <see cref="NativeMethods.FindExAdditionalFlags.LargeFetch"/>, otherwise uses <see cref="NativeMethods.FindExAdditionalFlags.None"/></value>
+      /// <summary>Gets or sets a value indicating which FindExAdditionalFlags to use.</summary>
+      /// <value><c>true</c> uses FindExAdditionalFlags.LargeFetch, otherwise uses FindExAdditionalFlags.None</value>
       public bool LargeCache
       {
          get { return _largeCache == NativeMethods.FindExAdditionalFlags.LargeFetch; }

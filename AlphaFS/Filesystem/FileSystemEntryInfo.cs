@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Constructor
 
       /// <summary>Initializes a new instance of the <see cref="FileSystemEntryInfo"/> class.</summary>
-      /// <param name="findData">The <see cref="NativeMethods.Win32FindData"/> structure.</param>
+      /// <param name="findData">The NativeMethods.Win32FindData structure.</param>
       internal FileSystemEntryInfo(NativeMethods.Win32FindData findData)
       {
          _win32FindData = findData;

@@ -4558,7 +4558,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <exception cref="ArgumentException"></exception>
       /// <exception cref="ArgumentNullException"></exception>
-      /// <param name="path">The directory to search.</param>
+      /// <param name="path">The directory to search.</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path)
@@ -5120,7 +5120,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory on the path.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool? isFullPath)
       {
@@ -5132,7 +5131,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
       /// <param name="path">The path to the file or directory.</param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory on the path.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
       {
@@ -5152,7 +5150,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory on the path.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -5165,7 +5162,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory on the path.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path)
       {

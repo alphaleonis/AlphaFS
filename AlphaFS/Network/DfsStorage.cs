@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Initializes a new instance of the <see cref="DfsStorage"/> class,
       /// <para>which acts as a wrapper for a DFS root or link target.</para>
       /// </summary>
-      /// <param name="structure">An initialized <see cref="NativeMethods.DfsStorageInfo"/> instance.</param>
+      /// <param name="structure">An initialized DfsStorageInfo instance.</param>
       internal DfsStorage(NativeMethods.DfsStorageInfo structure)
       {
          ServerName = structure.ServerName;

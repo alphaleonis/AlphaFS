@@ -841,7 +841,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the connection name of the locally mapped drive.
       /// </summary>
       /// <returns>The server and share as: \\servername\sharename.</returns>
-      /// <exception cref="PathTooLongException">When <paramref name="path"/> exceeds <see cref="NativeMethods.MaxPath"/></exception>
+      /// <exception cref="PathTooLongException">When <paramref name="path"/> exceeds MaxPath</exception>
       /// <param name="path">The local path with drive name.</param>
       [SecurityCritical]
       public static string GetMappedConnectionName(string path)
@@ -856,7 +856,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the network share name from the locally mapped path.
       /// </summary>
       /// <returns>The network share connection name of <paramref name="path"/>.</returns>
-      /// <exception cref="PathTooLongException">When <paramref name="path"/> exceeds <see cref="NativeMethods.MaxPath"/></exception>
+      /// <exception cref="PathTooLongException">When <paramref name="path"/> exceeds MaxPath</exception>
       /// <param name="path">The local path with drive name.</param>
       [SecurityCritical]
       public static string GetMappedUncName(string path)

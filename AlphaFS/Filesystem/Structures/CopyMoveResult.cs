@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsDirectory
 
-      // <summary>Gets a value indicating whether this instance represents a directory.</summary>
+      /// <summary>Gets a value indicating whether this instance represents a directory.</summary>
       /// <value><c>true</c> if this instance represents a directory; otherwise, <c>false</c>.</value>
       public bool IsDirectory { get; private set; }
 

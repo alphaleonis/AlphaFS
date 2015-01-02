@@ -349,7 +349,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes the label of the file system volume that is the root of the current directory.
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       /// </summary>
       [SecurityCritical]
       public static void DeleteCurrentVolumeLabel()
@@ -362,7 +361,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes the label of a file system volume.</summary>
       /// <param name="rootPathName">The root directory of a file system volume. This is the volume the function will remove the label.</param>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static void DeleteVolumeLabel(string rootPathName)
       {
@@ -899,7 +897,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region SetVolumeLabel
 
       /// <summary>Sets the label of a file system volume.
-      /// <exception cref="NativeError.ThrowException()"></exception>
       /// </summary>
       /// <param name="volumePath">
       /// <para>A path to a volume. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</para>

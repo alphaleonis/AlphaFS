@@ -322,8 +322,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates a <see cref="StreamWriter"/> that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
-      /// <returns>A stream writer that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// <summary>Creates a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.</returns>
       /// </summary>
       /// <param name="path">The path to the file to append to.</param>
       [SecurityCritical]
@@ -338,8 +338,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
-      /// <returns>A stream writer that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.</returns>
       /// </summary>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="isFullPath">
@@ -353,8 +353,8 @@ namespace Alphaleonis.Win32.Filesystem
          return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
-      /// <returns>A stream writer that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.</returns>
       /// </summary>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -371,8 +371,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsFullPath
 
-      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
-      /// <returns>A stream writer that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.</returns>
       /// </summary>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -386,8 +386,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
-      /// <returns>A stream writer that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.</returns>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
@@ -401,8 +401,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
-      /// <returns>A stream writer that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.</returns>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
@@ -418,8 +418,8 @@ namespace Alphaleonis.Win32.Filesystem
          return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
       }
 
-      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
-      /// <returns>A stream writer that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.</returns>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
@@ -437,8 +437,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsFullPath
       
-      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.
-      /// <returns>A stream writer that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// <summary>[AlphaFS] Creates a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or to a new file if the specified file does not exist.
+      /// <returns>A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.</returns>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
@@ -2362,7 +2362,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Opens an existing <see cref="NativeMethods.DefaultFileEncoding"/> encoded text file for reading.</summary>
+      /// <summary>Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
@@ -2378,7 +2378,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Opens an existing <see cref="NativeMethods.DefaultFileEncoding"/> encoded text file for reading.</summary>
+      /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -2426,7 +2426,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>[AlphaFS] Opens an existing <see cref="NativeMethods.DefaultFileEncoding"/> encoded text file for reading.</summary>
+      /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
@@ -2440,7 +2440,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Opens an existing <see cref="NativeMethods.DefaultFileEncoding"/> encoded text file for reading.</summary>
+      /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="isFullPath">
@@ -5327,7 +5327,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves file information for the specified <see cref="SafeFileHandle"/>.</summary>
       /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the open file from which to retrieve the information.</param>
       /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static ByHandleFileInfo GetFileInfoByHandle(SafeFileHandle handle)
       {
@@ -5356,7 +5355,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool? isFullPath)
       {
@@ -5368,7 +5366,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
       /// <param name="path">The path to the file or directory.</param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
       {
@@ -5388,7 +5385,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -5401,7 +5397,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
-      /// <exception cref="NativeError.ThrowException()"></exception>
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path)
       {
@@ -6459,7 +6454,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AppendTextInternal
 
-      /// <summary>[AlphaFS] Unified method AppendTextInternal() to create a <see cref="StreamWriter"/> that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <summary>[AlphaFS] Unified method AppendTextInternal() to create a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -6468,7 +6463,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A stream writer that appends <see cref="NativeMethods.DefaultFileEncoding"/> encoded text to the specified file or to a new file.</returns>
+      /// <returns>A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static StreamWriter AppendTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
@@ -6984,7 +6979,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A <see cref="StreamWriter"/> that writes to the specified file using <see cref="NativeMethods.DefaultFileBufferSize"/> encoding.</returns>
+      /// <returns>A <see cref="StreamWriter"/> that writes to the specified file using NativeMethods.DefaultFileBufferSize encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static StreamWriter CreateTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
