@@ -4,7 +4,7 @@
     <id>AlphaFS</id>
     <version>1.6.0.0</version>
     <title>AlphaFS</title>
-    <authors>Peter Palotas, Jeffrey Jangli, Normalex</authors>
+    <authors>Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</authors>
     <owners>Peter Palotas</owners>
     <licenseUrl>https://alphafs.codeplex.com/license</licenseUrl>
     <projectUrl>https://alphafs.codeplex.com/</projectUrl>
@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes. Features highlights: creating hardlinks, accessing hidden volumes, enumeration of volumes, transactional file operations and much more.</description>
     <releaseNotes>Many bugfixes and new features.</releaseNotes>
-    <copyright>Copyright 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex</copyright>
+    <copyright>Copyright 2008-2014 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</copyright>
     <tags>Win32, Filesystem</tags>
   </metadata>
    <files>
