@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Network
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Note that this member can be specified only if</para>
-      /// <para>the <see cref="T:ResourceScope"/> member is equal to <see cref="T:ResourceScope.GlobalNet"/>.</para>
+      /// <para>the <see cref="ResourceScope"/> member is equal to <see cref="ResourceScope.GlobalNet"/>.</para>
       /// </remarks>
       /// </summary>
       [Flags]
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>RESOURCEUSAGE_ALL
          /// <para>&#160;</para>
          /// <para>Setting this value is equivalent to setting:</para>
-         /// <para><see cref="T:ResourceUsage.Connectable"/>, <see cref="T:ResourceUsage.Container"/>, and <see cref="T:ResourceUsage.Attached"/>.</para>
+         /// <para><see cref="ResourceUsage.Connectable"/>, <see cref="ResourceUsage.Container"/>, and <see cref="ResourceUsage.Attached"/>.</para>
          /// </summary>
          All = (Connectable | Container | Attached)
       }

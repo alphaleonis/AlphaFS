@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The modified path information.</returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
-      /// <param name="path">The path information to modify. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="path">The path information to modify. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       /// <param name="extension">The new extension (with or without a leading period). Specify <c>null</c> to remove an existing extension from path.</param>
       [SecurityCritical]
       public static string ChangeExtension(string path, string extension)
@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <returns>
       /// <para>Directory information for <paramref name="path"/>, or <c>null</c> if <paramref name="path"/> denotes a root directory or is <c>null</c>.</para>
-      /// <para>Returns <see cref="T:string.Empty"/> if <paramref name="path"/> does not contain directory information.</para>
+      /// <para>Returns <see cref="string.Empty"/> if <paramref name="path"/> does not contain directory information.</para>
       /// </returns>
       /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Returns the directory information for the specified path string.
-      /// <returns>Directory information for <paramref name="path"/>, or <c>null</c> if <paramref name="path"/> denotes a root directory or is <c>null</c>. Returns <see cref="T:string.Empty"/> if <paramref name="path"/> does not contain directory information.</returns>
+      /// <returns>Directory information for <paramref name="path"/>, or <c>null</c> if <paramref name="path"/> denotes a root directory or is <c>null</c>. Returns <see cref="string.Empty"/> if <paramref name="path"/> does not contain directory information.</returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
       /// <param name="path">The path of a file or directory.</param>
@@ -141,14 +141,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns the extension of the specified path string.
       /// <para>&#160;</para>
       /// <returns>
-      /// <para>The extension of the specified path (including the period "."), or null, or <see cref="T:string.Empty"/>.</para>
+      /// <para>The extension of the specified path (including the period "."), or null, or <see cref="string.Empty"/>.</para>
       /// <para>If <paramref name="path"/> is null, <see cref="M:Path.GetExtension()"/> returns null.</para>
-      /// <para>If <paramref name="path"/> does not have extension information, <see cref="M:Path.GetExtension()"/> returns <see cref="T:string.Empty"/>.</para>
+      /// <para>If <paramref name="path"/> does not have extension information, <see cref="M:Path.GetExtension()"/> returns <see cref="string.Empty"/>.</para>
       /// </returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// </summary>
-      /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static string GetExtension(string path)
       {
@@ -162,13 +162,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns the extension of the specified path string.
       /// <para>&#160;</para>
       /// <returns>
-      /// <para>The extension of the specified path (including the period "."), or null, or <see cref="T:string.Empty"/>.</para>
+      /// <para>The extension of the specified path (including the period "."), or null, or <see cref="string.Empty"/>.</para>
       /// <para>If <paramref name="path"/> is null, <see cref="M:Path.GetExtension()"/> returns null.</para>
-      /// <para>If <paramref name="path"/> does not have extension information, <see cref="M:Path.GetExtension()"/> returns <see cref="T:string.Empty"/>.</para>
+      /// <para>If <paramref name="path"/> does not have extension information, <see cref="M:Path.GetExtension()"/> returns <see cref="string.Empty"/>.</para>
       /// </returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
-      /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static string GetExtension(string path, bool checkInvalidPathChars)
@@ -206,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The characters after the last directory character in <paramref name="path"/>. If the last character of <paramref name="path"/> is a directory or volume separator character, this method returns <c>string.Empty</c>. If path is null, this method returns null.</returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
-      /// <param name="path">The path string from which to obtain the file name and extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="path">The path string from which to obtain the file name and extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static string GetFileName(string path)
       {
@@ -255,7 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The string returned by GetFileName, minus the last period (.) and all characters following it.</returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
-      /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static string GetFileNameWithoutExtension(string path)
       {
@@ -270,7 +270,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The string returned by GetFileName, minus the last period (.) and all characters following it.</returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
-      /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static string GetFileNameWithoutExtension(string path, bool checkInvalidPathChars)
@@ -630,7 +630,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns><c>true</c> if the characters that follow the last directory separator (\\ or /) or volume separator (:) in the path include a period (.) followed by one or more characters; otherwise, <c>false</c>.</returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
-      /// <param name="path">The path to search for an extension. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="path">The path to search for an extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static bool HasExtension(string path)
       {
@@ -647,12 +647,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets a value indicating whether the specified path string contains absolute or relative path information.
       /// <returns><c>true</c> if <paramref name="path"/> contains a root; otherwise, <c>false</c>.</returns>
-      /// <remarks>The IsPathRooted method returns true if the first character is a directory separator character such as <see cref="T:DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="T:VolumeSeparatorChar"/>). For example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir". It returns <c>false</c> for path strings such as "MyDir".</remarks>
+      /// <remarks>The IsPathRooted method returns true if the first character is a directory separator character such as <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>). For example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir". It returns <c>false</c> for path strings such as "MyDir".</remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// </summary>
-      /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static bool IsPathRooted(string path)
       {
@@ -665,12 +665,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets a value indicating whether the specified path string contains absolute or relative path information.
       /// <returns><c>true</c> if <paramref name="path"/> contains a root; otherwise, <c>false</c>.</returns>
-      /// <remarks>The IsPathRooted method returns true if the first character is a directory separator character such as <see cref="T:DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="T:VolumeSeparatorChar"/>). For example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir". It returns <c>false</c> for path strings such as "MyDir".</remarks>
+      /// <remarks>The IsPathRooted method returns true if the first character is a directory separator character such as <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>). For example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir". It returns <c>false</c> for path strings such as "MyDir".</remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// </summary>
-      /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="T:GetInvalidPathChars"/>.</param>
+      /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       /// <param name="checkInvalidPathChars"><c>true</c> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static bool IsPathRooted(string path, bool checkInvalidPathChars)
@@ -700,9 +700,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AddDirectorySeparator
 
-      /// <summary>[AlphaFS] Adds a <see cref="T:DirectorySeparatorChar"/> or <see cref="T:AltDirectorySeparatorChar"/> character to the string.
-      /// <param name="path">A text string to which the <see cref="T:DirectorySeparatorChar"/> or <see cref="T:AltDirectorySeparatorChar"/> is to be added.</param>
-      /// <returns>A text string with the <see cref="T:DirectorySeparatorChar"/> or <see cref="T:AltDirectorySeparatorChar"/> character suffixed. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
+      /// <summary>[AlphaFS] Adds a <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character to the string.
+      /// <param name="path">A text string to which the <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> is to be added.</param>
+      /// <returns>A text string with the <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character suffixed. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
       /// </summary>
       [SecurityCritical]
       public static string AddDirectorySeparator(string path)
@@ -710,11 +710,11 @@ namespace Alphaleonis.Win32.Filesystem
          return AddDirectorySeparator(path, false);
       }
 
-      /// <summary>[AlphaFS] Adds a <see cref="T:DirectorySeparatorChar"/> or <see cref="T:AltDirectorySeparatorChar"/> character to the string.
-      /// <returns>A text string with the <see cref="T:DirectorySeparatorChar"/> or <see cref="T:AltDirectorySeparatorChar"/> character suffixed. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
+      /// <summary>[AlphaFS] Adds a <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character to the string.
+      /// <returns>A text string with the <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character suffixed. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
       /// </summary>
-      /// <param name="path">A text string to which the <see cref="T:DirectorySeparatorChar"/> or <see cref="T:AltDirectorySeparatorChar"/> is to be added.</param>
-      /// <param name="addAlternateSeparator">if <c>true</c> the <see cref="T:AltDirectorySeparatorChar"/> character will be added instead.</param>
+      /// <param name="path">A text string to which the <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> is to be added.</param>
+      /// <param name="addAlternateSeparator">if <c>true</c> the <see cref="AltDirectorySeparatorChar"/> character will be added instead.</param>
       [SecurityCritical]
       public static string AddDirectorySeparator(string path, bool addAlternateSeparator)
       {
@@ -761,7 +761,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFinalPathNameByHandle
 
-      /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="T:FinalPathFormats"/>.
+      /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.
       /// <returns>Returns the final path as a string.</returns>
       /// <remarks>
       /// A final path is the path that is returned when a path is fully resolved.
@@ -769,14 +769,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
-      /// <param name="handle">Then handle to a <see cref="T:SafeFileHandle"/> instance.</param>
+      /// <param name="handle">Then handle to a <see cref="SafeFileHandle"/> instance.</param>
       [SecurityCritical]
       public static string GetFinalPathNameByHandle(SafeFileHandle handle)
       {
          return GetFinalPathNameByHandleInternal(handle, FinalPathFormats.None);
       }
 
-      /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="T:FinalPathFormats"/>.
+      /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.
       /// <returns>Returns the final path as a string.</returns>
       /// <remarks>
       /// A final path is the path that is returned when a path is fully resolved.
@@ -784,8 +784,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
-      /// <param name="handle">Then handle to a <see cref="T:SafeFileHandle"/> instance.</param>
-      /// <param name="finalPath">The final path, formatted as <see cref="T:FinalPathFormats"/></param>
+      /// <param name="handle">Then handle to a <see cref="SafeFileHandle"/> instance.</param>
+      /// <param name="finalPath">The final path, formatted as <see cref="FinalPathFormats"/></param>
       [SecurityCritical]
       public static string GetFinalPathNameByHandle(SafeFileHandle handle, FinalPathFormats finalPath)
       {
@@ -796,9 +796,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetLongPath
 
-      /// <summary>[AlphaFS] Makes a Unicode path (LongPath) of the specified <paramref name="path"/> by prefixing <see cref="T:LongPathPrefix"/>.
+      /// <summary>[AlphaFS] Makes a Unicode path (LongPath) of the specified <paramref name="path"/> by prefixing <see cref="LongPathPrefix"/>.
       /// <para>&#160;</para>
-      /// <returns>Returns the <paramref name="path"/> prefixed with a <see cref="T:LongPathPrefix"/>.</returns>
+      /// <returns>Returns the <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>.</returns>
       /// </summary>
       /// <param name="path">The local or UNC path to the file or directory.</param>
       [SecurityCritical]
@@ -844,7 +844,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the connection name of the locally mapped drive.
       /// <returns>The server and share as: \\servername\sharename.</returns>
-      /// <exception cref="PathTooLongException">When <paramref name="path"/> exceeds <see cref="T:NativeMethods.MaxPath"/></exception>
+      /// <exception cref="PathTooLongException">When <paramref name="path"/> exceeds <see cref="NativeMethods.MaxPath"/></exception>
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
       /// <param name="path">The local path with drive name.</param>
@@ -860,7 +860,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the network share name from the locally mapped path.
       /// <returns>The network share connection name of <paramref name="path"/>.</returns>
-      /// <exception cref="PathTooLongException">When <paramref name="path"/> exceeds <see cref="T:NativeMethods.MaxPath"/></exception>
+      /// <exception cref="PathTooLongException">When <paramref name="path"/> exceeds <see cref="NativeMethods.MaxPath"/></exception>
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
       /// <param name="path">The local path with drive name.</param>
@@ -1019,7 +1019,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsLongPath
 
-      /// <summary>[AlphaFS] Determines whether the specified path starts with a <see cref="T:LongPathPrefix"/> or <see cref="T:LongPathUncPrefix"/>.
+      /// <summary>[AlphaFS] Determines whether the specified path starts with a <see cref="LongPathPrefix"/> or <see cref="LongPathUncPrefix"/>.
       /// <para>&#160;</para>
       /// <returns>Returns <c>true</c> if the specified path has a long path (UNC) prefix, <c>false</c> otherwise.</returns>
       /// </summary>
@@ -1131,25 +1131,25 @@ namespace Alphaleonis.Win32.Filesystem
       
       #region RemoveDirectorySeparator
 
-      /// <summary>[AlphaFS] Removes the <see cref="T:DirectorySeparatorChar"/> character from the string.
+      /// <summary>[AlphaFS] Removes the <see cref="DirectorySeparatorChar"/> character from the string.
       /// <para>&#160;</para>
       /// <returns>
-      /// <para>Returns A text string where the suffixed <see cref="T:DirectorySeparatorChar"/> has been removed.</para>
+      /// <para>Returns A text string where the suffixed <see cref="DirectorySeparatorChar"/> has been removed.</para>
       /// <para>The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</para>
       /// </returns>
       /// </summary>
-      /// <param name="path">A text string from which the <see cref="T:DirectorySeparatorChar"/> is to be removed.</param>
+      /// <param name="path">A text string from which the <see cref="DirectorySeparatorChar"/> is to be removed.</param>
       [SecurityCritical]
       public static string RemoveDirectorySeparator(string path)
       {
          return path == null ? null : path.TrimEnd(DirectorySeparatorChar, AltDirectorySeparatorChar);
       }
 
-      /// <summary>[AlphaFS] Removes the <see cref="T:DirectorySeparatorChar"/> or <see cref="T:AltDirectorySeparatorChar"/> character from the string.
-      /// <returns>A text string where the suffixed <see cref="T:DirectorySeparatorChar"/> or <see cref="T:AltDirectorySeparatorChar"/> character has been removed. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
+      /// <summary>[AlphaFS] Removes the <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character from the string.
+      /// <returns>A text string where the suffixed <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> character has been removed. The function returns <c>null</c> when <paramref name="path"/> is <c>null</c>.</returns>
       /// </summary>
-      /// <param name="path">A text string from which the <see cref="T:DirectorySeparatorChar"/> or <see cref="T:AltDirectorySeparatorChar"/> is to be removed.</param>
-      /// <param name="removeAlternateSeparator">If <c>true</c> the <see cref="T:AltDirectorySeparatorChar"/> character will be removed instead.</param>
+      /// <param name="path">A text string from which the <see cref="DirectorySeparatorChar"/> or <see cref="AltDirectorySeparatorChar"/> is to be removed.</param>
+      /// <param name="removeAlternateSeparator">If <c>true</c> the <see cref="AltDirectorySeparatorChar"/> character will be removed instead.</param>
       [SecurityCritical]
       public static string RemoveDirectorySeparator(string path, bool removeAlternateSeparator)
       {
@@ -1268,9 +1268,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="path">The patch to check.</param>
       /// <param name="checkVolumeSeparatorChar">
-      /// If <c>null</c>, checks for all separator characters: <see cref="T:DirectorySeparatorChar"/>, <see cref="T:AltDirectorySeparatorChar"/> and <see cref="T:VolumeSeparatorChar"/>
-      /// If <c>false</c>, only checks for: <see cref="T:DirectorySeparatorChar"/> and <see cref="T:AltDirectorySeparatorChar"/>
-      /// If <c>true</c>, only checks for: <see cref="T:VolumeSeparatorChar"/>
+      /// If <c>null</c>, checks for all separator characters: <see cref="DirectorySeparatorChar"/>, <see cref="AltDirectorySeparatorChar"/> and <see cref="VolumeSeparatorChar"/>
+      /// If <c>false</c>, only checks for: <see cref="DirectorySeparatorChar"/> and <see cref="AltDirectorySeparatorChar"/>
+      /// If <c>true</c>, only checks for: <see cref="VolumeSeparatorChar"/>
       ///</param>
       [SecurityCritical]
       internal static bool EndsWithDVsc(string path, bool? checkVolumeSeparatorChar)
@@ -1322,9 +1322,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="c">The character to check.</param>
       /// <param name="checkSeparatorChar">
-      /// If <c>null</c>, checks for all separator characters: <see cref="T:DirectorySeparatorChar"/>, <see cref="T:AltDirectorySeparatorChar"/> and <see cref="T:VolumeSeparatorChar"/>
-      /// If <c>false</c>, only checks for: <see cref="T:DirectorySeparatorChar"/> and <see cref="T:AltDirectorySeparatorChar"/>
-      /// If <c>true</c> only checks for: <see cref="T:VolumeSeparatorChar"/>
+      /// If <c>null</c>, checks for all separator characters: <see cref="DirectorySeparatorChar"/>, <see cref="AltDirectorySeparatorChar"/> and <see cref="VolumeSeparatorChar"/>
+      /// If <c>false</c>, only checks for: <see cref="DirectorySeparatorChar"/> and <see cref="AltDirectorySeparatorChar"/>
+      /// If <c>true</c> only checks for: <see cref="VolumeSeparatorChar"/>
       ///</param>
       [SecurityCritical]
       internal static bool IsDVsc(char c, bool? checkSeparatorChar)
@@ -1360,7 +1360,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>the Combine method appends path2 to path1 instead of returning only path2.</para>
       /// </remarks>
       /// </summary>
-      /// <exception cref="ArgumentException">One of the strings in the array contains one or more of the invalid characters defined in <see cref="T:GetInvalidPathChars"/>.</exception>
+      /// <exception cref="ArgumentException">One of the strings in the array contains one or more of the invalid characters defined in <see cref="GetInvalidPathChars"/>.</exception>
       /// <exception cref="ArgumentNullException">One of the strings in the array is <c>null</c>.</exception>
       /// <param name="paths">An array of parts of the path.</param>
       /// <param name="checkInvalidPathChars"><c>true</c> will not check <paramref name="paths"/> for invalid path characters.</param>
@@ -1442,17 +1442,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFinalPathNameByHandleInternal
 
-      /// <summary>[AlphaFS] Unified method GetFinalPathNameByHandleInternal() to retrieve the final path for the specified file, formatted as <see cref="T:FinalPathFormats"/>.
+      /// <summary>[AlphaFS] Unified method GetFinalPathNameByHandleInternal() to retrieve the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.
       /// <returns>Returns the final path as a string.</returns>
       /// <remarks>
       /// A final path is the path that is returned when a path is fully resolved.
       /// For example, for a symbolic link named "C:\tmp\mydir" that points to "D:\yourdir", the final path would be "D:\yourdir".
-      /// The string that is returned by this function uses the <see cref="T:LongPathPrefix"/> syntax.
+      /// The string that is returned by this function uses the <see cref="LongPathPrefix"/> syntax.
       /// </remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
-      /// <param name="handle">Then handle to a <see cref="T:SafeFileHandle"/> instance.</param>
-      /// <param name="finalPath">The final path, formatted as <see cref="T:FinalPathFormats"/></param>
+      /// <param name="handle">Then handle to a <see cref="SafeFileHandle"/> instance.</param>
+      /// <param name="finalPath">The final path, formatted as <see cref="FinalPathFormats"/></param>
       [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.GetMappedFileName(System.IntPtr,Alphaleonis.Win32.SafeGlobalMemoryBufferHandle,System.Text.StringBuilder,System.UInt32)")]
       [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.GetMappedFileName(System.IntPtr,Alphaleonis.Win32.Security.SafeLocalMemoryBufferHandle,System.Text.StringBuilder,System.UInt32)")]
       [SecurityCritical]

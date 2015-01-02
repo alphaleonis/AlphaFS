@@ -25,14 +25,14 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Represents information about a file system entry. Used together with <see cref="T:FindFileSystemEntryInfo" />.</summary>
+   /// <summary>Represents information about a file system entry. Used together with <see cref="FindFileSystemEntryInfo" />.</summary>
    [SerializableAttribute]
    [SecurityCritical]
    public sealed class FileSystemEntryInfo
    {
       #region Constructor
 
-      /// <summary>Initializes a new instance of the <see cref="T:FileSystemEntryInfo"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="FileSystemEntryInfo"/> class.</summary>
       /// <param name="findData">The <see cref="NativeMethods.Win32FindData"/> structure.</param>
       internal FileSystemEntryInfo(NativeMethods.Win32FindData findData)
       {

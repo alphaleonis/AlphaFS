@@ -29,12 +29,12 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class SafeFindFileHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      /// <summary>Initializes a new instance of the <see cref="T:SafeFindFileHandle"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeFindFileHandle"/> class.</summary>
       private SafeFindFileHandle() : base(true)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:SafeFindFileHandle"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeFindFileHandle"/> class.</summary>
       /// <param name="handle">The handle.</param>
       /// <param name="callerHandle"><c>true</c> [owns handle].</param>
       public SafeFindFileHandle(IntPtr handle, bool callerHandle) : base(callerHandle)

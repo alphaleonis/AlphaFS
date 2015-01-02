@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>The data is returned in a <see cref="T:NativeMethods.Win32FindData"/> structure,</para>
+      /// <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure,</para>
       /// <para>and cAlternateFileName member is always a NULL string.</para>
       /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
       /// </remarks>
@@ -501,7 +501,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>Repeated calls to this function return an <see cref="T:NativeMethods.SpDeviceInterfaceData"/> structure for a different device interface.</para>
+      /// <para>Repeated calls to this function return an <see cref="NativeMethods.SpDeviceInterfaceData"/> structure for a different device interface.</para>
       /// <para>This function can be called repeatedly to get information about interfaces in a device information set that are associated</para>
       /// <para>with a particular device information element or that are associated with all device information elements.</para>
       /// <para>&#160;</para>
@@ -1962,7 +1962,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>
       /// Type: BOOL
       /// For all but one of the URL types, UrlIs returns <c>true</c> if the URL is the specified type, <c>true</c> otherwise.
-      /// If UrlIs is set to <see cref="T:Shell32.UrlType.IsAppliable"/>, UrlIs will attempt to determine the URL scheme.
+      /// If UrlIs is set to <see cref="Shell32.UrlType.IsAppliable"/>, UrlIs will attempt to determine the URL scheme.
       /// If the function is able to determine a scheme, it returns <c>true</c>, or <c>false</c>.
       /// </returns>
       /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
@@ -2118,7 +2118,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>To determine whether a drive is a USB-type drive, call <see cref="M:SetupDiGetDeviceRegistryProperty"/> and specify the SPDRP_REMOVAL_POLICY property.</para>
       /// <para>&#160;</para>
       /// <returns>
-      /// <para>The return value specifies the type of drive, see <see cref="T:DriveType"/>.</para>
+      /// <para>The return value specifies the type of drive, see <see cref="DriveType"/>.</para>
       /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
       /// <para>&#160;</para>

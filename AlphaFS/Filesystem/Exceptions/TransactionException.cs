@@ -28,19 +28,19 @@ namespace Alphaleonis.Win32.Filesystem
    [SerializableAttribute]
    public class TransactionException : SystemException
    {
-      /// <summary>Initializes a new instance of the <see cref="T:TransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       public TransactionException()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:TransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
       public TransactionException(string message)
          : base(message)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:TransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
       public TransactionException(string message, Exception innerException)
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:TransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
       protected TransactionException(SerializationInfo info, StreamingContext context)

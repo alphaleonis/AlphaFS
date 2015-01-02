@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
    internal class SafeKernelTransactionHandle : SafeHandleMinusOneIsInvalid
    {
       /// <summary>
-      /// Initializes a new instance of the <see cref="T:SafeKernelTransactionHandle"/> class.
+      /// Initializes a new instance of the <see cref="SafeKernelTransactionHandle"/> class.
       /// </summary>      
       public SafeKernelTransactionHandle()
          : base(true)

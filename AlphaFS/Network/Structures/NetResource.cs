@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Network
 
          /// <summary>The scope of the enumeration.
          /// <para>&#160;</para>
-         /// <para>This member can be one of the following <see cref="T:ResourceScope"/> values.</para>
+         /// <para>This member can be one of the following <see cref="ResourceScope"/> values.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.U4)] public ResourceScope Scope;
 
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Network
 
          /// <summary>The type of resource.
          /// <para>&#160;</para>
-         /// <para>This member can be one of the following <see cref="T:ResourceType"/> values.</para>
+         /// <para>This member can be one of the following <see cref="ResourceType"/> values.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.U4)] public ResourceType Type;
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Network
 
          /// <summary>The display options for the network object in a network browsing user interface.
          /// <para>&#160;</para>
-         /// <para>This member can be one of the following <see cref="T:ResourceDisplayType"/> values.</para>
+         /// <para>This member can be one of the following <see cref="ResourceDisplayType"/> values.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.U4)] public ResourceDisplayType DisplayType;
 
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Network
 
          #region LocalName
 
-         /// <summary>If the <see cref="T:Scope"/> member is equal to <see cref="T:ResourceScope.Connected"/> or <see cref="T:ResourceScope.Remembered"/>,
+         /// <summary>If the <see cref="Scope"/> member is equal to <see cref="ResourceScope.Connected"/> or <see cref="ResourceScope.Remembered"/>,
          /// <para>this member is a pointer to a <c>null</c>-terminated character string that specifies the name of a local device.</para>
          /// <para>This member is <c>null</c> if the connection does not use a device.</para>
          /// </summary>
@@ -83,13 +83,13 @@ namespace Alphaleonis.Win32.Network
 
          #region RemoteName
 
-         /// <summary>If the entry is a network resource, this member is a <see cref="T:string"/>
+         /// <summary>If the entry is a network resource, this member is a <see cref="string"/>
          /// <para>that specifies the remote network name.</para>
          /// <para>&#160;</para>
-         /// <para>If the entry is a current or persistent connection, <see cref="T:RemoteName"/> member points to </para>
-         /// <para>the network name associated with the name pointed to by the <see cref="T:LocalName"/> member.</para>
+         /// <para>If the entry is a current or persistent connection, <see cref="RemoteName"/> member points to </para>
+         /// <para>the network name associated with the name pointed to by the <see cref="LocalName"/> member.</para>
          /// <para>&#160;</para>
-         /// <para>The <see cref="T:string"/> can be <see cref="T:Alphaleonis.Win32.Filesystem.NativeMethods.MaxPath"/> characters</para>
+         /// <para>The <see cref="string"/> can be <see cref="Alphaleonis.Win32.Filesystem.NativeMethods.MaxPath"/> characters</para>
          /// <para>in length, and it must follow the network provider's naming conventions.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.LPWStr)] public string RemoteName;
@@ -98,14 +98,14 @@ namespace Alphaleonis.Win32.Network
 
          #region Comment
 
-         /// <summary>A <see cref="T:string"/> that contains a comment supplied by the network provider.</summary>
+         /// <summary>A <see cref="string"/> that contains a comment supplied by the network provider.</summary>
          [MarshalAs(UnmanagedType.LPWStr)] public string Comment;
 
          #endregion // Comment
 
          #region Provider
 
-         /// <summary>A <see cref="T:string"/> that contains the name of the provider that owns the resource. 
+         /// <summary>A <see cref="string"/> that contains the name of the provider that owns the resource. 
          /// <para>&#160;</para>
          /// <para>This member can be <c>null</c> if the provider name is unknown.</para>
          /// <para>To retrieve the provider name, you can call the WNetGetProviderName function.</para>

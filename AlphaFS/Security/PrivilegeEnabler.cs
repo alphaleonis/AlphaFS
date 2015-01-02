@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Security
 
       private readonly List<InternalPrivilegeEnabler> _enabledPrivileges = new List<InternalPrivilegeEnabler>();
 
-      /// <summary>Initializes a new instance of the <see cref="T:PrivilegeEnabler"/> class.
+      /// <summary>Initializes a new instance of the <see cref="PrivilegeEnabler"/> class.
       /// This will enable the privileges specified (unless already enabled), and ensure that they are disabled again when
       /// the object is disposed. (Any privileges already enabled will not be disabled).
       /// </summary>

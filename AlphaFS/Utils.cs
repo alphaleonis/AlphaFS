@@ -56,7 +56,7 @@ namespace Alphaleonis
       #region GetEnumDescription
 
       /// <summary>Gets an attribute on an enum field value.</summary>
-      /// <param name="enumValue">One of the <see cref="T:DeviceGuid"/> enum types.</param>
+      /// <param name="enumValue">One of the <see cref="Alphaleonis.Win32.Filesystem.DeviceGuid"/> enum types.</param>
       /// <returns></returns>
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       public static string GetEnumDescription(Enum enumValue)
@@ -81,7 +81,7 @@ namespace Alphaleonis
       #region IsNullOrWhiteSpace
 
       /// <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
-      /// <returns><c>true</c> if the <paramref name="value"/> parameter is null or <see cref="T:string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
+      /// <returns><c>true</c> if the <paramref name="value"/> parameter is null or <see cref="String.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
       /// <param name="value">The string to test.</param>
       public static bool IsNullOrWhiteSpace(string value)
       {

@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>The identification number assigned to the resource when it is opened.</summary>
          [MarshalAs(UnmanagedType.U4)] public readonly uint Id;
 
-         /// <summary>The access permissions associated with the opening application. This member can be one or more of the following <see cref="T:AccessPermissions"/> values.</summary>
+         /// <summary>The access permissions associated with the opening application. This member can be one or more of the following <see cref="AccessPermissions"/> values.</summary>
          [MarshalAs(UnmanagedType.U4)] public readonly AccessPermissions Permissions;
 
          /// <summary>The number of file locks on the file, device, or pipe.</summary>

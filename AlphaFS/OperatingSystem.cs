@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32
 
       #region ProcessorArchitecture Name enum
 
-      /// <summary>A set of flags used by class <see cref="T:OperatingSystem"/> to indicate the current processor
+      /// <summary>A set of flags used by class <see cref="OperatingSystem"/> to indicate the current processor
       /// <para> architecture for which the OS is targeted and running.</para>
       /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Pa")]
@@ -176,7 +176,7 @@ namespace Alphaleonis.Win32
 
       #region OSVersion
 
-      /// <summary>Gets the numeric version of the OS. This is the same as returned by <see cref="T:System.Environment.OSVersion"/>.
+      /// <summary>Gets the numeric version of the OS. This is the same as returned by <see cref="System.Environment.OSVersion"/>.
       /// <para>&#160;</para>
       /// <value>Returns the numeric version of the OS.</value>
       /// </summary>
@@ -214,7 +214,7 @@ namespace Alphaleonis.Win32
       /// <summary>Gets the processor architecture for which the OS is targeted.
       /// <para>&#160;</para>
       /// <value>Returns the processor architecture for which the OS is targeted.</value>
-      /// <remarks>If running under WOW64 this will return a 32-bit processor. Use <see cref="T:IsWow64Process"/> to determine if this is the case.</remarks>
+      /// <remarks>If running under WOW64 this will return a 32-bit processor. Use <see cref="IsWow64Process"/> to determine if this is the case.</remarks>
       /// </summary>
       public static EnumProcessorArchitecture ProcessorArchitecture
       {
@@ -234,7 +234,7 @@ namespace Alphaleonis.Win32
 
       /// <summary>Gets the version of the service pack currently installed on the OS.</summary>
       /// <value>The version of the service pack currently installed on the OS.</value>
-      /// <remarks>Only the <see cref="T:Version.Major"/> and <see cref="T:Version.Minor"/> fields are used.</remarks>
+      /// <remarks>Only the <see cref="System.Version.Major"/> and <see cref="System.Version.Minor"/> fields are used.</remarks>
       public static Version ServicePackVersion
       {
          get

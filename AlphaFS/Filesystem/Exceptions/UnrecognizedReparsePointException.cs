@@ -28,19 +28,19 @@ namespace Alphaleonis.Win32.Filesystem
    [SerializableAttribute]
    public class UnrecognizedReparsePointException : System.IO.IOException
    {
-      /// <summary>Initializes a new instance of the <see cref="T:UnrecognizedReparsePointException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnrecognizedReparsePointException"/> class.</summary>
       public UnrecognizedReparsePointException()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:UnrecognizedReparsePointException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnrecognizedReparsePointException"/> class.</summary>
       /// <param name="message">The message.</param>
       public UnrecognizedReparsePointException(string message)
          : base(message)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:UnrecognizedReparsePointException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnrecognizedReparsePointException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
       public UnrecognizedReparsePointException(string message, Exception innerException)
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:UnrecognizedReparsePointException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnrecognizedReparsePointException"/> class.</summary>
       /// <param name="info">The info.</param>
       /// <param name="context">The context.</param>
       protected UnrecognizedReparsePointException(SerializationInfo info, StreamingContext context)

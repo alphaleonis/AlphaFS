@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Security
    /// </summary>
    internal sealed class InternalPrivilegeEnabler : IDisposable
    {
-      /// <summary>Initializes a new instance of the <see cref="T:PrivilegeEnabler"/> class and enabling the specified privilege for the currently running process.</summary>
+      /// <summary>Initializes a new instance of the <see cref="PrivilegeEnabler"/> class and enabling the specified privilege for the currently running process.</summary>
       /// <param name="privilegeName">The name of the privilege.</param>
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
       [SecurityCritical]

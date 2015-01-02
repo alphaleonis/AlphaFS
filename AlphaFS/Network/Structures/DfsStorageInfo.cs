@@ -26,7 +26,7 @@ namespace Alphaleonis.Win32.Network
    internal static partial class NativeMethods
    {
       /// <summary>DFS_STORAGE_INFO - Contains information about a DFS root or link target in a DFS namespace or from the cache maintained by the DFS client.</summary>
-      /// <remarks>The <see cref="T:DfsInfo"/> structure contains one or more <see cref="T:DfsStorageInfo"/> structures, one for each DFS target.
+      /// <remarks>The <see cref="DfsInfo"/> structure contains one or more <see cref="DfsStorageInfo"/> structures, one for each DFS target.
       /// Only one target can be marked as the active target. It is possible that no targets will be marked active.
       /// </remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>

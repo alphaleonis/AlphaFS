@@ -30,7 +30,7 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides properties and instance methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="T:FileStream"/> objects. This class cannot be inherited.</summary>
+   /// <summary>Provides properties and instance methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="FileStream"/> objects. This class cannot be inherited.</summary>
    [SerializableAttribute]
    public sealed class FileInfo : FileSystemInfo
    {
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
+      /// <summary>Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(string fileName) : this(null, fileName, false)
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transacted
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <param name="isFullPath">
@@ -105,17 +105,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates a <see cref="T:System.IO.StreamWriter"/> that appends text to the file represented by this instance of the <see cref="T:FileInfo"/>.</summary>
-      /// <returns>A new <see cref="T:StreamWriter"/></returns>
+      /// <summary>Creates a <see cref="System.IO.StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
+      /// <returns>A new <see cref="StreamWriter"/></returns>
       [SecurityCritical]
       public StreamWriter AppendText()
       {
          return File.AppendTextInternal(Transaction, LongFullName, NativeMethods.DefaultFileEncoding, null);
       }
 
-      /// <summary>Creates a <see cref="T:StreamWriter"/> that appends text to the file represented by this instance of the <see cref="T:FileInfo"/>.</summary>
-      /// <param name="encoding">The character <see cref="T:Encoding"/> to use.</param>
-      /// <returns>A new <see cref="T:StreamWriter"/></returns>
+      /// <summary>Creates a <see cref="StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
+      /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
+      /// <returns>A new <see cref="StreamWriter"/></returns>
       [SecurityCritical]
       public StreamWriter AppendText(Encoding encoding)
       {
@@ -132,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Copies an existing file to a new file, disallowing the overwriting of an existing file.
       /// <para>&#160;</para>
-      /// <returns>Returns a new <see cref="T:FileInfo"/> instance with a fully qualified path.</returns>
+      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing file by default.</para>
@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, disallowing the overwriting of an existing file.
       /// <para>&#160;</para>
-      /// <returns>Returns a new <see cref="T:FileInfo"/> instance with a fully qualified path.</returns>
+      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing file by default.</para>
@@ -273,7 +273,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Creates a file.</summary>
-      /// <returns><see cref="T:FileStream"/>A new file.</returns>
+      /// <returns><see cref="FileStream"/>A new file.</returns>
       [SecurityCritical]
       public FileStream Create()
       {
@@ -289,7 +289,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Creates a <see crefe="StreamWriter"/> instance that writes a new text file.</summary>
-      /// <returns>A new <see cref="T:StreamWriter"/></returns>
+      /// <returns>A new <see cref="StreamWriter"/></returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public StreamWriter CreateText()
@@ -336,7 +336,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Permanently deletes a file.</summary>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="T:FileAttributes"/> of the file.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       public void Delete(bool ignoreReadOnly)
@@ -368,8 +368,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Gets a <see cref="T:System.Security.AccessControl.FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="T:FileInfo"/> object.</summary>
-      /// <returns><see cref="T:System.Security.AccessControl.FileSecurity"/>A FileSecurity object that encapsulates the access control rules for the current file.</returns>
+      /// <summary>Gets a <see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="FileInfo"/> object.</summary>
+      /// <returns><see cref="System.Security.AccessControl.FileSecurity"/>A FileSecurity object that encapsulates the access control rules for the current file.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public FileSecurity GetAccessControl()
@@ -377,9 +377,9 @@ namespace Alphaleonis.Win32.Filesystem
          return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, null);
       }
 
-      /// <summary>Gets a <see cref="T:System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</summary>
-      /// <param name="includeSections">One of the <see cref="T:System.Security"/> values that specifies which group of access control entries to retrieve.</param>
-      /// <returns><see cref="T:System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</returns>
+      /// <summary>Gets a <see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</summary>
+      /// <param name="includeSections">One of the <see cref="System.Security"/> values that specifies which group of access control entries to retrieve.</param>
+      /// <returns><see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public FileSecurity GetAccessControl(AccessControlSections includeSections)
@@ -431,8 +431,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Opens a file in the specified mode.</summary>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
-      /// <returns>A <see cref="T:FileStream"/> file opened in the specified mode, with read/write access and unshared.</returns>
+      /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
+      /// <returns>A <see cref="FileStream"/> file opened in the specified mode, with read/write access and unshared.</returns>
       [SecurityCritical]
       public FileStream Open(FileMode mode)
       {
@@ -440,9 +440,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access.</summary>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
-      /// <param name="access">A <see cref="T:FileAccess"/> constant specifying whether to open the file with Read, Write, or ReadWrite file access.</param>
-      /// <returns>A <see cref="T:FileStream"/> object opened in the specified mode and access, and unshared.</returns>
+      /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> constant specifying whether to open the file with Read, Write, or ReadWrite file access.</param>
+      /// <returns>A <see cref="FileStream"/> object opened in the specified mode and access, and unshared.</returns>
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access)
       {
@@ -450,10 +450,10 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
-      /// <param name="access">A <see cref="T:FileAccess"/> constant specifying whether to open the file with Read, Write, or ReadWrite file access.</param>
-      /// <param name="share">A <see cref="T:FileShare"/> constant specifying the type of access other <see cref="T:FileStream"/> objects have to this file.</param>
-      /// <returns>A <see cref="T:FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
+      /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> constant specifying whether to open the file with Read, Write, or ReadWrite file access.</param>
+      /// <param name="share">A <see cref="FileShare"/> constant specifying the type of access other <see cref="FileStream"/> objects have to this file.</param>
+      /// <returns>A <see cref="FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access, FileShare share)
       {
@@ -465,9 +465,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access.</summary>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
-      /// <param name="rights">A <see cref="T:FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten along with additional options.</param>
-      /// <returns>A <see cref="T:FileStream"/> object opened in the specified mode and access, and unshared.</returns>
+      /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
+      /// <param name="rights">A <see cref="FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten along with additional options.</param>
+      /// <returns>A <see cref="FileStream"/> object opened in the specified mode and access, and unshared.</returns>
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights)
       {
@@ -475,10 +475,10 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
-      /// <param name="rights">A <see cref="T:FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten along with additional options.</param>
-      /// <param name="share">A <see cref="T:FileShare"/> constant specifying the type of access other <see cref="T:FileStream"/> objects have to this file.</param>
-      /// <returns>A <see cref="T:FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
+      /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
+      /// <param name="rights">A <see cref="FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten along with additional options.</param>
+      /// <param name="share">A <see cref="FileShare"/> constant specifying the type of access other <see cref="FileStream"/> objects have to this file.</param>
+      /// <returns>A <see cref="FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights, FileShare share)
       {
@@ -493,9 +493,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates a read-only <see cref="T:FileStream"/>.</summary>
-      /// <returns>A new read-only <see cref="T:FileStream"/> object.</returns>
-      /// <remarks>This method returns a read-only <see cref="T:FileStream"/> object with the <see cref="T:FileShare"/> mode set to Read.</remarks>
+      /// <summary>Creates a read-only <see cref="FileStream"/>.</summary>
+      /// <returns>A new read-only <see cref="FileStream"/> object.</returns>
+      /// <remarks>This method returns a read-only <see cref="FileStream"/> object with the <see cref="FileShare"/> mode set to Read.</remarks>
       [SecurityCritical]
       public FileStream OpenRead()
       {
@@ -510,8 +510,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates a <see cref="T:StreamReader"/> with <see cref="T:NativeMethods.DefaultFileEncoding"/> encoding that reads from an existing text file.</summary>
-      /// <returns>A new <see cref="T:StreamReader"/> with <see cref="T:NativeMethods.DefaultFileEncoding"/> encoding.</returns>
+      /// <summary>Creates a <see cref="StreamReader"/> with <see cref="NativeMethods.DefaultFileEncoding"/> encoding that reads from an existing text file.</summary>
+      /// <returns>A new <see cref="StreamReader"/> with <see cref="NativeMethods.DefaultFileEncoding"/> encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public StreamReader OpenText()
@@ -523,9 +523,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Creates a <see cref="T:StreamReader"/> with <see cref="T:Encoding"/> that reads from an existing text file.</summary>
-      /// <returns>A new <see cref="T:StreamReader"/> with the specified <see cref="T:Encoding"/>.</returns>
-      /// <param name="encoding">The <see cref="T:Encoding"/> applied to the contents of the file.</param>
+      /// <summary>[AlphaFS] Creates a <see cref="StreamReader"/> with <see cref="Encoding"/> that reads from an existing text file.</summary>
+      /// <returns>A new <see cref="StreamReader"/> with the specified <see cref="Encoding"/>.</returns>
+      /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public StreamReader OpenText(Encoding encoding)
@@ -541,8 +541,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates a write-only <see cref="T:FileStream"/>.</summary>
-      /// <returns>A write-only unshared <see cref="T:FileStream"/> object for a new or existing file.</returns>
+      /// <summary>Creates a write-only <see cref="FileStream"/>.</summary>
+      /// <returns>A write-only unshared <see cref="FileStream"/> object for a new or existing file.</returns>
       [SecurityCritical]
       public FileStream OpenWrite()
       {
@@ -572,11 +572,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="T:FileInfo"/> object, deleting the original file, and creating a backup of the replaced file.</summary>
+      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file.</summary>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
       /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
-      /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:FileInfo"/> object that describes the overwritten file.</remarks>
+      /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
+      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="FileInfo"/> object that describes the overwritten file.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -585,12 +585,12 @@ namespace Alphaleonis.Win32.Filesystem
          return Replace(destinationFileName, destinationBackupFileName, false, false);
       }
 
-      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="T:FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
+      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
       /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
       /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
-      /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:FileInfo"/> object that describes the overwritten file.</remarks>
+      /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
+      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="FileInfo"/> object that describes the overwritten file.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -605,7 +605,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="T:FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
+      /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
       /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
       /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
@@ -614,8 +614,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A <see cref="T:FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="T:FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="T:FileInfo"/> object that describes the overwritten file.</remarks>
+      /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
+      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="FileInfo"/> object that describes the overwritten file.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -650,7 +650,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
-      /// <param name="fileSecurity">A <see cref="T:FileSecurity"/> object that describes an access control list (ACL) entry to apply to the current file.</param>
+      /// <param name="fileSecurity">A <see cref="FileSecurity"/> object that describes an access control list (ACL) entry to apply to the current file.</param>
       /// <remarks>The SetAccessControl method applies access control list (ACL) entries to the current file that represents the noninherited ACL list. 
       /// Use the SetAccessControl method whenever you need to add or remove ACL entries from a file.
       /// </remarks>
@@ -663,8 +663,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
-      /// <param name="fileSecurity">A <see cref="T:FileSecurity"/> object that describes an access control list (ACL) entry to apply to the current file.</param>
-      /// <param name="includeSections">One or more of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
+      /// <param name="fileSecurity">A <see cref="FileSecurity"/> object that describes an access control list (ACL) entry to apply to the current file.</param>
+      /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
       /// <remarks>The SetAccessControl method applies access control list (ACL) entries to the current file that represents the noninherited ACL list. 
       /// Use the SetAccessControl method whenever you need to add or remove ACL entries from a file.
       /// </remarks>
@@ -754,7 +754,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the file is to be copied.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -791,7 +791,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the file is to be copied.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
@@ -815,7 +815,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
-      /// <para>Returns a new <see cref="T:FileInfo"/> instance with a fully qualified path when successfully copied.</para>
+      /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully copied.</para>
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
@@ -874,7 +874,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the file is to be copied.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
@@ -916,7 +916,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the file is to be copied.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -963,7 +963,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the file is to be copied.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       [SecurityCritical]
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions)
       {
@@ -995,7 +995,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the file is to be copied.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       [SecurityCritical]
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates)
@@ -1014,7 +1014,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
-      /// <para>Returns a new <see cref="T:FileInfo"/> instance with a fully qualified path when successfully copied.</para>
+      /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully copied.</para>
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
@@ -1068,7 +1068,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the file is to be copied.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
@@ -1105,7 +1105,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the file is to be copied.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -1136,8 +1136,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateStreams
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file.</summary>
-      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
+      /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
@@ -1145,8 +1145,8 @@ namespace Alphaleonis.Win32.Filesystem
          return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, null, null);
       }
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file.</summary>
-      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
+      /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
@@ -1177,9 +1177,9 @@ namespace Alphaleonis.Win32.Filesystem
          return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, name, StreamType.Data, null);
       }
 
-      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="T:StreamType"/> data streams (NTFS ADS).</summary>
-      /// <param name="type">The <see cref="T:StreamType"/> of the stream to retrieve.</param>
-      /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
+      /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public long GetStreamSize(StreamType type)
@@ -1198,7 +1198,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.
       /// <para>&#160;</para>
       /// <returns>
-      /// <para>Returns a new <see cref="T:FileInfo"/> instance with a fully qualified path when successfully moved,</para>
+      /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para>
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
@@ -1218,7 +1218,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>false</c> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1258,7 +1258,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
@@ -1284,7 +1284,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.
       /// <para>&#160;</para>
       /// <returns>
-      /// <para>Returns a new <see cref="T:FileInfo"/> instance with a fully qualified path when successfully moved,</para>
+      /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para>
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
@@ -1304,7 +1304,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
       public FileInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions)
       {
@@ -1339,7 +1339,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
@@ -1357,7 +1357,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region RefreshEntryInfo
 
-      /// <summary>Refreshes the state of the <see cref="T:FileSystemEntryInfo"/> EntryInfo instance.</summary>
+      /// <summary>Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo instance.</summary>
       [SecurityCritical]
       public new void RefreshEntryInfo()
       {
@@ -1369,7 +1369,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region RemoveStream
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the file.</summary>
-      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -1380,7 +1380,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from the file.</summary>
       /// <param name="name">The name of the stream to remove.</param>
-      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -1416,8 +1416,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath"><para>A full path string to the destination directory</para></param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
-      /// <param name="copyOptions"><para>This parameter can be <c>null</c>. Use <see cref="T:CopyOptions"/> to specify how the file is to be copied.</para></param>
-      /// <param name="moveOptions"><para>This parameter can be <c>null</c>. Use <see cref="T:MoveOptions"/> that specify how the file is to be moved.</para></param>
+      /// <param name="copyOptions"><para>This parameter can be <c>null</c>. Use <see cref="CopyOptions"/> to specify how the file is to be copied.</para></param>
+      /// <param name="moveOptions"><para>This parameter can be <c>null</c>. Use <see cref="MoveOptions"/> that specify how the file is to be moved.</para></param>
       /// <param name="progressHandler"><para>This parameter can be <c>null</c>. A callback function that is called each time another portion of the file has been copied.</para></param>
       /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
       /// <param name="longFullPath">Returns the retrieved long full path.</param>
@@ -1475,7 +1475,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets an instance of the parent directory.
       /// <para>&#160;</para>
-      /// <value>A <see cref="T:DirectoryInfo"/> object representing the parent directory of this file.</value>
+      /// <value>A <see cref="DirectoryInfo"/> object representing the parent directory of this file.</value>
       /// <para>&#160;</para>
       /// <remarks>To get the parent directory as a string, use the DirectoryName property.</remarks>
       /// </summary>
@@ -1518,7 +1518,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value><c>true</c> if the file exists; otherwise, <c>false</c>.</value>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>The <see cref="T:Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      /// <para>The <see cref="Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
       /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
       /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
       /// </remarks>
@@ -1629,7 +1629,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>The name of the file includes the file extension.</para>
-      /// <para>When first called, <see cref="T:FileInfo"/> calls Refresh and caches information about the file.</para>
+      /// <para>When first called, <see cref="FileInfo"/> calls Refresh and caches information about the file.</para>
       /// <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
       /// <para>The name of the file includes the file extension.</para>
       /// </remarks>

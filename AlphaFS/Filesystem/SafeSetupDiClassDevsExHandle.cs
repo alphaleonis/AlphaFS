@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal sealed class SafeSetupDiClassDevsExHandle : SafeHandleZeroOrMinusOneIsInvalid
       {
-         /// <summary>Initializes a new instance of the <see cref="T:SafeSetupDiClassDevsExHandle"/> class.</summary>
+         /// <summary>Initializes a new instance of the <see cref="SafeSetupDiClassDevsExHandle"/> class.</summary>
          public SafeSetupDiClassDevsExHandle()
             : base(true)
          {

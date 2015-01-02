@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          /// <summary>The FindFirstFileEx function retrieves a standard set of attribute information.
          /// <para>&#160;</para>
-         /// <para>The data is returned in a <see cref="T:NativeMethods.Win32FindData"/> structure.</para>
+         /// <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure.</para>
          /// </summary>
          Standard = 0,
 
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <para>improving overall enumeration speed.</para>
          /// <para>&#160;</para>
          /// <remarks>
-         /// <para>The data is returned in a <see cref="T:NativeMethods.Win32FindData"/> structure,</para>
+         /// <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure,</para>
          /// <para>and cAlternateFileName member is always a NULL string.</para>
          /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
          /// </remarks>

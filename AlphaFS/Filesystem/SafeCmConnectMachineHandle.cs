@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructor
 
-      /// <summary>Initializes a new instance of the <see cref="T:SafeCmConnectMachineHandle"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeCmConnectMachineHandle"/> class.</summary>
       public SafeCmConnectMachineHandle() : base(true)
       {
       }

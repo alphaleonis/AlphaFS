@@ -28,7 +28,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides the base class for both <see cref="T:FileInfo"/> and <see cref="T:DirectoryInfo"/> objects.</summary>
+   /// <summary>Provides the base class for both <see cref="FileInfo"/> and <see cref="DirectoryInfo"/> objects.</summary>
    [SerializableAttribute]
    [ComVisibleAttribute(true)]
    public abstract class FileSystemInfo : MarshalByRefObject
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region RefreshEntryInfo
 
-      /// <summary>Refreshes the state of the <see cref="T:FileSystemEntryInfo"/> EntryInfo instance.
+      /// <summary>Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo instance.
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>FileSystemInfo.RefreshEntryInfo() takes a snapshot of the file from the current file system.</para>
@@ -241,7 +241,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets or sets the attributes for the current file or directory.
       /// <para>&#160;</para>
-      /// <value><see cref="T:FileAttributes"/> of the current <see cref="T:FileSystemInfo"/>.</value>
+      /// <value><see cref="FileAttributes"/> of the current <see cref="FileSystemInfo"/>.</value>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>The value of the CreationTime property is pre-cached</para>
@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets or sets the creation time of the current file or directory.
       /// <para>&#160;</para>
-      /// <value>The creation date and time of the current <see cref="T:FileSystemInfo"/> object.</value>
+      /// <value>The creation date and time of the current <see cref="FileSystemInfo"/> object.</value>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>The value of the CreationTime property is pre-cached</para>
@@ -314,7 +314,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets or sets the creation time, in coordinated universal time (UTC), of the current file or directory.
       /// <para>&#160;</para>
-      /// <value>The creation date and time in UTC format of the current <see cref="T:FileSystemInfo"/> object.</value>
+      /// <value>The creation date and time in UTC format of the current <see cref="FileSystemInfo"/> object.</value>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>The value of the CreationTimeUtc property is pre-cached</para>
@@ -371,7 +371,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value><c>true</c> if the file or directory exists; otherwise, <c>false</c>.</value>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>The <see cref="T:Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file or directory exists.</para>
+      /// <para>The <see cref="Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file or directory exists.</para>
       /// <para>This can occur in situations that raise exceptions such as passing a directory- or file name with invalid characters or too many characters,</para>
       /// <para>a failing or missing disk, or if the caller does not have permission to read the file or directory.</para>
       /// </remarks>
@@ -384,10 +384,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the string representing the extension part of the file.
       /// <para>&#160;</para>
-      /// <value>A string containing the <see cref="T:FileSystemInfo"/> extension.</value>
+      /// <value>A string containing the <see cref="FileSystemInfo"/> extension.</value>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>The Extension property returns the <see cref="T:FileSystemInfo"/> extension, including the period (.).</para>
+      /// <para>The Extension property returns the <see cref="FileSystemInfo"/> extension, including the period (.).</para>
       /// <para>For example, for a file c:\NewFile.txt, this property returns ".txt".</para>
       /// </remarks>
       /// </summary>
@@ -593,7 +593,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       private FileSystemEntryInfo _entryInfo;
 
-      /// <summary>[AlphaFS] Gets the instance of the <see cref="T:FileSystemEntryInfo"/> class.</summary>
+      /// <summary>[AlphaFS] Gets the instance of the <see cref="FileSystemEntryInfo"/> class.</summary>
       public FileSystemEntryInfo EntryInfo
       {
          [SecurityCritical]
@@ -703,7 +703,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Represents the fully qualified path of the file or directory.
       /// <remarks>
-      /// <para>Classes derived from <see cref="T:FileSystemInfo"/> can use the FullPath field</para>
+      /// <para>Classes derived from <see cref="FileSystemInfo"/> can use the FullPath field</para>
       /// <para>to determine the full path of the object being manipulated.</para>
       /// </remarks>
       /// </summary>

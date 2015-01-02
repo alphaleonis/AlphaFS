@@ -28,19 +28,19 @@ namespace Alphaleonis.Win32.Filesystem
    [SerializableAttribute]
    public class NotAReparsePointException : System.IO.IOException
    {
-      /// <summary>Initializes a new instance of the <see cref="T:NotAReparsePointException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
       public NotAReparsePointException()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:NotAReparsePointException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
       /// <param name="message">The message.</param>
       public NotAReparsePointException(string message)
          : base(message)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:NotAReparsePointException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
       public NotAReparsePointException(string message, Exception innerException)
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:NotAReparsePointException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
       /// <param name="info">The info.</param>
       /// <param name="context">The context.</param>
       protected NotAReparsePointException(SerializationInfo info, StreamingContext context)

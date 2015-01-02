@@ -22,7 +22,7 @@ using System;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Defines the controllable aspects of the <see cref="T:Volume.DefineDosDevice(string, string, DosDeviceAttributes)"/> method.</summary>
+   /// <summary>Defines the controllable aspects of the <see cref="Volume.DefineDosDevice(string, string, DosDeviceAttributes)"/> method.</summary>
    [Flags]
    public enum DosDeviceAttributes
    {
@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>(0x00000004) DDD_EXACT_MATCH_ON_REMOVE
       /// <para>&#160;</para>
-      /// <para>If this value is specified along with <see cref="T:RemoveDefinition"/>,</para>
+      /// <para>If this value is specified along with <see cref="RemoveDefinition"/>,</para>
       /// <para>the function will use an exact match to determine which mapping to remove.</para>
       /// Use this value to ensure that you do not delete something that you did not define.
       /// </summary>

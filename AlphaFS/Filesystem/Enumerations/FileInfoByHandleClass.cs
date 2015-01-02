@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region FILE_ID_BOTH_DIR_INFO
 
-         ///// <summary>(11) FILE_ID_BOTH_DIR_INFO - Identical to <see cref="T:FileIdBothDirectoryInfo"/>, but forces the enumeration operation to start again from the beginning.
+         ///// <summary>(11) FILE_ID_BOTH_DIR_INFO - Identical to <see cref="FileIdBothDirectoryInfo"/>, but forces the enumeration operation to start again from the beginning.
          ///// </summary>
          //FileIdBothDirectoryInfoRestartInfo = 11,
 

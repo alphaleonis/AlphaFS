@@ -59,8 +59,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnumerateDevices
 
       /// <summary>Enumerates all available devices on the local host.</summary>
-      /// <param name="deviceGuid">One of the <see cref="T:DeviceGuid"/> devices.</param>
-      /// <returns>Returns <see cref="T:IEnumerable{DeviceInfo}"/> instances of type <see cref="T:DeviceGuid"/> from the local host.</returns>
+      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
+      /// <returns>Returns <see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
       [SecurityCritical]
       public IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region BaseContainerId
 
-      /// <summary>Represents the <see cref="T:Guid"/> value of the base container identifier (ID) .The Windows Plug and Play (PnP) manager assigns this value to the device node (devnode).</summary>
+      /// <summary>Represents the <see cref="Guid"/> value of the base container identifier (ID) .The Windows Plug and Play (PnP) manager assigns this value to the device node (devnode).</summary>
       public Guid BaseContainerId { get; internal set; }
 
       #endregion // BaseContainerId
@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region ClassGuid
 
-      /// <summary>Represents the <see cref="T:Guid"/> of the device setup class that a device instance belongs to.</summary>
+      /// <summary>Represents the <see cref="Guid"/> of the device setup class that a device instance belongs to.</summary>
       public Guid ClassGuid { get; internal set; }
 
       #endregion // ClassGuid

@@ -22,7 +22,7 @@
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Used by CopyFileXxx and MoveFileXxx.
-   /// <para>The reason that <see cref="T:CopyMoveProgressRoutine"/> was called.</para>
+   /// <para>The reason that <see cref="CopyMoveProgressRoutine"/> was called.</para>
    /// </summary>
    public enum CopyMoveProgressCallbackReason
    {

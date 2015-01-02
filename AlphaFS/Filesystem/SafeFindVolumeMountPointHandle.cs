@@ -29,13 +29,13 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    internal sealed class SafeFindVolumeMountPointHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      /// <summary>Initializes a new instance of the <see cref="T:SafeFindVolumeMountPointHandle"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeFindVolumeMountPointHandle"/> class.</summary>
       private SafeFindVolumeMountPointHandle()
          : base(true)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:SafeFindVolumeHandle"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeFindVolumeHandle"/> class.</summary>
       /// <param name="handle">The handle.</param>
       /// <param name="callerHandle"><c>true</c> [owns handle].</param>
       public SafeFindVolumeMountPointHandle(IntPtr handle, bool callerHandle) : base(callerHandle)

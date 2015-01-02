@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Enumerate
 
       /// <summary>Get an enumerator that returns all of the file system objects that match the wildcards that are in any of the directories to be searched.</summary>
-      /// <returns>An <see cref="T:IEnumerable{T}"/> instance: FileSystemEntryInfo, DirectoryInfo, FileInfo or string (full- or long path).</returns>
+      /// <returns>An <see cref="IEnumerable{T}"/> instance: FileSystemEntryInfo, DirectoryInfo, FileInfo or string (full- or long path).</returns>
       [SecurityCritical]
       public IEnumerable<T> Enumerate<T>()
       {
@@ -206,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Get
 
       /// <summary>Gets a specific file system object.</summary>
-      /// <returns>An <see cref="T:IEnumerable{FileSystemEntryInfo}"/> instance.</returns>
+      /// <returns>An <see cref="IEnumerable{FileSystemEntryInfo}"/> instance.</returns>
       [SecurityCritical]
       public FileSystemEntryInfo Get()
       {
@@ -228,8 +228,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AsFileSystemInfo
 
-      /// <summary>Gets or sets the ability to return the object as a <see cref="T:FileSystemInfo"/> instance.</summary>
-      /// <value><c>true</c> returns the object as a <see cref="T:FileSystemInfo"/> instance.</value>
+      /// <summary>Gets or sets the ability to return the object as a <see cref="FileSystemInfo"/> instance.</summary>
+      /// <value><c>true</c> returns the object as a <see cref="FileSystemInfo"/> instance.</value>
       public bool AsFileSystemInfo { get; set; }
 
       #endregion // AsFileSystemInfo
@@ -244,8 +244,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AsString
 
-      /// <summary>Gets or sets the ability to return the object instance as a <see cref="T:string"/>.</summary>
-      /// <value><c>true</c> returns the full path of the object as a <see cref="T:string"/></value>
+      /// <summary>Gets or sets the ability to return the object instance as a <see cref="string"/>.</summary>
+      /// <value><c>true</c> returns the full path of the object as a <see cref="string"/></value>
       public bool AsString { get; set; }
 
       #endregion // AsString
@@ -254,8 +254,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       private NativeMethods.FindExInfoLevels _basicSearch = NativeMethods.BasicSearch;
 
-      /// <summary>Gets or sets a value indicating which <see cref="T:NativeMethods.FindExInfoLevels"/> to use.</summary>
-      /// <value><c>true</c> uses <see cref="T:NativeMethods.FindExInfoLevels.Basic"/>, otherwise uses <see cref="T:NativeMethods.FindExInfoLevels.Standard"/></value>
+      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExInfoLevels"/> to use.</summary>
+      /// <value><c>true</c> uses <see cref="NativeMethods.FindExInfoLevels.Basic"/>, otherwise uses <see cref="NativeMethods.FindExInfoLevels.Standard"/></value>
       public bool BasicSearch
       {
          get { return _basicSearch == NativeMethods.FindExInfoLevels.Basic; }
@@ -339,7 +339,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFolder
 
-      /// <summary>Gets or sets a value indicating which <see cref="T:NativeMethods.FindExInfoLevels"/> to use.</summary>
+      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExInfoLevels"/> to use.</summary>
       /// <value><c>null</c> indicates the file system object is unknown, <c>true</c> indicates a folder object, <c>false</c> indicates a file object.</value>
       public bool IsFolder { get; set; }
 
@@ -356,8 +356,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       private NativeMethods.FindExAdditionalFlags _largeCache = NativeMethods.LargeCache;
 
-      /// <summary>Gets or sets a value indicating which <see cref="T:NativeMethods.FindExAdditionalFlags"/> to use.</summary>
-      /// <value><c>true</c> uses <see cref="T:NativeMethods.FindExAdditionalFlags.LargeFetch"/>, otherwise uses <see cref="T:NativeMethods.FindExAdditionalFlags.None"/></value>
+      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExAdditionalFlags"/> to use.</summary>
+      /// <value><c>true</c> uses <see cref="NativeMethods.FindExAdditionalFlags.LargeFetch"/>, otherwise uses <see cref="NativeMethods.FindExAdditionalFlags.None"/></value>
       public bool LargeCache
       {
          get { return _largeCache == NativeMethods.FindExAdditionalFlags.LargeFetch; }
@@ -387,7 +387,7 @@ namespace Alphaleonis.Win32.Filesystem
       private Regex _nameFilter;
 
       /// <summary>Search for file system object-name using a pattern.</summary>
-      /// <value>The path which has wildcard characters, for example, an asterisk (<see cref="T:Path.WildcardStarMatchAll"/>) or a question mark (<see cref="T:Path.WildcardQuestion"/>).</value>
+      /// <value>The path which has wildcard characters, for example, an asterisk (<see cref="Path.WildcardStarMatchAll"/>) or a question mark (<see cref="Path.WildcardQuestion"/>).</value>
       public string SearchPattern
       {
          get { return _searchPattern; }

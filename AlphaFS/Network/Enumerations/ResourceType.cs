@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Network
          /// <remarks>
          /// <para>If a network provider cannot distinguish between</para>
          /// <para>print and disk resources, it can enumerate all resources.</para>
-         /// <para>This value cannot be combined with <see cref="T:ResourceTypeDisk"/> or <see cref="T:ResourceType.Print"/>.</para>
+         /// <para>This value cannot be combined with <see cref="Disk"/> or <see cref="ResourceType.Print"/>.</para>
          /// </remarks>
          /// </summary>
          Any = 0,

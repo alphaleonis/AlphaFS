@@ -26,7 +26,7 @@ namespace Alphaleonis.Win32.Network
 {
    /// <summary>A set of bit flags that describe the state of the DFS root or link;
    /// <para>the state of the DFS namespace root cannot be changed.</para>
-   /// <para>One <see cref="T:DfsVolumeStates"/> flag is set, and one DFS_VOLUME_FLAVOR flag is set.</para>
+   /// <para>One <see cref="DfsVolumeStates"/> flag is set, and one DFS_VOLUME_FLAVOR flag is set.</para>
    /// </summary>
    [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue")]
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]

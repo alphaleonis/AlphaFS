@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>SPDRP_CLASS (0x00000007) - Represents the name of the device setup class that a device instance belongs to.</summary>
          Class = 7,
 
-         /// <summary>SPDRP_CLASSGUID (0x00000008) - Represents the <see cref="T:Guid"/> of the device setup class that a device instance belongs to.</summary>
+         /// <summary>SPDRP_CLASSGUID (0x00000008) - Represents the <see cref="System.Guid"/> of the device setup class that a device instance belongs to.</summary>
          ClassGuid = 8,
 
          /// <summary>SPDRP_DRIVER (0x00000009) - Represents the registry entry name of the driver key for a device instance.</summary>
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>SPDRP_LOWERFILTERS (0x00000012) - Represents a list of the service names of the lower-level filter drivers that are installed for a device instance.</summary>
          //LowerFilters = 18,
 
-         ///// <summary>SPDRP_BUSTYPEGUID (0x00000013) - Represents the <see cref="T:Guid"/> that identifies the bus type of a device instance.</summary>
+         ///// <summary>SPDRP_BUSTYPEGUID (0x00000013) - Represents the <see cref="Guid"/> that identifies the bus type of a device instance.</summary>
          //BusTypeGuid = 19,
 
          ///// <summary>SPDRP_LEGACYBUSTYPE (0x00000014) - Represents the legacy bus number of a device instance.</summary>
@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>SPDRP_ADDRESS (0x0000001C) - Represents the bus-specific address of a device instance.</summary>
          //Address = 28,
 
-         ///// <summary>SPDRP_UI_NUMBER_DESC_FORMAT (0X0000001D) - Represents a printf-compatible format string that you should use to display the value of the <see cref="T:UiNumber"/> device property for a device instance.</summary>
+         ///// <summary>SPDRP_UI_NUMBER_DESC_FORMAT (0X0000001D) - Represents a printf-compatible format string that you should use to display the value of the <see cref="UiNumber"/> device property for a device instance.</summary>
          //UiNumberDescriptionFormat = 29,
 
          ///// <summary>SPDRP_DEVICE_POWER_DATA (0x0000001E) - Represents power information about a device instance.</summary>
@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>SPDRP_LOCATION_PATHS (0x00000023) - Represents the location of a device instance in the device tree.</summary>
          LocationPaths = 35,
 
-         /// <summary>SPDRP_BASE_CONTAINERID (0x00000024) - Represents the <see cref="T:Guid"/> value of the base container identifier (ID) .The Windows Plug and Play (PnP) manager assigns this value to the device node (devnode).</summary>
+         /// <summary>SPDRP_BASE_CONTAINERID (0x00000024) - Represents the <see cref="System.Guid"/> value of the base container identifier (ID) .The Windows Plug and Play (PnP) manager assigns this value to the device node (devnode).</summary>
          BaseContainerId = 36
       }
    }
