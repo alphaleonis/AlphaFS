@@ -19,18 +19,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaFS.UnitTest", "AlphaFS.UnitTest\AlphaFS.UnitTest.csproj", "{BC336637-FDD7-4D13-9B24-1A888E85A944}"
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = AlphaFS\\AlphaFS.csproj
-		SccProjectName1 = AlphaFS
-		SccLocalPath1 = AlphaFS
-		SccProjectUniqueName2 = AlphaFS.UnitTest\\AlphaFS.UnitTest.csproj
-		SccProjectName2 = AlphaFS.UnitTest
-		SccLocalPath2 = AlphaFS.UnitTest
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86

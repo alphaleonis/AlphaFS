@@ -10,10 +10,6 @@
     <RootNamespace>Alphaleonis.Win32</RootNamespace>
     <AssemblyName>AlphaFS</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\AlphaFS.snk</AssemblyOriginatorKeyFile>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
