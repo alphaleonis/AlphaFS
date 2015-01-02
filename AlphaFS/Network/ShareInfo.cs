@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Creates a <see cref="ShareInfo"/> instance.</summary>
       /// <param name="host">A host to retrieve shares from.</param>
       /// <param name="shareLevel">Possible structure levels: <see cref="NativeMethods.ShareInfo503">503</see>, <see cref="NativeMethods.ShareInfo2">2</see>,  <see cref="NativeMethods.ShareInfo1">1</see> and <see cref="NativeMethods.ShareInfo1005">1005</see>.</param>
-      /// <param name="shareInfo">A ShareInfo2 or ShareInfo503 instance.</param>
+      /// <param name="shareInfo">A <see cref="NativeMethods.ShareInfo2"/> or <see cref="NativeMethods.ShareInfo503"/> instance.</param>
       internal ShareInfo(string host, int shareLevel, object shareInfo)
       {
          switch (shareLevel)

@@ -562,7 +562,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets an <see cref="IntPtr"/> handle to the Shell icon that represents the file.</summary>
       /// <returns>An <see cref="IntPtr"/> handle to the Shell icon that represents the file, or IntPtr.Zero on failure.</returns>
       /// <remarks>Caller is responsible for destroying this handle with DestroyIcon() when no longer needed.</remarks>
-      /// <param name="filePath">The path to the file system object which should not exceed MaxPath in length. Both absolute and relative paths are valid.</param>
+      /// <param name="filePath">The path to the file system object which should not exceed <see cref="NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
       /// <param name="iconAttributes">Icon size <see cref="Shell32.FileAttributes.SmallIcon"/> or <see cref="Shell32.FileAttributes.LargeIcon"/>. Can also be combined with <see cref="Shell32.FileAttributes.AddOverlays"/> and others.</param>
       [SecurityCritical]
       public static IntPtr GetFileIcon(string filePath, FileAttributes iconAttributes)
@@ -587,7 +587,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Failure to do so could cause the UI to stop responding.</para>
       /// <para>Unicode path are supported.</para>
       /// </remarks>
-      /// <param name="filePath">The path to the file system object which should not exceed MaxPath in length. Both absolute and relative paths are valid.</param>
+      /// <param name="filePath">The path to the file system object which should not exceed <see cref="NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
       /// <param name="attributes">A <see cref="System.IO.FileAttributes"/> attribute.</param>
       /// <param name="fileAttributes">One ore more <see cref="FileAttributes"/> attributes.</param>
       /// <param name="continueOnException">
@@ -709,7 +709,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region PathFileExists
 
       /// <summary>Determines whether a path to a file system object such as a file or folder is valid.</summary>
-      /// <param name="path">The full path of maximum length MaxPath to the object to verify.</param>
+      /// <param name="path">The full path of maximum length <see cref="NativeMethods.MaxPath"/> to the object to verify.</param>
       /// <returns><c>true</c> if the file exists; <c>false</c> otherwise</returns>
       [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastError")]
       [SecurityCritical]
@@ -749,7 +749,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region UrlCreateFromPath
 
       /// <summary>Converts a Microsoft MS-DOS path to a canonicalized URL.</summary>
-      /// <param name="path">The full MS-DOS path of maximum length MaxPath.</param>
+      /// <param name="path">The full MS-DOS path of maximum length <see cref="NativeMethods.MaxPath"/>.</param>
       /// <returns>
       /// <para>The URL. If no URL can be created <c>string.Empty</c> is returned.</para>
       /// <para>If <paramref name="path"/> is <c>null</c>, <c>null</c> will also be returned.</para>
@@ -885,7 +885,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Failure to do so could cause the UI to stop responding.</para>
       /// <para>Unicode path are not supported.</para>
       /// </remarks>
-      /// <param name="path">The path to the file system object which should not exceed MaxPath in length. Both absolute and relative paths are valid.</param>
+      /// <param name="path">The path to the file system object which should not exceed <see cref="NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
       /// <param name="attributes">A <see cref="System.IO.FileAttributes"/> attribute.</param>
       /// <param name="fileAttributes">A <see cref="FileAttributes"/> attribute.</param>
       /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>

@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class,
       /// <para>which acts as a wrapper for a DFS root or link target.</para>
       /// </summary>
-      /// <param name="structure">An initialized DfsInfo4 instance.</param>
+      /// <param name="structure">An initialized <see cref="NativeMethods.DfsInfo4"/> instance.</param>
       internal DfsInfo(NativeMethods.DfsInfo4 structure) : this(null, structure)
       {
       }
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Network
       /// <para>which acts as a wrapper for a DFS root or link target.</para>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="structure">An initialized DfsInfo4 instance.</param>
+      /// <param name="structure">An initialized <see cref="NativeMethods.DfsInfo4"/> instance.</param>
       private DfsInfo(KernelTransaction transaction, NativeMethods.DfsInfo4 structure)
       {
          Transaction = transaction;
