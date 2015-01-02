@@ -129,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates a directory.</summary>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Create()
       {
@@ -139,7 +139,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity)
@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void Create(bool compress)
@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity, bool compress)
@@ -190,7 +190,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path)
       {
@@ -206,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity)
       {
@@ -226,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, bool compress)
       {
@@ -243,7 +243,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, string templatePath, bool compress)
       {
@@ -261,7 +261,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity, bool compress)
       {
@@ -279,7 +279,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
@@ -298,7 +298,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public override void Delete()
       {
@@ -314,7 +314,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Delete(bool recursive)
       {
@@ -332,7 +332,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the <see cref="DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <c>false</c>.
       /// Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly)
       {
@@ -505,7 +505,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the directory described by the current DirectoryInfo object.</summary>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public DirectorySecurity GetAccessControl()
       {
@@ -515,7 +515,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the directory described by the current <see cref="DirectoryInfo"/> object.</summary>
       /// <param name="includeSections">One of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the path parameter.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public DirectorySecurity GetAccessControl(AccessControlSections includeSections)
       {
@@ -750,20 +750,18 @@ namespace Alphaleonis.Win32.Filesystem
       #region MoveTo
 
       /// <summary>Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
       /// <para>This method does not work across disk volumes.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationFullPath">
       /// <para>The name and path to which to move this directory.</para>
       /// <para>The destination cannot be another disk volume or a directory with the identical name.</para>
@@ -800,7 +798,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity)
@@ -811,7 +809,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
       /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity, AccessControlSections includeSections)
@@ -846,7 +844,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to the directory.</summary>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
@@ -862,21 +860,18 @@ namespace Alphaleonis.Win32.Filesystem
       #region DirectoryInfo
 
       /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
@@ -892,22 +887,19 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
@@ -929,23 +921,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -965,24 +954,21 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
@@ -1008,10 +994,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region DirectoryInfo
 
       /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
-      /// <para>&#160;</para>
-      /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
-      /// <para>&#160;</para>
       /// </summary>
+      /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
@@ -1022,7 +1006,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The destination directory path.</param>
       [SecurityCritical]
       public DirectoryInfo CopyTo1(string destinationPath)
@@ -1033,22 +1016,19 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
@@ -1065,23 +1045,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -1095,25 +1072,22 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
+      /// </summary>
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
@@ -1164,7 +1138,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <remarks>This will only compress the root items, non recursive.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Compress()
       {
@@ -1173,7 +1147,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Compress(DirectoryEnumerationOptions directoryEnumerationOptions)
       {
@@ -1189,7 +1163,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
       /// However, newly created files and directories will be uncompressed.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void DisableCompression()
       {
@@ -1203,7 +1177,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0"</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void DisableEncryption()
       {
@@ -1216,7 +1190,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <remarks>This will only decompress the root items, non recursive.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Decompress()
       {
@@ -1225,7 +1199,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Decompress(DirectoryEnumerationOptions directoryEnumerationOptions)
       {
@@ -1288,7 +1262,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// This method enables the directory-compression attribute. It will not compress the current contents of the directory.
       /// However, newly created files and directories will be compressed.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void EnableCompression()
       {
@@ -1302,7 +1276,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=1"</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void EnableEncryption()
       {
@@ -1334,7 +1308,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</summary>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
@@ -1343,7 +1317,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</summary>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the directory.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
@@ -1374,7 +1348,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
       /// <returns>The number of bytes used by all data streams.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public long GetStreamSize()
       {
@@ -1384,7 +1358,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public long GetStreamSize(string name)
       {
@@ -1394,7 +1368,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public long GetStreamSize(StreamType type)
       {
@@ -1411,24 +1385,21 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
       /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationFullPath">
       /// <para>The name and path to which to move this directory.</para>
       /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
@@ -1454,24 +1425,21 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
       /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationFullPath">
       /// <para>The name and path to which to move this directory.</para>
       /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
@@ -1502,7 +1470,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para>
       /// </returns>
@@ -1513,13 +1481,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationFullPath">
       /// <para>The name and path to which to move this directory.</para>
       /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
@@ -1540,24 +1506,21 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
       /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationFullPath">
       /// <para>The name and path to which to move this directory.</para>
       /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
@@ -1595,7 +1558,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the directory.</summary>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void RemoveStream()
       {
@@ -1606,7 +1569,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to remove.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void RemoveStream(string name)
       {
@@ -1621,25 +1584,21 @@ namespace Alphaleonis.Win32.Filesystem
       #region CopyToMoveToInternal
 
       /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
-      /// <para><see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,</para>
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified, and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
       /// <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
@@ -1697,7 +1656,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       private DirectoryInfo CreateSubdirectoryInternal(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {

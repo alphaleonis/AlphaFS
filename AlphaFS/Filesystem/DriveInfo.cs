@@ -188,7 +188,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves the drive names of all logical drives on a computer.</summary>
       /// <returns>An array of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
       {
@@ -219,7 +219,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on a computer.</summary>
       /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<DriveInfo> EnumerateDrives(bool fromEnvironment, bool isReady)
       {
@@ -233,7 +233,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the first available drive letter on the local system.</summary>
       /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
       /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       public static char GetFreeDriveLetter()
       {
          return GetFreeDriveLetter(false);
@@ -243,7 +243,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="getLastAvailable">When <c>true</c> get the last available drive letter. When <c>false</c> gets the first available drive letter.</param>
       /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
       /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
       public static char GetFreeDriveLetter(bool getLastAvailable)
@@ -511,7 +511,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The label length is determined by the operating system. For example, NTFS allows a volume label
       /// to be up to 32 characters long. Note that <c>null</c> is a valid VolumeLabel.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       public string VolumeLabel
       {
          get { return (string) GetDeviceInfo(0, 2); }

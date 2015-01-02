@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region ErrorMessage
 
-      /// <summary>The error message from the <see cref="M:ErrorCode"/> that was encountered during the Copy or Move action.
+      /// <summary>The error message from the <see cref="ErrorCode"/> that was encountered during the Copy or Move action.
       /// <para>&#160;</para>
       /// </summary>
       public string ErrorMessage { get; private set; }

@@ -403,7 +403,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, bool? isFullPath)
       {

@@ -579,17 +579,14 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetFileInfo
 
       /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system,
+      /// </summary>
       /// <para>such as a file, folder, directory, or drive root.</para>
-      /// <para>&#160;</para>
       /// <returns>Returns a <see cref="Shell32.FileInfo"/> struct instance.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>You should call this function from a background thread.</para>
       /// <para>Failure to do so could cause the UI to stop responding.</para>
       /// <para>Unicode path are supported.</para>
       /// </remarks>
-      /// </summary>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="filePath">The path to the file system object which should not exceed <see cref="NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
       /// <param name="attributes">A <see cref="System.IO.FileAttributes"/> attribute.</param>
       /// <param name="fileAttributes">One ore more <see cref="FileAttributes"/> attributes.</param>
@@ -880,17 +877,14 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetFileInfoInternal
 
       /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system,
+      /// </summary>
       /// <para>such as a file, folder, directory, or drive root.</para>
-      /// <para>&#160;</para>
       /// <returns>Returns a <see cref="Shell32.FileInfo"/> struct instance.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>You should call this function from a background thread.</para>
       /// <para>Failure to do so could cause the UI to stop responding.</para>
       /// <para>Unicode path are not supported.</para>
       /// </remarks>
-      /// </summary>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="path">The path to the file system object which should not exceed <see cref="NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
       /// <param name="attributes">A <see cref="System.IO.FileAttributes"/> attribute.</param>
       /// <param name="fileAttributes">A <see cref="FileAttributes"/> attribute.</param>

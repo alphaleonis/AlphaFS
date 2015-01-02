@@ -142,8 +142,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <returns>
       /// <para>The extension of the specified path (including the period "."), or null, or <see cref="string.Empty"/>.</para>
-      /// <para>If <paramref name="path"/> is null, <see cref="M:Path.GetExtension()"/> returns null.</para>
-      /// <para>If <paramref name="path"/> does not have extension information, <see cref="M:Path.GetExtension()"/> returns <see cref="string.Empty"/>.</para>
+      /// <para>If <paramref name="path"/> is null, <see cref="O:Alphaleonis.Win32.Filesystem.Path.GetExtension"/> returns null.</para>
+      /// <para>If <paramref name="path"/> does not have extension information, <see cref="O:Alphaleonis.Win32.Filesystem.Path.GetExtension"/> returns <see cref="string.Empty"/>.</para>
       /// </returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
@@ -163,8 +163,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <returns>
       /// <para>The extension of the specified path (including the period "."), or null, or <see cref="string.Empty"/>.</para>
-      /// <para>If <paramref name="path"/> is null, <see cref="M:Path.GetExtension()"/> returns null.</para>
-      /// <para>If <paramref name="path"/> does not have extension information, <see cref="M:Path.GetExtension()"/> returns <see cref="string.Empty"/>.</para>
+      /// <para>If <paramref name="path"/> is null, <see cref="O:Alphaleonis.Win32.Filesystem.Path.GetExtension"/> returns null.</para>
+      /// <para>If <paramref name="path"/> does not have extension information, <see cref="O:Alphaleonis.Win32.Filesystem.Path.GetExtension"/> returns <see cref="string.Empty"/>.</para>
       /// </returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// </summary>
@@ -762,13 +762,12 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetFinalPathNameByHandle
 
       /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.
+      /// </summary>
       /// <returns>Returns the final path as a string.</returns>
       /// <remarks>
       /// A final path is the path that is returned when a path is fully resolved.
       /// For example, for a symbolic link named "C:\tmp\mydir" that points to "D:\yourdir", the final path would be "D:\yourdir".
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="handle">Then handle to a <see cref="SafeFileHandle"/> instance.</param>
       [SecurityCritical]
       public static string GetFinalPathNameByHandle(SafeFileHandle handle)
@@ -777,13 +776,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.
+      /// </summary>
       /// <returns>Returns the final path as a string.</returns>
       /// <remarks>
       /// A final path is the path that is returned when a path is fully resolved.
       /// For example, for a symbolic link named "C:\tmp\mydir" that points to "D:\yourdir", the final path would be "D:\yourdir".
-      /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
+      /// </remarks>            
       /// <param name="handle">Then handle to a <see cref="SafeFileHandle"/> instance.</param>
       /// <param name="finalPath">The final path, formatted as <see cref="FinalPathFormats"/></param>
       [SecurityCritical]
@@ -812,9 +810,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetLongFrom83ShortPath
 
       /// <summary>[AlphaFS] Converts the specified existing path to its regular long form.
-      /// <returns>The regular full path.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>The regular full path.</returns>
       /// <param name="path">An existing path to a folder or file.</param>
       [SecurityCritical]
       public static string GetLongFrom83ShortPath(string path)
@@ -825,9 +822,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region Transacted
 
       /// <summary>[AlphaFS] Converts the specified existing path to its regular long form.
-      /// <returns>The regular full path.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>The regular full path.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">An existing path to a folder or file.</param>
       [SecurityCritical]
@@ -843,10 +839,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetMappedConnectionName
 
       /// <summary>[AlphaFS] Gets the connection name of the locally mapped drive.
+      /// </summary>
       /// <returns>The server and share as: \\servername\sharename.</returns>
       /// <exception cref="PathTooLongException">When <paramref name="path"/> exceeds <see cref="NativeMethods.MaxPath"/></exception>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="path">The local path with drive name.</param>
       [SecurityCritical]
       public static string GetMappedConnectionName(string path)
@@ -859,10 +854,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetMappedUncName
 
       /// <summary>[AlphaFS] Gets the network share name from the locally mapped path.
+      /// </summary>
       /// <returns>The network share connection name of <paramref name="path"/>.</returns>
       /// <exception cref="PathTooLongException">When <paramref name="path"/> exceeds <see cref="NativeMethods.MaxPath"/></exception>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="path">The local path with drive name.</param>
       [SecurityCritical]
       public static string GetMappedUncName(string path)
@@ -890,11 +884,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetShort83Path
 
       /// <summary>[AlphaFS] Retrieves the short path form of the specified path.
+      /// </summary>
       /// <returns>A path that has the 8.3 path form.</returns>
       /// <remarks>Will fail on NTFS volumes with disabled 8.3 name generation.</remarks>
       /// <remarks>The path must actually exist to be able to get the short path name.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="path">An existing path to a folder or file.</param>
       [SecurityCritical]
       public static string GetShort83Path(string path)
@@ -905,11 +898,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region Transacted
 
       /// <summary>[AlphaFS] Retrieves the short path form of the specified path.
+      /// </summary>
       /// <returns>A path that has the 8.3 path form.</returns>
       /// <remarks>Will fail on NTFS volumes with disabled 8.3 name generation.</remarks>
       /// <remarks>The path must actually exist to be able to get the short path name.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">An existing path to a folder or file.</param>
       [SecurityCritical]
@@ -1443,14 +1435,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetFinalPathNameByHandleInternal
 
       /// <summary>[AlphaFS] Unified method GetFinalPathNameByHandleInternal() to retrieve the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.
+      /// </summary>
       /// <returns>Returns the final path as a string.</returns>
       /// <remarks>
       /// A final path is the path that is returned when a path is fully resolved.
       /// For example, for a symbolic link named "C:\tmp\mydir" that points to "D:\yourdir", the final path would be "D:\yourdir".
       /// The string that is returned by this function uses the <see cref="LongPathPrefix"/> syntax.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="handle">Then handle to a <see cref="SafeFileHandle"/> instance.</param>
       /// <param name="finalPath">The final path, formatted as <see cref="FinalPathFormats"/></param>
       [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.GetMappedFileName(System.IntPtr,Alphaleonis.Win32.SafeGlobalMemoryBufferHandle,System.Text.StringBuilder,System.UInt32)")]
@@ -1555,18 +1546,15 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetFullPathInternal
 
       /// <summary>[AlphaFS] Unified method GetFullPathInternal() to retrieve the absolute path for the specified <paramref name="path"/> string.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns the fully qualified location of <paramref name="path"/>, such as "C:\MyFile.txt".</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
       /// <para>GetFullPath does not work reliable with relative paths.</para>
       /// <para>GetFullPath is not recommended for multithreaded applications or shared library code.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       /// <param name="asLongPath"><c>true</c> returns the path in long path (Unicode) format, when <c>false</c> returns the path as a regular path.</param>
@@ -1632,16 +1620,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetLongPathInternal
 
       /// <summary>[AlphaFS] Unified method GetLongPathInternal() to get a long path (Unicode path) of the specified <paramref name="path"/>.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns the <paramref name="path"/> as a long path, such as "\\?\C:\MyFile.txt".</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>      
       /// <param name="path">The path to the file or directory, this may also be an UNC path.</param>
       /// <param name="trimEnd"><c>true</c> removes trailing whitespace from <paramref name="path"/>.</param>
       /// <param name="addDirectorySeparator"><c>true</c> adds a directory separator to that path.</param>
@@ -1694,13 +1679,12 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetLongShort83PathInternal
 
       /// <summary>[AlphaFS] Unified method GetLongShort83PathInternal() to retrieve the short path form, or the regular long form of the specified <paramref name="path"/>.
+      /// </summary>
       /// <returns>If <paramref name="getShort"/> is <c>true</c>, a path of the 8.3 form otherwise the regular long form.</returns>
       /// <remarks>
       /// <para>Will fail on NTFS volumes with disabled 8.3 name generation.</para>
       /// <para>The path must actually exist to be able to get the short- or long path name.</para>
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">An existing path to a folder or file.</param>
       /// <param name="getShort"><c>true</c> to retrieve the short path form, <c>false</c> to retrieve the regular long form from the 8.3 <paramref name="path"/>.</param>
@@ -1745,15 +1729,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetRegularPathInternal
 
       /// <summary>[AlphaFS] Unified method GetRegularPathInternal() to get the regular path from a long path.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns the regular form of a long <paramref name="path"/>.</para>
       /// <para>For example: "\\?\C:\Temp\file.txt" to: "C:\Temp\file.txt", or: "\\?\UNC\Server\share\file.txt" to: "\\Server\share\file.txt".</para>
       /// </returns>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="path">The path.</param>
       /// <param name="trimEnd"><c>true</c> removes trailing whitespace from <paramref name="path"/>.</param>
       /// <param name="addDirectorySeparator"><c>true</c> adds a directory separator to that path.</param>

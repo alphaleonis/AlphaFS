@@ -460,13 +460,12 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is not allowed.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -474,7 +473,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="sourceFileName">The file to copy.</param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
@@ -485,13 +483,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -499,7 +496,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="overwrite"><c>true</c> if the destination file should ignoring the read-only and hidden attributes and overwrite; otherwise, <c>false</c>.</param>
@@ -519,21 +515,19 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="overwrite"><c>true</c> if the destination file should ignoring the read-only and hidden attributes and overwrite; otherwise, <c>false</c>.</param>
@@ -560,21 +554,19 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
@@ -598,21 +590,19 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy.</param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
@@ -624,21 +614,19 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
@@ -1021,7 +1009,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a file to decrypt.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Decrypt(string path)
       {
@@ -1041,7 +1029,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Decrypt(string path, bool? isFullPath)
       {
@@ -1061,7 +1049,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Deletes the specified file.</summary>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Delete(string path)
       {
@@ -1083,7 +1071,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly, bool? isFullPath)
       {
@@ -1096,7 +1084,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly)
       {
@@ -1111,7 +1099,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
       {
@@ -1132,7 +1120,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
       {
@@ -1146,7 +1134,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
@@ -1165,7 +1153,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
       /// <param name="path">A path that describes a file to encrypt.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Encrypt(string path)
       {
@@ -1185,7 +1173,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Encrypt(string path, bool? isFullPath)
       {
@@ -1353,7 +1341,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for a specified file.</summary>
       /// <param name="path">The path to a file containing a <see cref="FileSecurity"/> object that describes the file's access control list (ACL) information.</param>
       /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path)
       {
@@ -1364,7 +1352,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to a file containing a <see cref="FileSecurity"/> object that describes the file's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections)
       {
@@ -1385,7 +1373,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, bool? isFullPath)
       {
@@ -1401,7 +1389,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections, bool? isFullPath)
       {
@@ -1951,7 +1939,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Moves a specified file to a new location, providing the option to specify a new file name.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -1959,15 +1947,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
@@ -1986,7 +1972,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -1994,15 +1980,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
       /// <param name="isFullPath">
@@ -2028,7 +2012,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -2036,15 +2020,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
@@ -2067,7 +2049,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -2075,7 +2057,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -2083,7 +2064,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
@@ -3057,7 +3037,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of another file. It also creates a backup of the file that was replaced.</remarks>
       /// <remarks>If the <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are on different volumes, this method will raise an exception. If the <paramref name="destinationBackupFileName"/> is on a different volume from the source file, the backup file will be deleted.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName)
       {
@@ -3072,7 +3052,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of another file. It also creates a backup of the file that was replaced.</remarks>
       /// <remarks>If the <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are on different volumes, this method will raise an exception. If the <paramref name="destinationBackupFileName"/> is on a different volume from the source file, the backup file will be deleted.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
@@ -3099,7 +3079,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of another file. It also creates a backup of the file that was replaced.</remarks>
       /// <remarks>If the <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are on different volumes, this method will raise an exception. If the <paramref name="destinationBackupFileName"/> is on a different volume from the source file, the backup file will be deleted.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
@@ -3120,7 +3100,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Applies access control list (ACL) entries described by a <see cref="FileSecurity"/> FileSecurity object to the specified file.</summary>
       /// <param name="path">A file to add or remove access control list (ACL) entries from.</param>
       /// <param name="fileSecurity">A  <see cref="FileSecurity"/> object that describes an ACL entry to apply to the file described by the <paramref name="path"/> parameter.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity)
@@ -3132,7 +3112,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
       /// <param name="fileSecurity">A <see cref="FileSecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
       /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections)
@@ -3154,7 +3134,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, bool? isFullPath)
@@ -3171,7 +3151,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections, bool? isFullPath)
@@ -3190,11 +3170,12 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Sets the specified <see cref="FileAttributes"/> of the file or directory on the specified path.</summary>
+      /// <overloads>Sets the specified <see cref="FileAttributes"/> of the file or directory on the specified path.</overloads>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values. </param>
       /// <remarks>Certain file attributes, such as <see cref="FileAttributes.Hidden"/> and <see cref="FileAttributes.ReadOnly"/>, can be combined. Other attributes, such as <see cref="FileAttributes.Normal"/>, must be used alone.</remarks>
-      /// <remarks>It is not possible to change the <see cref="FileAttributes.Compressed"/> status of a File object using the <see cref="M:File.SetAttributes"/> method.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <remarks>It is not possible to change the <see cref="FileAttributes.Compressed"/> status of a File object using the <see cref="O:Alphaleonis.Win32.Filesystem.File.SetAttributes"/> method.</remarks>
+      
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes)
       {
@@ -3216,8 +3197,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>Certain file attributes, such as <see cref="FileAttributes.Hidden"/> and <see cref="FileAttributes.ReadOnly"/>, can be combined. Other attributes, such as <see cref="FileAttributes.Normal"/>, must be used alone.</remarks>
-      /// <remarks>It is not possible to change the <see cref="FileAttributes.Compressed"/> status of a File object using the <see cref="M:File.SetAttributes"/> method.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <remarks>It is not possible to change the <see cref="FileAttributes.Compressed"/> status of a File object using the <see cref="O:File.SetAttributes"/> method.</remarks>
+      
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes, bool? isFullPath)
       {
@@ -3235,8 +3216,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values. </param>
       /// <remarks>Certain file attributes, such as <see cref="FileAttributes.Hidden"/> and <see cref="FileAttributes.ReadOnly"/>, can be combined. Other attributes, such as <see cref="FileAttributes.Normal"/>, must be used alone.</remarks>
-      /// <remarks>It is not possible to change the <see cref="FileAttributes.Compressed"/> status of a File object using the <see cref="M:File.SetAttributes"/> method.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <remarks>It is not possible to change the <see cref="FileAttributes.Compressed"/> status of a File object using the <see cref="O:Alphaleonis.Win32.Filesystem.File.SetAttributes"/> method.</remarks>
+      
       [SecurityCritical]
       public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes)
       {
@@ -3257,8 +3238,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>Certain file attributes, such as <see cref="FileAttributes.Hidden"/> and <see cref="FileAttributes.ReadOnly"/>, can be combined. Other attributes, such as <see cref="FileAttributes.Normal"/>, must be used alone.</remarks>
-      /// <remarks>It is not possible to change the <see cref="FileAttributes.Compressed"/> status of a File object using the <see cref="M:File.SetAttributes"/> method.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <remarks>It is not possible to change the <see cref="FileAttributes.Compressed"/> status of a File object using the <see cref="O:Alphaleonis.Win32.Filesystem.File.SetAttributes"/> method.</remarks>
+      
       [SecurityCritical]
       public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes, bool? isFullPath)
       {
@@ -3280,7 +3261,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time the file was created.</summary>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime)
       {
@@ -3301,7 +3282,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime, bool? isFullPath)
       {
@@ -3318,7 +3299,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime)
       {
@@ -3338,7 +3319,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime, bool? isFullPath)
       {
@@ -3360,7 +3341,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time, in coordinated universal time (UTC), that the file was created.</summary>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc)
       {
@@ -3381,7 +3362,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc, bool? isFullPath)
       {
@@ -3398,7 +3379,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc)
       {
@@ -3418,7 +3399,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, bool? isFullPath)
       {
@@ -3440,7 +3421,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime)
       {
@@ -3461,7 +3442,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime, bool? isFullPath)
       {
@@ -3478,7 +3459,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime)
       {
@@ -3498,7 +3479,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime, bool? isFullPath)
       {
@@ -3520,7 +3501,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc)
       {
@@ -3541,7 +3522,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, bool? isFullPath)
       {
@@ -3558,7 +3539,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc)
       {
@@ -3578,7 +3559,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, bool? isFullPath)
       {
@@ -3600,7 +3581,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time that the specified file was last written to.</summary>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastWriteTime(string path, DateTime lastWriteTime)
       {
@@ -3621,7 +3602,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastWriteTime(string path, DateTime lastWriteTime, bool? isFullPath)
       {
@@ -3638,7 +3619,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime)
       {
@@ -3658,7 +3639,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime, bool? isFullPath)
       {
@@ -3680,7 +3661,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time, in coordinated universal time (UTC), that the specified file was last written to.</summary>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc)
       {
@@ -3701,7 +3682,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
@@ -3718,7 +3699,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc)
       {
@@ -3738,7 +3719,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
@@ -4216,7 +4197,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void AddStream(string path, string name, string[] contents, bool? isFullPath)
       {
@@ -4229,7 +4210,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void AddStream(string path, string name, string[] contents)
       {
@@ -4250,7 +4231,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents, bool? isFullPath)
       {
@@ -4264,7 +4245,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents)
       {
@@ -4286,7 +4267,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Compress(string path, bool? isFullPath)
       {
@@ -4297,7 +4278,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
       /// <param name="path">A path that describes a file to compress.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Compress(string path)
       {
@@ -4316,7 +4297,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Compress(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -4328,7 +4309,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a file to compress.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Compress(KernelTransaction transaction, string path)
       {
@@ -4344,14 +4325,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -4359,7 +4339,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
@@ -4377,25 +4356,22 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
@@ -4417,22 +4393,20 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
@@ -4444,16 +4418,14 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -4461,7 +4433,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
@@ -4474,17 +4445,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified,
+      /// </summary>
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -4492,7 +4461,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
@@ -4511,24 +4479,21 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
@@ -4547,17 +4512,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -4565,7 +4528,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
@@ -4588,22 +4550,20 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
@@ -4616,14 +4576,13 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -4631,7 +4590,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
@@ -4645,25 +4603,22 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>The attributes of the original file are retained in the copied file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
@@ -4694,7 +4649,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
       public static void CreateHardlink(string fileName, string existingFileName, bool? isFullPath)
@@ -4707,7 +4662,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
       public static void CreateHardlink(string fileName, string existingFileName)
@@ -4728,7 +4683,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
       public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName, bool? isFullPath)
@@ -4742,7 +4697,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
       public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName)
@@ -4767,7 +4722,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool? isFullPath)
@@ -4781,7 +4736,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
@@ -4803,7 +4758,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLink(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool? isFullPath)
@@ -4818,7 +4773,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLink(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
@@ -4841,7 +4796,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Decompress(string path, bool? isFullPath)
       {
@@ -4852,7 +4807,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
       /// <param name="path">A path that describes a file to decompress.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Decompress(string path)
       {
@@ -4871,7 +4826,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -4883,7 +4838,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a file to decompress.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path)
       {
@@ -4974,7 +4929,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, bool? isFullPath)
       {
@@ -4990,7 +4945,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType, bool? isFullPath)
       {
@@ -5002,7 +4957,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</summary>
       /// <param name="path">The file to search.</param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path)
       {
@@ -5013,7 +4968,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to search.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType)
       {
@@ -5023,7 +4978,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the handle specified by <paramref name="handle"/>.</summary>
       /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the file from which to retrieve the information.</param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the handle specified by <paramref name="handle"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(SafeFileHandle handle)
       {
@@ -5043,7 +4998,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -5060,7 +5015,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType, bool? isFullPath)
       {
@@ -5073,7 +5028,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to search.</param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path)
       {
@@ -5085,7 +5040,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to search.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file specified by <paramref name="path"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType)
       {
@@ -5101,10 +5056,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>Gets the change date and time of the specified file.
-      /// <para>&#160;</para>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -5120,10 +5073,8 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // IsFullPath
 
       /// <summary>Gets the change date and time of the specified file.
-      /// <para>&#160;</para>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
       [SecurityCritical]
       public static DateTime GetChangeTime(string path)
@@ -5132,10 +5083,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Gets the change date and time of the specified file.
-      /// <para>&#160;</para>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       [SecurityCritical]
       public static DateTime GetChangeTime(SafeFileHandle safeHandle)
       {
@@ -5147,10 +5096,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>Gets the change date and time of the specified file.
-      /// <para>&#160;</para>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
       /// <param name="isFullPath">
@@ -5167,10 +5114,8 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // IsFullPath
 
       /// <summary>Gets the change date and time of the specified file.
-      /// <para>&#160;</para>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
       [SecurityCritical]
@@ -5188,10 +5133,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.
-      /// <para>&#160;</para>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -5207,10 +5150,8 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // IsFullPath
 
       /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.
-      /// <para>&#160;</para>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path)
@@ -5219,10 +5160,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.
-      /// <para>&#160;</para>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
       {
@@ -5234,10 +5173,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.
-      /// <para>&#160;</para>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="isFullPath">
@@ -5254,10 +5191,8 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // IsFullPath
 
       /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.
-      /// <para>&#160;</para>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// </summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC time.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       [SecurityCritical]
@@ -5366,7 +5301,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path, bool? isFullPath)
       {
@@ -5378,7 +5313,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
       /// <param name="path">The name of the file.</param>
       /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path)
       {
@@ -5559,7 +5494,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The file size, in bytes.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetSize(string path, bool? isFullPath)
       {
@@ -5571,7 +5506,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
       /// <param name="path">The path to the file.</param>
       /// <returns>The file size, in bytes.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetSize(string path)
       {
@@ -5581,7 +5516,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
       /// <param name="handle">The <see cref="SafeFileHandle"/> to the file.</param>
       /// <returns>The file size, in bytes.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetSize(SafeFileHandle handle)
       {
@@ -5635,7 +5570,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The number of bytes used by all data streams.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(string path, bool? isFullPath)
       {
@@ -5651,7 +5586,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(string path, string name, bool? isFullPath)
       {
@@ -5667,7 +5602,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(string path, StreamType type, bool? isFullPath)
       {
@@ -5679,7 +5614,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
       /// <param name="path">The path to an existing file.</param>
       /// <returns>The number of bytes used by all data streams.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(string path)
       {
@@ -5690,7 +5625,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(string path, string name)
       {
@@ -5701,7 +5636,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(string path, StreamType type)
       {
@@ -5712,7 +5647,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="handle">The <see cref="SafeFileHandle"/> to the file.</param>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(SafeFileHandle handle, string name)
       {
@@ -5723,7 +5658,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="handle">The <see cref="SafeFileHandle"/> to the file.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(SafeFileHandle handle, StreamType type)
       {
@@ -5743,7 +5678,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The number of bytes used by all data streams.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -5760,7 +5695,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, string name, bool? isFullPath)
       {
@@ -5777,7 +5712,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type, bool? isFullPath)
       {
@@ -5790,7 +5725,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file.</param>
       /// <returns>The number of bytes used by all data streams.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path)
       {
@@ -5802,7 +5737,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, string name)
       {
@@ -5814,7 +5749,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type)
       {
@@ -5830,7 +5765,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name and <see cref="MoveOptions"/> options.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -5838,15 +5773,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
@@ -5863,10 +5796,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> options,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -5874,15 +5806,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
@@ -5903,7 +5833,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name and <see cref="MoveOptions"/> options.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -5911,15 +5841,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
@@ -5931,10 +5859,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> options,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -5942,7 +5869,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -5950,7 +5876,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
@@ -5968,7 +5893,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name and <see cref="MoveOptions"/> options.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -5976,7 +5901,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -5984,7 +5908,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
@@ -6002,10 +5925,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> options,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -6013,7 +5935,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -6021,7 +5942,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
@@ -6043,7 +5963,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name and <see cref="MoveOptions"/> options.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -6051,7 +5971,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -6059,7 +5978,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
@@ -6072,10 +5990,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> options,
+      /// </summary>
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
@@ -6083,7 +6000,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -6091,7 +6007,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
@@ -6114,11 +6029,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.
-      /// <para>&#160;</para>
+      /// </summary>
       /// This method is simpler to use then BackupFileStream to read only file's data stream.
       /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="path">The file path to open.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -6139,7 +6052,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
       /// </summary>
       /// <param name="path">The file path to open.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static FileStream OpenBackupRead(string path)
       {
@@ -6151,11 +6064,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.
-      /// <para>&#160;</para>
+      /// </summary>
       /// This method is simpler to use then BackupFileStream to read only file's data stream.
       /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file path to open.</param>
       /// <param name="isFullPath">
@@ -6172,11 +6083,9 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.
-      /// <para>&#160;</para>
+      /// </summary>
       /// This method is simpler to use then BackupFileStream to read only file's data stream.
       /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file path to open.</param>
       [SecurityCritical]
@@ -6202,7 +6111,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void RemoveStream(string path, bool? isFullPath)
       {
@@ -6219,7 +6128,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void RemoveStream(string path, string name, bool? isFullPath)
       {
@@ -6232,7 +6141,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void RemoveStream(string path)
       {
@@ -6244,7 +6153,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to remove.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void RemoveStream(string path, string name)
       {
@@ -6265,7 +6174,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -6283,7 +6192,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, string name, bool? isFullPath)
       {
@@ -6297,7 +6206,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path)
       {
@@ -6310,7 +6219,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to remove.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, string name)
       {
@@ -6335,7 +6244,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool? isFullPath)
       {
@@ -6349,7 +6258,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
       {
@@ -6371,7 +6280,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool? isFullPath)
       {
@@ -6386,7 +6295,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
       {
@@ -6411,7 +6320,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
@@ -6425,7 +6334,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
       {
@@ -6447,7 +6356,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
@@ -6462,7 +6371,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
       {
@@ -6486,7 +6395,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void TransferTimestamps(string sourcePath, string destinationPath, bool? isFullPath)
       {
@@ -6499,7 +6408,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
       /// <remarks>This method does not change last access time for the source file.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void TransferTimestamps(string sourcePath, string destinationPath)
       {
@@ -6520,7 +6429,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>This method does not change last access time for the source file.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath, bool? isFullPath)
       {
@@ -6534,7 +6443,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
       /// <remarks>This method does not change last access time for the source file.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
@@ -6583,26 +6492,23 @@ namespace Alphaleonis.Win32.Filesystem
       #region CopyMoveInternal
 
       /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
-      /// <para><see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,</para>
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,
+      /// and the possibility of notifying the application of its progress through a callback function.
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
       /// <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="isFolder">Specifies that <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The source directory path.</param>
@@ -6881,17 +6787,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or open a file, directory or I/O device.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns a <see cref="SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
       /// <remarks>
       /// <para>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.</para>
       /// <para>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive,</para>
       /// <para>communications resource, mailslot, and pipe.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"></exception>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file or directory to create.</param>
       /// <param name="attributes">One of the <see cref="ExtendedFileAttributes"/> values that describes how to create or overwrite the file or directory.</param>
@@ -6983,7 +6887,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="fileName"/> and <paramref name="existingFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
       internal static void CreateHardlinkInternal(KernelTransaction transaction, string fileName, string existingFileName, bool? isFullPath)
@@ -7039,7 +6943,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static void CreateSymbolicLinkInternal(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool? isFullPath)
       {
@@ -7093,10 +6997,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region DeleteFileInternal
 
       /// <summary>[AlphaFS] Unified method DeleteFileInternal() to delete a Non-/Transacted file.
-      /// <para>&#160;</para>
-      /// <remarks>If the file to be deleted does not exist, no exception is thrown</remarks>
       /// </summary>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <remarks>If the file to be deleted does not exist, no exception is thrown</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
@@ -7213,7 +7115,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static void EncryptDecryptFileInternal(bool isFolder, string path, bool encrypt, bool? isFullPath)
       {
@@ -7560,8 +7462,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Unified method GetAccessControlInternal() to get an <see cref="ObjectSecurity"/> object for a particular file or directory.</summary>
       /// <returns>An <see cref="ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the <paramref name="path"/> parameter. </returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>      
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's or file's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
@@ -7701,7 +7602,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static long GetCompressedSizeInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -7738,17 +7639,14 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetChangeTimeInternal
 
       /// <summary>[AlphaFS] Unified method GetChangeTimeInternal() to get the change date and time of the specified file.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file.</para>
       /// <para>This value is expressed in local time.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</para>
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeHandle">An open handle to the file or directory from which to retrieve information.</param>
@@ -7897,11 +7795,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetFileSystemEntryInfoInternal
 
       /// <summary>[AlphaFS] Unified method GetFileSystemEntryInfoInternal() to get a FileSystemEntryInfo from a Non-/Transacted directory/file.
+      /// </summary>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory, or <c>null</c> on Exception when <paramref name="continueOnException"/> is <c>true</c>.</returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
@@ -8003,6 +7900,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetSizeInternal
 
       /// <summary>[AlphaFS] Unified method GetSizeInternal() to retrieve the file size, in bytes to store a specified file.
+      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeHandle">The <see cref="SafeFileHandle"/> to the file.</param>
       /// <param name="path">The path to the file.</param>
@@ -8013,8 +7911,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       /// <remarks>Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
-      /// </summary>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       internal static long GetSizeInternal(KernelTransaction transaction, SafeFileHandle safeHandle, string path, bool? isFullPath)
@@ -8214,7 +8110,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of another file. It also creates a backup of the file that was replaced.</remarks>
       /// <remarks>If the <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are on different volumes, this method will raise an exception. If the <paramref name="destinationBackupFileName"/> is on a different volume from the source file, the backup file will be deleted.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static void ReplaceInternal(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
       {
@@ -8260,11 +8156,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region SetAccessControlInternal
 
       /// <summary>[AlphaFS] Unified method SetAccessControlInternal() applies access control list (ACL) entries described by a <see cref="FileSecurity"/> FileSecurity object to the specified file.
-      /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
       /// </summary>
+      /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="path">A file to add or remove access control list (ACL) entries from. This parameter This parameter may be <c>null</c>.</param>
       /// <param name="handle">A handle to add or remove access control list (ACL) entries from. This parameter This parameter may be <c>null</c>.</param>
       /// <param name="objectSecurity">A <see cref="DirectorySecurity"/> or <see cref="FileSecurity"/> object that describes an ACL entry to apply to the file described by the <paramref name="path"/> parameter.</param>
@@ -8406,7 +8301,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <remarks>Certain file attributes, such as <see cref="FileAttributes.Hidden"/> and <see cref="FileAttributes.ReadOnly"/>, can be combined. Other attributes, such as <see cref="FileAttributes.Normal"/>, must be used alone.</remarks>
       /// <remarks>It is not possible to change the <see cref="FileAttributes.Compressed"/> status of a File object using the SetAttributes method.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, bool? isFullPath)
       {
@@ -8467,7 +8362,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static void SetFsoDateTimeInternal(bool isFolder, KernelTransaction transaction, string path, DateTime? creationTimeUtc, DateTime? lastAccessTimeUtc, DateTime? lastWriteTimeUtc, bool? isFullPath)
       {
@@ -8499,7 +8394,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <remarks>This method does not change last access time for the source file.</remarks>
       /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static void TransferTimestampsInternal(bool isFolder, KernelTransaction transaction, string sourcePath, string destinationPath, bool? isFullPath)
       {

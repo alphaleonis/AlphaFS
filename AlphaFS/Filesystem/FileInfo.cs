@@ -131,15 +131,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Copies an existing file to a new file, disallowing the overwriting of an existing file.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing file by default.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -147,7 +145,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath)
@@ -158,18 +155,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Copies an existing file to a new file, allowing the overwriting of an existing file.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <c>true</c>.</para>
       /// <para>If the file exists and <paramref name="overwrite"/> is <c>false</c>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -177,7 +172,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
       [SecurityCritical]
@@ -195,23 +189,20 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, disallowing the overwriting of an existing file.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing file by default.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
@@ -227,26 +218,23 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <c>true</c>.</para>
       /// <para>If the file exists and <paramref name="overwrite"/> is <c>false</c>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
       /// <param name="isFullPath">
@@ -306,7 +294,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Decrypt()
       {
@@ -338,7 +326,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Permanently deletes a file.</summary>
       /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       public void Delete(bool ignoreReadOnly)
       {
          File.DeleteFileInternal(Transaction, LongFullName, ignoreReadOnly, null);
@@ -353,7 +341,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Encrypt()
       {
@@ -370,7 +358,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets a <see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="FileInfo"/> object.</summary>
       /// <returns><see cref="System.Security.AccessControl.FileSecurity"/>A FileSecurity object that encapsulates the access control rules for the current file.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public FileSecurity GetAccessControl()
       {
@@ -380,7 +368,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets a <see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</summary>
       /// <param name="includeSections">One of the <see cref="System.Security"/> values that specifies which group of access control entries to retrieve.</param>
       /// <returns><see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public FileSecurity GetAccessControl(AccessControlSections includeSections)
       {
@@ -396,7 +384,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Moves a specified file to a new location, providing the option to specify a new file name.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing file by default.</para>
       /// <para>This method works across disk volumes.</para>
@@ -404,15 +392,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
       [SecurityCritical]
       public void MoveTo(string destinationFullPath)
@@ -578,7 +564,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="FileInfo"/> object that describes the overwritten file.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName)
       {
@@ -592,7 +578,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="FileInfo"/> object that describes the overwritten file.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
@@ -617,7 +603,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
       /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="FileInfo"/> object that describes the overwritten file.</remarks>
       /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
       {
@@ -654,7 +640,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The SetAccessControl method applies access control list (ACL) entries to the current file that represents the noninherited ACL list. 
       /// Use the SetAccessControl method whenever you need to add or remove ACL entries from a file.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity)
@@ -668,7 +654,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The SetAccessControl method applies access control list (ACL) entries to the current file that represents the noninherited ACL list. 
       /// Use the SetAccessControl method whenever you need to add or remove ACL entries from a file.
       /// </remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity, AccessControlSections includeSections)
@@ -704,7 +690,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to the file.</summary>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
@@ -716,7 +702,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Compress
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Compress()
       {
@@ -732,27 +718,24 @@ namespace Alphaleonis.Win32.Filesystem
       #region FileInfo
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
       /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="isFullPath">
@@ -769,27 +752,24 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
       /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
@@ -811,19 +791,17 @@ namespace Alphaleonis.Win32.Filesystem
       #region CopyMoveResult
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file,
+      /// </summary>
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully copied.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing file by default.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -831,7 +809,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -850,29 +827,26 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// </summary>
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
       /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
@@ -893,28 +867,25 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
       /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
@@ -941,27 +912,24 @@ namespace Alphaleonis.Win32.Filesystem
       #region FileInfo
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
       /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       [SecurityCritical]
@@ -973,27 +941,24 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
       /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
@@ -1011,26 +976,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully copied.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing file by default.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
@@ -1045,28 +1007,25 @@ namespace Alphaleonis.Win32.Filesystem
       
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
       /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
@@ -1082,28 +1041,25 @@ namespace Alphaleonis.Win32.Filesystem
       
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
       /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
@@ -1125,7 +1081,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Decompress
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void Decompress()
       {
@@ -1138,7 +1094,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
@@ -1147,7 +1103,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
@@ -1160,7 +1116,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).</summary>
       /// <returns>The number of bytes used by all streams.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public long GetStreamSize()
       {
@@ -1170,7 +1126,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public long GetStreamSize(string name)
       {
@@ -1180,7 +1136,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public long GetStreamSize(StreamType type)
       {
@@ -1196,11 +1152,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region FileInfo
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>This method works across disk volumes.</para>
@@ -1208,7 +1163,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -1216,7 +1170,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
@@ -1237,10 +1190,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region CopyMoveResult
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified,
+      /// </summary>
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>This method works across disk volumes.</para>
@@ -1248,7 +1200,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
@@ -1256,7 +1207,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
@@ -1282,11 +1232,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region FileInfo
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>
       /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>This method works across disk volumes.</para>
@@ -1294,15 +1243,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
@@ -1319,9 +1266,8 @@ namespace Alphaleonis.Win32.Filesystem
       
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
       /// <para>This method works across disk volumes.</para>
@@ -1329,15 +1275,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
@@ -1371,7 +1315,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the file.</summary>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void RemoveStream()
       {
@@ -1382,7 +1326,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to remove.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void RemoveStream(string name)
       {
@@ -1397,23 +1341,20 @@ namespace Alphaleonis.Win32.Filesystem
       #region CopyToMoveToInternal
 
       /// <summary>[AlphaFS] Unified method CopyToMoveToInternal() to copy/move an existing file to a new file, allowing the overwriting of an existing file.
-      /// <para>&#160;</para>
+      /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// </summary>
       /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="FileNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <exception cref="NativeError.ThrowException()"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath"><para>A full path string to the destination directory</para></param>
       /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
       /// <param name="copyOptions"><para>This parameter can be <c>null</c>. Use <see cref="CopyOptions"/> to specify how the file is to be copied.</para></param>

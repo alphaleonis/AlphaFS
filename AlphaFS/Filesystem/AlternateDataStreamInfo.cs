@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to an existing file or directory.</summary>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
@@ -145,7 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file or directory.</summary>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void RemoveStream()
       {
@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to remove.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void RemoveStream(string name)
       {
@@ -181,7 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "StreamWriter() disposes of FileStream() object.")]
       [SecurityCritical]
       internal static void AddStreamInternal(bool isFolder, KernelTransaction transaction, string path, string name, IEnumerable<string> contents, bool? isFullPath)
@@ -218,7 +218,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <returns>An <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file or directory specified by path.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static IEnumerable<AlternateDataStreamInfo> EnumerateStreamsInternal(bool? isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, string originalName, StreamType? streamType, bool? isFullPath)
       {
@@ -392,7 +392,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static void RemoveStreamInternal(bool? isFolder, KernelTransaction transaction, string path, string name, bool? isFullPath)
       {

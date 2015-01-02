@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
       /// <param name="deviceName">An MS-DOS device name string specifying the device the function is defining, redefining, or deleting.</param>
       /// <param name="targetPath">An MS-DOS path that will implement this device.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void DefineDosDevice(string deviceName, string targetPath)
       {
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="deviceName">An MS-DOS device name string specifying the device the function is defining, redefining, or deleting.</param>
       /// <param name="targetPath">>An MS-DOS path that will implement this device. If <paramref name="deviceAttributes"/> parameter has the <see cref="DosDeviceAttributes.RawTargetPath"/> flag specified, <paramref name="targetPath"/> is used as is.</param>
       /// <param name="deviceAttributes">The controllable aspects of the DefineDosDevice function, <see cref="DosDeviceAttributes"/> flags which will be combined with the default.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void DefineDosDevice(string deviceName, string targetPath, DosDeviceAttributes deviceAttributes)
       {
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes an MS-DOS device name.</summary>
       /// <param name="deviceName">An MS-DOS device name specifying the device to delete.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName)
       {
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Deletes an MS-DOS device name.</summary>
       /// <param name="deviceName">An MS-DOS device name string specifying the device to delete.</param>
       /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath)
       {
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="deviceName">An MS-DOS device name string specifying the device to delete.</param>
       /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
       /// <param name="exactMatch">Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <c>true</c>, <paramref name="targetPath"/> must be the same path used to create the mapping.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath, bool exactMatch)
       {
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
       /// <param name="exactMatch">Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <c>true</c>, <paramref name="targetPath"/> must be the same path used to create the mapping.</param>
       /// <param name="deviceAttributes">The controllable aspects of the DefineDosDevice function <see cref="DosDeviceAttributes"/> flags which will be combined with the default.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
@@ -112,7 +112,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves a list of all existing MS-DOS device names.</summary>
       /// <returns>An <see cref="IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<string> QueryAllDosDevices()
       {
@@ -127,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// existing MS-DOS device names into the buffer.
       ///</param>
       /// <returns>An <see cref="IEnumerable{String}"/> with or more existing MS-DOS device names.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<string> QueryAllDosDevices(string deviceName)
       {
@@ -148,7 +148,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///</param>
       /// <param name="options">(Optional, default: <c>false</c>) If options[0] = <c>true</c> a sorted list will be returned.</param>
       /// <returns>An <see cref="IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<string> QueryDosDevice(string deviceName, params string[] options)
       {
@@ -307,7 +307,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="drivePath">A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</param>
       /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
       /// <remarks>The calling application must have FILE_LIST_DIRECTORY access rights for this directory.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static DiskSpaceInfo GetDiskFreeSpace(string drivePath)
       {
@@ -319,7 +319,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="spaceInfoType"><c>null</c> gets both size- and disk cluster information. <c>true</c> Get only disk cluster information, <c>false</c> Get only size information.</param>
       /// <returns>A <see ref="Alphaleonis.Win32.Filesystem.DiskSpaceInfo"/> class instance.</returns>
       /// <remarks>The calling application must have FILE_LIST_DIRECTORY access rights for this directory.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static DiskSpaceInfo GetDiskFreeSpace(string drivePath, bool? spaceInfoType)
       {
@@ -381,7 +381,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Deleting a mounted folder does not cause the underlying directory to be deleted.</remarks>
       /// <remarks>If the <paramref name="volumeMountPoint"/> parameter is a directory that is not a mounted folder, the function does nothing. The directory is not deleted.</remarks>
       /// <remarks>It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume mount point.</remarks>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static void DeleteVolumeMountPoint(string volumeMountPoint)
       {
@@ -395,7 +395,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of <see cref="String"/> of all mounted folders (volume mount points) on the specified volume.</summary>
       /// <param name="volumeGuid">A <see cref="string"/> containing the volume <see cref="Guid"/>.</param>
       /// <returns>An enumerable collection of <see cref="String"/> of all volume mount points on the specified volume.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumeMountPoints(string volumeGuid)
       {
@@ -463,7 +463,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of <see cref="String"/> drive letters and mounted folder paths for the specified volume.</summary>
       /// <param name="volumeGuid">A volume <see cref="Guid"/> path: \\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</param>
       /// <returns>An enumerable collection of <see cref="String"/> containing the path names for the specified volume.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumePathNames(string volumeGuid)
       {
@@ -519,7 +519,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an enumerable collection of <see cref="String"/> volumes on the computer.</summary>
       /// <returns>An enumerable collection of <see cref="String"/> volume names on the computer.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumes()
@@ -674,7 +674,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter, volume GUID path, or mounted folder).</summary>
       /// <param name="volumeMountPoint">The path of a mounted folder (for example, "Y:\MountX\") or a drive letter (for example, "X:\").</param>
       /// <returns>The unique volume name of the form: "\\?\Volume{GUID}\"</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
       [SecurityCritical]
       public static string GetVolumeGuid(string volumeMountPoint)
@@ -754,7 +754,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
       /// <param name="volumePath">A path that contains the root directory.</param>
       /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static VolumeInfo GetVolumeInformation(string volumePath)
       {
@@ -764,7 +764,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
       /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
       /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public static VolumeInfo GetVolumeInformation(SafeFileHandle volumeHandle)
       {
@@ -790,12 +790,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetVolumePathName
 
       /// <summary>Retrieves the volume mount point where the specified path is mounted.
+      /// </summary> 
       /// <returns>
       /// <para>Returns the nearest volume root path for a given directory.</para>
       /// <para>The volume path name, for example: "C:\Windows" --> "C:\".</para>
       /// </returns>
-      /// </summary> 
-      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="path">The path to the volume, for example: C:\Windows</param>
       [SecurityCritical]
       public static string GetVolumePathName(string path)
@@ -940,7 +939,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// or a directory on another volume (for example, "Y:\MountX\").
       ///</param>
       /// <param name="volumeGuid">A <see cref="string"/> containing the volume <see cref="Guid"/>.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1")]
       [SecurityCritical]
       public static void SetVolumeMountPoint(string volumeMountPoint, string volumeGuid)
@@ -995,7 +994,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="deviceAttributes">The controllable aspects of the DefineDosDevice function, <see cref="DosDeviceAttributes"/> flags which will be combined with the default.</param>
       /// <param name="exactMatch">Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <c>true</c>, <paramref name="targetPath"/> must be the same path used to create the mapping.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static void DefineDosDeviceInternal(bool isDefine, string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
       {
@@ -1035,7 +1034,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Deleting a mounted folder does not cause the underlying directory to be deleted.</remarks>
       /// <remarks>It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume mount point.</remarks>
       /// <returns>If completed successfully returns <see cref="Win32Errors.ERROR_SUCCESS"/>, otherwise the last error number.</returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       internal static int DeleteVolumeMountPointInternal(string volumeMountPoint, bool continueOnException)
       {

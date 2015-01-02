@@ -25,7 +25,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Represents information about a file system entry. Used together with <see cref="FindFileSystemEntryInfo" />.</summary>
+   /// <summary>Represents information about a file system entry. </summary>
    [SerializableAttribute]
    [SecurityCritical]
    public sealed class FileSystemEntryInfo

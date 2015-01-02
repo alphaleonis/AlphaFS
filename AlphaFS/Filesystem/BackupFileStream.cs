@@ -184,7 +184,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class for the specified file handle, with the specified read/write permission.</summary>
       /// <param name="handle">A file handle for the file that this <see cref="BackupFileStream"/> object will encapsulate.</param>
       /// <param name="access">A <see cref="FileSystemRights"/> constant that gets the <see cref="CanRead"/> and <see cref="CanWrite"/> properties of the <see cref="BackupFileStream"/> object.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public BackupFileStream(SafeFileHandle handle, FileSystemRights access)
       {
@@ -477,7 +477,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="BackupFileStream"/> object.</summary>
       /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="BackupFileStream"/> object. </returns>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
@@ -524,7 +524,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Applies access control list (ACL) entries described by a <see cref="FileSecurity"/> object to the file described by the  current <see cref="BackupFileStream"/> object.</summary>
       /// <param name="fileSecurity">A <see cref="FileSecurity"/> object that describes an ACL entry to apply to the current file.</param>
-      /// <exception cref="NativeError.ThrowException()"/>
+      
       [SecurityCritical]
       public void SetAccessControl(ObjectSecurity fileSecurity)
       {

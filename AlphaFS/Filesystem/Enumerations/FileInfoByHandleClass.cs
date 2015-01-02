@@ -24,7 +24,7 @@ namespace Alphaleonis.Win32.Filesystem
    internal static partial class NativeMethods
    {
       /// <summary>FILE_INFO_BY_HANDLE_CLASS
-      /// <para>Identifies the type of file information that <see cref="M:GetFileInformationByHandleEx"/> should retrieve or <see cref="M:SetFileInformationByHandle"/> should set.</para>
+      /// <para>Identifies the type of file information that <see cref="GetFileInformationByHandleEx"/> should retrieve or SetFileInformationByHandle should set.</para>
       /// </summary>
       internal enum FileInfoByHandleClass
       {
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(1) FILE_STANDARD_INFO - Extended information for the file should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Used for file handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// </summary>
          //FileStandardInfo = 1,
 
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(2) FILE_NAME_INFO - The file name should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Used for any handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// </summary>
          //FileNameInfo = 2,
 
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(3) FILE_RENAME_INFO - The file name should be changed.
          ///// <para>&#160;</para>
          ///// <para>Used for file handles.</para>
-         ///// <para>Use only when calling <see cref="M:SetFileInformationByHandle"/>.</para>
+         ///// <para>Use only when calling <see cref="SetFileInformationByHandle"/>.</para>
          ///// </summary>
          //FileRenameInfo = 3,
 
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(4) FILE_DISPOSITION_INFO - The file should be deleted.
          ///// <para>&#160;</para>
          ///// <para>Used for any handles.</para>
-         ///// <para>Use only when calling <see cref="M:SetFileInformationByHandle"/>.</para>
+         ///// <para>Use only when calling <see cref="SetFileInformationByHandle"/>.</para>
          ///// </summary>
          //FileDispositionInfo = 4,
 
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(5) FILE_ALLOCATION_INFO - The file allocation information should be changed.
          ///// <para>&#160;</para>
          ///// <para>Used for file handles.</para>
-         ///// <para>Use only when calling <see cref="M:SetFileInformationByHandle"/>.</para>
+         ///// <para>Use only when calling <see cref="SetFileInformationByHandle"/>.</para>
          ///// </summary>
          //FileAllocationInfo = 5,
 
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          ///// <summary>(6) FILE_END_OF_FILE_INFO - The end of the file should be set.
          ///// <para>&#160;</para>
-         ///// <para>Use only when calling <see cref="M:SetFileInformationByHandle"/>.</para>
+         ///// <para>Use only when calling <see cref="SetFileInformationByHandle"/>.</para>
          ///// </summary>
          //FileEndOfFileInfo = 6,
 
@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(7) FILE_STREAM_INFO - File stream information for the specified file should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Used for any handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// </summary>
          //FileStreamInfo = 7,
 
@@ -119,7 +119,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(8) FILE_COMPRESSION_INFO - File compression information should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Used for any handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// </summary>
          //FileCompressionInfo = 8,
 
@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(9) FILE_ATTRIBUTE_TAG_INFO - File attribute information should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Used for any handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// </summary>
          //FileAttributeTagInfo = 9,
 
@@ -141,12 +141,12 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>(10) FILE_ID_BOTH_DIR_INFO - Files in the specified directory should be retrieved.
          /// <para>&#160;</para>
          /// <para>Used for directory handles.</para>
-         /// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         /// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          /// <para>&#160;</para>
          /// <remarks>
-         /// <para>The number of files returned for each call to <see cref="M:GetFileInformationByHandleEx"/></para>
+         /// <para>The number of files returned for each call to <see cref="GetFileInformationByHandleEx"/></para>
          /// <para>depends on the size of the buffer that is passed to the function.</para>
-         /// <para>Any subsequent calls to <see cref="M:GetFileInformationByHandleEx"/> on the same handle</para>
+         /// <para>Any subsequent calls to <see cref="GetFileInformationByHandleEx"/> on the same handle</para>
          /// <para>will resume the enumeration operation after the last file is returned.</para>
          /// </remarks>
          /// </summary>
@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          ///// <summary>(12) FILE_IO_PRIORITY_HINT_INFO - Priority hint information should be set.
          ///// <para>&#160;</para>
-         ///// <para>Use only when calling <see cref="M:SetFileInformationByHandle"/>.</para>
+         ///// <para>Use only when calling <see cref="SetFileInformationByHandle"/>.</para>
          ///// </summary>
          //FileIoPriorityHintInfo = 12,
 
@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(13) FILE_REMOTE_PROTOCOL_INFO - File remote protocol information should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Use for any handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// </summary>
          //FileRemoteProtocolInfo = 13,
 
@@ -188,7 +188,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(14) FILE_FULL_DIR_INFO - Files in the specified directory should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Used for directory handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// <para>&#160;</para>
          ///// <remarks>
          ///// <para>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:</para>
@@ -203,7 +203,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          ///// <summary>(15) FILE_FULL_DIR_INFO - Identical to <see cref="FileFullDirectoryInfo"/>, but forces the enumeration operation to start again from the beginning.
          ///// <para>&#160;</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// <para>&#160;</para>
          ///// <remarks>
          ///// <para>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:</para>
@@ -219,7 +219,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(16) FILE_STORAGE_INFO - File storage information should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Use for any handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// <para>&#160;</para>
          ///// <remarks>
          ///// <para>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:</para>
@@ -235,7 +235,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(17) FILE_ALIGNMENT_INFO - File alignment information should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Use for any handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// <para>&#160;</para>
          ///// <remarks>
          ///// <para>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:</para>
@@ -251,7 +251,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(18) FILE_ID_INFO - File information should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Use for any handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// <para>&#160;</para>
          ///// <remarks>
          ///// <para>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:</para>
@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
          ///// <summary>(19) FILE_ID_EXTD_DIR_INFO - Files in the specified directory should be retrieved.
          ///// <para>&#160;</para>
          ///// <para>Used for directory handles.</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// <para>&#160;</para>
          ///// <remarks>
          ///// <para>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:</para>
@@ -282,7 +282,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          ///// <summary>(20) FILE_ID_EXTD_DIR_INFO - Identical to <see cref="FileIdExtdDirectoryInfo"/>, but forces the enumeration operation to start again from the beginning.
          ///// <para>&#160;</para>
-         ///// <para>Use only when calling <see cref="M:GetFileInformationByHandleEx"/>.</para>
+         ///// <para>Use only when calling <see cref="GetFileInformationByHandleEx"/>.</para>
          ///// <para>&#160;</para>
          ///// <remarks>
          ///// <para>Windows Server 2008 R2, Windows 7, Windows Server 2008, Windows Vista, Windows Server 2003, and Windows XP:</para>
