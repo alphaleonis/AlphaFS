@@ -186,3 +186,6 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+Gemfile
+Gemfile.lock
+_site/
