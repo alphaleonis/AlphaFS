@@ -34,10 +34,9 @@ using System.Security.AccessControl;
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Provides properties and instance methods for the enumeration,
-   /// <para>creation and deletion of NTFS Alternate Data Streams.</para>
-   /// <para>&#160;</para>
-   /// <remarks>This class cannot be inherited.</remarks>
+   /// creation and deletion of NTFS Alternate Data Streams.
    /// </summary>
+   /// <remarks>This class cannot be inherited.</remarks>
    [SerializableAttribute]
    public sealed class AlternateDataStreamInfo
    {
@@ -109,8 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to an existing file or directory.</summary>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
-      /// <param name="contents">The lines to add to the stream.</param>
-      
+      /// <param name="contents">The lines to add to the stream.</param>      
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
@@ -143,9 +141,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region RemoveStreams
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file or directory.</summary>
-      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
-      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.
+      /// No Exception is thrown if the stream does not exist.</remarks>
       [SecurityCritical]
       public void RemoveStream()
       {
@@ -154,9 +151,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file or directory.</summary>
       /// <param name="name">The name of the stream to remove.</param>
-      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
-      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.
+      /// No Exception is thrown if the stream does not exist.</remarks>
       [SecurityCritical]
       public void RemoveStream(string name)
       {
@@ -180,8 +176,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      /// </param>      
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "StreamWriter() disposes of FileStream() object.")]
       [SecurityCritical]
       internal static void AddStreamInternal(bool isFolder, KernelTransaction transaction, string path, string name, IEnumerable<string> contents, bool? isFullPath)
@@ -217,8 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file or directory specified by path.</returns>
-      
+      /// <returns>An <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file or directory specified by path.</returns>      
       [SecurityCritical]
       internal static IEnumerable<AlternateDataStreamInfo> EnumerateStreamsInternal(bool? isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, string originalName, StreamType? streamType, bool? isFullPath)
       {
@@ -391,9 +385,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
-      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.
+      /// No Exception is thrown if the stream does not exist.</remarks>      
       [SecurityCritical]
       internal static void RemoveStreamInternal(bool? isFolder, KernelTransaction transaction, string path, string name, bool? isFullPath)
       {

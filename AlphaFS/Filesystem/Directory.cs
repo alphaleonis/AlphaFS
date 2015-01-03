@@ -93,10 +93,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -104,8 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      
+      /// <exception cref="UnauthorizedAccessException"/>      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, bool compress, bool? isFullPath)
@@ -118,10 +139,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -129,8 +172,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      
+      /// <exception cref="UnauthorizedAccessException"/>      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, bool compress, bool? isFullPath)
@@ -143,10 +185,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -154,8 +218,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      
+      /// <exception cref="UnauthorizedAccessException"/>      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity, bool compress, bool? isFullPath)
@@ -169,10 +232,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -180,8 +265,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      
+      /// <exception cref="UnauthorizedAccessException"/>      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress, bool? isFullPath)
@@ -342,10 +426,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -354,33 +460,66 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, bool compress, bool? isFullPath)
       {
          return CreateDirectoryInternal(transaction, path, null, null, compress, isFullPath);
       }
-
-      /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
+      /// <summary>
+      ///   [AlphaFS] Creates all the directories in the specified path, applying the specified Windows
+      ///   security.
+      /// </summary>
+      /// <remarks>
+      ///   MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/>
+      ///   parameter before creating the directory.
+      /// </remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///   <list type="definition">
+      ///    <item>
+      ///      <term>
+      ///        <see langword="true" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      ///   </description>
+      ///    </item>
+      ///    <item>
+      ///      <term>
+      ///        <see langword="false" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> will be checked and resolved to an absolute path. Unicode
+      ///        prefix is applied.
+      ///   </description>
+      ///    </item>
+      ///    <item>
+      ///      <term>
+      ///        <see langword="null" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      ///   </description>
+      ///    </item>
+      ///   </list>
       /// </param>
-      /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      
+      /// <returns>
+      ///   An object that represents the directory at the specified path. This object is returned
+      ///   regardless of whether a directory at the specified path already exists.
+      /// </returns>
+      ///
+      /// ### <exception cref="ArgumentException">
+      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// ### <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// ### <exception cref="DirectoryNotFoundException">.</exception>
+      /// ### <exception cref="IOException">.</exception>
+      /// ### <exception cref="NotSupportedException">.</exception>
+      /// ### <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress, bool? isFullPath)
@@ -398,10 +537,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -409,8 +570,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      
+      /// <exception cref="UnauthorizedAccessException"/>      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, bool compress, bool? isFullPath)
@@ -425,10 +585,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -436,8 +618,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      
+      /// <exception cref="UnauthorizedAccessException"/>      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, bool compress, bool? isFullPath)
@@ -676,12 +857,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly, bool? isFullPath)
       {
@@ -694,8 +896,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove.</param>
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      
+      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>      
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly)
       {
@@ -712,12 +913,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool? isFullPath)
       {
@@ -1156,10 +1378,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="path">The path to test.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static bool Exists(string path, bool? isFullPath)
       {
@@ -1193,10 +1437,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -1275,10 +1541,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the specified directory.</summary>
       /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the file's access control list (ACL) information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
       
       [SecurityCritical]
@@ -1291,10 +1579,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="path"/> parameter. </returns>
       
       [SecurityCritical]
@@ -1335,10 +1645,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the creation date and time of the specified directory.</summary>
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the creation date and time for the specified directory. This value is expressed in local time.</returns>
       [SecurityCritical]
       public static DateTime GetCreationTime(string path, bool? isFullPath)
@@ -1358,10 +1690,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the creation date and time for the specified directory. This value is expressed in local time.</returns>
       [SecurityCritical]
       public static DateTime GetCreationTime(KernelTransaction transaction, string path, bool? isFullPath)
@@ -1415,10 +1769,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
       /// <param name="path">The directory for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the creation date and time for the specified directory. This value is expressed in UTC time.</returns>
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(string path, bool? isFullPath)
@@ -1440,10 +1816,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the creation date and time for the specified directory. This value is expressed in UTC time.</returns>
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
@@ -1682,10 +2080,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
       /// <param name="path">The path of a file or directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static string GetDirectoryRoot(string path, bool? isFullPath)
       {
@@ -1707,10 +2127,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path of a file or directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static string GetDirectoryRoot(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -2103,10 +2545,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last accessed.</summary>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
       [SecurityCritical]
       public static DateTime GetLastAccessTime(string path, bool? isFullPath)
@@ -2124,10 +2588,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in local time.</returns>
       [SecurityCritical]
       public static DateTime GetLastAccessTime(KernelTransaction transaction, string path, bool? isFullPath)
@@ -2181,10 +2667,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in UTC time.</returns>
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(string path, bool? isFullPath)
@@ -2206,10 +2714,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last accessed. This value is expressed in UTC time.</returns>
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
@@ -2265,10 +2795,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last written to.</summary>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in local time.</returns>
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path, bool? isFullPath)
@@ -2290,10 +2842,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in local time.</returns>
       [SecurityCritical]
       public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, bool? isFullPath)
@@ -2349,10 +2923,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified directory was last written to.</summary>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in UTC time.</returns>
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path, bool? isFullPath)
@@ -2374,10 +2970,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A <see cref="System.DateTime"/> structure set to the date and time that the specified directory was last written to. This value is expressed in UTC time.</returns>
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
@@ -2464,10 +3082,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static DirectoryInfo GetParent(string path, bool? isFullPath)
       {
@@ -2489,10 +3129,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static DirectoryInfo GetParent(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -2572,10 +3234,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Move(string sourcePath, string destinationPath, bool? isFullPath)
       {
@@ -2609,10 +3293,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" />is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourcePath, string destinationPath, bool? isFullPath)
       {
@@ -2697,11 +3403,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity, bool? isFullPath)
@@ -2714,10 +3441,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
       /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>Note that unlike <see cref="System.IO.File.SetAccessControl"/> this method does <b>not</b> automatically
       /// determine what parts of the specified <see cref="DirectorySecurity"/> instance has been modified. Instead, the
       /// parameter <paramref name="includeSections"/> is used to specify what entries from <paramref name="directorySecurity"/> to apply to <paramref name="path"/>.</remarks>
@@ -2762,10 +3511,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Sets the date and time the directory was created.</summary>
       /// <param name="path">The directory for which to set the creation date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       
       [SecurityCritical]
@@ -2789,11 +3560,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the creation date and time information.</param>
       /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime, bool? isFullPath)
       {
@@ -2851,11 +3643,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc, bool? isFullPath)
       {
@@ -2877,11 +3690,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, bool? isFullPath)
       {
@@ -2960,11 +3794,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime, bool? isFullPath)
       {
@@ -2986,11 +3841,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime, bool? isFullPath)
       {
@@ -3048,11 +3924,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, bool? isFullPath)
       {
@@ -3074,11 +3971,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, bool? isFullPath)
       {
@@ -3136,11 +4054,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the date and time information.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetLastWriteTime(string path, DateTime lastWriteTime, bool? isFullPath)
       {
@@ -3162,11 +4101,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the date and time information.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime, bool? isFullPath)
       {
@@ -3224,11 +4184,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
@@ -3250,11 +4231,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
@@ -3299,11 +4301,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void AddStream(string path, string name, string[] contents, bool? isFullPath)
       {
@@ -3333,11 +4356,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents, bool? isFullPath)
       {
@@ -3369,12 +4413,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Compress(string path, bool? isFullPath)
       {
@@ -3385,11 +4449,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Compress(string path, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
       {
@@ -3426,12 +4511,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This will only compress the root items, non recursive.</remarks>
-      
       [SecurityCritical]
       public static void Compress(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -3443,11 +4549,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Compress(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
       {
@@ -3503,10 +4630,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Copy1(string sourcePath, string destinationPath, CopyOptions copyOptions, bool? isFullPath)
       {
@@ -3534,10 +4683,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static CopyMoveResult Copy1(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
@@ -3616,10 +4787,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Copy1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, bool? isFullPath)
       {
@@ -3648,10 +4841,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static CopyMoveResult Copy1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
@@ -3723,10 +4938,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>The counted number of file system objects.</returns>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
       [SecurityCritical]
       public static long CountFileSystemObjects(string path, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
@@ -3743,10 +4980,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The counted number of file system objects.</returns>
       /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
       [SecurityCritical]
@@ -3793,10 +5052,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory path.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The counted number of file system objects.</returns>
       /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
       [SecurityCritical]
@@ -3815,10 +5096,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The counted number of file system objects.</returns>
       /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
       [SecurityCritical]
@@ -3869,10 +5172,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
       /// <param name="path">A path to a directory to decompress.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
       /// However, newly created files and directories will be uncompressed.</remarks>
       
@@ -3902,10 +5227,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <param name="path">A path to a directory to decompress.</param>
       /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
       /// However, newly created files and directories will be uncompressed.</remarks>
@@ -3941,10 +5288,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This will only decompress the root items, non recursive.</remarks>
       
       [SecurityCritical]
@@ -3957,11 +5326,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Decompress(string path, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
       {
@@ -3998,12 +5388,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This will only decompress the root items, non recursive.</remarks>
-      
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -4015,11 +5426,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
       {
@@ -4061,11 +5493,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a directory to decrypt.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Decrypt(string path, bool? isFullPath)
       {
@@ -4076,11 +5529,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a directory to decrypt.</param>
       /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of <paramref name="path"/>.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Decrypt(string path, bool recursive, bool? isFullPath)
       {
@@ -4119,10 +5593,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void DeleteEmpty(string path, bool recursive, bool ignoreReadOnly, bool? isFullPath)
       {
@@ -4160,10 +5656,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void DeleteEmpty(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool? isFullPath)
       {
@@ -4204,12 +5722,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
       /// <param name="path">The name of the directory for which to disable encryption.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0"</remarks>
-      
       [SecurityCritical]
       public static void DisableEncryption(string path, bool? isFullPath)
       {
@@ -4237,13 +5776,34 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
       /// <param name="path">A path to a directory to compress.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory.
       /// However, newly created files and directories will be compressed.</remarks>
-      
       [SecurityCritical]
       public static void EnableCompression(string path, bool? isFullPath)
       {
@@ -4255,8 +5815,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
       /// <param name="path">A path to a directory to compress.</param>
       /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory.
-      /// However, newly created files and directories will be compressed.</remarks>
-      
+      /// However, newly created files and directories will be compressed.</remarks>      
       [SecurityCritical]
       public static void EnableCompression(string path)
       {
@@ -4271,13 +5830,34 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory to compress.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory.
       /// However, newly created files and directories will be compressed.</remarks>
-      
       [SecurityCritical]
       public static void EnableCompression(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -4309,12 +5889,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=1"</remarks>
-      
       [SecurityCritical]
       public static void EnableEncryption(string path, bool? isFullPath)
       {
@@ -4342,12 +5943,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
-      
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(string path, bool? isFullPath)
       {
@@ -4358,12 +5980,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>      
-      
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(string path, FileShare shareMode, bool? isFullPath)
       {
@@ -4412,12 +6055,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
-      
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -4429,12 +6093,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
-      
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path, FileShare shareMode, bool? isFullPath)
       {
@@ -4446,8 +6131,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
-      /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
-      
+      /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>      
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path)
       {
@@ -4474,73 +6158,190 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.
+      /// <summary>
+      /// [AlphaFS] Returns an enumerable collection of file system entries in a specified path.
       /// </summary>
-      /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
-      /// </returns>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="ArgumentNullException"></exception>      
+      /// <typeparam name="T"></typeparam>
       /// <param name="path">The directory to search.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
+      /// <returns>
+      ///    The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.
+      /// </returns>
+      /// <exception cref="ArgumentException"></exception>
+      /// <exception cref="ArgumentNullException"></exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, bool? isFullPath)
       {
          return EnumerateFileSystemEntryInfosInternal<T>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, isFullPath);
       }
-
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.
+      /// <summary>
+      ///   [AlphaFS] Returns an enumerable collection of file system entries that match a
+      ///   <paramref name="searchPattern"/> in a specified path.
       /// </summary>
-      /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
-      /// </returns>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="ArgumentNullException"></exception>
+      /// <typeparam name="T">
+      ///   The type to return. This may be one of the following types:
+      ///   <list type="definition">
+      ///   <item>
+      ///      <term>
+      ///        <see cref="FileSystemInfo"/>
+      ///      </term>
+      ///      <description>
+      ///        This method will return instances of <see cref="DirectoryInfo"/>,
+      ///        <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///      </description>
+      ///   </item>
+      ///   <item>
+      ///      <term>
+      ///        <see cref="string"/>
+      ///      </term>
+      ///      <description>
+      ///        This method will return the full path of each item.
+      ///      </description>
+      ///   </item>
+      ///   </list>
+      /// </typeparam>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories in
+      ///   <paramref name="path"/>. This parameter can contain a combination of valid literal path and
+      ///   wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)
+      ///   characters, but doesn't support regular expressions.</para>
       /// </param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
+      /// <returns>
+      ///    The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.
+      /// </returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, bool? isFullPath)
       {
          return EnumerateFileSystemEntryInfosInternal<T>(null, path, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, isFullPath);
       }
-
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.
+      /// <summary>
+      ///   [AlphaFS] Returns an enumerable collection of file system entries that match a
+      ///   <paramref name="searchPattern"/> in a specified path using
+      ///   <see cref="DirectoryEnumerationOptions"/>.
       /// </summary>
-      /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> / <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
-      /// </returns>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="ArgumentNullException"></exception>
+      /// <typeparam name="T">
+      ///   The type to return. This may be one of the following types:
+      ///   <list type="definition">
+      ///   <item>
+      ///      <term>
+      ///        <see cref="FileSystemInfo"/>
+      ///      </term>
+      ///      <description>
+      ///        This method will return instances of <see cref="DirectoryInfo"/>,
+      ///        <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///      </description>
+      ///   </item>
+      ///   <item>
+      ///      <term>
+      ///        <see cref="string"/>
+      ///      </term>
+      ///      <description>
+      ///        This method will return the full path of each item.
+      ///      </description>
+      ///   </item>
+      ///   </list>
+      /// </typeparam>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories in
+      ///   <paramref name="path"/>. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but doesn't support regular expressions.</para>
       /// </param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="directoryEnumerationOptions">
+      ///   <see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be
+      ///   enumerated.
+      /// </param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
+      /// <returns>
+      ///    The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.
+      /// </returns>
+      /// ### <exception cref="ArgumentException">.</exception>
+      /// ### <exception cref="ArgumentNullException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
@@ -4550,15 +6351,36 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsFullPath
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.
+      /// <summary>
+      /// [AlphaFS] Returns an enumerable collection of file system entries in a specified path.
       /// </summary>
+      /// <typeparam name="T">
+      ///    The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term>
+      ///         <see cref="FileSystemInfo"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return instances of <see cref="DirectoryInfo"/>, <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///       </description>
+      ///    </item>
+      ///    <item>
+      ///       <term>
+      ///         <see cref="string"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return the full path of each item.
+      ///       </description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
+      /// <param name="path">The directory to search.</param>
       /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> / <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
+      ///    The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.
       /// </returns>
       /// <exception cref="ArgumentException"></exception>
       /// <exception cref="ArgumentNullException"></exception>
-      /// <param name="path">The directory to search.</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path)
@@ -4566,42 +6388,88 @@ namespace Alphaleonis.Win32.Filesystem
          return EnumerateFileSystemEntryInfosInternal<T>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false);
       }
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.
+      /// <summary>
+      /// [AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern" /> in a specified path.
       /// </summary>
+      /// <typeparam name="T">
+      ///    The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term>
+      ///         <see cref="FileSystemInfo"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return instances of <see cref="DirectoryInfo"/>, <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///       </description>
+      ///    </item>
+      ///    <item>
+      ///       <term>
+      ///         <see cref="string"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return the full path of each item.
+      ///       </description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
+      /// <param name="path">The directory to search.</param>
+      /// <param name="searchPattern"><para>The search string to match against the names of directories in <paramref name="path" />. This parameter can contain a</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll" /> and <see cref="Path.WildcardQuestion" />)</para>
+      /// <para>characters, but doesn't support regular expressions.</para></param>
       /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> / <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
+      ///    The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.
       /// </returns>
       /// <exception cref="ArgumentException"></exception>
       /// <exception cref="ArgumentNullException"></exception>
-      /// <param name="path">The directory to search.</param>
-      /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
-      /// </param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern)
       {
          return EnumerateFileSystemEntryInfosInternal<T>(null, path, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, false);
       }
-
-      /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.
+      /// <summary>
+      ///   [AlphaFS] Returns an enumerable collection of file system entries that match a
+      ///   <paramref name="searchPattern"/> in a specified path using
+      ///   <see cref="DirectoryEnumerationOptions"/>.
       /// </summary>
-      /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> / <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
-      /// </returns>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="ArgumentNullException"></exception>
+      /// <typeparam name="T">
+      ///   The type to return. This may be one of the following types:
+      ///   <list type="definition">
+      ///   <item>
+      ///      <term>
+      ///        <see cref="FileSystemInfo"/>
+      ///      </term>
+      ///      <description>
+      ///        This method will return instances of <see cref="DirectoryInfo"/>,
+      ///        <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///      </description>
+      ///   </item>
+      ///   <item>
+      ///      <term>
+      ///        <see cref="string"/>
+      ///      </term>
+      ///      <description>
+      ///        This method will return the full path of each item.
+      ///      </description>
+      ///   </item>
+      ///   </list>
+      /// </typeparam>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      ///   The search string to match against the names of directories in
+      ///   <paramref name="path"/>. This parameter can contain a
+      ///   combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and
+      ///   <see cref="Path.WildcardQuestion"/>)
+      ///   characters, but doesn't support regular expressions.
       /// </param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="directoryEnumerationOptions">
+      ///   <see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be
+      ///   enumerated.
+      /// </param>
+      /// <returns>
+      ///   The matching file system entries. The type of the items is determined by the type
+      ///   <typeparamref name="T"/>.
+      /// </returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions)
@@ -4615,19 +6483,62 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.
       /// </summary>
+      /// <typeparam name="T">
+      ///    The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term>
+      ///         <see cref="FileSystemInfo"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return instances of <see cref="DirectoryInfo"/>, <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///       </description>
+      ///    </item>
+      ///    <item>
+      ///       <term>
+      ///         <see cref="string"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return the full path of each item.
+      ///       </description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
       /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> / <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
+      ///   The matching file system entries. The type of the items is determined by the type
+      ///   <typeparamref name="T"/>.
       /// </returns>
       /// <exception cref="ArgumentException"></exception>
       /// <exception cref="ArgumentNullException"></exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(KernelTransaction transaction, string path, bool? isFullPath)
@@ -4637,9 +6548,30 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.
       /// </summary>
+      /// <typeparam name="T">
+      ///    The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term>
+      ///         <see cref="FileSystemInfo"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return instances of <see cref="DirectoryInfo"/>, <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///       </description>
+      ///    </item>
+      ///    <item>
+      ///       <term>
+      ///         <see cref="string"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return the full path of each item.
+      ///       </description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
       /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> / <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
+      ///   The matching file system entries. The type of the items is determined by the type
+      ///   <typeparamref name="T"/>.
       /// </returns>
       /// <exception cref="ArgumentException"></exception>
       /// <exception cref="ArgumentNullException"></exception>
@@ -4651,10 +6583,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>characters, but doesn't support regular expressions.</para>
       /// </param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(KernelTransaction transaction, string path, string searchPattern, bool? isFullPath)
@@ -4664,9 +6618,30 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.
       /// </summary>
+      /// <typeparam name="T">
+      ///    The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term>
+      ///         <see cref="FileSystemInfo"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return instances of <see cref="DirectoryInfo"/>, <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///       </description>
+      ///    </item>
+      ///    <item>
+      ///       <term>
+      ///         <see cref="string"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return the full path of each item.
+      ///       </description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
       /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> / <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
+      ///   The matching file system entries. The type of the items is determined by the type
+      ///   <typeparamref name="T"/>.
       /// </returns>
       /// <exception cref="ArgumentException"></exception>
       /// <exception cref="ArgumentNullException"></exception>
@@ -4679,10 +6654,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
@@ -4694,9 +6691,30 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system entries in a specified path.
       /// </summary>
+      /// <typeparam name="T">
+      ///    The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term>
+      ///         <see cref="FileSystemInfo"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return instances of <see cref="DirectoryInfo"/>, <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///       </description>
+      ///    </item>
+      ///    <item>
+      ///       <term>
+      ///         <see cref="string"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return the full path of each item.
+      ///       </description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
       /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> / <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
+      ///   The matching file system entries. The type of the items is determined by the type
+      ///   <typeparamref name="T"/>.
       /// </returns>
       /// <exception cref="ArgumentException"></exception>
       /// <exception cref="ArgumentNullException"></exception>
@@ -4711,9 +6729,30 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path.
       /// </summary>
+      /// <typeparam name="T">
+      ///    The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term>
+      ///         <see cref="FileSystemInfo"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return instances of <see cref="DirectoryInfo"/>, <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///       </description>
+      ///    </item>
+      ///    <item>
+      ///       <term>
+      ///         <see cref="string"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return the full path of each item.
+      ///       </description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
       /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> / <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
+      ///   The matching file system entries. The type of the items is determined by the type
+      ///   <typeparamref name="T"/>.
       /// </returns>
       /// <exception cref="ArgumentException"></exception>
       /// <exception cref="ArgumentNullException"></exception>
@@ -4733,9 +6772,30 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file system entries that match a <paramref name="searchPattern"/> in a specified path using <see cref="DirectoryEnumerationOptions"/>.
       /// </summary>
+      /// <typeparam name="T">
+      ///    The type to return. This may be one of the following types:
+      ///    <list type="definition">
+      ///    <item>
+      ///       <term>
+      ///         <see cref="FileSystemInfo"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return instances of <see cref="DirectoryInfo"/>, <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instances.
+      ///       </description>
+      ///    </item>
+      ///    <item>
+      ///       <term>
+      ///         <see cref="string"/>
+      ///       </term>
+      ///       <description>
+      ///         This method will return the full path of each item.
+      ///       </description>
+      ///    </item>
+      /// </list>
+      /// </typeparam>
       /// <returns>
-      /// <para>The return type is based on C# inference. Possible return types are:</para>
-      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> / <see cref="FileInfo"/> and <see cref="FileSystemEntryInfo"/> instance.</para>
+      ///   The matching file system entries. The type of the items is determined by the type
+      ///   <typeparamref name="T"/>.
       /// </returns>
       /// <exception cref="ArgumentException"></exception>
       /// <exception cref="ArgumentNullException"></exception>
@@ -4780,10 +6840,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory specified by <paramref name="path"/>.</summary>
       /// <param name="path">The file to search.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, bool? isFullPath)
@@ -4795,10 +6877,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to search.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType, bool? isFullPath)
@@ -4844,10 +6948,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to search.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, bool? isFullPath)
@@ -4860,10 +6986,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to search.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType, bool? isFullPath)
@@ -4905,11 +7053,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Encrypt(string path, bool? isFullPath)
       {
@@ -4920,11 +7089,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a directory to encrypt.</param>
       /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt files and directories in the root of <paramref name="path"/>.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Encrypt(string path, bool recursive, bool? isFullPath)
       {
@@ -4963,10 +7153,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static DateTime GetChangeTime(string path, bool? isFullPath)
       {
@@ -5004,10 +7216,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static DateTime GetChangeTime(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -5040,10 +7274,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path, bool? isFullPath)
       {
@@ -5081,10 +7337,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -5115,10 +7393,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory on the path.</returns>
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool? isFullPath)
@@ -5145,10 +7445,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory on the path.</returns>
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, bool? isFullPath)
@@ -5187,10 +7509,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="path">The target directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(string path, bool? isFullPath)
@@ -5210,10 +7554,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The target directory.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(string path, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
@@ -5274,10 +7640,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, bool? isFullPath)
@@ -5298,10 +7686,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The target directory.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
@@ -5359,10 +7769,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The number of bytes used by all data streams.</returns>
       
       [SecurityCritical]
@@ -5375,10 +7807,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The number of bytes used by a named stream.</returns>
       
       [SecurityCritical]
@@ -5391,10 +7845,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
       
       [SecurityCritical]
@@ -5467,10 +7943,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The number of bytes used by all data streams.</returns>
       
       [SecurityCritical]
@@ -5484,10 +7982,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The number of bytes used by a named stream.</returns>
       
       [SecurityCritical]
@@ -5501,12 +8021,33 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type, bool? isFullPath)
       {
@@ -5561,10 +8102,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Check if the directory has permission inheritance enabled.</summary>
       /// <param name="path">The full path to the directory to check.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns><c>true</c> if permission inheritance is enabled, <c>false</c> if permission inheritance is disabled.</returns>
       public static bool HasInheritedPermissions(string path, bool? isFullPath)
       {
@@ -5615,10 +8178,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Move1(string sourcePath, string destinationPath, MoveOptions moveOptions, bool? isFullPath)
       {
@@ -5646,10 +8231,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static CopyMoveResult Move1(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
@@ -5728,10 +8335,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void Move1(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, bool? isFullPath)
       {
@@ -5760,10 +8389,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="sourcePath" /> and <paramref name="destinationPath" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static CopyMoveResult Move1(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
@@ -5833,13 +8484,34 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing directory.</summary>
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
       [SecurityCritical]
       public static void RemoveStream(string path, bool? isFullPath)
       {
@@ -5850,13 +8522,34 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="name">The name of the stream to remove.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
       [SecurityCritical]
       public static void RemoveStream(string path, string name, bool? isFullPath)
       {
@@ -5896,13 +8589,34 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -5914,10 +8628,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="name">The name of the stream to remove.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       
@@ -5968,10 +8704,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool? isFullPath)
       {
@@ -6002,11 +8760,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool? isFullPath)
       {
@@ -6042,11 +8821,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
@@ -6078,11 +8878,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool? isFullPath)
       {
@@ -6096,8 +8917,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to set the dates and times information.</param>
       /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      
+      /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>      
       [SecurityCritical]
       public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
       {
@@ -6194,10 +9014,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="compress"><c>true</c> compress, when <c>false</c> decompress.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       internal static void CompressDecompressInternal(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, bool compress, bool? isFullPath)
       {
@@ -6382,10 +9224,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> access control to apply to the directory, may be null.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryInternal(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, bool? isFullPath)
@@ -6540,10 +9404,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path of a file or directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       internal static string GetDirectoryRootInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -6570,10 +9456,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       internal static DirectoryInfo GetParentInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -6610,10 +9518,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="requireEmpty"><c>true</c> requires the the directory must be empty.</param>
       /// <param name="continueOnNotExist"><c>true</c> does not throw an Exception when the file system object does not exist.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static void DeleteDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool requireEmpty, bool continueOnNotExist, bool? isFullPath)
@@ -6787,10 +9717,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       /// <param name="initialize">When <c>true</c> indicates the method is called externally.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       internal static void DeleteEmptyDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool initialize, bool? isFullPath)
       {
@@ -6847,10 +9799,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       /// <param name="enable"><c>true</c> enabled encryption, <c>false</c> disables encryption.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0 | 1"</remarks>
       
       [SecurityCritical]
@@ -6883,11 +9857,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encrypt"><c>true</c> encrypt, <c>false</c> decrypt.</param>
       /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of <paramref name="path"/>.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       internal static void EncryptDecryptDirectoryInternal(string path, bool encrypt, bool recursive, bool? isFullPath)
       {
@@ -6925,10 +9920,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
       /// <remarks>Either use <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</remarks>
       
@@ -7048,10 +10065,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       [SecurityCritical]
       internal static IEnumerable<T> EnumerateFileSystemEntryInfosInternal<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
       {
@@ -7196,10 +10235,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The target directory.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      ///  <list type="definition">
+      ///   <item>
+      ///     <term>
+      ///       <see langword="true" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="false" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      /// </description>
+      ///   </item>
+      ///   <item>
+      ///     <term>
+      ///       <see langword="null" />
+      ///     </term>
+      ///     <description>
+      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      /// </description>
+      ///   </item>
+      /// </list></param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
       internal static Dictionary<string, long> GetPropertiesInternal(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)

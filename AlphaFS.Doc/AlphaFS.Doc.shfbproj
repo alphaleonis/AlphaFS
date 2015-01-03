@@ -33,7 +33,7 @@
     <FrameworkVersion>.NET Framework 4.0</FrameworkVersion>
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <RootNamespaceTitle>API Reference</RootNamespaceTitle>
-    <HelpTitle>AlphaFS</HelpTitle>
+    <HelpTitle>AlphaFS 1.6 Documentation</HelpTitle>
     <CopyrightText>Copyright %28c%29 2008-2015 Peter Palotas, Alexandr Normuradov, Jeffrey Jangli</CopyrightText>
     <PresentationStyle>VS2013</PresentationStyle>
     <SyntaxFilters>Standard</SyntaxFilters>
@@ -49,10 +49,11 @@
     <NamespaceSummaries>
       <NamespaceSummaryItem name="Alphaleonis.Win32.Filesystem" isDocumented="True">The Filesystem namespace contains classes to access and work with the local filesystem. Many of the classes in this namespace are replicas of the ones available in the System.IO namespace, but with added functionality. All methods in this namespace accept long windows unicode paths (i.e. paths starting with &lt;c&gt;\\?\&lt;/c&gt;). 
 Additional classes and methods are provided to provide more advanced functionality than that of System.IO.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Alphaleonis.Win32.Security" isDocumented="True">This namespace contains classes directly related to security such as authentication, authorization and privilege tokens that may be needed for some file operations. For an example the SE_SECURITY_NAME privilege needs to be held to be able to modify the SACL of any file.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="(global)" isDocumented="True" />
-<NamespaceSummaryItem name="Alphaleonis.Win32" isDocumented="True">This namespace contains general classes related to the Win32 Api.</NamespaceSummaryItem>
-<NamespaceSummaryItem name="Alphaleonis.Win32.Network" isDocumented="True">This namespace contains network related classes.</NamespaceSummaryItem></NamespaceSummaries>
+      <NamespaceSummaryItem name="Alphaleonis.Win32.Security" isDocumented="True">This namespace contains classes directly related to security such as authentication, authorization and privilege tokens that may be needed for some file operations. For an example the SE_SECURITY_NAME privilege needs to be held to be able to modify the SACL of any file.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="(global)" isDocumented="True" />
+      <NamespaceSummaryItem name="Alphaleonis.Win32" isDocumented="True">This namespace contains general classes related to the Win32 Api.</NamespaceSummaryItem>
+      <NamespaceSummaryItem name="Alphaleonis.Win32.Network" isDocumented="True">This namespace contains network related classes.</NamespaceSummaryItem>
+    </NamespaceSummaries>
     <HelpFileFormat>HtmlHelp1, Website</HelpFileFormat>
     <ComponentConfigurations>
     </ComponentConfigurations>
