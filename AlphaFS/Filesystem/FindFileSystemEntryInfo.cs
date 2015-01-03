@@ -229,7 +229,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AsFileSystemInfo
 
       /// <summary>Gets or sets the ability to return the object as a <see cref="FileSystemInfo"/> instance.</summary>
-      /// <value><c>true</c> returns the object as a <see cref="FileSystemInfo"/> instance.</value>
+      /// <value><see langword="true"/> returns the object as a <see cref="FileSystemInfo"/> instance.</value>
       public bool AsFileSystemInfo { get; set; }
 
       #endregion // AsFileSystemInfo
@@ -237,7 +237,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AsLongPath
 
       /// <summary>Gets or sets the ability to return the full path in Unicode format.</summary>
-      /// <value><c>true</c> returns the full path in Unicode format, <c>false</c> returns the full path in regular path format.</value>
+      /// <value><see langword="true"/> returns the full path in Unicode format, <see langword="false"/> returns the full path in regular path format.</value>
       public bool AsLongPath { get; set; }
 
       #endregion // AsLongPath
@@ -245,7 +245,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AsString
 
       /// <summary>Gets or sets the ability to return the object instance as a <see cref="string"/>.</summary>
-      /// <value><c>true</c> returns the full path of the object as a <see cref="string"/></value>
+      /// <value><see langword="true"/> returns the full path of the object as a <see cref="string"/></value>
       public bool AsString { get; set; }
 
       #endregion // AsString
@@ -255,7 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
       private NativeMethods.FindExInfoLevels _basicSearch = NativeMethods.BasicSearch;
 
       /// <summary>Gets or sets a value indicating which NativeMethods.FindExInfoLevels to use.</summary>
-      /// <value><c>true</c> uses FindExInfoLevels.Basic, otherwise uses FindExInfoLevels.Standard</value>
+      /// <value><see langword="true"/> uses FindExInfoLevels.Basic, otherwise uses FindExInfoLevels.Standard</value>
       public bool BasicSearch
       {
          get { return _basicSearch == NativeMethods.FindExInfoLevels.Basic; }
@@ -274,7 +274,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region ContinueOnException
 
       /// <summary>Gets or sets the ability to skip on access errors.</summary>
-      /// <value><c>true</c> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</value>
+      /// <value><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</value>
       public bool ContinueOnException { get; set; }
 
       #endregion // ContinueOnException
@@ -282,7 +282,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Fallback
 
       /// <summary>Gets or sets the ability to fallback on function GetFileAttributesXxx() when function FindFirstFileXxx() fails.</summary>
-      /// <value><c>true</c> enable fallback, <c>false</c> disable fallback.</value>
+      /// <value><see langword="true"/> enable fallback, <see langword="false"/> disable fallback.</value>
       public bool Fallback { get; set; }
 
       #endregion // Fallback
@@ -294,9 +294,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the file system object type.</summary>
       /// <value>
-      /// <c>null</c> = Return files and directories.
-      /// <c>true</c> = Return only directories.
-      /// <c>false</c> = Return only files.
+      /// <see langword="null"/> = Return files and directories.
+      /// <see langword="true"/> = Return only directories.
+      /// <see langword="false"/> = Return only files.
       /// </value>
       public bool? FileSystemObjectType
       {
@@ -340,14 +340,14 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFolder
 
       /// <summary>Gets or sets a value indicating which FindExInfoLevels to use.</summary>
-      /// <value><c>null</c> indicates the file system object is unknown, <c>true</c> indicates a folder object, <c>false</c> indicates a file object.</value>
+      /// <value><see langword="null"/> indicates the file system object is unknown, <see langword="true"/> indicates a folder object, <see langword="false"/> indicates a file object.</value>
       public bool IsFolder { get; set; }
 
       #endregion // IsFolder
 
       #region IsFullPath
 
-      /// <summary><c>true</c> uses the path as is.</summary>
+      /// <summary><see langword="true"/> uses the path as is.</summary>
       public bool? IsFullPath { get; set; }
 
       #endregion // IsFullPath
@@ -357,7 +357,7 @@ namespace Alphaleonis.Win32.Filesystem
       private NativeMethods.FindExAdditionalFlags _largeCache = NativeMethods.LargeCache;
 
       /// <summary>Gets or sets a value indicating which FindExAdditionalFlags to use.</summary>
-      /// <value><c>true</c> uses FindExAdditionalFlags.LargeFetch, otherwise uses FindExAdditionalFlags.None</value>
+      /// <value><see langword="true"/> uses FindExAdditionalFlags.LargeFetch, otherwise uses FindExAdditionalFlags.None</value>
       public bool LargeCache
       {
          get { return _largeCache == NativeMethods.FindExAdditionalFlags.LargeFetch; }
@@ -376,7 +376,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Recursive
 
       /// <summary>Specifies whether the search should include only the current directory or should include all subdirectories.</summary>
-      /// <value><c>true</c> to all subdirectories.</value>
+      /// <value><see langword="true"/> to all subdirectories.</value>
       public bool Recursive { get; set; }
 
       #endregion // Recursive
@@ -410,7 +410,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region SkipReparsePoints
 
-      /// <summary><c>true</c> skips ReparsePoints, <c>false</c> will follow ReparsePoints.</summary>
+      /// <summary><see langword="true"/> skips ReparsePoints, <see langword="false"/> will follow ReparsePoints.</summary>
       public bool SkipReparsePoints { get; set; }
 
       #endregion // SkipReparsePoints

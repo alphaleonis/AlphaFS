@@ -30,7 +30,10 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Provides properties and instance methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="FileStream"/> objects. This class cannot be inherited.</summary>
+   /// <summary>
+   ///   Provides properties and instance methods for the creation, copying, deletion, moving, and opening of files, and aids in the
+   ///   creation of <see cref="FileStream"/> objects. This class cannot be inherited.
+   /// </summary>
    [SerializableAttribute]
    public sealed class FileInfo : FileSystemInfo
    {
@@ -54,9 +57,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <para><see langword="true"/> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><see langword="false"/> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><see langword="null"/> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(string fileName, bool? isFullPath) : this(null, fileName, isFullPath)
@@ -77,9 +80,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <para><see langword="true"/> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><see langword="false"/> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><see langword="null"/> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(KernelTransaction transaction, string fileName, bool? isFullPath)
@@ -105,7 +108,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates a <see cref="System.IO.StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
+      /// <summary>
+      ///   Creates a <see cref="System.IO.StreamWriter"/> that appends text to the file represented by this instance of the
+      ///   <see cref="FileInfo"/>.
+      /// </summary>
       /// <returns>A new <see cref="StreamWriter"/></returns>
       [SecurityCritical]
       public StreamWriter AppendText()
@@ -113,7 +119,9 @@ namespace Alphaleonis.Win32.Filesystem
          return File.AppendTextInternal(Transaction, LongFullName, NativeMethods.DefaultFileEncoding, null);
       }
 
-      /// <summary>Creates a <see cref="StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
+      /// <summary>
+      ///   Creates a <see cref="StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.
+      /// </summary>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       /// <returns>A new <see cref="StreamWriter"/></returns>
       [SecurityCritical]
@@ -130,22 +138,25 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Copies an existing file to a new file, disallowing the overwriting of an existing file.
-      /// </summary>
-      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
+      /// <summary>Copies an existing file to a new file, disallowing the overwriting of an existing file.</summary>
       /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing file by default.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
+      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath)
       {
@@ -154,26 +165,31 @@ namespace Alphaleonis.Win32.Filesystem
          return new FileInfo(Transaction, destinationPathLp, null);
       }
 
-      /// <summary>Copies an existing file to a new file, allowing the overwriting of an existing file.
-      /// </summary>
-      /// <returns>
-      /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <c>true</c>.</para>
-      /// <para>If the file exists and <paramref name="overwrite"/> is <c>false</c>, an <see cref="IOException"/> is thrown.</para>
-      /// </returns>
+      /// <summary>Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
+      /// <param name="overwrite">
+      ///   <see langword="true"/> to allow an existing file to be overwritten; otherwise, <see langword="false"/>.
+      /// </param>
+      /// <returns>
+      ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <see langword="true"/>.</para>
+      ///   <para>If the file exists and <paramref name="overwrite"/> is <see langword="false"/>, an <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath, bool overwrite)
       {
@@ -188,27 +204,31 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, disallowing the overwriting of an existing file.
-      /// </summary>
-      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
+      /// <summary>[AlphaFS] Copies an existing file to a new file, disallowing the overwriting of an existing file.</summary>
       /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing file by default.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
+      ///   is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
+      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath, bool? isFullPath)
       {
@@ -217,31 +237,37 @@ namespace Alphaleonis.Win32.Filesystem
          return new FileInfo(Transaction, destinationPathLp, null);
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.
-      /// </summary>
-      /// <returns>
-      /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <c>true</c>.</para>
-      /// <para>If the file exists and <paramref name="overwrite"/> is <c>false</c>, an <see cref="IOException"/> is thrown.</para>
-      /// </returns>
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="overwrite"><c>true</c> to allow an existing file to be overwritten; otherwise, <c>false</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <param name="overwrite">
+      ///   <see langword="true"/> to allow an existing file to be overwritten; otherwise, <see langword="false"/>.
       /// </param>
+      /// <param name="isFullPath">
+      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
+      ///   is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>
+      ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <see langword="true"/>.</para>
+      ///   <para>If the file exists and <paramref name="overwrite"/> is <see langword="false"/>, an <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath, bool overwrite, bool? isFullPath)
       {
@@ -293,8 +319,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
-      
+      /// <summary>Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>      
       [SecurityCritical]
       public void Decrypt()
       {
@@ -309,11 +334,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Permanently deletes a file.
-      /// <para>&#160;</para>
+      /// <summary>Permanently deletes a file.</summary>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
-      /// </summary>
-      /// <exception cref="IOException"></exception>
+      ///
+      /// <exception cref="IOException">.</exception>
       public override void Delete()
       {
          File.DeleteFileInternal(Transaction, LongFullName, false, null);
@@ -324,9 +348,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Permanently deletes a file.</summary>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
-      
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
       public void Delete(bool ignoreReadOnly)
       {
          File.DeleteFileInternal(Transaction, LongFullName, ignoreReadOnly, null);
@@ -340,8 +363,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
-      
+      /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>      
       [SecurityCritical]
       public void Encrypt()
       {
@@ -356,19 +378,31 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Gets a <see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="FileInfo"/> object.</summary>
-      /// <returns><see cref="System.Security.AccessControl.FileSecurity"/>A FileSecurity object that encapsulates the access control rules for the current file.</returns>
-      
+      /// <summary>
+      ///   Gets a <see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the access control list (ACL) entries for
+      ///   the file described by the current <see cref="FileInfo"/> object.
+      /// </summary>
+      /// <returns>
+      ///   <see cref="System.Security.AccessControl.FileSecurity"/>A FileSecurity object that encapsulates the access control rules for the
+      ///   current file.
+      /// </returns>      
       [SecurityCritical]
       public FileSecurity GetAccessControl()
       {
          return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, null);
       }
 
-      /// <summary>Gets a <see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</summary>
-      /// <param name="includeSections">One of the <see cref="System.Security"/> values that specifies which group of access control entries to retrieve.</param>
-      /// <returns><see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the file described by the current FileInfo object.</returns>
-      
+      /// <summary>
+      ///   Gets a <see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list
+      ///   (ACL) entries for the file described by the current FileInfo object.
+      /// </summary>
+      /// <param name="includeSections">
+      ///   One of the <see cref="System.Security"/> values that specifies which group of access control entries to retrieve.
+      /// </param>
+      /// <returns>
+      ///   <see cref="System.Security.AccessControl.FileSecurity"/> object that encapsulates the specified type of access control list (ACL)
+      ///   entries for the file described by the current FileInfo object.
+      /// </returns>      
       [SecurityCritical]
       public FileSecurity GetAccessControl(AccessControlSections includeSections)
       {
@@ -383,23 +417,26 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Moves a specified file to a new location, providing the option to specify a new file name.
-      /// </summary>
+      /// <summary>Moves a specified file to a new location, providing the option to specify a new file name.</summary>
       /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing file by default.</para>
-      /// <para>This method works across disk volumes.</para>
-      /// <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
+      ///   <para>This method works across disk volumes.</para>
+      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public void MoveTo(string destinationFullPath)
       {
@@ -417,7 +454,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Opens a file in the specified mode.</summary>
-      /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
+      /// <param name="mode">
+      ///   A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.
+      /// </param>
       /// <returns>A <see cref="FileStream"/> file opened in the specified mode, with read/write access and unshared.</returns>
       [SecurityCritical]
       public FileStream Open(FileMode mode)
@@ -436,9 +475,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
-      /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
-      /// <param name="access">A <see cref="FileAccess"/> constant specifying whether to open the file with Read, Write, or ReadWrite file access.</param>
-      /// <param name="share">A <see cref="FileShare"/> constant specifying the type of access other <see cref="FileStream"/> objects have to this file.</param>
+      /// <param name="mode">
+      ///   A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.
+      /// </param>
+      /// <param name="access">
+      ///   A <see cref="FileAccess"/> constant specifying whether to open the file with Read, Write, or ReadWrite file access.
+      /// </param>
+      /// <param name="share">
+      ///   A <see cref="FileShare"/> constant specifying the type of access other <see cref="FileStream"/> objects have to this file.
+      /// </param>
       /// <returns>A <see cref="FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access, FileShare share)
@@ -451,8 +496,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access.</summary>
-      /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
-      /// <param name="rights">A <see cref="FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten along with additional options.</param>
+      /// <param name="mode">
+      ///   A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.
+      /// </param>
+      /// <param name="rights">
+      ///   A <see cref="FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the
+      ///   contents of existing files are retained or overwritten along with additional options.
+      /// </param>
       /// <returns>A <see cref="FileStream"/> object opened in the specified mode and access, and unshared.</returns>
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights)
@@ -460,10 +510,19 @@ namespace Alphaleonis.Win32.Filesystem
          return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, FileShare.None, ExtendedFileAttributes.Normal, null);
       }
 
-      /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
-      /// <param name="mode">A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.</param>
-      /// <param name="rights">A <see cref="FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten along with additional options.</param>
-      /// <param name="share">A <see cref="FileShare"/> constant specifying the type of access other <see cref="FileStream"/> objects have to this file.</param>
+      /// <summary>
+      ///   [AlphaFS] Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.
+      /// </summary>
+      /// <param name="mode">
+      ///   A <see cref="FileMode"/> constant specifying the mode (for example, Open or Append) in which to open the file.
+      /// </param>
+      /// <param name="rights">
+      ///   A <see cref="FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the
+      ///   contents of existing files are retained or overwritten along with additional options.
+      /// </param>
+      /// <param name="share">
+      ///   A <see cref="FileShare"/> constant specifying the type of access other <see cref="FileStream"/> objects have to this file.
+      /// </param>
       /// <returns>A <see cref="FileStream"/> object opened with the specified mode, access, and sharing options.</returns>
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights, FileShare share)
@@ -480,8 +539,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Creates a read-only <see cref="FileStream"/>.</summary>
-      /// <returns>A new read-only <see cref="FileStream"/> object.</returns>
       /// <remarks>This method returns a read-only <see cref="FileStream"/> object with the <see cref="FileShare"/> mode set to Read.</remarks>
+      /// <returns>A new read-only <see cref="FileStream"/> object.</returns>
       [SecurityCritical]
       public FileStream OpenRead()
       {
@@ -496,7 +555,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates a <see cref="StreamReader"/> with NativeMethods.DefaultFileEncoding encoding that reads from an existing text file.</summary>
+      /// <summary>
+      ///   Creates a <see cref="StreamReader"/> with NativeMethods.DefaultFileEncoding encoding that reads from an existing text file.
+      /// </summary>
       /// <returns>A new <see cref="StreamReader"/> with NativeMethods.DefaultFileEncoding encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
@@ -510,8 +571,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Creates a <see cref="StreamReader"/> with <see cref="Encoding"/> that reads from an existing text file.</summary>
-      /// <returns>A new <see cref="StreamReader"/> with the specified <see cref="Encoding"/>.</returns>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
+      /// <returns>A new <see cref="StreamReader"/> with the specified <see cref="Encoding"/>.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public StreamReader OpenText(Encoding encoding)
@@ -558,27 +619,58 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file.</summary>
+      /// <summary>
+      ///   Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the
+      ///   original file, and creating a backup of the replaced file.
+      /// </summary>
+      /// <remarks>
+      ///   The Replace method replaces the contents of a specified file with the contents of the file described by the current
+      ///   <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new
+      ///   <see cref="FileInfo"/> object that describes the overwritten file.
+      /// </remarks>
+      /// <remarks>
+      ///   Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being
+      ///   replaced.
+      /// </remarks>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
-      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
-      /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="FileInfo"/> object that describes the overwritten file.</remarks>
-      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      
+      /// <param name="destinationBackupFileName">
+      ///   The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.
+      /// </param>
+      /// <returns>
+      ///   A <see cref="FileInfo"/> object that encapsulates information about the file described by the
+      ///   <paramref name="destinationFileName"/> parameter.
+      /// </returns>      
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName)
       {
          return Replace(destinationFileName, destinationBackupFileName, false, false);
       }
 
-      /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
+      /// <summary>
+      ///   Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the
+      ///   original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.
+      /// </summary>
+      /// <remarks>
+      ///   The Replace method replaces the contents of a specified file with the contents of the file described by the current
+      ///   <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new
+      ///   <see cref="FileInfo"/> object that describes the overwritten file.
+      /// </remarks>
+      /// <remarks>
+      ///   Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being
+      ///   replaced.
+      /// </remarks>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
-      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
-      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
-      /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="FileInfo"/> object that describes the overwritten file.</remarks>
-      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      
+      /// <param name="destinationBackupFileName">
+      ///   The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.
+      /// </param>
+      /// <param name="ignoreMetadataErrors">
+      ///   <see langword="true"/> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file;
+      ///   otherwise, <see langword="false"/>.
+      /// </param>
+      /// <returns>
+      ///   A <see cref="FileInfo"/> object that encapsulates information about the file described by the
+      ///   <paramref name="destinationFileName"/> parameter.
+      /// </returns>
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
@@ -591,19 +683,39 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsFullPath
 
-      /// <summary>[AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
+      /// <summary>
+      ///   [AlphaFS] Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting
+      ///   the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.
+      /// </summary>
+      /// <remarks>
+      ///   The Replace method replaces the contents of a specified file with the contents of the file described by the current
+      ///   <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new
+      ///   <see cref="FileInfo"/> object that describes the overwritten file.
+      /// </remarks>
+      /// <remarks>
+      ///   Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being
+      ///   replaced.
+      /// </remarks>
       /// <param name="destinationFileName">The name of a file to replace with the current file.</param>
-      /// <param name="destinationBackupFileName">The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.</param>
-      /// <param name="ignoreMetadataErrors"><c>true</c> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file; otherwise, <c>false</c>.</param>
-      /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <param name="destinationBackupFileName">
+      ///   The name of a file with which to create a backup of the file described by the <paramref name="destinationFileName"/> parameter.
       /// </param>
-      /// <returns>A <see cref="FileInfo"/> object that encapsulates information about the file described by the <paramref name="destinationFileName"/> parameter.</returns>
-      /// <remarks>The Replace method replaces the contents of a specified file with the contents of the file described by the current <see cref="FileInfo"/> object. It also creates a backup of the file that was replaced. Finally, it returns a new <see cref="FileInfo"/> object that describes the overwritten file.</remarks>
-      /// <remarks>Pass null to the <paramref name="destinationBackupFileName"/> parameter if you do not want to create a backup of the file being replaced.</remarks>
-      
+      /// <param name="ignoreMetadataErrors">
+      ///   <see langword="true"/> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file;
+      ///   otherwise, <see langword="false"/>.
+      /// </param>
+      /// <param name="isFullPath">
+      ///   <para><see langword="true"/> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is an absolute
+      ///   path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> will be
+      ///   checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is already an
+      ///   absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>
+      ///   A <see cref="FileInfo"/> object that encapsulates information about the file described by the
+      ///   <paramref name="destinationFileName"/> parameter.
+      /// </returns>      
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
       {
@@ -635,12 +747,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
-      /// <param name="fileSecurity">A <see cref="FileSecurity"/> object that describes an access control list (ACL) entry to apply to the current file.</param>
-      /// <remarks>The SetAccessControl method applies access control list (ACL) entries to the current file that represents the noninherited ACL list. 
-      /// Use the SetAccessControl method whenever you need to add or remove ACL entries from a file.
+      /// <summary>
+      ///   Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.
+      /// </summary>
+      /// <remarks>
+      ///   The SetAccessControl method applies access control list (ACL) entries to the current file that represents the noninherited ACL
+      ///   list. Use the SetAccessControl method whenever you need to add or remove ACL entries from a file.
       /// </remarks>
-      
+      /// <param name="fileSecurity">
+      ///   A <see cref="FileSecurity"/> object that describes an access control list (ACL) entry to apply to the current file.
+      /// </param>      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity)
@@ -648,13 +764,20 @@ namespace Alphaleonis.Win32.Filesystem
          File.SetAccessControlInternal(LongFullName, null, fileSecurity, AccessControlSections.All, null);
       }
 
-      /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
-      /// <param name="fileSecurity">A <see cref="FileSecurity"/> object that describes an access control list (ACL) entry to apply to the current file.</param>
-      /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
-      /// <remarks>The SetAccessControl method applies access control list (ACL) entries to the current file that represents the noninherited ACL list. 
-      /// Use the SetAccessControl method whenever you need to add or remove ACL entries from a file.
+      /// <summary>
+      ///   Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.
+      /// </summary>
+      /// <remarks>
+      ///   The SetAccessControl method applies access control list (ACL) entries to the current file that represents the noninherited ACL
+      ///   list. Use the SetAccessControl method whenever you need to add or remove ACL entries from a file.
       /// </remarks>
-      
+      /// <param name="fileSecurity">
+      ///   A <see cref="FileSecurity"/> object that describes an access control list (ACL) entry to apply to the current file.
+      /// </param>
+      /// <param name="includeSections">
+      ///   One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to
+      ///   set.
+      /// </param>      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity, AccessControlSections includeSections)
@@ -689,8 +812,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to the file.</summary>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
-      /// <param name="contents">The lines to add to the stream.</param>
-      
+      /// <param name="contents">The lines to add to the stream.</param>      
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
@@ -701,8 +823,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Compress
 
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      
+      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>      
       [SecurityCritical]
       public void Compress()
       {
@@ -717,32 +838,41 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FileInfo
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>
+      ///   [AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be
+      ///   specified.
       /// </summary>
-      /// <returns>
-      /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
-      /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
+      ///   is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
+      /// <returns>
+      ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
+      ///   <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an
+      ///   <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool? isFullPath)
       {
@@ -751,33 +881,44 @@ namespace Alphaleonis.Win32.Filesystem
          return new FileInfo(Transaction, destinationPathLp, null);
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>
+      ///   [AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be
+      ///   specified.
       /// </summary>
-      /// <returns>
-      /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
-      /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <param name="preserveDates">
+      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
       /// </param>
+      /// <param name="isFullPath">
+      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
+      ///   is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>
+      ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
+      ///   <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an
+      ///   <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates, bool? isFullPath)
       {
@@ -790,33 +931,41 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CopyMoveResult
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file,
-      /// </summary>
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
-      /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully copied.</para>
-      /// </returns>
+      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file,.</summary>
       /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing file by default.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <param name="progressHandler">
+      ///   A callback function that is called each time another portion of the file has been copied. This parameter can be
+      ///   <see langword="null"/>.
       /// </param>
+      /// <param name="userProgressData">
+      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <param name="isFullPath">
+      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
+      ///   is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
+      ///   <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully copied.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
@@ -826,36 +975,49 @@ namespace Alphaleonis.Win32.Filesystem
          return cmr;
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>
+      ///   [AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be
+      ///   specified.
       /// </summary>
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
-      /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
-      /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <param name="progressHandler">
+      ///   A callback function that is called each time another portion of the file has been copied. This parameter can be
+      ///   <see langword="null"/>.
       /// </param>
+      /// <param name="userProgressData">
+      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <param name="isFullPath">
+      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
+      ///   is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
+      ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
+      ///   <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an
+      ///   <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
@@ -865,37 +1027,53 @@ namespace Alphaleonis.Win32.Filesystem
          return cmr;
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <summary>
+      ///   [AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be
+      ///   specified.
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
-      /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
-      /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <param name="preserveDates">
+      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
       /// </param>
+      /// <param name="progressHandler">
+      ///   A callback function that is called each time another portion of the file has been copied. This parameter can be
+      ///   <see langword="null"/>.
+      /// </param>
+      /// <param name="userProgressData">
+      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <param name="isFullPath">
+      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
+      ///   is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
+      ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
+      ///   <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an
+      ///   <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
@@ -911,27 +1089,35 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FileInfo
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>
+      ///   [AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be
+      ///   specified.
       /// </summary>
-      /// <returns>
-      /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
-      /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
+      /// <returns>
+      ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
+      ///   <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an
+      ///   <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions)
       {
@@ -940,28 +1126,38 @@ namespace Alphaleonis.Win32.Filesystem
          return new FileInfo(Transaction, destinationPathLp, null);
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
+      /// <summary>
+      ///   [AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be
+      ///   specified.
       /// </summary>
-      /// <returns>
-      /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
-      /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
+      /// <param name="preserveDates">
+      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
+      /// </param>
+      /// <returns>
+      ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
+      ///   <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an
+      ///   <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
@@ -974,28 +1170,38 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CopyMoveResult
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <summary>
+      ///   [AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
-      /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully copied.</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing file by default.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">
+      ///   A callback function that is called each time another portion of the file has been copied. This parameter can be
+      ///   <see langword="null"/>.
+      /// </param>
+      /// <param name="userProgressData">
+      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
+      ///   <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully copied.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
@@ -1004,32 +1210,45 @@ namespace Alphaleonis.Win32.Filesystem
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
-      
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+
+      /// <summary>
+      ///   [AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be
+      ///   specified.
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
-      /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
-      /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="progressHandler">
+      ///   A callback function that is called each time another portion of the file has been copied. This parameter can be
+      ///   <see langword="null"/>.
+      /// </param>
+      /// <param name="userProgressData">
+      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
+      ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
+      ///   <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an
+      ///   <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
@@ -1038,33 +1257,48 @@ namespace Alphaleonis.Win32.Filesystem
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
-      
-      /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be specified.
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+
+      /// <summary>
+      ///   [AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file, <see cref="CopyOptions"/> can be
+      ///   specified.
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
-      /// <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
-      /// <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="preserveDates">
+      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
+      /// </param>
+      /// <param name="progressHandler">
+      ///   A callback function that is called each time another portion of the file has been copied. This parameter can be
+      ///   <see langword="null"/>.
+      /// </param>
+      /// <param name="userProgressData">
+      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
+      ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
+      ///   <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the file exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an
+      ///   <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
@@ -1094,7 +1328,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</returns>
-      
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
@@ -1102,8 +1335,10 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
-      /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file.</returns>
-      
+      /// <param name="streamType">Type of the stream.</param>
+      /// <returns>
+      ///   An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file.
+      /// </returns>
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
@@ -1115,8 +1350,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetStreamSize
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).</summary>
-      /// <returns>The number of bytes used by all streams.</returns>
-      
+      /// <returns>The number of bytes used by all streams.</returns>      
       [SecurityCritical]
       public long GetStreamSize()
       {
@@ -1125,8 +1359,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
       /// <param name="name">The name of the stream to retrieve.</param>
-      /// <returns>The number of bytes used by a named stream.</returns>
-      
+      /// <returns>The number of bytes used by a named stream.</returns>      
       [SecurityCritical]
       public long GetStreamSize(string name)
       {
@@ -1135,8 +1368,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
-      /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      
+      /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>      
       [SecurityCritical]
       public long GetStreamSize(StreamType type)
       {
@@ -1151,32 +1383,40 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FileInfo
 
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.
+      /// <summary>
+      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can
+      ///   be specified.
       /// </summary>
-      /// <returns>
-      /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>This method works across disk volumes.</para>
-      /// <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>This method works across disk volumes.</para>
+      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <param name="moveOptions">
+      ///   <see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.
       /// </param>
+      /// <param name="isFullPath">
+      ///   <para><see langword="true"/> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode
+      ///   prefix is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as
+      ///   is.</para>
+      /// </param>
+      /// <returns><para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para></returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public FileInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions, bool? isFullPath)
       {
@@ -1188,34 +1428,48 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // FileInfo
 
       #region CopyMoveResult
-      
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified,
+
+      /// <summary>
+      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can
+      ///   be specified,.
       /// </summary>
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>This method works across disk volumes.</para>
-      /// <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>This method works across disk volumes.</para>
+      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <param name="moveOptions">
+      ///   <see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.
       /// </param>
+      /// <param name="progressHandler">
+      ///   A callback function that is called each time another portion of the directory has been moved. This parameter can be
+      ///   <see langword="null"/>.
+      /// </param>
+      /// <param name="userProgressData">
+      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <param name="isFullPath">
+      ///   <para><see langword="true"/> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode
+      ///   prefix is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as
+      ///   is.</para>
+      /// </param>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
       {
@@ -1231,27 +1485,33 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FileInfo
 
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.
+      /// <summary>
+      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can
+      ///   be specified.
       /// </summary>
-      /// <returns>
-      /// <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para>
-      /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>This method works across disk volumes.</para>
-      /// <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>This method works across disk volumes.</para>
+      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions">
+      ///   <see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <returns><para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para></returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public FileInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions)
       {
@@ -1263,29 +1523,42 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // FileInfo
 
       #region CopyMoveResult
-      
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+
+      /// <summary>
+      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can
+      ///   be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing file.</para>
-      /// <para>This method works across disk volumes.</para>
-      /// <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
+      ///   <para>This method works across disk volumes.</para>
+      ///   <para>For example, the file c:\MyFile.txt can be moved to d:\public and renamed NewFile.txt.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationFullPath">The path to move the file to, which can specify a different file name.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions">
+      ///   <see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <param name="progressHandler">
+      ///   A callback function that is called each time another portion of the directory has been moved. This parameter can be
+      ///   <see langword="null"/>.
+      /// </param>
+      /// <param name="userProgressData">
+      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
@@ -1314,8 +1587,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the file.</summary>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
-      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>      
       [SecurityCritical]
       public void RemoveStream()
       {
@@ -1323,10 +1595,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from the file.</summary>
-      /// <param name="name">The name of the stream to remove.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+      /// <param name="name">The name of the stream to remove.</param>
       [SecurityCritical]
       public void RemoveStream(string name)
       {
@@ -1340,33 +1611,51 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CopyToMoveToInternal
 
-      /// <summary>[AlphaFS] Unified method CopyToMoveToInternal() to copy/move an existing file to a new file, allowing the overwriting of an existing file.
+      /// <summary>
+      ///   [AlphaFS] Unified method CopyToMoveToInternal() to copy/move an existing file to a new file, allowing the overwriting of an
+      ///   existing file.
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <remarks>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
+      ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath"><para>A full path string to the destination directory</para></param>
-      /// <param name="preserveDates"><c>true</c> if original Timestamps must be preserved, <c>false</c> otherwise.</param>
-      /// <param name="copyOptions"><para>This parameter can be <c>null</c>. Use <see cref="CopyOptions"/> to specify how the file is to be copied.</para></param>
-      /// <param name="moveOptions"><para>This parameter can be <c>null</c>. Use <see cref="MoveOptions"/> that specify how the file is to be moved.</para></param>
-      /// <param name="progressHandler"><para>This parameter can be <c>null</c>. A callback function that is called each time another portion of the file has been copied.</para></param>
-      /// <param name="userProgressData"><para>This parameter can be <c>null</c>. The argument to be passed to the callback function.</para></param>
-      /// <param name="longFullPath">Returns the retrieved long full path.</param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <param name="preserveDates">
+      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
       /// </param>
+      /// <param name="copyOptions">
+      ///   <para>This parameter can be <see langword="null"/>. Use <see cref="CopyOptions"/> to specify how the file is to be copied.</para>
+      /// </param>
+      /// <param name="moveOptions">
+      ///   <para>This parameter can be <see langword="null"/>. Use <see cref="MoveOptions"/> that specify how the file is to be moved.</para>
+      /// </param>
+      /// <param name="progressHandler">
+      ///   <para>This parameter can be <see langword="null"/>. A callback function that is called each time another portion of the file has
+      ///   been copied.</para>
+      /// </param>
+      /// <param name="userProgressData">
+      ///   <para>This parameter can be <see langword="null"/>. The argument to be passed to the callback function.</para>
+      /// </param>
+      /// <param name="longFullPath">[out] Returns the retrieved long full path.</param>
+      /// <param name="isFullPath">
+      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
+      ///   is applied.</para>
+      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </param>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
+      ///
+      /// <exception cref="ArgumentException">
+      ///   destinationPath contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="FileNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       private CopyMoveResult CopyToMoveToInternal(string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, bool? isFullPath)
       {
@@ -1414,12 +1703,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Directory
 
-      /// <summary>Gets an instance of the parent directory.
-      /// <para>&#160;</para>
-      /// <value>A <see cref="DirectoryInfo"/> object representing the parent directory of this file.</value>
-      /// <para>&#160;</para>
-      /// <remarks>To get the parent directory as a string, use the DirectoryName property.</remarks>
+      /// <summary>
+      ///   Gets an instance of the parent directory.
       /// </summary>
+      /// <remarks>To get the parent directory as a string, use the DirectoryName property.</remarks>
+      /// <value>A <see cref="DirectoryInfo"/> object representing the parent directory of this file.</value>
+      ///
       /// <exception cref="DirectoryNotFoundException">The specified path is invalid, such as being on an unmapped drive.</exception>
       public DirectoryInfo Directory
       {
@@ -1434,16 +1723,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region DirectoryName
 
-      /// <summary>Gets a string representing the directory's full path.
-      /// <para>&#160;</para>
-      /// <value>A string representing the directory's full path.</value>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>To get the parent directory as a DirectoryInfo object, use the Directory property.</para>
-      /// <para>When first called, FileInfo calls Refresh and caches information about the file.</para>
-      /// <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
-      /// </remarks>
+      /// <summary>
+      ///   Gets a string representing the directory's full path.
       /// </summary>
+      /// <remarks>
+      ///   <para>To get the parent directory as a DirectoryInfo object, use the Directory property.</para>
+      ///   <para>When first called, FileInfo calls Refresh and caches information about the file.</para>
+      ///   <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
+      /// </remarks>
+      /// <value>A string representing the directory's full path.</value>
+      ///
       /// <exception cref="ArgumentNullException">null was passed in for the directory name.</exception>
       public string DirectoryName
       {
@@ -1454,16 +1743,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Exists
 
-      /// <summary>Gets a value indicating whether the file exists.
-      /// <para>&#160;</para>
-      /// <value><c>true</c> if the file exists; otherwise, <c>false</c>.</value>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>The <see cref="Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
-      /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
-      /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
-      /// </remarks>
+      /// <summary>
+      ///   Gets a value indicating whether the file exists.
       /// </summary>
+      /// <remarks>
+      ///   <para>The <see cref="Exists"/> property returns <see langword="false"/> if any error occurs while trying to determine if the
+      ///   specified file exists.</para>
+      ///   <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
+      ///   </para>
+      ///   <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
+      /// </remarks>
+      /// <value><see langword="true"/> if the file exists; otherwise, <see langword="false"/>.</value>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       public override bool Exists
       {
@@ -1488,16 +1778,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsReadOnly
 
-      /// <summary>Gets or sets a value that determines if the current file is read only.
-      /// <para>&#160;</para>
-      /// <value><c>true</c> if the current file is read only; otherwise, <c>false</c>.</value>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Use the IsReadOnly property to quickly determine or change whether the current file is read only.</para>
-      /// <para>When first called, FileInfo calls Refresh and caches information about the file.</para>
-      /// <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
-      /// </remarks>
+      /// <summary>
+      ///   Gets or sets a value that determines if the current file is read only.
       /// </summary>
+      /// <remarks>
+      ///   <para>Use the IsReadOnly property to quickly determine or change whether the current file is read only.</para>
+      ///   <para>When first called, FileInfo calls Refresh and caches information about the file.</para>
+      ///   <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
+      /// </remarks>
+      /// <value><see langword="true"/> if the current file is read only; otherwise, <see langword="false"/>.</value>
+      ///
       /// <exception cref="FileNotFoundException">The file described by the current FileInfo object could not be found.</exception>
       /// <exception cref="IOException">An I/O error occurred while opening the file.</exception>
       public bool IsReadOnly
@@ -1517,17 +1807,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Length
 
-      /// <summary>Gets the size, in bytes, of the current file.
-      /// <para>&#160;</para>
-      /// <value>The size of the current file in bytes.</value>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>The value of the Length property is pre-cached</para>
-      /// <para>To get the latest value, call the Refresh method.</para>
-      /// </remarks>
-      /// <exception cref="System.IO.FileNotFoundException">The file does not exist or the Length property is called for a directory.</exception>
-      /// <exception cref="System.IO.IOException"/>
+      /// <summary>
+      ///   Gets the size, in bytes, of the current file.
       /// </summary>
+      /// <remarks>
+      ///   <para>The value of the Length property is pre-cached</para>
+      ///   <para>To get the latest value, call the Refresh method.</para>
+      /// </remarks>
+      /// <value>The size of the current file in bytes.</value>
+      ///
+      /// <exception cref="System.IO.FileNotFoundException">
+      ///   The file does not exist or the Length property is called for a directory.
+      /// </exception>
+      /// <exception cref="System.IO.IOException">.</exception>
       [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
       public long Length
       {
@@ -1564,17 +1856,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       private string _name;
 
-      /// <summary>Gets the name of the file.
-      /// <para>&#160;</para>
-      /// <value>The name of the file.</value>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>The name of the file includes the file extension.</para>
-      /// <para>When first called, <see cref="FileInfo"/> calls Refresh and caches information about the file.</para>
-      /// <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
-      /// <para>The name of the file includes the file extension.</para>
-      /// </remarks>
+      /// <summary>
+      ///   Gets the name of the file.
       /// </summary>
+      /// <remarks>
+      ///   <para>The name of the file includes the file extension.</para>
+      ///   <para>When first called, <see cref="FileInfo"/> calls Refresh and caches information about the file.</para>
+      ///   <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
+      ///   <para>The name of the file includes the file extension.</para>
+      /// </remarks>
+      /// <value>The name of the file.</value>
       public override string Name
       {
          get { return _name; }

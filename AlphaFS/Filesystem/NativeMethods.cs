@@ -129,8 +129,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
       /// <param name="handle">The current handle to check.</param>
-      /// <param name="throwException"><c>true</c> will throw an <exception cref="Resources.HandleInvalid"/>, <c>false</c> will not raise this exception..</param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
+      /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.HandleInvalid"/>, <see langword="false"/> will not raise this exception..</param>
+      /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
       /// <exception cref="ArgumentException"></exception>
       internal static bool IsValidHandle(SafeHandle handle, bool throwException = true)
       {
@@ -148,8 +148,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Check is the current handle is not null, not closed and not invalid.</summary>
       /// <param name="handle">The current handle to check.</param>
       /// <param name="lastError">The result of Marshal.GetLastWin32Error()</param>
-      /// <param name="throwException"><c>true</c> will throw an <exception cref="Resources.HandleInvalidWin32Error"/>, <c>false</c> will not raise this exception..</param>
-      /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
+      /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.HandleInvalidWin32Error"/>, <see langword="false"/> will not raise this exception..</param>
+      /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
       /// <exception cref="ArgumentException"></exception>
       internal static bool IsValidHandle(SafeHandle handle, int lastError, bool throwException = true)
       {
@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// do not set different error-mode attributes. Doing so can lead to inconsistent error handling.
       /// </remarks>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
@@ -216,7 +216,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// do not set different error-mode attributes. Doing so can lead to inconsistent error handling.
       /// </remarks>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows 7 [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 R2 [desktop apps only]</remarks>
@@ -384,7 +384,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
       /// <para>You cannot access remote machines when running on these versions of Windows.</para>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
       /// </remarks>
@@ -477,7 +477,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
       /// </remarks>
@@ -945,10 +945,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Creates or opens a named or unnamed file mapping object for a specified file.</summary>
       /// <returns>
       /// If the function succeeds, the return value is a handle to the newly created file mapping object.
-      /// If the function fails, the return value is <c>null</c>.
+      /// If the function fails, the return value is <see langword="null"/>.
       /// </returns>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003</remarks>
@@ -1167,7 +1167,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</remarks>
@@ -1486,7 +1486,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003</remarks>
@@ -1518,10 +1518,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Maps a view of a file mapping into the address space of a calling process.</summary>
       /// <returns>
       /// If the function succeeds, the return value is the starting address of the mapped view.
-      /// If the function fails, the return value is <c>null</c>.
+      /// If the function fails, the return value is <see langword="null"/>.
       /// </returns>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003</remarks>
@@ -1591,7 +1591,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region PathFileExists
 
       /// <summary>Determines whether a path to a file system object such as a file or folder is valid.</summary>
-      /// <returns><c>true</c> if the file exists; otherwise, <c>false</c>. Call GetLastError for extended error information.</returns>
+      /// <returns><see langword="true"/> if the file exists; otherwise, <see langword="false"/>. Call GetLastError for extended error information.</returns>
       /// <remarks>
       /// This function tests the validity of the path.
       /// A path specified by Universal Naming Convention (UNC) is limited to a file only; that is, \\server\share\file is permitted.
@@ -1708,7 +1708,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003</remarks>
@@ -1740,7 +1740,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Access token, Communications device, Console input, Console screen buffer, Event, File, File mapping, I/O completion port, Job,</para>
       /// <para>Mailslot, Memory resource notification, Mutex, Named pipe, Pipe, Process, Semaphore, Thread, Transaction, Waitable timer.</para>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <para>Minimum supported client: Windows 2000 Professional [desktop apps | Windows Store apps]</para>
       /// <para>Minimum supported server: Windows 2000 Server [desktop apps | Windows Store apps]</para>
@@ -1959,9 +1959,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Tests whether a URL is a specified type.</summary>
       /// <returns>
       /// Type: BOOL
-      /// For all but one of the URL types, UrlIs returns <c>true</c> if the URL is the specified type, <c>true</c> otherwise.
+      /// For all but one of the URL types, UrlIs returns <see langword="true"/> if the URL is the specified type, <see langword="true"/> otherwise.
       /// If UrlIs is set to <see cref="Shell32.UrlType.IsAppliable"/>, UrlIs will attempt to determine the URL scheme.
-      /// If the function is able to determine a scheme, it returns <c>true</c>, or <c>false</c>.
+      /// If the function is able to determine a scheme, it returns <see langword="true"/>, or <see langword="false"/>.
       /// </returns>
       /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
@@ -2080,7 +2080,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
@@ -2099,7 +2099,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the function fails, the return value is zero. To get extended error information, call GetLastError.
       /// </returns>
       /// <para>&#160;</para>
-      /// <para>SetLastError is set to <c>false</c>.</para>
+      /// <para>SetLastError is set to <see langword="false"/>.</para>
       /// <para>&#160;</para>
       /// <remarks>Minimum supported client: Windows XP</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003</remarks>

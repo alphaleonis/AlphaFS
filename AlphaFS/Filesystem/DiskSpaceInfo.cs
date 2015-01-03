@@ -61,9 +61,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a DiskSpaceInfo instance.</summary>
       /// <param name="drivePath">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share</param>
-      /// <param name="spaceInfoType"><c>null</c> gets both size- and disk cluster information. <c>true</c> Get only disk cluster information, <c>false</c> Get only size information.</param>
+      /// <param name="spaceInfoType"><see langword="null"/> gets both size- and disk cluster information. <see langword="true"/> Get only disk cluster information, <see langword="false"/> Get only size information.</param>
       /// <param name="refresh">Refreshes the state of the object.</param>
-      /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public DiskSpaceInfo(string drivePath, bool? spaceInfoType, bool refresh, bool continueOnException) : this(drivePath)
       {
@@ -179,8 +179,8 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Reset
 
       #region ToString
-
       /// <summary>Returns the drive name.</summary>
+      /// <returns>A string that represents this object.</returns>
       public override string ToString()
       {
          return DriveName;
@@ -246,7 +246,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region UsePercentSuffix
 
-      /// <summary><c>true</c> = suffix with "%"</summary>
+      /// <summary><see langword="true"/> = suffix with "%"</summary>
       public bool UsePercentSuffix { get; set; }
 
       #endregion // UsePercentSuffix

@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
-      /// <returns><c>true</c> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <c>false</c>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.</returns>
+      /// <returns><see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.</returns>
 #if NET35
       [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
 #endif

@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Indicates if the Copy or Move action was canceled.
       /// <para>&#160;</para>
-      /// <value><c>true</c> when the Copy/Move action was canceled. Otherwise <c>false</c>.</value>
+      /// <value><see langword="true"/> when the Copy/Move action was canceled. Otherwise <see langword="false"/>.</value>
       /// </summary>
       public bool IsCanceled { get; private set; }
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsDirectory
 
       /// <summary>Gets a value indicating whether this instance represents a directory.</summary>
-      /// <value><c>true</c> if this instance represents a directory; otherwise, <c>false</c>.</value>
+      /// <value><see langword="true"/> if this instance represents a directory; otherwise, <see langword="false"/>.</value>
       public bool IsDirectory { get; private set; }
 
       #endregion // IsDirectory
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Indicates if the action is a Copy or Move action.
       /// <para>&#160;</para>
-      /// <value><c>true</c> when action is Move. Otherwise <c>false</c>.</value>
+      /// <value><see langword="true"/> when action is Move. Otherwise <see langword="false"/>.</value>
       /// </summary>
       public bool IsMove { get; private set; }
 

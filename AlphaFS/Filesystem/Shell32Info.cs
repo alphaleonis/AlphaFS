@@ -49,9 +49,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <para><see langword="true"/> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><see langword="false"/> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><see langword="null"/> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       public Shell32Info(string fileName, bool? isFullPath)
       {
@@ -91,7 +91,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetVerbCommand
 
       /// <summary>Gets the Shell command association from the registry.</summary>
-      /// <returns>Returns the associated file- or protocol-related Shell command from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <param name="shellVerb">The shell verb.</param>
+      /// <returns>
+      ///   Returns the associated file- or protocol-related Shell command from the registry or <c>string.Empty</c> if no association can be
+      ///   found.
+      /// </returns>
       [SecurityCritical]
       public string GetVerbCommand(string shellVerb)
       {

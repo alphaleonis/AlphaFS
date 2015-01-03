@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Creates a <see cref="ShareInfo"/> instance.</summary>
       /// <param name="host">A host to retrieve shares from.</param>
-      /// <param name="shareLevel">Possible structure levels: <see cref="NativeMethods.ShareInfo503">503</see>, <see cref="NativeMethods.ShareInfo2">2</see>,  <see cref="NativeMethods.ShareInfo1">1</see> and <see cref="NativeMethods.ShareInfo1005">1005</see>.</param>
+      /// <param name="shareLevel">Possible structure levels: 503, 2,  1 and 1005.</param>
       /// <param name="shareInfo">A <see cref="NativeMethods.ShareInfo2"/> or <see cref="NativeMethods.ShareInfo503"/> instance.</param>
       internal ShareInfo(string host, int shareLevel, object shareInfo)
       {
@@ -101,6 +101,7 @@ namespace Alphaleonis.Win32.Network
       #region ToString
 
       /// <summary>Returns the full path to the share.</summary>
+      /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
          return NetFullPath;
@@ -235,7 +236,7 @@ namespace Alphaleonis.Win32.Network
 
       #region ShareLevel
 
-      /// <summary>The structure level for the ShareInfo instance. Possible structure levels: <see cref="NativeMethods.ShareInfo503">503</see>, <see cref="NativeMethods.ShareInfo2">2</see>, <see cref="NativeMethods.ShareInfo1">1</see> and <see cref="NativeMethods.ShareInfo1005">1005</see>.</summary>
+      /// <summary>The structure level for the ShareInfo instance. Possible structure levels: 503, 2, 1 and 1005.</summary>
       public int ShareLevel { get; private set; }
 
       #endregion // ShareLevel

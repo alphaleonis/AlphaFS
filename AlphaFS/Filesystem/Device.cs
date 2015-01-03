@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Enumerates all available devices of type <see cref="DeviceGuid"/> on the local or remote host.</summary>
-      /// <param name="hostName">The name of the local or remote host on which the device resides. <c>null</c> refers to the local host.</param>
+      /// <param name="hostName">The name of the local or remote host on which the device resides. <see langword="null"/> refers to the local host.</param>
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
       /// <returns>Returns <see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> for the specified <paramref name="hostName"/>.</returns>
       [SecurityCritical]
@@ -395,11 +395,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
-      /// <param name="compress"><c>true</c> = compress, <c>false</c> = decompress</param>
+      /// <param name="compress"><see langword="true"/> = compress, <see langword="false"/> = decompress</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       
       [SecurityCritical]

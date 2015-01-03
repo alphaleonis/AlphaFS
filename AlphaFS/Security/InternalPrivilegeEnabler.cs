@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Security
       }
 
       /// <summary>Adjusts the privilege.</summary>
-      /// <param name="enable"><c>true</c> the privilege will be enabled, otherwise disabled.</param>
+      /// <param name="enable"><see langword="true"/> the privilege will be enabled, otherwise disabled.</param>
       [SecurityCritical]
       private void AdjustPrivilege(bool enable)
       {

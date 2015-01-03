@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Network
       /// If the function succeeds, the return value is NERR_Success.
       /// If the function fails, the return value is a system error code.
       /// </returns>
-      /// <remarks>SetLastError is set to <c>false</c>.</remarks>
+      /// <remarks>SetLastError is set to <see langword="false"/>.</remarks>
       /// <remarks>Minimum supported client: Windows 2000 Professional [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]

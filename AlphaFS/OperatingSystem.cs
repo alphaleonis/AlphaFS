@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32
       private static bool _isServer;
 
       /// <summary>Gets a value indicating whether the OS is a server OS.</summary>
-      /// <value><c>true</c> if the current OS is a server OS; otherwise, <c>false</c>.</value>
+      /// <value><see langword="true"/> if the current OS is a server OS; otherwise, <see langword="false"/>.</value>
       public static bool IsServer
       {
          get
@@ -145,7 +145,7 @@ namespace Alphaleonis.Win32
 
       /// <summary>Determines whether the current process is running under WOW64.      
       /// </summary>
-      /// <value><c>true</c> if the current process is running under WOW64; otherwise, <c>false</c>.</value>
+      /// <value><see langword="true"/> if the current process is running under WOW64; otherwise, <see langword="false"/>.</value>
       public static bool IsWow64Process
       {
          get
@@ -247,7 +247,7 @@ namespace Alphaleonis.Win32
 
       /// <summary>Determines whether the OS is of the specified version or later.</summary>
       /// <param name="version">The lowest version for which to return true.</param>
-      /// <returns><c>true</c> if the OS is of the specified <paramref name="version"/> or later; otherwise, <c>false</c>.</returns>      
+      /// <returns><see langword="true"/> if the OS is of the specified <paramref name="version"/> or later; otherwise, <see langword="false"/>.</returns>      
       public static bool IsAtLeast(EnumOsName version)
       {
          return VersionName >= version;
@@ -256,7 +256,7 @@ namespace Alphaleonis.Win32
       /// <summary>Determines whether OS is of the specified version or later, allowing specification of a minimum service pack that must be installed on the lowest version.</summary>
       /// <param name="version">The minimum required version.</param>
       /// <param name="servicePackVersion">The major version of the service pack that must be installed on the minimum required version to return true. This can be 0 to indicate that no service pack is required.</param>
-      /// <returns><c>true</c> if the OS matches the specified <paramref name="version"/> with the specified service pack, or if the OS is of a later version; otherwise, <c>false</c>.</returns>      
+      /// <returns><see langword="true"/> if the OS matches the specified <paramref name="version"/> with the specified service pack, or if the OS is of a later version; otherwise, <see langword="false"/>.</returns>      
       public static bool IsAtLeast(EnumOsName version, int servicePackVersion)
       {
          return IsAtLeast(version) && ServicePackVersion.Major >= servicePackVersion;

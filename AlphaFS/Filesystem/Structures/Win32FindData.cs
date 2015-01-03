@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       /// If a file has a long file name, the complete name appears in the cFileName member, and the 8.3 format truncated version of the name appears
       /// in the cAlternateFileName member. Otherwise, cAlternateFileName is empty. If the FindFirstFileEx function was called with a value of FindExInfoBasic
-      /// in the fInfoLevelId parameter, the cAlternateFileName member will always contain a <c>null</c> string value. This remains true for all subsequent calls to the
+      /// in the fInfoLevelId parameter, the cAlternateFileName member will always contain a <see langword="null"/> string value. This remains true for all subsequent calls to the
       /// FindNextFile function. As an alternative method of retrieving the 8.3 format version of a file name, you can use the GetShortPathName function.
       /// For more information about file names, see File Names, Paths, and Namespaces.
       /// </remarks>

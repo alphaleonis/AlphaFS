@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
       /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
       /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
-      /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <c>null</c>.</param>
+      /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <see langword="null"/>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
@@ -167,7 +167,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
       /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
       /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
-      /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <c>null</c>.</param>
+      /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <see langword="null"/>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
@@ -212,7 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Dispose
 
       /// <summary>Releases the unmanaged resources used by the <see cref="System.IO.Stream"/> and optionally releases the managed resources.</summary>
-      /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+      /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       protected override void Dispose(bool disposing)
       {
@@ -255,7 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is larger than the buffer length.</exception>
       /// <exception cref="System.ArgumentNullException">
-      /// 	<paramref name="buffer"/> is <c>null</c>.</exception>
+      /// 	<paramref name="buffer"/> is <see langword="null"/>.</exception>
       /// <exception cref="System.ArgumentOutOfRangeException">
       /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
       /// <exception cref="System.NotSupportedException">The stream does not support reading.</exception>
@@ -278,7 +278,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is larger than the buffer length.</exception>
       /// <exception cref="System.ArgumentNullException">
-      /// 	<paramref name="buffer"/> is <c>null</c>.</exception>
+      /// 	<paramref name="buffer"/> is <see langword="null"/>.</exception>
       /// <exception cref="System.ArgumentOutOfRangeException">
       /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
       /// <exception cref="System.NotSupportedException">The stream does not support reading.</exception>
@@ -330,7 +330,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="count">The number of bytes to be written to the current stream.</param>
       /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is greater than the buffer length.</exception>
       /// <exception cref="System.ArgumentNullException">
-      /// 	<paramref name="buffer"/> is <c>null</c>.</exception>
+      /// 	<paramref name="buffer"/> is <see langword="null"/>.</exception>
       /// <exception cref="System.ArgumentOutOfRangeException">
       /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
       /// <exception cref="System.NotSupportedException">The stream does not support writing.</exception>
@@ -346,12 +346,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
       /// <param name="count">The number of bytes to be written to the current stream.</param>
       /// <param name="processSecurity">Specifies whether the function will restore the access-control list (ACL) data for the file or directory. 
-      /// If this is <c>true</c> you need to specify <see cref="FileSystemRights.TakeOwnership"/> and <see cref="FileSystemRights.ChangePermissions"/> access when 
+      /// If this is <see langword="true"/> you need to specify <see cref="FileSystemRights.TakeOwnership"/> and <see cref="FileSystemRights.ChangePermissions"/> access when 
       /// opening the file or directory handle. If the handle does not have those access rights, the operating system denies 
       /// access to the ACL data, and ACL data restoration will not occur.</param>
       /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is greater than the buffer length.</exception>
       /// <exception cref="System.ArgumentNullException">
-      /// 	<paramref name="buffer"/> is <c>null</c>.</exception>
+      /// 	<paramref name="buffer"/> is <see langword="null"/>.</exception>
       /// <exception cref="System.ArgumentOutOfRangeException">
       /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
       /// <exception cref="System.NotSupportedException">The stream does not support writing.</exception>
@@ -580,9 +580,13 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Lock / Unlock
 
       #region EnumerateStreams
-
-      /// <summary>Returns <see cref="AlternateDataStreamInfo"/> instances, associated with the file.</summary>
-      /// <returns>An <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file specified by path.</returns>
+      /// <summary>
+      ///   Returns <see cref="AlternateDataStreamInfo"/> instances, associated with the file.
+      /// </summary>
+      /// <returns>
+      ///   An <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file
+      ///   specified by path.
+      /// </returns>
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
          return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, SafeFileHandle, null, null, null, null);
@@ -593,7 +597,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region ReadStreamInfo
 
       /// <summary>Reads a stream header from the current <see cref="AlternateDataStreamInfo"/>.</summary>
-      /// <returns>The stream header read from the current <see cref="AlternateDataStreamInfo"/>, or <c>null</c> if the end-of-file 
+      /// <returns>The stream header read from the current <see cref="AlternateDataStreamInfo"/>, or <see langword="null"/> if the end-of-file 
       /// was reached before the required number of bytes of a header could be read.</returns>
       /// <remarks>The stream must be positioned at where an actual header starts for the returned object to represent valid information.</remarks>
       public AlternateDataStreamInfo ReadStreamInfo()
@@ -613,7 +617,7 @@ namespace Alphaleonis.Win32.Filesystem
       private readonly bool _canRead;
 
       /// <summary>Gets a value indicating whether the current stream supports reading.</summary>
-      /// <returns><c>true</c> if the stream supports reading, <c>false</c> otherwise.</returns>
+      /// <returns><see langword="true"/> if the stream supports reading, <see langword="false"/> otherwise.</returns>
       public override bool CanRead
       {
          get { return _canRead; }
@@ -624,7 +628,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region CanSeek
 
       /// <summary>Gets a value indicating whether the current stream supports seeking.</summary>        
-      /// <returns>This method always returns <c>false</c>.</returns>
+      /// <returns>This method always returns <see langword="false"/>.</returns>
       public override bool CanSeek
       {
          get { return false; }
@@ -637,7 +641,7 @@ namespace Alphaleonis.Win32.Filesystem
       private readonly bool _canWrite;
 
       /// <summary>Gets a value indicating whether the current stream supports writing.</summary>
-      /// <returns><c>true</c> if the stream supports writing, <c>false</c> otherwise.</returns>
+      /// <returns><see langword="true"/> if the stream supports writing, <see langword="false"/> otherwise.</returns>
       public override bool CanWrite
       {
          get { return _canWrite; }

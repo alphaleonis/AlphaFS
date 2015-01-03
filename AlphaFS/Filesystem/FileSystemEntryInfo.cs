@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsDirectory
 
       /// <summary>Gets a value indicating whether this instance represents a directory.</summary>
-      /// <value><c>true</c> if this instance represents a directory; otherwise, <c>false</c>.</value>
+      /// <value><see langword="true"/> if this instance represents a directory; otherwise, <see langword="false"/>.</value>
       public bool IsDirectory
       {
          get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Directory) == FileAttributes.Directory; }
@@ -129,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsMountPoint
 
       /// <summary>Gets a value indicating whether this instance is a mount point.</summary>
-      /// <value><c>true</c> if this instance is a mount point; otherwise, <c>false</c>.</value>
+      /// <value><see langword="true"/> if this instance is a mount point; otherwise, <see langword="false"/>.</value>
       public bool IsMountPoint
       {
          get { return ReparsePointTag == ReparsePointTag.MountPoint; }
@@ -140,7 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsReparsePoint
 
       /// <summary>Gets a value indicating whether this instance is a reparse point.</summary>
-      /// <value><c>true</c> if this instance is a reparse point; otherwise, <c>false</c>.</value>
+      /// <value><see langword="true"/> if this instance is a reparse point; otherwise, <see langword="false"/>.</value>
       public bool IsReparsePoint
       {
          get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.ReparsePoint) == FileAttributes.ReparsePoint; }
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsSymbolicLink
 
       /// <summary>Gets a value indicating whether this instance is a symbolic link.</summary>
-      /// <value><c>true</c> if this instance is a symbolic link; otherwise, <c>false</c>.</value>
+      /// <value><see langword="true"/> if this instance is a symbolic link; otherwise, <see langword="false"/>.</value>
       public bool IsSymbolicLink
       {
          get { return ReparsePointTag == ReparsePointTag.SymLink; }

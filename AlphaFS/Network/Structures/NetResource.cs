@@ -74,8 +74,8 @@ namespace Alphaleonis.Win32.Network
          #region LocalName
 
          /// <summary>If the <see cref="Scope"/> member is equal to <see cref="ResourceScope.Connected"/> or <see cref="ResourceScope.Remembered"/>,
-         /// <para>this member is a pointer to a <c>null</c>-terminated character string that specifies the name of a local device.</para>
-         /// <para>This member is <c>null</c> if the connection does not use a device.</para>
+         /// <para>this member is a pointer to a <see langword="null"/>-terminated character string that specifies the name of a local device.</para>
+         /// <para>This member is <see langword="null"/> if the connection does not use a device.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.LPWStr)] public string LocalName;
 
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Network
 
          /// <summary>A <see cref="string"/> that contains the name of the provider that owns the resource. 
          /// <para>&#160;</para>
-         /// <para>This member can be <c>null</c> if the provider name is unknown.</para>
+         /// <para>This member can be <see langword="null"/> if the provider name is unknown.</para>
          /// <para>To retrieve the provider name, you can call the WNetGetProviderName function.</para>
          /// </summary>
          [MarshalAs(UnmanagedType.LPWStr)] public string Provider;

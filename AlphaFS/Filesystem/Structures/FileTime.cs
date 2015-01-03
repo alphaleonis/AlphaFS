@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>Determines whether the specified Object is equal to the current Object.</summary>
          /// <param name="obj">Another object to compare to.</param>
-         /// <returns><c>true</c> if the specified Object is equal to the current Object; otherwise, <c>false</c>.</returns>
+         /// <returns><see langword="true"/> if the specified Object is equal to the current Object; otherwise, <see langword="false"/>.</returns>
          public override bool Equals(object obj)
          {
             if (obj == null || GetType() != obj.GetType())

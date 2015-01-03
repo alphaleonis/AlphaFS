@@ -37,14 +37,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a new instance of the <see cref="SafeFindVolumeHandle"/> class.</summary>
       /// <param name="handle">The handle.</param>
-      /// <param name="callerHandle"><c>true</c> [owns handle].</param>
+      /// <param name="callerHandle"><see langword="true"/> [owns handle].</param>
       public SafeFindVolumeHandle(IntPtr handle, bool callerHandle) : base(callerHandle)
       {
          SetHandle(handle);
       }
 
       /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
-      /// <returns><c>true</c> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <c>false</c>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
+      /// <returns><see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.
       /// </returns>
       protected override bool ReleaseHandle()
       {

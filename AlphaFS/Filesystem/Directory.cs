@@ -50,12 +50,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path)
       {
@@ -68,12 +67,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity)
@@ -91,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -122,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -137,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -168,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -183,7 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -214,7 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -230,7 +228,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -261,7 +259,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -283,16 +281,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, bool compress)
@@ -303,16 +301,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity, bool compress)
@@ -327,37 +325,37 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, bool compress)
       {
          return CreateDirectoryInternal(null, path, templatePath, null, compress, false);
       }
-      
+
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
@@ -377,12 +375,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath)
@@ -397,12 +395,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity)
@@ -424,7 +422,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -455,7 +453,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -477,7 +475,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <param name="isFullPath">
       ///   <list type="definition">
       ///    <item>
@@ -512,14 +510,14 @@ namespace Alphaleonis.Win32.Filesystem
       ///   regardless of whether a directory at the specified path already exists.
       /// </returns>
       ///
-      /// ### <exception cref="ArgumentException">
+      /// <exception cref="ArgumentException">
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
       /// </exception>
-      /// ### <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// ### <exception cref="DirectoryNotFoundException">.</exception>
-      /// ### <exception cref="IOException">.</exception>
-      /// ### <exception cref="NotSupportedException">.</exception>
-      /// ### <exception cref="UnauthorizedAccessException">.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">.</exception>
+      /// <exception cref="IOException">.</exception>
+      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress, bool? isFullPath)
@@ -535,7 +533,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -566,7 +564,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -583,7 +581,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -614,7 +612,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -640,12 +638,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path)
       {
@@ -659,12 +657,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, DirectorySecurity directorySecurity)
@@ -681,16 +679,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, bool compress)
@@ -702,16 +700,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress)
@@ -727,16 +725,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, bool compress)
@@ -749,16 +747,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory to create.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
@@ -779,12 +777,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath)
@@ -800,12 +798,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An object that represents the directory at the specified path. This object is returned regardless of whether a directory at the specified path already exists.</returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity)
@@ -828,7 +826,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Deletes an empty directory from a specified path.</summary>
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      
+
       [SecurityCritical]
       public static void Delete(string path)
       {
@@ -837,9 +835,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      
+
       [SecurityCritical]
       public static void Delete(string path, bool recursive)
       {
@@ -854,8 +852,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
+      /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -894,15 +892,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
+      /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>      
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly)
       {
          DeleteDirectoryInternal(null, null, path, recursive, ignoreReadOnly, !recursive, false, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -910,8 +908,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
+      /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -954,7 +952,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      
+
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
       {
@@ -964,9 +962,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
+      /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      
+
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive)
       {
@@ -974,20 +972,20 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><c>true</c> to remove directories, subdirectories, and files in <paramref name="path"/>. <c>false</c> otherwise.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
+      /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      
+
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
          DeleteDirectoryInternal(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1106,7 +1104,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // AlphaFS
 
       #endregion // EnumerateDirectories
-      
+
       #region EnumerateFiles
 
       #region .NET
@@ -1161,7 +1159,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       #region Transacted
-      
+
       #region .NET
 
       /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
@@ -1332,22 +1330,25 @@ namespace Alphaleonis.Win32.Filesystem
       #region Exists
 
       #region .NET
-
-      /// <summary>Determines whether the given path refers to an existing directory on disk.
-      /// <para>&#160;</para>
-      /// <returns>
-      /// <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
-      /// <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
-      /// </returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</para>
-      /// <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
-      /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
-      /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
-      /// </remarks>
+      /// <summary>
+      ///   Determines whether the given path refers to an existing directory on disk.
       /// </summary>
+      /// <remarks>
+      ///   <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the
+      ///   <paramref name="path"/>  parameter before checking whether the directory exists.</para>
+      ///   <para>The Exists method returns <see langword="false"/> if any error occurs while trying to determine
+      ///   if the specified file exists.</para>
+      ///   <para>This can occur in situations that raise exceptions such as passing a file name with
+      ///   invalid characters or too many characters,</para>
+      ///   <para>a failing or missing disk, or if the caller does not have permission to read the
+      ///   file.</para>
+      /// </remarks>
       /// <param name="path">The path to test.</param>
+      /// <returns>
+      ///   <para>Returns <see langword="true"/> if <paramref name="path"/> refers to an existing directory.</para>
+      ///   <para>Returns <see langword="false"/> if the directory does not exist or an error occurs when trying
+      ///   to determine if the specified file exists.</para>
+      /// </returns>
       [SecurityCritical]
       public static bool Exists(string path)
       {
@@ -1362,20 +1363,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
       /// <returns>
-      /// <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
-      /// <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      /// <para>Returns <see langword="true"/> if <paramref name="path"/> refers to an existing directory.</para>
+      /// <para>Returns <see langword="false"/> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</para>
-      /// <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      /// <para>The Exists method returns <see langword="false"/> if any error occurs while trying to determine if the specified file exists.</para>
       /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
       /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
       /// </remarks>
-      /// </summary>
       /// <param name="path">The path to test.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
@@ -1419,50 +1417,56 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       #region .NET
-
-      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.
-      /// <para>&#160;</para>
-      /// <returns>
-      /// <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
-      /// <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
-      /// </returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</para>
-      /// <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
-      /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
-      /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
-      /// </remarks>
+      /// <summary>
+      ///   [AlphaFS] Determines whether the given path refers to an existing directory on disk.
       /// </summary>
+      /// <remarks>
+      ///   <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the
+      ///   <paramref name="path"/> parameter before checking whether the directory exists.</para>
+      ///   <para>The Exists method returns <see langword="false"/> if any error occurs while trying to
+      ///   determine if the specified file exists.</para>
+      ///   <para>This can occur in situations that raise exceptions such as passing a file name with
+      ///   invalid characters or too many characters,</para>
+      ///   <para>a failing or missing disk, or if the caller does not have permission to read the
+      ///   file.</para>
+      /// </remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
       /// <param name="isFullPath">
-      ///  <list type="definition">
-      ///   <item>
-      ///     <term>
-      ///       <see langword="true" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
-      /// </description>
-      ///   </item>
-      ///   <item>
-      ///     <term>
-      ///       <see langword="false" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
-      /// </description>
-      ///   </item>
-      ///   <item>
-      ///     <term>
-      ///       <see langword="null" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
-      /// </description>
-      ///   </item>
-      /// </list></param>
+      ///   <list type="definition">
+      ///    <item>
+      ///      <term>
+      ///        <see langword="true" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      ///   </description>
+      ///    </item>
+      ///    <item>
+      ///      <term>
+      ///        <see langword="false" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> will be checked and resolved to an absolute path. Unicode
+      ///        prefix is applied.
+      ///   </description>
+      ///    </item>
+      ///    <item>
+      ///      <term>
+      ///        <see langword="null" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      ///   </description>
+      ///    </item>
+      ///   </list>
+      /// </param>
+      /// <returns>
+      ///   <para>Returns <see langword="true"/> if <paramref name="path"/> refers to an existing
+      ///   directory.</para>
+      ///   <para>Returns <see langword="false"/> if the directory does not exist or an error occurs
+      ///   when trying to determine if the specified file exists.</para>
+      /// </returns>
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -1475,20 +1479,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.
-      /// <para>&#160;</para>
+      /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
       /// <returns>
-      /// <para>Returns <c>true</c> if <paramref name="path"/> refers to an existing directory.</para>
-      /// <para>Returns <c>false</c> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
+      /// <para>Returns <see langword="true"/> if <paramref name="path"/> refers to an existing directory.</para>
+      /// <para>Returns <see langword="false"/> if the directory does not exist or an error occurs when trying to determine if the specified file exists.</para>
       /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether the directory exists.</para>
-      /// <para>The Exists method returns <c>false</c> if any error occurs while trying to determine if the specified file exists.</para>
+      /// <para>The Exists method returns <see langword="false"/> if any error occurs while trying to determine if the specified file exists.</para>
       /// <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,</para>
       /// <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
       /// </remarks>
-      /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
       [SecurityCritical]
@@ -1512,7 +1513,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the specified directory.</summary>
       /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the file's access control list (ACL) information.</param>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
-      
+
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(string path)
       {
@@ -1523,7 +1524,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to a directory containing a <see cref="DirectorySecurity"/> object that describes the directory's access control list (ACL) information.</param>
       /// <param name="includeSections">One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="path"/> parameter. </returns>
-      
+
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(string path, AccessControlSections includeSections)
       {
@@ -1568,7 +1569,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the <paramref name="path"/> parameter.</returns>
-      
+
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(string path, bool? isFullPath)
       {
@@ -1606,7 +1607,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory described by the <paramref name="path"/> parameter. </returns>
-      
+
       [SecurityCritical]
       public static DirectorySecurity GetAccessControl(string path, AccessControlSections includeSections, bool? isFullPath)
       {
@@ -1630,7 +1631,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A <see cref="System.DateTime"/> structure set to the creation date and time for the specified directory. This value is expressed in local time.</returns>
       [SecurityCritical]
       public static DateTime GetCreationTime(string path)
-      {         
+      {
          return File.GetCreationTimeInternal(null, path, false, false).ToLocalTime();
       }
 
@@ -1866,7 +1867,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion //.NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1879,7 +1880,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the current working directory of the application.</summary>
       /// <returns>The path of the current working directory without a backslash (\).</returns>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
       public static string GetCurrentDirectory()
@@ -1906,7 +1907,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>      
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>      
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
       public static string[] GetDirectories(string path)
@@ -1923,7 +1924,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -1945,7 +1946,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -1984,7 +1985,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
@@ -2002,7 +2003,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -2025,7 +2026,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -2061,7 +2062,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
       /// <param name="path">The path of a file or directory.</param>
-      /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
+      /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
       [SecurityCritical]
       public static string GetDirectoryRoot(string path)
       {
@@ -2077,7 +2078,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
-      /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
+      /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
       /// <param name="path">The path of a file or directory.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
@@ -2123,7 +2124,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
-      /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
+      /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path of a file or directory.</param>
       /// <param name="isFullPath">
@@ -2168,7 +2169,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Returns the volume information, root information, or both for the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path of a file or directory.</param>
-      /// <returns>The volume information, root information, or both for the specified path, or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</returns>
+      /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
       [SecurityCritical]
       public static string GetDirectoryRoot(KernelTransaction transaction, string path)
       {
@@ -2198,7 +2199,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
       public static string[] GetFiles(string path)
@@ -2217,7 +2218,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -2241,7 +2242,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -2281,7 +2282,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
@@ -2301,7 +2302,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -2326,7 +2327,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -2370,7 +2371,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="path">The directory for which file and subdirectory names are returned.</param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path)
@@ -2388,7 +2389,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="path">The path to be searched.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -2411,7 +2412,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -2450,7 +2451,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which file and subdirectory names are returned.</param>
       [SecurityCritical]
@@ -2469,7 +2470,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to be searched.</param>
       /// <param name="searchPattern">
@@ -2493,7 +2494,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -2636,7 +2637,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2764,7 +2765,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2892,7 +2893,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3020,7 +3021,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3063,7 +3064,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
-      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <returns>The parent directory, or <see langword="null"/> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
       [SecurityCritical]
       public static DirectoryInfo GetParent(string path)
       {
@@ -3079,7 +3080,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
-      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <returns>The parent directory, or <see langword="null"/> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
@@ -3125,7 +3126,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
-      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <returns>The parent directory, or <see langword="null"/> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <param name="isFullPath">
@@ -3170,7 +3171,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
-      /// <returns>The parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <returns>The parent directory, or <see langword="null"/> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
       [SecurityCritical]
       public static DirectoryInfo GetParent(KernelTransaction transaction, string path)
       {
@@ -3178,7 +3179,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3197,7 +3198,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -3226,7 +3227,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -3284,7 +3285,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -3339,7 +3340,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -3368,7 +3369,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
       /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity)
@@ -3383,7 +3384,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Note that unlike <see cref="System.IO.File.SetAccessControl"/> this method does <b>not</b> automatically
       /// determine what parts of the specified <see cref="DirectorySecurity"/> instance has been modified. Instead, the
       /// parameter <paramref name="includeSections"/> is used to specify what entries from <paramref name="directorySecurity"/> to apply to <paramref name="path"/>.</remarks>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity, AccessControlSections includeSections)
@@ -3470,7 +3471,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Note that unlike <see cref="System.IO.File.SetAccessControl"/> this method does <b>not</b> automatically
       /// determine what parts of the specified <see cref="DirectorySecurity"/> instance has been modified. Instead, the
       /// parameter <paramref name="includeSections"/> is used to specify what entries from <paramref name="directorySecurity"/> to apply to <paramref name="path"/>.</remarks>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity, AccessControlSections includeSections, bool? isFullPath)
@@ -3493,7 +3494,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time the directory was created.</summary>
       /// <param name="path">The directory for which to set the creation date and time information.</param>
       /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      
+
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime)
       {
@@ -3538,7 +3539,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      
+
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime, bool? isFullPath)
       {
@@ -3602,7 +3603,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to set the creation date and time information.</param>
       /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      
+
       [SecurityCritical]
       public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime)
       {
@@ -3610,7 +3611,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3624,7 +3625,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time, in coordinated universal time (UTC), that the directory was created.</summary>
       /// <param name="path">The directory for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      
+
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc)
       {
@@ -3732,7 +3733,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to set the creation date and time information.</param>
       /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      
+
       [SecurityCritical]
       public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc)
       {
@@ -3740,7 +3741,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3753,7 +3754,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Sets the application's current working directory to the specified directory.</summary>
       /// <param name="path">The path to which the current working directory is set.</param>
-      
+
       [SecurityCritical]
       public static void SetCurrentDirectory(string path)
       {
@@ -3763,7 +3764,7 @@ namespace Alphaleonis.Win32.Filesystem
          // System.IO SetCurrentDirectory() does not handle long paths.
          System.IO.Directory.SetCurrentDirectory(Path.GetRegularPathInternal(path, false, false, false, true));
       }
-      
+
       #endregion // .NET
 
       #endregion // SetCurrentDirectory (.NET)
@@ -3775,7 +3776,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time that the specified directory was last accessed.</summary>
       /// <param name="path">The file for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      
+
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime)
       {
@@ -3883,7 +3884,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to set the access date and time information.</param>
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      
+
       [SecurityCritical]
       public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime)
       {
@@ -3891,7 +3892,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3905,7 +3906,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
       /// <param name="path">The directory for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      
+
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc)
       {
@@ -4013,7 +4014,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to set the access date and time information.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      
+
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc)
       {
@@ -4021,7 +4022,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -4035,7 +4036,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time that the specified directory was last written to.</summary>
       /// <param name="path">The directory for which to set the date and time information.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      
+
       [SecurityCritical]
       public static void SetLastWriteTime(string path, DateTime lastWriteTime)
       {
@@ -4143,7 +4144,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to set the date and time information.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      
+
       [SecurityCritical]
       public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime)
       {
@@ -4151,7 +4152,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -4165,7 +4166,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the date and time, in coordinated universal time (UTC), that the specified directory was last written to.</summary>
       /// <param name="path">The directory for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      
+
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc)
       {
@@ -4273,7 +4274,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to set the date and time information.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      
+
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc)
       {
@@ -4281,7 +4282,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -4339,7 +4340,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      
+
       [SecurityCritical]
       public static void AddStream(string path, string name, string[] contents)
       {
@@ -4395,7 +4396,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      
+
       [SecurityCritical]
       public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents)
       {
@@ -4480,13 +4481,13 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, isFullPath);
       }
-      
+
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <remarks>This will only compress the root items, non recursive.</remarks>
-      
+
       [SecurityCritical]
       public static void Compress(string path)
       {
@@ -4496,13 +4497,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      
+
       [SecurityCritical]
       public static void Compress(string path, DirectoryEnumerationOptions directoryEnumerationOptions)
       {
          CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -4587,7 +4588,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <remarks>This will only compress the root items, non recursive.</remarks>
-      
+
       [SecurityCritical]
       public static void Compress(KernelTransaction transaction, string path)
       {
@@ -4598,13 +4599,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      
+
       [SecurityCritical]
       public static void Compress(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // Compress
@@ -4621,14 +4622,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -4672,16 +4673,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -4725,20 +4726,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
       public static void Copy1(string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
          CopyMoveInternal(null, sourcePath, destinationPath, copyOptions, null, null, null, false);
       }
-      
+
       /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
@@ -4749,22 +4750,22 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
       public static CopyMoveResult Copy1(string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(null, sourcePath, destinationPath, copyOptions, null, progressHandler, userProgressData, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -4777,7 +4778,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -4785,7 +4786,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -4829,7 +4830,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -4837,9 +4838,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -4883,7 +4884,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -4891,13 +4892,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
       public static void Copy1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions)
       {
          CopyMoveInternal(transaction, sourcePath, destinationPath, copyOptions, null, null, null, false);
       }
-      
+
       /// <summary>[AlphaFS] Copies a file or a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
       /// and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
@@ -4908,7 +4909,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -4916,15 +4917,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
       public static CopyMoveResult Copy1(KernelTransaction transaction, string sourcePath, string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(transaction, sourcePath, destinationPath, copyOptions, null, progressHandler, userProgressData, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // Copy1
@@ -5200,7 +5201,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </list></param>
       /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
       /// However, newly created files and directories will be uncompressed.</remarks>
-      
+
       [SecurityCritical]
       public static void DisableCompression(string path, bool? isFullPath)
       {
@@ -5213,13 +5214,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to a directory to decompress.</param>
       /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
       /// However, newly created files and directories will be uncompressed.</remarks>
-      
+
       [SecurityCritical]
       public static void DisableCompression(string path)
       {
          Device.ToggleCompressionInternal(true, null, path, false, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -5256,7 +5257,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to a directory to decompress.</param>
       /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
       /// However, newly created files and directories will be uncompressed.</remarks>
-      
+
       [SecurityCritical]
       public static void DisableCompression(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -5270,13 +5271,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to a directory to decompress.</param>
       /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
       /// However, newly created files and directories will be uncompressed.</remarks>
-      
+
       [SecurityCritical]
       public static void DisableCompression(KernelTransaction transaction, string path)
       {
          Device.ToggleCompressionInternal(true, transaction, path, false, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // DisableCompression
@@ -5315,7 +5316,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <remarks>This will only decompress the root items, non recursive.</remarks>
-      
+
       [SecurityCritical]
       public static void Decompress(string path, bool? isFullPath)
       {
@@ -5363,7 +5364,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <remarks>This will only decompress the root items, non recursive.</remarks>
-      
+
       [SecurityCritical]
       public static void Decompress(string path)
       {
@@ -5373,7 +5374,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      
+
       [SecurityCritical]
       public static void Decompress(string path, DirectoryEnumerationOptions directoryEnumerationOptions)
       {
@@ -5464,7 +5465,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <remarks>This will only decompress the root items, non recursive.</remarks>
-      
+
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path)
       {
@@ -5475,13 +5476,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      
+
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // Decompress
@@ -5527,7 +5528,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a directory to decrypt.</param>
-      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt files and directories in the root of <paramref name="path"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -5565,7 +5566,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a directory to decrypt.</param>
-      
+
       [SecurityCritical]
       public static void Decrypt(string path)
       {
@@ -5574,14 +5575,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a directory to decrypt.</param>
-      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of <paramref name="path"/>.</param>
-      
+      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt files and directories in the root of <paramref name="path"/>.</param>
+
       [SecurityCritical]
       public static void Decrypt(string path, bool recursive)
       {
          EncryptDecryptDirectoryInternal(path, false, recursive, false);
       }
-      
+
       #endregion // Decrypt
 
       #region DeleteEmpty
@@ -5590,8 +5591,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Deletes empty subdirectores from the specified directory.</summary>
       /// <param name="path">The name of the directory to remove empty subdirectories from.</param>
-      /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
+      /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -5629,7 +5630,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Deletes empty subdirectores from the specified directory.</summary>
       /// <param name="path">The name of the directory to remove empty subdirectories from.</param>
-      /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
+      /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
       [SecurityCritical]
       public static void DeleteEmpty(string path, bool recursive)
       {
@@ -5638,14 +5639,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Deletes empty subdirectores from the specified directory.</summary>
       /// <param name="path">The name of the directory to remove empty subdirectories from.</param>
-      /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
+      /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       [SecurityCritical]
       public static void DeleteEmpty(string path, bool recursive, bool ignoreReadOnly)
       {
          DeleteEmptyDirectoryInternal(null, null, path, recursive, ignoreReadOnly, true, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -5653,8 +5654,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes empty subdirectores from the specified directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove empty subdirectories from.</param>
-      /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
+      /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -5693,7 +5694,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes empty subdirectores from the specified directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove empty subdirectories from.</param>
-      /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
+      /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
       [SecurityCritical]
       public static void DeleteEmpty(KernelTransaction transaction, string path, bool recursive)
       {
@@ -5703,14 +5704,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Deletes empty subdirectores from the specified directory.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove empty subdirectories from.</param>
-      /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
+      /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       [SecurityCritical]
       public static void DeleteEmpty(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
          DeleteEmptyDirectoryInternal(null, transaction, path, recursive, ignoreReadOnly, true, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // DeleteEmpty
@@ -5760,13 +5761,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
       /// <param name="path">The name of the directory for which to disable encryption.</param>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0"</remarks>
-      
+
       [SecurityCritical]
       public static void DisableEncryption(string path)
       {
          EnableDisableEncryptionInternal(path, false, false);
       }
-      
+
       #endregion // DisableEncryption
 
       #region EnableCompression
@@ -5821,7 +5822,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Device.ToggleCompressionInternal(true, null, path, true, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -5871,13 +5872,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to a directory to compress.</param>
       /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory.
       /// However, newly created files and directories will be compressed.</remarks>
-      
+
       [SecurityCritical]
       public static void EnableCompression(KernelTransaction transaction, string path)
       {
          Device.ToggleCompressionInternal(true, transaction, path, true, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion //EnableCompression
@@ -5927,13 +5928,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=1"</remarks>
-      
+
       [SecurityCritical]
       public static void EnableEncryption(string path)
       {
          EnableDisableEncryptionInternal(path, true, false);
       }
-      
+
       #endregion // EnableEncryption
 
       #region EnumerateFileIdBothDirectoryInfo
@@ -6018,28 +6019,28 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in <see cref="FileShare.ReadWrite"/> mode.</summary>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
-      
+
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(string path)
       {
          return EnumerateFileIdBothDirectoryInfoInternal(null, null, path, FileShare.ReadWrite, false, false);
       }
-      
+
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="FileShare"/> mode.</summary>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>      
-      
+
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(string path, FileShare shareMode)
       {
          return EnumerateFileIdBothDirectoryInfoInternal(null, null, path, shareMode, false, false);
       }
-      
+
       /// <summary>[AlphaFS] Retrieves information about files in the directory handle specified.</summary>
       /// <param name="handle">An open handle to the directory from which to retrieve information.</param>
       /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
-      
+
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(SafeFileHandle handle)
       {
@@ -6137,19 +6138,19 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, FileShare.ReadWrite, false, false);
       }
-      
+
       /// <summary>[AlphaFS] Retrieves information about files in the directory specified by <paramref name="path"/> in specified <see cref="FileShare"/> mode.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       /// <returns>An enumeration of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>
-      
+
       [SecurityCritical]
       public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path, FileShare shareMode)
       {
          return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, shareMode, false, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // EnumerateFileIdBothDirectoryInfo
@@ -6340,8 +6341,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>
       ///    The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.
       /// </returns>
-      /// ### <exception cref="ArgumentException">.</exception>
-      /// ### <exception cref="ArgumentNullException">.</exception>
+      /// <exception cref="ArgumentException">.</exception>
+      /// <exception cref="ArgumentNullException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, bool? isFullPath)
@@ -6824,7 +6825,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
-      
+
       [SecurityCritical]
       public static IEnumerable<DriveInfo> EnumerateLogicalDrives(bool fromEnvironment, bool isReady)
       {
@@ -7045,11 +7046,11 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transacted
 
       #endregion // EnumerateStreams
-      
+
       #region Encrypt
 
       #region IsFullPath
-      
+
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
       /// <param name="isFullPath">
@@ -7087,7 +7088,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
-      /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="recursive"><see langword="true"/> to encrypt the directory recursively. <see langword="false"/> only encrypt files and directories in the root of <paramref name="path"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -7125,7 +7126,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
-      
+
       [SecurityCritical]
       public static void Encrypt(string path)
       {
@@ -7134,8 +7135,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
-      /// <param name="recursive"><c>true</c> to encrypt the directory recursively. <c>false</c> only encrypt files and directories in the root of <paramref name="path"/>.</param>
-      
+      /// <param name="recursive"><see langword="true"/> to encrypt the directory recursively. <see langword="false"/> only encrypt files and directories in the root of <paramref name="path"/>.</param>
+
       [SecurityCritical]
       public static void Encrypt(string path, bool recursive)
       {
@@ -7147,41 +7148,46 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetChangeTime
 
       #region IsFullPath
-
-      /// <summary>Gets the change date and time of the specified directory.
-      /// </summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
-      /// <param name="path">The directory for which to obtain creation date and time information.</param>
+      /// <summary>Gets the change date and time of the specified directory.</summary>
+      /// <param name="path">
+      ///   The directory for which to obtain creation date and time information.
+      /// </param>
       /// <param name="isFullPath">
-      ///  <list type="definition">
-      ///   <item>
-      ///     <term>
-      ///       <see langword="true" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
-      /// </description>
-      ///   </item>
-      ///   <item>
-      ///     <term>
-      ///       <see langword="false" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
-      /// </description>
-      ///   </item>
-      ///   <item>
-      ///     <term>
-      ///       <see langword="null" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
-      /// </description>
-      ///   </item>
-      /// </list></param>
+      ///   <list type="definition">
+      ///    <item>
+      ///      <term>
+      ///        <see langword="true" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      ///   </description>
+      ///    </item>
+      ///    <item>
+      ///      <term>
+      ///        <see langword="false" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> will be checked and resolved to an absolute path. Unicode
+      ///        prefix is applied.
+      ///   </description>
+      ///    </item>
+      ///    <item>
+      ///      <term>
+      ///        <see langword="null" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      ///   </description>
+      ///    </item>
+      ///   </list>
+      /// </param>
+      /// <returns>
+      ///   A <see cref="System.DateTime"/> structure set to the change date and time for the specified
+      ///   directory. This value is expressed in local time.
+      /// </returns>
       [SecurityCritical]
       public static DateTime GetChangeTime(string path, bool? isFullPath)
-      {
+      {         
          return File.GetChangeTimeInternal(true, null, null, path, false, isFullPath);
       }
 
@@ -7196,10 +7202,14 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return File.GetChangeTimeInternal(true, null, null, path, false, false);
       }
-
-      /// <summary>Gets the change date and time of the specified directory.
-      /// </summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
+      /// <summary>Gets the change date and time of the specified directory.</summary>
+      /// <param name="safeHandle">
+      ///   An open handle to the directory from which to retrieve information.
+      /// </param>
+      /// <returns>
+      ///   A <see cref="System.DateTime"/> structure set to the change date and time for the specified
+      ///   directory. This value is expressed in local time.
+      /// </returns>
       [SecurityCritical]
       public static DateTime GetChangeTime(SafeFileHandle safeHandle)
       {
@@ -7318,9 +7328,17 @@ namespace Alphaleonis.Win32.Filesystem
          return File.GetChangeTimeInternal(true, null, null, path, true, false);
       }
 
-      /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.
+      /// <summary>
+      ///   Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified
+      ///   directory.
       /// </summary>
-      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
+      /// <param name="safeHandle">
+      ///   An open handle to the directory from which to retrieve information.
+      /// </param>
+      /// <returns>
+      ///   A <see cref="System.DateTime"/> structure set to the change date and time for the specified
+      ///   directory. This value is expressed in UTC time.
+      /// </returns>
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
       {
@@ -7796,7 +7814,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <returns>The number of bytes used by all data streams.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(string path, bool? isFullPath)
       {
@@ -7834,13 +7852,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(string path, string name, bool? isFullPath)
       {
          return AlternateDataStreamInfo.GetStreamSizeInternal(true, null, null, path, name, StreamType.Data, isFullPath);
       }
-      
+
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
@@ -7872,7 +7890,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(string path, StreamType type, bool? isFullPath)
       {
@@ -7884,7 +7902,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
       /// <param name="path">The path to an existing directory.</param>
       /// <returns>The number of bytes used by all data streams.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(string path)
       {
@@ -7895,7 +7913,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(string path, string name)
       {
@@ -7906,7 +7924,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(string path, StreamType type)
       {
@@ -7917,7 +7935,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="handle">The <see cref="SafeFileHandle"/> to the directory.</param>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(SafeFileHandle handle, string name)
       {
@@ -7928,7 +7946,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="handle">The <see cref="SafeFileHandle"/> to the directory.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(SafeFileHandle handle, StreamType type)
       {
@@ -7970,7 +7988,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <returns>The number of bytes used by all data streams.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, bool? isFullPath)
       {
@@ -8009,7 +8027,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, string name, bool? isFullPath)
       {
@@ -8060,7 +8078,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing directory.</param>
       /// <returns>The number of bytes used by all data streams.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path)
       {
@@ -8072,7 +8090,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, string name)
       {
@@ -8084,7 +8102,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      
+
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type)
       {
@@ -8128,7 +8146,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </description>
       ///   </item>
       /// </list></param>
-      /// <returns><c>true</c> if permission inheritance is enabled, <c>false</c> if permission inheritance is disabled.</returns>
+      /// <returns><see langword="true"/> if permission inheritance is enabled, <see langword="false"/> if permission inheritance is disabled.</returns>
       public static bool HasInheritedPermissions(string path, bool? isFullPath)
       {
          if (Utils.IsNullOrWhiteSpace(path))
@@ -8144,7 +8162,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Check if the directory has permission inheritance enabled.</summary>
       /// <param name="path">The full path to the directory to check.</param>
-      /// <returns><c>true</c> if permission inheritance is enabled, <c>false</c> if permission inheritance is disabled.</returns>
+      /// <returns><see langword="true"/> if permission inheritance is enabled, <see langword="false"/> if permission inheritance is disabled.</returns>
       public static bool HasInheritedPermissions(string path)
       {
          if (Utils.IsNullOrWhiteSpace(path))
@@ -8154,7 +8172,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
       }
-      
+
       #endregion // HasInheritedPermissions
 
       #region Move1
@@ -8169,14 +8187,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -8220,16 +8238,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -8273,14 +8291,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
       public static void Move1(string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
@@ -8297,16 +8315,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
       public static CopyMoveResult Move1(string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
@@ -8325,7 +8343,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -8333,7 +8351,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -8377,7 +8395,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -8385,9 +8403,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -8431,7 +8449,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -8439,7 +8457,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
       public static void Move1(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions)
       {
@@ -8456,7 +8474,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -8464,9 +8482,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
       public static CopyMoveResult Move1(KernelTransaction transaction, string sourcePath, string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
@@ -8562,7 +8580,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+
       [SecurityCritical]
       public static void RemoveStream(string path)
       {
@@ -8574,7 +8592,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to remove.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+
       [SecurityCritical]
       public static void RemoveStream(string path, string name)
       {
@@ -8656,7 +8674,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </list></param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, string name, bool? isFullPath)
       {
@@ -8670,7 +8688,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing directory.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path)
       {
@@ -8683,7 +8701,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to remove.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, string name)
       {
@@ -8748,7 +8766,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetFsoDateTimeInternal(true, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -8800,13 +8818,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
       /// <param name="lastWriteTime">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in local time.</param>
-      
+
       [SecurityCritical]
       public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
       {
          File.SetFsoDateTimeInternal(true, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // SetTimestamps
@@ -8860,13 +8878,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
-      
+
       [SecurityCritical]
       public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
       {
          File.SetFsoDateTimeInternal(true, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -8923,7 +8941,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetFsoDateTimeInternal(true, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // SetTimestampsUtc
@@ -8936,9 +8954,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The source directory to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// <para><see langword="true"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
+      /// <para><see langword="false"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      /// <para><see langword="null"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
       [SecurityCritical]
@@ -8958,7 +8976,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.TransferTimestampsInternal(true, null, sourcePath, destinationPath, false);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -8968,12 +8986,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The source directory to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
       /// <param name="isFullPath">
-      /// <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
-      /// <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      /// <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      /// <para><see langword="true"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
+      /// <para><see langword="false"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      /// <para><see langword="null"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
-      
+
       [SecurityCritical]
       public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath, bool? isFullPath)
       {
@@ -8987,13 +9005,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The source directory to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
       /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
-      
+
       [SecurityCritical]
       public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
          File.TransferTimestampsInternal(true, transaction, sourcePath, destinationPath, false);
       }
-      
+
       #endregion // Transacted
 
       #endregion // TransferTimestamps
@@ -9012,7 +9030,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para>characters, but doesn't support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      /// <param name="compress"><c>true</c> compress, when <c>false</c> decompress.</param>
+      /// <param name="compress"><see langword="true"/> compress, when <see langword="false"/> decompress.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -9045,10 +9063,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = isFullPath == null
             ? path
-            : (bool) isFullPath
+            : (bool)isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
             : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
-         
+
          // Process directories and files.
          foreach (string fso in EnumerateFileSystemEntryInfosInternal<string>(transaction, pathLp, searchPattern, directoryEnumerationOptions | DirectoryEnumerationOptions.AsLongPath, null))
             Device.ToggleCompressionInternal(true, transaction, fso, compress, null);
@@ -9073,7 +9091,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
@@ -9081,14 +9099,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <c>null</c>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><see langword="true"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode prefix is applied.</para>
+      ///    <para><see langword="false"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to absolute paths. Unicode prefix is applied.</para>
+      ///    <para><see langword="null"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
@@ -9096,7 +9114,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (isFullPath != null && (bool) !isFullPath)
+         if (isFullPath != null && (bool)!isFullPath)
          {
             Path.CheckValidPath(sourcePath, true, true);
             Path.CheckValidPath(destinationPath, true, true);
@@ -9113,22 +9131,22 @@ namespace Alphaleonis.Win32.Filesystem
 
          string sourcePathLp = isFullPath == null
             ? sourcePath
-            : (bool) isFullPath
+            : (bool)isFullPath
                ? Path.GetLongPathInternal(sourcePath, false, false, false, false)
 #if NET35
                : Path.GetFullPathInternal(transaction, sourcePath, true, false, false, true, false, false, false);
 #else
-               : Path.GetFullPathInternal(transaction, sourcePath, true, true, false, true, false, false, false);
+ : Path.GetFullPathInternal(transaction, sourcePath, true, true, false, true, false, false, false);
 #endif
 
          string destinationPathLp = isFullPath == null
             ? destinationPath
-            : (bool) isFullPath
+            : (bool)isFullPath
                ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
 #if NET35
                : Path.GetFullPathInternal(transaction, destinationPath, true, false, false, true, false, false, false);
 #else
-               : Path.GetFullPathInternal(transaction, destinationPath, true, true, false, true, false, false, false);
+ : Path.GetFullPathInternal(transaction, destinationPath, true, true, false, true, false, false, false);
 #endif
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
@@ -9144,10 +9162,10 @@ namespace Alphaleonis.Win32.Filesystem
             throw new NotSupportedException(Resources.UndeterminedCopyMoveAction);
 
          bool overwrite = doCopy
-            ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
-            : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
+            ? (((CopyOptions)copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
+            : (((MoveOptions)moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
 
-         CopyMoveResult cmr = new CopyMoveResult(sourcePathLp, destinationPathLp, true, doMove, false, (int) Win32Errors.ERROR_SUCCESS);
+         CopyMoveResult cmr = new CopyMoveResult(sourcePathLp, destinationPathLp, true, doMove, false, (int)Win32Errors.ERROR_SUCCESS);
 
          #endregion //Setup
 
@@ -9160,7 +9178,7 @@ namespace Alphaleonis.Win32.Filesystem
             foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, null))
             {
                string newDestinationPathLp = Path.CombineInternal(false, destinationPathLp, fsei.FileName);
-               
+
                cmr = fsei.IsDirectory
                   ? CopyMoveInternal(transaction, fsei.LongFullPath, newDestinationPathLp, copyOptions, null, progressHandler, userProgressData, null)
                   : File.CopyMoveInternal(false, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, null, progressHandler, userProgressData, null);
@@ -9177,7 +9195,7 @@ namespace Alphaleonis.Win32.Filesystem
          else
          {
             // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
-            if (((MoveOptions) moveOptions & MoveOptions.CopyAllowed) != MoveOptions.CopyAllowed)
+            if (((MoveOptions)moveOptions & MoveOptions.CopyAllowed) != MoveOptions.CopyAllowed)
                if (!Path.GetPathRoot(sourcePathLp, false).Equals(Path.GetPathRoot(destinationPathLp, false), StringComparison.OrdinalIgnoreCase))
                   NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, destinationPathLp, true);
 
@@ -9213,16 +9231,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
-      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory. May be <c>null</c> to indicate that no template should be used.</param>
+      /// <param name="templatePath">The path of the directory to use as a template when creating the new directory. May be <see langword="null"/> to indicate that no template should be used.</param>
       /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> access control to apply to the directory, may be null.</param>
-      /// <param name="compress">When <c>true</c> compresses the directory.</param>
+      /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -9254,7 +9272,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryInternal(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, bool? isFullPath)
       {
-         if (isFullPath != null && (bool) !isFullPath)
+         if (isFullPath != null && (bool)!isFullPath)
          {
             if (path != null && path[0] == Path.VolumeSeparatorChar)
                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
@@ -9271,12 +9289,12 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = isFullPath == null
             ? path
-            : (bool) isFullPath
+            : (bool)isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false);
 #else
-               // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before creating the directory.
+            // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before creating the directory.
                : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false);
 #endif
 
@@ -9293,15 +9311,15 @@ namespace Alphaleonis.Win32.Filesystem
             ? null
             : isFullPath == null
                ? templatePath
-               : (bool) isFullPath
+               : (bool)isFullPath
                   ? Path.GetLongPathInternal(templatePath, false, false, false, false)
 #if NET35
                   : Path.GetFullPathInternal(transaction, templatePath, true, false, false, true, false, false, false);
 #else
-                  // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before creating the directory.
+            // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before creating the directory.
                   : Path.GetFullPathInternal(transaction, templatePath, true, true, false, true, false, false, false);
 #endif
-         
+
          #region Construct Full Path
 
          string longPathPrefix = Path.IsUncPath(path, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
@@ -9365,7 +9383,7 @@ namespace Alphaleonis.Win32.Filesystem
                      case Win32Errors.ERROR_ALREADY_EXISTS:
                         if (File.ExistsInternal(false, transaction, pathLp, null))
                            NativeError.ThrowException(lastError, pathLp, true);
-                        
+
                         if (File.ExistsInternal(false, transaction, folderLp, null))
                            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, folderLp, true);
                         break;
@@ -9398,7 +9416,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Unified method GetDirectoryRootInternal() to return the volume information, root information, or both for the specified path.
       /// <returns>
       /// <para>Returns the volume information, root information, or both for the specified path,</para>
-      /// <para> or <c>null</c> if <paramref name="path"/> path does not contain root directory information.</para>
+      /// <para> or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</para>
       /// </returns>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
@@ -9435,7 +9453,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = isFullPath == null
             ? path
-            : (bool) isFullPath
+            : (bool)isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, false, false, true, false);
 
@@ -9451,7 +9469,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Unified method GetParent() to retrieve the parent directory of the specified path, including both absolute and relative paths.
       /// <para>&#160;</para>
-      /// <returns>Returns the parent directory, or <c>null</c> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <returns>Returns the parent directory, or <see langword="null"/> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
@@ -9487,7 +9505,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = isFullPath == null
             ? path
-            : (bool) isFullPath
+            : (bool)isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, false, false, true, false);
 
@@ -9508,15 +9526,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
       /// <param name="fileSystemEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fileSystemEntryInfo"/> or <paramref name="path"/>, not both.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove. Use either <paramref name="path"/> or <paramref name="fileSystemEntryInfo"/>, not both.</param>
-      /// <param name="recursive"><c>true</c> to remove all files and subdirectories recursively; <c>false</c> otherwise only the top level empty directory.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only attribute of files and directories.</param>
-      /// <param name="requireEmpty"><c>true</c> requires the the directory must be empty.</param>
-      /// <param name="continueOnNotExist"><c>true</c> does not throw an Exception when the file system object does not exist.</param>
+      /// <param name="recursive"><see langword="true"/> to remove all files and subdirectories recursively; <see langword="false"/> otherwise only the top level empty directory.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only attribute of files and directories.</param>
+      /// <param name="requireEmpty"><see langword="true"/> requires the the directory must be empty.</param>
+      /// <param name="continueOnNotExist"><see langword="true"/> does not throw an Exception when the file system object does not exist.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -9550,7 +9568,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (isFullPath != null && (bool) !isFullPath)
+         if (isFullPath != null && (bool)!isFullPath)
             Path.CheckValidPath(path, true, true);
 
          if (fileSystemEntryInfo == null)
@@ -9563,15 +9581,15 @@ namespace Alphaleonis.Win32.Filesystem
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
                isFullPath == null
                   ? path
-                  : (bool) isFullPath
+                  : (bool)isFullPath
                      ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
                      : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false),
 #else
-                     // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before deleting the directory.
+               // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before deleting the directory.
                      : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false),
 #endif
-               continueOnNotExist, null);
+ continueOnNotExist, null);
          }
 
          if (fileSystemEntryInfo == null)
@@ -9587,7 +9605,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (recursive && fileSystemEntryInfo.IsReparsePoint)
             recursive = false;
 
-         
+
          // Check to see if this is a mount point, and unmount it.
          if (fileSystemEntryInfo.IsMountPoint)
          {
@@ -9614,7 +9632,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region Remove
 
-         startRemoveDirectory:
+      startRemoveDirectory:
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -9629,7 +9647,7 @@ namespace Alphaleonis.Win32.Filesystem
             : NativeMethods.RemoveDirectoryTransacted(pathLp, transaction.SafeHandle)))
          {
             int lastError = Marshal.GetLastWin32Error();
-            switch ((uint) lastError)
+            switch ((uint)lastError)
             {
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   if (requireEmpty)
@@ -9646,22 +9664,22 @@ namespace Alphaleonis.Win32.Filesystem
                         Win32Errors.ERROR_INVALID_PARAMETER, String.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp)));
                   break;
 
-                  
+
                case Win32Errors.ERROR_PATH_NOT_FOUND:
                   if (continueOnNotExist)
                      return;
                   break;
-               
+
                case Win32Errors.ERROR_SHARING_VIOLATION:
                   // MSDN: .NET 3.5+: IOException: The directory is being used by another process or there is an open handle on the directory.
                   NativeError.ThrowException(lastError, pathLp, true);
                   break;
-                  
+
                case Win32Errors.ERROR_ACCESS_DENIED:
                   NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
                   int dataInitialised = File.FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
-                  if (data.FileAttributes != (FileAttributes) (-1))
+                  if (data.FileAttributes != (FileAttributes)(-1))
                   {
                      if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                      {
@@ -9708,14 +9726,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <remarks>Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the empty directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>      
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>      
       /// <param name="fileSystemEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fileSystemEntryInfo"/> or <paramref name="path"/>, not both.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove empty subdirectories from. Use either <paramref name="path"/> or <paramref name="fileSystemEntryInfo"/>, not both.</param>
-      /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
-      /// <param name="initialize">When <c>true</c> indicates the method is called externally.</param>
+      /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
+      /// <param name="initialize">When <see langword="true"/> indicates the method is called externally.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -9754,15 +9772,15 @@ namespace Alphaleonis.Win32.Filesystem
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
                isFullPath == null
                   ? path
-                  : (bool) isFullPath
+                  : (bool)isFullPath
                      ? Path.GetLongPathInternal(path, false, false, false, false)
 #if NET35
                      : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true),
 #else
-                     : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, true, true),
+ : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, true, true),
 #endif
 
-               false, null);
+ false, null);
          }
 
          if (fileSystemEntryInfo == null)
@@ -9797,7 +9815,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
-      /// <param name="enable"><c>true</c> enabled encryption, <c>false</c> disables encryption.</param>
+      /// <param name="enable"><see langword="true"/> enabled encryption, <see langword="false"/> disables encryption.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -9826,7 +9844,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0 | 1"</remarks>
-      
+
       [SecurityCritical]
       internal static void EnableDisableEncryptionInternal(string path, bool enable, bool? isFullPath)
       {
@@ -9835,7 +9853,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = isFullPath == null
             ? path
-            : (bool) isFullPath
+            : (bool)isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(null, path, true, false, false, true, false, true, true);
 
@@ -9854,8 +9872,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Unified method EncryptDecryptFileInternal() to decrypt/encrypt a directory recursively so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
-      /// <param name="encrypt"><c>true</c> encrypt, <c>false</c> decrypt.</param>
-      /// <param name="recursive"><c>true</c> to decrypt the directory recursively. <c>false</c> only decrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="encrypt"><see langword="true"/> encrypt, <see langword="false"/> decrypt.</param>
+      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt files and directories in the root of <paramref name="path"/>.</param>
       /// <param name="isFullPath">
       ///  <list type="definition">
       ///   <item>
@@ -9916,7 +9934,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to the directory.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       /// <param name="continueOnException">
-      /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      /// <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       /// <param name="isFullPath">
@@ -9948,7 +9966,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </list></param>
       /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
       /// <remarks>Either use <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</remarks>
-      
+
       [SecurityCritical]
       internal static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoInternal(KernelTransaction transaction, SafeFileHandle safeHandle, string path, FileShare shareMode, bool continueOnException, bool? isFullPath)
       {
@@ -9963,7 +9981,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             string pathLp = isFullPath == null
                ? path
-               : (bool) isFullPath
+               : (bool)isFullPath
                ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
 
@@ -9982,7 +10000,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                NativeMethods.IsValidHandle(safeBuffer, Marshal.GetLastWin32Error());
 
-               long fileNameOffset = Marshal.OffsetOf(typeof (NativeMethods.FileIdBothDirInfo), "FileName").ToInt64();
+               long fileNameOffset = Marshal.OffsetOf(typeof(NativeMethods.FileIdBothDirInfo), "FileName").ToInt64();
 
                while (NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, NativeMethods.DefaultFileBufferSize))
                {
@@ -10008,14 +10026,14 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      NativeMethods.FileIdBothDirInfo fibdi = Utils.MarshalPtrToStructure<NativeMethods.FileIdBothDirInfo>(0, buffer);
 
-                     string fileName = Marshal.PtrToStringUni(new IntPtr(fileNameOffset + buffer.ToInt64()), (int) (fibdi.FileNameLength / 2));
+                     string fileName = Marshal.PtrToStringUni(new IntPtr(fileNameOffset + buffer.ToInt64()), (int)(fibdi.FileNameLength / 2));
 
                      if (!Utils.IsNullOrWhiteSpace(fileName) &&
                          !fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
                          !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
                         yield return new FileIdBothDirectoryInfo(fibdi, fileName);
 
-                     
+
                      buffer = fibdi.NextEntryOffset == 0
                         ? IntPtr.Zero
                         : new IntPtr(buffer.ToInt64() + fibdi.NextEntryOffset);
@@ -10023,7 +10041,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
                int lastError = Marshal.GetLastWin32Error();
-               switch ((uint) lastError)
+               switch ((uint)lastError)
                {
                   case Win32Errors.ERROR_SUCCESS:
                   case Win32Errors.ERROR_NO_MORE_FILES:
@@ -10102,7 +10120,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!gotFilesOrFolders)
             directoryEnumerationOptions |= DirectoryEnumerationOptions.FilesAndFolders;
 
-         
+
          return new FindFileSystemEntryInfo
          {
             Transaction = transaction,
@@ -10119,14 +10137,14 @@ namespace Alphaleonis.Win32.Filesystem
             AsFileSystemInfo = typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo),
 
             FileSystemObjectType = (directoryEnumerationOptions & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.FilesAndFolders
-               ? (bool?) null
+               ? (bool?)null
                : (directoryEnumerationOptions & DirectoryEnumerationOptions.Folders) == DirectoryEnumerationOptions.Folders,
 
             SkipReparsePoints = (directoryEnumerationOptions & DirectoryEnumerationOptions.SkipReparsePoints) == DirectoryEnumerationOptions.SkipReparsePoints,
 
             ContinueOnException = (directoryEnumerationOptions & DirectoryEnumerationOptions.ContinueOnException) == DirectoryEnumerationOptions.ContinueOnException
 
-         }.Enumerate<T>().Select(fsei => (T) (object) fsei);
+         }.Enumerate<T>().Select(fsei => (T)(object)fsei);
       }
 
       #endregion // EnumerateFileSystemEntryInfosInternal
@@ -10137,7 +10155,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
-      
       [SecurityCritical]
       internal static IEnumerable<DriveInfo> EnumerateLogicalDrivesInternal(bool fromEnvironment, bool isReady)
       {
@@ -10171,7 +10188,7 @@ namespace Alphaleonis.Win32.Filesystem
          uint lastError = NativeMethods.GetLogicalDrives();
          if (lastError == Win32Errors.ERROR_SUCCESS)
             // Throws IOException.
-            NativeError.ThrowException((int) lastError, true);
+            NativeError.ThrowException((int)lastError, true);
 
          uint drives = lastError;
          int count = 0;
@@ -10184,7 +10201,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          string[] result = new string[count];
-         char[] root = {'A', Path.VolumeSeparatorChar};
+         char[] root = { 'A', Path.VolumeSeparatorChar };
 
          drives = lastError;
          count = 0;
@@ -10276,7 +10293,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = isFullPath == null
             ? path
-            : (bool) isFullPath
+            : (bool)isFullPath
             ? Path.GetLongPathInternal(path, false, false, false, false)
             : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
 
