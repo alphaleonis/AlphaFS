@@ -1,0 +1,2062 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpTOC>
+
+  <HelpTOCNode Title="LICENSE" Url="html/75f7f0b6-63f5-4784-9898-0694076670a6.htm" />
+  <HelpTOCNode Id="1831e0af-bac9-4559-9b76-2d257da51fa4" Title="API Reference" Url="html/C493DC9A.htm">
+    <HelpTOCNode Id="94abfffe-a77b-4d42-b417-8359d0c0a4ca" Title="Alphaleonis.Win32" Url="html/731E07E5.htm">
+      <HelpTOCNode Id="b9e8e52c-0a38-4caf-99e9-f1733b6d0a7c" Title="OperatingSystem Class" Url="html/A85FE5C7.htm">
+        <HelpTOCNode Id="f759a98c-6236-4543-83cf-00e975626858" Title="OperatingSystem Methods" Url="html/2F9756D9.htm">
+          <HelpTOCNode Id="025fef32-0c05-4230-8f4c-08e57b7d824e" Title="IsAtLeast Method " Url="html/12EEC8BA.htm">
+            <HelpTOCNode Title="IsAtLeast Method (OperatingSystem.EnumOsName)" Url="html/14625DF0.htm" />
+            <HelpTOCNode Title="IsAtLeast Method (OperatingSystem.EnumOsName, Int32)" Url="html/F7F977B5.htm" />
+          </HelpTOCNode>
+        </HelpTOCNode>
+        <HelpTOCNode Id="7ce1abaf-664d-4c82-95ad-42905fe09b0c" Title="OperatingSystem Properties" Url="html/DA8CEF57.htm">
+          <HelpTOCNode Title="IsServer Property " Url="html/6CC795D1.htm" />
+          <HelpTOCNode Title="IsWow64Process Property " Url="html/C87EA14A.htm" />
+          <HelpTOCNode Title="OSVersion Property " Url="html/69692F81.htm" />
+          <HelpTOCNode Title="ProcessorArchitecture Property " Url="html/74838732.htm" />
+          <HelpTOCNode Title="ServicePackVersion Property " Url="html/DE6D82F7.htm" />
+          <HelpTOCNode Title="VersionName Property " Url="html/B52030A8.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="OperatingSystem.EnumOsName Enumeration" Url="html/4AD3E80D.htm" />
+      <HelpTOCNode Title="OperatingSystem.EnumProcessorArchitecture Enumeration" Url="html/3483ED97.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="57b32f97-8078-469b-9d63-570086f1758f" Title="Alphaleonis.Win32.Filesystem" Url="html/7C1374.htm">
+      <HelpTOCNode Id="fa254cd4-f4e2-489e-8e4f-82e68706cdaa" Title="AlternateDataStreamInfo Class" Url="html/804C881E.htm">
+        <HelpTOCNode Id="d4b39377-8500-4889-a0fd-b900bafb8deb" Title="AlternateDataStreamInfo Constructor " Url="html/E94EDB88.htm">
+          <HelpTOCNode Title="AlternateDataStreamInfo Constructor (SafeFileHandle)" Url="html/3C79C84D.htm" />
+          <HelpTOCNode Title="AlternateDataStreamInfo Constructor (String)" Url="html/3C78C84D.htm" />
+          <HelpTOCNode Title="AlternateDataStreamInfo Constructor (KernelTransaction, String)" Url="html/F7FFB3F9.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="a1eaec4b-054f-4d81-975f-7d7c65b299fc" Title="AlternateDataStreamInfo Methods" Url="html/3C5C122A.htm">
+          <HelpTOCNode Title="AddStream Method " Url="html/74FEA9C0.htm" />
+          <HelpTOCNode Id="4706f69b-f7dc-4f80-a252-f42d15e12403" Title="EnumerateStreams Method " Url="html/B5731CAB.htm">
+            <HelpTOCNode Title="EnumerateStreams Method " Url="html/2B190BE9.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (StreamType)" Url="html/F9EAA39B.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetStreamSizeInternal Method " Url="html/17E58B0F.htm" />
+          <HelpTOCNode Id="0baae72b-7621-490e-9317-4d06c44f2864" Title="RemoveStream Method " Url="html/BECBB312.htm">
+            <HelpTOCNode Title="RemoveStream Method " Url="html/53866C14.htm" />
+            <HelpTOCNode Title="RemoveStream Method (String)" Url="html/69E969E0.htm" />
+          </HelpTOCNode>
+        </HelpTOCNode>
+        <HelpTOCNode Id="8a3198cf-b87d-43e3-9b41-52dd1a4f3512" Title="AlternateDataStreamInfo Properties" Url="html/C317C5CC.htm">
+          <HelpTOCNode Title="Attributes Property " Url="html/E75B3BB7.htm" />
+          <HelpTOCNode Title="FullName Property " Url="html/C9164D69.htm" />
+          <HelpTOCNode Title="IsDirectory Property " Url="html/3259B2CF.htm" />
+          <HelpTOCNode Title="Name Property " Url="html/2B7A87EA.htm" />
+          <HelpTOCNode Title="Size Property " Url="html/535487E2.htm" />
+          <HelpTOCNode Title="Transaction Property " Url="html/862ED447.htm" />
+          <HelpTOCNode Title="Type Property " Url="html/5B4987D2.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="d3b44960-ec84-44a1-9648-3b1ac440a152" Title="BackupFileStream Class" Url="html/74717173.htm">
+        <HelpTOCNode Id="d2b03505-3b46-44ab-95a3-df5178a7d0b4" Title="BackupFileStream Constructor " Url="html/F7F2F2DA.htm">
+          <HelpTOCNode Title="BackupFileStream Constructor (SafeFileHandle, FileSystemRights)" Url="html/5362AE5F.htm" />
+          <HelpTOCNode Title="BackupFileStream Constructor (String, FileMode)" Url="html/3B590C30.htm" />
+          <HelpTOCNode Title="BackupFileStream Constructor (String, FileMode, FileSystemRights)" Url="html/98B19795.htm" />
+          <HelpTOCNode Title="BackupFileStream Constructor (KernelTransaction, String, FileMode)" Url="html/5CC0B8F6.htm" />
+          <HelpTOCNode Title="BackupFileStream Constructor (String, FileMode, FileSystemRights, FileShare)" Url="html/5630ABB6.htm" />
+          <HelpTOCNode Title="BackupFileStream Constructor (KernelTransaction, String, FileMode, FileSystemRights)" Url="html/C8C4DBF3.htm" />
+          <HelpTOCNode Title="BackupFileStream Constructor (String, FileMode, FileSystemRights, FileShare, ExtendedFileAttributes)" Url="html/B389371B.htm" />
+          <HelpTOCNode Title="BackupFileStream Constructor (KernelTransaction, String, FileMode, FileSystemRights, FileShare)" Url="html/B0BB39C4.htm" />
+          <HelpTOCNode Title="BackupFileStream Constructor (String, FileMode, FileSystemRights, FileShare, ExtendedFileAttributes, FileSecurity)" Url="html/1274DBF3.htm" />
+          <HelpTOCNode Title="BackupFileStream Constructor (KernelTransaction, String, FileMode, FileSystemRights, FileShare, ExtendedFileAttributes)" Url="html/E13C529.htm" />
+          <HelpTOCNode Title="BackupFileStream Constructor (KernelTransaction, String, FileMode, FileSystemRights, FileShare, ExtendedFileAttributes, FileSecurity)" Url="html/F60A22FA.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="dd2b18b7-acfb-4c27-9b89-aa0b99df6f81" Title="BackupFileStream Methods" Url="html/35C56DB7.htm">
+          <HelpTOCNode Id="e2bd7a44-4257-4308-83d0-675db101c8df" Title="Dispose Method " Url="html/CD7EC65E.htm">
+            <HelpTOCNode Title="Dispose Method (Boolean)" Url="html/6A420994.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="EnumerateStreams Method " Url="html/18A30D75.htm" />
+          <HelpTOCNode Title="Finalize Method " Url="html/380ACEAF.htm" />
+          <HelpTOCNode Title="Flush Method " Url="html/FA0C3760.htm" />
+          <HelpTOCNode Title="GetAccessControl Method " Url="html/699C604F.htm" />
+          <HelpTOCNode Title="Lock Method " Url="html/D586BC57.htm" />
+          <HelpTOCNode Id="a34e5f85-da5a-4fa8-9da4-bee4fa9c1853" Title="Read Method " Url="html/7F3C0C4B.htm">
+            <HelpTOCNode Title="Read Method (Byte[], Int32, Int32)" Url="html/1B96D32B.htm" />
+            <HelpTOCNode Title="Read Method (Byte[], Int32, Int32, Boolean)" Url="html/27B65615.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="ReadStreamInfo Method " Url="html/9E68FC8E.htm" />
+          <HelpTOCNode Title="Seek Method " Url="html/59400C0.htm" />
+          <HelpTOCNode Title="SetAccessControl Method " Url="html/69A2539B.htm" />
+          <HelpTOCNode Title="SetLength Method " Url="html/1E728522.htm" />
+          <HelpTOCNode Title="Skip Method " Url="html/14C07804.htm" />
+          <HelpTOCNode Title="Unlock Method " Url="html/9D7D9D01.htm" />
+          <HelpTOCNode Id="71a46d7c-74a5-49c3-ad4f-1f03d3cde257" Title="Write Method " Url="html/4571560E.htm">
+            <HelpTOCNode Title="Write Method (Byte[], Int32, Int32)" Url="html/F5E3FA4A.htm" />
+            <HelpTOCNode Title="Write Method (Byte[], Int32, Int32, Boolean)" Url="html/8620919D.htm" />
+          </HelpTOCNode>
+        </HelpTOCNode>
+        <HelpTOCNode Id="febb085a-baab-4634-982a-30291003ee1d" Title="BackupFileStream Properties" Url="html/18AF7E6F.htm">
+          <HelpTOCNode Title="CanRead Property " Url="html/9D080529.htm" />
+          <HelpTOCNode Title="CanSeek Property " Url="html/37B079C4.htm" />
+          <HelpTOCNode Title="CanWrite Property " Url="html/2E2ABB8E.htm" />
+          <HelpTOCNode Title="Length Property " Url="html/6A3B5A31.htm" />
+          <HelpTOCNode Title="Position Property " Url="html/47D753A7.htm" />
+          <HelpTOCNode Title="SafeFileHandle Property " Url="html/5736C13D.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="5323e267-76b2-48be-aa04-63664f0803ac" Title="ByHandleFileInfo Class" Url="html/10791B70.htm">
+        <HelpTOCNode Title="ByHandleFileInfo Methods" Url="html/1DF8C34D.htm" />
+        <HelpTOCNode Id="3d93fe75-c0f6-4a48-bfc3-95b3a7c2caf6" Title="ByHandleFileInfo Properties" Url="html/6075DB90.htm">
+          <HelpTOCNode Title="Attributes Property " Url="html/4E411AD.htm" />
+          <HelpTOCNode Title="CreationTime Property " Url="html/D099A8E.htm" />
+          <HelpTOCNode Title="FileIndex Property " Url="html/C38B8F4C.htm" />
+          <HelpTOCNode Title="FileSize Property " Url="html/27915F4F.htm" />
+          <HelpTOCNode Title="LastAccessTime Property " Url="html/F2FF0EC3.htm" />
+          <HelpTOCNode Title="LastWriteTime Property " Url="html/92617B52.htm" />
+          <HelpTOCNode Title="NumberOfLinks Property " Url="html/96F6E452.htm" />
+          <HelpTOCNode Title="VolumeSerialNumber Property " Url="html/D064661.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="CopyMoveProgressCallbackReason Enumeration" Url="html/26108E88.htm" />
+      <HelpTOCNode Title="CopyMoveProgressResult Enumeration" Url="html/BA2C77D2.htm" />
+      <HelpTOCNode Title="CopyMoveProgressRoutine Delegate" Url="html/BA7DED39.htm" />
+      <HelpTOCNode Id="68958f59-29bc-4c8f-90fa-a2b07ed16270" Title="CopyMoveResult Class" Url="html/175251D.htm">
+        <HelpTOCNode Title="CopyMoveResult Constructor " Url="html/70315AC9.htm" />
+        <HelpTOCNode Title="CopyMoveResult Methods" Url="html/9C51E2E7.htm" />
+        <HelpTOCNode Id="e07573b8-10e5-456a-abc6-e41bf5dfba25" Title="CopyMoveResult Properties" Url="html/367E48A1.htm">
+          <HelpTOCNode Title="Destination Property " Url="html/6747D89E.htm" />
+          <HelpTOCNode Title="ErrorCode Property " Url="html/F02735EA.htm" />
+          <HelpTOCNode Title="ErrorMessage Property " Url="html/3288C57C.htm" />
+          <HelpTOCNode Title="IsCanceled Property " Url="html/30328FCB.htm" />
+          <HelpTOCNode Title="IsDirectory Property " Url="html/1C27FB3A.htm" />
+          <HelpTOCNode Title="IsMove Property " Url="html/DB2FBA0.htm" />
+          <HelpTOCNode Title="Source Property " Url="html/102A5061.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="CopyOptions Enumeration" Url="html/A2820377.htm" />
+      <HelpTOCNode Id="0c8b6928-74e2-43e5-9774-3e1f349567c0" Title="Device Class" Url="html/13E12C58.htm">
+        <HelpTOCNode Id="36e1f2d8-2987-4a5a-85be-a0e1ab9207c8" Title="Device Methods" Url="html/49E7C11D.htm">
+          <HelpTOCNode Id="39b5f027-4878-40e1-a32a-b03284eb2f62" Title="EnumerateDevices Method " Url="html/C05001FD.htm">
+            <HelpTOCNode Title="EnumerateDevices Method (DeviceGuid)" Url="html/3D524A9C.htm" />
+            <HelpTOCNode Title="EnumerateDevices Method (String, DeviceGuid)" Url="html/D078840.htm" />
+          </HelpTOCNode>
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="DeviceGuid Enumeration" Url="html/744C99A8.htm" />
+      <HelpTOCNode Id="c6c87498-c63d-4211-b7c6-752dacfaee8d" Title="DeviceInfo Class" Url="html/5A2D139A.htm">
+        <HelpTOCNode Id="bfda81e5-0cd6-4027-82cd-8ad64a72ccb4" Title="DeviceInfo Constructor " Url="html/71227AA9.htm">
+          <HelpTOCNode Title="DeviceInfo Constructor " Url="html/A4693721.htm" />
+          <HelpTOCNode Title="DeviceInfo Constructor (String)" Url="html/E22B1541.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="eb86a8a1-4893-445f-8f41-aa6ddf71d744" Title="DeviceInfo Methods" Url="html/B19E58E.htm">
+          <HelpTOCNode Title="EnumerateDevices Method " Url="html/3DD1E9BD.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="f06bc128-b45e-4910-9f00-30c5fa79cdae" Title="DeviceInfo Properties" Url="html/7AD40E01.htm">
+          <HelpTOCNode Title="BaseContainerId Property " Url="html/33D8D65D.htm" />
+          <HelpTOCNode Title="Class Property " Url="html/8795D726.htm" />
+          <HelpTOCNode Title="ClassGuid Property " Url="html/9C92B0E0.htm" />
+          <HelpTOCNode Title="CompatibleIds Property " Url="html/4616D17A.htm" />
+          <HelpTOCNode Title="DeviceDescription Property " Url="html/B16B9080.htm" />
+          <HelpTOCNode Title="DevicePath Property " Url="html/2E0D77E1.htm" />
+          <HelpTOCNode Title="Driver Property " Url="html/DA68F765.htm" />
+          <HelpTOCNode Title="EnumeratorName Property " Url="html/90E211EA.htm" />
+          <HelpTOCNode Title="FriendlyName Property " Url="html/BA75FF3F.htm" />
+          <HelpTOCNode Title="HardwareId Property " Url="html/BB39EFE2.htm" />
+          <HelpTOCNode Title="InstanceId Property " Url="html/6DF4DC89.htm" />
+          <HelpTOCNode Title="LocationInformation Property " Url="html/5DF34015.htm" />
+          <HelpTOCNode Title="LocationPaths Property " Url="html/B0AA979B.htm" />
+          <HelpTOCNode Title="Manufacturer Property " Url="html/A3712DDF.htm" />
+          <HelpTOCNode Title="PhysicalDeviceObjectName Property " Url="html/66060180.htm" />
+          <HelpTOCNode Title="Service Property " Url="html/5A4868F.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="19e1750b-1f83-4375-823a-4919f52fc2ff" Title="Directory Class" Url="html/26653682.htm">
+        <HelpTOCNode Id="17bb2512-8526-4829-ae3a-76a081112902" Title="Directory Methods" Url="html/FEBE5027.htm">
+          <HelpTOCNode Id="13d7b421-9718-41c4-b393-8c8811024eea" Title="AddStream Method " Url="html/51F51EB5.htm">
+            <HelpTOCNode Title="AddStream Method (String, String, String[])" Url="html/A3F44BF8.htm" />
+            <HelpTOCNode Title="AddStream Method (String, String, String[], Nullable(Boolean))" Url="html/188F4BF8.htm" />
+            <HelpTOCNode Title="AddStream Method (KernelTransaction, String, String, String[])" Url="html/282141EB.htm" />
+            <HelpTOCNode Title="AddStream Method (KernelTransaction, String, String, String[], Nullable(Boolean))" Url="html/1C54BF8.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="0adc50ea-34a4-4fba-95b0-94361fa7f05b" Title="Compress Method " Url="html/3F49AC5D.htm">
+            <HelpTOCNode Title="Compress Method (String)" Url="html/95DF7FE.htm" />
+            <HelpTOCNode Title="Compress Method (String, DirectoryEnumerationOptions)" Url="html/66B68363.htm" />
+            <HelpTOCNode Title="Compress Method (String, Nullable(Boolean))" Url="html/AC056C99.htm" />
+            <HelpTOCNode Title="Compress Method (KernelTransaction, String)" Url="html/3C75A3B0.htm" />
+            <HelpTOCNode Title="Compress Method (String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/4EACE134.htm" />
+            <HelpTOCNode Title="Compress Method (KernelTransaction, String, DirectoryEnumerationOptions)" Url="html/F15455CF.htm" />
+            <HelpTOCNode Title="Compress Method (KernelTransaction, String, Nullable(Boolean))" Url="html/36A33F05.htm" />
+            <HelpTOCNode Title="Compress Method (KernelTransaction, String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/D94AB3A0.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="2cdbb8c3-2adf-4c7f-88ea-2897b71981a8" Title="Copy1 Method " Url="html/D494E4C5.htm">
+            <HelpTOCNode Title="Copy1 Method (String, String, CopyOptions)" Url="html/F4E67650.htm" />
+            <HelpTOCNode Title="Copy1 Method (String, String, CopyOptions, Nullable(Boolean))" Url="html/97157650.htm" />
+            <HelpTOCNode Title="Copy1 Method (KernelTransaction, String, String, CopyOptions)" Url="html/D2D8270A.htm" />
+            <HelpTOCNode Title="Copy1 Method (String, String, CopyOptions, CopyMoveProgressRoutine, Object)" Url="html/804B7650.htm" />
+            <HelpTOCNode Title="Copy1 Method (KernelTransaction, String, String, CopyOptions, Nullable(Boolean))" Url="html/C4A97650.htm" />
+            <HelpTOCNode Title="Copy1 Method (String, String, CopyOptions, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/BB07650.htm" />
+            <HelpTOCNode Title="Copy1 Method (KernelTransaction, String, String, CopyOptions, CopyMoveProgressRoutine, Object)" Url="html/ADDF7650.htm" />
+            <HelpTOCNode Title="Copy1 Method (KernelTransaction, String, String, CopyOptions, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/39447650.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="d3b24b15-e671-4034-baac-aac1488c9fc4" Title="CountFileSystemObjects Method " Url="html/37EA7E0F.htm">
+            <HelpTOCNode Title="CountFileSystemObjects Method (String, DirectoryEnumerationOptions)" Url="html/BA97DD7D.htm" />
+            <HelpTOCNode Title="CountFileSystemObjects Method (String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/BA97DD7C.htm" />
+            <HelpTOCNode Title="CountFileSystemObjects Method (String, String, DirectoryEnumerationOptions)" Url="html/BA97DD7B.htm" />
+            <HelpTOCNode Title="CountFileSystemObjects Method (KernelTransaction, String, DirectoryEnumerationOptions)" Url="html/52FC35F8.htm" />
+            <HelpTOCNode Title="CountFileSystemObjects Method (String, String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/BA97DD7A.htm" />
+            <HelpTOCNode Title="CountFileSystemObjects Method (KernelTransaction, String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/BA97DD80.htm" />
+            <HelpTOCNode Title="CountFileSystemObjects Method (KernelTransaction, String, String, DirectoryEnumerationOptions)" Url="html/BA97DD7F.htm" />
+            <HelpTOCNode Title="CountFileSystemObjects Method (KernelTransaction, String, String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/BA97DD7E.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="654344bf-08eb-4a7e-afd4-7f0faeb49f1c" Title="CreateDirectory Method " Url="html/7BA279B0.htm">
+            <HelpTOCNode Title="CreateDirectory Method (String)" Url="html/5C0FF938.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, Boolean)" Url="html/FEB76DD3.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, DirectorySecurity)" Url="html/2ECAB231.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, String)" Url="html/2BFCB4DA.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String)" Url="html/82618CE7.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, Boolean, Nullable(Boolean))" Url="html/8C233D96.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, DirectorySecurity, Boolean)" Url="html/D17226CC.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, String, Boolean)" Url="html/CEA42975.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, String, DirectorySecurity)" Url="html/B969849D.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, Boolean)" Url="html/A98A6435.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, DirectorySecurity)" Url="html/A98C6435.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, String)" Url="html/A98F6435.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, DirectorySecurity, Boolean, Nullable(Boolean))" Url="html/74199B67.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, String, Boolean, Nullable(Boolean))" Url="html/16C21002.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, String, DirectorySecurity, Boolean)" Url="html/5C10F938.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, Boolean, Nullable(Boolean))" Url="html/A98B6435.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, DirectorySecurity, Boolean)" Url="html/A98D6435.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, String, Boolean)" Url="html/A9906435.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, String, DirectorySecurity)" Url="html/A9926435.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (String, String, DirectorySecurity, Boolean, Nullable(Boolean))" Url="html/FEB86DD3.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, DirectorySecurity, Boolean, Nullable(Boolean))" Url="html/A98E6435.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, String, Boolean, Nullable(Boolean))" Url="html/A9916435.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, String, DirectorySecurity, Boolean)" Url="html/16C11002.htm" />
+            <HelpTOCNode Title="CreateDirectory Method (KernelTransaction, String, String, DirectorySecurity, Boolean, Nullable(Boolean))" Url="html/B968849D.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="f684f5ae-fd95-4d92-b57b-b6428bea950a" Title="Decompress Method " Url="html/CF1B6947.htm">
+            <HelpTOCNode Title="Decompress Method (String)" Url="html/4EC4B679.htm" />
+            <HelpTOCNode Title="Decompress Method (String, DirectoryEnumerationOptions)" Url="html/4EC4B678.htm" />
+            <HelpTOCNode Title="Decompress Method (String, Nullable(Boolean))" Url="html/4EC4B676.htm" />
+            <HelpTOCNode Title="Decompress Method (KernelTransaction, String)" Url="html/EF51AB1B.htm" />
+            <HelpTOCNode Title="Decompress Method (String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/4EC4B677.htm" />
+            <HelpTOCNode Title="Decompress Method (KernelTransaction, String, DirectoryEnumerationOptions)" Url="html/4EC4B674.htm" />
+            <HelpTOCNode Title="Decompress Method (KernelTransaction, String, Nullable(Boolean))" Url="html/4EC4B672.htm" />
+            <HelpTOCNode Title="Decompress Method (KernelTransaction, String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/4EC4B673.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="e0567b1a-a31a-44fb-827b-a3485b91f0a6" Title="Decrypt Method " Url="html/6795254C.htm">
+            <HelpTOCNode Title="Decrypt Method (String)" Url="html/83859820.htm" />
+            <HelpTOCNode Title="Decrypt Method (String, Boolean)" Url="html/F681A369.htm" />
+            <HelpTOCNode Title="Decrypt Method (String, Nullable(Boolean))" Url="html/F683A369.htm" />
+            <HelpTOCNode Title="Decrypt Method (String, Boolean, Nullable(Boolean))" Url="html/F684A369.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="0268d3a7-ade8-448a-b7ee-4964146a130d" Title="Delete Method " Url="html/72FEA621.htm">
+            <HelpTOCNode Title="Delete Method (String)" Url="html/7E9F9ECC.htm" />
+            <HelpTOCNode Title="Delete Method (String, Boolean)" Url="html/7E9F9ECD.htm" />
+            <HelpTOCNode Title="Delete Method (KernelTransaction, String)" Url="html/BE179564.htm" />
+            <HelpTOCNode Title="Delete Method (String, Boolean, Boolean)" Url="html/7E9F9ECA.htm" />
+            <HelpTOCNode Title="Delete Method (KernelTransaction, String, Boolean)" Url="html/7E9F9ED1.htm" />
+            <HelpTOCNode Title="Delete Method (String, Boolean, Boolean, Nullable(Boolean))" Url="html/7E9F9ECB.htm" />
+            <HelpTOCNode Title="Delete Method (KernelTransaction, String, Boolean, Boolean)" Url="html/7E9F9ECE.htm" />
+            <HelpTOCNode Title="Delete Method (KernelTransaction, String, Boolean, Boolean, Nullable(Boolean))" Url="html/7E9F9ECF.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="82d97a6d-75eb-4cf3-acfc-d33bd1146396" Title="DeleteEmpty Method " Url="html/8309D551.htm">
+            <HelpTOCNode Title="DeleteEmpty Method (String, Boolean)" Url="html/44DC45AA.htm" />
+            <HelpTOCNode Title="DeleteEmpty Method (String, Boolean, Boolean)" Url="html/44DD45AA.htm" />
+            <HelpTOCNode Title="DeleteEmpty Method (KernelTransaction, String, Boolean)" Url="html/7E5B088B.htm" />
+            <HelpTOCNode Title="DeleteEmpty Method (String, Boolean, Boolean, Nullable(Boolean))" Url="html/44DE45AA.htm" />
+            <HelpTOCNode Title="DeleteEmpty Method (KernelTransaction, String, Boolean, Boolean)" Url="html/44DA45AA.htm" />
+            <HelpTOCNode Title="DeleteEmpty Method (KernelTransaction, String, Boolean, Boolean, Nullable(Boolean))" Url="html/44DB45AA.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="e03ce817-cbec-4908-b836-6e248ab6920e" Title="DisableCompression Method " Url="html/330CE256.htm">
+            <HelpTOCNode Title="DisableCompression Method (String)" Url="html/2A97468C.htm" />
+            <HelpTOCNode Title="DisableCompression Method (String, Nullable(Boolean))" Url="html/2A97468D.htm" />
+            <HelpTOCNode Title="DisableCompression Method (KernelTransaction, String)" Url="html/CE5ED8A2.htm" />
+            <HelpTOCNode Title="DisableCompression Method (KernelTransaction, String, Nullable(Boolean))" Url="html/2A97468B.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="f870ffa5-9c43-4df4-85d7-878e149a83f4" Title="DisableEncryption Method " Url="html/A6BA89A1.htm">
+            <HelpTOCNode Title="DisableEncryption Method (String)" Url="html/E3F1E171.htm" />
+            <HelpTOCNode Title="DisableEncryption Method (String, Nullable(Boolean))" Url="html/EDC31D63.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="418c8eb5-8954-49bc-8519-ba7bbdde6d47" Title="EnableCompression Method " Url="html/40F1A3D0.htm">
+            <HelpTOCNode Title="EnableCompression Method (String)" Url="html/1EFB2CB.htm" />
+            <HelpTOCNode Title="EnableCompression Method (String, Nullable(Boolean))" Url="html/768AB2CB.htm" />
+            <HelpTOCNode Title="EnableCompression Method (KernelTransaction, String)" Url="html/6885DDE7.htm" />
+            <HelpTOCNode Title="EnableCompression Method (KernelTransaction, String, Nullable(Boolean))" Url="html/8D54B2CB.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="49e6b46f-4b16-4861-82d2-7b368f4f1fed" Title="EnableEncryption Method " Url="html/4FCE7106.htm">
+            <HelpTOCNode Title="EnableEncryption Method (String)" Url="html/8156404.htm" />
+            <HelpTOCNode Title="EnableEncryption Method (String, Nullable(Boolean))" Url="html/EF92EC31.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="a037f36c-c084-4261-bd49-13680c39d82e" Title="Encrypt Method " Url="html/65CC2579.htm">
+            <HelpTOCNode Title="Encrypt Method (String)" Url="html/392125D3.htm" />
+            <HelpTOCNode Title="Encrypt Method (String, Boolean)" Url="html/B03F311C.htm" />
+            <HelpTOCNode Title="Encrypt Method (String, Nullable(Boolean))" Url="html/B03D311C.htm" />
+            <HelpTOCNode Title="Encrypt Method (String, Boolean, Nullable(Boolean))" Url="html/B03C311C.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="bb9b6d3c-6a8a-4c5f-986b-df2660959e39" Title="EnumerateDirectories Method " Url="html/D75FBFC7.htm">
+            <HelpTOCNode Title="EnumerateDirectories Method (String)" Url="html/A9089B4E.htm" />
+            <HelpTOCNode Title="EnumerateDirectories Method (String, String)" Url="html/36746B11.htm" />
+            <HelpTOCNode Title="EnumerateDirectories Method (KernelTransaction, String)" Url="html/49E10AC5.htm" />
+            <HelpTOCNode Title="EnumerateDirectories Method (String, String, SearchOption)" Url="html/D91BDFAC.htm" />
+            <HelpTOCNode Title="EnumerateDirectories Method (KernelTransaction, String, String)" Url="html/63B9B218.htm" />
+            <HelpTOCNode Title="EnumerateDirectories Method (KernelTransaction, String, String, SearchOption)" Url="html/66126B3.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="2dcb1b0f-b563-4c2c-8a33-807487bee1ab" Title="EnumerateFileIdBothDirectoryInfo Method " Url="html/9DF9B4FC.htm">
+            <HelpTOCNode Title="EnumerateFileIdBothDirectoryInfo Method (SafeFileHandle)" Url="html/2647B.htm" />
+            <HelpTOCNode Title="EnumerateFileIdBothDirectoryInfo Method (String)" Url="html/A2A9D916.htm" />
+            <HelpTOCNode Title="EnumerateFileIdBothDirectoryInfo Method (String, FileShare)" Url="html/45514DB1.htm" />
+            <HelpTOCNode Title="EnumerateFileIdBothDirectoryInfo Method (String, Nullable(Boolean))" Url="html/6028ED37.htm" />
+            <HelpTOCNode Title="EnumerateFileIdBothDirectoryInfo Method (KernelTransaction, String)" Url="html/CCA28DB3.htm" />
+            <HelpTOCNode Title="EnumerateFileIdBothDirectoryInfo Method (String, FileShare, Nullable(Boolean))" Url="html/E7F8C24C.htm" />
+            <HelpTOCNode Title="EnumerateFileIdBothDirectoryInfo Method (KernelTransaction, String, FileShare)" Url="html/180C06AA.htm" />
+            <HelpTOCNode Title="EnumerateFileIdBothDirectoryInfo Method (KernelTransaction, String, Nullable(Boolean))" Url="html/5D5AEFE0.htm" />
+            <HelpTOCNode Title="EnumerateFileIdBothDirectoryInfo Method (KernelTransaction, String, FileShare, Nullable(Boolean))" Url="html/BAB37B45.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="209359c1-97c5-41ab-9d96-889075c94a91" Title="EnumerateFiles Method " Url="html/B3861C4B.htm">
+            <HelpTOCNode Title="EnumerateFiles Method (String)" Url="html/551CB08B.htm" />
+            <HelpTOCNode Title="EnumerateFiles Method (String, String)" Url="html/551CB084.htm" />
+            <HelpTOCNode Title="EnumerateFiles Method (KernelTransaction, String)" Url="html/2CDB896D.htm" />
+            <HelpTOCNode Title="EnumerateFiles Method (String, String, SearchOption)" Url="html/551CB085.htm" />
+            <HelpTOCNode Title="EnumerateFiles Method (KernelTransaction, String, String)" Url="html/551CB089.htm" />
+            <HelpTOCNode Title="EnumerateFiles Method (KernelTransaction, String, String, SearchOption)" Url="html/551CB08A.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="feed9928-6bd3-41d1-8469-73279bb3dcba" Title="EnumerateFileSystemEntries Method " Url="html/67D52357.htm">
+            <HelpTOCNode Title="EnumerateFileSystemEntries Method (String)" Url="html/154B8E47.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntries Method (String, String)" Url="html/154B8E46.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntries Method (KernelTransaction, String)" Url="html/A5505B79.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntries Method (String, String, SearchOption)" Url="html/154B8E45.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntries Method (KernelTransaction, String, String)" Url="html/154B8E49.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntries Method (KernelTransaction, String, String, SearchOption)" Url="html/154B8E48.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="3300effa-4e1a-4a07-bb16-a7a120ba0377" Title="EnumerateFileSystemEntryInfos Method " Url="html/3235A655.htm">
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (String)" Url="html/14D29A7D.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (String, Nullable(Boolean))" Url="html/B77A0F18.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (String, String)" Url="html/44E5DEDB.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (KernelTransaction, String)" Url="html/C7D14939.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (String, String, DirectoryEnumerationOptions)" Url="html/E78D5376.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (String, String, Nullable(Boolean))" Url="html/AB1DF84E.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (KernelTransaction, String, Nullable(Boolean))" Url="html/FCC8F84E.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (KernelTransaction, String, String)" Url="html/9F706CE9.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (String, String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/1FB8F84E.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (KernelTransaction, String, String, DirectoryEnumerationOptions)" Url="html/4217E184.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/722B25E2.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemEntryInfos(T) Method (KernelTransaction, String, String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/CF83B147.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="EnumerateLogicalDrives Method " Url="html/B6AA1D7.htm" />
+          <HelpTOCNode Id="706ca5d9-b952-457c-8094-d08dcae69023" Title="EnumerateStreams Method " Url="html/3D078822.htm">
+            <HelpTOCNode Title="EnumerateStreams Method (SafeFileHandle)" Url="html/74167658.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (String)" Url="html/16BDEAF3.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (String, StreamType)" Url="html/B9655F8E.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (String, Nullable(Boolean))" Url="html/FEB448C4.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (KernelTransaction, String)" Url="html/48ABD378.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (String, StreamType, Nullable(Boolean))" Url="html/5C0CD429.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (KernelTransaction, String, StreamType)" Url="html/8C201887.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (KernelTransaction, String, Nullable(Boolean))" Url="html/D16F01BD.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (KernelTransaction, String, StreamType, Nullable(Boolean))" Url="html/2EC78D22.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="d02bca0c-8671-4b13-8499-84fc4612aa37" Title="Exists Method " Url="html/27EB4867.htm">
+            <HelpTOCNode Title="Exists Method (String)" Url="html/ABADA9B5.htm" />
+            <HelpTOCNode Title="Exists Method (String, Nullable(Boolean))" Url="html/ABADA9B6.htm" />
+            <HelpTOCNode Title="Exists Method (KernelTransaction, String)" Url="html/27D39E27.htm" />
+            <HelpTOCNode Title="Exists Method (KernelTransaction, String, Nullable(Boolean))" Url="html/ABADA9B4.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="b5afe50f-e5c0-43e8-8555-4e618240c743" Title="GetAccessControl Method " Url="html/436D0C90.htm">
+            <HelpTOCNode Title="GetAccessControl Method (String)" Url="html/49C1891E.htm" />
+            <HelpTOCNode Title="GetAccessControl Method (String, Nullable(Boolean))" Url="html/FD932C62.htm" />
+            <HelpTOCNode Title="GetAccessControl Method (String, AccessControlSections)" Url="html/159CCE91.htm" />
+            <HelpTOCNode Title="GetAccessControl Method (String, AccessControlSections, Nullable(Boolean))" Url="html/B844432C.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="c95675de-cf94-447b-93c5-6e7ef122b718" Title="GetChangeTime Method " Url="html/DCDD9A16.htm">
+            <HelpTOCNode Title="GetChangeTime Method (SafeFileHandle)" Url="html/12C1939A.htm" />
+            <HelpTOCNode Title="GetChangeTime Method (String)" Url="html/9E26939A.htm" />
+            <HelpTOCNode Title="GetChangeTime Method (String, Nullable(Boolean))" Url="html/298B939A.htm" />
+            <HelpTOCNode Title="GetChangeTime Method (KernelTransaction, String)" Url="html/5E35A5C9.htm" />
+            <HelpTOCNode Title="GetChangeTime Method (KernelTransaction, String, Nullable(Boolean))" Url="html/875C939A.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="ed42a653-a146-432b-a641-7fed84d1091e" Title="GetChangeTimeUtc Method " Url="html/585FF1B7.htm">
+            <HelpTOCNode Title="GetChangeTimeUtc Method (SafeFileHandle)" Url="html/767FC313.htm" />
+            <HelpTOCNode Title="GetChangeTimeUtc Method (String)" Url="html/D3D84E78.htm" />
+            <HelpTOCNode Title="GetChangeTimeUtc Method (String, Nullable(Boolean))" Url="html/A6930771.htm" />
+            <HelpTOCNode Title="GetChangeTimeUtc Method (KernelTransaction, String)" Url="html/6E45E8AD.htm" />
+            <HelpTOCNode Title="GetChangeTimeUtc Method (KernelTransaction, String, Nullable(Boolean))" Url="html/8E896542.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="977eef5c-c775-4585-96c6-a25352d76df0" Title="GetCreationTime Method " Url="html/28F24756.htm">
+            <HelpTOCNode Title="GetCreationTime Method (String)" Url="html/8F197F3C.htm" />
+            <HelpTOCNode Title="GetCreationTime Method (String, Nullable(Boolean))" Url="html/8F187F3C.htm" />
+            <HelpTOCNode Title="GetCreationTime Method (KernelTransaction, String)" Url="html/3C465179.htm" />
+            <HelpTOCNode Title="GetCreationTime Method (KernelTransaction, String, Nullable(Boolean))" Url="html/8F1A7F3C.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="d3914409-1b35-4641-9bef-213ff04838c0" Title="GetCreationTimeUtc Method " Url="html/815D60E8.htm">
+            <HelpTOCNode Title="GetCreationTimeUtc Method (String)" Url="html/26956614.htm" />
+            <HelpTOCNode Title="GetCreationTimeUtc Method (String, Nullable(Boolean))" Url="html/26956613.htm" />
+            <HelpTOCNode Title="GetCreationTimeUtc Method (KernelTransaction, String)" Url="html/F3C37EE0.htm" />
+            <HelpTOCNode Title="GetCreationTimeUtc Method (KernelTransaction, String, Nullable(Boolean))" Url="html/26956615.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetCurrentDirectory Method " Url="html/470D0F0.htm" />
+          <HelpTOCNode Id="c99cfe7c-cb5f-41a8-bf3d-acbc8d6ecf21" Title="GetDirectories Method " Url="html/1D135DEB.htm">
+            <HelpTOCNode Title="GetDirectories Method (String)" Url="html/D5AE5D02.htm" />
+            <HelpTOCNode Title="GetDirectories Method (String, String)" Url="html/D5AE5D01.htm" />
+            <HelpTOCNode Title="GetDirectories Method (KernelTransaction, String)" Url="html/37741473.htm" />
+            <HelpTOCNode Title="GetDirectories Method (String, String, SearchOption)" Url="html/D5AE5D00.htm" />
+            <HelpTOCNode Title="GetDirectories Method (KernelTransaction, String, String)" Url="html/D5AE5D04.htm" />
+            <HelpTOCNode Title="GetDirectories Method (KernelTransaction, String, String, SearchOption)" Url="html/D5AE5D03.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="fb99604d-4ad0-42b7-abd9-c0a2806b75ba" Title="GetDirectoryRoot Method " Url="html/6E79B21B.htm">
+            <HelpTOCNode Title="GetDirectoryRoot Method (String)" Url="html/F71D3DEF.htm" />
+            <HelpTOCNode Title="GetDirectoryRoot Method (String, Nullable(Boolean))" Url="html/5475C954.htm" />
+            <HelpTOCNode Title="GetDirectoryRoot Method (KernelTransaction, String)" Url="html/550AD5F5.htm" />
+            <HelpTOCNode Title="GetDirectoryRoot Method (KernelTransaction, String, Nullable(Boolean))" Url="html/F26E01E.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="2aa74989-77d4-4a50-84bb-d3dca8808252" Title="GetFiles Method " Url="html/D4DC207F.htm">
+            <HelpTOCNode Title="GetFiles Method (String)" Url="html/38660921.htm" />
+            <HelpTOCNode Title="GetFiles Method (String, String)" Url="html/AAFA395E.htm" />
+            <HelpTOCNode Title="GetFiles Method (KernelTransaction, String)" Url="html/9B44899D.htm" />
+            <HelpTOCNode Title="GetFiles Method (String, String, SearchOption)" Url="html/852C4C3.htm" />
+            <HelpTOCNode Title="GetFiles Method (KernelTransaction, String, String)" Url="html/7DB4F257.htm" />
+            <HelpTOCNode Title="GetFiles Method (KernelTransaction, String, String, SearchOption)" Url="html/DB0D7DBC.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="7aa815c1-0e64-49cd-a5b1-d12d3e1661ea" Title="GetFileSystemEntries Method " Url="html/4C9944FB.htm">
+            <HelpTOCNode Title="GetFileSystemEntries Method (String)" Url="html/2D65B398.htm" />
+            <HelpTOCNode Title="GetFileSystemEntries Method (String, String)" Url="html/155C1169.htm" />
+            <HelpTOCNode Title="GetFileSystemEntries Method (KernelTransaction, String)" Url="html/84370ADE.htm" />
+            <HelpTOCNode Title="GetFileSystemEntries Method (String, String, SearchOption)" Url="html/72B49CCE.htm" />
+            <HelpTOCNode Title="GetFileSystemEntries Method (KernelTransaction, String, String)" Url="html/E816CA62.htm" />
+            <HelpTOCNode Title="GetFileSystemEntries Method (KernelTransaction, String, String, SearchOption)" Url="html/D00D2833.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="8114e646-ddca-4185-97df-043ff3fcf756" Title="GetFileSystemEntryInfo Method " Url="html/2520D6E2.htm">
+            <HelpTOCNode Title="GetFileSystemEntryInfo Method (String)" Url="html/A4262CD1.htm" />
+            <HelpTOCNode Title="GetFileSystemEntryInfo Method (String, Nullable(Boolean))" Url="html/A4262CD2.htm" />
+            <HelpTOCNode Title="GetFileSystemEntryInfo Method (KernelTransaction, String)" Url="html/E54A878F.htm" />
+            <HelpTOCNode Title="GetFileSystemEntryInfo Method (KernelTransaction, String, Nullable(Boolean))" Url="html/A4262CD4.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="aa036767-eec4-45c7-bc0b-d84b27941ab3" Title="GetLastAccessTime Method " Url="html/9241FA40.htm">
+            <HelpTOCNode Title="GetLastAccessTime Method (String)" Url="html/28E35852.htm" />
+            <HelpTOCNode Title="GetLastAccessTime Method (String, Nullable(Boolean))" Url="html/B4485852.htm" />
+            <HelpTOCNode Title="GetLastAccessTime Method (KernelTransaction, String)" Url="html/A7636F44.htm" />
+            <HelpTOCNode Title="GetLastAccessTime Method (KernelTransaction, String, Nullable(Boolean))" Url="html/9D7E5852.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="9c042050-f69e-46e2-a78d-61734cb63d4f" Title="GetLastAccessTimeUtc Method " Url="html/CE052DD7.htm">
+            <HelpTOCNode Title="GetLastAccessTimeUtc Method (String)" Url="html/19B736E8.htm" />
+            <HelpTOCNode Title="GetLastAccessTimeUtc Method (String, Nullable(Boolean))" Url="html/770FC24D.htm" />
+            <HelpTOCNode Title="GetLastAccessTimeUtc Method (KernelTransaction, String)" Url="html/3E2F7A50.htm" />
+            <HelpTOCNode Title="GetLastAccessTimeUtc Method (KernelTransaction, String, Nullable(Boolean))" Url="html/BC5EAB83.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="c43f7870-5591-441d-aef2-c2f31aa292cd" Title="GetLastWriteTime Method " Url="html/E1AF4BB3.htm">
+            <HelpTOCNode Title="GetLastWriteTime Method (String)" Url="html/3B9A2FBA.htm" />
+            <HelpTOCNode Title="GetLastWriteTime Method (String, Nullable(Boolean))" Url="html/98F2BB1F.htm" />
+            <HelpTOCNode Title="GetLastWriteTime Method (KernelTransaction, String)" Url="html/2AAB05C3.htm" />
+            <HelpTOCNode Title="GetLastWriteTime Method (KernelTransaction, String, Nullable(Boolean))" Url="html/53A3D1E9.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="05f6a3df-34c9-46a6-a7a1-8627b71e2d4b" Title="GetLastWriteTimeUtc Method " Url="html/1D00BCFF.htm">
+            <HelpTOCNode Title="GetLastWriteTimeUtc Method (String)" Url="html/43717E50.htm" />
+            <HelpTOCNode Title="GetLastWriteTimeUtc Method (String, Nullable(Boolean))" Url="html/43727E50.htm" />
+            <HelpTOCNode Title="GetLastWriteTimeUtc Method (KernelTransaction, String)" Url="html/F5DAF230.htm" />
+            <HelpTOCNode Title="GetLastWriteTimeUtc Method (KernelTransaction, String, Nullable(Boolean))" Url="html/43747E50.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="3fcffa7a-b89f-4f7b-b3a1-bc46fab2e66d" Title="GetLogicalDrives Method " Url="html/4E0A4F98.htm">
+            <HelpTOCNode Title="GetLogicalDrives Method " Url="html/B0F63D72.htm" />
+            <HelpTOCNode Title="GetLogicalDrives Method (Boolean, Boolean)" Url="html/77791793.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="238b4d1c-5148-4348-bfb1-d866f48c68f9" Title="GetParent Method " Url="html/E835A5C7.htm">
+            <HelpTOCNode Title="GetParent Method (String)" Url="html/F9C76D72.htm" />
+            <HelpTOCNode Title="GetParent Method (String, Nullable(Boolean))" Url="html/6E626D72.htm" />
+            <HelpTOCNode Title="GetParent Method (KernelTransaction, String)" Url="html/971C912E.htm" />
+            <HelpTOCNode Title="GetParent Method (KernelTransaction, String, Nullable(Boolean))" Url="html/57986D72.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="b076d2e8-e04b-416d-aad8-ebf483069931" Title="GetProperties Method " Url="html/782613ED.htm">
+            <HelpTOCNode Title="GetProperties Method (String)" Url="html/B151D4B6.htm" />
+            <HelpTOCNode Title="GetProperties Method (String, DirectoryEnumerationOptions)" Url="html/3CB6D4B6.htm" />
+            <HelpTOCNode Title="GetProperties Method (String, Nullable(Boolean))" Url="html/25ECD4B6.htm" />
+            <HelpTOCNode Title="GetProperties Method (KernelTransaction, String)" Url="html/BF586964.htm" />
+            <HelpTOCNode Title="GetProperties Method (String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/9A87D4B6.htm" />
+            <HelpTOCNode Title="GetProperties Method (KernelTransaction, String, DirectoryEnumerationOptions)" Url="html/F22D4B6.htm" />
+            <HelpTOCNode Title="GetProperties Method (KernelTransaction, String, Nullable(Boolean))" Url="html/F858D4B6.htm" />
+            <HelpTOCNode Title="GetProperties Method (KernelTransaction, String, DirectoryEnumerationOptions, Nullable(Boolean))" Url="html/6CF3D4B6.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="7e967291-7be9-42d7-8801-664f2202c95e" Title="GetStreamSize Method " Url="html/1455B38C.htm">
+            <HelpTOCNode Title="GetStreamSize Method (String)" Url="html/DCA3101.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (SafeFileHandle, StreamType)" Url="html/52283101.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (SafeFileHandle, String)" Url="html/DD8D3101.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String, StreamType)" Url="html/992F3101.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String, Nullable(Boolean))" Url="html/71E4886B.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String, String)" Url="html/71E4886C.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String)" Url="html/E8923264.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String, StreamType, Nullable(Boolean))" Url="html/71E4886A.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String, String, Nullable(Boolean))" Url="html/71E4886D.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String, StreamType)" Url="html/F4573101.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String, Nullable(Boolean))" Url="html/B213101.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String, String)" Url="html/3B5E3101.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String, StreamType, Nullable(Boolean))" Url="html/7FBC3101.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/C6C33101.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="5f9bc678-0f45-4658-83e5-ad12c08a958a" Title="HasInheritedPermissions Method " Url="html/9C1BF14.htm">
+            <HelpTOCNode Title="HasInheritedPermissions Method (String)" Url="html/EBB29773.htm" />
+            <HelpTOCNode Title="HasInheritedPermissions Method (String, Nullable(Boolean))" Url="html/CC190113.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="039312e5-2fbb-40ca-92c3-90af7eb22d27" Title="Move Method " Url="html/A6373E7B.htm">
+            <HelpTOCNode Title="Move Method (String, String)" Url="html/F1DB4485.htm" />
+            <HelpTOCNode Title="Move Method (String, String, Nullable(Boolean))" Url="html/9482B920.htm" />
+            <HelpTOCNode Title="Move Method (KernelTransaction, String, String)" Url="html/E98F26FE.htm" />
+            <HelpTOCNode Title="Move Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/D9D1A256.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="2f1e7087-6174-4964-acd1-61537b715d73" Title="Move1 Method " Url="html/EC4FCCD5.htm">
+            <HelpTOCNode Title="Move1 Method (String, String, MoveOptions)" Url="html/E4AE7644.htm" />
+            <HelpTOCNode Title="Move1 Method (String, String, MoveOptions, Nullable(Boolean))" Url="html/59497644.htm" />
+            <HelpTOCNode Title="Move1 Method (KernelTransaction, String, String, MoveOptions)" Url="html/E96026FE.htm" />
+            <HelpTOCNode Title="Move1 Method (String, String, MoveOptions, CopyMoveProgressRoutine, Object)" Url="html/70137644.htm" />
+            <HelpTOCNode Title="Move1 Method (KernelTransaction, String, String, MoveOptions, Nullable(Boolean))" Url="html/86DD7644.htm" />
+            <HelpTOCNode Title="Move1 Method (String, String, MoveOptions, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/CDE47644.htm" />
+            <HelpTOCNode Title="Move1 Method (KernelTransaction, String, String, MoveOptions, CopyMoveProgressRoutine, Object)" Url="html/9DA77644.htm" />
+            <HelpTOCNode Title="Move1 Method (KernelTransaction, String, String, MoveOptions, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/FB787644.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="d3706d4d-8350-42bd-91be-8c3bebec4d77" Title="RemoveStream Method " Url="html/B7FF6C99.htm">
+            <HelpTOCNode Title="RemoveStream Method (String)" Url="html/233B26BD.htm" />
+            <HelpTOCNode Title="RemoveStream Method (String, Nullable(Boolean))" Url="html/8093B222.htm" />
+            <HelpTOCNode Title="RemoveStream Method (String, String)" Url="html/688A0FF3.htm" />
+            <HelpTOCNode Title="RemoveStream Method (KernelTransaction, String)" Url="html/A00551AC.htm" />
+            <HelpTOCNode Title="RemoveStream Method (String, String, Nullable(Boolean))" Url="html/C5E29B58.htm" />
+            <HelpTOCNode Title="RemoveStream Method (KernelTransaction, String, Nullable(Boolean))" Url="html/B31848E.htm" />
+            <HelpTOCNode Title="RemoveStream Method (KernelTransaction, String, String)" Url="html/F327E25F.htm" />
+            <HelpTOCNode Title="RemoveStream Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/50806DC4.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="9b0ca1bb-d1a7-4669-90c8-cc7b95007588" Title="SetAccessControl Method " Url="html/437F3A34.htm">
+            <HelpTOCNode Title="SetAccessControl Method (String, DirectorySecurity)" Url="html/64856B2E.htm" />
+            <HelpTOCNode Title="SetAccessControl Method (String, DirectorySecurity, Nullable(Boolean))" Url="html/17CF0E72.htm" />
+            <HelpTOCNode Title="SetAccessControl Method (String, DirectorySecurity, AccessControlSections)" Url="html/2FD8B0A1.htm" />
+            <HelpTOCNode Title="SetAccessControl Method (String, DirectorySecurity, AccessControlSections, Nullable(Boolean))" Url="html/D280253C.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="1930ff65-88b8-4862-a63a-b28d355233dd" Title="SetCreationTime Method " Url="html/28F9D7D2.htm">
+            <HelpTOCNode Title="SetCreationTime Method (String, DateTime)" Url="html/CE157D08.htm" />
+            <HelpTOCNode Title="SetCreationTime Method (String, DateTime, Nullable(Boolean))" Url="html/CE147D08.htm" />
+            <HelpTOCNode Title="SetCreationTime Method (KernelTransaction, String, DateTime)" Url="html/8BC25163.htm" />
+            <HelpTOCNode Title="SetCreationTime Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/CE167D08.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="edf269d6-c6fc-4923-a50f-0c1a570b552e" Title="SetCreationTimeUtc Method " Url="html/825300DC.htm">
+            <HelpTOCNode Title="SetCreationTimeUtc Method (String, DateTime)" Url="html/44091B38.htm" />
+            <HelpTOCNode Title="SetCreationTimeUtc Method (String, DateTime, Nullable(Boolean))" Url="html/44091B37.htm" />
+            <HelpTOCNode Title="SetCreationTimeUtc Method (KernelTransaction, String, DateTime)" Url="html/32B77C9C.htm" />
+            <HelpTOCNode Title="SetCreationTimeUtc Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/44091B39.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="SetCurrentDirectory Method " Url="html/4544D498.htm" />
+          <HelpTOCNode Id="5c51062d-56de-4dbb-9b3e-d86d294ff810" Title="SetLastAccessTime Method " Url="html/9E611CC4.htm">
+            <HelpTOCNode Title="SetLastAccessTime Method (String, DateTime)" Url="html/83575A69.htm" />
+            <HelpTOCNode Title="SetLastAccessTime Method (String, DateTime, Nullable(Boolean))" Url="html/EBC5A69.htm" />
+            <HelpTOCNode Title="SetLastAccessTime Method (KernelTransaction, String, DateTime)" Url="html/1D7715B.htm" />
+            <HelpTOCNode Title="SetLastAccessTime Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/F7F25A69.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="08037e5a-88cb-4a4b-a6e2-6cd13244c9a4" Title="SetLastAccessTimeUtc Method " Url="html/D9A2505B.htm">
+            <HelpTOCNode Title="SetLastAccessTimeUtc Method (String, DateTime)" Url="html/C2037BE6.htm" />
+            <HelpTOCNode Title="SetLastAccessTimeUtc Method (String, DateTime, Nullable(Boolean))" Url="html/1F5C074B.htm" />
+            <HelpTOCNode Title="SetLastAccessTimeUtc Method (KernelTransaction, String, DateTime)" Url="html/E723BF4E.htm" />
+            <HelpTOCNode Title="SetLastAccessTimeUtc Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/64AAF081.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="cac0f53f-46d3-450d-9321-4a096434d868" Title="SetLastWriteTime Method " Url="html/E1B55757.htm">
+            <HelpTOCNode Title="SetLastWriteTime Method (String, DateTime)" Url="html/FE46355A.htm" />
+            <HelpTOCNode Title="SetLastWriteTime Method (String, DateTime, Nullable(Boolean))" Url="html/5B9EC0BF.htm" />
+            <HelpTOCNode Title="SetLastWriteTime Method (KernelTransaction, String, DateTime)" Url="html/EDBF0B63.htm" />
+            <HelpTOCNode Title="SetLastWriteTime Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/164FD789.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="789a747c-200d-4347-95c1-df76f9f738f7" Title="SetLastWriteTimeUtc Method " Url="html/1E483D0B.htm">
+            <HelpTOCNode Title="SetLastWriteTimeUtc Method (String, DateTime)" Url="html/5BBE37B8.htm" />
+            <HelpTOCNode Title="SetLastWriteTimeUtc Method (String, DateTime, Nullable(Boolean))" Url="html/5BBD37B8.htm" />
+            <HelpTOCNode Title="SetLastWriteTimeUtc Method (KernelTransaction, String, DateTime)" Url="html/B886F7D0.htm" />
+            <HelpTOCNode Title="SetLastWriteTimeUtc Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/5BBF37B8.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="0aa34e8c-b046-4b0b-9a25-c92c4b00dbc6" Title="SetTimestamps Method " Url="html/6A53BFA1.htm">
+            <HelpTOCNode Title="SetTimestamps Method (String, DateTime, DateTime, DateTime)" Url="html/B448F193.htm" />
+            <HelpTOCNode Title="SetTimestamps Method (String, DateTime, DateTime, DateTime, Nullable(Boolean))" Url="html/28E3F193.htm" />
+            <HelpTOCNode Title="SetTimestamps Method (KernelTransaction, String, DateTime, DateTime, DateTime)" Url="html/EA6E9048.htm" />
+            <HelpTOCNode Title="SetTimestamps Method (KernelTransaction, String, DateTime, DateTime, DateTime, Nullable(Boolean))" Url="html/1219F193.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="cc56249c-789b-4a09-bb06-f1af9fcfb0b5" Title="SetTimestampsUtc Method " Url="html/1BDAD859.htm">
+            <HelpTOCNode Title="SetTimestampsUtc Method (String, DateTime, DateTime, DateTime)" Url="html/78046DF.htm" />
+            <HelpTOCNode Title="SetTimestampsUtc Method (String, DateTime, DateTime, DateTime, Nullable(Boolean))" Url="html/64D8D244.htm" />
+            <HelpTOCNode Title="SetTimestampsUtc Method (KernelTransaction, String, DateTime, DateTime, DateTime)" Url="html/89CD3A4C.htm" />
+            <HelpTOCNode Title="SetTimestampsUtc Method (KernelTransaction, String, DateTime, DateTime, DateTime, Nullable(Boolean))" Url="html/AA27BB7A.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="edc7add5-ad38-41ee-a1b7-af7913483461" Title="TransferTimestamps Method " Url="html/326FB7CE.htm">
+            <HelpTOCNode Title="TransferTimestamps Method (String, String)" Url="html/17744E1F.htm" />
+            <HelpTOCNode Title="TransferTimestamps Method (String, String, Nullable(Boolean))" Url="html/17744E1E.htm" />
+            <HelpTOCNode Title="TransferTimestamps Method (KernelTransaction, String, String)" Url="html/8D32FDE2.htm" />
+            <HelpTOCNode Title="TransferTimestamps Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/17744E20.htm" />
+          </HelpTOCNode>
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="DirectoryEnumerationOptions Enumeration" Url="html/6354F8EE.htm" />
+      <HelpTOCNode Id="9cc009a2-bc9d-4c19-9b60-8e4082c5d145" Title="DirectoryInfo Class" Url="html/76696A28.htm">
+        <HelpTOCNode Id="dcaa4ddc-4fea-433e-aa5f-7d32cb1200df" Title="DirectoryInfo Constructor " Url="html/F6B5F72B.htm">
+          <HelpTOCNode Title="DirectoryInfo Constructor (String)" Url="html/6A3CB35E.htm" />
+          <HelpTOCNode Title="DirectoryInfo Constructor (String, Nullable(Boolean))" Url="html/DED7B35E.htm" />
+          <HelpTOCNode Title="DirectoryInfo Constructor (KernelTransaction, String)" Url="html/537D239F.htm" />
+          <HelpTOCNode Title="DirectoryInfo Constructor (KernelTransaction, String, Nullable(Boolean))" Url="html/C80DB35E.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="DirectoryInfo Fields" Url="html/FCB258.htm" />
+        <HelpTOCNode Id="d09f8c84-fafe-49d2-a090-f2efa6ce736e" Title="DirectoryInfo Methods" Url="html/E2573C6D.htm">
+          <HelpTOCNode Title="AddStream Method " Url="html/EE6EDB3D.htm" />
+          <HelpTOCNode Id="29b90ff1-7144-4409-aeec-dc7436b4bd57" Title="Compress Method " Url="html/10A05F5F.htm">
+            <HelpTOCNode Title="Compress Method " Url="html/D354C244.htm" />
+            <HelpTOCNode Title="Compress Method (DirectoryEnumerationOptions)" Url="html/4790EF1C.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="89d8211e-c6f3-4efb-9c27-65f0791221ea" Title="CopyTo1 Method " Url="html/D8CE275C.htm">
+            <HelpTOCNode Title="CopyTo1 Method (String)" Url="html/5BA15B24.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions)" Url="html/EE0F4F4F.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, Nullable(Boolean))" Url="html/EE134F4F.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyMoveProgressRoutine, Object)" Url="html/EE0D4F4F.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions, Nullable(Boolean))" Url="html/EE144F4F.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/EE104F4F.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions, CopyMoveProgressRoutine, Object)" Url="html/EE124F4F.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/EE114F4F.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="ada79a35-2451-4a58-9bd4-7d6801116db9" Title="CountFileSystemObjects Method " Url="html/F2DE866A.htm">
+            <HelpTOCNode Title="CountFileSystemObjects Method (DirectoryEnumerationOptions)" Url="html/9D7BDC18.htm" />
+            <HelpTOCNode Title="CountFileSystemObjects Method (String, DirectoryEnumerationOptions)" Url="html/99B3B39B.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="765120cc-f4f2-409d-b8b1-74fe8600c47c" Title="Create Method " Url="html/385BC09A.htm">
+            <HelpTOCNode Title="Create Method " Url="html/F34109A7.htm" />
+            <HelpTOCNode Title="Create Method (Boolean)" Url="html/36B1008C.htm" />
+            <HelpTOCNode Title="Create Method (DirectorySecurity)" Url="html/36B1008D.htm" />
+            <HelpTOCNode Title="Create Method (DirectorySecurity, Boolean)" Url="html/36B1008E.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="d9425da0-043d-4fe2-9314-9944489c883d" Title="CreateSubdirectory Method " Url="html/6869CC8B.htm">
+            <HelpTOCNode Title="CreateSubdirectory Method (String)" Url="html/B8B2FE38.htm" />
+            <HelpTOCNode Title="CreateSubdirectory Method (String, Boolean)" Url="html/484D1744.htm" />
+            <HelpTOCNode Title="CreateSubdirectory Method (String, DirectorySecurity)" Url="html/484D1745.htm" />
+            <HelpTOCNode Title="CreateSubdirectory Method (String, DirectorySecurity, Boolean)" Url="html/484D1746.htm" />
+            <HelpTOCNode Title="CreateSubdirectory Method (String, String, Boolean)" Url="html/484D173F.htm" />
+            <HelpTOCNode Title="CreateSubdirectory Method (String, String, DirectorySecurity, Boolean)" Url="html/484D1740.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="70a2733f-ed84-452e-9dad-274f1df48d7b" Title="Decompress Method " Url="html/8AF8161B.htm">
+            <HelpTOCNode Title="Decompress Method " Url="html/7B958FE0.htm" />
+            <HelpTOCNode Title="Decompress Method (DirectoryEnumerationOptions)" Url="html/C9A5197.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="0b46bfbd-5611-49e5-b022-8e35a6fa53b7" Title="Decrypt Method " Url="html/AB2631CC.htm">
+            <HelpTOCNode Title="Decrypt Method " Url="html/2AEE5704.htm" />
+            <HelpTOCNode Title="Decrypt Method (Boolean)" Url="html/C7FA4BF9.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="ff37b7a4-c0df-48b0-8def-3fb7d65ab455" Title="Delete Method " Url="html/9B2890CA.htm">
+            <HelpTOCNode Title="Delete Method " Url="html/44FC546C.htm" />
+            <HelpTOCNode Title="Delete Method (Boolean)" Url="html/55924BB1.htm" />
+            <HelpTOCNode Title="Delete Method (Boolean, Boolean)" Url="html/55924BB2.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="317eec7c-8f4f-4114-ab67-7b22b4f6aa41" Title="DeleteEmpty Method " Url="html/AF3E9F3F.htm">
+            <HelpTOCNode Title="DeleteEmpty Method " Url="html/9E72F9FE.htm" />
+            <HelpTOCNode Title="DeleteEmpty Method (Boolean)" Url="html/E15FE5FB.htm" />
+            <HelpTOCNode Title="DeleteEmpty Method (Boolean, Boolean)" Url="html/E160E5FB.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="DisableCompression Method " Url="html/3BF630A1.htm" />
+          <HelpTOCNode Title="DisableEncryption Method " Url="html/44D86D16.htm" />
+          <HelpTOCNode Title="EnableCompression Method " Url="html/3894B123.htm" />
+          <HelpTOCNode Title="EnableEncryption Method " Url="html/D0F5C9DC.htm" />
+          <HelpTOCNode Id="7860795b-d4e0-4f3a-b69b-a8e882ee3408" Title="Encrypt Method " Url="html/AB8B31AB.htm">
+            <HelpTOCNode Title="Encrypt Method " Url="html/FDFE55DD.htm" />
+            <HelpTOCNode Title="Encrypt Method (Boolean)" Url="html/7F2C4AD2.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="a8314501-b59e-4786-a7ca-57b204673bb6" Title="EnumerateDirectories Method " Url="html/1C187A38.htm">
+            <HelpTOCNode Title="EnumerateDirectories Method " Url="html/CA3103B8.htm" />
+            <HelpTOCNode Title="EnumerateDirectories Method (String)" Url="html/4966282.htm" />
+            <HelpTOCNode Title="EnumerateDirectories Method (String, SearchOption)" Url="html/1CA004B1.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="d7d7104e-7c46-4073-9d2a-9c4e261a8fb9" Title="EnumerateFiles Method " Url="html/35007799.htm">
+            <HelpTOCNode Title="EnumerateFiles Method " Url="html/803CC171.htm" />
+            <HelpTOCNode Title="EnumerateFiles Method (String)" Url="html/57BAF306.htm" />
+            <HelpTOCNode Title="EnumerateFiles Method (String, SearchOption)" Url="html/57BAF307.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="9793cc45-567d-4722-a92b-4db29297451d" Title="EnumerateFileSystemInfos Method " Url="html/2B393595.htm">
+            <HelpTOCNode Title="EnumerateFileSystemInfos Method " Url="html/4CFC6A9B.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemInfos Method (String)" Url="html/E15AE0B4.htm" />
+            <HelpTOCNode Title="EnumerateFileSystemInfos Method (String, SearchOption)" Url="html/C9513E85.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="ac72f861-6db6-4f0e-98bb-b58b7e3d87ff" Title="EnumerateStreams Method " Url="html/E2E787D1.htm">
+            <HelpTOCNode Title="EnumerateStreams Method " Url="html/4E8703F1.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (StreamType)" Url="html/F905F3FE.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="7090d92f-7fec-4b0e-b60e-46551001b197" Title="GetAccessControl Method " Url="html/930DDAA5.htm">
+            <HelpTOCNode Title="GetAccessControl Method " Url="html/5FF2EB2A.htm" />
+            <HelpTOCNode Title="GetAccessControl Method (AccessControlSections)" Url="html/6A40702A.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="9e932447-37b9-4f14-9356-73d5ab88f8a4" Title="GetDirectories Method " Url="html/3F462201.htm">
+            <HelpTOCNode Title="GetDirectories Method " Url="html/8018997F.htm" />
+            <HelpTOCNode Title="GetDirectories Method (String)" Url="html/EA0C5971.htm" />
+            <HelpTOCNode Title="GetDirectories Method (String, SearchOption)" Url="html/EA0C5974.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="19206002-dd6f-4f43-a17c-7ffe899ed4b0" Title="GetFiles Method " Url="html/9309A623.htm">
+            <HelpTOCNode Title="GetFiles Method " Url="html/E49F2E3D.htm" />
+            <HelpTOCNode Title="GetFiles Method (String)" Url="html/6651517F.htm" />
+            <HelpTOCNode Title="GetFiles Method (String, SearchOption)" Url="html/4E47AF50.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="1585df93-5fbf-48f0-b488-dd9afead665e" Title="GetFileSystemInfos Method " Url="html/4931788E.htm">
+            <HelpTOCNode Title="GetFileSystemInfos Method " Url="html/16326DCC.htm" />
+            <HelpTOCNode Title="GetFileSystemInfos Method (String)" Url="html/96C65232.htm" />
+            <HelpTOCNode Title="GetFileSystemInfos Method (String, SearchOption)" Url="html/96C6522F.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="12ebdce0-88f0-4145-8382-25616393616f" Title="GetStreamSize Method " Url="html/1383B168.htm">
+            <HelpTOCNode Title="GetStreamSize Method " Url="html/31B8386D.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String)" Url="html/B895FD4F.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (StreamType)" Url="html/1666FD4F.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="MoveTo Method " Url="html/41EA5B40.htm" />
+          <HelpTOCNode Id="bf668d2d-6401-42cf-97be-421cc74dbdbc" Title="MoveTo1 Method " Url="html/404C8C50.htm">
+            <HelpTOCNode Title="MoveTo1 Method (String, MoveOptions)" Url="html/6CD55B40.htm" />
+            <HelpTOCNode Title="MoveTo1 Method (String, MoveOptions, Nullable(Boolean))" Url="html/271F52F3.htm" />
+            <HelpTOCNode Title="MoveTo1 Method (String, MoveOptions, CopyMoveProgressRoutine, Object)" Url="html/272152F3.htm" />
+            <HelpTOCNode Title="MoveTo1 Method (String, MoveOptions, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/272052F3.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="Refresh Method " Url="html/3C09E269.htm" />
+          <HelpTOCNode Title="RefreshEntryInfo Method " Url="html/9DF7966.htm" />
+          <HelpTOCNode Id="9ab04e33-bf7b-4a7b-9be4-a4fed2f23e44" Title="RemoveStream Method " Url="html/7396CE7C.htm">
+            <HelpTOCNode Title="RemoveStream Method " Url="html/32E1E73D.htm" />
+            <HelpTOCNode Title="RemoveStream Method (String)" Url="html/7E5481F3.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="72e848d2-956f-4ab8-b826-1a4d34524031" Title="SetAccessControl Method " Url="html/930F4EC9.htm">
+            <HelpTOCNode Title="SetAccessControl Method (DirectorySecurity)" Url="html/3CFEF055.htm" />
+            <HelpTOCNode Title="SetAccessControl Method (DirectorySecurity, AccessControlSections)" Url="html/47347555.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="ToString Method " Url="html/1BD239E0.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="1073379c-9538-4811-a03d-1eb5481b7318" Title="DirectoryInfo Properties" Url="html/B233292E.htm">
+          <HelpTOCNode Title="Exists Property " Url="html/F7E41942.htm" />
+          <HelpTOCNode Title="Name Property " Url="html/4F90BE38.htm" />
+          <HelpTOCNode Title="Parent Property " Url="html/CB44E886.htm" />
+          <HelpTOCNode Title="Root Property " Url="html/2087D511.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="7562d3cb-f5cf-4d6b-83b7-594b091d097a" Title="DiskSpaceInfo Class" Url="html/5A35921F.htm">
+        <HelpTOCNode Id="94fcd59c-04b2-4cc9-b273-9d256df1ca38" Title="DiskSpaceInfo Constructor " Url="html/B6FFBAC0.htm">
+          <HelpTOCNode Title="DiskSpaceInfo Constructor (String)" Url="html/9C74E334.htm" />
+          <HelpTOCNode Title="DiskSpaceInfo Constructor (String, Nullable(Boolean), Boolean, Boolean)" Url="html/DB984DE3.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="042e0311-0540-4c23-a1c0-141bddbc1fc8" Title="DiskSpaceInfo Methods" Url="html/A4FC6732.htm">
+          <HelpTOCNode Title="Refresh Method " Url="html/A25079E2.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/1FB4DED5.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="f1bc690c-1576-47ff-b223-b646f330d090" Title="DiskSpaceInfo Properties" Url="html/C720ACA5.htm">
+          <HelpTOCNode Title="AvailableFreeSpacePercent Property " Url="html/E2921C00.htm" />
+          <HelpTOCNode Title="AvailableFreeSpaceUnitSize Property " Url="html/30029757.htm" />
+          <HelpTOCNode Title="BytesPerSector Property " Url="html/CE45F63D.htm" />
+          <HelpTOCNode Title="ClusterSize Property " Url="html/81EB2D39.htm" />
+          <HelpTOCNode Title="DriveName Property " Url="html/D0C75F30.htm" />
+          <HelpTOCNode Title="FreeBytesAvailable Property " Url="html/38684E19.htm" />
+          <HelpTOCNode Title="NumberOfFreeClusters Property " Url="html/102028FD.htm" />
+          <HelpTOCNode Title="SectorsPerCluster Property " Url="html/D52F308A.htm" />
+          <HelpTOCNode Title="TotalNumberOfBytes Property " Url="html/7AB61826.htm" />
+          <HelpTOCNode Title="TotalNumberOfClusters Property " Url="html/CE48F9AE.htm" />
+          <HelpTOCNode Title="TotalNumberOfFreeBytes Property " Url="html/4AEEC1B4.htm" />
+          <HelpTOCNode Title="TotalSizeUnitSize Property " Url="html/FF8B518B.htm" />
+          <HelpTOCNode Title="UsedSpacePercent Property " Url="html/79FB0793.htm" />
+          <HelpTOCNode Title="UsedSpaceUnitSize Property " Url="html/82813E7.htm" />
+          <HelpTOCNode Title="UsePercentSuffix Property " Url="html/F731E432.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="DosDeviceAttributes Enumeration" Url="html/1F762F73.htm" />
+      <HelpTOCNode Id="d605fbd7-0ab4-4843-a242-12238be70568" Title="DriveInfo Class" Url="html/4A65619F.htm">
+        <HelpTOCNode Title="DriveInfo Constructor " Url="html/E9D9D618.htm" />
+        <HelpTOCNode Id="a3a4828f-524b-455a-9285-60c3644877d0" Title="DriveInfo Methods" Url="html/A8661AD4.htm">
+          <HelpTOCNode Title="EnumerateDrives Method " Url="html/32BB2893.htm" />
+          <HelpTOCNode Title="GetDrives Method " Url="html/89AE618D.htm" />
+          <HelpTOCNode Id="439a6d43-edee-4486-ba13-c09a014bcb3b" Title="GetFreeDriveLetter Method " Url="html/E95F5757.htm">
+            <HelpTOCNode Title="GetFreeDriveLetter Method " Url="html/F789E28C.htm" />
+            <HelpTOCNode Title="GetFreeDriveLetter Method (Boolean)" Url="html/E44B8A27.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="ToString Method " Url="html/E9429452.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="81c075b1-9bb9-49d7-8871-ffb6522c58bb" Title="DriveInfo Properties" Url="html/441189B2.htm">
+          <HelpTOCNode Title="AvailableFreeSpace Property " Url="html/F8DDDD64.htm" />
+          <HelpTOCNode Title="DiskSpaceInfo Property " Url="html/16E3C0E1.htm" />
+          <HelpTOCNode Title="DosDeviceName Property " Url="html/9889C11B.htm" />
+          <HelpTOCNode Title="DriveFormat Property " Url="html/25CFA282.htm" />
+          <HelpTOCNode Title="DriveType Property " Url="html/63633EF6.htm" />
+          <HelpTOCNode Title="IsDosDeviceSubstitute Property " Url="html/C5A08CF0.htm" />
+          <HelpTOCNode Title="IsReady Property " Url="html/C373EB8E.htm" />
+          <HelpTOCNode Title="IsUnc Property " Url="html/C8EBDDE.htm" />
+          <HelpTOCNode Title="IsVolume Property " Url="html/3AFF79D4.htm" />
+          <HelpTOCNode Title="Name Property " Url="html/8E4EF0C9.htm" />
+          <HelpTOCNode Title="RootDirectory Property " Url="html/3F7B793C.htm" />
+          <HelpTOCNode Title="TotalFreeSpace Property " Url="html/11B5767A.htm" />
+          <HelpTOCNode Title="TotalSize Property " Url="html/47B55B6D.htm" />
+          <HelpTOCNode Title="VolumeInfo Property " Url="html/1B2044A5.htm" />
+          <HelpTOCNode Title="VolumeLabel Property " Url="html/2784B68E.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="ExtendedFileAttributes Enumeration" Url="html/518E8419.htm" />
+      <HelpTOCNode Id="29274b72-bb78-4860-9db7-70240946dd8b" Title="File Class" Url="html/F5429666.htm">
+        <HelpTOCNode Id="f94417ca-4738-4efd-b112-e220289a9912" Title="File Methods" Url="html/CDE9A6AE.htm">
+          <HelpTOCNode Id="fa426413-8772-4ee6-a9b6-af276ffc58aa" Title="AddStream Method " Url="html/AEA164DB.htm">
+            <HelpTOCNode Title="AddStream Method (String, String, String[])" Url="html/128913CC.htm" />
+            <HelpTOCNode Title="AddStream Method (String, String, String[], Nullable(Boolean))" Url="html/B5308867.htm" />
+            <HelpTOCNode Title="AddStream Method (KernelTransaction, String, String, String[])" Url="html/F1ABEF07.htm" />
+            <HelpTOCNode Title="AddStream Method (KernelTransaction, String, String, String[], Nullable(Boolean))" Url="html/6FE19F31.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="98530968-0a02-49e2-a956-cf200a068185" Title="AppendAllLines Method " Url="html/63E18345.htm">
+            <HelpTOCNode Title="AppendAllLines Method (String, IEnumerable(String))" Url="html/412EB826.htm" />
+            <HelpTOCNode Title="AppendAllLines Method (String, IEnumerable(String), Nullable(Boolean))" Url="html/CC93B826.htm" />
+            <HelpTOCNode Title="AppendAllLines Method (String, IEnumerable(String), Encoding)" Url="html/57F8B826.htm" />
+            <HelpTOCNode Title="AppendAllLines Method (KernelTransaction, String, IEnumerable(String))" Url="html/9E645046.htm" />
+            <HelpTOCNode Title="AppendAllLines Method (String, IEnumerable(String), Encoding, Nullable(Boolean))" Url="html/E35DB826.htm" />
+            <HelpTOCNode Title="AppendAllLines Method (KernelTransaction, String, IEnumerable(String), Nullable(Boolean))" Url="html/FA27B826.htm" />
+            <HelpTOCNode Title="AppendAllLines Method (KernelTransaction, String, IEnumerable(String), Encoding)" Url="html/858CB826.htm" />
+            <HelpTOCNode Title="AppendAllLines Method (KernelTransaction, String, IEnumerable(String), Encoding, Nullable(Boolean))" Url="html/10F1B826.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="b23218f0-0b7e-465e-9188-f7c57101c08e" Title="AppendAllText Method " Url="html/61DCB750.htm">
+            <HelpTOCNode Title="AppendAllText Method (String, String)" Url="html/8E5A902E.htm" />
+            <HelpTOCNode Title="AppendAllText Method (String, String, Nullable(Boolean))" Url="html/EBB31B93.htm" />
+            <HelpTOCNode Title="AppendAllText Method (String, String, Encoding)" Url="html/D3A97964.htm" />
+            <HelpTOCNode Title="AppendAllText Method (KernelTransaction, String, String)" Url="html/15AF7DC9.htm" />
+            <HelpTOCNode Title="AppendAllText Method (String, String, Encoding, Nullable(Boolean))" Url="html/310204C9.htm" />
+            <HelpTOCNode Title="AppendAllText Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/61154927.htm" />
+            <HelpTOCNode Title="AppendAllText Method (KernelTransaction, String, String, Encoding)" Url="html/490BA6F8.htm" />
+            <HelpTOCNode Title="AppendAllText Method (KernelTransaction, String, String, Encoding, Nullable(Boolean))" Url="html/A664325D.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="e886dc60-47f8-4f02-9e39-2b2ef60a7856" Title="AppendText Method " Url="html/2579C192.htm">
+            <HelpTOCNode Title="AppendText Method (String)" Url="html/9DCE82A1.htm" />
+            <HelpTOCNode Title="AppendText Method (String, Nullable(Boolean))" Url="html/293382A1.htm" />
+            <HelpTOCNode Title="AppendText Method (String, Encoding)" Url="html/870482A1.htm" />
+            <HelpTOCNode Title="AppendText Method (KernelTransaction, String)" Url="html/E80480AC.htm" />
+            <HelpTOCNode Title="AppendText Method (String, Encoding, Nullable(Boolean))" Url="html/126982A1.htm" />
+            <HelpTOCNode Title="AppendText Method (KernelTransaction, String, Nullable(Boolean))" Url="html/FB9F82A1.htm" />
+            <HelpTOCNode Title="AppendText Method (KernelTransaction, String, Encoding)" Url="html/597082A1.htm" />
+            <HelpTOCNode Title="AppendText Method (KernelTransaction, String, Encoding, Nullable(Boolean))" Url="html/E4D582A1.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="6c409c18-81d9-4ec9-88f2-5ae53aa86509" Title="Compress Method " Url="html/39C5A76C.htm">
+            <HelpTOCNode Title="Compress Method (String)" Url="html/87D5D0A.htm" />
+            <HelpTOCNode Title="Compress Method (String, Nullable(Boolean))" Url="html/87E5D0A.htm" />
+            <HelpTOCNode Title="Compress Method (KernelTransaction, String)" Url="html/BD7D2049.htm" />
+            <HelpTOCNode Title="Compress Method (KernelTransaction, String, Nullable(Boolean))" Url="html/8805D0A.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="d371b76f-2c42-4f70-a0f3-0dd766e81eeb" Title="Copy Method " Url="html/5DBFEE1E.htm">
+            <HelpTOCNode Title="Copy Method (String, String)" Url="html/7716F159.htm" />
+            <HelpTOCNode Title="Copy Method (String, String, Boolean)" Url="html/7711F159.htm" />
+            <HelpTOCNode Title="Copy Method (KernelTransaction, String, String)" Url="html/AB67547A.htm" />
+            <HelpTOCNode Title="Copy Method (String, String, Boolean, Nullable(Boolean))" Url="html/7710F159.htm" />
+            <HelpTOCNode Title="Copy Method (KernelTransaction, String, String, Boolean)" Url="html/7714F159.htm" />
+            <HelpTOCNode Title="Copy Method (KernelTransaction, String, String, Boolean, Nullable(Boolean))" Url="html/7717F159.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="990714e7-9ce7-43a5-808d-0b05b5678532" Title="Copy1 Method " Url="html/1C0AEE1E.htm">
+            <HelpTOCNode Title="Copy1 Method (String, String, CopyOptions)" Url="html/83D561D7.htm" />
+            <HelpTOCNode Title="Copy1 Method (String, String, CopyOptions, Boolean)" Url="html/9BDF0406.htm" />
+            <HelpTOCNode Title="Copy1 Method (KernelTransaction, String, String, CopyOptions)" Url="html/7745F13F.htm" />
+            <HelpTOCNode Title="Copy1 Method (String, String, CopyOptions, Boolean, Nullable(Boolean))" Url="html/23AED91B.htm" />
+            <HelpTOCNode Title="Copy1 Method (KernelTransaction, String, String, CopyOptions, Boolean)" Url="html/E733443.htm" />
+            <HelpTOCNode Title="Copy1 Method (String, String, CopyOptions, Boolean, CopyMoveProgressRoutine, Object)" Url="html/3E8678A1.htm" />
+            <HelpTOCNode Title="Copy1 Method (KernelTransaction, String, String, CopyOptions, Boolean, Nullable(Boolean))" Url="html/E12DED3C.htm" />
+            <HelpTOCNode Title="Copy1 Method (String, String, CopyOptions, Boolean, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/81076480.htm" />
+            <HelpTOCNode Title="Copy1 Method (KernelTransaction, String, String, CopyOptions, Boolean, CopyMoveProgressRoutine, Object)" Url="html/267CD672.htm" />
+            <HelpTOCNode Title="Copy1 Method (KernelTransaction, String, String, CopyOptions, Boolean, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/C9244B0D.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="f20122fb-2534-48b1-8ff4-b650b7f551da" Title="Create Method " Url="html/24F5DDEA.htm">
+            <HelpTOCNode Title="Create Method (String)" Url="html/BE7BFA5B.htm" />
+            <HelpTOCNode Title="Create Method (String, Int32)" Url="html/49E0FA5B.htm" />
+            <HelpTOCNode Title="Create Method (String, Nullable(Boolean))" Url="html/C3AB37FB.htm" />
+            <HelpTOCNode Title="Create Method (KernelTransaction, String)" Url="html/1FB705A3.htm" />
+            <HelpTOCNode Title="Create Method (String, Int32, FileOptions)" Url="html/C3AB37F8.htm" />
+            <HelpTOCNode Title="Create Method (String, Int32, Nullable(Boolean))" Url="html/C3AB37FC.htm" />
+            <HelpTOCNode Title="Create Method (KernelTransaction, String, Int32)" Url="html/EEB8FA5B.htm" />
+            <HelpTOCNode Title="Create Method (KernelTransaction, String, Nullable(Boolean))" Url="html/3316FA5B.htm" />
+            <HelpTOCNode Title="Create Method (String, Int32, FileOptions, Nullable(Boolean))" Url="html/C3AB37F7.htm" />
+            <HelpTOCNode Title="Create Method (String, Int32, FileOptions, FileSecurity)" Url="html/C3AB37F6.htm" />
+            <HelpTOCNode Title="Create Method (KernelTransaction, String, Int32, FileOptions)" Url="html/7A1DFA5B.htm" />
+            <HelpTOCNode Title="Create Method (KernelTransaction, String, Int32, Nullable(Boolean))" Url="html/A7B1FA5B.htm" />
+            <HelpTOCNode Title="Create Method (String, Int32, FileOptions, FileSecurity, Nullable(Boolean))" Url="html/C3AB37F5.htm" />
+            <HelpTOCNode Title="Create Method (KernelTransaction, String, Int32, FileOptions, Nullable(Boolean))" Url="html/582FA5B.htm" />
+            <HelpTOCNode Title="Create Method (KernelTransaction, String, Int32, FileOptions, FileSecurity)" Url="html/90E7FA5B.htm" />
+            <HelpTOCNode Title="Create Method (KernelTransaction, String, Int32, FileOptions, FileSecurity, Nullable(Boolean))" Url="html/1C4CFA5B.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="aeb98b02-1ba8-4e80-9f72-86be1864b109" Title="CreateHardlink Method " Url="html/F83048C3.htm">
+            <HelpTOCNode Title="CreateHardlink Method (String, String)" Url="html/234A5BD1.htm" />
+            <HelpTOCNode Title="CreateHardlink Method (String, String, Nullable(Boolean))" Url="html/97E55BD1.htm" />
+            <HelpTOCNode Title="CreateHardlink Method (KernelTransaction, String, String)" Url="html/5FD103B5.htm" />
+            <HelpTOCNode Title="CreateHardlink Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/811B5BD1.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="7875b440-8286-45ed-8594-95a2cf264e0c" Title="CreateSymbolicLink Method " Url="html/336F0B.htm">
+            <HelpTOCNode Title="CreateSymbolicLink Method (String, String, SymbolicLinkTarget)" Url="html/FCFEEE02.htm" />
+            <HelpTOCNode Title="CreateSymbolicLink Method (String, String, SymbolicLinkTarget, Nullable(Boolean))" Url="html/8863EE02.htm" />
+            <HelpTOCNode Title="CreateSymbolicLink Method (KernelTransaction, String, String, SymbolicLinkTarget)" Url="html/C87CAC06.htm" />
+            <HelpTOCNode Title="CreateSymbolicLink Method (KernelTransaction, String, String, SymbolicLinkTarget, Nullable(Boolean))" Url="html/7199EE02.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="b6d7b26c-7737-414c-bcb1-0a79dbd5fb40" Title="CreateText Method " Url="html/9F689F31.htm">
+            <HelpTOCNode Title="CreateText Method (String)" Url="html/584DBA10.htm" />
+            <HelpTOCNode Title="CreateText Method (String, Nullable(Boolean))" Url="html/CCE8BA10.htm" />
+            <HelpTOCNode Title="CreateText Method (KernelTransaction, String)" Url="html/F3B7686D.htm" />
+            <HelpTOCNode Title="CreateText Method (String, Encoding, Nullable(Boolean))" Url="html/4183BA10.htm" />
+            <HelpTOCNode Title="CreateText Method (KernelTransaction, String, Encoding, Nullable(Boolean))" Url="html/E3B2BA10.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="37bc974f-9a62-4cc2-95bb-1172f7018344" Title="Decompress Method " Url="html/90139328.htm">
+            <HelpTOCNode Title="Decompress Method (String)" Url="html/D0B4446.htm" />
+            <HelpTOCNode Title="Decompress Method (String, Nullable(Boolean))" Url="html/81A64446.htm" />
+            <HelpTOCNode Title="Decompress Method (KernelTransaction, String)" Url="html/791231DB.htm" />
+            <HelpTOCNode Title="Decompress Method (KernelTransaction, String, Nullable(Boolean))" Url="html/6ADC4446.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="dd9be39b-f5f0-4619-81b2-3fe2e017d8ac" Title="Decrypt Method " Url="html/E58B8331.htm">
+            <HelpTOCNode Title="Decrypt Method (String)" Url="html/94D9DA34.htm" />
+            <HelpTOCNode Title="Decrypt Method (String, Nullable(Boolean))" Url="html/CAE4EBD3.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="06ca8ddc-5d37-40e5-b7c9-fb1916bdf249" Title="Delete Method " Url="html/EBAA0957.htm">
+            <HelpTOCNode Title="Delete Method (String)" Url="html/B40C218B.htm" />
+            <HelpTOCNode Title="Delete Method (String, Boolean)" Url="html/E449218B.htm" />
+            <HelpTOCNode Title="Delete Method (KernelTransaction, String)" Url="html/817DD3F9.htm" />
+            <HelpTOCNode Title="Delete Method (String, Boolean, Nullable(Boolean))" Url="html/6FAE218B.htm" />
+            <HelpTOCNode Title="Delete Method (KernelTransaction, String, Boolean)" Url="html/9D42218B.htm" />
+            <HelpTOCNode Title="Delete Method (KernelTransaction, String, Boolean, Nullable(Boolean))" Url="html/28A7218B.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="f2cd2b0c-8610-44b6-bebf-d7a999bf662f" Title="Encrypt Method " Url="html/ED8684FA.htm">
+            <HelpTOCNode Title="Encrypt Method (String)" Url="html/9684DA55.htm" />
+            <HelpTOCNode Title="Encrypt Method (String, Nullable(Boolean))" Url="html/1EFF012.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="f5e99e7f-e7c5-47ff-8c2f-2b01154c6252" Title="EnumerateHardlinks Method " Url="html/E4731E1D.htm">
+            <HelpTOCNode Title="EnumerateHardlinks Method (String)" Url="html/BCFFDDB9.htm" />
+            <HelpTOCNode Title="EnumerateHardlinks Method (String, Nullable(Boolean))" Url="html/4864DDB9.htm" />
+            <HelpTOCNode Title="EnumerateHardlinks Method (KernelTransaction, String)" Url="html/948AEE63.htm" />
+            <HelpTOCNode Title="EnumerateHardlinks Method (KernelTransaction, String, Nullable(Boolean))" Url="html/319ADDB9.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="d9644a45-cbff-4d36-9646-e8ba6ca17a53" Title="EnumerateStreams Method " Url="html/F030D5A9.htm">
+            <HelpTOCNode Title="EnumerateStreams Method (SafeFileHandle)" Url="html/7C58FB0D.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (String)" Url="html/7C57FB0D.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (String, StreamType)" Url="html/7C56FB0D.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (String, Nullable(Boolean))" Url="html/7C5CFB0D.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (KernelTransaction, String)" Url="html/C415482E.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (String, StreamType, Nullable(Boolean))" Url="html/7C55FB0D.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (KernelTransaction, String, StreamType)" Url="html/7C53FB0D.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (KernelTransaction, String, Nullable(Boolean))" Url="html/7C51FB0D.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (KernelTransaction, String, StreamType, Nullable(Boolean))" Url="html/7C52FB0D.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="09b413b3-df1a-4b7e-8159-b58cc0fd1973" Title="Exists Method " Url="html/536112C.htm">
+            <HelpTOCNode Title="Exists Method (String)" Url="html/2CABAE91.htm" />
+            <HelpTOCNode Title="Exists Method (String, Nullable(Boolean))" Url="html/B810AE91.htm" />
+            <HelpTOCNode Title="Exists Method (KernelTransaction, String)" Url="html/20B78D11.htm" />
+            <HelpTOCNode Title="Exists Method (KernelTransaction, String, Nullable(Boolean))" Url="html/CEDAAE91.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="c350360b-68a4-4a6a-96dc-7713faa302a0" Title="GetAccessControl Method " Url="html/405F35B1.htm">
+            <HelpTOCNode Title="GetAccessControl Method (String)" Url="html/5CB6FD44.htm" />
+            <HelpTOCNode Title="GetAccessControl Method (String, Nullable(Boolean))" Url="html/4A1F4400.htm" />
+            <HelpTOCNode Title="GetAccessControl Method (String, AccessControlSections)" Url="html/4A224400.htm" />
+            <HelpTOCNode Title="GetAccessControl Method (String, AccessControlSections, Nullable(Boolean))" Url="html/4A214400.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="1ab62827-b416-45fb-b2c4-ce951be31909" Title="GetAttributes Method " Url="html/86277A44.htm">
+            <HelpTOCNode Title="GetAttributes Method (String)" Url="html/F721A290.htm" />
+            <HelpTOCNode Title="GetAttributes Method (String, Nullable(Boolean))" Url="html/99C9172B.htm" />
+            <HelpTOCNode Title="GetAttributes Method (KernelTransaction, String)" Url="html/1EC9D7E7.htm" />
+            <HelpTOCNode Title="GetAttributes Method (KernelTransaction, String, Nullable(Boolean))" Url="html/DF180061.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="34bf2944-3054-4665-82d2-04c8ac6eb0b8" Title="GetChangeTime Method " Url="html/32F1C112.htm">
+            <HelpTOCNode Title="GetChangeTime Method (SafeFileHandle)" Url="html/246D5969.htm" />
+            <HelpTOCNode Title="GetChangeTime Method (String)" Url="html/C714CE04.htm" />
+            <HelpTOCNode Title="GetChangeTime Method (String, Nullable(Boolean))" Url="html/54809DC7.htm" />
+            <HelpTOCNode Title="GetChangeTime Method (KernelTransaction, String)" Url="html/BA4ACB2F.htm" />
+            <HelpTOCNode Title="GetChangeTime Method (KernelTransaction, String, Nullable(Boolean))" Url="html/81C5E4CE.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="b4bba4c3-288f-447a-a612-de78204419cd" Title="GetChangeTimeUtc Method " Url="html/41170482.htm">
+            <HelpTOCNode Title="GetChangeTimeUtc Method (SafeFileHandle)" Url="html/78EF4233.htm" />
+            <HelpTOCNode Title="GetChangeTimeUtc Method (String)" Url="html/78F04233.htm" />
+            <HelpTOCNode Title="GetChangeTimeUtc Method (String, Nullable(Boolean))" Url="html/78F54233.htm" />
+            <HelpTOCNode Title="GetChangeTimeUtc Method (KernelTransaction, String)" Url="html/65247707.htm" />
+            <HelpTOCNode Title="GetChangeTimeUtc Method (KernelTransaction, String, Nullable(Boolean))" Url="html/78F24233.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="d91ba475-2fd4-45ec-aee3-1248ff2cec80" Title="GetCompressedSize Method " Url="html/74379B58.htm">
+            <HelpTOCNode Title="GetCompressedSize Method (String)" Url="html/B2A9FCCA.htm" />
+            <HelpTOCNode Title="GetCompressedSize Method (String, Nullable(Boolean))" Url="html/55517165.htm" />
+            <HelpTOCNode Title="GetCompressedSize Method (KernelTransaction, String)" Url="html/4282D01.htm" />
+            <HelpTOCNode Title="GetCompressedSize Method (KernelTransaction, String, Nullable(Boolean))" Url="html/9AA05A9B.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="e341aea3-08b1-4881-91a6-dd942ff8a658" Title="GetCreationTime Method " Url="html/DA3ACE07.htm">
+            <HelpTOCNode Title="GetCreationTime Method (String)" Url="html/7ED0F224.htm" />
+            <HelpTOCNode Title="GetCreationTime Method (String, Nullable(Boolean))" Url="html/7ED0F225.htm" />
+            <HelpTOCNode Title="GetCreationTime Method (KernelTransaction, String)" Url="html/550BE21A.htm" />
+            <HelpTOCNode Title="GetCreationTime Method (KernelTransaction, String, Nullable(Boolean))" Url="html/7ED0F227.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="19398e33-170f-4848-b3b0-55acf33661a0" Title="GetCreationTimeUtc Method " Url="html/83385934.htm">
+            <HelpTOCNode Title="GetCreationTimeUtc Method (String)" Url="html/5B0D8F59.htm" />
+            <HelpTOCNode Title="GetCreationTimeUtc Method (String, Nullable(Boolean))" Url="html/CFA88F59.htm" />
+            <HelpTOCNode Title="GetCreationTimeUtc Method (KernelTransaction, String)" Url="html/F065F262.htm" />
+            <HelpTOCNode Title="GetCreationTimeUtc Method (KernelTransaction, String, Nullable(Boolean))" Url="html/B8DE8F59.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="66db32c8-0a2f-4758-89c3-58336d2166cc" Title="GetEncryptionStatus Method " Url="html/2F7B406F.htm">
+            <HelpTOCNode Title="GetEncryptionStatus Method (String)" Url="html/7943EF14.htm" />
+            <HelpTOCNode Title="GetEncryptionStatus Method (String, Nullable(Boolean))" Url="html/C8E80618.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetFileInfoByHandle Method " Url="html/8CE020BC.htm" />
+          <HelpTOCNode Id="656360b3-417a-4248-b880-627ce79218bb" Title="GetFileSystemEntryInfo Method " Url="html/8947F5C4.htm">
+            <HelpTOCNode Title="GetFileSystemEntryInfo Method (String)" Url="html/728B594B.htm" />
+            <HelpTOCNode Title="GetFileSystemEntryInfo Method (String, Nullable(Boolean))" Url="html/FDF0594B.htm" />
+            <HelpTOCNode Title="GetFileSystemEntryInfo Method (KernelTransaction, String)" Url="html/392C5895.htm" />
+            <HelpTOCNode Title="GetFileSystemEntryInfo Method (KernelTransaction, String, Nullable(Boolean))" Url="html/E726594B.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="3c7f38fa-a56e-4ebc-b7a5-f53cb7407404" Title="GetLastAccessTime Method " Url="html/6D2CD7A0.htm">
+            <HelpTOCNode Title="GetLastAccessTime Method (String)" Url="html/3981388E.htm" />
+            <HelpTOCNode Title="GetLastAccessTime Method (String, Nullable(Boolean))" Url="html/DC28AD29.htm" />
+            <HelpTOCNode Title="GetLastAccessTime Method (KernelTransaction, String)" Url="html/961FF308.htm" />
+            <HelpTOCNode Title="GetLastAccessTime Method (KernelTransaction, String, Nullable(Boolean))" Url="html/96D9C3F3.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="0d9de4ef-d547-4eaa-9afd-3e29c1ff6026" Title="GetLastAccessTimeUtc Method " Url="html/E1AC410B.htm">
+            <HelpTOCNode Title="GetLastAccessTimeUtc Method (String)" Url="html/C956FD8.htm" />
+            <HelpTOCNode Title="GetLastAccessTimeUtc Method (String, Nullable(Boolean))" Url="html/C966FD8.htm" />
+            <HelpTOCNode Title="GetLastAccessTimeUtc Method (KernelTransaction, String)" Url="html/20A84884.htm" />
+            <HelpTOCNode Title="GetLastAccessTimeUtc Method (KernelTransaction, String, Nullable(Boolean))" Url="html/C946FD8.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="b96fb58c-d090-4afe-8378-0991a0337ae8" Title="GetLastWriteTime Method " Url="html/9FCEC7CF.htm">
+            <HelpTOCNode Title="GetLastWriteTime Method (String)" Url="html/24ACEB50.htm" />
+            <HelpTOCNode Title="GetLastWriteTime Method (String, Nullable(Boolean))" Url="html/24ABEB50.htm" />
+            <HelpTOCNode Title="GetLastWriteTime Method (KernelTransaction, String)" Url="html/218694AB.htm" />
+            <HelpTOCNode Title="GetLastWriteTime Method (KernelTransaction, String, Nullable(Boolean))" Url="html/24ADEB50.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="0cb8d6cf-a055-4e00-aba7-d1bfa1cb92bf" Title="GetLastWriteTimeUtc Method " Url="html/1225428F.htm">
+            <HelpTOCNode Title="GetLastWriteTimeUtc Method (String)" Url="html/A8F93F64.htm" />
+            <HelpTOCNode Title="GetLastWriteTimeUtc Method (String, Nullable(Boolean))" Url="html/A8F93F65.htm" />
+            <HelpTOCNode Title="GetLastWriteTimeUtc Method (KernelTransaction, String)" Url="html/685D1502.htm" />
+            <HelpTOCNode Title="GetLastWriteTimeUtc Method (KernelTransaction, String, Nullable(Boolean))" Url="html/A8F93F67.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="79a155b7-050a-4732-b7fe-a213a163891a" Title="GetLinkTargetInfo Method " Url="html/7FFDA226.htm">
+            <HelpTOCNode Title="GetLinkTargetInfo Method (String)" Url="html/B028E447.htm" />
+            <HelpTOCNode Title="GetLinkTargetInfo Method (String, Nullable(Boolean))" Url="html/52D058E2.htm" />
+            <HelpTOCNode Title="GetLinkTargetInfo Method (KernelTransaction, String)" Url="html/AEC1E73F.htm" />
+            <HelpTOCNode Title="GetLinkTargetInfo Method (KernelTransaction, String, Nullable(Boolean))" Url="html/D816FAC.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="fba39636-1f0c-4f51-9fc3-3f6b0e0b4d9a" Title="GetSize Method " Url="html/6CF47B30.htm">
+            <HelpTOCNode Title="GetSize Method (SafeFileHandle)" Url="html/6559793F.htm" />
+            <HelpTOCNode Title="GetSize Method (String)" Url="html/6559793E.htm" />
+            <HelpTOCNode Title="GetSize Method (String, Nullable(Boolean))" Url="html/65597939.htm" />
+            <HelpTOCNode Title="GetSize Method (KernelTransaction, String)" Url="html/4558495F.htm" />
+            <HelpTOCNode Title="GetSize Method (KernelTransaction, String, Nullable(Boolean))" Url="html/6559793C.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="b70ad5eb-d590-4adb-ac39-dd103082a44f" Title="GetStreamSize Method " Url="html/F65639DB.htm">
+            <HelpTOCNode Title="GetStreamSize Method (String)" Url="html/5AD6A63.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (SafeFileHandle, StreamType)" Url="html/EAD5CADD.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (SafeFileHandle, String)" Url="html/8D7D3F78.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String, StreamType)" Url="html/A854DEFE.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String, Nullable(Boolean))" Url="html/551B83D6.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String, String)" Url="html/F74A83D6.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String)" Url="html/78207BEA.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String, StreamType, Nullable(Boolean))" Url="html/E08083D6.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String, String, Nullable(Boolean))" Url="html/6BE583D6.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String, StreamType)" Url="html/BD9083D6.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String, Nullable(Boolean))" Url="html/2DF6D0C.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String, String)" Url="html/A586E1A7.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String, StreamType, Nullable(Boolean))" Url="html/6037F871.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/482E5642.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="4b703ef7-b3c2-4df9-8103-71d04232d003" Title="Move Method " Url="html/E3372D2A.htm">
+            <HelpTOCNode Title="Move Method (String, String)" Url="html/7D5ADA4D.htm" />
+            <HelpTOCNode Title="Move Method (String, String, Nullable(Boolean))" Url="html/7D59DA4D.htm" />
+            <HelpTOCNode Title="Move Method (KernelTransaction, String, String)" Url="html/B1AA3DB2.htm" />
+            <HelpTOCNode Title="Move Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/7D57DA4D.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="d8b10d86-b753-4d22-9e0b-6f5888486f90" Title="Move1 Method " Url="html/E222D2A.htm">
+            <HelpTOCNode Title="Move1 Method (String, String, MoveOptions)" Url="html/C509A24C.htm" />
+            <HelpTOCNode Title="Move1 Method (String, String, MoveOptions, Nullable(Boolean))" Url="html/AD00001D.htm" />
+            <HelpTOCNode Title="Move1 Method (KernelTransaction, String, String, MoveOptions)" Url="html/7D88DAB7.htm" />
+            <HelpTOCNode Title="Move1 Method (String, String, MoveOptions, CopyMoveProgressRoutine, Object)" Url="html/67B116E7.htm" />
+            <HelpTOCNode Title="Move1 Method (KernelTransaction, String, String, MoveOptions, Nullable(Boolean))" Url="html/22622DB1.htm" />
+            <HelpTOCNode Title="Move1 Method (String, String, MoveOptions, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/A588B82.htm" />
+            <HelpTOCNode Title="Move1 Method (KernelTransaction, String, String, MoveOptions, CopyMoveProgressRoutine, Object)" Url="html/DD13447B.htm" />
+            <HelpTOCNode Title="Move1 Method (KernelTransaction, String, String, MoveOptions, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/7FBAB916.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="e2e1bbd7-85c6-4289-b319-ffcb597b1693" Title="Open Method " Url="html/F0702FD4.htm">
+            <HelpTOCNode Title="Open Method (String, FileMode)" Url="html/AB2B05F6.htm" />
+            <HelpTOCNode Title="Open Method (String, FileMode, FileAccess)" Url="html/AB2C05F6.htm" />
+            <HelpTOCNode Title="Open Method (String, FileMode, Nullable(Boolean))" Url="html/E92D9E04.htm" />
+            <HelpTOCNode Title="Open Method (KernelTransaction, String, FileMode)" Url="html/E2B6689F.htm" />
+            <HelpTOCNode Title="Open Method (String, FileMode, FileAccess, FileShare)" Url="html/AB2D05F6.htm" />
+            <HelpTOCNode Title="Open Method (String, FileMode, FileAccess, Nullable(Boolean))" Url="html/8BD5129F.htm" />
+            <HelpTOCNode Title="Open Method (KernelTransaction, String, FileMode, FileAccess)" Url="html/AB2605F6.htm" />
+            <HelpTOCNode Title="Open Method (KernelTransaction, String, FileMode, Nullable(Boolean))" Url="html/AB2A05F6.htm" />
+            <HelpTOCNode Title="Open Method (String, FileMode, FileAccess, FileShare, Nullable(Boolean))" Url="html/AB2E05F6.htm" />
+            <HelpTOCNode Title="Open Method (KernelTransaction, String, FileMode, FileAccess, FileShare)" Url="html/AB2705F6.htm" />
+            <HelpTOCNode Title="Open Method (KernelTransaction, String, FileMode, FileAccess, Nullable(Boolean))" Url="html/AB2905F6.htm" />
+            <HelpTOCNode Title="Open Method (KernelTransaction, String, FileMode, FileAccess, FileShare, Nullable(Boolean))" Url="html/AB2805F6.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="48a9f7d0-5805-43e9-ab77-c4e419effacc" Title="OpenBackupRead Method " Url="html/51687FB0.htm">
+            <HelpTOCNode Title="OpenBackupRead Method (String)" Url="html/CC1264A5.htm" />
+            <HelpTOCNode Title="OpenBackupRead Method (String, Nullable(Boolean))" Url="html/40AD64A5.htm" />
+            <HelpTOCNode Title="OpenBackupRead Method (KernelTransaction, String)" Url="html/6F31120B.htm" />
+            <HelpTOCNode Title="OpenBackupRead Method (KernelTransaction, String, Nullable(Boolean))" Url="html/577764A5.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="8ce2f562-b65f-4db1-a2b4-9d372a823180" Title="OpenRead Method " Url="html/3E242E10.htm">
+            <HelpTOCNode Title="OpenRead Method (String)" Url="html/8C0176D9.htm" />
+            <HelpTOCNode Title="OpenRead Method (String, Nullable(Boolean))" Url="html/8C0076D9.htm" />
+            <HelpTOCNode Title="OpenRead Method (KernelTransaction, String)" Url="html/AF412D9F.htm" />
+            <HelpTOCNode Title="OpenRead Method (KernelTransaction, String, Nullable(Boolean))" Url="html/8C0276D9.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="8e4c1c31-0f4c-49e8-bbf9-73edcfd55c24" Title="OpenText Method " Url="html/4395E460.htm">
+            <HelpTOCNode Title="OpenText Method (String)" Url="html/8D92908E.htm" />
+            <HelpTOCNode Title="OpenText Method (String, Nullable(Boolean))" Url="html/8D91908E.htm" />
+            <HelpTOCNode Title="OpenText Method (String, Encoding)" Url="html/8D90908E.htm" />
+            <HelpTOCNode Title="OpenText Method (KernelTransaction, String)" Url="html/B0D44710.htm" />
+            <HelpTOCNode Title="OpenText Method (String, Encoding, Nullable(Boolean))" Url="html/8D8F908E.htm" />
+            <HelpTOCNode Title="OpenText Method (KernelTransaction, String, Nullable(Boolean))" Url="html/8D95908E.htm" />
+            <HelpTOCNode Title="OpenText Method (KernelTransaction, String, Encoding)" Url="html/8D94908E.htm" />
+            <HelpTOCNode Title="OpenText Method (KernelTransaction, String, Encoding, Nullable(Boolean))" Url="html/8D93908E.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="38689b10-9ddd-4a3e-bc68-288c192f8ac3" Title="OpenWrite Method " Url="html/239AE475.htm">
+            <HelpTOCNode Title="OpenWrite Method (String)" Url="html/C078DE78.htm" />
+            <HelpTOCNode Title="OpenWrite Method (String, Nullable(Boolean))" Url="html/63205313.htm" />
+            <HelpTOCNode Title="OpenWrite Method (KernelTransaction, String)" Url="html/C214D18E.htm" />
+            <HelpTOCNode Title="OpenWrite Method (KernelTransaction, String, Nullable(Boolean))" Url="html/1DD169DD.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="1aab0c67-3f8a-4bff-a525-5382e78db863" Title="ReadAllBytes Method " Url="html/252C47.htm">
+            <HelpTOCNode Title="ReadAllBytes Method (String)" Url="html/8AB97D0A.htm" />
+            <HelpTOCNode Title="ReadAllBytes Method (String, Nullable(Boolean))" Url="html/8ABA7D0A.htm" />
+            <HelpTOCNode Title="ReadAllBytes Method (KernelTransaction, String)" Url="html/EE0AE8BD.htm" />
+            <HelpTOCNode Title="ReadAllBytes Method (KernelTransaction, String, Nullable(Boolean))" Url="html/8ABC7D0A.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="b2a54423-da99-4079-bc23-28f39a7ce716" Title="ReadAllLines Method " Url="html/B7C615F.htm">
+            <HelpTOCNode Title="ReadAllLines Method (String)" Url="html/7D777EBA.htm" />
+            <HelpTOCNode Title="ReadAllLines Method (String, Nullable(Boolean))" Url="html/7D787EBA.htm" />
+            <HelpTOCNode Title="ReadAllLines Method (String, Encoding)" Url="html/7D797EBA.htm" />
+            <HelpTOCNode Title="ReadAllLines Method (KernelTransaction, String)" Url="html/DE2AE8CD.htm" />
+            <HelpTOCNode Title="ReadAllLines Method (String, Encoding, Nullable(Boolean))" Url="html/7D7A7EBA.htm" />
+            <HelpTOCNode Title="ReadAllLines Method (KernelTransaction, String, Nullable(Boolean))" Url="html/7D7C7EBA.htm" />
+            <HelpTOCNode Title="ReadAllLines Method (KernelTransaction, String, Encoding)" Url="html/7D7D7EBA.htm" />
+            <HelpTOCNode Title="ReadAllLines Method (KernelTransaction, String, Encoding, Nullable(Boolean))" Url="html/7D7E7EBA.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="9ae3bb53-e8db-4843-ad5d-11726d3df21b" Title="ReadAllText Method " Url="html/256FC531.htm">
+            <HelpTOCNode Title="ReadAllText Method (String)" Url="html/ACEC24A.htm" />
+            <HelpTOCNode Title="ReadAllText Method (String, Nullable(Boolean))" Url="html/ACEC249.htm" />
+            <HelpTOCNode Title="ReadAllText Method (String, Encoding)" Url="html/ACEC24C.htm" />
+            <HelpTOCNode Title="ReadAllText Method (KernelTransaction, String)" Url="html/367D2A8E.htm" />
+            <HelpTOCNode Title="ReadAllText Method (String, Encoding, Nullable(Boolean))" Url="html/ACEC24B.htm" />
+            <HelpTOCNode Title="ReadAllText Method (KernelTransaction, String, Nullable(Boolean))" Url="html/ACEC24D.htm" />
+            <HelpTOCNode Title="ReadAllText Method (KernelTransaction, String, Encoding)" Url="html/ACEC250.htm" />
+            <HelpTOCNode Title="ReadAllText Method (KernelTransaction, String, Encoding, Nullable(Boolean))" Url="html/ACEC24F.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="e1a76efb-a088-489f-a725-db8773e4c431" Title="ReadLines Method " Url="html/AC28FA14.htm">
+            <HelpTOCNode Title="ReadLines Method (String)" Url="html/6A950565.htm" />
+            <HelpTOCNode Title="ReadLines Method (String, Nullable(Boolean))" Url="html/D3C7A00.htm" />
+            <HelpTOCNode Title="ReadLines Method (String, Encoding)" Url="html/AFE3EE9B.htm" />
+            <HelpTOCNode Title="ReadLines Method (KernelTransaction, String)" Url="html/4A81AFAA.htm" />
+            <HelpTOCNode Title="ReadLines Method (String, Encoding, Nullable(Boolean))" Url="html/528B6336.htm" />
+            <HelpTOCNode Title="ReadLines Method (KernelTransaction, String, Nullable(Boolean))" Url="html/829EA794.htm" />
+            <HelpTOCNode Title="ReadLines Method (KernelTransaction, String, Encoding)" Url="html/25461C2F.htm" />
+            <HelpTOCNode Title="ReadLines Method (KernelTransaction, String, Encoding, Nullable(Boolean))" Url="html/C7ED90CA.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="c08f17d6-07c0-49c5-9e51-0e195f325fd1" Title="RemoveStream Method " Url="html/D1B14E62.htm">
+            <HelpTOCNode Title="RemoveStream Method (String)" Url="html/2656FB56.htm" />
+            <HelpTOCNode Title="RemoveStream Method (String, Nullable(Boolean))" Url="html/2655FB56.htm" />
+            <HelpTOCNode Title="RemoveStream Method (String, String)" Url="html/2658FB56.htm" />
+            <HelpTOCNode Title="RemoveStream Method (KernelTransaction, String)" Url="html/C4A997F9.htm" />
+            <HelpTOCNode Title="RemoveStream Method (String, String, Nullable(Boolean))" Url="html/2657FB56.htm" />
+            <HelpTOCNode Title="RemoveStream Method (KernelTransaction, String, Nullable(Boolean))" Url="html/2659FB56.htm" />
+            <HelpTOCNode Title="RemoveStream Method (KernelTransaction, String, String)" Url="html/265CFB56.htm" />
+            <HelpTOCNode Title="RemoveStream Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/265BFB56.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="42a552f0-0243-4314-94c7-7cb8ae55e8cf" Title="Replace Method " Url="html/59FF22C8.htm">
+            <HelpTOCNode Title="Replace Method (String, String, String)" Url="html/AA3486C6.htm" />
+            <HelpTOCNode Title="Replace Method (String, String, String, Boolean)" Url="html/1343FBE5.htm" />
+            <HelpTOCNode Title="Replace Method (String, String, String, Boolean, Nullable(Boolean))" Url="html/1343FBE6.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="503b4874-e20f-4a9b-a248-6434a8e9632e" Title="SetAccessControl Method " Url="html/83B61AD.htm">
+            <HelpTOCNode Title="SetAccessControl Method (String, FileSecurity)" Url="html/5BDECF90.htm" />
+            <HelpTOCNode Title="SetAccessControl Method (String, FileSecurity, Nullable(Boolean))" Url="html/2E815F34.htm" />
+            <HelpTOCNode Title="SetAccessControl Method (String, FileSecurity, AccessControlSections)" Url="html/2E805F34.htm" />
+            <HelpTOCNode Title="SetAccessControl Method (String, FileSecurity, AccessControlSections, Nullable(Boolean))" Url="html/2E7F5F34.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="5e845bf7-80e8-4bc2-bc7f-190907da9371" Title="SetAttributes Method " Url="html/86F0B6A7.htm">
+            <HelpTOCNode Title="SetAttributes Method (String, FileAttributes)" Url="html/F6D4332C.htm" />
+            <HelpTOCNode Title="SetAttributes Method (String, FileAttributes, Nullable(Boolean))" Url="html/997BA7C7.htm" />
+            <HelpTOCNode Title="SetAttributes Method (KernelTransaction, String, FileAttributes)" Url="html/1F166883.htm" />
+            <HelpTOCNode Title="SetAttributes Method (KernelTransaction, String, FileAttributes, Nullable(Boolean))" Url="html/DECA90FD.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="6c27d71f-21fe-423e-9a28-df67c58ee9d6" Title="SetCreationTime Method " Url="html/6E300FBC.htm">
+            <HelpTOCNode Title="SetCreationTime Method (String, DateTime)" Url="html/81F75858.htm" />
+            <HelpTOCNode Title="SetCreationTime Method (String, DateTime, Nullable(Boolean))" Url="html/81F75859.htm" />
+            <HelpTOCNode Title="SetCreationTime Method (KernelTransaction, String, DateTime)" Url="html/552451CE.htm" />
+            <HelpTOCNode Title="SetCreationTime Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/81F7585B.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="fc66e74c-f432-4c5e-90fd-6f84301f9d18" Title="SetCreationTimeUtc Method " Url="html/83298BA9.htm">
+            <HelpTOCNode Title="SetCreationTimeUtc Method (String, DateTime)" Url="html/5EEFF515.htm" />
+            <HelpTOCNode Title="SetCreationTimeUtc Method (String, DateTime, Nullable(Boolean))" Url="html/D38AF515.htm" />
+            <HelpTOCNode Title="SetCreationTimeUtc Method (KernelTransaction, String, DateTime)" Url="html/F448581E.htm" />
+            <HelpTOCNode Title="SetCreationTimeUtc Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/BCC0F515.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="0a1867bc-2db6-45a7-b5c9-691cb367cd68" Title="SetLastAccessTime Method " Url="html/C1DE1FB8.htm">
+            <HelpTOCNode Title="SetLastAccessTime Method (String, DateTime)" Url="html/1D1A37BA.htm" />
+            <HelpTOCNode Title="SetLastAccessTime Method (String, DateTime, Nullable(Boolean))" Url="html/BFC1AC55.htm" />
+            <HelpTOCNode Title="SetLastAccessTime Method (KernelTransaction, String, DateTime)" Url="html/7A46F234.htm" />
+            <HelpTOCNode Title="SetLastAccessTime Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/7A72C31F.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="ca78f848-0752-4ee2-a35a-dbdfdd62cba0" Title="SetLastAccessTimeUtc Method " Url="html/EB606EE0.htm">
+            <HelpTOCNode Title="SetLastAccessTimeUtc Method (String, DateTime)" Url="html/65BE550F.htm" />
+            <HelpTOCNode Title="SetLastAccessTimeUtc Method (String, DateTime, Nullable(Boolean))" Url="html/65BF550F.htm" />
+            <HelpTOCNode Title="SetLastAccessTimeUtc Method (KernelTransaction, String, DateTime)" Url="html/45147B0.htm" />
+            <HelpTOCNode Title="SetLastAccessTimeUtc Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/65BD550F.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="f4cb3638-c081-48ee-86ff-a88278bb3f1e" Title="SetLastWriteTime Method " Url="html/DB0AD5B.htm">
+            <HelpTOCNode Title="SetLastWriteTime Method (String, DateTime)" Url="html/2C0762F4.htm" />
+            <HelpTOCNode Title="SetLastWriteTime Method (String, DateTime, Nullable(Boolean))" Url="html/2C0662F4.htm" />
+            <HelpTOCNode Title="SetLastWriteTime Method (KernelTransaction, String, DateTime)" Url="html/21BE88C7.htm" />
+            <HelpTOCNode Title="SetLastWriteTime Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/2C0462F4.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="c619bb62-d5a5-4b1a-baeb-63324914e972" Title="SetLastWriteTimeUtc Method " Url="html/8DAF281B.htm">
+            <HelpTOCNode Title="SetLastWriteTimeUtc Method (String, DateTime)" Url="html/AB9EAB49.htm" />
+            <HelpTOCNode Title="SetLastWriteTimeUtc Method (String, DateTime, Nullable(Boolean))" Url="html/AB9EAB48.htm" />
+            <HelpTOCNode Title="SetLastWriteTimeUtc Method (KernelTransaction, String, DateTime)" Url="html/70338CA6.htm" />
+            <HelpTOCNode Title="SetLastWriteTimeUtc Method (KernelTransaction, String, DateTime, Nullable(Boolean))" Url="html/AB9EAB4A.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="83961478-057a-49ca-9ad7-aa23f1189b62" Title="SetTimestamps Method " Url="html/59E3759D.htm">
+            <HelpTOCNode Title="SetTimestamps Method (String, DateTime, DateTime, DateTime)" Url="html/DBFA7F88.htm" />
+            <HelpTOCNode Title="SetTimestamps Method (String, DateTime, DateTime, DateTime, Nullable(Boolean))" Url="html/39530AED.htm" />
+            <HelpTOCNode Title="SetTimestamps Method (KernelTransaction, String, DateTime, DateTime, DateTime)" Url="html/7256C51C.htm" />
+            <HelpTOCNode Title="SetTimestamps Method (KernelTransaction, String, DateTime, DateTime, DateTime, Nullable(Boolean))" Url="html/7EA1F423.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="42ef43af-2540-4d73-afc7-80361c19fd96" Title="SetTimestampsUtc Method " Url="html/221041B1.htm">
+            <HelpTOCNode Title="SetTimestampsUtc Method (String, DateTime, DateTime, DateTime)" Url="html/9D740425.htm" />
+            <HelpTOCNode Title="SetTimestampsUtc Method (String, DateTime, DateTime, DateTime, Nullable(Boolean))" Url="html/9D730425.htm" />
+            <HelpTOCNode Title="SetTimestampsUtc Method (KernelTransaction, String, DateTime, DateTime, DateTime)" Url="html/D4D36F92.htm" />
+            <HelpTOCNode Title="SetTimestampsUtc Method (KernelTransaction, String, DateTime, DateTime, DateTime, Nullable(Boolean))" Url="html/9D750425.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="ff671f71-54b7-4d34-b104-b9c36ea586e6" Title="TransferTimestamps Method " Url="html/1543310.htm">
+            <HelpTOCNode Title="TransferTimestamps Method (String, String)" Url="html/8897FCFC.htm" />
+            <HelpTOCNode Title="TransferTimestamps Method (String, String, Nullable(Boolean))" Url="html/13FCFCFC.htm" />
+            <HelpTOCNode Title="TransferTimestamps Method (KernelTransaction, String, String)" Url="html/274586B5.htm" />
+            <HelpTOCNode Title="TransferTimestamps Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/FD32FCFC.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="43e34912-703e-4544-be62-d16fc473921f" Title="WriteAllBytes Method " Url="html/DBDC8CA1.htm">
+            <HelpTOCNode Title="WriteAllBytes Method (String, Byte[])" Url="html/AE3AA274.htm" />
+            <HelpTOCNode Title="WriteAllBytes Method (String, Byte[], Nullable(Boolean))" Url="html/B932DD9.htm" />
+            <HelpTOCNode Title="WriteAllBytes Method (KernelTransaction, String, Byte[])" Url="html/675FE3F8.htm" />
+            <HelpTOCNode Title="WriteAllBytes Method (KernelTransaction, String, Byte[], Nullable(Boolean))" Url="html/50E2170F.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="4dbe131b-428b-4171-a9e0-e9dff71b2daa" Title="WriteAllLines Method " Url="html/B81C8CB1.htm">
+            <HelpTOCNode Title="WriteAllLines Method (String, IEnumerable(String))" Url="html/372BA4E6.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (String, String[])" Url="html/9D99D523.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (String, IEnumerable(String), Nullable(Boolean))" Url="html/9484304B.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (String, IEnumerable(String), Encoding)" Url="html/86CFD523.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (String, String[], Nullable(Boolean))" Url="html/28FED523.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (String, String[], Encoding)" Url="html/593BD523.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (KernelTransaction, String, IEnumerable(String))" Url="html/C3FA73AC.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (KernelTransaction, String, String[])" Url="html/D7051C2A.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (String, IEnumerable(String), Encoding, Nullable(Boolean))" Url="html/1234D523.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (String, String[], Encoding, Nullable(Boolean))" Url="html/E4A0D523.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (KernelTransaction, String, IEnumerable(String), Nullable(Boolean))" Url="html/A9BFD523.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (KernelTransaction, String, IEnumerable(String), Encoding)" Url="html/91B632F4.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (KernelTransaction, String, String[], Nullable(Boolean))" Url="html/345DA78F.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (KernelTransaction, String, String[], Encoding)" Url="html/1C540560.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (KernelTransaction, String, IEnumerable(String), Encoding, Nullable(Boolean))" Url="html/EF0EBE59.htm" />
+            <HelpTOCNode Title="WriteAllLines Method (KernelTransaction, String, String[], Encoding, Nullable(Boolean))" Url="html/79AC90C5.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="eca41946-c6bf-4346-a900-bb1dbb8d8842" Title="WriteAllText Method " Url="html/9B6761C2.htm">
+            <HelpTOCNode Title="WriteAllText Method (String, String)" Url="html/1ECF0F76.htm" />
+            <HelpTOCNode Title="WriteAllText Method (String, String, Nullable(Boolean))" Url="html/1ED00F76.htm" />
+            <HelpTOCNode Title="WriteAllText Method (String, String, Encoding)" Url="html/1ED10F76.htm" />
+            <HelpTOCNode Title="WriteAllText Method (KernelTransaction, String, String)" Url="html/4CDB9326.htm" />
+            <HelpTOCNode Title="WriteAllText Method (String, String, Encoding, Nullable(Boolean))" Url="html/1ED20F76.htm" />
+            <HelpTOCNode Title="WriteAllText Method (KernelTransaction, String, String, Nullable(Boolean))" Url="html/1ECC0F76.htm" />
+            <HelpTOCNode Title="WriteAllText Method (KernelTransaction, String, String, Encoding)" Url="html/1ECD0F76.htm" />
+            <HelpTOCNode Title="WriteAllText Method (KernelTransaction, String, String, Encoding, Nullable(Boolean))" Url="html/1ECE0F76.htm" />
+          </HelpTOCNode>
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="FileEncryptionStatus Enumeration" Url="html/995CA44E.htm" />
+      <HelpTOCNode Id="c423969c-a8fc-4ed0-81fc-845ea5addc0c" Title="FileIdBothDirectoryInfo Class" Url="html/CD444141.htm">
+        <HelpTOCNode Title="FileIdBothDirectoryInfo Methods" Url="html/5512C7E3.htm" />
+        <HelpTOCNode Id="9208d436-9ffe-4359-9c7e-5f27fb6d9fc4" Title="FileIdBothDirectoryInfo Properties" Url="html/6F1C2B96.htm">
+          <HelpTOCNode Title="AllocationSize Property " Url="html/D7C0840A.htm" />
+          <HelpTOCNode Title="ChangeTime Property " Url="html/D789B743.htm" />
+          <HelpTOCNode Title="CreationTime Property " Url="html/7B21BD91.htm" />
+          <HelpTOCNode Title="EndOfFile Property " Url="html/1005F59C.htm" />
+          <HelpTOCNode Title="ExtendedAttributesSize Property " Url="html/A1076F7A.htm" />
+          <HelpTOCNode Title="FileAttributes Property " Url="html/8A64A55C.htm" />
+          <HelpTOCNode Title="FileId Property " Url="html/9935F62E.htm" />
+          <HelpTOCNode Title="FileIndex Property " Url="html/69FEE5E4.htm" />
+          <HelpTOCNode Title="FileName Property " Url="html/2A9EE5E9.htm" />
+          <HelpTOCNode Title="LastAccessTime Property " Url="html/8DCC711C.htm" />
+          <HelpTOCNode Title="LastWriteTime Property " Url="html/5E8340A5.htm" />
+          <HelpTOCNode Title="ShortName Property " Url="html/1D5A5479.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="2f279a29-ff1a-445c-b5b7-ad2c773b8bf2" Title="FileInfo Class" Url="html/C308A5E5.htm">
+        <HelpTOCNode Id="73b48d86-4719-45d2-a985-05c8acee13c9" Title="FileInfo Constructor " Url="html/CE97C04D.htm">
+          <HelpTOCNode Title="FileInfo Constructor (String)" Url="html/98776670.htm" />
+          <HelpTOCNode Title="FileInfo Constructor (String, Nullable(Boolean))" Url="html/F5CFF1D5.htm" />
+          <HelpTOCNode Title="FileInfo Constructor (KernelTransaction, String)" Url="html/3284F40F.htm" />
+          <HelpTOCNode Title="FileInfo Constructor (KernelTransaction, String, Nullable(Boolean))" Url="html/B081089F.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="FileInfo Fields" Url="html/9FD0E5B2.htm" />
+        <HelpTOCNode Id="5325ba4c-206d-4c44-b8e3-a61f40ffea01" Title="FileInfo Methods" Url="html/FE224D78.htm">
+          <HelpTOCNode Title="AddStream Method " Url="html/9ABF7662.htm" />
+          <HelpTOCNode Id="7e5619ea-a0cc-4ce3-b628-39d0894f1050" Title="AppendText Method " Url="html/589859F3.htm">
+            <HelpTOCNode Title="AppendText Method " Url="html/EBB90F6E.htm" />
+            <HelpTOCNode Title="AppendText Method (Encoding)" Url="html/E7C45C5B.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="Compress Method " Url="html/CA336802.htm" />
+          <HelpTOCNode Id="08262192-cc2e-4592-9274-39153e430cdf" Title="CopyTo Method " Url="html/CAE2DEA9.htm">
+            <HelpTOCNode Title="CopyTo Method (String)" Url="html/DAEA25A9.htm" />
+            <HelpTOCNode Title="CopyTo Method (String, Boolean)" Url="html/EDDCE093.htm" />
+            <HelpTOCNode Title="CopyTo Method (String, Nullable(Boolean))" Url="html/4A6E093.htm" />
+            <HelpTOCNode Title="CopyTo Method (String, Boolean, Nullable(Boolean))" Url="html/900BE093.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="12c81bdb-be44-4f14-bcb8-55efa40485cf" Title="CopyTo1 Method " Url="html/CAB3DEA9.htm">
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions)" Url="html/3E8F243E.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyMoveProgressRoutine, Object)" Url="html/621AECB9.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions, Boolean)" Url="html/3E8F243F.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions, Nullable(Boolean))" Url="html/3E8F2443.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/3E8F243B.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions, CopyMoveProgressRoutine, Object)" Url="html/3E8F243D.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions, Boolean, Nullable(Boolean))" Url="html/3E8F2444.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/3E8F2440.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions, Boolean, CopyMoveProgressRoutine, Object)" Url="html/3E8F2442.htm" />
+            <HelpTOCNode Title="CopyTo1 Method (String, CopyOptions, Boolean, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/3E8F2441.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="Create Method " Url="html/ECFF22E0.htm" />
+          <HelpTOCNode Title="CreateText Method " Url="html/53B49149.htm" />
+          <HelpTOCNode Title="Decompress Method " Url="html/B0D75D52.htm" />
+          <HelpTOCNode Title="Decrypt Method " Url="html/C0A46CFB.htm" />
+          <HelpTOCNode Id="c5c7702f-240d-4db8-b8b7-65058b818309" Title="Delete Method " Url="html/B019B1D5.htm">
+            <HelpTOCNode Title="Delete Method " Url="html/8F14533C.htm" />
+            <HelpTOCNode Title="Delete Method (Boolean)" Url="html/1E48657E.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="Encrypt Method " Url="html/C1096D1C.htm" />
+          <HelpTOCNode Id="d0f2bdf9-680f-4052-a092-31a1eb928905" Title="EnumerateStreams Method " Url="html/B27B607C.htm">
+            <HelpTOCNode Title="EnumerateStreams Method " Url="html/B22FCBA7.htm" />
+            <HelpTOCNode Title="EnumerateStreams Method (StreamType)" Url="html/DADF4B7C.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="5a593a16-277d-4ce6-99ea-9af4dc79b580" Title="GetAccessControl Method " Url="html/492AFBC2.htm">
+            <HelpTOCNode Title="GetAccessControl Method " Url="html/2F92DCAD.htm" />
+            <HelpTOCNode Title="GetAccessControl Method (AccessControlSections)" Url="html/9A3AA093.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="9f1899aa-5b9d-4f14-b738-1bfb616139a7" Title="GetStreamSize Method " Url="html/62B162D4.htm">
+            <HelpTOCNode Title="GetStreamSize Method " Url="html/992FEF56.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (String)" Url="html/41C86DDC.htm" />
+            <HelpTOCNode Title="GetStreamSize Method (StreamType)" Url="html/E46FE277.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="MoveTo Method " Url="html/E9E2E081.htm" />
+          <HelpTOCNode Id="ab9880c0-aa69-4982-b692-316a930a61eb" Title="MoveTo1 Method " Url="html/F81DB115.htm">
+            <HelpTOCNode Title="MoveTo1 Method (String, MoveOptions)" Url="html/502B1BD1.htm" />
+            <HelpTOCNode Title="MoveTo1 Method (String, MoveOptions, Nullable(Boolean))" Url="html/D5473A31.htm" />
+            <HelpTOCNode Title="MoveTo1 Method (String, MoveOptions, CopyMoveProgressRoutine, Object)" Url="html/D5473A33.htm" />
+            <HelpTOCNode Title="MoveTo1 Method (String, MoveOptions, CopyMoveProgressRoutine, Object, Nullable(Boolean))" Url="html/D5473A32.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="c366f55b-3ab3-4713-a285-a9a47661de2f" Title="Open Method " Url="html/165B4BA3.htm">
+            <HelpTOCNode Title="Open Method (FileMode)" Url="html/F88F5792.htm" />
+            <HelpTOCNode Title="Open Method (FileMode, FileAccess)" Url="html/1D322143.htm" />
+            <HelpTOCNode Title="Open Method (FileMode, FileSystemRights)" Url="html/1D342143.htm" />
+            <HelpTOCNode Title="Open Method (FileMode, FileAccess, FileShare)" Url="html/1D332143.htm" />
+            <HelpTOCNode Title="Open Method (FileMode, FileSystemRights, FileShare)" Url="html/1D352143.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="OpenRead Method " Url="html/30E8C624.htm" />
+          <HelpTOCNode Id="eba5aa16-9c29-493d-bf73-73af4c4e5138" Title="OpenText Method " Url="html/6FA1C150.htm">
+            <HelpTOCNode Title="OpenText Method " Url="html/8444400F.htm" />
+            <HelpTOCNode Title="OpenText Method (Encoding)" Url="html/38204168.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="OpenWrite Method " Url="html/ADAC6C6E.htm" />
+          <HelpTOCNode Title="Refresh Method " Url="html/C6A6D72E.htm" />
+          <HelpTOCNode Title="RefreshEntryInfo Method " Url="html/6CC2E17F.htm" />
+          <HelpTOCNode Id="d1e93d04-bba3-4faf-8267-ebced1a97a6f" Title="RemoveStream Method " Url="html/AE04D15E.htm">
+            <HelpTOCNode Title="RemoveStream Method " Url="html/28295A06.htm" />
+            <HelpTOCNode Title="RemoveStream Method (String)" Url="html/1DC1873A.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="5428c039-b769-446d-8c61-9b75f7a3e1ee" Title="Replace Method " Url="html/1483E20C.htm">
+            <HelpTOCNode Title="Replace Method (String, String)" Url="html/292E2D71.htm" />
+            <HelpTOCNode Title="Replace Method (String, String, Boolean)" Url="html/262420D4.htm" />
+            <HelpTOCNode Title="Replace Method (String, String, Boolean, Nullable(Boolean))" Url="html/262420D5.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="5172113c-7422-4f97-939b-48a1853d77a8" Title="SetAccessControl Method " Url="html/F62DA637.htm">
+            <HelpTOCNode Title="SetAccessControl Method (FileSecurity)" Url="html/2FAD4C69.htm" />
+            <HelpTOCNode Title="SetAccessControl Method (FileSecurity, AccessControlSections)" Url="html/9D430857.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="ToString Method " Url="html/2DE25684.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="357679c8-eec4-4a0d-b059-465d50805751" Title="FileInfo Properties" Url="html/102B25A5.htm">
+          <HelpTOCNode Title="Directory Property " Url="html/7BCF3149.htm" />
+          <HelpTOCNode Title="DirectoryName Property " Url="html/951452C5.htm" />
+          <HelpTOCNode Title="Exists Property " Url="html/8A85A92F.htm" />
+          <HelpTOCNode Title="IsReadOnly Property " Url="html/F43D1A31.htm" />
+          <HelpTOCNode Title="Length Property " Url="html/9870F21F.htm" />
+          <HelpTOCNode Title="Name Property " Url="html/481DBC25.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="e64fddf4-53b8-42d8-89fd-426462291a20" Title="FileSystemEntryInfo Class" Url="html/7D97CBAE.htm">
+        <HelpTOCNode Title="FileSystemEntryInfo Methods" Url="html/33681044.htm" />
+        <HelpTOCNode Id="64ae2c85-e6f9-4171-b9b0-7ae3cfc4e63f" Title="FileSystemEntryInfo Properties" Url="html/3B7B5AD0.htm">
+          <HelpTOCNode Title="AlternateFileName Property " Url="html/B0BBBC71.htm" />
+          <HelpTOCNode Title="Attributes Property " Url="html/D7B871B8.htm" />
+          <HelpTOCNode Title="Created Property " Url="html/F991BBED.htm" />
+          <HelpTOCNode Title="FileName Property " Url="html/47B68462.htm" />
+          <HelpTOCNode Title="FileSize Property " Url="html/605A845A.htm" />
+          <HelpTOCNode Title="FullPath Property " Url="html/2DD0068C.htm" />
+          <HelpTOCNode Title="IsDirectory Property " Url="html/F0E31F2D.htm" />
+          <HelpTOCNode Title="IsMountPoint Property " Url="html/919D5D31.htm" />
+          <HelpTOCNode Title="IsReparsePoint Property " Url="html/959BADFD.htm" />
+          <HelpTOCNode Title="IsSymbolicLink Property " Url="html/2D23BED8.htm" />
+          <HelpTOCNode Title="LastAccessed Property " Url="html/7046E3F0.htm" />
+          <HelpTOCNode Title="LastModified Property " Url="html/2165EBEB.htm" />
+          <HelpTOCNode Title="LongFullPath Property " Url="html/FE50D8A.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="1a36ba78-51c9-4fb9-8dea-3ced2405e1f2" Title="FileSystemInfo Class" Url="html/98E59669.htm">
+        <HelpTOCNode Title="FileSystemInfo Constructor " Url="html/D6B52E63.htm" />
+        <HelpTOCNode Id="cc281171-9b0f-4298-99cd-91e231e33174" Title="FileSystemInfo Fields" Url="html/53F7E48F.htm">
+          <HelpTOCNode Title="FullPath Field" Url="html/D36B9E7F.htm" />
+          <HelpTOCNode Title="OriginalPath Field" Url="html/6BA2B5F0.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="ade3c9c2-e3a2-46aa-b300-e2b3631c0f1e" Title="FileSystemInfo Methods" Url="html/EC2EB850.htm">
+          <HelpTOCNode Title="Delete Method " Url="html/2728F8A6.htm" />
+          <HelpTOCNode Title="Equals Method " Url="html/5C6D215C.htm" />
+          <HelpTOCNode Title="GetHashCode Method " Url="html/AC74B901.htm" />
+          <HelpTOCNode Title="Refresh Method " Url="html/C34B5707.htm" />
+          <HelpTOCNode Title="RefreshEntryInfo Method " Url="html/77F5F11.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/65F8DE65.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="c3d390d6-7739-432e-85ea-5f8ae68b064c" Title="FileSystemInfo Operators" Url="html/C6301C3D.htm">
+          <HelpTOCNode Title="Equality Operator " Url="html/AEBA812D.htm" />
+          <HelpTOCNode Title="Inequality Operator " Url="html/B66E7D00.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="e52355d4-f71d-405f-93b9-693db7e404a1" Title="FileSystemInfo Properties" Url="html/1435D482.htm">
+          <HelpTOCNode Title="Attributes Property " Url="html/8AD31218.htm" />
+          <HelpTOCNode Title="CreationTime Property " Url="html/32D10D18.htm" />
+          <HelpTOCNode Title="CreationTimeUtc Property " Url="html/6948C843.htm" />
+          <HelpTOCNode Title="DisplayPath Property " Url="html/5E4CF949.htm" />
+          <HelpTOCNode Title="EntryInfo Property " Url="html/6E96E2B3.htm" />
+          <HelpTOCNode Title="Exists Property " Url="html/84134BDA.htm" />
+          <HelpTOCNode Title="Extension Property " Url="html/B60E5C40.htm" />
+          <HelpTOCNode Title="FullName Property " Url="html/5E625BE1.htm" />
+          <HelpTOCNode Title="IsDirectory Property " Url="html/6EED5D18.htm" />
+          <HelpTOCNode Title="LastAccessTime Property " Url="html/56B9A002.htm" />
+          <HelpTOCNode Title="LastAccessTimeUtc Property " Url="html/40A7476C.htm" />
+          <HelpTOCNode Title="LastWriteTime Property " Url="html/FDF44AB5.htm" />
+          <HelpTOCNode Title="LastWriteTimeUtc Property " Url="html/CDF02BD5.htm" />
+          <HelpTOCNode Title="LengthStreams Property " Url="html/C39DDB02.htm" />
+          <HelpTOCNode Title="LongFullName Property " Url="html/185F3001.htm" />
+          <HelpTOCNode Title="Name Property " Url="html/7022838F.htm" />
+          <HelpTOCNode Title="Transaction Property " Url="html/659480E4.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="FinalPathFormats Enumeration" Url="html/27C0B3E0.htm" />
+      <HelpTOCNode Id="fd9e4fd9-5487-4c54-9952-6b9593bfae26" Title="InvalidTransactionException Class" Url="html/7709231E.htm">
+        <HelpTOCNode Id="e427d80d-ccbf-45f2-8fb9-116d1053ccb3" Title="InvalidTransactionException Constructor " Url="html/C6F6B706.htm">
+          <HelpTOCNode Title="InvalidTransactionException Constructor " Url="html/CB406D7D.htm" />
+          <HelpTOCNode Title="InvalidTransactionException Constructor (String)" Url="html/728132DF.htm" />
+          <HelpTOCNode Title="InvalidTransactionException Constructor (SerializationInfo, StreamingContext)" Url="html/728232DF.htm" />
+          <HelpTOCNode Title="InvalidTransactionException Constructor (String, Exception)" Url="html/728032DF.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="InvalidTransactionException Methods" Url="html/F3CD6C28.htm" />
+        <HelpTOCNode Title="InvalidTransactionException Properties" Url="html/C9C412A9.htm" />
+        <HelpTOCNode Title="InvalidTransactionException Events" Url="html/3DE87479.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="c78126fc-2846-41f2-aece-6004eca4f62b" Title="KernelTransaction Class" Url="html/DE4F64B8.htm">
+        <HelpTOCNode Id="e5e0126a-02e0-489e-a8f6-8444cf5f6609" Title="KernelTransaction Constructor " Url="html/7F220F88.htm">
+          <HelpTOCNode Title="KernelTransaction Constructor " Url="html/D6699C7E.htm" />
+          <HelpTOCNode Title="KernelTransaction Constructor (Transaction)" Url="html/77963140.htm" />
+          <HelpTOCNode Title="KernelTransaction Constructor (UInt32, String)" Url="html/EC313140.htm" />
+          <HelpTOCNode Title="KernelTransaction Constructor (ObjectSecurity, UInt32, String)" Url="html/D5673140.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="f6833e2c-27d0-40c1-a25e-6964c0dc0fd3" Title="KernelTransaction Methods" Url="html/BC564277.htm">
+          <HelpTOCNode Title="Commit Method " Url="html/59F679C7.htm" />
+          <HelpTOCNode Title="Dispose Method " Url="html/2D0F90F7.htm" />
+          <HelpTOCNode Title="Rollback Method " Url="html/D0846A8E.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="5551debe-31b9-4e49-babe-8f412c36e08c" Title="KernelTransaction Properties" Url="html/E94662D5.htm">
+          <HelpTOCNode Title="SafeHandle Property " Url="html/4810BE6B.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="c70285fd-f434-4388-95e7-fb2434d244ca" Title="LinkTargetInfo Class" Url="html/2EEDA79E.htm">
+        <HelpTOCNode Title="LinkTargetInfo Methods" Url="html/5524FA6E.htm" />
+        <HelpTOCNode Id="8138e295-b5c8-49f3-8782-2202add123f2" Title="LinkTargetInfo Properties" Url="html/D4A83AC9.htm">
+          <HelpTOCNode Title="PrintName Property " Url="html/D0A29ACE.htm" />
+          <HelpTOCNode Title="SubstituteName Property " Url="html/72154030.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="MoveOptions Enumeration" Url="html/1036D9B3.htm" />
+      <HelpTOCNode Id="a9412b7f-a359-46f3-a467-2c8fa36a3ffa" Title="NotAReparsePointException Class" Url="html/9DA04580.htm">
+        <HelpTOCNode Id="ae823d6c-4ff5-4897-aeaa-27bbae08d9a9" Title="NotAReparsePointException Constructor " Url="html/AB0440B0.htm">
+          <HelpTOCNode Title="NotAReparsePointException Constructor " Url="html/B5BE0203.htm" />
+          <HelpTOCNode Title="NotAReparsePointException Constructor (String)" Url="html/32F44A56.htm" />
+          <HelpTOCNode Title="NotAReparsePointException Constructor (SerializationInfo, StreamingContext)" Url="html/90C54A56.htm" />
+          <HelpTOCNode Title="NotAReparsePointException Constructor (String, Exception)" Url="html/A78F4A56.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="NotAReparsePointException Methods" Url="html/8BE8DBF7.htm" />
+        <HelpTOCNode Title="NotAReparsePointException Properties" Url="html/F3C3E7A9.htm" />
+        <HelpTOCNode Title="NotAReparsePointException Events" Url="html/3C926379.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="05b38c46-c712-4d05-93d4-4e024b0b1ad0" Title="Path Class" Url="html/E7DD823D.htm">
+        <HelpTOCNode Id="fe4fe2e8-c41d-4eea-8711-dd2f3bb5d949" Title="Path Fields" Url="html/7C8AF3C1.htm">
+          <HelpTOCNode Title="AltDirectorySeparator Field" Url="html/3268BD08.htm" />
+          <HelpTOCNode Title="AltDirectorySeparatorChar Field" Url="html/5B586B06.htm" />
+          <HelpTOCNode Title="CurrentDirectoryPrefix Field" Url="html/3584D631.htm" />
+          <HelpTOCNode Title="CurrentDirectoryPrefixChar Field" Url="html/F50617E0.htm" />
+          <HelpTOCNode Title="DevicePrefix Field" Url="html/1999B6F.htm" />
+          <HelpTOCNode Title="DirectorySeparator Field" Url="html/C0E333C.htm" />
+          <HelpTOCNode Title="DirectorySeparatorChar Field" Url="html/C645131B.htm" />
+          <HelpTOCNode Title="DosDeviceLanmanPrefix Field" Url="html/934B3F6B.htm" />
+          <HelpTOCNode Title="DosDeviceMupPrefix Field" Url="html/1C5F950.htm" />
+          <HelpTOCNode Title="DosDeviceUncPrefix Field" Url="html/9CE305E7.htm" />
+          <HelpTOCNode Title="ExtensionSeparatorChar Field" Url="html/34ECD7EF.htm" />
+          <HelpTOCNode Title="GlobalRootPrefix Field" Url="html/84BC6A3B.htm" />
+          <HelpTOCNode Title="LogicalDrivePrefix Field" Url="html/4AD0DA28.htm" />
+          <HelpTOCNode Title="LongPathPrefix Field" Url="html/273BD0F0.htm" />
+          <HelpTOCNode Title="LongPathUncPrefix Field" Url="html/20EB9CD2.htm" />
+          <HelpTOCNode Title="ParentDirectoryPrefix Field" Url="html/AE2FA054.htm" />
+          <HelpTOCNode Title="PathSeparator Field" Url="html/FCCFD472.htm" />
+          <HelpTOCNode Title="StreamSeparator Field" Url="html/4B32982D.htm" />
+          <HelpTOCNode Title="StreamSeparatorChar Field" Url="html/21EDE656.htm" />
+          <HelpTOCNode Title="StringTerminatorChar Field" Url="html/B000C938.htm" />
+          <HelpTOCNode Title="SubstitutePrefix Field" Url="html/2152EF02.htm" />
+          <HelpTOCNode Title="UncPrefix Field" Url="html/F544DDD3.htm" />
+          <HelpTOCNode Title="WildcardQuestion Field" Url="html/FB748839.htm" />
+          <HelpTOCNode Title="WildcardQuestionChar Field" Url="html/42E8D0CA.htm" />
+          <HelpTOCNode Title="WildcardStarMatchAll Field" Url="html/815CAB16.htm" />
+          <HelpTOCNode Title="WildcardStarMatchAllChar Field" Url="html/B52711C5.htm" />
+          <HelpTOCNode Title="VolumePrefix Field" Url="html/BF796DA9.htm" />
+          <HelpTOCNode Title="VolumeSeparator Field" Url="html/9BAC4825.htm" />
+          <HelpTOCNode Title="VolumeSeparatorChar Field" Url="html/123BAABE.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="41cf4c9f-bd4b-46a4-a00d-e52e6c21ca82" Title="Path Methods" Url="html/30525F9F.htm">
+          <HelpTOCNode Id="44978335-16ce-4a41-84c6-80ca919e0316" Title="AddDirectorySeparator Method " Url="html/B9D04722.htm">
+            <HelpTOCNode Title="AddDirectorySeparator Method (String)" Url="html/66C2BBF3.htm" />
+            <HelpTOCNode Title="AddDirectorySeparator Method (String, Boolean)" Url="html/BA1BF8F8.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="ChangeExtension Method " Url="html/622631C4.htm" />
+          <HelpTOCNode Title="Combine Method " Url="html/6358FF8D.htm" />
+          <HelpTOCNode Id="4937a000-4012-4719-9c8d-de0b93ece045" Title="GetDirectoryName Method " Url="html/79CA1982.htm">
+            <HelpTOCNode Title="GetDirectoryName Method (String)" Url="html/559EA00D.htm" />
+            <HelpTOCNode Title="GetDirectoryName Method (String, Boolean)" Url="html/2FEBBD16.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="55b527d5-ec38-451a-91be-83ecb47475a7" Title="GetDirectoryNameWithoutRoot Method " Url="html/F47D3A8F.htm">
+            <HelpTOCNode Title="GetDirectoryNameWithoutRoot Method (String)" Url="html/7E72FA97.htm" />
+            <HelpTOCNode Title="GetDirectoryNameWithoutRoot Method (KernelTransaction, String)" Url="html/19482A92.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="14b0b71c-aa76-4c64-bdc4-aebaae2ca182" Title="GetExtension Method " Url="html/F4E06A39.htm">
+            <HelpTOCNode Title="GetExtension Method (String)" Url="html/F5F9F66.htm" />
+            <HelpTOCNode Title="GetExtension Method (String, Boolean)" Url="html/6BBC68A9.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="aa86bc73-c2d0-49b7-9e93-59615900171f" Title="GetFileName Method " Url="html/262E7A37.htm">
+            <HelpTOCNode Title="GetFileName Method (String)" Url="html/B5D5E1A9.htm" />
+            <HelpTOCNode Title="GetFileName Method (String, Boolean)" Url="html/19A267DD.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="46230a49-9010-45fc-b975-ffed9101c6f3" Title="GetFileNameWithoutExtension Method " Url="html/1990C379.htm">
+            <HelpTOCNode Title="GetFileNameWithoutExtension Method (String)" Url="html/1FAA89C5.htm" />
+            <HelpTOCNode Title="GetFileNameWithoutExtension Method (String, Boolean)" Url="html/3DE6B37.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="f7cd1c78-fe99-4116-af09-cd2c6898743d" Title="GetFinalPathNameByHandle Method " Url="html/AAB3D532.htm">
+            <HelpTOCNode Title="GetFinalPathNameByHandle Method (SafeFileHandle)" Url="html/81E86D77.htm" />
+            <HelpTOCNode Title="GetFinalPathNameByHandle Method (SafeFileHandle, FinalPathFormats)" Url="html/4F1AD910.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="32574bf3-295f-48bb-8cb3-6998f09fe4d3" Title="GetFullPath Method " Url="html/6201083C.htm">
+            <HelpTOCNode Title="GetFullPath Method (String)" Url="html/A3F290D7.htm" />
+            <HelpTOCNode Title="GetFullPath Method (String, Boolean)" Url="html/A3F290D8.htm" />
+            <HelpTOCNode Title="GetFullPath Method (KernelTransaction, String)" Url="html/7E41C041.htm" />
+            <HelpTOCNode Title="GetFullPath Method (KernelTransaction, String, Boolean)" Url="html/A3F290D5.htm" />
+            <HelpTOCNode Title="GetFullPath Method (String, Boolean, Boolean, Boolean)" Url="html/A3F290D9.htm" />
+            <HelpTOCNode Title="GetFullPath Method (KernelTransaction, String, Boolean, Boolean, Boolean)" Url="html/A3F290D6.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetInvalidFileNameChars Method " Url="html/B5AD88C8.htm" />
+          <HelpTOCNode Title="GetInvalidPathChars Method " Url="html/D3C7E698.htm" />
+          <HelpTOCNode Id="d41e39c2-7f3d-4ffd-a537-c4c4979f7970" Title="GetLongFrom83ShortPath Method " Url="html/958AECEE.htm">
+            <HelpTOCNode Title="GetLongFrom83ShortPath Method (String)" Url="html/EEB6757.htm" />
+            <HelpTOCNode Title="GetLongFrom83ShortPath Method (KernelTransaction, String)" Url="html/4F880DA1.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetLongPath Method " Url="html/527901AA.htm" />
+          <HelpTOCNode Title="GetMappedConnectionName Method " Url="html/9C92E4FA.htm" />
+          <HelpTOCNode Title="GetMappedUncName Method " Url="html/7E1179.htm" />
+          <HelpTOCNode Id="ecdd1791-c064-4961-ab98-f65c028cb66b" Title="GetPathRoot Method " Url="html/28E74B5F.htm">
+            <HelpTOCNode Title="GetPathRoot Method (String)" Url="html/5A5527C3.htm" />
+            <HelpTOCNode Title="GetPathRoot Method (String, Boolean)" Url="html/C01DCEB6.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetRandomFileName Method " Url="html/C42726E.htm" />
+          <HelpTOCNode Title="GetRegularPath Method " Url="html/DC14875E.htm" />
+          <HelpTOCNode Id="7e5aa1fd-87a3-4590-bae7-0ff49c6a8294" Title="GetShort83Path Method " Url="html/B7367760.htm">
+            <HelpTOCNode Title="GetShort83Path Method (String)" Url="html/63480053.htm" />
+            <HelpTOCNode Title="GetShort83Path Method (KernelTransaction, String)" Url="html/21A66AC4.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="0e1fc815-9879-4d86-a628-429c2463dcdb" Title="GetSuffixedDirectoryName Method " Url="html/171ECE5F.htm">
+            <HelpTOCNode Title="GetSuffixedDirectoryName Method (String)" Url="html/555757BA.htm" />
+            <HelpTOCNode Title="GetSuffixedDirectoryName Method (KernelTransaction, String)" Url="html/B54C944A.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="954ed033-9f4f-4595-afb5-6ff6e7101853" Title="GetSuffixedDirectoryNameWithoutRoot Method " Url="html/C6792652.htm">
+            <HelpTOCNode Title="GetSuffixedDirectoryNameWithoutRoot Method (String)" Url="html/CBE12DA.htm" />
+            <HelpTOCNode Title="GetSuffixedDirectoryNameWithoutRoot Method (KernelTransaction, String)" Url="html/E23E4C8E.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetTempFileName Method " Url="html/92082E25.htm" />
+          <HelpTOCNode Id="00a847c9-3b6a-4e9a-9109-ee7638e0dc6d" Title="GetTempPath Method " Url="html/51DC52C1.htm">
+            <HelpTOCNode Title="GetTempPath Method " Url="html/671E5EAD.htm" />
+            <HelpTOCNode Title="GetTempPath Method (String)" Url="html/2AE2F561.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="HasExtension Method " Url="html/CDBD80D2.htm" />
+          <HelpTOCNode Id="177c8fb0-f6ea-42f2-8d8f-aa8c6123f06d" Title="IsLocalPath Method " Url="html/A647F2A5.htm">
+            <HelpTOCNode Title="IsLocalPath Method (String)" Url="html/AC7CFDD3.htm" />
+            <HelpTOCNode Title="IsLocalPath Method (String, Boolean)" Url="html/1A987C8F.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="IsLongPath Method " Url="html/656E7E9A.htm" />
+          <HelpTOCNode Id="2ddc7f5b-6d06-461d-81ff-589c76256609" Title="IsPathRooted Method " Url="html/C69BBAD7.htm">
+            <HelpTOCNode Title="IsPathRooted Method (String)" Url="html/62500DE5.htm" />
+            <HelpTOCNode Title="IsPathRooted Method (String, Boolean)" Url="html/B385C2C5.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="be4dd456-1de2-4dbb-9d41-0ef2749a844d" Title="IsUncPath Method " Url="html/E39CECD2.htm">
+            <HelpTOCNode Title="IsUncPath Method (String)" Url="html/D21F30FB.htm" />
+            <HelpTOCNode Title="IsUncPath Method (String, Boolean)" Url="html/3E142BE3.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="IsValidName Method " Url="html/54C25C2F.htm" />
+          <HelpTOCNode Id="81b6686e-f7ee-48d8-9620-b2e1a4064bda" Title="LocalToUnc Method " Url="html/CA90D029.htm">
+            <HelpTOCNode Title="LocalToUnc Method (String)" Url="html/AB9CA2FE.htm" />
+            <HelpTOCNode Title="LocalToUnc Method (String, Boolean)" Url="html/CA360F8.htm" />
+            <HelpTOCNode Title="LocalToUnc Method (String, Boolean, Boolean, Boolean)" Url="html/813E60F8.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="5dfbfc3a-f5c6-4d29-a3b4-f94928bd3db8" Title="RemoveDirectorySeparator Method " Url="html/4E5EC194.htm">
+            <HelpTOCNode Title="RemoveDirectorySeparator Method (String)" Url="html/B0E842DE.htm" />
+            <HelpTOCNode Title="RemoveDirectorySeparator Method (String, Boolean)" Url="html/442A873D.htm" />
+          </HelpTOCNode>
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="ReparsePointTag Enumeration" Url="html/5845012B.htm" />
+      <HelpTOCNode Id="c71facfc-c051-47c7-9122-6136a316bdf8" Title="SafeFindFileHandle Class" Url="html/9E78773D.htm">
+        <HelpTOCNode Title="SafeFindFileHandle Constructor " Url="html/97BAF8D8.htm" />
+        <HelpTOCNode Title="SafeFindFileHandle Fields" Url="html/532949E.htm" />
+        <HelpTOCNode Id="6ec08b33-edd0-4c50-9931-23ef528e5c2c" Title="SafeFindFileHandle Methods" Url="html/EECB95A2.htm">
+          <HelpTOCNode Title="ReleaseHandle Method " Url="html/A9FBB4CE.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="SafeFindFileHandle Properties" Url="html/B0539BAB.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="8dc45353-840f-4e12-a6ef-7d2e7bee5661" Title="SafeFindVolumeHandle Class" Url="html/FA4405AC.htm">
+        <HelpTOCNode Title="SafeFindVolumeHandle Constructor " Url="html/D2DBCDEF.htm" />
+        <HelpTOCNode Title="SafeFindVolumeHandle Fields" Url="html/C70A3C6C.htm" />
+        <HelpTOCNode Id="a0461aba-7c44-46b2-b4b8-1434ea5dba8d" Title="SafeFindVolumeHandle Methods" Url="html/8B6179B4.htm">
+          <HelpTOCNode Title="ReleaseHandle Method " Url="html/2D82B982.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="SafeFindVolumeHandle Properties" Url="html/E01679A5.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="9a814603-5cf2-4420-bd86-60fd4e6ab324" Title="Shell32 Class" Url="html/63DCEFA.htm">
+        <HelpTOCNode Id="37cb7a75-d9b0-414b-8d7a-e4183ee6f8c9" Title="Shell32 Methods" Url="html/D53D7AC7.htm">
+          <HelpTOCNode Title="GetFileAssociation Method " Url="html/F20CF6FF.htm" />
+          <HelpTOCNode Title="GetFileContentType Method " Url="html/60B94D86.htm" />
+          <HelpTOCNode Title="GetFileDefaultIcon Method " Url="html/385A1656.htm" />
+          <HelpTOCNode Title="GetFileFriendlyAppName Method " Url="html/F63D3BD4.htm" />
+          <HelpTOCNode Title="GetFileFriendlyDocName Method " Url="html/AC21200.htm" />
+          <HelpTOCNode Title="GetFileIcon Method " Url="html/B8474F9E.htm" />
+          <HelpTOCNode Title="GetFileInfo Method " Url="html/BAEF4FA5.htm" />
+          <HelpTOCNode Title="GetFileOpenWithAppName Method " Url="html/44CA9EF.htm" />
+          <HelpTOCNode Title="GetFileVerbCommand Method " Url="html/99C71297.htm" />
+          <HelpTOCNode Id="3bcf56da-25af-49aa-a09b-aae5f6f4573b" Title="GetShell32Info Method " Url="html/360B174.htm">
+            <HelpTOCNode Title="GetShell32Info Method (String)" Url="html/9FA6A197.htm" />
+            <HelpTOCNode Title="GetShell32Info Method (String, Nullable(Boolean))" Url="html/9C43FD24.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="PathFileExists Method " Url="html/EFDB2BBA.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="Shell32.AssociationAttributes Enumeration" Url="html/7CF5AA52.htm" />
+      <HelpTOCNode Title="Shell32.AssociationString Enumeration" Url="html/8A25D8C7.htm" />
+      <HelpTOCNode Title="Shell32.FileAttributes Enumeration" Url="html/470C70AD.htm" />
+      <HelpTOCNode Id="be36ee94-c8f1-4c41-9983-e204eeb641bb" Title="Shell32.FileInfo Structure" Url="html/7BD96C1F.htm">
+        <HelpTOCNode Id="e1aa86df-c0da-4959-96f4-075b47f7d134" Title="FileInfo Fields" Url="html/466141F3.htm">
+          <HelpTOCNode Title="Attributes Field" Url="html/FE398D17.htm" />
+          <HelpTOCNode Title="DisplayName Field" Url="html/3FE3AC5E.htm" />
+          <HelpTOCNode Title="IconHandle Field" Url="html/DE323ED.htm" />
+          <HelpTOCNode Title="IconIndex Field" Url="html/6A36DFC2.htm" />
+          <HelpTOCNode Title="TypeName Field" Url="html/26D938EA.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="FileInfo Methods" Url="html/654BA265.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="Shell32.GetAttributesOf Enumeration" Url="html/2EC277F3.htm" />
+      <HelpTOCNode Title="Shell32.UrlType Enumeration" Url="html/B3747114.htm" />
+      <HelpTOCNode Id="d5cac343-5741-4f45-97ab-04afd49eca7e" Title="Shell32Info Class" Url="html/9DB949B9.htm">
+        <HelpTOCNode Id="dbaa56bf-4b0b-4878-ab28-19c3ae800240" Title="Shell32Info Constructor " Url="html/5FA534B6.htm">
+          <HelpTOCNode Title="Shell32Info Constructor (String)" Url="html/DB863EC0.htm" />
+          <HelpTOCNode Title="Shell32Info Constructor (String, Nullable(Boolean))" Url="html/D3772D5.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="4842c1c3-4fb0-4b09-a429-7c7641bb79ba" Title="Shell32Info Methods" Url="html/78424C8E.htm">
+          <HelpTOCNode Title="GetIcon Method " Url="html/649D9BA5.htm" />
+          <HelpTOCNode Title="GetVerbCommand Method " Url="html/85A556BA.htm" />
+          <HelpTOCNode Title="Refresh Method " Url="html/E7FDE2C0.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/5B47D630.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="aa5161f4-2242-4b67-bd16-bdcc92fc6ece" Title="Shell32Info Properties" Url="html/EC2E8533.htm">
+          <HelpTOCNode Title="Association Property " Url="html/D4E64C2F.htm" />
+          <HelpTOCNode Title="Attributes Property " Url="html/DD615576.htm" />
+          <HelpTOCNode Title="Command Property " Url="html/67587A82.htm" />
+          <HelpTOCNode Title="ContentType Property " Url="html/EDFB8CBE.htm" />
+          <HelpTOCNode Title="DdeApplication Property " Url="html/2E1CDA7D.htm" />
+          <HelpTOCNode Title="DefaultIcon Property " Url="html/D639C257.htm" />
+          <HelpTOCNode Title="FriendlyAppName Property " Url="html/8AA3BBD8.htm" />
+          <HelpTOCNode Title="FriendlyDocName Property " Url="html/33F9B8B3.htm" />
+          <HelpTOCNode Title="FullPath Property " Url="html/DF5964EB.htm" />
+          <HelpTOCNode Title="OpenWithAppName Property " Url="html/ECE7507E.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="StreamAttributes Enumeration" Url="html/90E75799.htm" />
+      <HelpTOCNode Title="StreamType Enumeration" Url="html/E31D3761.htm" />
+      <HelpTOCNode Title="SymbolicLinkTarget Enumeration" Url="html/E803C211.htm" />
+      <HelpTOCNode Id="6f482a03-75cf-4025-95e6-8754287845f2" Title="SymbolicLinkTargetInfo Class" Url="html/4FBD7A0.htm">
+        <HelpTOCNode Title="SymbolicLinkTargetInfo Methods" Url="html/2A17803C.htm" />
+        <HelpTOCNode Id="fc0eaf10-01f1-4a80-a3ba-d52c521eedc4" Title="SymbolicLinkTargetInfo Properties" Url="html/AFDD1B8D.htm">
+          <HelpTOCNode Title="LinkType Property " Url="html/DD55B885.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="SymbolicLinkType Enumeration" Url="html/EE05DD52.htm" />
+      <HelpTOCNode Id="f8039f6b-d7ac-498f-bae1-9b7168b936c4" Title="TransactionalConflictException Class" Url="html/604340F0.htm">
+        <HelpTOCNode Id="cf93a6c9-0fba-4c12-bf3c-33a7cfca5b0b" Title="TransactionalConflictException Constructor " Url="html/FA87A40.htm">
+          <HelpTOCNode Title="TransactionalConflictException Constructor " Url="html/C3461434.htm" />
+          <HelpTOCNode Title="TransactionalConflictException Constructor (String)" Url="html/C2A9A1C3.htm" />
+          <HelpTOCNode Title="TransactionalConflictException Constructor (SerializationInfo, StreamingContext)" Url="html/C2A9A1C2.htm" />
+          <HelpTOCNode Title="TransactionalConflictException Constructor (String, Exception)" Url="html/C2A9A1C4.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="TransactionalConflictException Methods" Url="html/D805F6FF.htm" />
+        <HelpTOCNode Title="TransactionalConflictException Properties" Url="html/BDF361C7.htm" />
+        <HelpTOCNode Title="TransactionalConflictException Events" Url="html/B8F5A27C.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="c37eced7-6c1a-4a38-9c1a-09a06cdeecf3" Title="TransactionAlreadyAbortedException Class" Url="html/C79FC983.htm">
+        <HelpTOCNode Id="bf8a3cf8-662b-4e4b-81f4-071cb488169c" Title="TransactionAlreadyAbortedException Constructor " Url="html/AF4C9BCE.htm">
+          <HelpTOCNode Title="TransactionAlreadyAbortedException Constructor " Url="html/B605065E.htm" />
+          <HelpTOCNode Title="TransactionAlreadyAbortedException Constructor (String)" Url="html/42EA5DC4.htm" />
+          <HelpTOCNode Title="TransactionAlreadyAbortedException Constructor (SerializationInfo, StreamingContext)" Url="html/42EA5DC5.htm" />
+          <HelpTOCNode Title="TransactionAlreadyAbortedException Constructor (String, Exception)" Url="html/42EA5DC3.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="TransactionAlreadyAbortedException Methods" Url="html/2547C843.htm" />
+        <HelpTOCNode Title="TransactionAlreadyAbortedException Properties" Url="html/4D5D197B.htm" />
+        <HelpTOCNode Title="TransactionAlreadyAbortedException Events" Url="html/F234D0B.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="ebc53cd6-fd4e-4d4c-8f98-5d2f86f602b3" Title="TransactionAlreadyCommittedException Class" Url="html/999C104.htm">
+        <HelpTOCNode Id="5e110d5a-c4c0-4a8f-bff7-6b21ddf82910" Title="TransactionAlreadyCommittedException Constructor " Url="html/3DD62316.htm">
+          <HelpTOCNode Title="TransactionAlreadyCommittedException Constructor " Url="html/A133F8BF.htm" />
+          <HelpTOCNode Title="TransactionAlreadyCommittedException Constructor (String)" Url="html/2452E083.htm" />
+          <HelpTOCNode Title="TransactionAlreadyCommittedException Constructor (SerializationInfo, StreamingContext)" Url="html/C493E54.htm" />
+          <HelpTOCNode Title="TransactionAlreadyCommittedException Constructor (String, Exception)" Url="html/C6FA551E.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="TransactionAlreadyCommittedException Methods" Url="html/989329E9.htm" />
+        <HelpTOCNode Title="TransactionAlreadyCommittedException Properties" Url="html/9C961797.htm" />
+        <HelpTOCNode Title="TransactionAlreadyCommittedException Events" Url="html/A80CAEA2.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="d2953869-0e3a-4985-8fbd-2f3af3fe465f" Title="TransactionException Class" Url="html/DAC5B55E.htm">
+        <HelpTOCNode Id="7fd9b4f7-cc77-4ce3-b13f-cd8de10210a6" Title="TransactionException Constructor " Url="html/9AC43E62.htm">
+          <HelpTOCNode Title="TransactionException Constructor " Url="html/A7CA6FF1.htm" />
+          <HelpTOCNode Title="TransactionException Constructor (String)" Url="html/5388AA69.htm" />
+          <HelpTOCNode Title="TransactionException Constructor (SerializationInfo, StreamingContext)" Url="html/F6301F04.htm" />
+          <HelpTOCNode Title="TransactionException Constructor (String, Exception)" Url="html/B0E135CE.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="TransactionException Methods" Url="html/BEC9040F.htm" />
+        <HelpTOCNode Title="TransactionException Properties" Url="html/A5167678.htm" />
+        <HelpTOCNode Title="TransactionException Events" Url="html/7EE2B9E.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="b5523c66-4859-4906-9dbf-7abdcf17c227" Title="UnrecognizedReparsePointException Class" Url="html/9FDA9A76.htm">
+        <HelpTOCNode Id="42a4de4d-fac0-4e1b-802d-4cd251d9805c" Title="UnrecognizedReparsePointException Constructor " Url="html/D77B568D.htm">
+          <HelpTOCNode Title="UnrecognizedReparsePointException Constructor " Url="html/976DC8F6.htm" />
+          <HelpTOCNode Title="UnrecognizedReparsePointException Constructor (String)" Url="html/296A7F6F.htm" />
+          <HelpTOCNode Title="UnrecognizedReparsePointException Constructor (SerializationInfo, StreamingContext)" Url="html/873B7F6F.htm" />
+          <HelpTOCNode Title="UnrecognizedReparsePointException Constructor (String, Exception)" Url="html/9E057F6F.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="UnrecognizedReparsePointException Methods" Url="html/7D6F8CE3.htm" />
+        <HelpTOCNode Title="UnrecognizedReparsePointException Properties" Url="html/ACA233C.htm" />
+        <HelpTOCNode Title="UnrecognizedReparsePointException Events" Url="html/DFE3295.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="0bdb1b8e-1439-4092-9f51-de0d4293168e" Title="UnsupportedRemoteTransactionException Class" Url="html/70B85215.htm">
+        <HelpTOCNode Id="23e0303c-2782-44a4-bea2-89c79744791e" Title="UnsupportedRemoteTransactionException Constructor " Url="html/49D65110.htm">
+          <HelpTOCNode Title="UnsupportedRemoteTransactionException Constructor " Url="html/EB41FB35.htm" />
+          <HelpTOCNode Title="UnsupportedRemoteTransactionException Constructor (String)" Url="html/E0C5D31.htm" />
+          <HelpTOCNode Title="UnsupportedRemoteTransactionException Constructor (SerializationInfo, StreamingContext)" Url="html/82A75D31.htm" />
+          <HelpTOCNode Title="UnsupportedRemoteTransactionException Constructor (String, Exception)" Url="html/99715D31.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="UnsupportedRemoteTransactionException Methods" Url="html/D619DF68.htm" />
+        <HelpTOCNode Title="UnsupportedRemoteTransactionException Properties" Url="html/5C656872.htm" />
+        <HelpTOCNode Title="UnsupportedRemoteTransactionException Events" Url="html/65DD6A8B.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="4f1494d9-18e6-46da-a5ed-520fb98fce21" Title="Volume Class" Url="html/35866CB2.htm">
+        <HelpTOCNode Id="4f2c9f95-b011-4bf4-abee-7e06f227808f" Title="Volume Methods" Url="html/F8FADD77.htm">
+          <HelpTOCNode Id="aac254b4-1ce9-4aac-8d08-29fb6d06fe87" Title="DefineDosDevice Method " Url="html/87E6C5EB.htm">
+            <HelpTOCNode Title="DefineDosDevice Method (String, String)" Url="html/FA990208.htm" />
+            <HelpTOCNode Title="DefineDosDevice Method (String, String, DosDeviceAttributes)" Url="html/81C19449.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="DeleteCurrentVolumeLabel Method " Url="html/A5463AE0.htm" />
+          <HelpTOCNode Id="3d598390-c223-4921-9537-ef90f223e72f" Title="DeleteDosDevice Method " Url="html/C44E2A82.htm">
+            <HelpTOCNode Title="DeleteDosDevice Method (String)" Url="html/408C2B6.htm" />
+            <HelpTOCNode Title="DeleteDosDevice Method (String, String)" Url="html/328A40D7.htm" />
+            <HelpTOCNode Title="DeleteDosDevice Method (String, String, Boolean)" Url="html/77D92A0D.htm" />
+            <HelpTOCNode Title="DeleteDosDevice Method (String, String, DosDeviceAttributes, Boolean)" Url="html/D531B572.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="DeleteVolumeLabel Method " Url="html/83A3191F.htm" />
+          <HelpTOCNode Title="DeleteVolumeMountPoint Method " Url="html/8E4FCBBF.htm" />
+          <HelpTOCNode Title="EnumerateVolumeMountPoints Method " Url="html/D9B788D1.htm" />
+          <HelpTOCNode Title="EnumerateVolumePathNames Method " Url="html/9D048BC5.htm" />
+          <HelpTOCNode Title="EnumerateVolumes Method " Url="html/C29D380E.htm" />
+          <HelpTOCNode Title="GetCurrentDriveType Method " Url="html/393013AC.htm" />
+          <HelpTOCNode Id="92cd12a7-be50-4621-9321-a6d9815d7796" Title="GetDiskFreeSpace Method " Url="html/8E8B0E6.htm">
+            <HelpTOCNode Title="GetDiskFreeSpace Method (String)" Url="html/4AD6A378.htm" />
+            <HelpTOCNode Title="GetDiskFreeSpace Method (String, Nullable(Boolean))" Url="html/FF7C4086.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetDriveFormat Method " Url="html/C82EEC0.htm" />
+          <HelpTOCNode Title="GetDriveNameForNtDeviceName Method " Url="html/43EA4404.htm" />
+          <HelpTOCNode Title="GetDriveType Method " Url="html/C9461050.htm" />
+          <HelpTOCNode Title="GetUniqueVolumeNameForPath Method " Url="html/7F1D950A.htm" />
+          <HelpTOCNode Title="GetVolumeDeviceName Method " Url="html/714EA9EF.htm" />
+          <HelpTOCNode Title="GetVolumeDisplayName Method " Url="html/C5F9CBB1.htm" />
+          <HelpTOCNode Title="GetVolumeGuid Method " Url="html/8793EBF1.htm" />
+          <HelpTOCNode Title="GetVolumeGuidForNtDeviceName Method " Url="html/D8AC4895.htm" />
+          <HelpTOCNode Id="75bd0ff4-8bdb-4a23-bb98-d55a66a868ce" Title="GetVolumeInformation Method " Url="html/F95FFDC2.htm">
+            <HelpTOCNode Title="GetVolumeInformation Method (SafeFileHandle)" Url="html/1BC300B5.htm" />
+            <HelpTOCNode Title="GetVolumeInformation Method (String)" Url="html/3E58B3D8.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetVolumeLabel Method " Url="html/7A227742.htm" />
+          <HelpTOCNode Title="GetVolumePathName Method " Url="html/3F0928B0.htm" />
+          <HelpTOCNode Title="IsReady Method " Url="html/44B61512.htm" />
+          <HelpTOCNode Title="IsSameVolume Method " Url="html/821CBBA9.htm" />
+          <HelpTOCNode Title="IsVolume Method " Url="html/56AA725B.htm" />
+          <HelpTOCNode Id="805d2689-341d-4e44-a538-1ed5ea1970ce" Title="QueryAllDosDevices Method " Url="html/8A8648BC.htm">
+            <HelpTOCNode Title="QueryAllDosDevices Method " Url="html/A92CDB55.htm" />
+            <HelpTOCNode Title="QueryAllDosDevices Method (String)" Url="html/131B9809.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="QueryDosDevice Method " Url="html/A64E41B8.htm" />
+          <HelpTOCNode Title="SetCurrentVolumeLabel Method " Url="html/C87E465A.htm" />
+          <HelpTOCNode Title="SetVolumeLabel Method " Url="html/CF32AC3E.htm" />
+          <HelpTOCNode Title="SetVolumeMountPoint Method " Url="html/59700B1D.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="8b733c96-cb26-4d49-a994-579043c501de" Title="VolumeInfo Class" Url="html/F2FD145.htm">
+        <HelpTOCNode Id="a75920c2-0519-4489-9d05-f3821ecaa4ce" Title="VolumeInfo Constructor " Url="html/84605463.htm">
+          <HelpTOCNode Title="VolumeInfo Constructor (SafeFileHandle)" Url="html/37E632E4.htm" />
+          <HelpTOCNode Title="VolumeInfo Constructor (String)" Url="html/1C4A8E7B.htm" />
+          <HelpTOCNode Title="VolumeInfo Constructor (SafeFileHandle, Boolean, Boolean)" Url="html/1C4A8E7A.htm" />
+          <HelpTOCNode Title="VolumeInfo Constructor (String, Boolean, Boolean)" Url="html/1C4A8E7C.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="e785d382-8b22-4068-85f3-5877b38d273d" Title="VolumeInfo Methods" Url="html/E06CE874.htm">
+          <HelpTOCNode Title="Refresh Method " Url="html/AF6EA8E5.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/78E3D095.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="d94cff21-ba1c-41ff-9560-db8610893595" Title="VolumeInfo Properties" Url="html/1F71FECF.htm">
+          <HelpTOCNode Title="CasePreservedNames Property " Url="html/A9A2B71A.htm" />
+          <HelpTOCNode Title="CaseSensitiveSearch Property " Url="html/D73DDCEA.htm" />
+          <HelpTOCNode Title="Compression Property " Url="html/5D518A2E.htm" />
+          <HelpTOCNode Title="FileSystemName Property " Url="html/CCBE64F7.htm" />
+          <HelpTOCNode Title="FullPath Property " Url="html/E55D6161.htm" />
+          <HelpTOCNode Title="Guid Property " Url="html/42DDDA7C.htm" />
+          <HelpTOCNode Title="MaximumComponentLength Property " Url="html/A3B1AE27.htm" />
+          <HelpTOCNode Title="Name Property " Url="html/DEA5F3F3.htm" />
+          <HelpTOCNode Title="NamedStreams Property " Url="html/35683D70.htm" />
+          <HelpTOCNode Title="PersistentAcls Property " Url="html/B524BCCF.htm" />
+          <HelpTOCNode Title="ReadOnlyVolume Property " Url="html/38CC1142.htm" />
+          <HelpTOCNode Title="SequentialWriteOnce Property " Url="html/F3F4BC26.htm" />
+          <HelpTOCNode Title="SerialNumber Property " Url="html/7C7FFCA5.htm" />
+          <HelpTOCNode Title="SupportsEncryption Property " Url="html/5F6E63DA.htm" />
+          <HelpTOCNode Title="SupportsExtendedAttributes Property " Url="html/6EA0F868.htm" />
+          <HelpTOCNode Title="SupportsHardLinks Property " Url="html/C0B67271.htm" />
+          <HelpTOCNode Title="SupportsObjectIds Property " Url="html/FF7EA1A8.htm" />
+          <HelpTOCNode Title="SupportsOpenByFileId Property " Url="html/9139695C.htm" />
+          <HelpTOCNode Title="SupportsRemoteStorage Property " Url="html/FFB85005.htm" />
+          <HelpTOCNode Title="SupportsReparsePoints Property " Url="html/8405B931.htm" />
+          <HelpTOCNode Title="SupportsSparseFiles Property " Url="html/6C7D7263.htm" />
+          <HelpTOCNode Title="SupportsTransactions Property " Url="html/BA7DBB69.htm" />
+          <HelpTOCNode Title="SupportsUsnJournal Property " Url="html/B5A3FE15.htm" />
+          <HelpTOCNode Title="UnicodeOnDisk Property " Url="html/C4DD6C1C.htm" />
+          <HelpTOCNode Title="VolumeIsCompressed Property " Url="html/D0559723.htm" />
+          <HelpTOCNode Title="VolumeQuotas Property " Url="html/79932F3B.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="3075519b-bb0c-486b-ad30-18a031680587" Title="Alphaleonis.Win32.Network" Url="html/1E40DD2.htm">
+      <HelpTOCNode Title="AccessPermissions Enumeration" Url="html/B257DBB5.htm" />
+      <HelpTOCNode Id="9105f5b0-3f90-4dee-ad55-4184c94da943" Title="DfsInfo Class" Url="html/8AC701E6.htm">
+        <HelpTOCNode Title="DfsInfo Constructor " Url="html/8DCB4B22.htm" />
+        <HelpTOCNode Id="085946e6-5fb6-436a-ba34-93bb0e111262" Title="DfsInfo Methods" Url="html/FF956CB0.htm">
+          <HelpTOCNode Title="ToString Method " Url="html/F17D0D6C.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="aeba8bbe-5709-4fb2-aa72-0310f1d00b4f" Title="DfsInfo Properties" Url="html/21E3441F.htm">
+          <HelpTOCNode Title="Comment Property " Url="html/7D0A8DDB.htm" />
+          <HelpTOCNode Title="DirectoryInfo Property " Url="html/588BC4C.htm" />
+          <HelpTOCNode Title="EntryPath Property " Url="html/6DBAB5E4.htm" />
+          <HelpTOCNode Title="Guid Property " Url="html/AEF2625A.htm" />
+          <HelpTOCNode Title="NumberOfStorages Property " Url="html/3522626C.htm" />
+          <HelpTOCNode Title="State Property " Url="html/B48DAA63.htm" />
+          <HelpTOCNode Title="Timeout Property " Url="html/3CEB907E.htm" />
+          <HelpTOCNode Title="Transaction Property " Url="html/92DC9C97.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="f5755f4f-d061-4fcc-b488-0a0f78df683c" Title="DfsStorage Class" Url="html/94074A8.htm">
+        <HelpTOCNode Title="DfsStorage Constructor " Url="html/8374D35A.htm" />
+        <HelpTOCNode Title="DfsStorage Methods" Url="html/6E5FC075.htm" />
+        <HelpTOCNode Id="9066ad78-5d17-43d7-86e4-3eacc7bc053d" Title="DfsStorage Properties" Url="html/968C2E06.htm">
+          <HelpTOCNode Title="ServerName Property " Url="html/E6363D9F.htm" />
+          <HelpTOCNode Title="ShareName Property " Url="html/A3E06945.htm" />
+          <HelpTOCNode Title="State Property " Url="html/8A3C86BF.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="DfsStorageStates Enumeration" Url="html/7E734AF.htm" />
+      <HelpTOCNode Title="DfsVolumeStates Enumeration" Url="html/606F1BA2.htm" />
+      <HelpTOCNode Id="410156ab-446f-4489-bc24-e7ed67befbad" Title="Host Class" Url="html/73E49412.htm">
+        <HelpTOCNode Id="8a9c7e30-6602-4bd2-83c9-c6e2b27d4382" Title="Host Methods" Url="html/931F3F76.htm">
+          <HelpTOCNode Id="7b7b438f-a95a-4563-abed-165ab562c004" Title="ConnectDrive Method " Url="html/34A5991D.htm">
+            <HelpTOCNode Title="ConnectDrive Method (String, String)" Url="html/3E1A58FF.htm" />
+            <HelpTOCNode Title="ConnectDrive Method (String, String, NetworkCredential, Boolean, Boolean, Boolean)" Url="html/9B72E464.htm" />
+            <HelpTOCNode Title="ConnectDrive Method (IntPtr, String, String, NetworkCredential, Boolean, Boolean, Boolean)" Url="html/49ED7D79.htm" />
+            <HelpTOCNode Title="ConnectDrive Method (String, String, String, String, Boolean, Boolean, Boolean)" Url="html/E0714A1.htm" />
+            <HelpTOCNode Title="ConnectDrive Method (IntPtr, String, String, String, String, Boolean, Boolean, Boolean)" Url="html/E0C1CD9A.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="40440adf-982e-4d4c-942e-288efbb46ffc" Title="ConnectTo Method " Url="html/9E313340.htm">
+            <HelpTOCNode Title="ConnectTo Method (String)" Url="html/A26F4DCE.htm" />
+            <HelpTOCNode Title="ConnectTo Method (String, NetworkCredential, Boolean, Boolean, Boolean)" Url="html/170A4DCE.htm" />
+            <HelpTOCNode Title="ConnectTo Method (IntPtr, String, NetworkCredential, Boolean, Boolean, Boolean)" Url="html/15F56CE.htm" />
+            <HelpTOCNode Title="ConnectTo Method (String, String, String, Boolean, Boolean, Boolean)" Url="html/B9394DCE.htm" />
+            <HelpTOCNode Title="ConnectTo Method (IntPtr, String, String, String, Boolean, Boolean, Boolean)" Url="html/404DCE.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="cd01fb4b-0297-40db-9a9c-6f0e53855b9e" Title="DisconnectDrive Method " Url="html/6787FBF8.htm">
+            <HelpTOCNode Title="DisconnectDrive Method (String)" Url="html/965E001A.htm" />
+            <HelpTOCNode Title="DisconnectDrive Method (String, Boolean, Boolean)" Url="html/F84D689.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="423cb931-f1ef-4496-af7a-a25453a74fbf" Title="DisconnectFrom Method " Url="html/AD4E700E.htm">
+            <HelpTOCNode Title="DisconnectFrom Method (String)" Url="html/D4C64721.htm" />
+            <HelpTOCNode Title="DisconnectFrom Method (String, Boolean, Boolean)" Url="html/613B1DB6.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="EnumerateDfsLinks Method " Url="html/32187CAC.htm" />
+          <HelpTOCNode Id="0c115535-ff27-4e25-bb37-b1c00ed1e03c" Title="EnumerateDfsRoot Method " Url="html/580E94B2.htm">
+            <HelpTOCNode Title="EnumerateDfsRoot Method " Url="html/F17FC11B.htm" />
+            <HelpTOCNode Title="EnumerateDfsRoot Method (String, Boolean)" Url="html/E0B7F305.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="acb48170-f0a0-4856-b601-88dc168695cb" Title="EnumerateDomainDfsRoot Method " Url="html/8B46AE5E.htm">
+            <HelpTOCNode Title="EnumerateDomainDfsRoot Method " Url="html/186B7B50.htm" />
+            <HelpTOCNode Title="EnumerateDomainDfsRoot Method (String, Boolean)" Url="html/68BF1433.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="19cb25b8-cb44-4e6c-8c4d-ece158a21cd4" Title="EnumerateDrives Method " Url="html/E455D836.htm">
+            <HelpTOCNode Title="EnumerateDrives Method " Url="html/2810CDA2.htm" />
+            <HelpTOCNode Title="EnumerateDrives Method (String, Boolean)" Url="html/579001EE.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="7159faa9-f712-4265-85c8-a1dcf1db4279" Title="EnumerateOpenConnections Method " Url="html/43CD9471.htm">
+            <HelpTOCNode Title="EnumerateOpenConnections Method " Url="html/16154B5A.htm" />
+            <HelpTOCNode Title="EnumerateOpenConnections Method (String, String, Boolean)" Url="html/FC25C1B7.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="4ff7d287-7578-4e00-a8b6-5ecd3483be9a" Title="EnumerateOpenResources Method " Url="html/CE07EF89.htm">
+            <HelpTOCNode Title="EnumerateOpenResources Method " Url="html/A003BFAC.htm" />
+            <HelpTOCNode Title="EnumerateOpenResources Method (String, String, String, Boolean)" Url="html/FF9ECFEB.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="bbbbcb1d-79e2-4cd1-a554-de35a198f2e4" Title="EnumerateShares Method " Url="html/3C24D454.htm">
+            <HelpTOCNode Title="EnumerateShares Method " Url="html/37CBF359.htm" />
+            <HelpTOCNode Title="EnumerateShares Method (String, Boolean)" Url="html/67CB2895.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="f93afccd-90f7-49a1-8ad4-bed001d0fdba" Title="GetDfsClientInfo Method " Url="html/5271B286.htm">
+            <HelpTOCNode Title="GetDfsClientInfo Method (String)" Url="html/227C3CBA.htm" />
+            <HelpTOCNode Title="GetDfsClientInfo Method (String, String, String)" Url="html/BDFE4B8.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetDfsInfo Method " Url="html/804C4AD0.htm" />
+          <HelpTOCNode Title="GetHostShareFromPath Method " Url="html/188965B2.htm" />
+          <HelpTOCNode Id="ada8a14f-6e5c-4a68-b0ce-16392c5b70a0" Title="GetShareInfo Method " Url="html/86C3DEA0.htm">
+            <HelpTOCNode Title="GetShareInfo Method (String, Boolean)" Url="html/313D1A72.htm" />
+            <HelpTOCNode Title="GetShareInfo Method (Int32, String, Boolean)" Url="html/CBAEFA06.htm" />
+            <HelpTOCNode Title="GetShareInfo Method (String, String, Boolean)" Url="html/D3E48F0D.htm" />
+            <HelpTOCNode Title="GetShareInfo Method (Int32, String, String, Boolean)" Url="html/19337843.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Id="824271de-f575-4c26-b788-83ebaec77c35" Title="GetUncName Method " Url="html/655A2F0F.htm">
+            <HelpTOCNode Title="GetUncName Method " Url="html/93B1ADCE.htm" />
+            <HelpTOCNode Title="GetUncName Method (String)" Url="html/C8D4BF69.htm" />
+          </HelpTOCNode>
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="5a078991-1f62-42a5-b295-1a376aa86081" Title="Host.DriveConnection Class" Url="html/5097E8B0.htm">
+        <HelpTOCNode Id="30b106fe-118a-4177-ab94-7ca0d3247e64" Title="DriveConnection Constructor " Url="html/9AF9A30F.htm">
+          <HelpTOCNode Title="Host.DriveConnection Constructor (String)" Url="html/38C70EF4.htm" />
+          <HelpTOCNode Title="Host.DriveConnection Constructor (String, NetworkCredential, Boolean)" Url="html/B8B29D2D.htm" />
+          <HelpTOCNode Title="Host.DriveConnection Constructor (String, String, String, Boolean)" Url="html/16839D2D.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="83fc5f17-30ee-4b23-a648-17dd2a40193b" Title="DriveConnection Methods" Url="html/12005555.htm">
+          <HelpTOCNode Title="Dispose Method " Url="html/88B33800.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/123EE6EB.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="446d20fa-6e65-48bd-8349-4e2158ea1296" Title="DriveConnection Properties" Url="html/E619266D.htm">
+          <HelpTOCNode Title="LocalName Property " Url="html/BF8B5EA8.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="e637e07c-1459-4f70-8707-b8068f399d16" Title="OpenConnectionInfo Class" Url="html/DB7EDCB4.htm">
+        <HelpTOCNode Id="5742de63-7f37-44ab-a860-89725539ef78" Title="OpenConnectionInfo Methods" Url="html/1A82259E.htm">
+          <HelpTOCNode Title="ToString Method " Url="html/D3AA0DBB.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="56d2fef5-ecb4-4a72-adba-23631a95f1af" Title="OpenConnectionInfo Properties" Url="html/40E050C5.htm">
+          <HelpTOCNode Title="ConnectedSeconds Property " Url="html/EC7218EC.htm" />
+          <HelpTOCNode Title="Host Property " Url="html/CFFDB49E.htm" />
+          <HelpTOCNode Title="Id Property " Url="html/D5991433.htm" />
+          <HelpTOCNode Title="NetName Property " Url="html/AE344F8F.htm" />
+          <HelpTOCNode Title="ShareType Property " Url="html/3ACD0956.htm" />
+          <HelpTOCNode Title="TotalOpenFiles Property " Url="html/4CE48CE.htm" />
+          <HelpTOCNode Title="TotalUsers Property " Url="html/EF863EAB.htm" />
+          <HelpTOCNode Title="UserName Property " Url="html/B24AF85.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="6f54c3f0-75fc-4d6e-879f-31310187e5b6" Title="OpenResourceInfo Class" Url="html/BA775BBB.htm">
+        <HelpTOCNode Id="d46e73e5-9710-4e0e-b0b9-eacff71620c0" Title="OpenResourceInfo Methods" Url="html/9EF619FD.htm">
+          <HelpTOCNode Title="Close Method " Url="html/C3A8B50E.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/8C12D8FB.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="adf69fe7-e726-4be6-a7a9-00729e2ac855" Title="OpenResourceInfo Properties" Url="html/9290A8FC.htm">
+          <HelpTOCNode Title="Host Property " Url="html/BD7A125.htm" />
+          <HelpTOCNode Title="Id Property " Url="html/934E5464.htm" />
+          <HelpTOCNode Title="PathName Property " Url="html/262B90AD.htm" />
+          <HelpTOCNode Title="Permissions Property " Url="html/616ECD88.htm" />
+          <HelpTOCNode Title="TotalLocks Property " Url="html/A71441F6.htm" />
+          <HelpTOCNode Title="UserName Property " Url="html/FB3F244D.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="7ebae019-042a-4580-b52e-784b31583e7e" Title="ShareInfo Class" Url="html/1B7C2B56.htm">
+        <HelpTOCNode Id="a8d01df0-b76a-4e07-aa7b-8ea29f449644" Title="ShareInfo Methods" Url="html/C63DE993.htm">
+          <HelpTOCNode Title="ToString Method " Url="html/83CCD19B.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="2f423041-f782-45c8-964d-c48390c98b56" Title="ShareInfo Properties" Url="html/F2CDEF1D.htm">
+          <HelpTOCNode Title="CurrentUses Property " Url="html/E07C1A97.htm" />
+          <HelpTOCNode Title="DirectoryInfo Property " Url="html/BED9358A.htm" />
+          <HelpTOCNode Title="MaxUses Property " Url="html/E461E2F5.htm" />
+          <HelpTOCNode Title="NetFullPath Property " Url="html/6B6E61F7.htm" />
+          <HelpTOCNode Title="NetName Property " Url="html/F1F7995C.htm" />
+          <HelpTOCNode Title="Password Property " Url="html/98BE8406.htm" />
+          <HelpTOCNode Title="Path Property " Url="html/E9C98A15.htm" />
+          <HelpTOCNode Title="Permissions Property " Url="html/D91ED429.htm" />
+          <HelpTOCNode Title="Remark Property " Url="html/5DF4CFC4.htm" />
+          <HelpTOCNode Title="ResourceType Property " Url="html/39AE903C.htm" />
+          <HelpTOCNode Title="SecurityDescriptor Property " Url="html/871DB770.htm" />
+          <HelpTOCNode Title="ServerName Property " Url="html/15B19B4.htm" />
+          <HelpTOCNode Title="ShareLevel Property " Url="html/6DC47312.htm" />
+          <HelpTOCNode Title="ShareType Property " Url="html/DF0672F6.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Title="ShareResourceTypes Enumeration" Url="html/47B7ADE3.htm" />
+      <HelpTOCNode Title="ShareType Enumeration" Url="html/275928A7.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="8cea4340-2758-4d35-b09a-9a0e17ea6a81" Title="Alphaleonis.Win32.Security" Url="html/D9234A4E.htm">
+      <HelpTOCNode Id="3b33b9e3-4405-4cf3-9a37-38679ff361ac" Title="Privilege Class" Url="html/AC5B7CEB.htm">
+        <HelpTOCNode Title="Privilege Constructor " Url="html/3F932AC0.htm" />
+        <HelpTOCNode Id="3449101e-e8e5-433e-8ae5-bd20a12e103f" Title="Privilege Fields" Url="html/A6A53CC9.htm">
+          <HelpTOCNode Title="AssignPrimaryToken Field" Url="html/D9B9CD73.htm" />
+          <HelpTOCNode Title="Audit Field" Url="html/972EB78C.htm" />
+          <HelpTOCNode Title="Backup Field" Url="html/F50956C.htm" />
+          <HelpTOCNode Title="ChangeNotify Field" Url="html/B8FFF34E.htm" />
+          <HelpTOCNode Title="CreateGlobal Field" Url="html/1FDA5A80.htm" />
+          <HelpTOCNode Title="CreatePagefile Field" Url="html/40F53E34.htm" />
+          <HelpTOCNode Title="CreatePermanent Field" Url="html/99FFC746.htm" />
+          <HelpTOCNode Title="CreateSymbolicLink Field" Url="html/FD9A5144.htm" />
+          <HelpTOCNode Title="CreateToken Field" Url="html/33FF28E.htm" />
+          <HelpTOCNode Title="Debug Field" Url="html/81A9F6A8.htm" />
+          <HelpTOCNode Title="EnableDelegation Field" Url="html/EDF2E60E.htm" />
+          <HelpTOCNode Title="Impersonate Field" Url="html/1CB89FC9.htm" />
+          <HelpTOCNode Title="IncreaseBasePriority Field" Url="html/FFB9D77D.htm" />
+          <HelpTOCNode Title="IncreaseQuota Field" Url="html/9187893E.htm" />
+          <HelpTOCNode Title="IncreaseWorkingSet Field" Url="html/E146C09B.htm" />
+          <HelpTOCNode Title="LoadDriver Field" Url="html/CA647375.htm" />
+          <HelpTOCNode Title="LockMemory Field" Url="html/6882753B.htm" />
+          <HelpTOCNode Title="MachineAccount Field" Url="html/9EFD2851.htm" />
+          <HelpTOCNode Title="ManageVolume Field" Url="html/82E73EAF.htm" />
+          <HelpTOCNode Title="ProfileSingleProcess Field" Url="html/23C6880.htm" />
+          <HelpTOCNode Title="Relabel Field" Url="html/37DA5B.htm" />
+          <HelpTOCNode Title="RemoteShutdown Field" Url="html/A6AEAE80.htm" />
+          <HelpTOCNode Title="Restore Field" Url="html/A9824995.htm" />
+          <HelpTOCNode Title="Security Field" Url="html/88F44436.htm" />
+          <HelpTOCNode Title="Shutdown Field" Url="html/551F07F5.htm" />
+          <HelpTOCNode Title="SyncAgent Field" Url="html/F016F243.htm" />
+          <HelpTOCNode Title="SystemEnvironment Field" Url="html/5BD8B850.htm" />
+          <HelpTOCNode Title="SystemProfile Field" Url="html/910CB26A.htm" />
+          <HelpTOCNode Title="SystemTime Field" Url="html/F370B2D8.htm" />
+          <HelpTOCNode Title="TakeOwnership Field" Url="html/1664B469.htm" />
+          <HelpTOCNode Title="Tcb Field" Url="html/25D39A09.htm" />
+          <HelpTOCNode Title="TimeZone Field" Url="html/B8E44B08.htm" />
+          <HelpTOCNode Title="TrustedCredManAccess Field" Url="html/89F7FAE1.htm" />
+          <HelpTOCNode Title="Undock Field" Url="html/E9D0C338.htm" />
+          <HelpTOCNode Title="UnsolicitedInput Field" Url="html/817B5C4A.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="cbfc367e-f59a-42ae-aba8-b0313ae4c014" Title="Privilege Methods" Url="html/10573F4F.htm">
+          <HelpTOCNode Id="89a95368-9621-4f79-a055-4c1f9be4eca1" Title="Equals Method " Url="html/21F6445B.htm">
+            <HelpTOCNode Title="Equals Method (Object)" Url="html/C9AA44B9.htm" />
+            <HelpTOCNode Title="Equals Method (Privilege)" Url="html/49BCE3F6.htm" />
+          </HelpTOCNode>
+          <HelpTOCNode Title="GetHashCode Method " Url="html/99A679E2.htm" />
+          <HelpTOCNode Title="LookupDisplayName Method " Url="html/8AC76DF9.htm" />
+          <HelpTOCNode Title="LookupLuid Method " Url="html/23ED5067.htm" />
+          <HelpTOCNode Title="ToString Method " Url="html/706F2BF6.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="4ddd13fb-4409-495a-8866-ffedfa08f718" Title="Privilege Properties" Url="html/95BAE7BE.htm">
+          <HelpTOCNode Title="Name Property " Url="html/AAC2B3BF.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="f1376288-4100-4a1f-a6e6-22437cf72c40" Title="PrivilegeEnabler Class" Url="html/39E557A3.htm">
+        <HelpTOCNode Title="PrivilegeEnabler Constructor " Url="html/FE053DB8.htm" />
+        <HelpTOCNode Id="cb26ed22-09c1-46e4-a630-cb4e15b9219b" Title="PrivilegeEnabler Methods" Url="html/E707AEF5.htm">
+          <HelpTOCNode Title="Dispose Method " Url="html/17BC467A.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="e1f9d342-ab2c-44f3-a864-f6e58f0b0634" Title="PrivilegeEnabler Properties" Url="html/D24B5438.htm">
+          <HelpTOCNode Title="EnabledPrivileges Property " Url="html/411F8AA0.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+  </HelpTOCNode>
+</HelpTOC>

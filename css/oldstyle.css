@@ -1,0 +1,30 @@
+body {
+   padding-top: 50px;
+   padding-bottom: 30px;
+   font-family: "Lato";
+}
+
+.doc-header {
+   position: relative;
+   padding: 30px 15px;
+   color: #a7b9ce;
+   text-align: center;
+   text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.1);
+   background-color: #42586E;
+   background-repeat: repeat-x;
+   font-size: 24px;
+   text-align: left;
+}
+
+   .doc-header h1 {
+      font-size: 60px;
+      line-height: 1;
+      color: #FFF;
+   }
+
+.navbar {
+   margin-bottom: 0;
+}
+
+
+
