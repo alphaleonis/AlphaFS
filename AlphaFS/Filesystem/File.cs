@@ -8428,12 +8428,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This can occur in situations that raise exceptions such as passing a file name with invalid characters or too many characters,
       ///   </para>
       ///   <para>a failing or missing disk, or if the caller does not have permission to read the file.</para>
-      ///   <para>&#160;</para>
-      ///   <para>The Exists method should not be used for path validation,</para>
-      ///   <para>this method merely checks if the file specified in path exists.</para>
+      ///   <para>The Exists method should not be used for path validation,
+      ///   this method merely checks if the file specified in path exists.</para>
       ///   <para>Passing an invalid path to Exists returns false.</para>
-      ///   <para>Be aware that another process can potentially do something with the file in between</para>
-      ///   <para>the time you call the Exists method and perform another operation on the file, such as Delete.</para>
+      ///   <para>Be aware that another process can potentially do something with the file in between
+      ///   the time you call the Exists method and perform another operation on the file, such as Delete.</para>
       /// </remarks>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
@@ -9183,7 +9182,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   [AlphaFS] Unified method OpenInternal() to open a <see cref="FileStream"/> on the specified path, having the specified mode with
       ///   <para>read, write, or read/write access, the specified sharing option and additional options specified.</para>
-      ///   <para>&#160;</para>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open.</param>

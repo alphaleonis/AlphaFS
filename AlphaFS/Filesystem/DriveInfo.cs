@@ -135,12 +135,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Provides access to information on the specified drive.
-      /// <para>&#160;</para>
-      /// </summary>
-      /// <param name="driveName">A valid drive path or drive letter.
-      /// <para>This can be either uppercase or lowercase,</para>
-      /// <para>'a' to 'z' or a network share in the format: \\server\share</para>
+      /// <summary>Provides access to information on the specified drive.</summary>
+      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <param name="driveName">
+      ///   A valid drive path or drive letter.
+      ///   <para>This can be either uppercase or lowercase,</para>
+      ///   <para>'a' to 'z' or a network share in the format: \\server\share</para>
       /// </param>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
       [SecurityCritical]

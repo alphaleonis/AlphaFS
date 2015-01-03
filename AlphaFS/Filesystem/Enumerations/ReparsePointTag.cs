@@ -23,14 +23,14 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Enumeration specifying the different reparse point tags.
-   /// <para>&#160;</para>
-   /// <remarks>
-   /// <para>Reparse tags, with the exception of IO_REPARSE_TAG_SYMLINK, are processed on the server</para>
-   /// <para>and are not processed by a client after transmission over the wire.</para>
-   /// <para>Clients should treat associated reparse data as opaque data.</para>
-   /// </remarks>
+   /// <summary>
+   ///   Enumeration specifying the different reparse point tags.
    /// </summary>
+   /// <remarks>
+   ///   <para>Reparse tags, with the exception of IO_REPARSE_TAG_SYMLINK, are processed on the server</para>
+   ///   <para>and are not processed by a client after transmission over the wire.</para>
+   ///   <para>Clients should treat associated reparse data as opaque data.</para>
+   /// </remarks>
    [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
    public enum ReparsePointTag : uint
    {

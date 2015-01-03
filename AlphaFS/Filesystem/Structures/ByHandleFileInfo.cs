@@ -26,7 +26,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>BY_HANDLE_FILE_INFORMATION - Contains information that the GetFileInformationByHandle function retrieves.</summary>
+      /// <summary>Contains information that the GetFileInformationByHandle function retrieves.</summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct ByHandleFileInfo
       {

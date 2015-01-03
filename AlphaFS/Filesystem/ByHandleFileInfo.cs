@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    #region ByHandleFileInfo
 
-   /// <summary>BY_HANDLE_FILE_INFORMATION - Contains information that the GetFileInformationByHandle function retrieves.</summary>
+   /// <summary>Contains information that the GetFileInformationByHandle function retrieves.</summary>
    [SerializableAttribute]
    [SecurityCritical]
    public sealed class ByHandleFileInfo

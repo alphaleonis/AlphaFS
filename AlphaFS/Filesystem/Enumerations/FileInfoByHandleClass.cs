@@ -31,7 +31,6 @@ namespace Alphaleonis.Win32.Filesystem
          #region FILE_BASIC_INFO
 
          /// <summary>(0) FILE_BASIC_INFO - Minimal information for the file should be retrieved or set.
-         /// <para>&#160;</para>
          /// <para>Used for file handles.</para>
          /// </summary>
          FileBasicInfo = 0,

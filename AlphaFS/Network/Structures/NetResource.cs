@@ -36,10 +36,12 @@ namespace Alphaleonis.Win32.Network
       {
          #region Scope
 
-         /// <summary>The scope of the enumeration.
-         /// <para>&#160;</para>
-         /// <para>This member can be one of the following <see cref="ResourceScope"/> values.</para>
+         /// <summary>
+         ///   The scope of the enumeration.
+         ///   <para>&#160;</para>
+         ///   <para>This member can be one of the following <see cref="ResourceScope"/> values.</para>
          /// </summary>
+         /// <value>The scope.</value>
          [MarshalAs(UnmanagedType.U4)] public ResourceScope Scope;
 
          #endregion // Scope

@@ -50,13 +50,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region BasicSearch
 
-      /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure,</para>
-      /// <para>and cAlternateFileName member is always a NULL string.</para>
-      /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
-      /// </remarks>
+      /// <summary>
+      ///   The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.
+      ///   <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure, and cAlternateFileName member is always a NULL string.</para>
+      ///   <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
       /// </summary>
       public static readonly FindExInfoLevels BasicSearch = IsAtLeastWindows7 ? FindExInfoLevels.Basic : FindExInfoLevels.Standard;
 
@@ -64,10 +61,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LargeCache
 
-      /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.
-      /// <para>&#160;</para>
+      /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.</summary>
       /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
-      /// </summary>
       public static readonly FindExAdditionalFlags LargeCache = IsAtLeastWindows7 ? FindExAdditionalFlags.LargeFetch : FindExAdditionalFlags.None;
 
       #endregion // LargeCache
@@ -189,17 +184,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region SetErrorMode
 
-      /// <summary>Controls whether the system will handle the specified types of serious errors or whether the process will handle them.</summary>
-      /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
+      /// <summary>
+      ///   Controls whether the system will handle the specified types of serious errors or whether the process will handle them.
+      /// </summary>
       /// <remarks>
-      /// Because the error mode is set for the entire process, you must ensure that multi-threaded applications
-      /// do not set different error-mode attributes. Doing so can lead to inconsistent error handling.
+      ///   Because the error mode is set for the entire process, you must ensure that multi-threaded applications do not set different error-
+      ///   mode attributes. Doing so can lead to inconsistent error handling.
       /// </remarks>
-      /// <para>&#160;</para>
-      /// <para>SetLastError is set to <see langword="false"/>.</para>
-      /// <para>&#160;</para>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <remarks>Minimum supported client: Windows XP [desktop apps only].</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only].</remarks>
+      /// <param name="uMode">The mode.</param>
+      /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.U4)]
@@ -209,17 +204,18 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region SetThreadErrorMode
 
-      /// <summary>Controls whether the system will handle the specified types of serious errors or whether the calling thread will handle them.</summary>
-      /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
+      /// <summary>
+      ///   Controls whether the system will handle the specified types of serious errors or whether the calling thread will handle them.
+      /// </summary>
       /// <remarks>
-      /// Because the error mode is set for the entire process, you must ensure that multi-threaded applications
-      /// do not set different error-mode attributes. Doing so can lead to inconsistent error handling.
+      ///   Because the error mode is set for the entire process, you must ensure that multi-threaded applications do not set different error-
+      ///   mode attributes. Doing so can lead to inconsistent error handling.
       /// </remarks>
-      /// <para>&#160;</para>
-      /// <para>SetLastError is set to <see langword="false"/>.</para>
-      /// <para>&#160;</para>
-      /// <remarks>Minimum supported client: Windows 7 [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2008 R2 [desktop apps only]</remarks>
+      /// <remarks>Minimum supported client: Windows 7 [desktop apps only].</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2008 R2 [desktop apps only].</remarks>
+      /// <param name="dwNewMode">The new mode.</param>
+      /// <param name="lpOldMode">[out] The old mode.</param>
+      /// <returns>The return value is the previous state of the error-mode bit attributes.</returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -245,21 +241,29 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region BackupRead
 
-      /// <summary>The BackupRead function can be used to back up a file or directory, including the security information.
-      /// <para>The function reads data associated with a specified file or directory into a buffer,</para>
-      /// <para>which can then be written to the backup medium using the WriteFile function.</para>
+      /// <summary>
+      ///   The BackupRead function can be used to back up a file or directory, including the security information.
+      ///   <para>The function reads data associated with a specified file or directory into a buffer,</para>
+      ///   <para>which can then be written to the backup medium using the WriteFile function.</para>
       /// </summary>
-      /// <returns>
-      /// <para>If the function succeeds, the return value is nonzero.</para>
-      /// <para>If the function fails, the return value is zero, indicating that an I/O error occurred. To get extended error information, call GetLastError.</para>
-      /// </returns>
       /// <remarks>
-      /// <para>This function is not intended for use in backing up files encrypted under the Encrypted File System.</para>
-      /// <para>Use ReadEncryptedFileRaw for that purpose.</para>
-      /// <para>&#160;</para>
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      ///   <para>This function is not intended for use in backing up files encrypted under the Encrypted File System.</para>
+      ///   <para>Use ReadEncryptedFileRaw for that purpose.</para>
+      ///   <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      ///   <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
       /// </remarks>
+      /// <param name="hFile">The file.</param>
+      /// <param name="lpBuffer">The buffer.</param>
+      /// <param name="nNumberOfBytesToRead">Number of bytes to reads.</param>
+      /// <param name="lpNumberOfBytesRead">[out] Number of bytes reads.</param>
+      /// <param name="bAbort">true to abort.</param>
+      /// <param name="bProcessSecurity">true to process security.</param>
+      /// <param name="lpContext">[out] The context.</param>
+      /// <returns>
+      ///   <para>If the function succeeds, the return value is nonzero.</para>
+      ///   <para>If the function fails, the return value is zero, indicating that an I/O error occurred. To get extended error information,
+      ///   call GetLastError.</para>
+      /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -269,24 +273,34 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region BackupSeek
 
-      /// <summary>The BackupSeek function seeks forward in a data stream initially accessed by using the <see cref="BackupRead"/> or <see cref="BackupWrite"/> function.
-      /// <para>The function reads data associated with a specified file or directory into a buffer, which can then be written to the backup medium using the WriteFile function.</para>
-      /// <para>&#160;</para>
-      /// <returns>
-      /// <para>If the function could seek the requested amount, the function returns a nonzero value.</para>
-      /// <para>If the function could not seek the requested amount, the function returns zero. To get extended error information, call GetLastError.</para>
-      /// </returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Applications use the BackupSeek function to skip portions of a data stream that cause errors.</para>
-      /// <para>This function does not seek across stream headers. For example, this function cannot be used to skip the stream name.</para>
-      /// <para>If an application attempts to seek past the end of a substream, the function fails, the lpdwLowByteSeeked and lpdwHighByteSeeked parameters</para>
-      /// <para>indicate the actual number of bytes the function seeks, and the file position is placed at the start of the next stream header.</para>
-      /// <para>&#160;</para>
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
+      /// <summary>
+      ///   The BackupSeek function seeks forward in a data stream initially accessed by using the <see cref="BackupRead"/> or
+      ///   <see cref="BackupWrite"/> function.
+      ///   <para>The function reads data associated with a specified file or directory into a buffer, which can then be written to the backup
+      ///   medium using the WriteFile function.</para>
       /// </summary>
+      /// <remarks>
+      ///   <para>Applications use the BackupSeek function to skip portions of a data stream that cause errors.</para>
+      ///   <para>This function does not seek across stream headers. For example, this function cannot be used to skip the stream name.</para>
+      ///   <para>If an application attempts to seek past the end of a substream, the function fails, the lpdwLowByteSeeked and
+      ///   lpdwHighByteSeeked parameters</para>
+      ///   <para>indicate the actual number of bytes the function seeks, and the file position is placed at the start of the next stream
+      ///   header.</para>
+      ///   <para>&#160;</para>
+      ///   <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      ///   <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// <param name="hFile">The file.</param>
+      /// <param name="dwLowBytesToSeek">The low bytes to seek.</param>
+      /// <param name="dwHighBytesToSeek">The high bytes to seek.</param>
+      /// <param name="lpdwLowBytesSeeked">[out] The lpdw low bytes seeked.</param>
+      /// <param name="lpdwHighBytesSeeked">[out] The lpdw high bytes seeked.</param>
+      /// <param name="lpContext">[out] The context.</param>
+      /// <returns>
+      ///   <para>If the function could seek the requested amount, the function returns a nonzero value.</para>
+      ///   <para>If the function could not seek the requested amount, the function returns zero. To get extended error information, call
+      ///   GetLastError.</para>
+      /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -296,21 +310,30 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region BackupWrite
 
-      /// <summary>The BackupWrite function can be used to restore a file or directory that was backed up using <see cref="BackupRead"/>.
-      /// <para>Use the ReadFile function to get a stream of data from the backup medium, then use BackupWrite to write the data to the specified file or directory.</para>
-      /// <para>&#160;</para>
-      /// <returns>
-      /// <para>If the function succeeds, the return value is nonzero.</para>
-      /// <para>If the function fails, the return value is zero, indicating that an I/O error occurred. To get extended error information, call GetLastError.</para>
-      /// </returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>This function is not intended for use in restoring files encrypted under the Encrypted File System. Use WriteEncryptedFileRaw for that purpose.</para>
-      /// <para>&#160;</para>
-      /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
-      /// </remarks>
+      /// <summary>
+      ///   The BackupWrite function can be used to restore a file or directory that was backed up using <see cref="BackupRead"/>.
+      ///   <para>Use the ReadFile function to get a stream of data from the backup medium, then use BackupWrite to write the data to the
+      ///   specified file or directory.</para>
+      ///   <para>&#160;</para>
       /// </summary>
+      /// <remarks>
+      ///   <para>This function is not intended for use in restoring files encrypted under the Encrypted File System. Use WriteEncryptedFileRaw
+      ///   for that purpose.</para>
+      ///   <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      ///   <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// <param name="hFile">The file.</param>
+      /// <param name="lpBuffer">The buffer.</param>
+      /// <param name="nNumberOfBytesToWrite">Number of bytes to writes.</param>
+      /// <param name="lpNumberOfBytesWritten">[out] Number of bytes writtens.</param>
+      /// <param name="bAbort">true to abort.</param>
+      /// <param name="bProcessSecurity">true to process security.</param>
+      /// <param name="lpContext">[out] The context.</param>
+      /// <returns>
+      ///   <para>If the function succeeds, the return value is nonzero.</para>
+      ///   <para>If the function fails, the return value is zero, indicating that an I/O error occurred. To get extended error information,
+      ///   call GetLastError.</para>
+      /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
@@ -327,20 +350,18 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CM_Connect_Machine
 
-      /// <summary>The CM_Connect_Machine function creates a connection to a remote machine.
-      /// <para>&#160;</para>
-      /// <returns>
-      /// <para>If the operation succeeds, the function returns CR_SUCCESS.</para>
-      /// <para>Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</para>
-      /// </returns>
-      /// <para>&#160;</para>
+      /// <summary>The CM_Connect_Machine function creates a connection to a remote machine.</summary>
       /// <remarks>
-      /// <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
-      /// <para>You cannot access remote machines when running on these versions of Windows.</para>
-      /// <para>&#160;</para>
-      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      ///   <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
+      ///   <para>You cannot access remote machines when running on these versions of Windows.</para>
+      ///   <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
       /// </remarks>
-      /// </summary>
+      /// <param name="uncServerName">Name of the unc server.</param>
+      /// <param name="phMachine">[out] The ph machine.</param>
+      /// <returns>
+      ///   <para>If the operation succeeds, the function returns CR_SUCCESS.</para>
+      ///   <para>Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</para>
+      /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.I4)]
@@ -350,20 +371,24 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CM_Get_Device_ID_Ex
 
-      /// <summary>The CM_Get_Device_ID_Ex function retrieves the device instance ID for a specified device instance on a local or a remote machine.
-      /// <para>&#160;</para>
-      /// <returns>
-      /// <para>If the operation succeeds, the function returns CR_SUCCESS.</para>
-      /// <para>Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</para>
-      /// </returns>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
-      /// <para>You cannot access remote machines when running on these versions of Windows.</para>
-      /// <para>&#160;</para>
-      /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
-      /// </remarks>
+      /// <summary>
+      ///   The CM_Get_Device_ID_Ex function retrieves the device instance ID for a specified device instance on a local or a remote machine.
       /// </summary>
+      /// <remarks>
+      ///   <para>Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.</para>
+      ///   <para>You cannot access remote machines when running on these versions of Windows.</para>
+      ///   <para>&#160;</para>
+      ///   <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
+      /// </remarks>
+      /// <param name="dnDevInst">The dn development instance.</param>
+      /// <param name="buffer">The buffer.</param>
+      /// <param name="bufferLen">Length of the buffer.</param>
+      /// <param name="ulFlags">The ul flags.</param>
+      /// <param name="hMachine">The machine.</param>
+      /// <returns>
+      ///   <para>If the operation succeeds, the function returns CR_SUCCESS.</para>
+      ///   <para>Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</para>
+      /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.I4)]

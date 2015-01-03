@@ -778,7 +778,6 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>
       ///   Enumerates Server Message Block (SMB) shares from the specified host.
-      ///   <para>&#160;</para>
       /// </summary>
       /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="continueOnException">

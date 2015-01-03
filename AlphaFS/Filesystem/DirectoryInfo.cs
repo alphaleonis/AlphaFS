@@ -1473,30 +1473,36 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region DirectoryInfo
 
-      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <summary>
+      ///   [AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>
-      /// <para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para>
-      /// </returns>
-      /// <para>&#160;</para>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains
+      ///   <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in
+      ///   undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationFullPath">
-      /// <para>The name and path to which to move this directory.</para>
-      /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
-      /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
+      ///   <para>The name and path to which to move this directory.</para>
+      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains
+      ///   <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
+      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
       /// </param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="moveOptions">
+      ///   <see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <returns><para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para></returns>
+      ///
+      /// ### <exception cref="ArgumentException">
+      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// ### <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// ### <exception cref="DirectoryNotFoundException">.</exception>
+      /// ### <exception cref="IOException">.</exception>
+      /// ### <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public DirectoryInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions)
       {
@@ -1687,16 +1693,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Exists
 
-      /// <summary>Gets a value indicating whether the directory exists.
-      /// <para>&#160;</para>
-      /// <value><see langword="true"/> if the directory exists; otherwise, <see langword="false"/>.</value>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>The <see cref="Exists"/> property returns <see langword="false"/> if any error occurs while trying to determine if the specified directory exists.</para>
-      /// <para>This can occur in situations that raise exceptions such as passing a directory name with invalid characters or too many characters,</para>
-      /// <para>a failing or missing disk, or if the caller does not have permission to read the directory.</para>
-      /// </remarks>
+      /// <summary>
+      ///   Gets a value indicating whether the directory exists.
       /// </summary>
+      /// <remarks>
+      ///   <para>The <see cref="Exists"/> property returns <see langword="false"/> if any error occurs while trying to determine if the
+      ///   specified directory exists.</para>
+      ///   <para>This can occur in situations that raise exceptions such as passing a directory name with invalid characters or too many
+      ///   characters,</para>
+      ///   <para>a failing or missing disk, or if the caller does not have permission to read the directory.</para>
+      /// </remarks>
+      /// <value><see langword="true"/> if the directory exists; otherwise, <see langword="false"/>.</value>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       public override bool Exists
       {
@@ -1722,15 +1729,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Name
 
-      /// <summary>Gets the name of this <see cref="DirectoryInfo"/> instance.
-      /// <para>&#160;</para>
-      /// <value>The directory name.</value>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>This Name property returns only the name of the directory, such as "Bin".</para>
-      /// <para>To get the full path, such as "c:\public\Bin", use the FullName property.</para>
-      /// </remarks>
+      /// <summary>
+      ///   Gets the name of this <see cref="DirectoryInfo"/> instance.      
       /// </summary>
+      /// <remarks>
+      ///   <para>This Name property returns only the name of the directory, such as "Bin".</para>
+      ///   <para>To get the full path, such as "c:\public\Bin", use the FullName property.</para>
+      /// </remarks>
+      /// <value>The directory name.</value>
       public override string Name
       {
          get { return GetDirName(FullPath); }
@@ -1740,11 +1746,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Parent
 
-      /// <summary>Gets the parent directory of a specified subdirectory.
-      /// <para>&#160;</para>
-      /// <value>The parent directory, or null if the path is null or if the file path denotes a root (such as "\", "C:", or * "\\server\share").</value>
-      /// <para>&#160;</para>
+      /// <summary>
+      ///   Gets the parent directory of a specified subdirectory.
       /// </summary>
+      /// <value>
+      ///   The parent directory, or null if the path is null or if the file path denotes a root (such as "\", "C:", or * "\\server\share").
+      /// </value>
       public DirectoryInfo Parent
       {
          [SecurityCritical]
@@ -1764,11 +1771,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Root
 
-      /// <summary>Gets the root portion of the directory.
-      /// <para>&#160;</para>
-      /// <value>An object that represents the root of the directory.</value>
-      /// <para>&#160;</para>
+      /// <summary>
+      ///   Gets the root portion of the directory.
       /// </summary>
+      /// <value>An object that represents the root of the directory.</value>
       public DirectoryInfo Root
       {
          [SecurityCritical] get { return new DirectoryInfo(Transaction, Path.GetPathRoot(FullPath, false), true); }

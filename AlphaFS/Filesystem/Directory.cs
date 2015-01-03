@@ -9467,39 +9467,44 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetParentInternal
 
-      /// <summary>[AlphaFS] Unified method GetParent() to retrieve the parent directory of the specified path, including both absolute and relative paths.
-      /// <para>&#160;</para>
-      /// <returns>Returns the parent directory, or <see langword="null"/> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <summary>
+      ///   [AlphaFS] Unified method GetParent() to retrieve the parent directory of the specified path, including both absolute and relative
+      ///   paths.
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <param name="isFullPath">
-      ///  <list type="definition">
-      ///   <item>
-      ///     <term>
-      ///       <see langword="true" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
-      /// </description>
-      ///   </item>
-      ///   <item>
-      ///     <term>
-      ///       <see langword="false" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
-      /// </description>
-      ///   </item>
-      ///   <item>
-      ///     <term>
-      ///       <see langword="null" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
-      /// </description>
-      ///   </item>
-      /// </list></param>
+      ///   <list type="definition">
+      ///    <item>
+      ///      <term>
+      ///        <see langword="true" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> is an absolute path. Unicode prefix is applied.
+      ///   </description>
+      ///    </item>
+      ///    <item>
+      ///      <term>
+      ///        <see langword="false" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
+      ///   </description>
+      ///    </item>
+      ///    <item>
+      ///      <term>
+      ///        <see langword="null" />
+      ///      </term>
+      ///      <description>
+      ///        <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
+      ///   </description>
+      ///    </item>
+      ///   </list>
+      /// </param>
+      /// <returns>
+      ///   Returns the parent directory, or <see langword="null"/> if <paramref name="path"/> is the root directory, including the root of a
+      ///   UNC server or share name.
+      /// </returns>
       [SecurityCritical]
       internal static DirectoryInfo GetParentInternal(KernelTransaction transaction, string path, bool? isFullPath)
       {

@@ -23,14 +23,14 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>FINDEX_SEARCH_OPS Enumeration - Defines values that are used with the FindFirstFileEx function
-      /// <para>to specify the type of filtering to perform.</para>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
-      /// <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
-      /// </remarks>
+      /// <summary>
+      ///   FINDEX_SEARCH_OPS Enumeration - Defines values that are used with the FindFirstFileEx function
+      ///   <para>to specify the type of filtering to perform.</para>
       /// </summary>
+      /// <remarks>
+      ///   <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
+      ///   <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
+      /// </remarks>
       internal enum FindExSearchOps
       {
          /// <summary>The search for a file that matches a specified file name.
@@ -53,9 +53,8 @@ namespace Alphaleonis.Win32.Filesystem
          SearchLimitToDirectories = 1,
 
          /// <summary>This filtering type is not available.
-         /// <para>&#160;</para>
-         /// <remarks>For more information, see Device Interface Classes.</remarks>
          /// </summary>
+         /// <remarks>For more information, see Device Interface Classes.</remarks>
          SearchLimitToDevices = 2
       }
    }

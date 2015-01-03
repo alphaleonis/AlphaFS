@@ -25,15 +25,16 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>NETRESOURCE structure
-      /// <para>&#160;</para>
-      /// <para>ResourceUsage: A set of bit flags describing how the resource can be used.</para>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Note that this member can be specified only if</para>
-      /// <para>the <see cref="ResourceScope"/> member is equal to <see cref="ResourceScope.GlobalNet"/>.</para>
-      /// </remarks>
+      /// <summary>
+      ///   NETRESOURCE structure
+      ///   <para>&#160;</para>
+      ///   <para>ResourceUsage: A set of bit flags describing how the resource can be used.</para>
+      ///   <para>&#160;</para>
       /// </summary>
+      /// <remarks>
+      ///   <para>Note that this member can be specified only if</para>
+      ///   <para>the <see cref="ResourceScope"/> member is equal to <see cref="ResourceScope.GlobalNet"/>.</para>
+      /// </remarks>
       [Flags]
       internal enum ResourceUsage
       {

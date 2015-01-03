@@ -481,22 +481,18 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastWriteTime
 
-      /// <summary>
-      ///   Gets or sets the time when the current file or directory was last written to.
-      /// </summary>
+      /// <summary>Gets or sets the time when the current file or directory was last written to.</summary>
       /// <remarks>
-      ///   <para>The value of the LastWriteTime property is pre-cached</para>
-      ///   <para>To get the latest value, call the Refresh method.</para>
-      ///   <para>&#160;</para>
-      ///   <para>This method may return an inaccurate value, because it uses native functions</para>
-      ///   <para>whose values may not be continuously updated by the operating system.</para>
-      ///   <para>&#160;</para>
-      ///   <para>If the file described in the FileSystemInfo object does not exist, this property will return</para>
-      ///   <para>12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</para>
+      ///   <para>The value of the LastWriteTime property is pre-cached.
+      ///   To get the latest value, call the Refresh method.</para>
+      ///   <para>This method may return an inaccurate value, because it uses native functions
+      ///   whose values may not be continuously updated by the operating system.</para>
+      ///   <para>If the file described in the FileSystemInfo object does not exist, this property will return
+      ///   12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</para>
       /// </remarks>
       /// <value>The time the current file was last written.</value>
       ///
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// ### <exception cref="IOException">Refresh cannot initialize the data.</exception>
       public DateTime LastWriteTime
       {
          get { return LastWriteTimeUtc.ToLocalTime(); }
@@ -511,18 +507,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Gets or sets the time, in coordinated universal time (UTC), when the current file or directory was last written to.
       /// </summary>
       /// <remarks>
-      ///   <para>The value of the LastWriteTimeUtc property is pre-cached</para>
-      ///   <para>To get the latest value, call the Refresh method.</para>
-      ///   <para>&#160;</para>
-      ///   <para>This method may return an inaccurate value, because it uses native functions</para>
-      ///   <para>whose values may not be continuously updated by the operating system.</para>
-      ///   <para>&#160;</para>
-      ///   <para>If the file described in the FileSystemInfo object does not exist, this property will return</para>
-      ///   <para>12:00 midnight, January 1, 1601 A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</para>
+      ///   <para>The value of the LastWriteTimeUtc property is pre-cached. To get the latest value, call the Refresh method.</para>
+      ///   <para>This method may return an inaccurate value, because it uses native functions whose values may not be continuously updated by
+      ///   the operating system.</para>
+      ///   <para>If the file described in the FileSystemInfo object does not exist, this property will return 12:00 midnight, January 1, 1601
+      ///   A.D. (C.E.) Coordinated Universal Time (UTC), adjusted to local time.</para>
       /// </remarks>
       /// <value>The UTC time when the current file was last written to.</value>
-      ///
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
       [ComVisible(false)]
       public DateTime LastWriteTimeUtc
       {

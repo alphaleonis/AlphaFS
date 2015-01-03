@@ -31,13 +31,13 @@ namespace Alphaleonis.Win32
    {
       #region OperatingSystem Name Enum
 
-      /// <summary>A set of flags that describe the named Windows versions.
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>The values of the enumeration are ordered. A a later released OS version</para>
-      /// <para>has a higher number, so comparisons between named versions are meaningful.</para>
-      /// </remarks>
+      /// <summary>
+      ///   A set of flags that describe the named Windows versions.      
       /// </summary>
+      /// <remarks>
+      ///   <para>The values of the enumeration are ordered. A a later released OS version</para>
+      ///   <para>has a higher number, so comparisons between named versions are meaningful.</para>
+      /// </remarks>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
       public enum EnumOsName

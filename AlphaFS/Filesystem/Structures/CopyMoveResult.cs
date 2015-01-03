@@ -28,29 +28,28 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region ErrorCode
 
-      /// <summary>The error code encountered during the Copy or Move action.
-      /// <para>&#160;</para>
-      /// <value>0 (zero) indicates success.</value>
+      /// <summary>
+      ///   The error code encountered during the Copy or Move action.
       /// </summary>
+      /// <value>0 (zero) indicates success.</value>
       public int ErrorCode { get; private set; }
 
       #endregion // ErrorCode
 
       #region ErrorMessage
 
-      /// <summary>The error message from the <see cref="ErrorCode"/> that was encountered during the Copy or Move action.
-      /// <para>&#160;</para>
+      /// <summary>
+      ///   The error message from the <see cref="ErrorCode"/> that was encountered during the Copy or Move action.
       /// </summary>
+      /// <value>A message describing the error.</value>
       public string ErrorMessage { get; private set; }
 
       #endregion // ErrorMessage
 
       #region IsCanceled
 
-      /// <summary>Indicates if the Copy or Move action was canceled.
-      /// <para>&#160;</para>
+      /// <summary>Indicates if the Copy or Move action was canceled.</summary>
       /// <value><see langword="true"/> when the Copy/Move action was canceled. Otherwise <see langword="false"/>.</value>
-      /// </summary>
       public bool IsCanceled { get; private set; }
 
       #endregion // IsCanceled
@@ -65,10 +64,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsMove
 
-      /// <summary>Indicates if the action is a Copy or Move action.
-      /// <para>&#160;</para>
-      /// <value><see langword="true"/> when action is Move. Otherwise <see langword="false"/>.</value>
+      /// <summary>
+      ///   Indicates if the action is a Copy or Move action.
       /// </summary>
+      /// <value><see langword="true"/> when action is Move. Otherwise <see langword="false"/>.</value>
       public bool IsMove { get; private set; }
 
       #endregion // IsMove

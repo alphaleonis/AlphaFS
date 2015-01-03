@@ -27,15 +27,16 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>FILE_BASIC_INFO structure - Contains the basic information for a file.
-      /// <para>Used for file handles.</para>
-      /// <para>&#160;</para>
-      /// <remarks>
-      /// <para>Specifying -1 for <see cref="LastAccessTime"/>, <see cref="ChangeTime"/>, or <see cref="LastWriteTime"/></para>
-      /// <para>indicates that operations on the current handle should not affect the given field.</para>
-      /// <para>(I.e, specifying -1 for <see cref="LastWriteTime"/> will leave the <see cref="LastWriteTime"/> unaffected by writes performed on the current handle.)</para>
-      /// </remarks>
+      /// <summary>
+      ///   FILE_BASIC_INFO structure - Contains the basic information for a file.
+      ///   <para>Used for file handles.</para>
       /// </summary>
+      /// <remarks>
+      ///   <para>Specifying -1 for <see cref="LastAccessTime"/>, <see cref="ChangeTime"/>, or <see cref="LastWriteTime"/></para>
+      ///   <para>indicates that operations on the current handle should not affect the given field.</para>
+      ///   <para>(I.e, specifying -1 for <see cref="LastWriteTime"/> will leave the <see cref="LastWriteTime"/> unaffected by writes performed
+      ///   on the current handle.)</para>
+      /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct FileBasicInfo
       {
