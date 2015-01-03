@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -139,7 +139,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>
          /// An executable from a Shell verb command string.
          /// For example, this string is found as the (Default) value for a subkey such as HKEY_CLASSES_ROOT\ApplicationName\shell\Open\command.
-         /// If the command uses Rundll.exe, set the <see cref="T:AssociationAttributes.RemapRunDll"/> flag in the attributes parameter of IQueryAssociations::GetString to retrieve the target executable.
+         /// If the command uses Rundll.exe, set the <see cref="AssociationAttributes.RemapRunDll"/> flag in the attributes parameter of IQueryAssociations::GetString to retrieve the target executable.
          /// </summary>
          Executable = 2,
 
@@ -179,16 +179,16 @@ namespace Alphaleonis.Win32.Filesystem
          InfoTip = 11,
 
          /// <summary>
-         /// Corresponds to the QuickTip registry value. This is the same as <see cref="T:InfoTip"/>, except that it always returns a list of property names in the form of an IPropertyDescriptionList.
-         /// The difference between this value and <see cref="T:InfoTip"/> is that this returns properties that are safe for any scenario that causes slow property retrieval, such as offline or slow networks.
-         /// Some of the properties returned from <see cref="T:InfoTip"/> might not be appropriate for slow property retrieval scenarios.
+         /// Corresponds to the QuickTip registry value. This is the same as <see cref="InfoTip"/>, except that it always returns a list of property names in the form of an IPropertyDescriptionList.
+         /// The difference between this value and <see cref="InfoTip"/> is that this returns properties that are safe for any scenario that causes slow property retrieval, such as offline or slow networks.
+         /// Some of the properties returned from <see cref="InfoTip"/> might not be appropriate for slow property retrieval scenarios.
          /// The list of properties can be parsed with PSGetPropertyDescriptionListFromString.
          /// </summary>
          QuickTip = 12,
 
          /// <summary>
          /// Corresponds to the TileInfo registry value. Contains a list of properties to be displayed for a particular file type in a Windows Explorer window that is in tile view.
-         /// This is the same as <see cref="T:InfoTip"/>, but, like <see cref="T:QuickTip"/>, it also returns a list of property names in the form of an IPropertyDescriptionList.
+         /// This is the same as <see cref="InfoTip"/>, but, like <see cref="QuickTip"/>, it also returns a list of property names in the form of an IPropertyDescriptionList.
          /// The list of properties can be parsed with PSGetPropertyDescriptionListFromString.
          /// </summary>
          TileInfo = 13,
@@ -233,7 +233,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <remarks>Introduced in Windows 8.</remarks>
          SupportedUriProtocols = 19,
 
-         /// <summary>The maximum defined <see cref="T:AssociationString"/> value, used for validation purposes.</summary>
+         /// <summary>The maximum defined <see cref="AssociationString"/> value, used for validation purposes.</summary>
          Max = 20
       }
 
@@ -248,16 +248,16 @@ namespace Alphaleonis.Win32.Filesystem
       public enum FileAttributes
       {
          /// <summary>0x000000000 - Get file system object large icon.</summary>
-         /// <remarks>The <see cref="T:Icon"/> flag must also be set.</remarks>
+         /// <remarks>The <see cref="Icon"/> flag must also be set.</remarks>
          LargeIcon = 0,
 
          /// <summary>0x000000001 - Get file system object small icon.</summary>
-         /// <remarks>The <see cref="T:Icon"/> flag must also be set.</remarks>
+         /// <remarks>The <see cref="Icon"/> flag must also be set.</remarks>
          SmallIcon = 1,
 
          /// <summary>0x000000002 - Get file system object open icon.</summary>
          /// <remarks>A container object displays an open icon to indicate that the container is open.</remarks>
-         /// <remarks>The <see cref="T:Icon"/> and/or <see cref="T:SysIconIndex"/> flag must also be set.</remarks>
+         /// <remarks>The <see cref="Icon"/> and/or <see cref="SysIconIndex"/> flag must also be set.</remarks>
          OpenIcon = 2,
 
          /// <summary>0x000000004 - Get file system object Shell-sized icon.</summary>
@@ -270,32 +270,32 @@ namespace Alphaleonis.Win32.Filesystem
          Pidl = 8,
 
          /// <summary>0x000000010 - Indicates that the given file should not be accessed. Rather, it should act as if the given file exists and use the supplied attributes.</summary>
-         /// <remarks>This flag cannot be combined with the <see cref="T:Attributes"/>, <see cref="T:ExeType"/> or <see cref="T:Pidl"/> attributes.</remarks>
+         /// <remarks>This flag cannot be combined with the <see cref="Attributes"/>, <see cref="ExeType"/> or <see cref="Pidl"/> attributes.</remarks>
          UseFileAttributes = 16,
 
          /// <summary>0x000000020 - Apply the appropriate overlays to the file's icon.</summary>
-         /// <remarks>The <see cref="T:Icon"/> flag must also be set.</remarks>
+         /// <remarks>The <see cref="Icon"/> flag must also be set.</remarks>
          AddOverlays = 32,
 
          /// <summary>0x000000040 - Returns the index of the overlay icon.</summary>
          /// <remarks>The value of the overlay index is returned in the upper eight bits of the iIcon member of the structure specified by psfi.</remarks>
          OverlayIndex = 64,
 
-         /// <summary>0x000000100 - Retrieve the handle to the icon that represents the file and the index of the icon within the system image list. The handle is copied to the <see cref="T:FileInfo.IconHandle"/> member of the structure, and the index is copied to the <see cref="T:FileInfo.IconIndex"/> member.</summary>
+         /// <summary>0x000000100 - Retrieve the handle to the icon that represents the file and the index of the icon within the system image list. The handle is copied to the <see cref="FileInfo.IconHandle"/> member of the structure, and the index is copied to the <see cref="FileInfo.IconIndex"/> member.</summary>
          Icon = 256,
 
-         /// <summary>0x000000200 - Retrieve the display name for the file. The name is copied to the <see cref="T:FileInfo.DisplayName"/> member of the structure.</summary>
+         /// <summary>0x000000200 - Retrieve the display name for the file. The name is copied to the <see cref="FileInfo.DisplayName"/> member of the structure.</summary>
          /// <remarks>The returned display name uses the long file name, if there is one, rather than the 8.3 form of the file name.</remarks>
          DisplayName = 512,
 
          /// <summary>0x000000400 - Retrieve the string that describes the file's type.</summary>
          TypeName = 1024,
 
-         /// <summary>0x000000800 - Retrieve the item attributes. The attributes are copied to the <see cref="T:FileInfo.Attributes"/> member of the structure.</summary>
+         /// <summary>0x000000800 - Retrieve the item attributes. The attributes are copied to the <see cref="FileInfo.Attributes"/> member of the structure.</summary>
          /// <remarks>Will touch every file, degrading performance.</remarks>
          Attributes = 2048,
 
-         /// <summary>0x000001000 - Retrieve the name of the file that contains the icon representing the file specified by pszPath. The name of the file containing the icon is copied to the <see cref="T:FileInfo.DisplayName"/> member of the structure.  The icon's index is copied to that structure's <see cref="T:FileInfo.IconIndex"/> member.</summary>
+         /// <summary>0x000001000 - Retrieve the name of the file that contains the icon representing the file specified by pszPath. The name of the file containing the icon is copied to the <see cref="FileInfo.DisplayName"/> member of the structure.  The icon's index is copied to that structure's <see cref="FileInfo.IconIndex"/> member.</summary>
          IconLocation = 4096,
 
          /// <summary>0x000002000 - Retrieve the type of the executable file if pszPath identifies an executable file.</summary>
@@ -306,14 +306,14 @@ namespace Alphaleonis.Win32.Filesystem
          SysIconIndex = 16384,
 
          /// <summary>0x000008000 - Add the link overlay to the file's icon.</summary>
-         /// <remarks>The <see cref="T:Icon"/> flag must also be set.</remarks>
+         /// <remarks>The <see cref="Icon"/> flag must also be set.</remarks>
          LinkOverlay = 32768,
 
          /// <summary>0x000010000 - Blend the file's icon with the system highlight color.</summary>
          Selected = 65536,
 
-         /// <summary>0x000020000 - Modify <see cref="T:Attributes"/> to indicate that <see cref="T:FileInfo.Attributes"/> contains specific attributes that are desired.</summary>
-         /// <remarks>This flag cannot be specified with the <see cref="T:Icon"/> attribute. Will touch every file, degrading performance.</remarks>
+         /// <summary>0x000020000 - Modify <see cref="Attributes"/> to indicate that <see cref="FileInfo.Attributes"/> contains specific attributes that are desired.</summary>
+         /// <remarks>This flag cannot be specified with the <see cref="Icon"/> attribute. Will touch every file, degrading performance.</remarks>
          AttributesSpecified = 131072
       }
 
@@ -559,11 +559,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFileIcon
 
-      /// <summary>Gets an <see cref="T:IntPtr"/> handle to the Shell icon that represents the file.</summary>
-      /// <returns>An <see cref="T:IntPtr"/> handle to the Shell icon that represents the file, or IntPtr.Zero on failure.</returns>
+      /// <summary>Gets an <see cref="IntPtr"/> handle to the Shell icon that represents the file.</summary>
+      /// <returns>An <see cref="IntPtr"/> handle to the Shell icon that represents the file, or IntPtr.Zero on failure.</returns>
       /// <remarks>Caller is responsible for destroying this handle with DestroyIcon() when no longer needed.</remarks>
-      /// <param name="filePath">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
-      /// <param name="iconAttributes">Icon size <see cref="T:Shell32.FileAttributes.SmallIcon"/> or <see cref="T:Shell32.FileAttributes.LargeIcon"/>. Can also be combined with <see cref="T:Shell32.FileAttributes.AddOverlays"/> and others.</param>
+      /// <param name="filePath">The path to the file system object which should not exceed <see cref="NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
+      /// <param name="iconAttributes">Icon size <see cref="Shell32.FileAttributes.SmallIcon"/> or <see cref="Shell32.FileAttributes.LargeIcon"/>. Can also be combined with <see cref="Shell32.FileAttributes.AddOverlays"/> and others.</param>
       [SecurityCritical]
       public static IntPtr GetFileIcon(string filePath, FileAttributes iconAttributes)
       {
@@ -581,7 +581,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system,
       /// <para>such as a file, folder, directory, or drive root.</para>
       /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="T:Shell32.FileInfo"/> struct instance.</returns>
+      /// <returns>Returns a <see cref="Shell32.FileInfo"/> struct instance.</returns>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>You should call this function from a background thread.</para>
@@ -590,9 +590,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// </summary>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="filePath">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
-      /// <param name="attributes">A <see cref="T:System.IO.FileAttributes"/> attribute.</param>
-      /// <param name="fileAttributes">One ore more <see cref="T:FileAttributes"/> attributes.</param>
+      /// <param name="filePath">The path to the file system object which should not exceed <see cref="NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
+      /// <param name="attributes">A <see cref="System.IO.FileAttributes"/> attribute.</param>
+      /// <param name="fileAttributes">One ore more <see cref="FileAttributes"/> attributes.</param>
       /// <param name="continueOnException">
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
@@ -609,7 +609,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary></summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>A <see cref="T:Shell32Info"/> class instance.</returns>
+      /// <returns>A <see cref="Shell32Info"/> class instance.</returns>
       [SecurityCritical]
       public static Shell32Info GetShell32Info(string path)
       {
@@ -623,7 +623,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>A <see cref="T:Shell32Info"/> class instance.</returns>
+      /// <returns>A <see cref="Shell32Info"/> class instance.</returns>
       [SecurityCritical]
       public static Shell32Info GetShell32Info(string path, bool? isFullPath)
       {
@@ -712,7 +712,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region PathFileExists
 
       /// <summary>Determines whether a path to a file system object such as a file or folder is valid.</summary>
-      /// <param name="path">The full path of maximum length <see cref="T:NativeMethods.MaxPath"/> to the object to verify.</param>
+      /// <param name="path">The full path of maximum length <see cref="NativeMethods.MaxPath"/> to the object to verify.</param>
       /// <returns><c>true</c> if the file exists; <c>false</c> otherwise</returns>
       [SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "lastError")]
       [SecurityCritical]
@@ -738,7 +738,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="urlType"></param>
       /// <returns>
       /// For all but one of the URL types, UrlIs returns <c>true</c> if the URL is the specified type, or <c>false</c> otherwise.
-      /// If UrlIs is set to <see cref="T:UrlType.IsAppliable"/>, UrlIs will attempt to determine the URL scheme.
+      /// If UrlIs is set to <see cref="UrlType.IsAppliable"/>, UrlIs will attempt to determine the URL scheme.
       /// If the function is able to determine a scheme, it returns <c>true</c>, or <c>false</c> otherwise.
       /// </returns>
       [SecurityCritical]
@@ -752,7 +752,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region UrlCreateFromPath
 
       /// <summary>Converts a Microsoft MS-DOS path to a canonicalized URL.</summary>
-      /// <param name="path">The full MS-DOS path of maximum length <see cref="T:NativeMethods.MaxPath"/>.</param>
+      /// <param name="path">The full MS-DOS path of maximum length <see cref="NativeMethods.MaxPath"/>.</param>
       /// <returns>
       /// <para>The URL. If no URL can be created <c>string.Empty</c> is returned.</para>
       /// <para>If <paramref name="path"/> is <c>null</c>, <c>null</c> will also be returned.</para>
@@ -827,8 +827,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Unified method GetFileAssociationInternal() to search for and retrieves a file or protocol association-related string from the registry.</summary>
       /// <param name="path">A path to a file.</param>
-      /// <param name="attributes">One or more <see cref="T:AssociationAttributes"/> attributes. Only one "InitXXX" attribute can be used.</param>
-      /// <param name="associationType">A <see cref="T:AssociationString"/> attribute.</param>
+      /// <param name="attributes">One or more <see cref="AssociationAttributes"/> attributes. Only one "InitXXX" attribute can be used.</param>
+      /// <param name="associationType">A <see cref="AssociationString"/> attribute.</param>
       /// <returns>Returns the associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
       /// <exception cref="ArgumentNullException"></exception>
       [SecurityCritical]
@@ -882,7 +882,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system,
       /// <para>such as a file, folder, directory, or drive root.</para>
       /// <para>&#160;</para>
-      /// <returns>Returns a <see cref="T:Shell32.FileInfo"/> struct instance.</returns>
+      /// <returns>Returns a <see cref="Shell32.FileInfo"/> struct instance.</returns>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>You should call this function from a background thread.</para>
@@ -891,9 +891,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// </summary>
       /// <exception cref="NativeError.ThrowException()"/>
-      /// <param name="path">The path to the file system object which should not exceed <see cref="T:NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
-      /// <param name="attributes">A <see cref="T:System.IO.FileAttributes"/> attribute.</param>
-      /// <param name="fileAttributes">A <see cref="T:FileAttributes"/> attribute.</param>
+      /// <param name="path">The path to the file system object which should not exceed <see cref="NativeMethods.MaxPath"/> in length. Both absolute and relative paths are valid.</param>
+      /// <param name="attributes">A <see cref="System.IO.FileAttributes"/> attribute.</param>
+      /// <param name="fileAttributes">A <see cref="FileAttributes"/> attribute.</param>
       /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
       /// <param name="continueOnException">
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>

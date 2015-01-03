@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Security
    /// </summary>
    internal sealed class InternalPrivilegeEnabler : IDisposable
    {
-      /// <summary>Initializes a new instance of the <see cref="T:PrivilegeEnabler"/> class and enabling the specified privilege for the currently running process.</summary>
+      /// <summary>Initializes a new instance of the <see cref="PrivilegeEnabler"/> class and enabling the specified privilege for the currently running process.</summary>
       /// <param name="privilegeName">The name of the privilege.</param>
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
       [SecurityCritical]

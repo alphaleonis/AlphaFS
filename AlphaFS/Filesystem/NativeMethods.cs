@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>The data is returned in a <see cref="T:NativeMethods.Win32FindData"/> structure,</para>
+      /// <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure,</para>
       /// <para>and cAlternateFileName member is always a NULL string.</para>
       /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
       /// </remarks>
@@ -256,7 +256,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>This function is not intended for use in backing up files encrypted under the Encrypted File System.</para>
-      /// <para>Use <see cref="M:ReadEncryptedFileRaw"/> for that purpose.</para>
+      /// <para>Use ReadEncryptedFileRaw for that purpose.</para>
       /// <para>&#160;</para>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
@@ -271,8 +271,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region BackupSeek
 
-      /// <summary>The BackupSeek function seeks forward in a data stream initially accessed by using the <see cref="M:BackupRead"/> or <see cref="M:BackupWrite"/> function.
-      /// <para>The function reads data associated with a specified file or directory into a buffer, which can then be written to the backup medium using the <see cref="M:WriteFile"/> function.</para>
+      /// <summary>The BackupSeek function seeks forward in a data stream initially accessed by using the <see cref="BackupRead"/> or <see cref="BackupWrite"/> function.
+      /// <para>The function reads data associated with a specified file or directory into a buffer, which can then be written to the backup medium using the WriteFile function.</para>
       /// <para>&#160;</para>
       /// <returns>
       /// <para>If the function could seek the requested amount, the function returns a nonzero value.</para>
@@ -298,8 +298,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region BackupWrite
 
-      /// <summary>The BackupWrite function can be used to restore a file or directory that was backed up using <see cref="M:BackupRead"/>.
-      /// <para>Use the <see cref="M:ReadFile"/> function to get a stream of data from the backup medium, then use BackupWrite to write the data to the specified file or directory.</para>
+      /// <summary>The BackupWrite function can be used to restore a file or directory that was backed up using <see cref="BackupRead"/>.
+      /// <para>Use the ReadFile function to get a stream of data from the backup medium, then use BackupWrite to write the data to the specified file or directory.</para>
       /// <para>&#160;</para>
       /// <returns>
       /// <para>If the function succeeds, the return value is nonzero.</para>
@@ -433,7 +433,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>To retrieve a handle to the device, you must call the <see cref="M:CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
+      /// <para>To retrieve a handle to the device, you must call the <see cref="CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
       /// <para>To specify a device name, use the following format: <c>\\.\DeviceName</c></para>
       /// <para>&#160;</para>
       /// <para>Minimum supported client: Windows XP</para>
@@ -453,7 +453,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>To retrieve a handle to the device, you must call the <see cref="M:CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
+      /// <para>To retrieve a handle to the device, you must call the <see cref="CreateFile"/> function with either the name of a device or the name of the driver associated with a device.</para>
       /// <para>To specify a device name, use the following format: <c>\\.\DeviceName</c></para>
       /// <para>&#160;</para>
       /// <para>Minimum supported client: Windows XP</para>
@@ -501,7 +501,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>Repeated calls to this function return an <see cref="T:NativeMethods.SpDeviceInterfaceData"/> structure for a different device interface.</para>
+      /// <para>Repeated calls to this function return an <see cref="NativeMethods.SpDeviceInterfaceData"/> structure for a different device interface.</para>
       /// <para>This function can be called repeatedly to get information about interfaces in a device information set that are associated</para>
       /// <para>with a particular device information element or that are associated with all device information elements.</para>
       /// <para>&#160;</para>
@@ -525,7 +525,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>The caller of SetupDiGetClassDevsEx must delete the returned device information set when it is no longer needed by calling <see cref="M:SetupDiDestroyDeviceInfoList"/>.</para>
+      /// <para>The caller of SetupDiGetClassDevsEx must delete the returned device information set when it is no longer needed by calling <see cref="SetupDiDestroyDeviceInfoList"/>.</para>
       /// <para>&#160;</para>
       /// <para>Available in Microsoft Windows 2000 and later versions of Windows.</para>
       /// </remarks>
@@ -601,7 +601,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>
       /// <para>Some file systems, such as the NTFS file system, support compression or encryption for individual files and directories.</para>
       /// <para>On volumes formatted for such a file system, a new directory inherits the compression and encryption attributes of its parent directory.</para>
-      /// <para>An application can obtain a handle to a directory by calling <see cref="M:CreateFile"/> with the FILE_FLAG_BACKUP_SEMANTICS flag set.</para>
+      /// <para>An application can obtain a handle to a directory by calling <see cref="CreateFile"/> with the FILE_FLAG_BACKUP_SEMANTICS flag set.</para>
       /// <para>&#160;</para>
       /// <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
@@ -633,7 +633,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <para>Some file systems, such as the NTFS file system, support compression or encryption for individual files and directories.</para>
       /// <para>On volumes formatted for such a file system, a new directory inherits the compression and encryption attributes of its parent directory.</para>
-      /// <para>You can obtain a handle to a directory by calling the <see cref="M:CreateFile"/> function with the FILE_FLAG_BACKUP_SEMANTICS flag set.</para>
+      /// <para>You can obtain a handle to a directory by calling the <see cref="CreateFile"/> function with the FILE_FLAG_BACKUP_SEMANTICS flag set.</para>
       /// <para>&#160;</para>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
@@ -667,7 +667,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>&#160;</para>
       /// <para>Some file systems, such as the NTFS file system, support compression or encryption for individual files and directories.</para>
       /// <para>On volumes formatted for such a file system, a new directory inherits the compression and encryption attributes of its parent directory.</para>
-      /// <para>You can obtain a handle to a directory by calling the <see cref="M:CreateFileTransacted"/> function with the FILE_FLAG_BACKUP_SEMANTICS flag set.</para>
+      /// <para>You can obtain a handle to a directory by calling the <see cref="CreateFileTransacted"/> function with the FILE_FLAG_BACKUP_SEMANTICS flag set.</para>
       /// <para>&#160;</para>
       /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
       /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
@@ -1770,7 +1770,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>Use the <see cref="M:CloseHandle"/> function to close the transaction handle. If the last transaction handle is closed before</para>
+      /// <para>Use the <see cref="CloseHandle"/> function to close the transaction handle. If the last transaction handle is closed before</para>
       /// <para>a client calls the CommitTransaction function with the transaction handle, then KTM rolls back the transaction.</para>
       /// <para>&#160;</para>
       /// <para>Minimum supported client: Windows Vista</para>
@@ -1962,7 +1962,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>
       /// Type: BOOL
       /// For all but one of the URL types, UrlIs returns <c>true</c> if the URL is the specified type, <c>true</c> otherwise.
-      /// If UrlIs is set to <see cref="T:Shell32.UrlType.IsAppliable"/>, UrlIs will attempt to determine the URL scheme.
+      /// If UrlIs is set to <see cref="Shell32.UrlType.IsAppliable"/>, UrlIs will attempt to determine the URL scheme.
       /// If the function is able to determine a scheme, it returns <c>true</c>, or <c>false</c>.
       /// </returns>
       /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
@@ -2115,10 +2115,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetDriveType
 
       /// <summary>Determines whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.
-      /// <para>To determine whether a drive is a USB-type drive, call <see cref="M:SetupDiGetDeviceRegistryProperty"/> and specify the SPDRP_REMOVAL_POLICY property.</para>
+      /// <para>To determine whether a drive is a USB-type drive, call <see cref="SetupDiGetDeviceRegistryProperty"/> and specify the SPDRP_REMOVAL_POLICY property.</para>
       /// <para>&#160;</para>
       /// <returns>
-      /// <para>The return value specifies the type of drive, see <see cref="T:DriveType"/>.</para>
+      /// <para>The return value specifies the type of drive, see <see cref="DriveType"/>.</para>
       /// <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
       /// </returns>
       /// <para>&#160;</para>

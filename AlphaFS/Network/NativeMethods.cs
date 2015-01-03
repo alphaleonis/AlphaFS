@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -263,7 +263,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>The WNetCancelConnection function cancels an existing network connection. You can also call the function to remove remembered network connections that are not currently connected.</summary>
       /// <returns>
-      /// If the function succeeds, the return value is <see cref="T:Win32Errors.NO_ERROR"/>
+      /// If the function succeeds, the return value is <see cref="Win32Errors.NO_ERROR"/>
       /// If the function fails, the return value is a system error code.
       /// </returns>
       /// <remarks>Minimum supported client: Windows 2000 Professional [desktop apps only]</remarks>
@@ -279,7 +279,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>The WNetGetUniversalName function takes a drive-based path for a network resource and returns an information structure that contains a more universal form of the name.</summary>
       /// <returns>
-      /// If the function succeeds, the return value is <see cref="T:Win32Errors.NO_ERROR"/>
+      /// If the function succeeds, the return value is <see cref="Win32Errors.NO_ERROR"/>
       /// If the function fails, the return value is a system error code.
       /// </returns>
       /// <remarks>Minimum supported client: Windows 2000 Professional [desktop apps only]</remarks>
@@ -295,7 +295,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>The WNetUseConnection function creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <returns>
-      /// If the function succeeds, the return value is <see cref="T:Win32Errors.NO_ERROR"/>
+      /// If the function succeeds, the return value is <see cref="Win32Errors.NO_ERROR"/>
       /// If the function fails, the return value is a system error code.
       /// </returns>
       /// <remarks>Minimum supported client: Windows 2000 Professional [desktop apps only]</remarks>

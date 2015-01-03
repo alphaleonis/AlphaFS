@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -38,11 +38,11 @@ namespace Alphaleonis.Win32.Filesystem
       void GetHandle([Out] out SafeKernelTransactionHandle handle);
    }
 
-   /// <summary>A KTM transaction object for use with the transacted operations in <see cref="T:Filesystem"/></summary>
+   /// <summary>A KTM transaction object for use with the transacted operations in <see cref="Filesystem"/></summary>
    public sealed class KernelTransaction : MarshalByRefObject, IDisposable
    {
-      /// <summary>Initializes a new instance of the <see cref="T:KernelTransaction"/> class, internally using the specified <see cref="T:Transaction"/>.
-      /// This method allows the usage of methods accepting a <see cref="T:KernelTransaction"/> with an instance of <see cref="T:System.Transactions.Transaction"/>.
+      /// <summary>Initializes a new instance of the <see cref="KernelTransaction"/> class, internally using the specified <see cref="Transaction"/>.
+      /// This method allows the usage of methods accepting a <see cref="KernelTransaction"/> with an instance of <see cref="System.Transactions.Transaction"/>.
       /// </summary>
       /// <param name="transaction">The transaction to use for any transactional operations.</param>
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
@@ -52,14 +52,14 @@ namespace Alphaleonis.Win32.Filesystem
          ((IKernelTransaction) TransactionInterop.GetDtcTransaction(transaction)).GetHandle(out _hTrans);
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:KernelTransaction"/> class with a default security descriptor, infinite timeout and no description.</summary>
+      /// <summary>Initializes a new instance of the <see cref="KernelTransaction"/> class with a default security descriptor, infinite timeout and no description.</summary>
       [SecurityCritical]
       public KernelTransaction()
          : this(0, null)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:KernelTransaction"/> class with a default security descriptor.</summary>
+      /// <summary>Initializes a new instance of the <see cref="KernelTransaction"/> class with a default security descriptor.</summary>
       /// <param name="timeout"><para>The time, in milliseconds, when the transaction will be aborted if it has not already reached the prepared state.</para></param>
       /// <param name="description">A user-readable description of the transaction. This parameter may be <c>null</c>.</param>
       [SecurityCritical]
@@ -68,8 +68,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:KernelTransaction"/> class.</summary>
-      /// <param name="securityDescriptor">The <see cref="T:ObjectSecurity"/> security descriptor.</param>
+      /// <summary>Initializes a new instance of the <see cref="KernelTransaction"/> class.</summary>
+      /// <param name="securityDescriptor">The <see cref="ObjectSecurity"/> security descriptor.</param>
       /// <param name="timeout"><para>The time, in milliseconds, when the transaction will be aborted if it has not already reached the prepared state.</para>
       /// <para>Specify 0 to provide an infinite timeout.</para></param>
       /// <param name="description">A user-readable description of the transaction. This parameter may be <c>null</c>.</param>

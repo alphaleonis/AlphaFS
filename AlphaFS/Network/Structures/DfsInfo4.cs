@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Network
    internal static partial class NativeMethods
    {
       /// <summary>DFS_INFO_4 - Contains information about a Distributed File System (DFS) root or link. This structure contains the name, status, GUID, time-out, number of targets, and information about each target of the root or link.</summary>
-      /// <remarks>A DFS_INFO_4 structure contains one or more <see cref="T:DfsStorageInfo"/> structures, one for each DFS target.</remarks>
+      /// <remarks>A DFS_INFO_4 structure contains one or more <see cref="DfsStorageInfo"/> structures, one for each DFS target.</remarks>
       /// <remarks>This structure is only for use with the NetDfsEnum, NetDfsGetClientInfo, and NetDfsGetInfo functions.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>The comment associated with the DFS root or link.</summary>
          [MarshalAs(UnmanagedType.LPWStr)] public readonly string Comment;
 
-         /// <summary>A <see cref="T:DfsVolumeStates"/> that specifies a set of bit flags that describe the DFS root or link.</summary>
+         /// <summary>A <see cref="DfsVolumeStates"/> that specifies a set of bit flags that describe the DFS root or link.</summary>
          [MarshalAs(UnmanagedType.U4)] public readonly DfsVolumeStates State;
 
          /// <summary>Specifies the time-out, in seconds, of the DFS root or link.</summary>
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>Specifies the number of DFS targets.</summary>
          [MarshalAs(UnmanagedType.U4)] public readonly uint NumberOfStorages;
 
-         /// <summary>An array of <see cref="T:DfsStorageInfo"/> structures. The NumberOfStorages member specifies the number of structures in the array.</summary>
+         /// <summary>An array of <see cref="DfsStorageInfo"/> structures. The NumberOfStorages member specifies the number of structures in the array.</summary>
          public readonly IntPtr Storage;
       }
    }

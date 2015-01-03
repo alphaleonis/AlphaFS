@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a VolumeInfo instance.</summary>
       /// <param name="volumeName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share</param>
-      /// <Remark>This is a Lazyloading object; call <see cref="T:Refresh()"/> to populate all properties first before accessing.</Remark>
+      /// <Remark>This is a Lazyloading object; call <see cref="Refresh()"/> to populate all properties first before accessing.</Remark>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
       public VolumeInfo(string volumeName)
       {
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Initializes a VolumeInfo instance.</summary>
-      /// <param name="volumeHandle">An instance to a <see cref="T:SafeFileHandle"/> handle.</param>
+      /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
       [SecurityCritical]
       public VolumeInfo(SafeFileHandle volumeHandle)
       {
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Initializes a VolumeInfo instance.</summary>
-      /// <param name="volumeHandle">An instance to a <see cref="T:SafeFileHandle"/> handle.</param>
+      /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
       /// <param name="refresh">Refreshes the state of the object.</param>
       /// <param name="continueOnException"><c>true</c> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
-            // GetVolumeInformation()
+            // GetVolumeInformationXxx()
             // In the ANSI version of this function, the name is limited to 248 characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.

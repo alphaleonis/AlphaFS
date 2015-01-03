@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region CreationTime
 
-         /// <summary>A <see cref="T:NativeMethods.FileTime"/> structure that specifies when a file or directory was created.
+         /// <summary>A <see cref="NativeMethods.FileTime"/> structure that specifies when a file or directory was created.
          /// If the underlying file system does not support creation time, this member is zero.</summary>
          public readonly FileTime CreationTime;
 
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region LastAccessTime
 
-         /// <summary>A <see cref="T:NativeMethods.FileTime"/> structure.
+         /// <summary>A <see cref="NativeMethods.FileTime"/> structure.
          /// For a file, the structure specifies when the file was last read from, written to, or for executable files, run.
          /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last access time, this member is zero.
          /// On the FAT file system, the specified date for both files and directories is correct, but the time of day is always set to midnight.
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region LastWriteTime
 
-         /// <summary>A <see cref="T:NativeMethods.FileTime"/> structure.
+         /// <summary>A <see cref="NativeMethods.FileTime"/> structure.
          /// For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used.
          /// The date and time are not updated when file attributes or security descriptors are changed.
          /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last write time, this member is zero.

@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -76,9 +76,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetIcon
 
-      /// <summary>Gets an <see cref="T:IntPtr"/> handle to the Shell icon that represents the file.</summary>
-      /// <param name="iconAttributes">Icon size <see cref="T:Shell32.FileAttributes.SmallIcon"/> or <see cref="T:Shell32.FileAttributes.LargeIcon"/>. Can also be combined with <see cref="T:Shell32.FileAttributes.AddOverlays"/> and others.</param>
-      /// <returns>An <see cref="T:IntPtr"/> handle to the Shell icon that represents the file.</returns>
+      /// <summary>Gets an <see cref="IntPtr"/> handle to the Shell icon that represents the file.</summary>
+      /// <param name="iconAttributes">Icon size <see cref="Shell32.FileAttributes.SmallIcon"/> or <see cref="Shell32.FileAttributes.LargeIcon"/>. Can also be combined with <see cref="Shell32.FileAttributes.AddOverlays"/> and others.</param>
+      /// <returns>An <see cref="IntPtr"/> handle to the Shell icon that represents the file.</returns>
       /// <remarks>Caller is responsible for destroying this handle with DestroyIcon() when no longer needed.</remarks>
       [SecurityCritical]
       public IntPtr GetIcon(Shell32.FileAttributes iconAttributes)

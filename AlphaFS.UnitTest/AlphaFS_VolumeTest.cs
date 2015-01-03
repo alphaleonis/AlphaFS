@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -938,16 +938,16 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetVolumeGuidForNtDeviceName
 
-      #region GetVolumeInformation
+      #region GetVolumeInfo
 
       [TestMethod]
-      public void GetVolumeInformation()
+      public void GetVolumeInfo()
       {
-         Console.WriteLine("Volume.GetVolumeInformation()");
+         Console.WriteLine("Volume.GetVolumeInfo()");
          Console.WriteLine("\nPlease see unit test: Filesystem_Class_VolumeInfo()");
       }
 
-      #endregion // GetVolumeInformation
+      #endregion // GetVolumeInfo
 
       #region GetVolumeLabel
 

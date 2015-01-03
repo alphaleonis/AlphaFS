@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -39,8 +39,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
-      /// <param name="path">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
+      /// <summary>Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
+      /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
       /// <remarks>
       /// This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.
       /// The path parameter can be a file name, including a file on a Universal Naming Convention (UNC) share.
@@ -53,8 +53,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
-      /// <param name="path">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
+      /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Special internal implementation.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="fullPath">The full path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
+      /// <param name="fullPath">The full path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
       /// <param name="junk1">Not used.</param>
       /// <param name="junk2">Not used.</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
@@ -89,17 +89,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transacted
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
+      /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       public DirectoryInfo(KernelTransaction transaction, string path) : this(transaction, path, false)
       {
       }
 
-      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="T:Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
+      /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path on which to create the <see cref="T:Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
+      /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
       /// <param name="isFullPath">
       /// <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
          Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, false, null);
       }
 
-      /// <summary>Creates a directory using a <see cref="T:System.Security.AccessControl.DirectorySecurity"/> object.</summary>
+      /// <summary>Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Creates a directory using a <see cref="T:System.Security.AccessControl.DirectorySecurity"/> object.</summary>
+      /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -162,7 +162,7 @@ namespace Alphaleonis.Win32.Filesystem
          Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, compress, null);
       }
 
-      /// <summary>[AlphaFS] Creates a directory using a <see cref="T:System.Security.AccessControl.DirectorySecurity"/> object.</summary>
+      /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
@@ -182,7 +182,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:DirectoryInfo"/> class.</summary>
+      /// <summary>Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="DirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
       /// <returns>The last directory specified in <paramref name="path"/>.</returns>
       /// <remarks>
@@ -197,9 +197,9 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateSubdirectoryInternal(path, null, null, false);
       }
 
-      /// <summary>Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:DirectoryInfo"/> class.</summary>
+      /// <summary>Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="DirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
-      /// <param name="directorySecurity">The <see cref="T:DirectorySecurity"/> security to apply.</param>
+      /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> security to apply.</param>
       /// <returns>The last directory specified in <paramref name="path"/>.</returns>
       /// <remarks>
       /// Any and all directories specified in path are created, unless some part of path is invalid.
@@ -217,7 +217,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:DirectoryInfo"/> class.</summary>
+      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="DirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>The last directory specified in <paramref name="path"/>.</returns>
@@ -233,7 +233,7 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateSubdirectoryInternal(path, null, null, compress);
       }
 
-      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:DirectoryInfo"/> class.</summary>
+      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="DirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
@@ -251,9 +251,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:DirectoryInfo"/> class.</summary>
+      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="DirectoryInfo"/> class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
-      /// <param name="directorySecurity">The <see cref="T:DirectorySecurity"/> security to apply.</param>
+      /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> security to apply.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
       /// <returns>The last directory specified in <paramref name="path"/>.</returns>
       /// <remarks>
@@ -268,11 +268,11 @@ namespace Alphaleonis.Win32.Filesystem
          return CreateSubdirectoryInternal(path, null, directorySecurity, compress);
       }
 
-      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="T:DirectoryInfo"/> class.</summary>
+      /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="DirectoryInfo"/> class.</summary>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       /// <param name="path">The specified path. This cannot be a different disk volume.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
-      /// <param name="directorySecurity">The <see cref="T:DirectorySecurity"/> security to apply.</param>
+      /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> security to apply.</param>
       /// <returns>The last directory specified in <paramref name="path"/>.</returns>
       /// <remarks>
       /// Any and all directories specified in path are created, unless some part of path is invalid.
@@ -294,7 +294,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Deletes this <see cref="T:DirectoryInfo"/> if it is empty.</summary>
+      /// <summary>Deletes this <see cref="DirectoryInfo"/> if it is empty.</summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
       /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
@@ -305,11 +305,11 @@ namespace Alphaleonis.Win32.Filesystem
          Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, false, false, true, false, null);
       }
 
-      /// <summary>Deletes this instance of a <see cref="T:DirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
+      /// <summary>Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
       /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; otherwise, <c>false</c>.</param>
       /// <remarks>
-      /// If the <see cref="T:DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="T:DirectoryInfo"/> even if <paramref name="recursive"/> is <c>false</c>.
-      /// Attempting to delete a <see cref="T:DirectoryInfo"/> that is not empty when <paramref name="recursive"/> is <c>false</c> throws an <see cref="T:IOException"/>.
+      /// If the <see cref="DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if <paramref name="recursive"/> is <c>false</c>.
+      /// Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when <paramref name="recursive"/> is <c>false</c> throws an <see cref="IOException"/>.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
@@ -325,12 +325,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Deletes this instance of a <see cref="T:DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
+      /// <summary>[AlphaFS] Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
       /// <param name="recursive"><c>true</c> to delete this directory, its subdirectories, and all files; otherwise, <c>false</c>.</param>
       /// <param name="ignoreReadOnly"><c>true</c> ignores read only attribute of files and directories.</param>
       /// <remarks>
-      /// If the <see cref="T:DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="T:DirectoryInfo"/> even if recursive is <c>false</c>.
-      /// Attempting to delete a <see cref="T:DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="T:IOException"/>.
+      /// If the <see cref="DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <c>false</c>.
+      /// Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.
       /// </remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -358,8 +358,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -371,11 +371,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern and search subdirectory option.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
       /// <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
       /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
@@ -409,8 +409,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -422,11 +422,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of file information that matches a specified search pattern and search subdirectory option.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
       /// <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
       /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
@@ -461,8 +461,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
@@ -475,11 +475,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern and search subdirectory option.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
       /// <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
       /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
@@ -503,8 +503,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Gets a <see cref="T:DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the directory described by the current DirectoryInfo object.</summary>
-      /// <returns>A <see cref="T:DirectorySecurity"/> object that encapsulates the access control rules for the directory.</returns>
+      /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the directory described by the current DirectoryInfo object.</summary>
+      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public DirectorySecurity GetAccessControl()
@@ -512,9 +512,9 @@ namespace Alphaleonis.Win32.Filesystem
          return File.GetAccessControlInternal<DirectorySecurity>(true, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, null);
       }
 
-      /// <summary>Gets a <see cref="T:DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the directory described by the current <see cref="T:DirectoryInfo"/> object.</summary>
-      /// <param name="includeSections">One of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
-      /// <returns>A <see cref="T:DirectorySecurity"/> object that encapsulates the access control rules for the file described by the path parameter.</returns>
+      /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the directory described by the current <see cref="DirectoryInfo"/> object.</summary>
+      /// <param name="includeSections">One of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
+      /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the path parameter.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public DirectorySecurity GetAccessControl(AccessControlSections includeSections)
@@ -531,7 +531,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns the subdirectories of the current directory.</summary>
-      /// <returns>An array of <see cref="T:DirectoryInfo"/> objects.</returns>
+      /// <returns>An array of <see cref="DirectoryInfo"/> objects.</returns>
       /// <remarks>If there are no subdirectories, this method returns an empty array. This method is not recursive.</remarks>
       /// <remarks>
       /// The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
@@ -544,13 +544,13 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders, null).ToArray();
       }
 
-      /// <summary>Returns an array of directories in the current <see cref="T:DirectoryInfo"/> matching the given search criteria.</summary>
+      /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
-      /// <returns>An array of type <see cref="T:DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
+      /// <returns>An array of type <see cref="DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
       /// <remarks>
       /// The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
       /// before the whole collection is returned; when you use GetDirectories, you must wait for the whole array of names to be returned before you can access the array.
@@ -562,17 +562,17 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Folders, null).ToArray();
       }
 
-      /// <summary>Returns an array of directories in the current <see cref="T:DirectoryInfo"/> matching the given search criteria and using a value to determine whether to search subdirectories.</summary>
+      /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria and using a value to determine whether to search subdirectories.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
       /// <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
-      /// <returns>An array of type <see cref="T:DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
+      /// <returns>An array of type <see cref="DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
       /// <remarks>If there are no subdirectories, or no subdirectories match the searchPattern parameter, this method returns an empty array.</remarks>
       /// <remarks>
       /// The EnumerateDirectories and GetDirectories methods differ as follows: When you use EnumerateDirectories, you can start enumerating the collection of names
@@ -599,7 +599,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Returns a file list from the current directory.</summary>
-      /// <returns>An array of type <see cref="T:FileInfo"/>.</returns>
+      /// <returns>An array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
       /// <remarks>If there are no files in the <see cref="DirectoryInfo"/>, this method returns an empty array.</remarks>
       /// <remarks>
@@ -616,10 +616,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns a file list from the current directory matching the given search pattern.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
-      /// <returns>An array of type <see cref="T:FileInfo"/>.</returns>
+      /// <returns>An array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
       /// <remarks>If there are no files in the <see cref="DirectoryInfo"/>, this method returns an empty array.</remarks>
       /// <remarks>
@@ -636,14 +636,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns a file list from the current directory matching the given search pattern and using a value to determine whether to search subdirectories.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
       /// <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
-      /// <returns>An array of type <see cref="T:FileInfo"/>.</returns>
+      /// <returns>An array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
       /// <remarks>If there are no files in the <see cref="DirectoryInfo"/>, this method returns an empty array.</remarks>
       /// <remarks>
@@ -670,11 +670,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Returns an array of strongly typed <see cref="T:FileSystemInfo"/> entries representing all the files and subdirectories in a directory.</summary>
-      /// <returns>An array of strongly typed <see cref="T:FileSystemInfo"/> entries.</returns>
+      /// <summary>Returns an array of strongly typed <see cref="FileSystemInfo"/> entries representing all the files and subdirectories in a directory.</summary>
+      /// <returns>An array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
       /// <remarks>
-      /// For subdirectories, the <see cref="T:FileSystemInfo"/> objects returned by this method can be cast to the derived class <see cref="T:DirectoryInfo"/>.
-      /// Use the <see cref="T:FileAttributes"/> value returned by the <see cref="FileSystemInfo.Attributes"/> property to determine whether the <see cref="T:FileSystemInfo"/> represents a file or a directory.
+      /// For subdirectories, the <see cref="FileSystemInfo"/> objects returned by this method can be cast to the derived class <see cref="DirectoryInfo"/>.
+      /// Use the <see cref="FileAttributes"/> value returned by the <see cref="FileSystemInfo.Attributes"/> property to determine whether the <see cref="FileSystemInfo"/> represents a file or a directory.
       /// </remarks>
       /// <remarks>
       /// If there are no files or directories in the DirectoryInfo, this method returns an empty array. This method is not recursive.
@@ -688,16 +688,16 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, null).ToArray();
       }
 
-      /// <summary>Retrieves an array of strongly typed <see cref="T:FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
+      /// <summary>Retrieves an array of strongly typed <see cref="FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
-      /// <returns>An array of strongly typed <see cref="T:FileSystemInfo"/> entries.</returns>
+      /// <returns>An array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
       /// <remarks>
-      /// For subdirectories, the <see cref="T:FileSystemInfo"/> objects returned by this method can be cast to the derived class <see cref="T:DirectoryInfo"/>.
-      /// Use the <see cref="T:FileAttributes"/> value returned by the <see cref="FileSystemInfo.Attributes"/> property to determine whether the <see cref="T:FileSystemInfo"/> represents a file or a directory.
+      /// For subdirectories, the <see cref="FileSystemInfo"/> objects returned by this method can be cast to the derived class <see cref="DirectoryInfo"/>.
+      /// Use the <see cref="FileAttributes"/> value returned by the <see cref="FileSystemInfo.Attributes"/> property to determine whether the <see cref="FileSystemInfo"/> represents a file or a directory.
       /// </remarks>
       /// <remarks>
       /// If there are no files or directories in the DirectoryInfo, this method returns an empty array. This method is not recursive.
@@ -711,20 +711,20 @@ namespace Alphaleonis.Win32.Filesystem
          return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, null).ToArray();
       }
 
-      /// <summary>Retrieves an array of strongly typed <see cref="T:FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
+      /// <summary>Retrieves an array of strongly typed <see cref="FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="T:SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
       /// <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
-      /// <returns>An array of strongly typed <see cref="T:FileSystemInfo"/> entries.</returns>
+      /// <returns>An array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
       /// <remarks>
-      /// For subdirectories, the <see cref="T:FileSystemInfo"/> objects returned by this method can be cast to the derived class <see cref="T:DirectoryInfo"/>.
-      /// Use the <see cref="T:FileAttributes"/> value returned by the <see cref="FileSystemInfo.Attributes"/> property to determine whether the <see cref="T:FileSystemInfo"/> represents a file or a directory.
+      /// For subdirectories, the <see cref="FileSystemInfo"/> objects returned by this method can be cast to the derived class <see cref="DirectoryInfo"/>.
+      /// Use the <see cref="FileAttributes"/> value returned by the <see cref="FileSystemInfo.Attributes"/> property to determine whether the <see cref="FileSystemInfo"/> represents a file or a directory.
       /// </remarks>
       /// <remarks>
       /// If there are no files or directories in the DirectoryInfo, this method returns an empty array. This method is not recursive.
@@ -749,7 +749,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region MoveTo
 
-      /// <summary>Moves a <see cref="T:DirectoryInfo"/> instance and its contents to a new path.
+      /// <summary>Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path.
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
@@ -798,8 +798,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region .NET
 
-      /// <summary>Applies access control list (ACL) entries described by a <see cref="T:DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
-      /// <param name="directorySecurity">A <see cref="T:DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
+      /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
+      /// <param name="directorySecurity">A <see cref="DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -808,9 +808,9 @@ namespace Alphaleonis.Win32.Filesystem
          File.SetAccessControlInternal(LongFullName, null, directorySecurity, AccessControlSections.All, null);
       }
 
-      /// <summary>Applies access control list (ACL) entries described by a <see cref="T:DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
-      /// <param name="directorySecurity">A <see cref="T:DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
-      /// <param name="includeSections">One or more of the <see cref="T:AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
+      /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
+      /// <param name="directorySecurity">A <see cref="DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
+      /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
@@ -861,9 +861,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region DirectoryInfo
 
-      /// <summary>[AlphaFS] Copies a <see cref="T:DirectoryInfo"/> instance and its contents to a new path.
+      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
       /// <para>&#160;</para>
-      /// <returns>Returns a new <see cref="T:DirectoryInfo"/> instance if the directory was completely copied.</returns>
+      /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
@@ -891,9 +891,9 @@ namespace Alphaleonis.Win32.Filesystem
          return new DirectoryInfo(Transaction, destinationPathLp, null);
       }
 
-      /// <summary>[AlphaFS] Copies a <see cref="T:DirectoryInfo"/> instance and its contents to a new path.
+      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
       /// <para>&#160;</para>
-      /// <returns>Returns a new <see cref="T:DirectoryInfo"/> instance if the directory was completely copied.</returns>
+      /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
@@ -909,7 +909,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>false</c> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -927,7 +927,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CopyMoveResult
 
-      /// <summary>[AlphaFS] Copies a <see cref="T:DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
+      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <para>&#160;</para>
       /// <returns>
@@ -963,7 +963,7 @@ namespace Alphaleonis.Win32.Filesystem
          return cmr;
       }
 
-      /// <summary>[AlphaFS] Copies a <see cref="T:DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
+      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <para>&#160;</para>
       /// <returns>
@@ -984,7 +984,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
@@ -1007,9 +1007,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region DirectoryInfo
 
-      /// <summary>[AlphaFS] Copies a <see cref="T:DirectoryInfo"/> instance and its contents to a new path.
+      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
       /// <para>&#160;</para>
-      /// <returns>Returns a new <see cref="T:DirectoryInfo"/> instance if the directory was completely copied.</returns>
+      /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
@@ -1032,9 +1032,9 @@ namespace Alphaleonis.Win32.Filesystem
          return new DirectoryInfo(Transaction, destinationPathLp, null);
       }
 
-      /// <summary>[AlphaFS] Copies a <see cref="T:DirectoryInfo"/> instance and its contents to a new path.
+      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
       /// <para>&#160;</para>
-      /// <returns>Returns a new <see cref="T:DirectoryInfo"/> instance if the directory was completely copied.</returns>
+      /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
       /// <para>&#160;</para>
       /// <remarks>
       /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
@@ -1050,7 +1050,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
       public DirectoryInfo CopyTo1(string destinationPath, CopyOptions copyOptions)
       {
@@ -1063,7 +1063,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CopyMoveResult
 
-      /// <summary>[AlphaFS] Copies a <see cref="T:DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
+      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <para>&#160;</para>
       /// <returns>
@@ -1094,7 +1094,7 @@ namespace Alphaleonis.Win32.Filesystem
          return cmr;
       }
 
-      /// <summary>[AlphaFS] Copies a <see cref="T:DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
+      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <para>&#160;</para>
       /// <returns>
@@ -1115,7 +1115,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
@@ -1134,7 +1134,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region CountFileSystemObjects
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
-      /// <param name="directoryEnumerationOptions"><see cref="T:DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>The counted number of file system objects.</returns>
       /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
       [SecurityCritical]
@@ -1146,10 +1146,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="T:Path.WildcardStarMatchAll"/> and <see cref="T:Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
-      /// <param name="directoryEnumerationOptions"><see cref="T:DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>The counted number of file system objects.</returns>
       /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
       [SecurityCritical]
@@ -1172,7 +1172,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <param name="directoryEnumerationOptions"><see cref="T:DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public void Compress(DirectoryEnumerationOptions directoryEnumerationOptions)
@@ -1224,7 +1224,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <param name="directoryEnumerationOptions"><see cref="T:DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public void Decompress(DirectoryEnumerationOptions directoryEnumerationOptions)
@@ -1255,14 +1255,14 @@ namespace Alphaleonis.Win32.Filesystem
       
       #region DeleteEmpty
 
-      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:DirectoryInfo"/> instance.</summary>
+      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="DirectoryInfo"/> instance.</summary>
       [SecurityCritical]
       public void DeleteEmpty()
       {
          Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, false, false, true, null);
       }
 
-      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:DirectoryInfo"/> instance.</summary>
+      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="DirectoryInfo"/> instance.</summary>
       /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
       [SecurityCritical]
       public void DeleteEmpty(bool recursive)
@@ -1270,9 +1270,9 @@ namespace Alphaleonis.Win32.Filesystem
          Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, recursive, false, true, null);
       }
 
-      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="T:DirectoryInfo"/> instance.</summary>
+      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="DirectoryInfo"/> instance.</summary>
       /// <param name="recursive"><c>true</c> deletes empty subdirectories from this directory and its subdirectories.</param>
-      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="T:FileAttributes"/> of empty directories.</param>
+      /// <param name="ignoreReadOnly"><c>true</c> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       [SecurityCritical]
       public void DeleteEmpty(bool recursive, bool ignoreReadOnly)
       {
@@ -1332,8 +1332,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateStreams
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the directory.</summary>
-      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the directory.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</summary>
+      /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
@@ -1341,8 +1341,8 @@ namespace Alphaleonis.Win32.Filesystem
          return AlternateDataStreamInfo.EnumerateStreamsInternal(true, Transaction, null, LongFullName, null, null, null);
       }
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the directory.</summary>
-      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the directory.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</summary>
+      /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the directory.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
@@ -1391,9 +1391,9 @@ namespace Alphaleonis.Win32.Filesystem
          return AlternateDataStreamInfo.GetStreamSizeInternal(true, Transaction, null, LongFullName, name, StreamType.Data, null);
       }
 
-      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="T:StreamType"/> data streams (NTFS ADS).</summary>
-      /// <param name="type">The <see cref="T:StreamType"/> of the stream to retrieve.</param>
-      /// <returns>The number of bytes used by stream of type <see cref="T:StreamType"/>.</returns>
+      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
+      /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
+      /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public long GetStreamSize(StreamType type)
@@ -1409,11 +1409,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region DirectoryInfo
 
-      /// <summary>[AlphaFS] Moves a <see cref="T:DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <para>&#160;</para>
       /// <returns>
-      /// <para>Returns a new <see cref="T:DirectoryInfo"/> instance if the directory was completely moved.</para>
+      /// <para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para>
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
@@ -1434,7 +1434,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
       /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
       /// </param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
       ///    <para><c>true</c> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
       ///    <para><c>false</c> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
@@ -1452,7 +1452,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CopyMoveResult
 
-      /// <summary>[AlphaFS] Moves a <see cref="T:DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <para>&#160;</para>
       /// <returns>
@@ -1477,7 +1477,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
       /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
       /// </param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="isFullPath">
@@ -1500,11 +1500,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region DirectoryInfo
 
-      /// <summary>[AlphaFS] Moves a <see cref="T:DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <para>&#160;</para>
       /// <returns>
-      /// <para>Returns a new <see cref="T:DirectoryInfo"/> instance if the directory was completely moved.</para>
+      /// <para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para>
       /// </returns>
       /// <para>&#160;</para>
       /// <remarks>
@@ -1525,7 +1525,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
       /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
       /// </param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
       public DirectoryInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions)
       {
@@ -1538,7 +1538,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CopyMoveResult
 
-      /// <summary>[AlphaFS] Moves a <see cref="T:DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
       /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <para>&#160;</para>
       /// <returns>
@@ -1563,7 +1563,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
       /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
       /// </param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       [SecurityCritical]
@@ -1581,7 +1581,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region RefreshEntryInfo
 
-      /// <summary>Refreshes the state of the <see cref="T:FileSystemEntryInfo"/> EntryInfo instance.</summary>
+      /// <summary>Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo instance.</summary>
       [SecurityCritical]
       public new void RefreshEntryInfo()
       {
@@ -1593,7 +1593,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region RemoveStream
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the directory.</summary>
-      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -1604,7 +1604,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from the directory.</summary>
       /// <param name="name">The name of the stream to remove.</param>
-      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -1641,8 +1641,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="T:CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
-      /// <param name="moveOptions"><see cref="T:MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <c>null</c>.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <c>null</c>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <c>null</c>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <c>null</c>.</param>
       /// <param name="longFullPath">Returns the retrieved long full path.</param>
@@ -1689,9 +1689,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Unified method CreateSubdirectory() to create a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the DirectoryInfo class.</summary>
       /// <param name="path">The specified path. This cannot be a different disk volume or Universal Naming Convention (UNC) name.</param>
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
-      /// <param name="directorySecurity">The <see cref="T:DirectorySecurity"/> security to apply.</param>
+      /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> security to apply.</param>
       /// <param name="compress">When <c>true</c> compresses the directory.</param>
-      /// <returns>The last directory specified in path as an <see cref="T:DirectoryInfo"/> object.</returns>
+      /// <returns>The last directory specified in path as an <see cref="DirectoryInfo"/> object.</returns>
       /// <remarks>
       /// Any and all directories specified in path are created, unless some part of path is invalid.
       /// The path parameter specifies a directory path, not a file path.
@@ -1728,7 +1728,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value><c>true</c> if the directory exists; otherwise, <c>false</c>.</value>
       /// <para>&#160;</para>
       /// <remarks>
-      /// <para>The <see cref="T:Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified directory exists.</para>
+      /// <para>The <see cref="Exists"/> property returns <c>false</c> if any error occurs while trying to determine if the specified directory exists.</para>
       /// <para>This can occur in situations that raise exceptions such as passing a directory name with invalid characters or too many characters,</para>
       /// <para>a failing or missing disk, or if the caller does not have permission to read the directory.</para>
       /// </remarks>
@@ -1758,7 +1758,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Name
 
-      /// <summary>Gets the name of this <see cref="T:DirectoryInfo"/> instance.
+      /// <summary>Gets the name of this <see cref="DirectoryInfo"/> instance.
       /// <para>&#160;</para>
       /// <value>The directory name.</value>
       /// <para>&#160;</para>

@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -45,19 +45,19 @@ namespace Alphaleonis.Win32.Network
          /// <summary>Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</summary>
          public IntPtr WinOwner;
 
-         /// <summary>The name of a local device to be redirected, such as "F:". When <see cref="T:LocalName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</summary>
+         /// <summary>The name of a local device to be redirected, such as "F:". When <see cref="LocalName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</summary>
          public string LocalName;
 
          /// <summary>A network resource to connect to/disconnect from, for example: \\server or \\server\share</summary>
          public string RemoteName;
 
-         /// <summary>A <see cref="T:NetworkCredential"/> instance. Use either this or the combination of <see cref="T:UserName"/> and <see cref="T:Password"/>.</summary>
+         /// <summary>A <see cref="NetworkCredential"/> instance. Use either this or the combination of <see cref="UserName"/> and <see cref="Password"/>.</summary>
          public NetworkCredential Credential;
 
-         /// <summary>The user name for making the connection. If <see cref="T:UserName"/> is <c>null</c>, the function uses the default user name. (The user context for the process provides the default user name)</summary>
+         /// <summary>The user name for making the connection. If <see cref="UserName"/> is <c>null</c>, the function uses the default user name. (The user context for the process provides the default user name)</summary>
          public string UserName;
 
-         /// <summary>The password to be used for making the network connection. If <see cref="T:Password"/> is <c>null</c>, the function uses the current default password associated with the user specified by <see cref="T:UserName"/>.</summary>
+         /// <summary>The password to be used for making the network connection. If <see cref="Password"/> is <c>null</c>, the function uses the current default password associated with the user specified by <see cref="UserName"/>.</summary>
          public string Password;
 
          /// <summary><c>true</c> always pop-ups an authentication dialog box.</summary>
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Network
 
          /// <summary>Creates a temporary connection to a network resource. The function can redirect a local device to a network resource.</summary>
          /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
-         /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
+         /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
          /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
          public DriveConnection(string remoteName, NetworkCredential credentials, bool prompt)
          {
@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Network
 
          #region Dispose
 
-         /// <summary>Releases all resources used by the <see cref="T:DriveConnection"/> class.</summary>
+         /// <summary>Releases all resources used by the <see cref="DriveConnection"/> class.</summary>
          public void Dispose()
          {
             if (!Utils.IsNullOrWhiteSpace(LocalName))
@@ -226,7 +226,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Creates a connection to a network resource. The function can redirect a local device to a network resource.</summary>
       /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
-      /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
+      /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
@@ -277,7 +277,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="localName">The name of a local device to be redirected, such as "F:". When <paramref name="localName"/> is <c>null</c> or <c>string.Empty</c>, the last available drive letter will be used. Letters are assigned beginning with Z:, then Y: and so on.</param>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
-      /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
+      /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
@@ -335,7 +335,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Creates a connection to a network resource.</summary>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share</param>
-      /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
+      /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
@@ -380,7 +380,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Creates a connection to a network resource.</summary>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share</param>
-      /// <param name="credentials">An instance of <see cref="T:NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
+      /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
       /// <param name="prompt"><c>true</c> always pop-ups an authentication dialog box.</param>
       /// <param name="updateProfile"><c>true</c> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
@@ -472,7 +472,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Enumerates the DFS Links from a DFS namespace.</summary>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
-      /// <returns>Returns <see cref="T:IEnumerable{DfsInfo}"/> of DFS namespaces.</returns>
+      /// <returns>Returns <see cref="IEnumerable{DfsInfo}"/> of DFS namespaces.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
@@ -501,7 +501,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateDfsRoot
 
       /// <summary>Enumerates the DFS namespaces from the local host.</summary>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from the local host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from the local host.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
@@ -516,7 +516,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a remote host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from a remote host.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
@@ -530,7 +530,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateDomainDfsRoot
 
       /// <summary>Enumerates the DFS namespaces from the domain.</summary>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from the domain.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from the domain.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
@@ -545,7 +545,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
@@ -559,7 +559,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateDrives
 
       /// <summary>Enumerates drives from the local host.</summary>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> drives from the local host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> drives from the local host.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDrives()
       {
@@ -572,7 +572,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> drives from the specified host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> drives from the specified host.</returns>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDrives(string host, bool continueOnException)
       {
@@ -584,7 +584,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateOpenConnections
 
       /// <summary>Enumerates open connections from the local host.</summary>
-      /// <returns>Returns <see cref="T:OpenConnectionInfo"/> connection information from the local host.</returns>
+      /// <returns>Returns <see cref="OpenConnectionInfo"/> connection information from the local host.</returns>
       [SecurityCritical]
       public static IEnumerable<OpenConnectionInfo> EnumerateOpenConnections()
       {
@@ -598,7 +598,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
+      /// <returns>Returns <see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<OpenConnectionInfo> EnumerateOpenConnections(string host, string share, bool continueOnException)
       {
@@ -610,7 +610,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateOpenResources
 
       /// <summary>Enumerates open resources from the local host.</summary>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> open resources from the local host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> open resources from the local host.</returns>
       [SecurityCritical]
       public static IEnumerable<OpenResourceInfo> EnumerateOpenResources()
       {
@@ -625,7 +625,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<OpenResourceInfo> EnumerateOpenResources(string host, string basePath, string typeName, bool continueOnException)
       {
@@ -637,7 +637,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateShares
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
-      /// <returns>Returns <see cref="T:IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares()
       {
@@ -646,7 +646,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the specified host.
       /// <para>&#160;</para>
-      /// <returns>Returns <see cref="T:IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       /// </summary>
       /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="continueOnException">
@@ -665,7 +665,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Gets information about a DFS root or link from the cache maintained by the DFS client.</summary>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
-      /// <returns>Returns a <see cref="T:DfsInfo"/> instance.</returns>
+      /// <returns>Returns a <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
@@ -679,7 +679,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       /// <param name="serverName">The name of the DFS root target or link target server.</param>
       /// <param name="shareName">The name of the share corresponding to the DFS root target or link target.</param>
-      /// <returns>Returns a <see cref="T:DfsInfo"/> instance.</returns>
+      /// <returns>Returns a <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
@@ -695,7 +695,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Gets information about a specified DFS root or link in a DFS namespace.</summary>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
-      /// <returns>Returns a <see cref="T:DfsInfo"/> instance.</returns>
+      /// <returns>Returns a <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
@@ -736,7 +736,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>A <see cref="T:ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(string uncPath, bool continueOnException)
       {
@@ -745,13 +745,13 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <param name="structureLevel">The structure level for the ShareInfo instance. Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>, <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</param>
+      /// <param name="structureLevel">The structure level for the ShareInfo instance. Possible structure levels: <see cref="NativeMethods.ShareInfo503">503</see>, <see cref="NativeMethods.ShareInfo2">2</see>, <see cref="NativeMethods.ShareInfo1">1</see> and <see cref="NativeMethods.ShareInfo1005">1005</see>.</param>
       /// <param name="uncPath">The share in the format: \\host\share</param>
       /// <param name="continueOnException">
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>A <see cref="T:ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(int structureLevel, string uncPath, bool continueOnException)
       {
@@ -766,7 +766,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>A <see cref="T:ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <c>null</c> on failure or when not available.</returns>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(string host, string share, bool continueOnException)
       {
@@ -774,14 +774,14 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <param name="structureLevel">Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>,  <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</param>
+      /// <param name="structureLevel">Possible structure levels: <see cref="NativeMethods.ShareInfo503">503</see>, <see cref="NativeMethods.ShareInfo2">2</see>,  <see cref="NativeMethods.ShareInfo1">1</see> and <see cref="NativeMethods.ShareInfo1005">1005</see>.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException">
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>A <see cref="T:ShareInfo"/> class, or <see cref="T:null"/> on failure or when not available.</returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or null on failure or when not available.</returns>
       [SecurityCritical]
       public static ShareInfo GetShareInfo(int structureLevel, string host, string share, bool continueOnException)
       {
@@ -821,7 +821,7 @@ namespace Alphaleonis.Win32.Network
       #region ConnectDisconnectInternal
 
       /// <summary>Unified method ConnectDisconnectInternal() to connect to/disconnect from a network resource. The function can redirect a local device to a network resource.</summary>
-      /// <returns>If <see cref="T:ConnectDisconnectArguments.LocalName"/> is <c>null</c> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
+      /// <returns>If <see cref="ConnectDisconnectArguments.LocalName"/> is <c>null</c> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       [SecurityCritical]
@@ -946,7 +946,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a remote host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from a remote host.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
@@ -981,7 +981,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
@@ -1016,7 +1016,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> drives from the specified host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> drives from the specified host.</returns>
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDrivesInternal(string host, bool continueOnException)
       {
@@ -1048,7 +1048,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
+      /// <returns>Returns <see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
       [SecurityCritical]
       private static IEnumerable<OpenConnectionInfo> EnumerateOpenConnectionsInternal(string host, string share, bool continueOnException)
       {
@@ -1085,7 +1085,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
       [SecurityCritical]
       private static IEnumerable<OpenResourceInfo> EnumerateOpenResourcesInternal(string host, string basePath, string typeName, bool continueOnException)
       {
@@ -1217,7 +1217,7 @@ namespace Alphaleonis.Win32.Network
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>Returns <see cref="T:IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       [SecurityCritical]
       private static IEnumerable<ShareInfo> EnumerateSharesInternal(string host, bool continueOnException)
       {
@@ -1278,7 +1278,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       /// <param name="serverName">The name of the DFS root target or link target server. If <paramref name="getFromClient"/> is <c>false</c>, this parameter is always <c>null</c>.</param>
       /// <param name="shareName">The name of the share corresponding to the DFS root target or link target. If <paramref name="getFromClient"/> is <c>false</c>, this parameter is always <c>null</c>.</param>
-      /// <returns>Returns <see cref="T:IEnumerable{DfsInfo}"/></returns>
+      /// <returns>Returns <see cref="IEnumerable{DfsInfo}"/></returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
@@ -1333,13 +1333,13 @@ namespace Alphaleonis.Win32.Network
 
       #region GetRemoteNameInfoInternal
 
-      /// <summary>This method uses <see cref="T:NativeMethods.RemoteNameInfo"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
+      /// <summary>This method uses <see cref="NativeMethods.RemoteNameInfo"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
       /// <param name="path">The local path with drive name.</param>
       /// <param name="continueOnException">
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>A <see cref="T:NativeMethods.RemoteNameInfo"/> structure.</returns>
+      /// <returns>A <see cref="NativeMethods.RemoteNameInfo"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid: http://alphafs.codeplex.com/discussions/316583</remarks>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
@@ -1416,15 +1416,15 @@ namespace Alphaleonis.Win32.Network
 
       #region GetShareInfoInternal
 
-      /// <summary>Unified method GetShareInfoInternal() to get the <see cref="T:ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
-      /// <param name="structureLevel">Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>,  <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</param>
+      /// <summary>Unified method GetShareInfoInternal() to get the <see cref="ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
+      /// <param name="structureLevel">Possible structure levels: <see cref="NativeMethods.ShareInfo503">503</see>, <see cref="NativeMethods.ShareInfo2">2</see>,  <see cref="NativeMethods.ShareInfo1">1</see> and <see cref="NativeMethods.ShareInfo1005">1005</see>.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException">
       /// <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       /// <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>A <see cref="T:ShareInfo"/> class, or <see cref="T:null"/> on failure or when not available.</returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or null on failure or when not available.</returns>
       /// <exception cref="NetworkInformationException"/>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]

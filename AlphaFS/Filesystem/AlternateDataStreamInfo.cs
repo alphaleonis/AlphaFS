@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -43,27 +43,27 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructors
 
-      /// <summary>Initializes a new instance of the <see cref="T:AlternateDataStreamInfo"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
       /// <param name="path">The path to an existing file or directory.</param>
       public AlternateDataStreamInfo(string path) : this(new NativeMethods.Win32StreamId(), null, path, null, null, null, false)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:AlternateDataStreamInfo"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file or directory.</param>
       public AlternateDataStreamInfo(KernelTransaction transaction, string path) : this(new NativeMethods.Win32StreamId(), transaction, path, null, null, null, false)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:AlternateDataStreamInfo"/> class.</summary>
-      /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the file or directory from which to retrieve the information.</param>
+      /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
+      /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the file or directory from which to retrieve the information.</param>
       public AlternateDataStreamInfo(SafeFileHandle handle) : this(new NativeMethods.Win32StreamId(), null, Path.GetFinalPathNameByHandleInternal(handle, FinalPathFormats.None), null, null, null, false)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:AlternateDataStreamInfo"/> class.</summary>
-      /// <param name="stream">The <see cref="T:NativeMethods.Win32StreamId"/> stream ID.</param>
+      /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
+      /// <param name="stream">The <see cref="NativeMethods.Win32StreamId"/> stream ID.</param>
       /// <param name="transaction"></param>
       /// <param name="path">The path to an existing file or directory.</param>
       /// <param name="name">The originalName of the stream.</param>
@@ -121,17 +121,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateStreams
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file or directory.</summary>
-      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances for the file or directory.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file or directory.</summary>
+      /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file or directory.</returns>
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
          return EnumerateStreamsInternal(IsDirectory, Transaction, null, LongFullName, null, null, null);
       }
 
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file or directory.</summary>
+      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file or directory.</summary>
       /// <param name="streamType">The type of stream to retrieve.</param>
-      /// <returns>An enumerable collection of <see cref="T:AlternateDataStreamInfo"/> of type <see cref="T:StreamType"/> instances for the file or directory.</returns>
+      /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file or directory.</returns>
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region RemoveStreams
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file or directory.</summary>
-      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file or directory.</summary>
       /// <param name="name">The name of the stream to remove.</param>
-      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -205,10 +205,10 @@ namespace Alphaleonis.Win32.Filesystem
       
       #region EnumerateStreamsInternal
 
-      /// <summary>Unified method EnumerateStreamsInternal() to return an enumerable collection of <see cref="T:AlternateDataStreamInfo"/> instances, associated with a file or directory.</summary>
+      /// <summary>Unified method EnumerateStreamsInternal() to return an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances, associated with a file or directory.</summary>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory. <c>null</c> to retrieve automatically.</param>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="safeHandle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information. Use either <paramref name="safeHandle"/> or <paramref name="path"/>, not both.</param>
+      /// <param name="safeHandle">A <see cref="SafeFileHandle"/> connected to the open file from which to retrieve the information. Use either <paramref name="safeHandle"/> or <paramref name="path"/>, not both.</param>
       /// <param name="path">The path to an existing file or directory. Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</param>
       /// <param name="originalName">The name of the stream to retrieve.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
@@ -217,7 +217,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>An <see cref="T:IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file or directory specified by path.</returns>
+      /// <returns>An <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file or directory specified by path.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       internal static IEnumerable<AlternateDataStreamInfo> EnumerateStreamsInternal(bool? isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, string originalName, StreamType? streamType, bool? isFullPath)
@@ -357,7 +357,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Retrieves the actual number of bytes of disk storage used by all or a specific alternate data streams (NTFS ADS).</summary>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory. <c>null</c> to retrieve automatically.</param>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="handle">A <see cref="T:SafeFileHandle"/> connected to the open file from which to retrieve the information. Use either <paramref name="handle"/> or <paramref name="path"/>, not both.</param>
+      /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the open file from which to retrieve the information. Use either <paramref name="handle"/> or <paramref name="path"/>, not both.</param>
       /// <param name="path">A path that describes a file. Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</param>
       /// <param name="name">The name of the stream to retrieve or <c>null</c> to retrieve all streams.</param>
       /// <param name="streamType">The type of stream to retrieve or <c>null</c> to retrieve all streams.</param>
@@ -390,7 +390,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <remarks>This method only removes streams of type <see cref="T:StreamType.AlternateData"/>.</remarks>
+      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]

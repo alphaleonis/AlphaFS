@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Network
          /// <remarks>
          /// <para>If a network provider cannot distinguish between</para>
          /// <para>print and disk resources, it can enumerate all resources.</para>
-         /// <para>This value cannot be combined with <see cref="T:ResourceTypeDisk"/> or <see cref="T:ResourceType.Print"/>.</para>
+         /// <para>This value cannot be combined with <see cref="ResourceType.Disk"/> or <see cref="ResourceType.Print"/>.</para>
          /// </remarks>
          /// </summary>
          Any = 0,

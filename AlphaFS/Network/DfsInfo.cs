@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -35,26 +35,26 @@ namespace Alphaleonis.Win32.Network
    {
       #region Constructor
 
-      /// <summary>Initializes a new instance of the <see cref="T:DfsInfo"/> class,
+      /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class,
       /// <para>which acts as a wrapper for a DFS root or link target.</para>
       /// </summary>
       public DfsInfo()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:DfsInfo"/> class,
+      /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class,
       /// <para>which acts as a wrapper for a DFS root or link target.</para>
       /// </summary>
-      /// <param name="structure">An initialized <see cref="T:NativeMethods.DfsInfo4"/> instance.</param>
+      /// <param name="structure">An initialized <see cref="NativeMethods.DfsInfo4"/> instance.</param>
       internal DfsInfo(NativeMethods.DfsInfo4 structure) : this(null, structure)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:DfsInfo"/> class,
+      /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class,
       /// <para>which acts as a wrapper for a DFS root or link target.</para>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="structure">An initialized <see cref="T:NativeMethods.DfsInfo4"/> instance.</param>
+      /// <param name="structure">An initialized <see cref="NativeMethods.DfsInfo4"/> instance.</param>
       private DfsInfo(KernelTransaction transaction, NativeMethods.DfsInfo4 structure)
       {
          Transaction = transaction;
@@ -122,7 +122,7 @@ namespace Alphaleonis.Win32.Network
 
       #region State
 
-      /// <summary>An <see cref="T:DfsVolumeStates"/> enum that specifies a set of bit flags that describe the DFS root or link.</summary>
+      /// <summary>An <see cref="DfsVolumeStates"/> enum that specifies a set of bit flags that describe the DFS root or link.</summary>
       public DfsVolumeStates State { get; internal set; }
 
       //DfsVolumeStates flavorBits = (structure3.State & (DfsVolumeStates) DfsNamespaceFlavors.All);
@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Network
 
       private DirectoryInfo _directoryInfo;
 
-      /// <summary>The <see cref="T:DirectoryInfo"/> instance of the DFS root or link.</summary>
+      /// <summary>The <see cref="DirectoryInfo"/> instance of the DFS root or link.</summary>
       public DirectoryInfo DirectoryInfo
       {
          get

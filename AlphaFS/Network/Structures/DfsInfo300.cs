@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Network
    internal static partial class NativeMethods
    {
       /// <summary>DFS_INFO_300 - Contains the name and type (domain-based or stand-alone) of a DFS namespace.</summary>
-      /// <remarks>The DFS functions use the <see cref="T:DfsInfo300"/> structure to enumerate DFS namespaces hosted on a machine.</remarks>
+      /// <remarks>The DFS functions use the <see cref="DfsInfo300"/> structure to enumerate DFS namespaces hosted on a machine.</remarks>
       /// <remarks>Minimum supported client: Windows XP with SP1 [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Network
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct DfsInfo300
       {
-         /// <summary>Value that specifies the type of the DFS namespace. This member can be one of the <see cref="T:DfsNamespaceFlavors"/> values.</summary>
+         /// <summary>Value that specifies the type of the DFS namespace. This member can be one of the <see cref="DfsNamespaceFlavors"/> values.</summary>
          [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
          [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags")]
          [MarshalAs(UnmanagedType.U4)] public readonly DfsNamespaceFlavors Flags;

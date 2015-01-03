@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -25,14 +25,14 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Represents information about a file system entry. Used together with <see cref="T:FindFileSystemEntryInfo" />.</summary>
+   /// <summary>Represents information about a file system entry. Used together with <see cref="FindFileSystemEntryInfo" />.</summary>
    [SerializableAttribute]
    [SecurityCritical]
    public sealed class FileSystemEntryInfo
    {
       #region Constructor
 
-      /// <summary>Initializes a new instance of the <see cref="T:FileSystemEntryInfo"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="FileSystemEntryInfo"/> class.</summary>
       /// <param name="findData">The <see cref="NativeMethods.Win32FindData"/> structure.</param>
       internal FileSystemEntryInfo(NativeMethods.Win32FindData findData)
       {

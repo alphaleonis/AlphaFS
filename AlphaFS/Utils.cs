@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,7 +57,7 @@ namespace Alphaleonis
       #region GetEnumDescription
 
       /// <summary>Gets an attribute on an enum field value.</summary>
-      /// <param name="enumValue">One of the <see cref="T:DeviceGuid"/> enum types.</param>
+      /// <param name="enumValue">One of the <see cref="DeviceGuid"/> enum types.</param>
       /// <returns></returns>
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       public static string GetEnumDescription(Enum enumValue)
@@ -81,7 +82,7 @@ namespace Alphaleonis
       #region IsNullOrWhiteSpace
 
       /// <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
-      /// <returns><c>true</c> if the <paramref name="value"/> parameter is null or <see cref="T:string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
+      /// <returns><c>true</c> if the <paramref name="value"/> parameter is null or <see cref="string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
       /// <param name="value">The string to test.</param>
       public static bool IsNullOrWhiteSpace(string value)
       {

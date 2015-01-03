@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -22,7 +22,7 @@
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Used by CopyFileXxx and MoveFileXxx.
-   /// <para>The reason that <see cref="T:CopyMoveProgressRoutine"/> was called.</para>
+   /// <para>The reason that <see cref="CopyMoveProgressRoutine"/> was called.</para>
    /// </summary>
    public enum CopyMoveProgressCallbackReason
    {

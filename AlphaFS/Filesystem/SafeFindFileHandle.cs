@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -29,12 +29,12 @@ namespace Alphaleonis.Win32.Filesystem
    [SecurityCritical]
    public sealed class SafeFindFileHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      /// <summary>Initializes a new instance of the <see cref="T:SafeFindFileHandle"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeFindFileHandle"/> class.</summary>
       private SafeFindFileHandle() : base(true)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:SafeFindFileHandle"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="SafeFindFileHandle"/> class.</summary>
       /// <param name="handle">The handle.</param>
       /// <param name="callerHandle"><c>true</c> [owns handle].</param>
       public SafeFindFileHandle(IntPtr handle, bool callerHandle) : base(callerHandle)

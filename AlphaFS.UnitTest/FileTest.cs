@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -3492,16 +3492,16 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetEncryptionStatus
 
-      #region GetFileSystemEntryInfo
+      #region GetFileSystemEntry
 
       [TestMethod]
-      public void AlphaFS_GetFileSystemEntryInfo()
+      public void AlphaFS_GetFileSystemEntry()
       {
-         Console.WriteLine("File.GetFileSystemEntryInfo()");
-         Console.WriteLine("\nPlease see unit test: Directory.EnumerateFileSystemEntryInfos()");
+         Console.WriteLine("File.GetFileSystemEntry()");
+         Console.WriteLine("\nPlease see unit test: Filesystem_Class_FileSystemEntryInfo()");
       }
 
-      #endregion // GetFileSystemEntryInfo
+      #endregion // GetFileSystemEntry
 
       #region GetFileInfoByHandle
 

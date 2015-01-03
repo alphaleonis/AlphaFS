@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,16 +33,16 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>The file attributes.</summary>
          public readonly FileAttributes FileAttributes;
 
-         /// <summary>A <see cref="T:NativeMethods.FileTime"/> structure that specifies when a file or directory is created.</summary>
+         /// <summary>A <see cref="NativeMethods.FileTime"/> structure that specifies when a file or directory is created.</summary>
          public readonly FileTime CreationTime;
 
-         /// <summary>A <see cref="T:NativeMethods.FileTime"/> structure. For a file, the structure specifies the last time that a file is read from or written to.
+         /// <summary>A <see cref="NativeMethods.FileTime"/> structure. For a file, the structure specifies the last time that a file is read from or written to.
          /// For a directory, the structure specifies when the directory is created.
          /// For both files and directories, the specified date is correct, but the time of day is always set to midnight.
          /// </summary>
          public readonly FileTime LastAccessTime;
 
-         /// <summary>A <see cref="T:NativeMethods.FileTime"/> structure. For a file, the structure specifies the last time that a file is written to.
+         /// <summary>A <see cref="NativeMethods.FileTime"/> structure. For a file, the structure specifies the last time that a file is written to.
          /// For a directory, the structure specifies when the directory is created.</summary>
          public readonly FileTime LastWriteTime;
 

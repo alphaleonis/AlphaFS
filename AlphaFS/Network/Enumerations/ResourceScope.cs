@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>(1) RESOURCE_CONNECTED
          /// <para>&#160;</para>
          /// <para>Enumerate all currently connected resources.</para>
-         /// <para>The function ignores the <see cref="T:ResourceUsage"/> parameter.</para>
+         /// <para>The function ignores the <see cref="ResourceUsage"/> parameter.</para>
          /// </summary>
          Connected = 1,
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>(3) RESOURCE_REMEMBERED
          /// <para>&#160;</para>
          /// <para>Enumerate all remembered (persistent) connections.</para>
-         /// <para>The function ignores the <see cref="T:ResourceUsage"/> parameter.</para>
+         /// <para>The function ignores the <see cref="ResourceUsage"/> parameter.</para>
          /// </summary>
          Remembered = 3,
 
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Network
          /// <para>&#160;</para>
          /// <para>Enumerate only resources in the network context of the caller.</para>
          /// <para>Specify this value for a Network Neighborhood view.</para>
-         /// <para>The function ignores the <see cref="T:ResourceUsage"/> parameter.</para>
+         /// <para>The function ignores the <see cref="ResourceUsage"/> parameter.</para>
          /// </summary>
          Context = 5
       }

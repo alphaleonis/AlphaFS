@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
    internal class SafeKernelTransactionHandle : SafeHandleMinusOneIsInvalid
    {
       /// <summary>
-      /// Initializes a new instance of the <see cref="T:SafeKernelTransactionHandle"/> class.
+      /// Initializes a new instance of the <see cref="SafeKernelTransactionHandle"/> class.
       /// </summary>      
       public SafeKernelTransactionHandle()
          : base(true)

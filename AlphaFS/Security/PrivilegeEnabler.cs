@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Security
 
       private readonly List<InternalPrivilegeEnabler> _enabledPrivileges = new List<InternalPrivilegeEnabler>();
 
-      /// <summary>Initializes a new instance of the <see cref="T:PrivilegeEnabler"/> class.
+      /// <summary>Initializes a new instance of the <see cref="PrivilegeEnabler"/> class.
       /// This will enable the privileges specified (unless already enabled), and ensure that they are disabled again when
       /// the object is disposed. (Any privileges already enabled will not be disabled).
       /// </summary>

@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,7 +33,7 @@ using SecurityNativeMethods = Alphaleonis.Win32.Security.NativeMethods;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The <see cref="T:BackupFileStream"/> provides access to data associated with a specific file or directory, including security information and alternative data streams, for backup and restore operations.</summary>
+   /// <summary>The <see cref="BackupFileStream"/> provides access to data associated with a specific file or directory, including security information and alternative data streams, for backup and restore operations.</summary>
    /// <remarks>This class uses the <see href="http://msdn.microsoft.com/en-us/library/aa362509(VS.85).aspx">BackupRead</see>, 
    /// <see href="http://msdn.microsoft.com/en-us/library/aa362510(VS.85).aspx">BackupSeek</see> and 
    /// <see href="http://msdn.microsoft.com/en-us/library/aa362511(VS.85).aspx">BackupWrite</see> functions from the Win32 API to provide access to the file or directory.
@@ -44,9 +44,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region File
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class with the specified path and creation mode.</summary>
-      /// <param name="path">A relative or absolute path for the file that the current <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path and creation mode.</summary>
+      /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
       /// <remarks>The file will be opened for exclusive access for both reading and writing.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
@@ -55,10 +55,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class with the specified path, creation mode and access rights.</summary>
-      /// <param name="path">A relative or absolute path for the file that the current <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
-      /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode and access rights.</summary>
+      /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
       /// <remarks>The file will be opened for exclusive access.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
@@ -67,11 +67,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission.</summary>
-      /// <param name="path">A relative or absolute path for the file that the current <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
-      /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
-      /// <param name="share">A <see cref="T:FileShare"/> constant that determines how the file will be shared by processes.</param>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission.</summary>
+      /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
+      /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share)
@@ -79,12 +79,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, and additional file attributes.</summary>
-      /// <param name="path">A relative or absolute path for the file that the current <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
-      /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
-      /// <param name="share">A <see cref="T:FileShare"/> constant that determines how the file will be shared by processes.</param>
-      /// <param name="attributes">A <see cref="T:ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, and additional file attributes.</summary>
+      /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
+      /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
+      /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
@@ -92,13 +92,13 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, additional file attributes, access control and audit security.</summary>
-      /// <param name="path">A relative or absolute path for the file that the current <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
-      /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
-      /// <param name="share">A <see cref="T:FileShare"/> constant that determines how the file will be shared by processes.</param>
-      /// <param name="attributes">A <see cref="T:ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
-      /// <param name="security">A <see cref="T:FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <c>null</c>.</param>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, additional file attributes, access control and audit security.</summary>
+      /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
+      /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
+      /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
+      /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <c>null</c>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
@@ -108,10 +108,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transacted
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class with the specified path and creation mode.</summary>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path and creation mode.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A relative or absolute path for the file that the current <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
+      /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
       /// <remarks>The file will be opened for exclusive access for both reading and writing.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
@@ -120,11 +120,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class with the specified path, creation mode and access rights.</summary>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode and access rights.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A relative or absolute path for the file that the current <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
-      /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
+      /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
       /// <remarks>The file will be opened for exclusive access.</remarks>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
@@ -133,12 +133,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission.</summary>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A relative or absolute path for the file that the current <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
-      /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
-      /// <param name="share">A <see cref="T:FileShare"/> constant that determines how the file will be shared by processes.</param>
+      /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
+      /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share)
@@ -146,13 +146,13 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, and additional file attributes.</summary>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, and additional file attributes.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A relative or absolute path for the file that the current <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
-      /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
-      /// <param name="share">A <see cref="T:FileShare"/> constant that determines how the file will be shared by processes.</param>
-      /// <param name="attributes">A <see cref="T:ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
+      /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
+      /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
+      /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
@@ -160,14 +160,14 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, additional file attributes, access control and audit security.</summary>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path, creation mode, access rights and sharing permission, additional file attributes, access control and audit security.</summary>
       /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A relative or absolute path for the file that the current <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="mode">A <see cref="T:FileMode"/> constant that determines how to open or create the file.</param>
-      /// <param name="access">A <see cref="T:FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
-      /// <param name="share">A <see cref="T:FileShare"/> constant that determines how the file will be shared by processes.</param>
-      /// <param name="attributes">A <see cref="T:ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
-      /// <param name="security">A <see cref="T:FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <c>null</c>.</param>
+      /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file.</param>
+      /// <param name="share">A <see cref="FileShare"/> constant that determines how the file will be shared by processes.</param>
+      /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
+      /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <c>null</c>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
@@ -181,9 +181,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Stream
 
-      /// <summary>Initializes a new instance of the <see cref="T:BackupFileStream"/> class for the specified file handle, with the specified read/write permission.</summary>
-      /// <param name="handle">A file handle for the file that this <see cref="T:BackupFileStream"/> object will encapsulate.</param>
-      /// <param name="access">A <see cref="T:FileSystemRights"/> constant that gets the <see cref="T:CanRead"/> and <see cref="T:CanWrite"/> properties of the <see cref="T:BackupFileStream"/> object.</param>
+      /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class for the specified file handle, with the specified read/write permission.</summary>
+      /// <param name="handle">A file handle for the file that this <see cref="BackupFileStream"/> object will encapsulate.</param>
+      /// <param name="access">A <see cref="FileSystemRights"/> constant that gets the <see cref="CanRead"/> and <see cref="CanWrite"/> properties of the <see cref="BackupFileStream"/> object.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public BackupFileStream(SafeFileHandle handle, FileSystemRights access)
@@ -197,7 +197,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Dispose
 
-      /// <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="T:BackupFileStream"/> is reclaimed by garbage collection.</summary>
+      /// <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="BackupFileStream"/> is reclaimed by garbage collection.</summary>
       ~BackupFileStream()
       {
          Dispose(false);
@@ -211,7 +211,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Dispose
 
-      /// <summary>Releases the unmanaged resources used by the <see cref="T:System.IO.Stream"/> and optionally releases the managed resources.</summary>
+      /// <summary>Releases the unmanaged resources used by the <see cref="System.IO.Stream"/> and optionally releases the managed resources.</summary>
       /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       protected override void Dispose(bool disposing)
@@ -349,7 +349,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
       /// <param name="count">The number of bytes to be written to the current stream.</param>
       /// <param name="processSecurity">Specifies whether the function will restore the access-control list (ACL) data for the file or directory. 
-      /// If this is <c>true</c> you need to specify <see cref="T:FileSystemRights.TakeOwnership"/> and <see cref="T:FileSystemRights.ChangePermissions"/> access when 
+      /// If this is <c>true</c> you need to specify <see cref="FileSystemRights.TakeOwnership"/> and <see cref="FileSystemRights.ChangePermissions"/> access when 
       /// opening the file or directory handle. If the handle does not have those access rights, the operating system denies 
       /// access to the ACL data, and ACL data restoration will not occur.</param>
       /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is greater than the buffer length.</exception>
@@ -413,9 +413,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>When overridden in a derived class, sets the position within the current stream.</summary>
       /// <param name="offset">A byte offset relative to the <paramref name="origin"/> parameter.</param>
-      /// <param name="origin">A value of type <see cref="T:System.IO.SeekOrigin"/> indicating the reference point used to obtain the new position.</param>
+      /// <param name="origin">A value of type <see cref="System.IO.SeekOrigin"/> indicating the reference point used to obtain the new position.</param>
       /// <returns>The new position within the current stream.</returns>
-      /// <remarks><para><note><para>This stream does not support seeking using this method, and calling this method will always throw <see cref="T:NotSupportedException"/>. See <see cref="T:Skip"/> for an alternative way of seeking forward.</para></note></para></remarks>
+      /// <remarks><para><note><para>This stream does not support seeking using this method, and calling this method will always throw <see cref="NotSupportedException"/>. See <see cref="Skip"/> for an alternative way of seeking forward.</para></note></para></remarks>
       /// <exception cref="System.NotSupportedException">The stream does not support seeking.</exception>
       public override long Seek(long offset, SeekOrigin origin)
       {
@@ -428,7 +428,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>When overridden in a derived class, sets the length of the current stream.</summary>
       /// <param name="value">The desired length of the current stream in bytes.</param>
-      /// <remarks>This method is not supported by the <see cref="T:BackupFileStream"/> class, and calling it will always generate a <see cref="T:NotSupportedException"/>.</remarks>
+      /// <remarks>This method is not supported by the <see cref="BackupFileStream"/> class, and calling it will always generate a <see cref="NotSupportedException"/>.</remarks>
       /// <exception cref="System.NotSupportedException">Always thrown by this class.</exception>
       public override void SetLength(long value)
       {
@@ -442,7 +442,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Skips ahead the specified number of bytes from the current stream.</summary>
       /// <remarks><para>This method represents the Win32 API implementation of <see href="http://msdn.microsoft.com/en-us/library/aa362509(VS.85).aspx">BackupSeek</see>.</para>
       /// <para>
-      /// Applications use the <see cref="T:Skip"/> method to skip portions of a data stream that cause errors. This function does not 
+      /// Applications use the <see cref="Skip"/> method to skip portions of a data stream that cause errors. This function does not 
       /// seek across stream headers. For example, this function cannot be used to skip the stream name. If an application 
       /// attempts to seek past the end of a substream, the function fails, the return value indicates the actual number of bytes 
       /// the function seeks, and the file position is placed at the start of the next stream header.
@@ -475,8 +475,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetAccessControl
 
-      /// <summary>Gets a <see cref="T:FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="T:BackupFileStream"/> object.</summary>
-      /// <returns>A <see cref="T:FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="T:BackupFileStream"/> object. </returns>
+      /// <summary>Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="BackupFileStream"/> object.</summary>
+      /// <returns>A <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current <see cref="BackupFileStream"/> object. </returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
@@ -522,8 +522,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region SetAccessControl
 
-      /// <summary>Applies access control list (ACL) entries described by a <see cref="T:FileSecurity"/> object to the file described by the  current <see cref="T:BackupFileStream"/> object.</summary>
-      /// <param name="fileSecurity">A <see cref="T:FileSecurity"/> object that describes an ACL entry to apply to the current file.</param>
+      /// <summary>Applies access control list (ACL) entries described by a <see cref="FileSecurity"/> object to the file described by the  current <see cref="BackupFileStream"/> object.</summary>
+      /// <param name="fileSecurity">A <see cref="FileSecurity"/> object that describes an ACL entry to apply to the current file.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public void SetAccessControl(ObjectSecurity fileSecurity)
@@ -539,7 +539,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Lock
 
-      /// <summary>Prevents other processes from changing the <see cref="T:BackupFileStream"/> while permitting read access.</summary>
+      /// <summary>Prevents other processes from changing the <see cref="BackupFileStream"/> while permitting read access.</summary>
       /// <param name="position">The beginning of the range to lock. The value of this parameter must be equal to or greater than zero (0).</param>
       /// <param name="length">The range to be locked.</param>
       /// <exception cref="ArgumentOutOfRangeException"><paramref name="position"/> or <paramref name="length"/> is negative.</exception>
@@ -589,8 +589,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateStreams
 
-      /// <summary>Returns <see cref="T:AlternateDataStreamInfo"/> instances, associated with the file.</summary>
-      /// <returns>An <see cref="T:IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file specified by path.</returns>
+      /// <summary>Returns <see cref="AlternateDataStreamInfo"/> instances, associated with the file.</summary>
+      /// <returns>An <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file specified by path.</returns>
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
          return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, SafeFileHandle, null, null, null, null);
@@ -600,8 +600,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region ReadStreamInfo
 
-      /// <summary>Reads a stream header from the current <see cref="T:AlternateDataStreamInfo"/>.</summary>
-      /// <returns>The stream header read from the current <see cref="T:AlternateDataStreamInfo"/>, or <c>null</c> if the end-of-file 
+      /// <summary>Reads a stream header from the current <see cref="AlternateDataStreamInfo"/>.</summary>
+      /// <returns>The stream header read from the current <see cref="AlternateDataStreamInfo"/>, or <c>null</c> if the end-of-file 
       /// was reached before the required number of bytes of a header could be read.</returns>
       /// <remarks>The stream must be positioned at where an actual header starts for the returned object to represent valid information.</remarks>
       public AlternateDataStreamInfo ReadStreamInfo()
@@ -657,7 +657,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>When overridden in a derived class, gets the length in bytes of the stream.</summary>
       /// <value>This method always throws an exception.</value>
-      /// <exception cref="System.NotSupportedException">This exception is always thrown if this property is accessed on a <see cref="T:BackupFileStream"/>.</exception>
+      /// <exception cref="System.NotSupportedException">This exception is always thrown if this property is accessed on a <see cref="BackupFileStream"/>.</exception>
       public override long Length
       {
          get { throw new NotSupportedException(Resources.ThisStreamDoesNotSupportSeeking); }
@@ -669,7 +669,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>When overridden in a derived class, gets or sets the position within the current stream.</summary>
       /// <value>This method always throws an exception.</value>
-      /// <exception cref="System.NotSupportedException">This exception is always thrown if this property is accessed on a <see cref="T:BackupFileStream"/>.</exception>
+      /// <exception cref="System.NotSupportedException">This exception is always thrown if this property is accessed on a <see cref="BackupFileStream"/>.</exception>
       public override long Position
       {
          get { throw new NotSupportedException(Resources.ThisStreamDoesNotSupportSeeking); }
@@ -682,9 +682,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       private readonly SafeFileHandle _safeFileHandle;
 
-      /// <summary>Gets a <see cref="T:SafeFileHandle"/> object that represents the operating system file handle for the file that the current <see cref="T:BackupFileStream"/> object encapsulates.</summary>
-      /// <value>A <see cref="T:SafeFileHandle"/> object that represents the operating system file handle for the file that 
-      /// the current <see cref="T:BackupFileStream"/> object encapsulates.</value>
+      /// <summary>Gets a <see cref="SafeFileHandle"/> object that represents the operating system file handle for the file that the current <see cref="BackupFileStream"/> object encapsulates.</summary>
+      /// <value>A <see cref="SafeFileHandle"/> object that represents the operating system file handle for the file that 
+      /// the current <see cref="BackupFileStream"/> object encapsulates.</value>
       public SafeFileHandle SafeFileHandle
       {
          get { return _safeFileHandle; }

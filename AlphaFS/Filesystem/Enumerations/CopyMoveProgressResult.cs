@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -22,7 +22,7 @@
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Used by CopyFileXxx and MoveFileXxx.
-   /// <para>The <see cref="T:CopyMoveProgressRoutine"/> function should return one of the following values.</para>
+   /// <para>The <see cref="CopyMoveProgressRoutine"/> function should return one of the following values.</para>
    /// </summary>
    public enum CopyMoveProgressResult 
    {
@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>(2) PROGRESS_STOP - Stop the copy operation. It can be restarted at a later time.</summary>
       Stop = 2,
 
-      /// <summary>(3) PROGRESS_QUIET - Continue the copy operation, but stop invoking <see cref="T:CopyMoveProgressRoutine"/> to report progress.</summary>
+      /// <summary>(3) PROGRESS_QUIET - Continue the copy operation, but stop invoking <see cref="CopyMoveProgressRoutine"/> to report progress.</summary>
       Quiet = 3
    }
 }

@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -91,17 +91,46 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // FindFirstFile
 
+      #region NewFileSystemEntryInfo
+
+      private T NewFileSystemEntryInfo<T>(NativeMethods.Win32FindData win32FindData, string fullPath, bool isFolder)
+      {
+         if (FileSystemObjectType != null && ((!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder)))
+            return (T) (object) null;
+
+         if (AsString)
+            // Return object instance FullPath property as string, optionally in Unicode format.
+            return (T) (object) (AsLongPath ? Path.GetLongPathInternal(fullPath, false, false, false, false) : fullPath);
+
+         
+         // Make sure the requested file system object type is returned.
+         // null = Return files and directories.
+         // true = Return only directories.
+         // false = Return only files.
+
+         var fsei = new FileSystemEntryInfo(win32FindData) {FullPath = fullPath};
+
+         return !AsFileSystemInfo
+            // Return object instance of type FileSystemEntryInfo.
+            ? (T) (object) fsei
+
+            // Return object instance of type FileSystemInfo.
+            : (T) (object) (fsei.IsDirectory
+               ? (FileSystemInfo)
+                  new DirectoryInfo(Transaction, fsei.LongFullPath, null) {EntryInfo = fsei}
+               : new FileInfo(Transaction, fsei.LongFullPath, null) {EntryInfo = fsei});
+      }
+
+      #endregion // NewFileSystemEntryInfo
+
 
       #region Enumerate
 
       /// <summary>Get an enumerator that returns all of the file system objects that match the wildcards that are in any of the directories to be searched.</summary>
-      /// <returns>An <see cref="T:IEnumerable{T}"/> instance: FileSystemEntryInfo, DirectoryInfo, FileInfo or string (full- or long path).</returns>
+      /// <returns>An <see cref="IEnumerable{T}"/> instance: FileSystemEntryInfo, DirectoryInfo, FileInfo or string (full path).</returns>
       [SecurityCritical]
       public IEnumerable<T> Enumerate<T>()
       {
-         bool? fileSystemObjectType = FileSystemObjectType;
-         bool asFileSystemEntryInfo = !AsString && !AsFileSystemInfo;
-
          // MSDN: Queue
          // Represents a first-in, first-out collection of objects.
          // The capacity of a Queue is the number of elements the Queue can hold.
@@ -111,7 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
          // If the size of the collection can be estimated, specifying the initial capacity eliminates the need to perform a number of resizing operations while adding elements to the Queue.
          // This constructor is an O(n) operation, where n is capacity.
 
-         Queue<string> dirs = new Queue<string>(1000);
+         var dirs = new Queue<string>(1000);
 
          // Removes the object at the beginning of your Queue.
          // The algorithmic complexity of this is O(1). It doesn't loop over elements.
@@ -134,8 +163,9 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   string fileName = win32FindData.FileName;
 
-                  // Skip entries.
-                  if (fileName.Equals(".", StringComparison.OrdinalIgnoreCase) || fileName.Equals("..", StringComparison.OrdinalIgnoreCase))
+                  // Skip entries "." and ".."
+                  if (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) ||
+                      fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
                      continue;
 
                   // Skip reparse points here to cleanly separate regular directories from links.
@@ -143,45 +173,32 @@ namespace Alphaleonis.Win32.Filesystem
                      continue;
 
                   
-                  string fullPathLp = path + fileName;
-                  bool isDirectory = (win32FindData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory;
+                  string fseiFullPathLp = path + fileName;
+                  bool fseiIsFolder = (win32FindData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory;
 
                   // If object is a directory, add it to the queue for later traversal.
-                  if (isDirectory && Recursive)
-                     dirs.Enqueue(fullPathLp);
+                  if (fseiIsFolder && Recursive)
+                     dirs.Enqueue(fseiFullPathLp);
 
 
                   if (!(_nameFilter == null || (_nameFilter != null && _nameFilter.IsMatch(fileName))))
                      continue;
 
+                  var res = NewFileSystemEntryInfo<T>(win32FindData, fseiFullPathLp, fseiIsFolder);
+                  if (res == null)
+                     continue;
 
-                  // Make sure the requested file system object type is returned.
-                  // null = Return files and directories.
-                  // true = Return only directories.
-                  // false = Return only files.
-
-                  if (fileSystemObjectType == null || ((bool) fileSystemObjectType && isDirectory || (bool) !fileSystemObjectType && !isDirectory))
-                  {
-                     FileSystemEntryInfo fsei = new FileSystemEntryInfo(win32FindData) {FullPath = fullPathLp};
-
-                     yield return asFileSystemEntryInfo
-                        ? (T) (object) fsei
-
-                        : (T) (AsString
-                           // Return object instance FullPath property as string, optionally in Unicode format.
-                           ? (object) (AsLongPath ? fsei.LongFullPath : fsei.FullPath)
-
-                           // Return object instance of type DirectoryInfo or FileInfo.
-                           : (fsei.IsDirectory
-                              ? (FileSystemInfo)
-                                 new DirectoryInfo(Transaction, fsei.LongFullPath, null) {EntryInfo = fsei}
-                              : new FileInfo(Transaction, fsei.LongFullPath, null) {EntryInfo = fsei}));
-                  }
+                  yield return res;
 
                } while (NativeMethods.FindNextFile(handle, out win32FindData));
+               
+               
+               if (ContinueOnException)
+                  continue;
 
+               
+               var lastError = (uint) Marshal.GetLastWin32Error();
 
-               uint lastError = (uint) Marshal.GetLastWin32Error();
                switch (lastError)
                {
                   case Win32Errors.ERROR_NO_MORE_FILES:
@@ -190,12 +207,12 @@ namespace Alphaleonis.Win32.Filesystem
 
                   case Win32Errors.ERROR_FILE_NOT_FOUND:
                   case Win32Errors.ERROR_PATH_NOT_FOUND:
-                     if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && IsFolder)
+                     if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && IsDirectory)
                         lastError = Win32Errors.ERROR_PATH_NOT_FOUND;
                      break;
                }
 
-               if (!ContinueOnException && lastError != Win32Errors.NO_ERROR)
+               if (lastError != Win32Errors.NO_ERROR)
                   NativeError.ThrowException(lastError, InputPath);
             }
          }
@@ -206,18 +223,25 @@ namespace Alphaleonis.Win32.Filesystem
       #region Get
 
       /// <summary>Gets a specific file system object.</summary>
-      /// <returns>An <see cref="T:IEnumerable{FileSystemEntryInfo}"/> instance.</returns>
+      /// <returns>
+      /// <para>The return type is based on C# inference. Possible return types are:</para>
+      /// <para> <see cref="string"/>- (full path), <see cref="FileSystemInfo"/>- (<see cref="DirectoryInfo"/> or <see cref="FileInfo"/>) or <see cref="FileSystemEntryInfo"/> instance.</para>
+      /// </returns>
       [SecurityCritical]
-      public FileSystemEntryInfo Get()
+      public T Get<T>()
       {
          NativeMethods.Win32FindData win32FindData;
-
+         
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          using (SafeFindFileHandle handle = FindFirstFile(InputPath, out win32FindData))
          {
-            return handle.IsInvalid ? null : new FileSystemEntryInfo(win32FindData) {FullPath = InputPath};
+            if (!handle.IsInvalid)
+               return NewFileSystemEntryInfo<T>(win32FindData, InputPath,
+                  (win32FindData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory);
          }
+
+         return (T) (object) null;
       }
 
       #endregion // Get
@@ -228,8 +252,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AsFileSystemInfo
 
-      /// <summary>Gets or sets the ability to return the object as a <see cref="T:FileSystemInfo"/> instance.</summary>
-      /// <value><c>true</c> returns the object as a <see cref="T:FileSystemInfo"/> instance.</value>
+      /// <summary>Gets or sets the ability to return the object as a <see cref="FileSystemInfo"/> instance.</summary>
+      /// <value><c>true</c> returns the object as a <see cref="FileSystemInfo"/> instance.</value>
       public bool AsFileSystemInfo { get; set; }
 
       #endregion // AsFileSystemInfo
@@ -244,8 +268,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AsString
 
-      /// <summary>Gets or sets the ability to return the object instance as a <see cref="T:string"/>.</summary>
-      /// <value><c>true</c> returns the full path of the object as a <see cref="T:string"/></value>
+      /// <summary>Gets or sets the ability to return the object instance as a <see cref="string"/>.</summary>
+      /// <value><c>true</c> returns the full path of the object as a <see cref="string"/></value>
       public bool AsString { get; set; }
 
       #endregion // AsString
@@ -254,8 +278,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       private NativeMethods.FindExInfoLevels _basicSearch = NativeMethods.BasicSearch;
 
-      /// <summary>Gets or sets a value indicating which <see cref="T:NativeMethods.FindExInfoLevels"/> to use.</summary>
-      /// <value><c>true</c> uses <see cref="T:NativeMethods.FindExInfoLevels.Basic"/>, otherwise uses <see cref="T:NativeMethods.FindExInfoLevels.Standard"/></value>
+      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExInfoLevels"/> to use.</summary>
+      /// <value><c>true</c> uses <see cref="NativeMethods.FindExInfoLevels.Basic"/>, otherwise uses <see cref="NativeMethods.FindExInfoLevels.Standard"/></value>
       public bool BasicSearch
       {
          get { return _basicSearch == NativeMethods.FindExInfoLevels.Basic; }
@@ -337,17 +361,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // InputPath
 
-      #region IsFolder
+      #region IsDirectory
 
-      /// <summary>Gets or sets a value indicating which <see cref="T:NativeMethods.FindExInfoLevels"/> to use.</summary>
-      /// <value><c>null</c> indicates the file system object is unknown, <c>true</c> indicates a folder object, <c>false</c> indicates a file object.</value>
-      public bool IsFolder { get; set; }
+      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExInfoLevels"/> to use.</summary>
+      /// <value><c>true</c> indicates a folder object, <c>false</c> indicates a file object.</value>
+      public bool IsDirectory { get; set; }
 
-      #endregion // IsFolder
+      #endregion // IsDirectory
 
       #region IsFullPath
 
-      /// <summary><c>true</c> uses the path as is.</summary>
+      /// <summary>Gets or sets a value indicating how to process <see cref="InputPath"/>.</summary>
+      /// <value>
+      ///    <para><c>true</c> <see cref="InputPath"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <see cref="InputPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <see cref="InputPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      /// </value>
       public bool? IsFullPath { get; set; }
 
       #endregion // IsFullPath
@@ -356,8 +385,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       private NativeMethods.FindExAdditionalFlags _largeCache = NativeMethods.LargeCache;
 
-      /// <summary>Gets or sets a value indicating which <see cref="T:NativeMethods.FindExAdditionalFlags"/> to use.</summary>
-      /// <value><c>true</c> uses <see cref="T:NativeMethods.FindExAdditionalFlags.LargeFetch"/>, otherwise uses <see cref="T:NativeMethods.FindExAdditionalFlags.None"/></value>
+      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExAdditionalFlags"/> to use.</summary>
+      /// <value><c>true</c> uses <see cref="NativeMethods.FindExAdditionalFlags.LargeFetch"/>, otherwise uses <see cref="NativeMethods.FindExAdditionalFlags.None"/></value>
       public bool LargeCache
       {
          get { return _largeCache == NativeMethods.FindExAdditionalFlags.LargeFetch; }
@@ -387,7 +416,7 @@ namespace Alphaleonis.Win32.Filesystem
       private Regex _nameFilter;
 
       /// <summary>Search for file system object-name using a pattern.</summary>
-      /// <value>The path which has wildcard characters, for example, an asterisk (<see cref="T:Path.WildcardStarMatchAll"/>) or a question mark (<see cref="T:Path.WildcardQuestion"/>).</value>
+      /// <value>The path which has wildcard characters, for example, an asterisk (<see cref="Path.WildcardStarMatchAll"/>) or a question mark (<see cref="Path.WildcardQuestion"/>).</value>
       public string SearchPattern
       {
          get { return _searchPattern; }

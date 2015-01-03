@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -28,19 +28,19 @@ namespace Alphaleonis.Win32.Filesystem
    [SerializableAttribute]
    public class UnsupportedRemoteTransactionException : TransactionException
    {
-      /// <summary>Initializes a new instance of the <see cref="T:UnsupportedRemoteTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
       public UnsupportedRemoteTransactionException()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:UnsupportedRemoteTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
       public UnsupportedRemoteTransactionException(string message)
          : base(message)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:UnsupportedRemoteTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
       public UnsupportedRemoteTransactionException(string message, Exception innerException)
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:UnsupportedRemoteTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="UnsupportedRemoteTransactionException"/> class.</summary>
       /// <param name="info">The object that holds the serialized object data.</param>
       /// <param name="context">The contextual information about the source or destination.</param>
       protected UnsupportedRemoteTransactionException(SerializationInfo info, StreamingContext context)

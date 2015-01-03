@@ -1,4 +1,4 @@
-Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
 
 
 Version 1.6
@@ -7,7 +7,7 @@ Version 1.6
 
 	* New: Unit Tests, also act as code samples.
 
-    * New: Numerous bugfixes and optimizations.
+    * New: Numerous bugfixes, optimizations and (AlphaFS) overloaded methods implementations.
 
 	* New: Complete implementation of .NET 4.5 File(Info) and Directory(Info) classes.
 
@@ -39,26 +39,64 @@ Version 1.6
 	
 	* Mod: Enabled KernelTransaction parameter for all Win32 API functions that support it.
 
-	* Mod: Added public read only properties to class FileSystemInfo()
+	* Mod: Added public read only properties to class FileSystemInfo().
 
 		Available for: DirectoryInfo() / FileInfo()
 			EntryInfo	 : Instance of the FileSystemEntryInfo() class.
 			LengthStreams: Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).
 			Transaction  : Represents the KernelTransaction that was passed to the constructor.
 	
+	* Mod: Added more entries to enum ReparsePointTag.
+
+	* Mod: Removed method Directory.CountFiles() and added method Directory.CountFileSystemObjects().	
+
+	* Mod: Removed method Directory.GetFullFileSystemEntries() and added method Directory.EnumerateFileSystemEntryInfos().
+	       Note: This new method currently does not support DirectoryEnumerationExceptionHandler, this will probably be added in a future release.
+
+	* Mod: Renamed method Directory.GetFileIdBothDirectoryInfo() to Directory.EnumerateFileIdBothDirectoryInfo().
+
+	* Mod: Method Directory.CreateDirectory() signature change: Using template directory.
+	       Ability for NTFS-compressed folders added.
+
+	* Mod: Method Directory.GetProperties() signature change.
+
+	* Mod: Renamed method File.GetFileSystemEntry() to File.GetFileSystemEntry() and changed signature: Now uses c# type inference;
+	* Mod: Renamed method File.GetFileInformationByHandle() to File.GetFileInfoByHandle().
+	* Mod: Removed overloaded method File.GetFileInformationByHandle(FileStream).h
+	* Mod: Removed overloaded AlphaFS methods File.Move() using MoveFileOptions and CopyProgressRoutine, and added method File.Move1().
+	
+	* Mod: Renamed method Volume.GetDeviceForVolumeName() to Volume.GetVolumeDeviceName().
+	* Mod: Renamed method Volume.GetDisplayNameForVolume() to Volume.GetVolumeDisplayName().
+	* Mod: Renamed method Volume.GetVolumeInformation() to Volume.GetVolumeInfo().
+	* Mod: Renamed method Volume.GetVolumeMountPoints() to Volume.EnumerateVolumeMountPoints().
+	* Mod: Renamed method Volume.GetVolumePathNamesForVolume() to Volume.EnumerateVolumePathNames().
+	* Mod: Renamed method Volume.GetVolumes() to Volume.EnumerateVolumes().
+		
+	* Mod: Method Volume.DefineDosDevice() signature change.
+	* Mod: Method Volume.QueryDosDevice() signature change.
+	* Mod: Method Volume.QueryAllDosDevices() signature change.
+	* Mod: Removed method Volume.GetLogicalDrives() in favor of method Directory.GetLogicalDrives().
+
+	* Mod: Class VolumeInfo() constructor signature change.
+	* Mod: Class VolumeInfo() properties updated/changed.
+	* Mod: Added method Volume.Refresh().
+	
+	* Mod: Changed class DiskSpaceInfo() to struct.
+	* Mod: Class DiskSpaceInfo() constructor signature change.
+	* Mod: Class DiskSpaceInfo() properties added.
+	* Mod: Added method DiskSpaceInfo.Refresh().
+
 	* Mod: Refactored Path() class.
 
-	* Mod: Add more reparse point tag entries to enum ReparsePointTag.
-
-	
 	* Removed classes PathInfoXxx().
+	* Removed method Path.IsValidPath(), was part of PathInfo() class.
 	
 	* Improved upon the correct exceptions thrown, resulting in the removal of Alpha Exception types:
 	* Removed AlreadyExistsException.
 	* Removed DeviceNotReadyException.
 	* Removed DirectoryNotEmptyException.
 	* Removed IllegalPathException.
-
+	
 	* Removed enum DriveType in favor of System.IO.DriveType enum.
 	* Removed enum FileAccess in favor of System.IO.FileAccess enum.
 	* Removed enum FileAttributes in favor of System.IO.FileAttributes enum.
@@ -69,17 +107,15 @@ Version 1.6
 	* Removed enum FileType, obsolete.
 	* Removed enum EnumerationExceptionDecision, obsolete.
 	* Removed enum IoControlCode.cs, obsolete.
+		
+	* Renamed enum BackupStreamType to StreamType.
+	* Renamed enum CopyProgressResult to CopyMoveProgressResult.
+	* Renamed enum MoveFileOptions to MoveOptions.
+
+	* Renamed class BackupStreamInfo to AlternateDataStreamInfo.
+	* Renamed class DeviceIo to Device.
+	* Renamed delegate CopyProgressResult to CopyMoveProgressResult.
 	
-	* Renamed enum BackupStreamType to StreamType
-	* Renamed enum CopyProgressResult to CopyMoveProgressResult
-	* Renamed enum MoveFileOptions to MoveOptions
-
-	* Renamed class BackupStreamInfo to AlternateDataStreamInfo
-	* Renamed class DeviceIo to Device
-	* Renamed delegate CopyProgressResult to CopyMoveProgressResult
-
-	* Changed struct DiskSpaceInfo to class
-
 Version 1.5
    * New: Various file system objects enumeration methods in Directory class.
    * Numerous bugfixes and optimizations

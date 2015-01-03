@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,17 +33,17 @@ namespace Alphaleonis.Win32.Network
    {
       #region Constructor
 
-      /// <summary>Initializes a new instance of the <see cref="T:DfsStorage"/> class,
+      /// <summary>Initializes a new instance of the <see cref="DfsStorage"/> class,
       /// <para>which acts as a wrapper for a DFS root or link target.</para>
       /// </summary>
       public DfsStorage()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:DfsStorage"/> class,
+      /// <summary>Initializes a new instance of the <see cref="DfsStorage"/> class,
       /// <para>which acts as a wrapper for a DFS root or link target.</para>
       /// </summary>
-      /// <param name="structure">An initialized <see cref="T:NativeMethods.DfsStorageInfo"/> instance.</param>
+      /// <param name="structure">An initialized <see cref="NativeMethods.DfsStorageInfo"/> instance.</param>
       internal DfsStorage(NativeMethods.DfsStorageInfo structure)
       {
          ServerName = structure.ServerName;
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Network
 
       #region State
 
-      /// <summary>An <see cref="T:DfsStorageStates"/> enum of the DFS root target or link target.</summary>
+      /// <summary>An <see cref="DfsStorageStates"/> enum of the DFS root target or link target.</summary>
       public DfsStorageStates State { get; private set; }
 
       #endregion // State

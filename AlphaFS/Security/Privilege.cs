@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -29,7 +29,7 @@ using System.Text;
 namespace Alphaleonis.Win32.Security
 {
    /// <summary>Represents a privilege for an access token. The privileges available on the local machine are available as 
-   /// static instances from this class. To create a <see cref="T:Privilege"/> representing a privilege on another system,
+   /// static instances from this class. To create a <see cref="Privilege"/> representing a privilege on another system,
    /// use the constructor specifying a system name together with one of these static instances.
    /// </summary>
    /// <seealso cref="PrivilegeEnabler"/>
@@ -330,7 +330,7 @@ namespace Alphaleonis.Win32.Security
 
       private readonly string _systemName;
 
-      /// <summary>Create a new <see cref="T:Privilege"/> representing the specified privilege on the specified system.</summary>
+      /// <summary>Create a new <see cref="Privilege"/> representing the specified privilege on the specified system.</summary>
       /// <param name="systemName">Name of the system.</param>
       /// <param name="privilege">The privilege to copy the privilege name from.</param>
       public Privilege(string systemName, Privilege privilege)
@@ -421,9 +421,9 @@ namespace Alphaleonis.Win32.Security
                  (_systemName != null && _systemName.Equals(other._systemName, StringComparison.OrdinalIgnoreCase)));
       }
 
-      /// <summary>Determines whether the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>.</summary>
-      /// <param name="obj">The <see cref="T:System.Object"/> to compare with the current <see cref="T:System.Object"/>.</param>
-      /// <returns><c>true</c> if the specified <see cref="T:System.Object"/> is equal to the current <see cref="T:System.Object"/>; otherwise, <c>false</c>.</returns>
+      /// <summary>Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>.</summary>
+      /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="System.Object"/>.</param>
+      /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>; otherwise, <c>false</c>.</returns>
       /// <exception cref="System.NullReferenceException">The <paramref name="obj"/> parameter is <c>null</c>.</exception>
       public override bool Equals(object obj)
       {
@@ -468,8 +468,8 @@ namespace Alphaleonis.Win32.Security
       #region ToString
 
       /// <summary>Returns the system name for this privilege.</summary>
-      /// <remarks>This is equivalent to <see cref="T:Privilege.Name"/>.</remarks>
-      /// <returns>A <see cref="T:System.String"/> that represents the current <see cref="T:System.Object"/>.</returns>
+      /// <remarks>This is equivalent to <see cref="Privilege.Name"/>.</remarks>
+      /// <returns>A <see cref="System.String"/> that represents the current <see cref="System.Object"/>.</returns>
       public override string ToString()
       {
          return _name;
@@ -479,7 +479,7 @@ namespace Alphaleonis.Win32.Security
 
       #region Privilege
 
-      /// <summary>Initializes a new instance of the <see cref="T:Privilege"/> class, representing a privilege with the specified name on the local system.</summary>
+      /// <summary>Initializes a new instance of the <see cref="Privilege"/> class, representing a privilege with the specified name on the local system.</summary>
       /// <param name="name">The name.</param>
       private Privilege(string name)
       {

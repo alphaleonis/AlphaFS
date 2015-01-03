@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       //   }
       //}
 
-      /// <summary>Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> object with the data needed to serialize the target object.</summary>
+      /// <summary>Populates a <see cref="System.Runtime.Serialization.SerializationInfo"/> object with the data needed to serialize the target object.</summary>
       /// <param name="info"></param>
       /// <param name="context"></param>
       [SecurityCritical]    
@@ -187,7 +187,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region  .NET
 
       /// <summary>Retrieves the drive names of all logical drives on a computer.</summary>
-      /// <returns>An array of type <see cref="T:Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
+      /// <returns>An array of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
@@ -218,7 +218,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnumerateDrives
 
       /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on a computer.</summary>
-      /// <returns>An IEnumerable of type <see cref="T:Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
+      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<DriveInfo> EnumerateDrives(bool fromEnvironment, bool isReady)
@@ -231,7 +231,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetFreeDriveLetter
 
       /// <summary>[AlphaFS] Gets the first available drive letter on the local system.</summary>
-      /// <returns>A drive letter as <see cref="T:char"/>. When no drive letters are available, an exception is thrown.</returns>
+      /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
       /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       public static char GetFreeDriveLetter()
@@ -241,7 +241,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets an available drive letter on the local system.</summary>
       /// <param name="getLastAvailable">When <c>true</c> get the last available drive letter. When <c>false</c> gets the first available drive letter.</param>
-      /// <returns>A drive letter as <see cref="T:char"/>. When no drive letters are available, an exception is thrown.</returns>
+      /// <returns>A drive letter as <see cref="char"/>. When no drive letters are available, an exception is thrown.</returns>
       /// <remarks>The letters "A" and "B" are reserved for floppy drives and will never be returned by this function.</remarks>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
@@ -388,7 +388,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Indicates the amount of available free space on a drive.</summary>
       /// <returns>The amount of free space available on the drive, in bytes.</returns>
-      /// <remarks>This property indicates the amount of free space available on the drive. Note that this number may be different from the <see cref="T:TotalFreeSpace"/> number because this property takes into account disk quotas.</remarks>
+      /// <remarks>This property indicates the amount of free space available on the drive. Note that this number may be different from the <see cref="TotalFreeSpace"/> number because this property takes into account disk quotas.</remarks>
       public long AvailableFreeSpace
       {
          get
@@ -414,10 +414,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region DriveType
 
       /// <summary>Gets the drive type.</summary>
-      /// <returns>One of the <see cref="T:System.IO.DriveType"/> values.</returns>
+      /// <returns>One of the <see cref="System.IO.DriveType"/> values.</returns>
       /// <remarks>
       /// The DriveType property indicates whether a drive is any of: CDRom, Fixed, Unknown, Network, NoRootDirectory,
-      /// Ram, Removable, or Unknown. Values are listed in the <see cref="T:System.IO.DriveType"/> enumeration.
+      /// Ram, Removable, or Unknown. Values are listed in the <see cref="System.IO.DriveType"/> enumeration.
       /// </remarks>
       public DriveType DriveType
       {

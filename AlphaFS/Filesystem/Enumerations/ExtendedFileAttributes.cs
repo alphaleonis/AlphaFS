@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -36,59 +36,59 @@ namespace Alphaleonis.Win32.Filesystem
       #region FILE_ATTRIBUTE - Attributes applying to any file
 
       /// <summary>The file is read only. Applications can read the file, but cannot write to or delete it.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.ReadOnly"/>1</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.ReadOnly"/>1</remarks>
       ReadOnly = FileAttributes.ReadOnly,
 
       /// <summary>The file is hidden. Do not include it in an ordinary directory listing.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.Hidden"/>2</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.Hidden"/>2</remarks>
       Hidden = FileAttributes.Hidden,
 
       /// <summary>The file is part of or used exclusively by an operating system.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.System"/>4</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.System"/>4</remarks>
       System = FileAttributes.System,
 
       /// <summary>The handle that identifies a directory.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.Directory"/>16</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.Directory"/>16</remarks>
       Directory = FileAttributes.Directory,
 
       /// <summary>The file should be archived. Applications use this attribute to mark files for backup or removal.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.Archive"/>32</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.Archive"/>32</remarks>
       Archive = FileAttributes.Archive,
 
       /// <summary>The file should be archived. Applications use this attribute to mark files for backup or removal.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.Device"/>64</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.Device"/>64</remarks>
       Device = FileAttributes.Device,
 
       /// <summary>The file does not have other attributes set. This attribute is valid only if used alone.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.Normal"/>128</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.Normal"/>128</remarks>
       Normal = FileAttributes.Normal,
 
       /// <summary>The file is being used for temporary storage.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.Temporary"/>256</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.Temporary"/>256</remarks>
       Temporary = FileAttributes.Temporary,
 
       /// <summary>A file that is a sparse file.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.SparseFile"/>512</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.SparseFile"/>512</remarks>
       SparseFile = FileAttributes.SparseFile,
 
       /// <summary>A file or directory that has an associated reparse point, or a file that is a symbolic link.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.ReparsePoint"/>1024</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.ReparsePoint"/>1024</remarks>
       ReparsePoint = FileAttributes.ReparsePoint,
 
       /// <summary>A file or directory that is compressed. For a file, all of the data in the file is compressed. For a directory, compression is the default for newly created files and subdirectories.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.Compressed"/>2048</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.Compressed"/>2048</remarks>
       Compressed = FileAttributes.Compressed,
 
       /// <summary>The data of a file is not immediately available. This attribute indicates that file data is physically moved to offline storage. This attribute is used by Remote Storage, the hierarchical storage management software. Applications should not arbitrarily change this attribute.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.Offline"/>4096</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.Offline"/>4096</remarks>
       Offline = FileAttributes.Offline,
 
       /// <summary>The file or directory is not to be indexed by the content indexing service.</summary>
-      /// <remarks>Equals <see cref="T:FileAttributes.NotContentIndexed"/>8192</remarks>
+      /// <remarks>Equals <see cref="FileAttributes.NotContentIndexed"/>8192</remarks>
       NotContentIndexed = FileAttributes.NotContentIndexed,
 
       /// <summary>The file or directory is encrypted. For a file, this means that all data in the file is encrypted. For a directory, this means that encryption is the default for newly created files and subdirectories.</summary>
-      /// <remarks>Equals <see cref="T:FileOptions.Encrypted"/>16384</remarks>
+      /// <remarks>Equals <see cref="FileOptions.Encrypted"/>16384</remarks>
       Encrypted = FileOptions.Encrypted,
 
       #endregion // FILE_ATTRIBUTE - Attributes applying to any file
@@ -117,27 +117,27 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>(0x2000000) The file is being opened or created for a backup or restore operation. The system ensures that the calling process overrides file security checks when the process has SE_BACKUP_NAME and SE_RESTORE_NAME privileges. You must set this flag to obtain a handle to a directory. A directory handle can be passed to some functions instead of a file handle.</summary>
       BackupSemantics = 33554432,
 
-      /// <summary>The file is to be deleted immediately after all of its handles are closed, which includes the specified handle and any other open or duplicated handles. If there are existing open handles to a file, the call fails unless they were all opened with the <see cref="T:FileShare.Delete"/> share mode. Subsequent open requests for the file fail, unless the <see cref="T:FileShare.Delete"/> share mode is specified.</summary>
-      /// <remarks>Equals <see cref="T:FileOptions.DeleteOnClose"/>67108864</remarks>
+      /// <summary>The file is to be deleted immediately after all of its handles are closed, which includes the specified handle and any other open or duplicated handles. If there are existing open handles to a file, the call fails unless they were all opened with the <see cref="FileShare.Delete"/> share mode. Subsequent open requests for the file fail, unless the <see cref="FileShare.Delete"/> share mode is specified.</summary>
+      /// <remarks>Equals <see cref="FileOptions.DeleteOnClose"/>67108864</remarks>
       DeleteOnClose = FileOptions.DeleteOnClose,
 
       /// <summary>Access is intended to be sequential from beginning to end. The system can use this as a hint to optimize file caching.</summary>
-      /// <remarks>Equals <see cref="T:FileOptions.SequentialScan"/>134217728</remarks>
+      /// <remarks>Equals <see cref="FileOptions.SequentialScan"/>134217728</remarks>
       SequentialScan = FileOptions.SequentialScan,
 
       /// <summary>Access is intended to be random. The system can use this as a hint to optimize file caching.</summary>
-      /// <remarks>Equals <see cref="T:FileOptions.RandomAccess"/>268435456</remarks>
+      /// <remarks>Equals <see cref="FileOptions.RandomAccess"/>268435456</remarks>
       RandomAccess = FileOptions.RandomAccess,
 
-      /// <summary>(0x20000000) There are strict requirements for successfully working with files opened with the <see cref="T:NoBuffering"/> flag, for details see the section on "File Buffering" in the online MSDN documentation.</summary>
+      /// <summary>(0x20000000) There are strict requirements for successfully working with files opened with the <see cref="NoBuffering"/> flag, for details see the section on "File Buffering" in the online MSDN documentation.</summary>
       NoBuffering = 536870912,
 
       /// <summary>The file or device is being opened or created for asynchronous I/O.</summary>
-      /// <remarks>Equals <see cref="T:FileOptions.Asynchronous"/>1073741824</remarks>
+      /// <remarks>Equals <see cref="FileOptions.Asynchronous"/>1073741824</remarks>
       Overlapped = FileOptions.Asynchronous,
 
       /// <summary>(0x80000000) Write operations will not go through any intermediate cache, they will go directly to disk.</summary>
-      /// <remarks>Equals .NET <see cref="T:FileOptions.WriteThrough"/>-2147483648</remarks>
+      /// <remarks>Equals .NET <see cref="FileOptions.WriteThrough"/>-2147483648</remarks>
       WriteThrough = 2147483648
    }
 }

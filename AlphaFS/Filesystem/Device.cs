@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -38,18 +38,18 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnumerateDevices
 
       /// <summary>Enumerates all available devices on the local.</summary>
-      /// <param name="deviceGuid">One of the <see cref="T:DeviceGuid"/> devices.</param>
-      /// <returns>Returns <see cref="T:IEnumerable{DeviceInfo}"/> instances of type <see cref="T:DeviceGuid"/> from the local host.</returns>
+      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
+      /// <returns>Returns <see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {
          return EnumerateDevices(null, deviceGuid);
       }
 
-      /// <summary>Enumerates all available devices of type <see cref="T:DeviceGuid"/> on the local or remote host.</summary>
+      /// <summary>Enumerates all available devices of type <see cref="DeviceGuid"/> on the local or remote host.</summary>
       /// <param name="hostName">The name of the local or remote host on which the device resides. <c>null</c> refers to the local host.</param>
-      /// <param name="deviceGuid">One of the <see cref="T:DeviceGuid"/> devices.</param>
-      /// <returns>Returns <see cref="T:IEnumerable{DeviceInfo}"/> instances of type <see cref="T:DeviceGuid"/> for the specified <paramref name="hostName"/>.</returns>
+      /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
+      /// <returns>Returns <see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> for the specified <paramref name="hostName"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(string hostName, DeviceGuid deviceGuid)
       {
@@ -426,7 +426,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateDeviceInfoDataInstance
 
       /// <summary>Builds a DeviceInfo Data structure.</summary>
-      /// <returns>An initialized <see cref="T:NativeMethods.SpDeviceInfoData"/> instance.</returns>
+      /// <returns>An initialized <see cref="NativeMethods.SpDeviceInfoData"/> instance.</returns>
       [SecurityCritical]
       private static NativeMethods.SpDeviceInfoData CreateDeviceInfoDataInstance()
       {
@@ -441,7 +441,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateDeviceInterfaceDataInstance
 
       /// <summary>Builds a Device Interface Data structure.</summary>
-      /// <returns>An initialized <see cref="T:NativeMethods.SpDeviceInterfaceData"/> instance.</returns>
+      /// <returns>An initialized <see cref="NativeMethods.SpDeviceInterfaceData"/> instance.</returns>
       [SecurityCritical]
       private static NativeMethods.SpDeviceInterfaceData CreateDeviceInterfaceDataInstance()
       {
@@ -456,7 +456,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetDeviceInterfaceDetailDataInstance
 
       /// <summary>Builds a Device Interface Detail Data structure.</summary>
-      /// <returns>An initialized <see cref="T:NativeMethods.SpDeviceInterfaceDetailData"/> instance.</returns>
+      /// <returns>An initialized <see cref="NativeMethods.SpDeviceInterfaceDetailData"/> instance.</returns>
       [SecurityCritical]
       private static NativeMethods.SpDeviceInterfaceDetailData GetDeviceInterfaceDetailDataInstance(SafeHandle safeHandle, NativeMethods.SpDeviceInterfaceData deviceInterfaceData, NativeMethods.SpDeviceInfoData deviceInfoData)
       {

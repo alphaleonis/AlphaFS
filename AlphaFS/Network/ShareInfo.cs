@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -33,10 +33,10 @@ namespace Alphaleonis.Win32.Network
       
       #region ShareInfo
 
-      /// <summary>Creates a <see cref="T:ShareInfo"/> instance.</summary>
+      /// <summary>Creates a <see cref="ShareInfo"/> instance.</summary>
       /// <param name="host">A host to retrieve shares from.</param>
-      /// <param name="shareLevel">Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>,  <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</param>
-      /// <param name="shareInfo">A <see cref="T:NativeMethods.ShareInfo2"/> or <see cref="T:NativeMethods.ShareInfo503"/> instance.</param>
+      /// <param name="shareLevel">Possible structure levels: <see cref="NativeMethods.ShareInfo503">503</see>, <see cref="NativeMethods.ShareInfo2">2</see>,  <see cref="NativeMethods.ShareInfo1">1</see> and <see cref="NativeMethods.ShareInfo1005">1005</see>.</param>
+      /// <param name="shareInfo">A <see cref="NativeMethods.ShareInfo2"/> or <see cref="NativeMethods.ShareInfo503"/> instance.</param>
       internal ShareInfo(string host, int shareLevel, object shareInfo)
       {
          switch (shareLevel)
@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Network
 
       private DirectoryInfo _directoryInfo;
 
-      /// <summary>The <see cref="T:DirectoryInfo"/> instance associated with this share.</summary>
+      /// <summary>The <see cref="DirectoryInfo"/> instance associated with this share.</summary>
       public DirectoryInfo DirectoryInfo
       {
          get
@@ -235,7 +235,7 @@ namespace Alphaleonis.Win32.Network
 
       #region ShareLevel
 
-      /// <summary>The structure level for the ShareInfo instance. Possible structure levels: <see cref="T:NativeMethods.ShareInfo503">503</see>, <see cref="T:NativeMethods.ShareInfo2">2</see>, <see cref="T:NativeMethods.ShareInfo1">1</see> and <see cref="T:NativeMethods.ShareInfo1005">1005</see>.</summary>
+      /// <summary>The structure level for the ShareInfo instance. Possible structure levels: <see cref="NativeMethods.ShareInfo503">503</see>, <see cref="NativeMethods.ShareInfo2">2</see>, <see cref="NativeMethods.ShareInfo1">1</see> and <see cref="NativeMethods.ShareInfo1005">1005</see>.</summary>
       public int ShareLevel { get; private set; }
 
       #endregion // ShareLevel

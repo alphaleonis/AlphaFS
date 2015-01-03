@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -28,19 +28,19 @@ namespace Alphaleonis.Win32.Filesystem
    [SerializableAttribute]
    public class TransactionAlreadyAbortedException : TransactionException
    {
-      /// <summary>Initializes a new instance of the <see cref="T:TransactionAlreadyAbortedException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
       public TransactionAlreadyAbortedException()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:TransactionAlreadyAbortedException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
       /// <param name="message">The message.</param>
       public TransactionAlreadyAbortedException(string message)
          : base(message)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:TransactionAlreadyAbortedException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
       public TransactionAlreadyAbortedException(string message, Exception innerException)
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:TransactionAlreadyAbortedException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="TransactionAlreadyAbortedException"/> class.</summary>
       /// <param name="info">The info.</param>
       /// <param name="context">The context.</param>
       protected TransactionAlreadyAbortedException(SerializationInfo info, StreamingContext context)

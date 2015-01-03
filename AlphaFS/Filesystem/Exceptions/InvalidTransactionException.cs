@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -28,19 +28,19 @@ namespace Alphaleonis.Win32.Filesystem
    [SerializableAttribute]
    public class InvalidTransactionException : TransactionException
    {
-      /// <summary>Initializes a new instance of the <see cref="T:InvalidTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="InvalidTransactionException"/> class.</summary>
       public InvalidTransactionException()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:InvalidTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="InvalidTransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
       public InvalidTransactionException(string message)
          : base(message)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:InvalidTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="InvalidTransactionException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
       public InvalidTransactionException(string message, Exception innerException)
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="T:InvalidTransactionException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="InvalidTransactionException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
       protected InvalidTransactionException(SerializationInfo info, StreamingContext context)

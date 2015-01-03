@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -38,6 +38,7 @@ using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
+using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
 using OperatingSystem = Alphaleonis.Win32.OperatingSystem;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
@@ -62,6 +63,7 @@ namespace AlphaFS.UnitTest
       private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
       private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
       private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
+      private static string NotepadExe = Path.Combine(SysRoot32, "notepad.exe");
 
       private const string TextTrue = "IsTrue";
       private const string TenNumbers = "0123456789";
@@ -936,7 +938,7 @@ namespace AlphaFS.UnitTest
 
                   // true == Cluster information only.
                   dsi = Volume.GetDiskFreeSpace(drive, true);
-         Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
+                  Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
                   Assert.IsTrue(dsi.FreeBytesAvailable == 0 && dsi.TotalNumberOfBytes == 0 && dsi.TotalNumberOfFreeBytes == 0);
               }
               catch (Exception ex)
@@ -1371,6 +1373,9 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
 
+         Console.WriteLine("\nThe return type is based on C# inference. Possible return types are:");
+         Console.WriteLine("string (full path), FileSystemInfo (DiskInfo / FileInfo) or FileSystemEntryInfo instance.\n");
+
          #region Directory
 
          string path = SysRoot;
@@ -1378,32 +1383,57 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput Directory Path: [{0}]", path);
 
-         StopWatcher(true);
-         FileSystemEntryInfo fsei = File.GetFileSystemEntryInfo(path);
-         Console.WriteLine(Reporter());
-         
-         Assert.IsFalse(fsei == null);
-         Assert.IsTrue(Dump(fsei, -17));
+         Console.WriteLine("\n\nvar fsei = Directory.GetFileSystemEntry<FileSystemEntryInfo>(path);");
+         var asFileSystemEntryInfo = File.GetFileSystemEntry<FileSystemEntryInfo>(path);
+         Assert.IsTrue((asFileSystemEntryInfo.GetType().IsEquivalentTo(typeof(FileSystemEntryInfo))));
+         Assert.IsTrue(Dump(asFileSystemEntryInfo, -17));
+
+
+         Console.WriteLine("\n\nvar di = Directory.GetFileSystemEntry<FileSystemInfo>(path);");
+         var asFileSystemInfo = File.GetFileSystemEntry<FileSystemInfo>(path);
+         Assert.IsTrue((asFileSystemInfo.GetType().IsEquivalentTo(typeof(DirectoryInfo))));
+         Assert.IsTrue(Dump(asFileSystemInfo, -17));
+
+
+         Console.WriteLine("\n\nvar aString = Directory.GetFileSystemEntry<string>(path);");
+         var asString = File.GetFileSystemEntry<string>(path);
+         Assert.IsFalse(Utils.IsNullOrWhiteSpace(asString));
+         Assert.IsTrue((asString.GetType().IsEquivalentTo(typeof(string))));
+         Assert.IsTrue(Dump(asString, -17));
+
+
+         Console.WriteLine();
 
          #endregion // Directory
 
          #region File
 
-         path = Path.Combine(SysRoot, "notepad.exe");
+         path = NotepadExe;
          if (!isLocal) path = Path.LocalToUnc(path);
 
          Console.WriteLine("\nInput File Path: [{0}]", path);
-         
-         StopWatcher(true);
-         fsei = File.GetFileSystemEntryInfo(path);
-         Console.WriteLine(Reporter());
+
+         Console.WriteLine("\n\nvar fsei = File.GetFileSystemEntry<FileSystemEntryInfo>(path);");
+         asFileSystemEntryInfo = File.GetFileSystemEntry<FileSystemEntryInfo>(path);
+         Assert.IsTrue((asFileSystemEntryInfo.GetType().IsEquivalentTo(typeof(FileSystemEntryInfo))));
+         Assert.IsTrue(Dump(asFileSystemEntryInfo, -17));
 
 
-         Assert.IsFalse(fsei == null);
-         Assert.IsTrue(Dump(fsei, -17));
-         #endregion // File
+         Console.WriteLine("\n\nvar fi = File.GetFileSystemEntry<FileSystemInfo>(path);");
+         asFileSystemInfo = File.GetFileSystemEntry<FileSystemInfo>(path);
+         Assert.IsTrue((asFileSystemInfo.GetType().IsEquivalentTo(typeof(FileInfo))));
+         Assert.IsTrue(Dump(asFileSystemInfo, -17));
+
+
+         Console.WriteLine("\n\nvar string = File.GetFileSystemEntry<string>(path);");
+         asString = File.GetFileSystemEntry<string>(path);
+         Assert.IsFalse(Utils.IsNullOrWhiteSpace(asString));
+         Assert.IsTrue((asString.GetType().IsEquivalentTo(typeof(string))));
+         Assert.IsTrue(Dump(asString, -17));
 
          Console.WriteLine();
+
+         #endregion // File
       }
 
       #endregion // DumpClassFileSystemEntryInfo
@@ -1455,12 +1485,12 @@ namespace AlphaFS.UnitTest
          foreach (string drive in Directory.GetLogicalDrives())
          {
             string tempPath = drive;
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+            if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         StopWatcher(true);
+            StopWatcher(true);
             try
             {
-         VolumeInfo volInfo = Volume.GetVolumeInformation(tempPath);
+               VolumeInfo volInfo = Volume.GetVolumeInfo(tempPath);
                Console.WriteLine("\n#{0:000}\tLogical Drive: [{1}]", ++cnt, tempPath);
                Assert.AreEqual(tempPath, volInfo.FullPath);
                Dump(volInfo, -26);

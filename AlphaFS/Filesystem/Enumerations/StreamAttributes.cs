@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       ModifiedWhenRead = 1,
 
       /// <summary>(2) STREAM_CONTAINS_SECURITY - The backup stream contains security information.
-      /// <para>This attribute applies only to backup stream of type <see cref="T:Type.SecurityData"/>.</para>
+      /// <para>This attribute applies only to backup stream of type <see cref="StreamType.SecurityData"/>.</para>
       /// </summary>
       ContainsSecurity = 2,
 
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       ContainsProperties = 4,
 
       /// <summary>(8) STREAM_SPARSE_ATTRIBUTE - The backup stream is part of a sparse file stream.
-      /// <para>This attribute applies only to backup stream of type <see cref="T:Type.Data"/>, <see cref="T:Type.AlternateData"/>, and <see cref="T:Type.SparseBlock"/>.</para>
+      /// <para>This attribute applies only to backup stream of type <see cref="StreamType.Data"/>, <see cref="StreamType.AlternateData"/>, and <see cref="StreamType.SparseBlock"/>.</para>
       /// </summary>
       Sparse = 8
    }

@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -50,8 +50,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
       /// <param name="deviceName">An MS-DOS device name string specifying the device the function is defining, redefining, or deleting.</param>
-      /// <param name="targetPath">>An MS-DOS path that will implement this device. If <paramref name="deviceAttributes"/> parameter has the <see cref="T:DosDeviceAttributes.RawTargetPath"/> flag specified, <paramref name="targetPath"/> is used as is.</param>
-      /// <param name="deviceAttributes">The controllable aspects of the DefineDosDevice function, <see cref="T:DosDeviceAttributes"/> flags which will be combined with the default.</param>
+      /// <param name="targetPath">>An MS-DOS path that will implement this device. If <paramref name="deviceAttributes"/> parameter has the <see cref="DosDeviceAttributes.RawTargetPath"/> flag specified, <paramref name="targetPath"/> is used as is.</param>
+      /// <param name="deviceAttributes">The controllable aspects of the DefineDosDevice function, <see cref="DosDeviceAttributes"/> flags which will be combined with the default.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void DefineDosDevice(string deviceName, string targetPath, DosDeviceAttributes deviceAttributes)
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes an MS-DOS device name.</summary>
       /// <param name="deviceName">An MS-DOS device name string specifying the device to delete.</param>
-      /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="T:DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
+      /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath)
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes an MS-DOS device name.</summary>
       /// <param name="deviceName">An MS-DOS device name string specifying the device to delete.</param>
-      /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="T:DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
+      /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
       /// <param name="exactMatch">Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <c>true</c>, <paramref name="targetPath"/> must be the same path used to create the mapping.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
@@ -95,9 +95,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes an MS-DOS device name.</summary>
       /// <param name="deviceName">An MS-DOS device name string specifying the device to delete.</param>
-      /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="T:DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
+      /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
       /// <param name="exactMatch">Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <c>true</c>, <paramref name="targetPath"/> must be the same path used to create the mapping.</param>
-      /// <param name="deviceAttributes">The controllable aspects of the DefineDosDevice function <see cref="T:DosDeviceAttributes"/> flags which will be combined with the default.</param>
+      /// <param name="deviceAttributes">The controllable aspects of the DefineDosDevice function <see cref="DosDeviceAttributes"/> flags which will be combined with the default.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region QueryAllDosDevices
 
       /// <summary>Retrieves a list of all existing MS-DOS device names.</summary>
-      /// <returns>An <see cref="T:IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>
+      /// <returns>An <see cref="IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<string> QueryAllDosDevices()
@@ -123,10 +123,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="deviceName">
       /// (Optional, default: <c>null</c>) An MS-DOS device name string specifying the target of the query.
       /// This parameter can be "sort". In that case a sorted list of all existing MS-DOS device names is returned.
-      /// This parameter can be <c>null</c>. In that case, the <see cref="T:QueryDosDevice"/> function will store a list of all
+      /// This parameter can be <c>null</c>. In that case, the <see cref="QueryDosDevice"/> function will store a list of all
       /// existing MS-DOS device names into the buffer.
       ///</param>
-      /// <returns>An <see cref="T:IEnumerable{String}"/> with or more existing MS-DOS device names.</returns>
+      /// <returns>An <see cref="IEnumerable{String}"/> with or more existing MS-DOS device names.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<string> QueryAllDosDevices(string deviceName)
@@ -147,7 +147,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// existing MS-DOS device names into the buffer.
       ///</param>
       /// <param name="options">(Optional, default: <c>false</c>) If options[0] = <c>true</c> a sorted list will be returned.</param>
-      /// <returns>An <see cref="T:IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>
+      /// <returns>An <see cref="IEnumerable{String}"/> with one or more existing MS-DOS device names.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<string> QueryDosDevice(string deviceName, params string[] options)
@@ -286,7 +286,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Determines whether a disk drive is a removable, fixed, CD-ROM, RAM disk, or network drive.</summary>
       /// <param name="drivePath">A path to a drive. For example: "C:\", "\\server\share", or "\\?\Volume{c0580d5e-2ad6-11dc-9924-806e6f6e6963}\"</param>
-      /// <returns>A <see cref="T:System.IO.DriveType"/> object.</returns>
+      /// <returns>A <see cref="System.IO.DriveType"/> object.</returns>
       [SecurityCritical]
       public static DriveType GetDriveType(string drivePath)
       {
@@ -392,9 +392,9 @@ namespace Alphaleonis.Win32.Filesystem
       
       #region EnumerateVolumeMountPoints
 
-      /// <summary>Returns an enumerable collection of <see cref="T:String"/> of all mounted folders (volume mount points) on the specified volume.</summary>
-      /// <param name="volumeGuid">A <see cref="T:string"/> containing the volume <see cref="T:Guid"/>.</param>
-      /// <returns>An enumerable collection of <see cref="T:String"/> of all volume mount points on the specified volume.</returns>
+      /// <summary>Returns an enumerable collection of <see cref="String"/> of all mounted folders (volume mount points) on the specified volume.</summary>
+      /// <param name="volumeGuid">A <see cref="string"/> containing the volume <see cref="Guid"/>.</param>
+      /// <returns>An enumerable collection of <see cref="String"/> of all volume mount points on the specified volume.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumeMountPoints(string volumeGuid)
@@ -460,9 +460,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateVolumePathNames
 
-      /// <summary>Returns an enumerable collection of <see cref="T:String"/> drive letters and mounted folder paths for the specified volume.</summary>
-      /// <param name="volumeGuid">A volume <see cref="T:Guid"/> path: \\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</param>
-      /// <returns>An enumerable collection of <see cref="T:String"/> containing the path names for the specified volume.</returns>
+      /// <summary>Returns an enumerable collection of <see cref="String"/> drive letters and mounted folder paths for the specified volume.</summary>
+      /// <param name="volumeGuid">A volume <see cref="Guid"/> path: \\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</param>
+      /// <returns>An enumerable collection of <see cref="String"/> containing the path names for the specified volume.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumePathNames(string volumeGuid)
@@ -517,8 +517,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnumerateVolumes
 
-      /// <summary>Returns an enumerable collection of <see cref="T:String"/> volumes on the computer.</summary>
-      /// <returns>An enumerable collection of <see cref="T:String"/> volume names on the computer.</returns>
+      /// <summary>Returns an enumerable collection of <see cref="String"/> volumes on the computer.</summary>
+      /// <returns>An enumerable collection of <see cref="String"/> volume names on the computer.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
@@ -645,9 +645,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetVolumeDisplayName
 
       /// <summary>Gets the shortest display name for the specified <paramref name="volumeName"/>.</summary>
-      /// <param name="volumeName">A volume <see cref="T:Guid"/> path: \\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</param>
+      /// <param name="volumeName">A volume <see cref="Guid"/> path: \\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\</param>
       /// <returns>The shortest display name for the specified volume found, or <c>null</c> if no display names were found.</returns>
-      /// <remarks>This method basically returns the shortest string returned by <see cref="T:EnumerateVolumePathNames"/></remarks>
+      /// <remarks>This method basically returns the shortest string returned by <see cref="EnumerateVolumePathNames"/></remarks>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       public static string GetVolumeDisplayName(string volumeName)
@@ -671,7 +671,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetVolumeGuid
 
-      /// <summary>Retrieves a volume <see cref="T:Guid"/> path for the volume that is associated with the specified volume mount point (drive letter, volume GUID path, or mounted folder).</summary>
+      /// <summary>Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter, volume GUID path, or mounted folder).</summary>
       /// <param name="volumeMountPoint">The path of a mounted folder (for example, "Y:\MountX\") or a drive letter (for example, "X:\").</param>
       /// <returns>The unique volume name of the form: "\\?\Volume{GUID}\"</returns>
       /// <exception cref="NativeError.ThrowException()"/>
@@ -749,29 +749,29 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetVolumeGuidForNtDeviceName
 
-      #region GetVolumeInformation
+      #region GetVolumeInfo
 
       /// <summary>Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
       /// <param name="volumePath">A path that contains the root directory.</param>
-      /// <returns>A <see cref="T:VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
+      /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static VolumeInfo GetVolumeInformation(string volumePath)
+      public static VolumeInfo GetVolumeInfo(string volumePath)
       {
          return new VolumeInfo(volumePath, true, false);
       }
 
       /// <summary>Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
-      /// <param name="volumeHandle">An instance to a <see cref="T:SafeFileHandle"/> handle.</param>
-      /// <returns>A <see cref="T:VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
+      /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
+      /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>
       /// <exception cref="NativeError.ThrowException()"/>
       [SecurityCritical]
-      public static VolumeInfo GetVolumeInformation(SafeFileHandle volumeHandle)
+      public static VolumeInfo GetVolumeInfo(SafeFileHandle volumeHandle)
       {
          return new VolumeInfo(volumeHandle, true, true);
       }
 
-      #endregion // GetVolumeInformation
+      #endregion // GetVolumeInfo
 
       #region GetVolumeLabel
 
@@ -939,7 +939,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The user-mode path to be associated with the volume. This may be a Drive letter (for example, "X:\")
       /// or a directory on another volume (for example, "Y:\MountX\").
       ///</param>
-      /// <param name="volumeGuid">A <see cref="T:string"/> containing the volume <see cref="T:Guid"/>.</param>
+      /// <param name="volumeGuid">A <see cref="string"/> containing the volume <see cref="Guid"/>.</param>
       /// <exception cref="NativeError.ThrowException()"/>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1")]
       [SecurityCritical]
@@ -991,8 +991,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Unified method DefineDosDeviceInternal() to define, redefine, or delete MS-DOS device names.</summary>
       /// <param name="isDefine"><c>true</c> defines a new MS-DOS device. <c>false</c> deletes a previously defined MS-DOS device.</param>
       /// <param name="deviceName">An MS-DOS device name string specifying the device the function is defining, redefining, or deleting.</param>
-      /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="T:DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
-      /// <param name="deviceAttributes">The controllable aspects of the DefineDosDevice function, <see cref="T:DosDeviceAttributes"/> flags which will be combined with the default.</param>
+      /// <param name="targetPath">A pointer to a path string that will implement this device. The string is an MS-DOS path string unless the <see cref="DosDeviceAttributes.RawTargetPath"/> flag is specified, in which case this string is a path string.</param>
+      /// <param name="deviceAttributes">The controllable aspects of the DefineDosDevice function, <see cref="DosDeviceAttributes"/> flags which will be combined with the default.</param>
       /// <param name="exactMatch">Only delete MS-DOS device on an exact name match. If <paramref name="exactMatch"/> is <c>true</c>, <paramref name="targetPath"/> must be the same path used to create the mapping.</param>
       /// <returns><c>true</c> on success, <c>false</c> otherwise.</returns>
       /// <exception cref="NativeError.ThrowException()"/>

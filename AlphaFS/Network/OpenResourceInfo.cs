@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Network
 
       #region Permissions
 
-      /// <summary>The access permissions associated with the opening application. This member can be one or more of the following <see cref="T:AccessPermissions"/> values.</summary>
+      /// <summary>The access permissions associated with the opening application. This member can be one or more of the following <see cref="AccessPermissions"/> values.</summary>
       public AccessPermissions Permissions { get; private set; }
 
       #endregion // Permissions
