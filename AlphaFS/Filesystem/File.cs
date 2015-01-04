@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,11 +19,11 @@
  *  THE SOFTWARE. 
  */
 
-using System.ComponentModel;
 using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -6258,7 +6258,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetFileInfoByHandle
 
-      #region GetFileSystemEntryInfo
+      #region GetFileSystemEntry
 
       #region IsFullPath
 
@@ -6272,9 +6272,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool? isFullPath)
+      public static T GetFileSystemEntry<T>(string path, bool? isFullPath)
       {
-         return GetFileSystemEntryInfoInternal(false, null, path, false, isFullPath);
+         return GetFileSystemEntryInternal<T>(null, path, false, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -6283,9 +6283,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file or directory.</param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
+      public static T GetFileSystemEntry<T>(string path)
       {
-         return GetFileSystemEntryInfoInternal(false, null, path, false, false);
+         return GetFileSystemEntryInternal<T>(null, path, false, false);
       }
 
       #region Transacted
@@ -6303,9 +6303,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, bool? isFullPath)
+      public static T GetFileSystemEntry<T>(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return GetFileSystemEntryInfoInternal(false, transaction, path, false, isFullPath);
+         return GetFileSystemEntryInternal<T>(transaction, path, false, isFullPath);
       }
 
       #endregion // IsFullPath
@@ -6313,16 +6313,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
+      /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the file on the path.</returns>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path)
+      public static T GetFileSystemEntry<T>(KernelTransaction transaction, string path)
       {
-         return GetFileSystemEntryInfoInternal(false, transaction, path, false, false);
+         return GetFileSystemEntryInternal<T>(transaction, path, false, false);
       }
 
       #endregion // Transacted
 
-      #endregion // GetFileSystemEntryInfo
+      #endregion // GetFileSystemEntry
 
       #region GetLinkTargetInfo
 
@@ -7293,7 +7293,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="lastWriteTime">
       ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
-      /// </param>      
+      /// </param>     
       [SecurityCritical]
       public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
       {
@@ -8414,9 +8414,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // EnumerateHardlinksInternal
-
       
-
       #region ExistsInternal
 
       /// <summary>[AlphaFS] Unified method ExistsInternal() to determine whether the specified file or directory exists.</summary>
@@ -8996,7 +8994,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   [AlphaFS] Unified method GetFileSystemEntryInfoInternal() to get a FileSystemEntryInfo from a Non-/Transacted directory/file.
       /// </summary>
-      /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="continueOnException">
@@ -9019,21 +9016,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// </exception>
       /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       [SecurityCritical]
-      internal static FileSystemEntryInfo GetFileSystemEntryInfoInternal(bool isFolder, KernelTransaction transaction, string path, bool continueOnException, bool? isFullPath)
+      internal static T GetFileSystemEntryInternal<T>(KernelTransaction transaction, string path, bool continueOnException, bool? isFullPath)
       {
+         Type typeOfT = typeof(T);
+
          return new FindFileSystemEntryInfo
          {
-            IsFullPath = isFullPath,
-            InputPath = path,
-            IsFolder = isFolder,
             Transaction = transaction,
-            Fallback = false,
-            ContinueOnException = continueOnException,
+            InputPath = path,
+            SearchPattern = Path.WildcardStarMatchAll,
+            IsFullPath = isFullPath,
+            AsString = typeOfT == typeof(string),
+            AsFileSystemInfo = typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo),
+            ContinueOnException = continueOnException
 
-         }.Get();
+         }.Get<T>();
       }
 
-      #endregion // GetFileSystemEntryInfoInternal
+      #endregion // GetFileSystemEntryInternal
 
       #region GetLastAccessTimeInternal
 

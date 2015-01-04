@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -805,13 +805,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetVolumeGuidForNtDeviceName
 
-      #region GetVolumeInformation
+      #region GetVolumeInfo
 
       /// <summary>Retrieves information about the file system and volume associated with the specified root file or directorystream.</summary>
       /// <param name="volumePath">A path that contains the root directory.</param>
       /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>      
       [SecurityCritical]
-      public static VolumeInfo GetVolumeInformation(string volumePath)
+      public static VolumeInfo GetVolumeInfo(string volumePath)
       {
          return new VolumeInfo(volumePath, true, false);
       }
@@ -820,12 +820,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
       /// <returns>A <see cref="VolumeInfo"/> instance describing the volume associatied with the specified root directory.</returns>      
       [SecurityCritical]
-      public static VolumeInfo GetVolumeInformation(SafeFileHandle volumeHandle)
+      public static VolumeInfo GetVolumeInfo(SafeFileHandle volumeHandle)
       {
          return new VolumeInfo(volumeHandle, true, true);
       }
 
-      #endregion // GetVolumeInformation
+      #endregion // GetVolumeInfo
 
       #region GetVolumeLabel
 

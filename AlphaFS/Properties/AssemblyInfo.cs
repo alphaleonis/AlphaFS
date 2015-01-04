@@ -31,7 +31,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("AlphaFS")]
-[assembly: AssemblyCopyright("© 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex")]
+[assembly: AssemblyCopyright("© 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
