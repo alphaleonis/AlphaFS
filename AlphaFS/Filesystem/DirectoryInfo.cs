@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -359,7 +359,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -372,7 +372,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -410,7 +410,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -423,7 +423,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -462,7 +462,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
@@ -476,7 +476,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -548,7 +548,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An array of type <see cref="DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
       /// <remarks>
@@ -566,7 +566,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -617,7 +617,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
@@ -637,7 +637,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -692,7 +692,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
       /// <remarks>
@@ -715,7 +715,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -1121,7 +1121,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>The counted number of file system objects.</returns>

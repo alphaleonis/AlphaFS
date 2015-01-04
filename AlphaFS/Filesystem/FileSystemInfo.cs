@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -170,7 +170,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void RefreshEntryInfo()
       {
-         _entryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullName, true, null);
+         _entryInfo = File.GetFileSystemEntryInternal<FileSystemEntryInfo>(Transaction, LongFullName, true, null);
    
          if (_entryInfo == null)
             DataInitialised = -1;

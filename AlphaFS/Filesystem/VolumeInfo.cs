@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
-            // GetVolumeInformation()
+            // GetVolumeInformationXxx()
             // In the ANSI version of this function, the name is limited to 248 characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.

@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
@@ -442,29 +442,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // CopyTo
-
-      #region CountDirectories
-
-      [TestMethod]
-      public void AlphaFS_CountDirectories()
-      {
-         Console.WriteLine("DirectoryInfo.CopyTo()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // CountDirectories
-
-      #region CountFiles
-
-      [TestMethod]
-      public void AlphaFS_CountFiles()
-      {
-         Console.WriteLine("DirectoryInfo.CountFiles()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // CountFiles
-
+      
       #region Compress
 
       [TestMethod]
@@ -475,6 +453,17 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Compress
+
+      #region AlphaFS_CountFileSystemObjects
+
+      [TestMethod]
+      public void AlphaFS_CountFileSystemObjects()
+      {
+         Console.WriteLine("DirectoryInfo.CountFileSystemObjects()");
+         Console.WriteLine("\nPlease see unit tests from class: Directory().");
+      }
+
+      #endregion // AlphaFS_CountFileSystemObjects
 
       #region DisableCompression
 

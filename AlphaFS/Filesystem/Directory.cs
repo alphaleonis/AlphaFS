@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2014 Peter Palotas, Jeffrey Jangli, Normalex
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -409,8 +409,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // Template
-
-
+      
       #region Transacted
 
       #region IsFullPath
@@ -826,8 +825,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Deletes an empty directory from a specified path.</summary>
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-
-      [SecurityCritical]
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
+       [SecurityCritical]
       public static void Delete(string path)
       {
          DeleteDirectoryInternal(null, null, path, false, false, true, false, false);
@@ -837,7 +838,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove.</param>
       /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
       [SecurityCritical]
       public static void Delete(string path, bool recursive)
       {
@@ -882,6 +885,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly, bool? isFullPath)
       {
@@ -895,6 +901,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>      
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly)
       {
@@ -938,6 +950,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   </item>
       /// </list></param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool? isFullPath)
       {
@@ -952,6 +967,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
 
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
@@ -964,6 +982,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove.</param>
       /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
 
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive)
@@ -979,7 +1000,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="DirectoryNotFoundException ">path is <c>null</c>.</exception>
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
@@ -1010,7 +1033,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the directories in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -1024,7 +1047,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -1065,7 +1088,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the directories in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -1080,7 +1103,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -1123,7 +1146,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -1137,7 +1160,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -1178,7 +1201,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -1193,7 +1216,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -1236,7 +1259,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -1250,7 +1273,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -1289,7 +1312,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of file-system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -1304,7 +1327,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -1929,7 +1952,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       [SecurityCritical]
       public static string[] GetDirectories(string path, string searchPattern)
@@ -1951,7 +1974,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -2009,7 +2032,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       [SecurityCritical]
       public static string[] GetDirectories(KernelTransaction transaction, string path, string searchPattern)
@@ -2032,7 +2055,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -2223,7 +2246,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       [SecurityCritical]
       public static string[] GetFiles(string path, string searchPattern)
@@ -2247,7 +2270,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -2308,7 +2331,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       [SecurityCritical]
       public static string[] GetFiles(KernelTransaction transaction, string path, string searchPattern)
@@ -2333,7 +2356,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -2394,7 +2417,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path, string searchPattern)
@@ -2417,7 +2440,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -2476,7 +2499,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(KernelTransaction transaction, string path, string searchPattern)
@@ -2500,7 +2523,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
       /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
@@ -3755,16 +3778,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Sets the application's current working directory to the specified directory.</summary>
       /// <param name="path">The path to which the current working directory is set.</param>
 
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
       [SecurityCritical]
       public static void SetCurrentDirectory(string path)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         // System.IO SetCurrentDirectory() does not handle long paths.
-         System.IO.Directory.SetCurrentDirectory(Path.GetRegularPathInternal(path, false, false, false, true));
-      }
+         string pathRp = Path.GetRegularPathInternal(path, false, false, false, true);
 
+         // System.IO SetCurrentDirectory() does not handle long paths.
+         System.IO.Directory.SetCurrentDirectory(path.Length > 255 ? Path.GetShort83Path(pathRp) : pathRp);
+      }
+      
       #endregion // .NET
 
       #endregion // SetCurrentDirectory (.NET)
@@ -4977,7 +5003,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
@@ -5033,7 +5059,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>The counted number of file system objects.</returns>
@@ -5093,7 +5119,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
@@ -5151,7 +5177,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>The counted number of file system objects.</returns>
@@ -6581,7 +6607,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="isFullPath">
       ///  <list type="definition">
@@ -6651,7 +6677,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
@@ -6762,7 +6788,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
@@ -6805,7 +6831,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
@@ -7403,114 +7429,6 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transacted
 
       #endregion // GetChangeTimeUtc
-
-      #region GetFileSystemEntryInfo
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
-      /// <param name="path">The path to the file or directory.</param>
-      /// <param name="isFullPath">
-      ///  <list type="definition">
-      ///   <item>
-      ///     <term>
-      ///       <see langword="true" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
-      /// </description>
-      ///   </item>
-      ///   <item>
-      ///     <term>
-      ///       <see langword="false" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
-      /// </description>
-      ///   </item>
-      ///   <item>
-      ///     <term>
-      ///       <see langword="null" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
-      /// </description>
-      ///   </item>
-      /// </list></param>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory on the path.</returns>
-      [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool? isFullPath)
-      {
-         return File.GetFileSystemEntryInfoInternal(true, null, path, false, isFullPath);
-      }
-
-      #endregion // IsFullPath
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
-      /// <param name="path">The path to the file or directory.</param>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory on the path.</returns>
-      [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
-      {
-         return File.GetFileSystemEntryInfoInternal(true, null, path, false, false);
-      }
-
-      #region Transacted
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file or directory.</param>
-      /// <param name="isFullPath">
-      ///  <list type="definition">
-      ///   <item>
-      ///     <term>
-      ///       <see langword="true" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> is an absolute path. Unicode prefix is applied.
-      /// </description>
-      ///   </item>
-      ///   <item>
-      ///     <term>
-      ///       <see langword="false" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> will be checked and resolved to an absolute path. Unicode prefix is applied.
-      /// </description>
-      ///   </item>
-      ///   <item>
-      ///     <term>
-      ///       <see langword="null" />
-      ///     </term>
-      ///     <description>
-      ///       <paramref name="path" /> is already an absolute path with Unicode prefix. Use as is.
-      /// </description>
-      ///   </item>
-      /// </list></param>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory on the path.</returns>
-      [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, bool? isFullPath)
-      {
-         return File.GetFileSystemEntryInfoInternal(true, transaction, path, false, isFullPath);
-      }
-
-      #endregion // IsFullPath
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the directory on the path.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file or directory.</param>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the directory on the path.</returns>
-      [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path)
-      {
-         return File.GetFileSystemEntryInfoInternal(true, transaction, path, false, false);
-      }
-
-      #endregion // Transacted
-
-      #endregion // GetFileSystemEntryInfo
 
       #region GetProperties
 
@@ -9027,7 +8945,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       ///    <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       ///    <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      ///    <para>characters, but doesn't support regular expressions.</para>
+      ///    <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="compress"><see langword="true"/> compress, when <see langword="false"/> decompress.</param>
@@ -9583,7 +9501,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Path refers to a file instead of a directory.
             // The specified path is invalid (for example, it is on an unmapped drive). 
 
-            fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
+            fileSystemEntryInfo = File.GetFileSystemEntryInternal<FileSystemEntryInfo>(transaction,
                isFullPath == null
                   ? path
                   : (bool)isFullPath
@@ -9769,12 +9687,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void DeleteEmptyDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool initialize, bool? isFullPath)
       {
+         #region Setup
+
          if (fileSystemEntryInfo == null)
          {
             if (!File.ExistsInternal(true, transaction, path, isFullPath))
                NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
 
-            fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
+            fileSystemEntryInfo = File.GetFileSystemEntryInternal<FileSystemEntryInfo>(transaction,
                isFullPath == null
                   ? path
                   : (bool)isFullPath
@@ -9793,6 +9713,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = fileSystemEntryInfo.LongFullPath;
 
+         #endregion // Setup
 
          // Ensure path is a directory.
          if (!fileSystemEntryInfo.IsDirectory)
@@ -9810,7 +9731,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             // Prevent deleting path itself.
             if (!initialize)
-               DeleteDirectoryInternal(fileSystemEntryInfo, transaction, null, false, ignoreReadOnly, true, false, null);
+               DeleteDirectoryInternal(fileSystemEntryInfo, transaction, null, false, ignoreReadOnly, true, true, null);
          }
       }
 
@@ -10084,7 +10005,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but doesn't support regular expressions.</para>
+      /// <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="isFullPath">
@@ -10119,19 +10040,17 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Type typeOfT = typeof(T);
 
-         // Need at least files or folders to enumerate.
-         bool gotFilesOrFolders = (directoryEnumerationOptions & DirectoryEnumerationOptions.FilesAndFolders) != DirectoryEnumerationOptions.None;
-
-         if (!gotFilesOrFolders)
+         // Need files or folders to enumerate.
+         if ((directoryEnumerationOptions & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.None)
             directoryEnumerationOptions |= DirectoryEnumerationOptions.FilesAndFolders;
-
-
+         
          return new FindFileSystemEntryInfo
          {
             Transaction = transaction,
             InputPath = path,
             SearchPattern = searchPattern,
             IsFullPath = isFullPath,
+            IsDirectory = true,
 
             Recursive = (directoryEnumerationOptions & DirectoryEnumerationOptions.Recursive) == DirectoryEnumerationOptions.Recursive,
 
