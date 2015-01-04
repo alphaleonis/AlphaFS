@@ -1,4 +1,4 @@
-﻿/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Normalex
+﻿/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a copy
  *  of this software and associated documentation files (the "Software"), to deal
