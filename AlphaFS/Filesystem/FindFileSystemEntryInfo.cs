@@ -162,15 +162,16 @@ namespace Alphaleonis.Win32.Filesystem
 
          var fsei = new FileSystemEntryInfo(win32FindData) {FullPath = Path.GetRegularPathInternal(fullPathLp, false, false, false, false)};
 
-         return !AsFileSystemInfo
-            // Return object instance of type FileSystemEntryInfo.
-            ? (T) (object) fsei
-
+         return AsFileSystemInfo
             // Return object instance of type FileSystemInfo.
-            : (T) (object) (fsei.IsDirectory
+            ? (T) (object) (fsei.IsDirectory
                ? (FileSystemInfo)
                   new DirectoryInfo(Transaction, fsei.LongFullPath, null) {EntryInfo = fsei}
-               : new FileInfo(Transaction, fsei.LongFullPath, null) {EntryInfo = fsei});
+               : new FileInfo(Transaction, fsei.LongFullPath, null) {EntryInfo = fsei})
+
+            // Return object instance of type FileSystemEntryInfo.
+            : (T) (object) fsei;
+
       }
 
       #endregion // NewFileSystemEntryType
@@ -232,7 +233,8 @@ namespace Alphaleonis.Win32.Filesystem
                      if (fseiIsFolder && Recursive)
                         dirs.Enqueue(fseiFullPathLp);
 
-
+                     
+                     // Determine yield.
                      if (!(_nameFilter == null || (_nameFilter != null && _nameFilter.IsMatch(fileName))))
                         continue;
 

@@ -17,7 +17,7 @@ Version 1.6
 * New: Supports isFullPath parameter for numerous methods to control path normalization. This speeds up things internally (less string processing and GetFullPath() calls) and also enables working with files and folders with a trailing dot or space:
 	* `false` (slow): (default) Path will be checked and resolved to an absolute path. Unicode prefix is applied.
 	* `true`  (fast): Path is an absolute path. Unicode prefix is applied.
-	* null    (fastest): Path is already an absolute path with Unicode prefix. Use as is.
+	* `null`  (fastest): Path is already an absolute path with Unicode prefix. Use as is.
 * Mod: Enabled KernelTransaction parameter for all Win32 API functions that support it.
 * Mod: Added public read only properties to class FileSystemInfo(). Available for: DirectoryInfo() / FileInfo():
 	* EntryInfo	 : Instance of the FileSystemEntryInfo() class.

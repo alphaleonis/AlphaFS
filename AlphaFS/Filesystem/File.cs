@@ -7764,7 +7764,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   case Win32Errors.ERROR_FILE_EXISTS:
                      // File.Copy()
-                     // Directory.Copy() (AlphaFS)
+                     // Directory.Copy1()
                      NativeError.ThrowException(lastError, destFileNameLp, true);
                      break;
 
