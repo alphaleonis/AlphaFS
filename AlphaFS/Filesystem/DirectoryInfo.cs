@@ -45,7 +45,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.
       /// The path parameter can be a file name, including a file on a Universal Naming Convention (UNC) share.
       /// </remarks>
-      public DirectoryInfo(string path) : this(null, path, false)
+      public DirectoryInfo(string path) 
+         : this(null, path, PathFormat.Auto)
       {
       }
 
@@ -61,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
-      public DirectoryInfo(string path, bool? isFullPath) : this(null, path, isFullPath)
+      public DirectoryInfo(string path, PathFormat pathFormat) : this(null, path, pathFormat)
       {
       }
 
@@ -78,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
          IsDirectory = true;
          Transaction = transaction;
 
-         LongFullName = Path.GetLongPathInternal(fullPath, false, false, false, false);
+         LongFullName = Path.GetLongPathInternal(fullPath, new GetFullPathInternalArgs(false, false, false, false));
 
          OriginalPath = Path.GetFileName(fullPath, true);
 
@@ -93,7 +94,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
-      public DirectoryInfo(KernelTransaction transaction, string path) : this(transaction, path, false)
+      public DirectoryInfo(KernelTransaction transaction, string path) 
+         : this(transaction, path, PathFormat.Auto)
       {
       }
 
@@ -106,9 +108,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
-      public DirectoryInfo(KernelTransaction transaction, string path, bool? isFullPath)
+      public DirectoryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         InitializeInternal(true, transaction, path, isFullPath);
+         InitializeInternal(true, transaction, path, pathFormat);
       }
 
       #endregion // Transacted
@@ -133,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create()
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, false, null);
+         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, false, PathFormat.ExtendedLength);
       }
 
       /// <summary>Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
@@ -144,7 +146,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity)
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, false, null);
+         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, false, PathFormat.ExtendedLength);
       }
 
       #endregion // .NET
@@ -159,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create(bool compress)
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, compress, null);
+         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, compress, PathFormat.ExtendedLength);
       }
 
       /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
@@ -171,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity, bool compress)
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, compress, null);
+         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, compress, PathFormat.ExtendedLength);
       }
 
       #endregion // AlphaFS
@@ -302,7 +304,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public override void Delete()
       {
-         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, false, false, true, false, null);
+         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, false, false, true, false, PathFormat.ExtendedLength);
       }
 
       /// <summary>Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
@@ -318,7 +320,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive)
       {
-         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, recursive, false, !recursive, false, null);
+         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, recursive, false, !recursive, false, PathFormat.ExtendedLength);
       }
 
       #endregion // .NET
@@ -336,7 +338,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly)
       {
-         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, !recursive, false, null);
+         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, !recursive, false, PathFormat.ExtendedLength);
       }
 
       #endregion // AlphaFS
@@ -879,10 +881,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public DirectoryInfo CopyTo1(string destinationPath, bool? isFullPath)
+      public DirectoryInfo CopyTo1(string destinationPath, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, isFullPath);
+         CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
          return new DirectoryInfo(Transaction, destinationPathLp, null);
       }
 
@@ -908,10 +910,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public DirectoryInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool? isFullPath)
+      public DirectoryInfo CopyTo1(string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, isFullPath);
+         CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, pathFormat);
          return new DirectoryInfo(Transaction, destinationPathLp, null);
       }
 
@@ -944,10 +946,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -979,10 +981,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1417,10 +1419,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public DirectoryInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions, bool? isFullPath)
+      public DirectoryInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, isFullPath);
+         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, pathFormat);
          return new DirectoryInfo(Transaction, destinationPathLp, null);
       }
 
@@ -1459,10 +1461,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
          return cmr;
       }
@@ -1622,16 +1624,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
       [SecurityCritical]
-      private CopyMoveResult CopyToMoveToInternal(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, bool? isFullPath)
+      private CopyMoveResult CopyToMoveToInternal(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {
          string destinationPathLp = isFullPath == null
             ? destinationPath
             : (bool)isFullPath
-               ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
+               ? Path.GetLongPathInternal(destinationPath, new GetFullPathInternalArgs(false, false, false, false))
 #if NET35
                : Path.GetFullPathInternal(Transaction, destinationPath, true, false, false, true, false, true, true);
 #else
- : Path.GetFullPathInternal(Transaction, destinationPath, true, true, false, true, false, true, true);
+ : Path.GetFullPathInternal(Transaction, destinationPath, true, new GetFullPathInternalArgs(true, false, true, true, false, true));
 #endif
 
          longFullPath = destinationPathLp;

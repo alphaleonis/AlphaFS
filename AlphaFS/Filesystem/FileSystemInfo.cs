@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   applied.</para>
       ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
+      internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (isFullPath != null && (bool) !isFullPath)
             Path.CheckValidPath(path, true, true);
@@ -212,12 +212,12 @@ namespace Alphaleonis.Win32.Filesystem
          LongFullName = isFullPath == null
             ? path
             : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
+               ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
 #if NET35
                : Path.GetFullPathInternal(transaction, path, true, false, false, !isFolder, true, false, false);
 #else
                // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the FileSystemInfo instance.
-               : Path.GetFullPathInternal(transaction, path, true, true, false, !isFolder, true, false, false);
+               : Path.GetFullPathInternal(transaction, path, true, new GetFullPathInternalArgs(true, false, !isFolder, false, true, false));
 #endif
 
          FullPath = Path.GetRegularPathInternal(LongFullName, false, false, false, false);

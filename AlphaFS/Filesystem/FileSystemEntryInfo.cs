@@ -189,7 +189,7 @@ namespace Alphaleonis.Win32.Filesystem
       public string LongFullPath
       {
          get { return _longFullPath; }
-         private set { _longFullPath = Path.GetLongPathInternal(value, false, false, false, false); }
+         private set { _longFullPath = Path.GetLongPathInternal(value, new GetFullPathInternalArgs(false, false, false, false)); }
       }
 
       #endregion // LongFullPath

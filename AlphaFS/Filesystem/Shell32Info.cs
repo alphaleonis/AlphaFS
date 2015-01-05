@@ -39,7 +39,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       /// </summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      public Shell32Info(string fileName) : this(fileName, false)
+      public Shell32Info(string fileName) 
+         : this(fileName, PathFormat.Auto)
       {
       }
 
@@ -53,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para><see langword="false"/> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       /// <para><see langword="null"/> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      public Shell32Info(string fileName, bool? isFullPath)
+      public Shell32Info(string fileName, PathFormat pathFormat)
       {
          if (Utils.IsNullOrWhiteSpace(fileName))
             throw new ArgumentNullException("fileName");
@@ -61,11 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Shell32 is limited to MAX_PATH length.
          // Get a full path of regular format.
 
-         FullPath = isFullPath == null
-            ? fileName
-            : (bool) isFullPath
-               ? Path.GetRegularPathInternal(fileName, false, false, true, false)
-               : Path.GetFullPathInternal(null, fileName, false, false, false, true, false, true, true);
+         FullPath = Path.GetExtendedLengthPathInternal(null, fileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
          Initialize();
       }

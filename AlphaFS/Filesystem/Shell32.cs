@@ -628,9 +628,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>A <see cref="Shell32Info"/> class instance.</returns>
       [SecurityCritical]
-      public static Shell32Info GetShell32Info(string path, bool? isFullPath)
+      public static Shell32Info GetShell32Info(string path, PathFormat pathFormat)
       {
-         return new Shell32Info(path, isFullPath);
+         return new Shell32Info(path, pathFormat);
       }
 
       #endregion // GetShell32Info
@@ -729,7 +729,7 @@ namespace Alphaleonis.Win32.Filesystem
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-         return NativeMethods.PathFileExists(Path.GetFullPathInternal(null, path, true, false, false, false, true, true, true));
+         return NativeMethods.PathFileExists(Path.GetFullPathInternal(null, path, true, new GetFullPathInternalArgs(false, false, false, true, true, true)));
       }
 
       #endregion // PathFileExists

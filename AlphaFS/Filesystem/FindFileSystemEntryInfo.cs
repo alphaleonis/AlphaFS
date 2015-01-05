@@ -35,16 +35,11 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructor
 
-      public FindFileSystemEntryInfo(bool enumerate, KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, Type typeOfT, bool? isFullPath)
+      public FindFileSystemEntryInfo(bool enumerate, KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, Type typeOfT, PathFormat pathFormat)
       {
-         IsFullPath = isFullPath;
          Transaction = transaction;
 
-         InputPath = isFullPath == null
-            ? path
-            : (bool)isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(Transaction, path, true, false, false, true, false, true, true);
+         InputPath = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
          SearchPattern = searchPattern;
          FileSystemObjectType = null;
@@ -382,18 +377,6 @@ namespace Alphaleonis.Win32.Filesystem
       public bool IsDirectory { get; internal set; }
 
       #endregion // IsDirectory
-
-      #region IsFullPath
-
-      /// <summary>Gets or sets a value indicating how to process <see cref="InputPath"/>.</summary>
-      /// <value>
-      ///    <para><see langword="true"/> <see cref="InputPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <see cref="InputPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <see cref="InputPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </value>
-      public bool? IsFullPath { get; internal set; }
-
-      #endregion // IsFullPath
 
       #region LargeCache
 

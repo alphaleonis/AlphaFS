@@ -403,9 +403,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       
       [SecurityCritical]
-      internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, bool? isFullPath)
+      internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
-         using (SafeFileHandle handle = File.CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, isFullPath))
+         using (SafeFileHandle handle = File.CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, pathFormat))
          {
             // DeviceIoControlMethod.Buffered = 0,
             // DeviceIoControlFileDevice.FileSystem = 9
