@@ -207,6 +207,7 @@
     <Compile Include="Filesystem\File Class\File.SetAccessControl.cs" />
     <Compile Include="Filesystem\File Class\File.SetAttributes.cs" />
     <Compile Include="Filesystem\File Class\File.SetFileTime.cs" />
+    <Compile Include="Filesystem\File Class\File.WriteAllBytes.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />
