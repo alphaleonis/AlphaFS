@@ -157,6 +157,7 @@
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
+    <Compile Include="Filesystem\File Class\File.Compress.cs" />
     <Compile Include="Filesystem\File Class\File.AddAlternateDataStream.cs" />
     <Compile Include="Filesystem\File Class\File.Delete.cs" />
     <Compile Include="Filesystem\File Class\File.EncryptDescrypt.cs" />

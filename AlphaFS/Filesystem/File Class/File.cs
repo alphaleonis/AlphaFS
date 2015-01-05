@@ -44,57 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
    public static partial class File
    {
-      #region Compress
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="path">A path that describes a file to compress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      [SecurityCritical]
-      public static void Compress(string path, PathFormat pathFormat)
-      {
-         Device.ToggleCompressionInternal(false, null, path, true, pathFormat);
-      }
-
-      #endregion // IsFullPath
-
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="path">A path that describes a file to compress.</param>      
-      [SecurityCritical]
-      public static void Compress(string path)
-      {
-         Device.ToggleCompressionInternal(false, null, path, true, PathFormat.Auto);
-      }
-
-      #region Transacted
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to compress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         Device.ToggleCompressionInternal(false, transaction, path, true, pathFormat);
-      }
-
-      #endregion // IsFullPath
-
-      /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to compress.</param>      
-      [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path)
-      {
-         Device.ToggleCompressionInternal(false, transaction, path, true, PathFormat.Auto);
-      }
-
-      #endregion // Transacted
-
-      #endregion // Compress
+      
 
       #region CreateHardlink
 
