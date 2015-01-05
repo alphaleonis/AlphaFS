@@ -157,6 +157,7 @@
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
+    <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
     <Compile Include="Filesystem\File Class\File.CreateSymbolicLink.cs" />
     <Compile Include="Filesystem\File Class\File.CreateHardlink.cs" />
     <Compile Include="Filesystem\File Class\File.Compress.cs" />

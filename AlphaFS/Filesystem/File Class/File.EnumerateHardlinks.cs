@@ -1,0 +1,148 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
+using System.Text;
+
+namespace Alphaleonis.Win32.Filesystem
+{
+   public static partial class File
+   {
+      #region EnumerateHardlinks
+
+      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <param name="path">The name of the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateHardlinks(string path, PathFormat pathFormat)
+      {
+         return EnumerateHardlinksInternal(null, path, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <param name="path">The name of the file.</param>
+      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateHardlinks(string path)
+      {
+         return EnumerateHardlinksInternal(null, path, PathFormat.Auto);
+      }
+
+      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         return EnumerateHardlinksInternal(transaction, path, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the file.</param>
+      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
+      [SecurityCritical]
+      public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path)
+      {
+         return EnumerateHardlinksInternal(transaction, path, PathFormat.Auto);
+      }
+
+      #endregion // EnumerateHardlinks
+
+      #region Internal Methods
+
+      /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
+      /// <exception cref="PlatformNotSupportedException">Thrown when a Platform Not Supported error condition occurs.</exception>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The name of the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
+      internal static IEnumerable<string> EnumerateHardlinksInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         if (!NativeMethods.IsAtLeastWindowsVista)
+            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+
+         // Default buffer length, will be extended if needed, although this should not happen.
+         uint length = NativeMethods.MaxPathUnicode;
+         StringBuilder builder = new StringBuilder((int)length);
+
+
+      getFindFirstFileName:
+
+         using (SafeFindFileHandle handle = transaction == null
+
+            // FindFirstFileName() / FindFirstFileNameTransacted()
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+
+            ? NativeMethods.FindFirstFileName(pathLp, 0, out length, builder)
+            : NativeMethods.FindFirstFileNameTransacted(pathLp, 0, out length, builder, transaction.SafeHandle))
+         {
+            if (handle.IsInvalid)
+            {
+               int lastError = Marshal.GetLastWin32Error();
+               switch ((uint)lastError)
+               {
+                  case Win32Errors.ERROR_MORE_DATA:
+                     builder = new StringBuilder((int)length);
+                     handle.Close();
+                     goto getFindFirstFileName;
+
+                  default:
+                     // If the function fails, the return value is INVALID_HANDLE_VALUE.
+                     NativeError.ThrowException(lastError, pathLp);
+                     break;
+               }
+            }
+
+            yield return builder.ToString();
+
+
+            //length = NativeMethods.MaxPathUnicode;
+            //builder = new StringBuilder((int)length);
+
+            do
+            {
+               while (!NativeMethods.FindNextFileName(handle, out length, builder))
+               {
+                  int lastError = Marshal.GetLastWin32Error();
+                  switch ((uint)lastError)
+                  {
+                     // We've reached the end of the enumeration.
+                     case Win32Errors.ERROR_HANDLE_EOF:
+                        yield break;
+
+                     case Win32Errors.ERROR_MORE_DATA:
+                        builder = new StringBuilder((int)length);
+                        continue;
+
+                     default:
+                        //If the function fails, the return value is zero (0).
+                        // Throws IOException.
+                        NativeError.ThrowException(lastError, true);
+                        break;
+                  }
+               }
+
+               yield return builder.ToString();
+
+            } while (true);
+         }
+      }
+
+      #endregion // EnumerateHardlinksInternal
+
+   }
+}
