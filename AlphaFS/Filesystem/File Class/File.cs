@@ -50,26 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       
 
-      #region GetFileInfoByHandle
-
-      /// <summary>[AlphaFS] Retrieves file information for the specified <see cref="SafeFileHandle"/>.</summary>
-      /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the open file from which to retrieve the information.</param>
-      /// <returns>A <see cref="ByHandleFileInfo"/> object containing the requested information.</returns>
-      [SecurityCritical]
-      public static ByHandleFileInfo GetFileInfoByHandle(SafeFileHandle handle)
-      {
-         NativeMethods.IsValidHandle(handle);
-
-         NativeMethods.ByHandleFileInfo info;
-
-         if (!NativeMethods.GetFileInformationByHandle(handle, out info))
-            // Throws IOException.
-            NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
-
-         return new ByHandleFileInfo(info);
-      }
-
-      #endregion // GetFileInfoByHandle
+      
 
       #region GetFileSystemEntry
 
