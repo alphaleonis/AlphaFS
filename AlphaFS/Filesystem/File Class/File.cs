@@ -45,57 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class File
    {
 
-      #region Decompress
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
-      /// <param name="path">A path that describes a file to decompress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      [SecurityCritical]
-      public static void Decompress(string path, PathFormat pathFormat)
-      {
-         Device.ToggleCompressionInternal(false, null, path, false, pathFormat);
-      }
-
-      #endregion // IsFullPath
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
-      /// <param name="path">A path that describes a file to decompress.</param>      
-      [SecurityCritical]
-      public static void Decompress(string path)
-      {
-         Device.ToggleCompressionInternal(false, null, path, false, PathFormat.Auto);
-      }
-
-      #region Transacted
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to decompress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
-      [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         Device.ToggleCompressionInternal(false, transaction, path, false, pathFormat);
-      }
-
-      #endregion // IsFullPath
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a file to decompress.</param>      
-      [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path)
-      {
-         Device.ToggleCompressionInternal(false, transaction, path, false, PathFormat.Auto);
-      }
-
-      #endregion // Transacted
-
-      #endregion // Decompress
+      
 
       #region EnumerateHardlinks
 
