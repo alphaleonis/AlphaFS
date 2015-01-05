@@ -157,7 +157,7 @@
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
-    <Compile Include="Filesystem\File Class\EnumStreams.cs" />
+    <Compile Include="Filesystem\File Class\File.EnumerateStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
     <Compile Include="Filesystem\File Class\File.CreateSymbolicLink.cs" />
     <Compile Include="Filesystem\File Class\File.CreateHardlink.cs" />
@@ -214,6 +214,7 @@
     <Compile Include="Filesystem\File Class\File.SetAttributes.cs" />
     <Compile Include="Filesystem\File Class\File.SetFileTime.cs" />
     <Compile Include="Filesystem\File Class\File.WriteAllBytes.cs" />
+    <Compile Include="Filesystem\File Class\File.GetChangeTime.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />
