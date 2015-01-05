@@ -161,7 +161,7 @@
     <Compile Include="Filesystem\File Class\File.EncryptDescrypt.cs" />
     <Compile Include="Filesystem\File Class\File.CreateText.cs" />
     <Compile Include="Filesystem\File Class\File.CopyMove.cs" />
-    <Compile Include="Filesystem\File Class\File.AppendAllText.cs" />
+    <Compile Include="Filesystem\File Class\File.WriteText.cs" />
     <Compile Include="Filesystem\File Class\File.AppendText.cs" />
     <Compile Include="Filesystem\File Class\File.Create.cs" />
     <Compile Include="Filesystem\DeviceInfo.cs" />
