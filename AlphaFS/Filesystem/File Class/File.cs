@@ -365,7 +365,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -416,7 +416,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path, PathFormat pathFormat)
       {
-         return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>
@@ -441,7 +441,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return AppendTextInternal(null, path, encoding, isFullPath);
+         return AppendTextInternal(null, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -460,7 +460,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path, Encoding encoding)
       {
-         return AppendTextInternal(null, path, encoding, false);
+         return AppendTextInternal(null, path, encoding, PathFormat.Auto);
       }
 
       #region Transacted
@@ -480,7 +480,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path)
       {
-         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, false);
+         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -508,7 +508,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>
@@ -534,7 +534,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return AppendTextInternal(transaction, path, encoding, isFullPath);
+         return AppendTextInternal(transaction, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -554,7 +554,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return AppendTextInternal(transaction, path, encoding, false);
+         return AppendTextInternal(transaction, path, encoding, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -594,7 +594,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destFileName)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Auto);
       }
 
       /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.
@@ -618,7 +618,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destFileName, bool overwrite)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -655,7 +655,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destFileName, bool overwrite, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
       #endregion // .NET
@@ -695,7 +695,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
       #endregion // .NET
@@ -725,7 +725,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
@@ -750,7 +750,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -772,7 +772,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter CreateText(string path)
       {
-         return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, false);
+         return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -795,7 +795,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter CreateText(string path, PathFormat pathFormat)
       {
-         return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
@@ -814,7 +814,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter CreateText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return CreateTextInternal(null, path, encoding, isFullPath);
+         return CreateTextInternal(null, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -830,7 +830,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter CreateText(KernelTransaction transaction, string path)
       {
-         return CreateTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, false);
+         return CreateTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -851,11 +851,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter CreateText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return CreateTextInternal(transaction, path, encoding, isFullPath);
+         return CreateTextInternal(transaction, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -868,11 +868,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a file to decrypt.</param>
-      
+
       [SecurityCritical]
       public static void Decrypt(string path)
       {
-         EncryptDecryptFileInternal(false, path, false, false);
+         EncryptDecryptFileInternal(false, path, false, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -888,11 +888,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
       ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      
+
       [SecurityCritical]
       public static void Decrypt(string path, PathFormat pathFormat)
       {
-         EncryptDecryptFileInternal(false, path, false, isFullPath);
+         EncryptDecryptFileInternal(false, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -913,7 +913,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileInternal(null, path, false, false);
+         DeleteFileInternal(null, path, false, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -941,7 +941,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileInternal(null, path, ignoreReadOnly, isFullPath);
+         DeleteFileInternal(null, path, ignoreReadOnly, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -957,7 +957,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly)
       {
-         DeleteFileInternal(null, path, ignoreReadOnly, false);
+         DeleteFileInternal(null, path, ignoreReadOnly, PathFormat.Auto);
       }
 
       #region Transacted
@@ -973,7 +973,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
       {
-         DeleteFileInternal(transaction, path, false, false);
+         DeleteFileInternal(transaction, path, false, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -993,11 +993,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileInternal(transaction, path, ignoreReadOnly, isFullPath);
+         DeleteFileInternal(transaction, path, ignoreReadOnly, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
@@ -1005,8 +1005,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>      
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly)
-      {         
-         DeleteFileInternal(transaction, path, ignoreReadOnly, false);
+      {
+         DeleteFileInternal(transaction, path, ignoreReadOnly, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -1021,11 +1021,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
       /// <param name="path">A path that describes a file to encrypt.</param>
-      
+
       [SecurityCritical]
       public static void Encrypt(string path)
       {
-         EncryptDecryptFileInternal(false, path, true, false);
+         EncryptDecryptFileInternal(false, path, true, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1044,7 +1044,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Encrypt(string path, PathFormat pathFormat)
       {
-         EncryptDecryptFileInternal(false, path, true, isFullPath);
+         EncryptDecryptFileInternal(false, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1082,7 +1082,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path)
       {
-         return ExistsInternal(false, null, path, false);
+         return ExistsInternal(false, null, path, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1125,7 +1125,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path, PathFormat pathFormat)
       {
-         return ExistsInternal(false, null, path, isFullPath);
+         return ExistsInternal(false, null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1164,7 +1164,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
       {
-         return ExistsInternal(false, transaction, path, false);
+         return ExistsInternal(false, transaction, path, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1209,11 +1209,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ExistsInternal(false, transaction, path, isFullPath);
+         return ExistsInternal(false, transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1239,7 +1239,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, false);
+         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.Auto);
       }
 
       /// <summary>
@@ -1261,7 +1261,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, false);
+         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1293,7 +1293,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, PathFormat pathFormat)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, isFullPath);
+         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, pathFormat);
       }
 
       /// <summary>
@@ -1320,7 +1320,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, isFullPath);
+         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1339,7 +1339,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, false);
+         return GetAttributesExInternal<FileAttributes>(null, path, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1360,7 +1360,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path, PathFormat pathFormat)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, isFullPath);
+         return GetAttributesExInternal<FileAttributes>(null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1376,7 +1376,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(KernelTransaction transaction, string path)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, false);
+         return GetAttributesExInternal<FileAttributes>(transaction, path, PathFormat.Auto);
       }
 
       #endregion //.NET
@@ -1396,7 +1396,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, isFullPath);
+         return GetAttributesExInternal<FileAttributes>(transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1420,7 +1420,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(string path)
       {
-         return GetCreationTimeInternal(null, path, false, false).ToLocalTime();
+         return GetCreationTimeInternal(null, path, false, PathFormat.Auto).ToLocalTime();
       }
 
       #endregion // .NET
@@ -1444,7 +1444,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(null, path, false, isFullPath).ToLocalTime();
+         return GetCreationTimeInternal(null, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -1463,7 +1463,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(KernelTransaction transaction, string path)
       {
-         return GetCreationTimeInternal(transaction, path, false, false).ToLocalTime();
+         return GetCreationTimeInternal(transaction, path, false, PathFormat.Auto).ToLocalTime();
       }
 
       #endregion // .NET
@@ -1486,11 +1486,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(transaction, path, false, isFullPath).ToLocalTime();
+         return GetCreationTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1512,7 +1512,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(string path)
       {
-         return GetCreationTimeInternal(null, path, true, false);
+         return GetCreationTimeInternal(null, path, true, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1538,7 +1538,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(null, path, true, isFullPath);
+         return GetCreationTimeInternal(null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1559,7 +1559,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path)
       {
-         return GetCreationTimeInternal(transaction, path, true, false);
+         return GetCreationTimeInternal(transaction, path, true, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1584,11 +1584,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(transaction, path, true, isFullPath);
+         return GetCreationTimeInternal(transaction, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1608,7 +1608,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(string path)
       {
-         return GetLastAccessTimeInternal(null, path, false, false).ToLocalTime();
+         return GetLastAccessTimeInternal(null, path, false, PathFormat.Auto).ToLocalTime();
       }
 
       #endregion // .NET
@@ -1632,7 +1632,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(string path, PathFormat pathFormat)
       {
-         return GetLastAccessTimeInternal(null, path, false, isFullPath).ToLocalTime();
+         return GetLastAccessTimeInternal(null, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -1651,7 +1651,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(KernelTransaction transaction, string path)
       {
-         return GetLastAccessTimeInternal(transaction, path, false, false).ToLocalTime();
+         return GetLastAccessTimeInternal(transaction, path, false, PathFormat.Auto).ToLocalTime();
       }
 
       #endregion // .NET
@@ -1674,11 +1674,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLastAccessTimeInternal(transaction, path, false, isFullPath).ToLocalTime();
+         return GetLastAccessTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1698,7 +1698,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(string path)
       {
-         return GetLastAccessTimeInternal(null, path, true, false);
+         return GetLastAccessTimeInternal(null, path, true, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1722,7 +1722,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetLastAccessTimeInternal(null, path, true, isFullPath);
+         return GetLastAccessTimeInternal(null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1741,7 +1741,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path)
       {
-         return GetLastAccessTimeInternal(transaction, path, true, false);
+         return GetLastAccessTimeInternal(transaction, path, true, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1764,7 +1764,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLastAccessTimeInternal(transaction, path, true, isFullPath);
+         return GetLastAccessTimeInternal(transaction, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1788,7 +1788,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path)
       {
-         return GetLastWriteTimeInternal(null, path, false, false).ToLocalTime();
+         return GetLastWriteTimeInternal(null, path, false, PathFormat.Auto).ToLocalTime();
       }
 
       #endregion //.NET
@@ -1812,7 +1812,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(null, path, false, isFullPath).ToLocalTime();
+         return GetLastWriteTimeInternal(null, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -1831,7 +1831,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(KernelTransaction transaction, string path)
       {
-         return GetLastWriteTimeInternal(transaction, path, false, false).ToLocalTime();
+         return GetLastWriteTimeInternal(transaction, path, false, PathFormat.Auto).ToLocalTime();
       }
 
       #endregion // .NET
@@ -1854,7 +1854,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(transaction, path, false, isFullPath).ToLocalTime();
+         return GetLastWriteTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -1878,7 +1878,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path)
       {
-         return GetLastWriteTimeInternal(null, path, true, false);
+         return GetLastWriteTimeInternal(null, path, true, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1904,7 +1904,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(null, path, true, isFullPath);
+         return GetLastWriteTimeInternal(null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1925,7 +1925,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path)
       {
-         return GetLastWriteTimeInternal(transaction, path, true, false);
+         return GetLastWriteTimeInternal(transaction, path, true, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -1950,11 +1950,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(transaction, path, true, isFullPath);
+         return GetLastWriteTimeInternal(transaction, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1991,7 +1991,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destFileName)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2029,7 +2029,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destFileName, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, pathFormat);
       }
 
       #endregion // .NET
@@ -2070,7 +2070,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, pathFormat);
       }
 
       #endregion // .NET
@@ -2102,7 +2102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2124,7 +2124,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode)
       {
-         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Auto);
       }
 
       /// <summary>Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2135,7 +2135,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access)
       {
-         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Auto);
       }
 
       /// <summary>Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -2147,7 +2147,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share)
       {
-         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2172,7 +2172,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2194,7 +2194,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       /// <summary>
@@ -2221,7 +2221,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2241,7 +2241,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode)
       {
-         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2258,7 +2258,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access)
       {
-         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Auto);
       }
 
       /// <summary>
@@ -2280,7 +2280,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share)
       {
-         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2304,7 +2304,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2327,7 +2327,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -2345,11 +2345,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2370,7 +2370,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(string path)
       {
-         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2395,7 +2395,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(string path, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2415,7 +2415,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Auto);
       }
 
       #endregion //.NET
@@ -2439,11 +2439,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2461,7 +2461,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Auto), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -2483,7 +2483,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
@@ -2500,7 +2500,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), encoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), encoding);
       }
 
       #endregion // IsFullPath
@@ -2513,7 +2513,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path, Encoding encoding)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), encoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Auto), encoding);
       }
 
       #region Transacted
@@ -2527,7 +2527,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Auto), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -2547,7 +2547,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
@@ -2564,7 +2564,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), encoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), encoding);
       }
 
       #endregion // IsFullPath
@@ -2577,7 +2577,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), encoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Auto), encoding);
       }
 
       #endregion // Transacted
@@ -2596,7 +2596,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(string path)
       {
-         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2617,7 +2617,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(string path, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2633,7 +2633,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2653,7 +2653,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2674,7 +2674,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path)
       {
-         return ReadAllBytesInternal(null, path, false);
+         return ReadAllBytesInternal(null, path, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2695,7 +2695,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path, PathFormat pathFormat)
       {
-         return ReadAllBytesInternal(null, path, isFullPath);
+         return ReadAllBytesInternal(null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2711,7 +2711,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static byte[] ReadAllBytes(KernelTransaction transaction, string path)
       {
-         return ReadAllBytesInternal(transaction, path, false);
+         return ReadAllBytesInternal(transaction, path, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2731,11 +2731,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static byte[] ReadAllBytes(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadAllBytesInternal(transaction, path, isFullPath);
+         return ReadAllBytesInternal(transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2752,7 +2752,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(string path)
       {
-         return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, false).ToArray();
+         return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto).ToArray();
       }
 
       /// <summary>Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -2762,7 +2762,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(string path, Encoding encoding)
       {
-         return ReadAllLinesInternal(null, path, encoding, false).ToArray();
+         return ReadAllLinesInternal(null, path, encoding, PathFormat.Auto).ToArray();
       }
 
       #endregion // .NET
@@ -2783,7 +2783,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(string path, PathFormat pathFormat)
       {
-         return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath).ToArray();
+         return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat).ToArray();
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -2799,7 +2799,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadAllLinesInternal(null, path, encoding, isFullPath).ToArray();
+         return ReadAllLinesInternal(null, path, encoding, pathFormat).ToArray();
       }
 
       #endregion // IsFullPath
@@ -2815,7 +2815,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(KernelTransaction transaction, string path)
       {
-         return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, false).ToArray();
+         return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto).ToArray();
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -2826,7 +2826,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return ReadAllLinesInternal(transaction, path, encoding, false).ToArray();
+         return ReadAllLinesInternal(transaction, path, encoding, PathFormat.Auto).ToArray();
       }
 
       #endregion // .NET
@@ -2846,7 +2846,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath).ToArray();
+         return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat).ToArray();
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -2863,7 +2863,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadAllLinesInternal(transaction, path, encoding, isFullPath).ToArray();
+         return ReadAllLinesInternal(transaction, path, encoding, pathFormat).ToArray();
       }
 
       #endregion // IsFullPath
@@ -2884,7 +2884,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(string path)
       {
-         return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, false);
+         return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto);
       }
 
       /// <summary>Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -2894,7 +2894,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(string path, Encoding encoding)
       {
-         return ReadAllTextInternal(null, path, encoding, false);
+         return ReadAllTextInternal(null, path, encoding, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2915,7 +2915,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(string path, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -2931,7 +2931,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(null, path, encoding, isFullPath);
+         return ReadAllTextInternal(null, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2947,7 +2947,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(KernelTransaction transaction, string path)
       {
-         return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, false);
+         return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -2958,7 +2958,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return ReadAllTextInternal(transaction, path, encoding, false);
+         return ReadAllTextInternal(transaction, path, encoding, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -2978,7 +2978,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -2995,11 +2995,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(transaction, path, encoding, isFullPath);
+         return ReadAllTextInternal(transaction, path, encoding, pathFormat);
       }
-      
+
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3016,7 +3016,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path)
       {
-         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, false);
+         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto);
       }
 
       /// <summary>Read the lines of a file that has a specified encoding.</summary>
@@ -3026,7 +3026,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path, Encoding encoding)
       {
-         return ReadLinesInternal(null, path, encoding, false);
+         return ReadLinesInternal(null, path, encoding, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3047,7 +3047,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path, PathFormat pathFormat)
       {
-         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
@@ -3063,7 +3063,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadLinesInternal(null, path, encoding, isFullPath);
+         return ReadLinesInternal(null, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3079,7 +3079,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path)
       {
-         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, false);
+         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
@@ -3090,7 +3090,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return ReadLinesInternal(transaction, path, encoding, false);
+         return ReadLinesInternal(transaction, path, encoding, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3110,7 +3110,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
@@ -3127,7 +3127,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadLinesInternal(transaction, path, encoding, isFullPath);
+         return ReadLinesInternal(transaction, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3165,7 +3165,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, false, false);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, false, PathFormat.Auto);
       }
 
       /// <summary>
@@ -3196,7 +3196,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, false);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3241,7 +3241,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, isFullPath);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3266,7 +3266,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity)
       {
-         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, false);
+         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, PathFormat.Auto);
       }
 
       /// <summary>
@@ -3284,7 +3284,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         SetAccessControlInternal(path, null, fileSecurity, includeSections, false);
+         SetAccessControlInternal(path, null, fileSecurity, includeSections, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3312,7 +3312,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, PathFormat pathFormat)
       {
-         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, isFullPath);
+         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, pathFormat);
       }
 
       /// <summary>
@@ -3337,7 +3337,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         SetAccessControlInternal(path, null, fileSecurity, includeSections, isFullPath);
+         SetAccessControlInternal(path, null, fileSecurity, includeSections, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3364,7 +3364,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes)
       {
-         SetAttributesInternal(false, null, path, fileAttributes, false, false);
+         SetAttributesInternal(false, null, path, fileAttributes, false, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3392,7 +3392,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         SetAttributesInternal(false, null, path, fileAttributes, false, isFullPath);
+         SetAttributesInternal(false, null, path, fileAttributes, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3415,7 +3415,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes)
       {
-         SetAttributesInternal(false, transaction, path, fileAttributes, false, false);
+         SetAttributesInternal(false, transaction, path, fileAttributes, false, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3442,7 +3442,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         SetAttributesInternal(false, transaction, path, fileAttributes, false, isFullPath);
+         SetAttributesInternal(false, transaction, path, fileAttributes, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3466,7 +3466,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), null, null, false);
+         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), null, null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3490,7 +3490,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), null, null, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), null, null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3509,7 +3509,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), null, null, false);
+         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), null, null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3532,7 +3532,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), null, null, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), null, null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3556,7 +3556,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, null, null, false);
+         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, null, null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3580,7 +3580,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, null, null, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, null, null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3599,7 +3599,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, null, null, false);
+         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, null, null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3622,11 +3622,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, null, null, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, null, null, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3646,7 +3646,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime)
       {
-         SetFsoDateTimeInternal(false, null, path, null, lastAccessTime.ToUniversalTime(), null, false);
+         SetFsoDateTimeInternal(false, null, path, null, lastAccessTime.ToUniversalTime(), null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3670,7 +3670,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, null, lastAccessTime.ToUniversalTime(), null, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, null, lastAccessTime.ToUniversalTime(), null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3689,7 +3689,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTime.ToUniversalTime(), null, false);
+         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTime.ToUniversalTime(), null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3712,7 +3712,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTime.ToUniversalTime(), null, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTime.ToUniversalTime(), null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3736,7 +3736,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc)
       {
-         SetFsoDateTimeInternal(false, null, path, null, lastAccessTimeUtc, null, false);
+         SetFsoDateTimeInternal(false, null, path, null, lastAccessTimeUtc, null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3760,7 +3760,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, null, lastAccessTimeUtc, null, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, null, lastAccessTimeUtc, null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3779,7 +3779,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTimeUtc, null, false);
+         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTimeUtc, null, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3802,11 +3802,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTimeUtc, null, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTimeUtc, null, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3826,7 +3826,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTime(string path, DateTime lastWriteTime)
       {
-         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTime.ToUniversalTime(), false);
+         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTime.ToUniversalTime(), PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3850,7 +3850,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTime(string path, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTime.ToUniversalTime(), isFullPath);
+         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3869,7 +3869,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTime.ToUniversalTime(), false);
+         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTime.ToUniversalTime(), PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3892,7 +3892,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTime.ToUniversalTime(), isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3916,7 +3916,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc)
       {
-         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTimeUtc, false);
+         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTimeUtc, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3942,7 +3942,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTimeUtc, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTimeUtc, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3963,7 +3963,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTimeUtc, false);
+         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTimeUtc, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -3988,7 +3988,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTimeUtc, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTimeUtc, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4013,7 +4013,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytes(string path, byte[] bytes)
       {
-         WriteAllBytesInternal(null, path, bytes, false);
+         WriteAllBytesInternal(null, path, bytes, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -4038,7 +4038,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytes(string path, byte[] bytes, PathFormat pathFormat)
       {
-         WriteAllBytesInternal(null, path, bytes, isFullPath);
+         WriteAllBytesInternal(null, path, bytes, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4058,7 +4058,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytes(KernelTransaction transaction, string path, byte[] bytes)
       {
-         WriteAllBytesInternal(transaction, path, bytes, false);
+         WriteAllBytesInternal(transaction, path, bytes, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -4082,7 +4082,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytes(KernelTransaction transaction, string path, byte[] bytes, PathFormat pathFormat)
       {
-         WriteAllBytesInternal(transaction, path, bytes, isFullPath);
+         WriteAllBytesInternal(transaction, path, bytes, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4104,7 +4104,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, IEnumerable<string> contents)
       {
-         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, false);
+         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.Auto);
       }
 
       /// <summary>Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
@@ -4113,7 +4113,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, string[] contents)
       {
-         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, false);
+         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.Auto);
       }
 
       /// <summary>
@@ -4125,7 +4125,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, IEnumerable<string> contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, false);
+         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, PathFormat.Auto);
       }
 
       /// <summary>Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
@@ -4135,7 +4135,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, string[] contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, false);
+         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -4157,7 +4157,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, IEnumerable<string> contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
+         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
       /// <summary>
@@ -4174,7 +4174,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, string[] contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
+         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
       /// <summary>
@@ -4192,7 +4192,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, IEnumerable<string> contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, isFullPath);
+         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, pathFormat);
       }
 
       /// <summary>
@@ -4210,7 +4210,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, string[] contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, isFullPath);
+         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4227,7 +4227,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, false);
+         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
@@ -4238,7 +4238,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, false);
+         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.Auto);
       }
 
       /// <summary>
@@ -4251,7 +4251,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, false);
+         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, PathFormat.Auto);
       }
 
       /// <summary>
@@ -4264,7 +4264,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, false);
+         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -4285,7 +4285,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
@@ -4302,7 +4302,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
       /// <summary>
@@ -4321,7 +4321,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, pathFormat);
       }
 
       /// <summary>
@@ -4340,11 +4340,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -4365,7 +4365,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(string path, string contents)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, false);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, PathFormat.Auto);
       }
 
       /// <summary>
@@ -4378,7 +4378,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(string path, string contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, false, false, false);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, false, false, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -4403,7 +4403,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(string path, string contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, isFullPath);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, pathFormat);
       }
 
       /// <summary>
@@ -4422,9 +4422,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, false, false, isFullPath);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, false, false, pathFormat);
       }
-      
+
       #endregion // IsFullPath
 
       #region Transacted
@@ -4442,7 +4442,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(KernelTransaction transaction, string path, string contents)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, false);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Creates a new file as part of a transaction, writes the specified string to the file using the specified encoding, and then closes the file. If the target file already exists, it is overwritten.</summary>
@@ -4453,7 +4453,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(KernelTransaction transaction, string path, string contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, false);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -4477,7 +4477,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(KernelTransaction transaction, string path, string contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, pathFormat);
       }
 
       /// <summary>
@@ -4497,7 +4497,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4637,7 +4637,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Compress(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionInternal(false, transaction, path, true, false);
+         Device.ToggleCompressionInternal(false, transaction, path, true, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -4689,7 +4689,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, pathFormat);
       }
 
       /// <summary>
@@ -4741,7 +4741,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, isFullPath);
+         return CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4776,7 +4776,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, copyOptions, null, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, copyOptions, null, null, null, PathFormat.Auto);
       }
 
       /// <summary>
@@ -4813,7 +4813,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, PathFormat.Auto);
       }
 
       /// <summary>
@@ -4857,7 +4857,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, false);
+         return CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Auto);
       }
 
       #region Transacted
@@ -4907,7 +4907,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, pathFormat);
       }
 
       /// <summary>
@@ -4960,7 +4960,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, isFullPath);
+         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4996,7 +4996,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, copyOptions, null, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, copyOptions, null, null, null, PathFormat.Auto);
       }
 
       /// <summary>
@@ -5033,7 +5033,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, PathFormat.Auto);
       }
 
       /// <summary>
@@ -5078,7 +5078,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, false);
+         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -5107,7 +5107,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(string fileName, string existingFileName, PathFormat pathFormat)
       {
-         CreateHardlinkInternal(null, fileName, existingFileName, isFullPath);
+         CreateHardlinkInternal(null, fileName, existingFileName, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5122,7 +5122,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(string fileName, string existingFileName)
       {
-         CreateHardlinkInternal(null, fileName, existingFileName, false);
+         CreateHardlinkInternal(null, fileName, existingFileName, PathFormat.Auto);
       }
 
       #region Transacted
@@ -5148,7 +5148,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
       {
-         CreateHardlinkInternal(transaction, fileName, existingFileName, isFullPath);
+         CreateHardlinkInternal(transaction, fileName, existingFileName, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5164,7 +5164,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName)
       {
-         CreateHardlinkInternal(transaction, fileName, existingFileName, false);
+         CreateHardlinkInternal(transaction, fileName, existingFileName, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -5191,7 +5191,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
-         CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, isFullPath);
+         CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5204,7 +5204,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
       {
-         CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, false);
+         CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, PathFormat.Auto);
       }
 
       #region Transacted
@@ -5228,7 +5228,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLink(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
-         CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, isFullPath);
+         CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5242,7 +5242,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLink(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
       {
-         CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, false);
+         CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -5264,7 +5264,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decompress(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(false, null, path, false, isFullPath);
+         Device.ToggleCompressionInternal(false, null, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5274,7 +5274,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decompress(string path)
       {
-         Device.ToggleCompressionInternal(false, null, path, false, false);
+         Device.ToggleCompressionInternal(false, null, path, false, PathFormat.Auto);
       }
 
       #region Transacted
@@ -5293,7 +5293,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(false, transaction, path, false, isFullPath);
+         Device.ToggleCompressionInternal(false, transaction, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5304,7 +5304,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionInternal(false, transaction, path, false, false);
+         Device.ToggleCompressionInternal(false, transaction, path, false, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -5328,7 +5328,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(string path, PathFormat pathFormat)
       {
-         return EnumerateHardlinksInternal(null, path, isFullPath);
+         return EnumerateHardlinksInternal(null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5340,7 +5340,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(string path)
       {
-         return EnumerateHardlinksInternal(null, path, false);
+         return EnumerateHardlinksInternal(null, path, PathFormat.Auto);
       }
 
       #region Transacted
@@ -5361,7 +5361,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return EnumerateHardlinksInternal(transaction, path, isFullPath);
+         return EnumerateHardlinksInternal(transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5374,7 +5374,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path)
       {
-         return EnumerateHardlinksInternal(transaction, path, false);
+         return EnumerateHardlinksInternal(transaction, path, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -5402,7 +5402,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, isFullPath);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, pathFormat);
       }
 
       /// <summary>
@@ -5424,7 +5424,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, isFullPath);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5440,7 +5440,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, false);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, PathFormat.Auto);
       }
 
       /// <summary>
@@ -5456,7 +5456,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, false);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, PathFormat.Auto);
       }
 
       /// <summary>
@@ -5470,7 +5470,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(SafeFileHandle handle)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, handle, null, null, null, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, handle, null, null, null, PathFormat.ExtendedLength);
       }
 
       #region Transacted
@@ -5495,7 +5495,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, isFullPath);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, pathFormat);
       }
 
       /// <summary>
@@ -5518,7 +5518,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, isFullPath);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5535,7 +5535,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, false);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, PathFormat.Auto);
       }
 
       /// <summary>
@@ -5552,7 +5552,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, false);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -5578,7 +5578,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, null, null, path, false, isFullPath);
+         return GetChangeTimeInternal(false, null, null, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5592,7 +5592,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(string path)
       {
-         return GetChangeTimeInternal(false, null, null, path, false, false);
+         return GetChangeTimeInternal(false, null, null, path, false, PathFormat.Auto);
       }
 
       /// <summary>Gets the change date and time of the specified file.</summary>
@@ -5604,7 +5604,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(SafeFileHandle safeHandle)
       {
-         return GetChangeTimeInternal(false, null, safeHandle, null, false, null);
+         return GetChangeTimeInternal(false, null, safeHandle, null, false, PathFormat.ExtendedLength);
       }
 
       #region Transacted
@@ -5627,9 +5627,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, false, isFullPath);
+         return GetChangeTimeInternal(false, transaction, null, path, false, pathFormat);
       }
-      
+
       #endregion // IsFullPath
 
       /// <summary>Gets the change date and time of the specified file.</summary>
@@ -5642,7 +5642,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(KernelTransaction transaction, string path)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, false, false);
+         return GetChangeTimeInternal(false, transaction, null, path, false, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -5668,7 +5668,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, null, null, path, true, isFullPath);
+         return GetChangeTimeInternal(false, null, null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5682,7 +5682,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path)
       {
-         return GetChangeTimeInternal(false, null, null, path, true, false);
+         return GetChangeTimeInternal(false, null, null, path, true, PathFormat.Auto);
       }
 
       /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
@@ -5694,7 +5694,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
       {
-         return GetChangeTimeInternal(false, null, safeHandle, null, true, null);
+         return GetChangeTimeInternal(false, null, safeHandle, null, true, PathFormat.ExtendedLength);
       }
 
       #region Transacted
@@ -5717,7 +5717,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, true, isFullPath);
+         return GetChangeTimeInternal(false, transaction, null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5732,7 +5732,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, true, false);
+         return GetChangeTimeInternal(false, transaction, null, path, true, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -5760,7 +5760,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(string path, PathFormat pathFormat)
       {
-         return GetCompressedSizeInternal(null, path, isFullPath);
+         return GetCompressedSizeInternal(null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5776,7 +5776,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(string path)
       {
-         return GetCompressedSizeInternal(null, path, false);
+         return GetCompressedSizeInternal(null, path, PathFormat.Auto);
       }
 
       #region Transacted
@@ -5801,7 +5801,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetCompressedSizeInternal(transaction, path, isFullPath);
+         return GetCompressedSizeInternal(transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5818,7 +5818,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(KernelTransaction transaction, string path)
       {
-         return GetCompressedSizeInternal(transaction, path, false);
+         return GetCompressedSizeInternal(transaction, path, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -5841,7 +5841,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path, PathFormat pathFormat)
       {
-         return GetEncryptionStatusInternal(path, isFullPath);
+         return GetEncryptionStatusInternal(path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5852,7 +5852,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path)
       {
-         return GetEncryptionStatusInternal(path, false);
+         return GetEncryptionStatusInternal(path, PathFormat.Auto);
       }
 
       #endregion // GetEncryptionStatus
@@ -5894,7 +5894,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, PathFormat pathFormat)
       {
-         return GetFileSystemEntryInfoInternal(null, path, false, isFullPath);
+         return GetFileSystemEntryInfoInternal(null, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5905,7 +5905,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
       {
-         return GetFileSystemEntryInfoInternal(null, path, false, false);
+         return GetFileSystemEntryInfoInternal(null, path, false, PathFormat.Auto);
       }
 
       #region Transacted
@@ -5925,7 +5925,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetFileSystemEntryInfoInternal(transaction, path, false, isFullPath);
+         return GetFileSystemEntryInfoInternal(transaction, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5937,7 +5937,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path)
       {
-         return GetFileSystemEntryInfoInternal(transaction, path, false, false);
+         return GetFileSystemEntryInfoInternal(transaction, path, false, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -5963,7 +5963,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoInternal(null, path, isFullPath);
+         return GetLinkTargetInfoInternal(null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5977,9 +5977,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path)
       {
-         return GetLinkTargetInfoInternal(null, path, false);
+         return GetLinkTargetInfoInternal(null, path, PathFormat.Auto);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -6000,7 +6000,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoInternal(transaction, path, isFullPath);
+         return GetLinkTargetInfoInternal(transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6015,7 +6015,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(KernelTransaction transaction, string path)
       {
-         return GetLinkTargetInfoInternal(transaction, path, false);
+         return GetLinkTargetInfoInternal(transaction, path, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -6038,7 +6038,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path, PathFormat pathFormat)
       {
-         return GetSizeInternal(null, null, path, isFullPath);
+         return GetSizeInternal(null, null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6049,7 +6049,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path)
       {
-         return GetSizeInternal(null, null, path, false);
+         return GetSizeInternal(null, null, path, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
@@ -6058,7 +6058,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(SafeFileHandle handle)
       {
-         return GetSizeInternal(null, handle, null, null);
+         return GetSizeInternal(null, handle, null, PathFormat.ExtendedLength);
       }
 
       #region Transacted
@@ -6078,7 +6078,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetSizeInternal(transaction, null, path, isFullPath);
+         return GetSizeInternal(transaction, null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6090,7 +6090,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(KernelTransaction transaction, string path)
       {
-         return GetSizeInternal(transaction, null, path, false);
+         return GetSizeInternal(transaction, null, path, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -6113,7 +6113,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -6129,7 +6129,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path, string name, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, pathFormat);
       }
 
       /// <summary>
@@ -6147,7 +6147,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path, StreamType type, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6158,7 +6158,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -6168,7 +6168,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, PathFormat.Auto);
       }
 
       /// <summary>
@@ -6180,7 +6180,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
@@ -6190,7 +6190,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(SafeFileHandle handle, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, name, StreamType.Data, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, name, StreamType.Data, PathFormat.ExtendedLength);
       }
 
       /// <summary>
@@ -6202,7 +6202,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(SafeFileHandle handle, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, null, type, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, null, type, PathFormat.ExtendedLength);
       }
 
       #region Transacted
@@ -6222,7 +6222,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -6239,7 +6239,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, string name, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, StreamType.Data, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, StreamType.Data, pathFormat);
       }
 
       /// <summary>
@@ -6258,7 +6258,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6270,7 +6270,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -6281,7 +6281,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, null, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, null, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
@@ -6292,7 +6292,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -6344,7 +6344,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move1(string sourceFileName, string destFileName, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, null, null, pathFormat);
       }
 
       /// <summary>
@@ -6396,7 +6396,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move1(string sourceFileName, string destFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, isFullPath);
+         return CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6434,7 +6434,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move1(string sourceFileName, string destFileName, MoveOptions moveOptions)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, null, null, PathFormat.Auto);
       }
 
       /// <summary>
@@ -6478,7 +6478,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move1(string sourceFileName, string destFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, false);
+         return CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.Auto);
       }
 
       #region Transacted
@@ -6527,7 +6527,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, null, null, pathFormat);
       }
 
       /// <summary>
@@ -6580,7 +6580,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, isFullPath);
+         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6619,7 +6619,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, null, null, PathFormat.Auto);
       }
 
       /// <summary>
@@ -6664,7 +6664,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, false);
+         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -6687,7 +6687,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(string path, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, isFullPath);
+         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6701,7 +6701,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(string path)
       {
-         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null);
+         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, PathFormat.ExtendedLength);
       }
 
       #region Transacted
@@ -6721,7 +6721,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, isFullPath);
+         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6733,13 +6733,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null);
+         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, PathFormat.ExtendedLength);
       }
 
       #endregion // Transacted
 
       #endregion // OpenBackupRead
-      
+
       #region RemoveStream
 
       #region IsFullPath
@@ -6757,7 +6757,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(string path, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, isFullPath);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -6774,9 +6774,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(string path, string name, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, isFullPath);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, pathFormat);
       }
-      
+
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file.</summary>
@@ -6786,7 +6786,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(string path)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, false);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -6797,7 +6797,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(string path, string name)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, false);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, PathFormat.Auto);
       }
 
       #region Transacted
@@ -6818,7 +6818,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, isFullPath);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -6836,7 +6836,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, string name, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, isFullPath);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6849,7 +6849,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, false);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, PathFormat.Auto);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -6861,9 +6861,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, string name)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, false);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, PathFormat.Auto);
       }
-      
+
       #endregion Transacted
 
       #endregion // RemoveStream
@@ -6895,7 +6895,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), isFullPath);
+         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6917,7 +6917,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false);
+         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), PathFormat.Auto);
       }
 
       #region Transacted
@@ -6948,7 +6948,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6971,7 +6971,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false);
+         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -7005,7 +7005,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7027,7 +7027,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false);
+         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, PathFormat.Auto);
       }
 
       #region Transacted
@@ -7058,7 +7058,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7081,7 +7081,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false);
+         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, PathFormat.Auto);
       }
 
       #endregion // Transacted
@@ -7107,7 +7107,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         TransferTimestampsInternal(false, null, sourcePath, destinationPath, isFullPath);
+         TransferTimestampsInternal(false, null, sourcePath, destinationPath, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7119,7 +7119,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(string sourcePath, string destinationPath)
       {
-         TransferTimestampsInternal(false, null, sourcePath, destinationPath, false);
+         TransferTimestampsInternal(false, null, sourcePath, destinationPath, PathFormat.Auto);
       }
 
       #region Transacted
@@ -7142,7 +7142,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, isFullPath);
+         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7155,9 +7155,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, false);
+         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, PathFormat.Auto);
       }
-      
+
       #endregion // Transacted
 
       #endregion // TransferTimestamps
@@ -7188,7 +7188,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static StreamWriter AppendTextInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         FileStream fs = OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         FileStream fs = OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
 
          try
          {
@@ -7270,7 +7270,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (isFullPath != null && (bool) !isFullPath)
+         if (pathFormat == PathFormat.Auto)
          {
             Path.CheckValidPath(sourceFileName, true, true);
             Path.CheckValidPath(destFileName, true, true);
@@ -7282,17 +7282,8 @@ namespace Alphaleonis.Win32.Filesystem
             Path.CheckValidPath(destFileName, false, false);
          }
 
-         string sourceFileNameLp = isFullPath == null
-            ? sourceFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(sourceFileName, new GetFullPathInternalArgs(false, false, false, false))
-               : Path.GetFullPathInternal(transaction, sourceFileName, true, new GetFullPathInternalArgs(false, false, true, false, false, false));
-
-         string destFileNameLp = isFullPath == null
-            ? destFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destFileName, new GetFullPathInternalArgs(false, false, false, false))
-               : Path.GetFullPathInternal(transaction, destFileName, true, new GetFullPathInternalArgs(false, false, true, false, false, false));
+         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(transaction, sourceFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, false, false, false));
+         string destFileNameLp = Path.GetExtendedLengthPathInternal(transaction, destFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, false, false, false));
 
 
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
@@ -7307,8 +7298,8 @@ namespace Alphaleonis.Win32.Filesystem
             throw new NotSupportedException(Resources.UndeterminedCopyMoveAction);
 
          bool overwrite = doCopy
-            ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
-            : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
+            ? (((CopyOptions)copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
+            : (((MoveOptions)moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
 
          bool raiseException = progressHandler == null;
 
@@ -7317,11 +7308,11 @@ namespace Alphaleonis.Win32.Filesystem
             ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, hSourceFile, hDestinationFile, lpData)
                =>
                progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, userProgressData)
-            : (NativeMethods.NativeCopyMoveProgressRoutine) null;
+            : (NativeMethods.NativeCopyMoveProgressRoutine)null;
 
          #endregion //Setup
 
-         startCopyMove:
+      startCopyMove:
 
          uint lastError = Win32Errors.ERROR_SUCCESS;
 
@@ -7329,24 +7320,24 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
             ? doMove
-               // MoveFileWithProgress() / MoveFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-04-15: MSDN confirms LongPath usage.
+            // MoveFileWithProgress() / MoveFileTransacted()
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // 2013-04-15: MSDN confirms LongPath usage.
 
                // CopyFileEx() / CopyFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-04-15: MSDN confirms LongPath usage.
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // 2013-04-15: MSDN confirms LongPath usage.
 
-               ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
-               : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
+               ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions)moveOptions)
+               : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions)copyOptions)
 
             : doMove
-               ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
-               : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle)))
+               ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions)moveOptions, transaction.SafeHandle)
+               : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions)copyOptions, transaction.SafeHandle)))
          {
-            lastError = (uint) Marshal.GetLastWin32Error();
+            lastError = (uint)Marshal.GetLastWin32Error();
 
             if (lastError == Win32Errors.ERROR_REQUEST_ABORTED)
             {
@@ -7395,7 +7386,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // Check if destination directory already exists.
                      // Directory.Move()
                      // MSDN: .NET 3.5+: IOException: destDirName already exists. 
-                     if (ExistsInternal(true, transaction, destFileNameLp, null))
+                     if (ExistsInternal(true, transaction, destFileNameLp, PathFormat.ExtendedLength))
                         NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destFileNameLp, true);
 
                      if (doMove)
@@ -7403,7 +7394,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // Ensure that the source file or directory exists.
                         // Directory.Move()
                         // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
-                        if (!ExistsInternal(isFolder, transaction, sourceFileNameLp, null))
+                        if (!ExistsInternal(isFolder, transaction, sourceFileNameLp, PathFormat.ExtendedLength))
                            NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourceFileNameLp);
                      }
 
@@ -7412,7 +7403,7 @@ namespace Alphaleonis.Win32.Filesystem
                      string fileNameLp = destFileNameLp;
 
                      if (!isFolder)
-                        using (SafeFileHandle safeHandle = CreateFileInternal(transaction, sourceFileNameLp, ExtendedFileAttributes.None, null, FileMode.Open, 0, FileShare.Read, false, null))
+                        using (SafeFileHandle safeHandle = CreateFileInternal(transaction, sourceFileNameLp, ExtendedFileAttributes.None, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.ExtendedLength))
                            if (safeHandle.IsInvalid)
                               fileNameLp = sourceFileNameLp;
 
@@ -7423,7 +7414,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // File.Move()
                         // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
                         //   Directory exists with the same name as the file.
-                        if (!isFolder && ExistsInternal(true, transaction, destFileNameLp, null))
+                        if (!isFolder && ExistsInternal(true, transaction, destFileNameLp, PathFormat.ExtendedLength))
                            NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, destFileNameLp), true);
 
                         else
@@ -7431,7 +7422,7 @@ namespace Alphaleonis.Win32.Filesystem
                            var data = new NativeMethods.Win32FileAttributeData();
                            FillAttributeInfoInternal(transaction, destFileNameLp, ref data, false, true);
 
-                           if (data.FileAttributes != (FileAttributes) (-1))
+                           if (data.FileAttributes != (FileAttributes)(-1))
                            {
                               if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                               {
@@ -7440,7 +7431,7 @@ namespace Alphaleonis.Win32.Filesystem
                                  if (overwrite)
                                  {
                                     // Reset directory attributes.
-                                    SetAttributesInternal(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, null);
+                                    SetAttributesInternal(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, PathFormat.ExtendedLength);
                                     goto startCopyMove;
                                  }
 
@@ -7489,13 +7480,13 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1))
                SetFsoDateTimeInternal(false, transaction, destFileNameLp,
-                  DateTime.FromFileTimeUtc(data.CreationTime), DateTime.FromFileTimeUtc(data.LastAccessTime), DateTime.FromFileTimeUtc(data.LastWriteTime), null);
+                  DateTime.FromFileTimeUtc(data.CreationTime), DateTime.FromFileTimeUtc(data.LastAccessTime), DateTime.FromFileTimeUtc(data.LastWriteTime), PathFormat.ExtendedLength);
          }
 
          #endregion // Transfer Timestamps
 
          // The copy/move operation succeeded, failed or was canceled.
-         return new CopyMoveResult(sourceFileNameLp, destFileNameLp, isFolder, doMove, cancel, (int) lastError);
+         return new CopyMoveResult(sourceFileNameLp, destFileNameLp, isFolder, doMove, cancel, (int)lastError);
       }
 
       #endregion // CopyMoveInternal
@@ -7522,18 +7513,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CreateHardlinkInternal(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
       {
-         string fileNameLp = isFullPath == null
-            ? fileName
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(fileName, new GetFullPathInternalArgs(false, false, false, false))
-            : Path.GetFullPathInternal(transaction, fileName, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string fileNameLp = Path.GetExtendedLengthPathInternal(transaction, fileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
-         string existingFileNameLp = isFullPath == null
-            ? existingFileName
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(existingFileName, new GetFullPathInternalArgs(false, false, false, false))
-            : Path.GetFullPathInternal(transaction, existingFileName, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
-
+         string existingFileNameLp = Path.GetExtendedLengthPathInternal(transaction, existingFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -7546,7 +7528,7 @@ namespace Alphaleonis.Win32.Filesystem
             : NativeMethods.CreateHardLinkTransacted(fileNameLp, existingFileNameLp, IntPtr.Zero, transaction.SafeHandle)))
          {
             int lastError = Marshal.GetLastWin32Error();
-            switch ((uint) lastError)
+            switch ((uint)lastError)
             {
                case Win32Errors.ERROR_INVALID_FUNCTION:
                   throw new NotSupportedException(Resources.HardLinksOnNonNTFSPartitionsIsNotSupported);
@@ -7579,17 +7561,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CreateSymbolicLinkInternal(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
-         string symlinkFileNameLp = isFullPath == null
-            ? symlinkFileName
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(symlinkFileName, new GetFullPathInternalArgs(false, false, false, false))
-            : Path.GetFullPathInternal(transaction, symlinkFileName, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string symlinkFileNameLp = Path.GetExtendedLengthPathInternal(transaction, symlinkFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
-         string targetFileNameLp = isFullPath == null
-            ? targetFileName
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(targetFileName, new GetFullPathInternalArgs(false, false, false, false))
-            : Path.GetFullPathInternal(transaction, targetFileName, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string targetFileNameLp = Path.GetExtendedLengthPathInternal(transaction, targetFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -7624,7 +7598,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static StreamWriter CreateTextInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return new StreamWriter(CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.SequentialScan, null, FileMode.Create, FileAccess.Write, FileShare.Read, NativeMethods.DefaultFileBufferSize, isFullPath), encoding);
+         return new StreamWriter(CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.SequentialScan, null, FileMode.Create, FileAccess.Write, FileShare.Read, NativeMethods.DefaultFileBufferSize, pathFormat), encoding);
       }
 
       #endregion // CreateTextInternal
@@ -7648,26 +7622,17 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (isFullPath != null && (bool) !isFullPath)
+         if (pathFormat == PathFormat.Auto)
             Path.CheckValidPath(path, true, true);
 
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-#if NET35
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false);
-#else
-               // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the file.
-               : Path.GetFullPathInternal(transaction, path, true, new GetFullPathInternalArgs(true, false, true, false, false, false));
-#endif
-         
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(true, false, true, false, false, false));
+
          // If the path points to a symbolic link, the symbolic link is deleted, not the target.
-         
+
          #endregion // Setup
 
-         startDeleteFile:
-         
+      startDeleteFile:
+
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // DeleteFile() / DeleteFileTransacted()
@@ -7679,7 +7644,7 @@ namespace Alphaleonis.Win32.Filesystem
             : NativeMethods.DeleteFileTransacted(pathLp, transaction.SafeHandle)))
          {
             int lastError = Marshal.GetLastWin32Error();
-            switch ((uint) lastError)
+            switch ((uint)lastError)
             {
                case Win32Errors.ERROR_FILE_NOT_FOUND:
                   // MSDN: .NET 3.5+: If the file to be deleted does not exist, no exception is thrown.
@@ -7687,7 +7652,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_PATH_NOT_FOUND:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid (for example, it is on an unmapped drive).
-               NativeError.ThrowException(lastError, pathLp);
+                  NativeError.ThrowException(lastError, pathLp);
                   return;
 
                case Win32Errors.ERROR_SHARING_VIOLATION:
@@ -7699,7 +7664,7 @@ namespace Alphaleonis.Win32.Filesystem
                   var data = new NativeMethods.Win32FileAttributeData();
                   int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
-                  if (data.FileAttributes != (FileAttributes) (-1))
+                  if (data.FileAttributes != (FileAttributes)(-1))
                   {
                      if ((data.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: Path is a directory.
@@ -7712,13 +7677,13 @@ namespace Alphaleonis.Win32.Filesystem
                         if (ignoreReadOnly)
                         {
                            // Reset file attributes.
-                           SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, null);
+                           SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, PathFormat.ExtendedLength);
                            goto startDeleteFile;
                         }
 
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: Path specified a read-only file.
                         throw new UnauthorizedAccessException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}: [{2}]",
-                           Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message, pathLp));
+                           Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int)Win32Errors.ERROR_FILE_READ_ONLY).Message, pathLp));
                      }
                   }
 
@@ -7739,7 +7704,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // DeleteFileInternal
-      
+
       #region EncryptDecryptFileInternal
 
       /// <summary>
@@ -7759,15 +7724,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void EncryptDecryptFileInternal(bool isFolder, string path, bool encrypt, PathFormat pathFormat)
       {
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-               : Path.GetFullPathInternal(null, path, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
          // Reset file/directory attributes.
          // MSDN: If lpFileName specifies a read-only file, the function fails and GetLastError returns ERROR_FILE_READ_ONLY.
-         SetAttributesInternal(isFolder, null, pathLp, FileAttributes.Normal, true, null);
+         SetAttributesInternal(isFolder, null, pathLp, FileAttributes.Normal, true, PathFormat.ExtendedLength);
 
          // EncryptFile() / DecryptFile()
          // In the ANSI version of this function, the name is limited to 248 characters.
@@ -7789,7 +7750,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                default:
                   if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && isFolder)
-                     lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+                     lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
 
                   NativeError.ThrowException(lastError, pathLp);
                   break;
@@ -7817,18 +7778,14 @@ namespace Alphaleonis.Win32.Filesystem
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         string pathLp = isFullPath == null
-            ? path
-            : (bool)isFullPath
-            ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-            : Path.GetFullPathInternal(transaction, path, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
          // Default buffer length, will be extended if needed, although this should not happen.
          uint length = NativeMethods.MaxPathUnicode;
-         StringBuilder builder = new StringBuilder((int) length);
+         StringBuilder builder = new StringBuilder((int)length);
 
 
-         getFindFirstFileName:
+      getFindFirstFileName:
 
          using (SafeFindFileHandle handle = transaction == null
 
@@ -7843,10 +7800,10 @@ namespace Alphaleonis.Win32.Filesystem
             if (handle.IsInvalid)
             {
                int lastError = Marshal.GetLastWin32Error();
-               switch ((uint) lastError)
+               switch ((uint)lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
-                     builder = new StringBuilder((int) length);
+                     builder = new StringBuilder((int)length);
                      handle.Close();
                      goto getFindFirstFileName;
 
@@ -7868,14 +7825,14 @@ namespace Alphaleonis.Win32.Filesystem
                while (!NativeMethods.FindNextFileName(handle, out length, builder))
                {
                   int lastError = Marshal.GetLastWin32Error();
-                  switch ((uint) lastError)
+                  switch ((uint)lastError)
                   {
-                        // We've reached the end of the enumeration.
+                     // We've reached the end of the enumeration.
                      case Win32Errors.ERROR_HANDLE_EOF:
                         yield break;
 
                      case Win32Errors.ERROR_MORE_DATA:
-                        builder = new StringBuilder((int) length);
+                        builder = new StringBuilder((int)length);
                         continue;
 
                      default:
@@ -7893,7 +7850,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // EnumerateHardlinksInternal
-      
+
       #region ExistsInternal
 
       /// <summary>[AlphaFS] Unified method ExistsInternal() to determine whether the specified file or directory exists.</summary>
@@ -7927,7 +7884,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
-         {
+      {
          // Will be caught later and be thrown as an ArgumentException or ArgumentNullException.
          // Let's take a shorter route, preventing an Exception from being thrown altogether.
          if (Utils.IsNullOrWhiteSpace(path))
@@ -7945,30 +7902,21 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          try
-               {
-            string pathLp = isFullPath == null
-               ? path
-               : (bool) isFullPath
-                  ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-
-                  // MSDN: .NET 3.5+: Trailing spaces are removed from the end of the path parameter before before determining if the file exists.
-                  // MSDN: .NET 3.5+: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
-
-                  : Path.GetFullPathInternal(transaction, path, true, new GetFullPathInternalArgs(true, false, true, true, true, false));
-
+         {
+            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(true, false, true, true, true, false));
 
             var data = new NativeMethods.Win32FileAttributeData();
             int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
-            return (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes) (-1) && (isFolder
+            return (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1) && (isFolder
                ? (data.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory
                : (data.FileAttributes & FileAttributes.Directory) != FileAttributes.Directory));
          }
          catch
          {
             return false;
-               }
-            }
+         }
+      }
 
       #endregion ExistsInternal
 
@@ -7989,7 +7937,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static int FillAttributeInfoInternal(KernelTransaction transaction, string pathLp, ref NativeMethods.Win32FileAttributeData win32AttrData, bool tryagain, bool returnErrorOnNotFound)
       {
-         int dataInitialised = (int) Win32Errors.ERROR_SUCCESS;
+         int dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
 
          #region Try Again
 
@@ -8028,8 +7976,8 @@ namespace Alphaleonis.Win32.Filesystem
                         if (!returnErrorOnNotFound)
                         {
                            // Return default value for backward compatibility
-                           dataInitialised = (int) Win32Errors.ERROR_SUCCESS;
-                           win32AttrData.FileAttributes = (FileAttributes) (-1);
+                           dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
+                           win32AttrData.FileAttributes = (FileAttributes)(-1);
                         }
                      }
 
@@ -8085,8 +8033,8 @@ namespace Alphaleonis.Win32.Filesystem
                   if (!returnErrorOnNotFound)
                   {
                      // Return default value for backward compbatibility.
-                     dataInitialised = (int) Win32Errors.ERROR_SUCCESS;
-                     win32AttrData.FileAttributes = (FileAttributes) (-1);
+                     dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
+                     win32AttrData.FileAttributes = (FileAttributes)(-1);
                   }
                }
             }
@@ -8156,12 +8104,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (privilegeEnabler)
          {
-            string pathLp = isFullPath == null
-               ? path
-               : (bool) isFullPath
-                  ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-                  : Path.GetFullPathInternal(null, path, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
-
+            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
             IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
             SafeGlobalMemoryBufferHandle pSecurityDescriptor;
@@ -8188,9 +8131,9 @@ namespace Alphaleonis.Win32.Filesystem
                //byte[] managedBuffer = new byte[length];
                //pSecurityDescriptor.CopyTo(managedBuffer, 0, (int) length);
 
-               byte[] managedBuffer = pSecurityDescriptor.ToByteArray(0, (int) length);
+               byte[] managedBuffer = pSecurityDescriptor.ToByteArray(0, (int)length);
 
-               objectSecurity = (isFolder) ? (ObjectSecurity) new DirectorySecurity() : new FileSecurity();
+               objectSecurity = (isFolder) ? (ObjectSecurity)new DirectorySecurity() : new FileSecurity();
                objectSecurity.SetSecurityDescriptorBinaryForm(managedBuffer);
             }
             finally
@@ -8199,7 +8142,7 @@ namespace Alphaleonis.Win32.Filesystem
                   pSecurityDescriptor.Close();
             }
 
-            return (T) (object) objectSecurity;
+            return (T)(object)objectSecurity;
          }
       }
 
@@ -8228,14 +8171,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static T GetAttributesExInternal<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         if (isFullPath != null && (bool)!isFullPath)
+         if (pathFormat == PathFormat.Auto)
             Path.CheckValidPath(path, true, true);
 
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-               : Path.GetFullPathInternal(transaction, path, true, new GetFullPathInternalArgs(false, false, true, true, false, false));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, false));
 
          var data = new NativeMethods.Win32FileAttributeData();
          int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
@@ -8244,10 +8183,10 @@ namespace Alphaleonis.Win32.Filesystem
             // Throws IOException.
             NativeError.ThrowException(dataInitialised, pathLp, true);
 
-         return (typeof (T) == typeof (FileAttributes)
-            ? (T) (object) data.FileAttributes
-            : (T) (object) data);
-         }
+         return (typeof(T) == typeof(FileAttributes)
+            ? (T)(object)data.FileAttributes
+            : (T)(object)data);
+      }
 
       #endregion // GetAttributesExInternal
 
@@ -8272,15 +8211,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static long GetCompressedSizeInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         if (isFullPath != null)
-         if (Utils.IsNullOrWhiteSpace(path))
+         if (pathFormat != PathFormat.ExtendedLength && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-            : Path.GetFullPathInternal(transaction, path, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
          uint fileSizeHigh;
          uint fileSizeLow = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -8336,20 +8270,15 @@ namespace Alphaleonis.Win32.Filesystem
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            if (isFullPath != null)
-            if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
+            if (pathFormat != PathFormat.ExtendedLength && Utils.IsNullOrWhiteSpace(path))
+               throw new ArgumentNullException("path");
 
-            string pathLp = isFullPath == null
-               ? path
-               : (bool) isFullPath
-                  ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-                  : Path.GetFullPathInternal(transaction, path, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
+            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
-            safeHandle = CreateFileInternal(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, null);
+            safeHandle = CreateFileInternal(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, PathFormat.ExtendedLength);
          }
 
-         
+
          try
          {
             NativeMethods.IsValidHandle(safeHandle);
@@ -8362,7 +8291,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // Throws IOException.
                   NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
 
-               
+
                // CA2001:AvoidCallingProblematicMethods
 
                IntPtr buffer = IntPtr.Zero;
@@ -8379,7 +8308,7 @@ namespace Alphaleonis.Win32.Filesystem
                   NativeError.ThrowException(Resources.HandleDangerousRef);
 
                // CA2001:AvoidCallingProblematicMethods
-               
+
 
                NativeMethods.FileTime changeTime = Utils.MarshalPtrToStructure<NativeMethods.FileBasicInfo>(0, buffer).ChangeTime;
 
@@ -8421,7 +8350,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DateTime GetCreationTimeInternal(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
       {
-         NativeMethods.FileTime creationTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, isFullPath).CreationTime;
+         NativeMethods.FileTime creationTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, pathFormat).CreationTime;
 
          return getUtc
             ? DateTime.FromFileTimeUtc(creationTime)
@@ -8443,15 +8372,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static FileEncryptionStatus GetEncryptionStatusInternal(string path, PathFormat pathFormat)
       {
-         if (isFullPath != null)
-         if (Utils.IsNullOrWhiteSpace(path))
+         if (pathFormat != PathFormat.ExtendedLength && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = isFullPath == null
-            ? path
-            : (bool)isFullPath
-            ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-            : Path.GetFullPathInternal(null, path, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
          FileEncryptionStatus status;
 
@@ -8495,7 +8419,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (continueOnException)
             directoryEnumerationOptions |= DirectoryEnumerationOptions.ContinueOnException;
 
-         return (new FindFileSystemEntryInfo(false, transaction, path, Path.WildcardQuestion, directoryEnumerationOptions, typeof(FileSystemEntryInfo), isFullPath)).Get<FileSystemEntryInfo>();
+         return (new FindFileSystemEntryInfo(false, transaction, path, Path.WildcardQuestion, directoryEnumerationOptions, typeof(FileSystemEntryInfo), pathFormat)).Get<FileSystemEntryInfo>();
       }
 
       #endregion // GetFileSystemEntryInfoInternal
@@ -8524,7 +8448,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DateTime GetLastAccessTimeInternal(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
       {
-         NativeMethods.FileTime lastAccessTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, isFullPath).LastAccessTime;
+         NativeMethods.FileTime lastAccessTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, pathFormat).LastAccessTime;
 
          return getUtc
             ? DateTime.FromFileTimeUtc(lastAccessTime)
@@ -8557,7 +8481,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DateTime GetLastWriteTimeInternal(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
       {
-         NativeMethods.FileTime lastWriteTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, isFullPath).LastWriteTime;
+         NativeMethods.FileTime lastWriteTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, pathFormat).LastWriteTime;
 
          return getUtc
             ? DateTime.FromFileTimeUtc(lastWriteTime)
@@ -8587,7 +8511,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static LinkTargetInfo GetLinkTargetInfoInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, true, isFullPath))
+         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, true, pathFormat))
             return Device.GetLinkTargetInfoInternal(safeHandle);
       }
 
@@ -8614,18 +8538,14 @@ namespace Alphaleonis.Win32.Filesystem
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            string pathLp = isFullPath == null
-               ? path
-               : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-               : Path.GetFullPathInternal(transaction, path, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
+            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
-            safeHandle = CreateFileInternal(transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, null);
+            safeHandle = CreateFileInternal(transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, PathFormat.ExtendedLength);
          }
-         
+
 
          long fileSize;
-         
+
          try
          {
             NativeMethods.GetFileSizeEx(safeHandle, out fileSize);
@@ -8675,7 +8595,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, ExtendedFileAttributes attributes, PathFormat pathFormat)
       {
-         SafeFileHandle safeHandle = CreateFileInternal(transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights)access, share, true, isFullPath);
+         SafeFileHandle safeHandle = CreateFileInternal(transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights)access, share, true, pathFormat);
 
          return rights != 0
             ? new FileStream(safeHandle, FileAccess.Write)
@@ -8705,7 +8625,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          byte[] buffer;
 
-         using (FileStream fs = OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.None, isFullPath))
+         using (FileStream fs = OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.None, pathFormat))
          {
             int offset = 0;
             long length = fs.Length;
@@ -8749,7 +8669,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static IEnumerable<string> ReadAllLinesInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, isFullPath), encoding))
+         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, pathFormat), encoding))
          {
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -8779,7 +8699,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string ReadAllTextInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, isFullPath), encoding))
+         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, pathFormat), encoding))
             return sr.ReadToEnd();
       }
 
@@ -8802,7 +8722,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static IEnumerable<string> ReadLinesInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, isFullPath), encoding))
+         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, pathFormat), encoding))
          {
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -8849,34 +8769,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void ReplaceInternal(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
-         string sourceFileNameLp = isFullPath == null
-            ? sourceFileName
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(sourceFileName, new GetFullPathInternalArgs(false, false, false, false))
-            : Path.GetFullPathInternal(null, sourceFileName, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
-
-         string destinationFileNameLp = isFullPath == null
-            ? destinationFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationFileName, new GetFullPathInternalArgs(false, false, false, false))
-               : Path.GetFullPathInternal(null, destinationFileName, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
-
+         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(null, sourceFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
          // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
+         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationBackupFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
-         string destinationBackupFileNameLp = isFullPath == null
-            ? destinationBackupFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationBackupFileName, new GetFullPathInternalArgs(false, false, false, false))
-               : Path.GetFullPathInternal(null, destinationBackupFileName, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
-         
-         
          const int replacefileWriteThrough = 1;
          const int replacefileIgnoreMergeErrors = 2;
 
-         FileSystemRights dwReplaceFlags = (FileSystemRights) replacefileWriteThrough;
+         FileSystemRights dwReplaceFlags = (FileSystemRights)replacefileWriteThrough;
          if (ignoreMetadataErrors)
-            dwReplaceFlags |= (FileSystemRights) replacefileIgnoreMergeErrors;
-         
+            dwReplaceFlags |= (FileSystemRights)replacefileIgnoreMergeErrors;
+
          // ReplaceFile()
          // In the ANSI version of this function, the name is limited to MAX_PATH characters.
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
@@ -8924,7 +8828,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         if (isFullPath != null && (bool)!isFullPath)
+         if (pathFormat == PathFormat.Auto)
             Path.CheckValidPath(path, true, true);
 
          if (objectSecurity == null)
@@ -8933,11 +8837,7 @@ namespace Alphaleonis.Win32.Filesystem
          byte[] managedDescriptor = objectSecurity.GetSecurityDescriptorBinaryForm();
          using (SafeGlobalMemoryBufferHandle hDescriptor = new SafeGlobalMemoryBufferHandle(managedDescriptor.Length))
          {
-            string pathLp = isFullPath == null
-               ? path
-               : (bool) isFullPath
-                  ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-                  : Path.GetFullPathInternal(null, path, true, new GetFullPathInternalArgs(false, false, true, true, false, false));
+            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, false));
 
             hDescriptor.CopyFrom(managedDescriptor, 0, managedDescriptor.Length);
 
@@ -9024,7 +8924,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   lastError = Security.NativeMethods.SetSecurityInfo(handle, ObjectType.FileObject, securityInfo, pOwner, pGroup, pDacl, pSacl);
                   if (lastError != Win32Errors.ERROR_SUCCESS)
-                     NativeError.ThrowException((int) lastError);
+                     NativeError.ThrowException((int)lastError);
                }
             }
             finally
@@ -9066,11 +8966,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, PathFormat pathFormat)
       {
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false))
-               : Path.GetFullPathInternal(transaction, path, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -9085,7 +8981,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (continueOnNotExist)
                return;
 
-            uint lastError = (uint) Marshal.GetLastWin32Error();
+            uint lastError = (uint)Marshal.GetLastWin32Error();
 
             switch (lastError)
             {
@@ -9095,7 +8991,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_FILE_NOT_FOUND:
                   if (isFolder)
-                     lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+                     lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
 
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid, (for example, it is on an unmapped drive).
                   // MSDN: .NET 3.5+: FileNotFoundException: The file cannot be found.
@@ -9140,13 +9036,13 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void SetFsoDateTimeInternal(bool isFolder, KernelTransaction transaction, string path, DateTime? creationTimeUtc, DateTime? lastAccessTimeUtc, DateTime? lastWriteTimeUtc, PathFormat pathFormat)
       {
          // Because we already check here, use false for CreateFileInternal() to prevent another check.
-         if (isFullPath != null && (bool) !isFullPath)
+         if (pathFormat == PathFormat.Auto)
             Path.CheckValidPath(path, false, false);
 
          using (SafeGlobalMemoryBufferHandle creationTime = SafeGlobalMemoryBufferHandle.CreateFromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastAccessTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastWriteTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?)null))
-         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, isFullPath))
+         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, pathFormat))
             if (!NativeMethods.SetFileTime(safeHandle, creationTime, lastAccessTime, lastWriteTime))
                NativeError.ThrowException(path);
       }
@@ -9177,9 +9073,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void TransferTimestampsInternal(bool isFolder, KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         NativeMethods.Win32FileAttributeData attrs = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, sourcePath, isFullPath);
+         NativeMethods.Win32FileAttributeData attrs = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, sourcePath, pathFormat);
 
-         SetFsoDateTimeInternal(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.CreationTime), DateTime.FromFileTimeUtc(attrs.LastAccessTime), DateTime.FromFileTimeUtc(attrs.LastWriteTime), isFullPath);
+         SetFsoDateTimeInternal(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.CreationTime), DateTime.FromFileTimeUtc(attrs.LastAccessTime), DateTime.FromFileTimeUtc(attrs.LastWriteTime), pathFormat);
       }
 
       #endregion // TransferTimestampsInternal
@@ -9207,7 +9103,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (bytes == null)
             throw new ArgumentNullException("bytes");
 
-         using (FileStream fs = OpenInternal(transaction, path, FileMode.Create, 0, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.None, isFullPath))
+         using (FileStream fs = OpenInternal(transaction, path, FileMode.Create, 0, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.None, pathFormat))
             fs.Write(bytes, 0, bytes.Length);
       }
 
@@ -9243,7 +9139,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("encoding");
 
 
-         using (FileStream stream = OpenInternal(transaction, path, (isAppend ? FileMode.OpenOrCreate : FileMode.Create), FileSystemRights.AppendData, FileAccess.Write, FileShare.ReadWrite, ExtendedFileAttributes.None, isFullPath))
+         using (FileStream stream = OpenInternal(transaction, path, (isAppend ? FileMode.OpenOrCreate : FileMode.Create), FileSystemRights.AppendData, FileAccess.Write, FileShare.ReadWrite, ExtendedFileAttributes.None, pathFormat))
          {
             if (isAppend)
                stream.Seek(0, SeekOrigin.End);
