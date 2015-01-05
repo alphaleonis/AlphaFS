@@ -1583,7 +1583,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsDVsc
 
-      public static string GetExtendedLengthPathInternal(KernelTransaction transaction, string sourcePath, PathFormat pathFormat, GetFullPathInternalArgs options)
+      internal static string GetExtendedLengthPathInternal(KernelTransaction transaction, string sourcePath, PathFormat pathFormat, GetFullPathInternalArgs options)
       {
          switch (pathFormat)
          {

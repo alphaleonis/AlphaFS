@@ -346,7 +346,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                         // Do not use ?? expression here.
                         if (_rootDirectory == null)
-                           _rootDirectory = new DirectoryInfo(null, Name, false);
+                           _rootDirectory = new DirectoryInfo(null, Name, PathFormat.Auto);
                         return _rootDirectory;
                   }
                   break;
@@ -445,7 +445,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public bool IsReady
       {
-         get { return File.ExistsInternal(true, null, Name, null); }
+         get { return File.ExistsInternal(true, null, Name, PathFormat.ExtendedLength); }
       }
 
       #endregion // IsReady

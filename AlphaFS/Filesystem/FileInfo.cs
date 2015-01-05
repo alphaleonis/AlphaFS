@@ -720,19 +720,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
-         string destinationFileNameLp = isFullPath == null
-            ? destinationFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationFileName, new GetFullPathInternalArgs(false, false, false, false))
-               : Path.GetFullPathInternal(Transaction, destinationFileName, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
-
-         // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
-         string destinationBackupFileNameLp = isFullPath == null
-            ? destinationBackupFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationBackupFileName, new GetFullPathInternalArgs(false, false, false, false))
-               : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
-
+         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationBackupFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+          
          File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, PathFormat.ExtendedLength);
 
          return new FileInfo(Transaction, destinationFileNameLp, PathFormat.Standard);
@@ -1660,15 +1650,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private CopyMoveResult CopyToMoveToInternal(string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {
-         string destinationPathLp = isFullPath == null
-            ? destinationPath
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationPath, new GetFullPathInternalArgs(false, false, false, false))
-#if NET35
-               : Path.GetFullPathInternal(Transaction, destinationPath, true, false, false, true, false, true, true);
-#else
- : Path.GetFullPathInternal(Transaction, destinationPath, true, new GetFullPathInternalArgs(true, false, true, true, false, true));
-#endif
+         string destinationPathLp = Path.GetExtendedLengthPathInternal(Transaction, destinationPath, pathFormat, new GetFullPathInternalArgs(true, false, true, true, false, true));
 
          longFullPath = destinationPathLp;
 

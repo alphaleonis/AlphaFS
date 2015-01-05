@@ -8969,8 +8969,8 @@ namespace Alphaleonis.Win32.Filesystem
                string newDestinationPathLp = Path.CombineInternal(false, destinationPathLp, fsei.FileName);
 
                cmr = fsei.IsDirectory
-                  ? CopyMoveInternal(transaction, fsei.LongFullPath, newDestinationPathLp, copyOptions, null, progressHandler, userProgressData, null)
-                  : File.CopyMoveInternal(false, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, null, progressHandler, userProgressData, null);
+                  ? CopyMoveInternal(transaction, fsei.LongFullPath, newDestinationPathLp, copyOptions, null, progressHandler, userProgressData, PathFormat.ExtendedLength)
+                  : File.CopyMoveInternal(false, transaction, fsei.LongFullPath, newDestinationPathLp, false, copyOptions, null, progressHandler, userProgressData, PathFormat.ExtendedLength);
 
                if (cmr.IsCanceled)
                   return cmr;

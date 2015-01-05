@@ -370,7 +370,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsReady(string drivePath)
       {
-         return File.ExistsInternal(true, null, drivePath, true);
+         return File.ExistsInternal(true, null, drivePath, PathFormat.Standard);
       }
 
       #endregion // IsReady
