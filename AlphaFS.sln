@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Documentation\AlphaFS.png = Documentation\AlphaFS.png
 		AlphaFS.testrunconfig = AlphaFS.testrunconfig
 		AlphaFS.vsmdi = AlphaFS.vsmdi
-		ChangeLog.txt = ChangeLog.txt
+		CHANGELOG.md = CHANGELOG.md
 		Documentation\Content Layout.content = Documentation\Content Layout.content
 		Documentation\License.aml = Documentation\License.aml
 	EndProjectSection
