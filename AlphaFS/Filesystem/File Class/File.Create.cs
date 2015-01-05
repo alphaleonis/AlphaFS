@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
-      public static FileStream Create2(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
+      public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
          return CreateFileStreamInternal(null, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.Auto);
       }

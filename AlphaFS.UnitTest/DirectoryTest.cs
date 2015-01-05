@@ -875,7 +875,7 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            if (Directory.Exists(tempPath, true))
+            if (Directory.Exists(tempPath, PathFormat.Standard))
             {
                StopWatcher(true);
                Directory.Delete(tempPath, true, true);
@@ -3456,10 +3456,10 @@ namespace AlphaFS.UnitTest
 
             #region AlphaFS
 
-            DirectoryInfo alphaFsDi = Directory.CreateDirectory(tempPathDot, false, true);
+            DirectoryInfo alphaFsDi = Directory.CreateDirectory(tempPathDot, false, PathFormat.Standard);
             Assert.IsTrue(alphaFsDi.Name.EndsWith(characterDot), "Path should have a trailing dot.");
             Assert.IsFalse(Directory.Exists(tempPathDot), "Directory should not exist.");
-            Assert.IsTrue(Directory.Exists(tempPathDot, true), "Directory should exist.");
+            Assert.IsTrue(Directory.Exists(tempPathDot, PathFormat.Standard), "Directory should exist.");
 
             DirectoryInfo alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-dot-" + characterDot, false);
             Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
@@ -3467,8 +3467,8 @@ namespace AlphaFS.UnitTest
             alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-space-" + characterSpace, false);
             Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
 
-            Directory.Delete(tempPathDot, true, true, true);
-            Assert.IsFalse(Directory.Exists(tempPathDot, true), "Directory should not exist.");
+            Directory.Delete(tempPathDot, true, true, PathFormat.Standard);
+            Assert.IsFalse(Directory.Exists(tempPathDot, PathFormat.Standard), "Directory should not exist.");
 
             #endregion // AlphaFS
 
@@ -3494,10 +3494,10 @@ namespace AlphaFS.UnitTest
 
             #region AlphaFS
 
-            alphaFsDi = Directory.CreateDirectory(tempPathSpace, false, true);
+            alphaFsDi = Directory.CreateDirectory(tempPathSpace, false, PathFormat.Standard);
             Assert.IsTrue(alphaFsDi.Name.EndsWith(characterSpace), "Path should have a trailing space.");
             Assert.IsFalse(Directory.Exists(tempPathSpace), "Directory should exist.");  // Because trailing space is removed.
-            Assert.IsTrue(Directory.Exists(tempPathSpace, true), "Directory should exist.");
+            Assert.IsTrue(Directory.Exists(tempPathSpace, PathFormat.Standard), "Directory should exist.");
 
             alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-space-" + characterSpace, false);
             Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
@@ -3505,8 +3505,8 @@ namespace AlphaFS.UnitTest
             alphaFsDi2 = alphaFsDi.CreateSubdirectory("Directory-with-dot-" + characterDot, false);
             Assert.IsTrue(alphaFsDi2.Exists, "Directory should exist.");
 
-            Directory.Delete(tempPathSpace, true, true, true);
-            Assert.IsFalse(Directory.Exists(tempPathSpace, true), "Directory should not exist.");
+            Directory.Delete(tempPathSpace, true, true, PathFormat.Standard);
+            Assert.IsFalse(Directory.Exists(tempPathSpace, PathFormat.Standard), "Directory should not exist.");
 
             #endregion // AlphaFS
 
@@ -3518,10 +3518,10 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            if (Directory.Exists(tempPathDot, true))
+            if (Directory.Exists(tempPathDot, PathFormat.Standard))
                Directory.Delete(tempPathDot, true, true);
 
-            if (Directory.Exists(tempPathSpace, true))
+            if (Directory.Exists(tempPathSpace, PathFormat.Standard))
                Directory.Delete(tempPathSpace, true, true);
 
             Assert.IsFalse(Directory.Exists(tempPathDot), "Cleanup failed: Directory should have been removed.");
