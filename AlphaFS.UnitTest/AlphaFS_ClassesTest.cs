@@ -1384,23 +1384,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput Directory Path: [{0}]", path);
 
          Console.WriteLine("\n\nvar fsei = Directory.GetFileSystemEntry<FileSystemEntryInfo>(path);");
-         var asFileSystemEntryInfo = File.GetFileSystemEntry<FileSystemEntryInfo>(path);
+         var asFileSystemEntryInfo = File.GetFileSystemEntryInfo(path);
          Assert.IsTrue((asFileSystemEntryInfo.GetType().IsEquivalentTo(typeof(FileSystemEntryInfo))));
          Assert.IsTrue(Dump(asFileSystemEntryInfo, -17));
-
-
-         Console.WriteLine("\n\nvar di = Directory.GetFileSystemEntry<FileSystemInfo>(path);");
-         var asFileSystemInfo = File.GetFileSystemEntry<FileSystemInfo>(path);
-         Assert.IsTrue((asFileSystemInfo.GetType().IsEquivalentTo(typeof(DirectoryInfo))));
-         Assert.IsTrue(Dump(asFileSystemInfo, -17));
-
-
-         Console.WriteLine("\n\nvar aString = Directory.GetFileSystemEntry<string>(path);");
-         var asString = File.GetFileSystemEntry<string>(path);
-         Assert.IsFalse(Utils.IsNullOrWhiteSpace(asString));
-         Assert.IsTrue((asString.GetType().IsEquivalentTo(typeof(string))));
-         Assert.IsTrue(Dump(asString, -17));
-
 
          Console.WriteLine();
 
@@ -1414,22 +1400,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput File Path: [{0}]", path);
 
          Console.WriteLine("\n\nvar fsei = File.GetFileSystemEntry<FileSystemEntryInfo>(path);");
-         asFileSystemEntryInfo = File.GetFileSystemEntry<FileSystemEntryInfo>(path);
+         asFileSystemEntryInfo = File.GetFileSystemEntryInfo(path);
          Assert.IsTrue((asFileSystemEntryInfo.GetType().IsEquivalentTo(typeof(FileSystemEntryInfo))));
          Assert.IsTrue(Dump(asFileSystemEntryInfo, -17));
-
-
-         Console.WriteLine("\n\nvar fi = File.GetFileSystemEntry<FileSystemInfo>(path);");
-         asFileSystemInfo = File.GetFileSystemEntry<FileSystemInfo>(path);
-         Assert.IsTrue((asFileSystemInfo.GetType().IsEquivalentTo(typeof(FileInfo))));
-         Assert.IsTrue(Dump(asFileSystemInfo, -17));
-
-
-         Console.WriteLine("\n\nvar string = File.GetFileSystemEntry<string>(path);");
-         asString = File.GetFileSystemEntry<string>(path);
-         Assert.IsFalse(Utils.IsNullOrWhiteSpace(asString));
-         Assert.IsTrue((asString.GetType().IsEquivalentTo(typeof(string))));
-         Assert.IsTrue(Dump(asString, -17));
 
          Console.WriteLine();
 

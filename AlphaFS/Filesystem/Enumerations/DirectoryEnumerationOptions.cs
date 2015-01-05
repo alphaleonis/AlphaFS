@@ -1,4 +1,4 @@
-/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -36,13 +36,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Enumerate directories only.</summary>
       Folders = 2,
 
-      /// <summary>Enumerate files and folders.</summary>
+      /// <summary>Enumerate files and directories.</summary>
       FilesAndFolders = Files | Folders,
 
-      /// <summary>Return file/folder full path in Unicode format, only valid when return type is <see cref="string"/>.</summary>
+      /// <summary>Return file/directory full path in Unicode format, only valid when return type is <see cref="string"/>.</summary>
       AsLongPath = 4,
 
-      /// <summary>Do not follow (skip) Reparse Points during enumeration.</summary>
+      /// <summary>Skip reparse points during directory enumeration.</summary>
       SkipReparsePoints = 8,
 
       /// <summary><para>Suppress any Exception that might be thrown a result from a failure,</para>
@@ -51,6 +51,12 @@ namespace Alphaleonis.Win32.Filesystem
       ContinueOnException = 16,
 
       /// <summary>Specifies whether to search the current directory, or the current directory and all subdirectories.</summary>
-      Recursive = 32
+      Recursive = 32,
+
+      /// <summary>Enumerate directory using the <see cref="NativeMethods.FindExInfoLevels.Basic"/> option.</summary>
+      BasicSearch = 64,
+
+      /// <summary>Enumerate directory using the <see cref="NativeMethods.FindExAdditionalFlags.LargeFetch"/> option.</summary>
+      LargeCache = 128
    }
 }

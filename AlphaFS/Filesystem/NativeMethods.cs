@@ -22,13 +22,9 @@
 using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Text;
@@ -48,16 +44,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Operating System
 
-      #region BasicSearch
+      #region FindExInfoLevel
 
-      /// <summary>
-      ///   The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.
-      ///   <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure, and cAlternateFileName member is always a NULL string.</para>
-      ///   <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
+      /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.
+      /// <para>&#160;</para>
+      /// <remarks>
+      /// <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure,</para>
+      /// <para>and cAlternateFileName member is always a NULL string.</para>
+      /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
+      /// </remarks>
       /// </summary>
-      public static readonly FindExInfoLevels BasicSearch = IsAtLeastWindows7 ? FindExInfoLevels.Basic : FindExInfoLevels.Standard;
+      public static readonly FindExInfoLevels FindExInfoLevel = IsAtLeastWindows7 ? FindExInfoLevels.Basic : FindExInfoLevels.Standard;
 
-      #endregion // BasicSearch
+      #endregion // FindExInfoLevel
 
       #region LargeCache
 

@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo(string path) : this(null, path, false)
       {
       }
-      
+
       #endregion // .NET
 
       #region AlphaFS
@@ -129,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates a directory.</summary>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      
+
       [SecurityCritical]
       public void Create()
       {
@@ -139,7 +139,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity)
@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
       /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void Create(bool compress)
@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       /// <remarks>If the directory already exists, this method does nothing.</remarks>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity, bool compress)
@@ -190,7 +190,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      
+
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path)
       {
@@ -206,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      
+
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity)
       {
@@ -226,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      
+
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, bool compress)
       {
@@ -243,7 +243,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      
+
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, string templatePath, bool compress)
       {
@@ -261,7 +261,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      
+
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity, bool compress)
       {
@@ -279,7 +279,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      
+
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
@@ -298,7 +298,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
-      
+
       [SecurityCritical]
       public override void Delete()
       {
@@ -314,7 +314,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
-      
+
       [SecurityCritical]
       public void Delete(bool recursive)
       {
@@ -332,7 +332,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// If the <see cref="DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.
       /// Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.
       /// </remarks>
-      
+
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly)
       {
@@ -382,16 +382,16 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories(string searchPattern, SearchOption searchOption)
       {
-         DirectoryEnumerationOptions enumOptions = DirectoryEnumerationOptions.Folders;
+         var directoryEnumerationOptions = DirectoryEnumerationOptions.Folders;
 
          if (searchOption == SearchOption.AllDirectories)
-            enumOptions |= DirectoryEnumerationOptions.Recursive;
-            
-         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, enumOptions, null);
+            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
+
+         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null);
       }
 
       #endregion // .NET
-      
+
       #endregion // EnumerateDirectories
 
       #region EnumerateFiles
@@ -433,12 +433,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(string searchPattern, SearchOption searchOption)
       {
-         DirectoryEnumerationOptions enumOptions = DirectoryEnumerationOptions.Files;
+         var directoryEnumerationOptions = DirectoryEnumerationOptions.Files;
 
          if (searchOption == SearchOption.AllDirectories)
-            enumOptions |= DirectoryEnumerationOptions.Recursive;
+            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, enumOptions, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null);
       }
 
       #endregion // .NET
@@ -487,12 +487,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern, SearchOption searchOption)
       {
-         DirectoryEnumerationOptions enumOptions = DirectoryEnumerationOptions.FilesAndFolders;
+         var directoryEnumerationOptions = DirectoryEnumerationOptions.FilesAndFolders;
 
          if (searchOption == SearchOption.AllDirectories)
-            enumOptions |= DirectoryEnumerationOptions.Recursive;
+            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, enumOptions, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null);
       }
 
       #endregion // .NET
@@ -505,7 +505,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the access control list (ACL) entries for the directory described by the current DirectoryInfo object.</summary>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the directory.</returns>
-      
+
       [SecurityCritical]
       public DirectorySecurity GetAccessControl()
       {
@@ -515,7 +515,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the directory described by the current <see cref="DirectoryInfo"/> object.</summary>
       /// <param name="includeSections">One of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to receive.</param>
       /// <returns>A <see cref="DirectorySecurity"/> object that encapsulates the access control rules for the file described by the path parameter.</returns>
-      
+
       [SecurityCritical]
       public DirectorySecurity GetAccessControl(AccessControlSections includeSections)
       {
@@ -582,18 +582,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories(string searchPattern, SearchOption searchOption)
       {
-         DirectoryEnumerationOptions enumOptions = DirectoryEnumerationOptions.Folders;
+         var directoryEnumerationOptions = DirectoryEnumerationOptions.Folders;
 
          if (searchOption == SearchOption.AllDirectories)
-            enumOptions |= DirectoryEnumerationOptions.Recursive;
+            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, enumOptions, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null).ToArray();
       }
 
       #endregion // .NET
 
       #endregion // GetDirectories
-      
+
       #region GetFiles
 
       #region .NET
@@ -654,12 +654,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo[] GetFiles(string searchPattern, SearchOption searchOption)
       {
-         DirectoryEnumerationOptions enumOptions = DirectoryEnumerationOptions.Files;
+         var directoryEnumerationOptions = DirectoryEnumerationOptions.Files;
 
          if (searchOption == SearchOption.AllDirectories)
-            enumOptions |= DirectoryEnumerationOptions.Recursive;
+            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, enumOptions, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null).ToArray();
       }
 
       #endregion // .NET
@@ -735,12 +735,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSystemInfo[] GetFileSystemInfos(string searchPattern, SearchOption searchOption)
       {
-         DirectoryEnumerationOptions enumOptions = DirectoryEnumerationOptions.FilesAndFolders;
+         var directoryEnumerationOptions = DirectoryEnumerationOptions.FilesAndFolders;
 
          if (searchOption == SearchOption.AllDirectories)
-            enumOptions |= DirectoryEnumerationOptions.Recursive;
+            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, enumOptions, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null).ToArray();
       }
 
       #endregion // .NET
@@ -798,7 +798,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity)
@@ -809,7 +809,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
       /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
-      
+
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity, AccessControlSections includeSections)
@@ -844,7 +844,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to the directory.</summary>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      
+
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
@@ -1133,12 +1133,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // CountFileSystemObjects
-      
+
       #region Compress
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <remarks>This will only compress the root items, non recursive.</remarks>
-      
+
       [SecurityCritical]
       public void Compress()
       {
@@ -1147,7 +1147,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      
+
       [SecurityCritical]
       public void Compress(DirectoryEnumerationOptions directoryEnumerationOptions)
       {
@@ -1163,7 +1163,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
       /// However, newly created files and directories will be uncompressed.
       /// </remarks>
-      
+
       [SecurityCritical]
       public void DisableCompression()
       {
@@ -1177,7 +1177,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
       /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0"</remarks>
-      
+
       [SecurityCritical]
       public void DisableEncryption()
       {
@@ -1190,7 +1190,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <remarks>This will only decompress the root items, non recursive.</remarks>
-      
+
       [SecurityCritical]
       public void Decompress()
       {
@@ -1199,7 +1199,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      
+
       [SecurityCritical]
       public void Decompress(DirectoryEnumerationOptions directoryEnumerationOptions)
       {
@@ -1226,7 +1226,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // Decrypt
-      
+
       #region DeleteEmpty
 
       /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="DirectoryInfo"/> instance.</summary>
@@ -1262,7 +1262,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// This method enables the directory-compression attribute. It will not compress the current contents of the directory.
       /// However, newly created files and directories will be compressed.
       /// </remarks>
-      
+
       [SecurityCritical]
       public void EnableCompression()
       {
@@ -1270,13 +1270,13 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // EnableCompression
-      
+
       #region EnableEncryption
 
       /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
       /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
       /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=1"</remarks>
-      
+
       [SecurityCritical]
       public void EnableEncryption()
       {
@@ -1308,7 +1308,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</summary>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</returns>
-      
+
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
@@ -1353,7 +1353,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
       /// <returns>The number of bytes used by all data streams.</returns>
-      
+
       [SecurityCritical]
       public long GetStreamSize()
       {
@@ -1363,7 +1363,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>
-      
+
       [SecurityCritical]
       public long GetStreamSize(string name)
       {
@@ -1373,7 +1373,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-      
+
       [SecurityCritical]
       public long GetStreamSize(StreamType type)
       {
@@ -1569,7 +1569,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the directory.</summary>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+
       [SecurityCritical]
       public void RemoveStream()
       {
@@ -1580,7 +1580,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to remove.</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-      
+
       [SecurityCritical]
       public void RemoveStream(string name)
       {
@@ -1626,12 +1626,12 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp = isFullPath == null
             ? destinationPath
-            : (bool) isFullPath
+            : (bool)isFullPath
                ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
 #if NET35
                : Path.GetFullPathInternal(Transaction, destinationPath, true, false, false, true, false, true, true);
 #else
-               : Path.GetFullPathInternal(Transaction, destinationPath, true, true, false, true, false, true, true);
+ : Path.GetFullPathInternal(Transaction, destinationPath, true, true, false, true, false, true, true);
 #endif
 
          longFullPath = destinationPathLp;
@@ -1667,7 +1667,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The path parameter specifies a directory path, not a file path.
       /// If the subdirectory already exists, this method does nothing.
       /// </remarks>
-      
+
       [SecurityCritical]
       private DirectoryInfo CreateSubdirectoryInternal(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
@@ -1680,7 +1680,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // CreateSubdirectoryInternal
-      
+
       #endregion // Unified Internals
 
       #endregion // AlphaFS
@@ -1716,7 +1716,7 @@ namespace Alphaleonis.Win32.Filesystem
                   Refresh();
 
                FileAttributes attrs = Win32AttributeData.FileAttributes;
-               return DataInitialised == 0 && (attrs != (FileAttributes) (-1) && (attrs & FileAttributes.Directory) != 0);
+               return DataInitialised == 0 && (attrs != (FileAttributes)(-1) && (attrs & FileAttributes.Directory) != 0);
             }
             catch
             {
@@ -1777,7 +1777,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>An object that represents the root of the directory.</value>
       public DirectoryInfo Root
       {
-         [SecurityCritical] get { return new DirectoryInfo(Transaction, Path.GetPathRoot(FullPath, false), true); }
+         [SecurityCritical]
+         get { return new DirectoryInfo(Transaction, Path.GetPathRoot(FullPath, false), true); }
       }
 
       #endregion // Root

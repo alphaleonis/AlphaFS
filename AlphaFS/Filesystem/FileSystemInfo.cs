@@ -21,7 +21,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -170,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void RefreshEntryInfo()
       {
-         _entryInfo = File.GetFileSystemEntryInternal<FileSystemEntryInfo>(Transaction, LongFullName, true, null);
+         _entryInfo = File.GetFileSystemEntryInfoInternal(Transaction, LongFullName, true, null);
    
          if (_entryInfo == null)
             DataInitialised = -1;

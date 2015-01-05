@@ -6263,6 +6263,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
+      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory.</returns>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="isFullPath">
       ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
@@ -6270,22 +6271,21 @@ namespace Alphaleonis.Win32.Filesystem
       ///   applied.</para>
       ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
       [SecurityCritical]
-      public static T GetFileSystemEntry<T>(string path, bool? isFullPath)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool? isFullPath)
       {
-         return GetFileSystemEntryInternal<T>(null, path, false, isFullPath);
+         return GetFileSystemEntryInfoInternal(null, path, false, isFullPath);
       }
 
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
+      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory.</returns>
       /// <param name="path">The path to the file or directory.</param>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
       [SecurityCritical]
-      public static T GetFileSystemEntry<T>(string path)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
       {
-         return GetFileSystemEntryInternal<T>(null, path, false, false);
+         return GetFileSystemEntryInfoInternal(null, path, false, false);
       }
 
       #region Transacted
@@ -6293,6 +6293,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
 
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
+      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="isFullPath">
@@ -6301,23 +6302,22 @@ namespace Alphaleonis.Win32.Filesystem
       ///   applied.</para>
       ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file on the path.</returns>
       [SecurityCritical]
-      public static T GetFileSystemEntry<T>(KernelTransaction transaction, string path, bool? isFullPath)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, bool? isFullPath)
       {
-         return GetFileSystemEntryInternal<T>(transaction, path, false, isFullPath);
+         return GetFileSystemEntryInfoInternal(transaction, path, false, isFullPath);
       }
 
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
+      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
-      /// <returns>The <see cref="T:FileSystemEntryInfo"/> instance of the file on the path.</returns>
       [SecurityCritical]
-      public static T GetFileSystemEntry<T>(KernelTransaction transaction, string path)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path)
       {
-         return GetFileSystemEntryInternal<T>(transaction, path, false, false);
+         return GetFileSystemEntryInfoInternal(transaction, path, false, false);
       }
 
       #endregion // Transacted
@@ -7808,7 +7808,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                         else
                         {
-                           NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
+                           var data = new NativeMethods.Win32FileAttributeData();
                            FillAttributeInfoInternal(transaction, destFileNameLp, ref data, false, true);
 
                            if (data.FileAttributes != (FileAttributes) (-1))
@@ -7864,7 +7864,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (preserveDates && doCopy && lastError == Win32Errors.ERROR_SUCCESS)
          {
             // Currently preserveDates is only used with files.
-            NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
+            var data = new NativeMethods.Win32FileAttributeData();
             int dataInitialised = FillAttributeInfoInternal(transaction, sourceFileNameLp, ref data, false, true);
 
             if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1))
@@ -8217,7 +8217,7 @@ namespace Alphaleonis.Win32.Filesystem
                   break;
 
                case Win32Errors.ERROR_ACCESS_DENIED:
-                  NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
+                  var data = new NativeMethods.Win32FileAttributeData();
                   int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
                   if (data.FileAttributes != (FileAttributes) (-1))
@@ -8478,7 +8478,7 @@ namespace Alphaleonis.Win32.Filesystem
                   : Path.GetFullPathInternal(transaction, path, true, true, false, true, true, true, false);
 
 
-            NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
+            var data = new NativeMethods.Win32FileAttributeData();
             int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
             return (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes) (-1) && (isFolder
@@ -8532,8 +8532,8 @@ namespace Alphaleonis.Win32.Filesystem
                   // 2013-01-13: MSDN confirms LongPath usage.
 
                   // A trailing backslash is not allowed.
-                  ? NativeMethods.FindFirstFileEx(Path.RemoveDirectorySeparator(pathLp, false), NativeMethods.BasicSearch, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache)
-                  : NativeMethods.FindFirstFileTransacted(Path.RemoveDirectorySeparator(pathLp, false), NativeMethods.BasicSearch, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache, transaction.SafeHandle);
+                  ? NativeMethods.FindFirstFileEx(Path.RemoveDirectorySeparator(pathLp, false), NativeMethods.FindExInfoLevel, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache)
+                  : NativeMethods.FindFirstFileTransacted(Path.RemoveDirectorySeparator(pathLp, false), NativeMethods.FindExInfoLevel, out findData, NativeMethods.FindExSearchOps.SearchNameMatch, IntPtr.Zero, NativeMethods.LargeCache, transaction.SafeHandle);
 
                try
                {
@@ -8758,7 +8758,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? Path.GetLongPathInternal(path, false, false, false, false)
                : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, false);
 
-         NativeMethods.Win32FileAttributeData data = new NativeMethods.Win32FileAttributeData();
+         var data = new NativeMethods.Win32FileAttributeData();
          int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
@@ -8991,49 +8991,35 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFileSystemEntryInfoInternal
 
-      /// <summary>
-      ///   [AlphaFS] Unified method GetFileSystemEntryInfoInternal() to get a FileSystemEntryInfo from a Non-/Transacted directory/file.
-      /// </summary>
+      /// <summary>[AlphaFS] Unified method GetFileSystemEntryInfoInternal() to get a FileSystemEntryInfo from a Non-/Transacted directory/file.</summary>
+      /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory, or <c>null</c> on Exception when <paramref name="continueOnException"/> is <c>true</c>.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="NativeError.ThrowException()"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="continueOnException">
-      ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
-      ///   <para>such as ACLs protected directories or non-accessible reparse points.</para>
+      ///    <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
+      ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
+      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
+      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
       /// </param>
-      /// <returns>
-      ///   The <see cref="FileSystemEntryInfo"/> instance of the file or directory, or <see langword="null"/> on Exception when
-      ///   <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       [SecurityCritical]
-      internal static T GetFileSystemEntryInternal<T>(KernelTransaction transaction, string path, bool continueOnException, bool? isFullPath)
+      internal static FileSystemEntryInfo GetFileSystemEntryInfoInternal(KernelTransaction transaction, string path, bool continueOnException, bool? isFullPath)
       {
-         Type typeOfT = typeof(T);
+         // // Enable BasicSearch and LargeCache by default.
+         var directoryEnumerationOptions = DirectoryEnumerationOptions.BasicSearch | DirectoryEnumerationOptions.LargeCache;
 
-         return new FindFileSystemEntryInfo
-         {
-            Transaction = transaction,
-            InputPath = path,
-            SearchPattern = Path.WildcardStarMatchAll,
-            IsFullPath = isFullPath,
-            AsString = typeOfT == typeof(string),
-            AsFileSystemInfo = typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo),
-            ContinueOnException = continueOnException
+         if (continueOnException)
+            directoryEnumerationOptions |= DirectoryEnumerationOptions.ContinueOnException;
 
-         }.Get<T>();
+         return (new FindFileSystemEntryInfo(false, transaction, path, Path.WildcardQuestion, directoryEnumerationOptions, typeof(FileSystemEntryInfo), isFullPath)).Get<FileSystemEntryInfo>();
       }
 
-      #endregion // GetFileSystemEntryInternal
+      #endregion // GetFileSystemEntryInfoInternal
 
       #region GetLastAccessTimeInternal
 
