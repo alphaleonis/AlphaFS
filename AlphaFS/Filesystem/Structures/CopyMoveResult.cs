@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Create a CopyMoveResult class instance for the Copy or Move action.</summary>
       /// <param name="source">Indicates the source file or directory.</param>
       /// <param name="destination">Indicates the destination file or directory.</param>
-      /// <param name="isDirectory">Indicates that a file or directory file system object.</param>
+      /// <param name="isDirectory">Indicates that the file system object is a directory.</param>
       /// <param name="isMove">Indicates if the action is a Copy or Move action.</param>
       /// <param name="isCanceled">The result of the Copy or Move action.</param>
       /// <param name="errorCode">The error code encountered during the Copy or Move action.</param>

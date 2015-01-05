@@ -5868,7 +5868,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? (((CopyOptions)copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
             : (((MoveOptions)moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
 
-         CopyMoveResult cmr = new CopyMoveResult(sourcePathLp, destinationPathLp, true, doMove, false, (int)Win32Errors.ERROR_SUCCESS);
+         var cmr = new CopyMoveResult(sourcePathLp, destinationPathLp, true, doMove, false, (int)Win32Errors.ERROR_SUCCESS);
 
          #endregion //Setup
 
