@@ -386,6 +386,181 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // SetLastWriteTimeUtc
 
+      #region SetTimestamps
+
+      /// <summary>[AlphaFS] Sets all the date and time stamps for the specified file, at once.</summary>
+      /// <param name="path">The file for which to set the dates and times information.</param>
+      /// <param name="creationTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   is expressed in local time.
+      /// </param>
+      /// <param name="lastAccessTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   value is expressed in local time.
+      /// </param>
+      /// <param name="lastWriteTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   is expressed in local time.
+      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      [SecurityCritical]
+      public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, PathFormat pathFormat)
+      {
+         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Sets all the date and time stamps for the specified file, at once.</summary>
+      /// <param name="path">The file for which to set the dates and times information.</param>
+      /// <param name="creationTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   is expressed in local time.
+      /// </param>
+      /// <param name="lastAccessTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   value is expressed in local time.
+      /// </param>
+      /// <param name="lastWriteTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   is expressed in local time.
+      /// </param>     
+      [SecurityCritical]
+      public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
+      {
+         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), PathFormat.Auto);
+      }
+
+      /// <summary>[AlphaFS] Sets all the date and time stamps for the specified file, at once.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file for which to set the dates and times information.</param>
+      /// <param name="creationTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   is expressed in local time.
+      /// </param>
+      /// <param name="lastAccessTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   value is expressed in local time.
+      /// </param>
+      /// <param name="lastWriteTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   is expressed in local time.
+      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      [SecurityCritical]
+      public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, PathFormat pathFormat)
+      {
+         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Sets all the date and time stamps for the specified file, at once.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file for which to set the dates and times information.</param>
+      /// <param name="creationTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   is expressed in local time.
+      /// </param>
+      /// <param name="lastAccessTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   value is expressed in local time.
+      /// </param>
+      /// <param name="lastWriteTime">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   is expressed in local time.
+      /// </param>      
+      [SecurityCritical]
+      public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
+      {
+         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), PathFormat.Auto);
+      }
+
+      #endregion // SetTimestamps
+
+      #region SetTimestampsUtc
+
+      /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified file, at once.</summary>
+      /// <param name="path">The file for which to set the dates and times information.</param>
+      /// <param name="creationTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   is expressed in UTC time.
+      /// </param>
+      /// <param name="lastAccessTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   value is expressed in UTC time.
+      /// </param>
+      /// <param name="lastWriteTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   is expressed in UTC time.
+      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      [SecurityCritical]
+      public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, PathFormat pathFormat)
+      {
+         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified file, at once.</summary>
+      /// <param name="path">The file for which to set the dates and times information.</param>
+      /// <param name="creationTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   is expressed in UTC time.
+      /// </param>
+      /// <param name="lastAccessTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   value is expressed in UTC time.
+      /// </param>
+      /// <param name="lastWriteTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   is expressed in UTC time.
+      /// </param>      
+      [SecurityCritical]
+      public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
+      {
+         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, PathFormat.Auto);
+      }
+
+      /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified file, at once.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file for which to set the dates and times information.</param>
+      /// <param name="creationTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   is expressed in UTC time.
+      /// </param>
+      /// <param name="lastAccessTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   value is expressed in UTC time.
+      /// </param>
+      /// <param name="lastWriteTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   is expressed in UTC time.
+      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      [SecurityCritical]
+      public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, PathFormat pathFormat)
+      {
+         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified file, at once.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file for which to set the dates and times information.</param>
+      /// <param name="creationTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
+      ///   is expressed in UTC time.
+      /// </param>
+      /// <param name="lastAccessTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
+      ///   value is expressed in UTC time.
+      /// </param>
+      /// <param name="lastWriteTimeUtc">
+      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
+      ///   is expressed in UTC time.
+      /// </param>      
+      [SecurityCritical]
+      public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
+      {
+         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, PathFormat.Auto);
+      }
+
+      #endregion // SetTimestampsUtc
 
       #region Internal Methods
 
