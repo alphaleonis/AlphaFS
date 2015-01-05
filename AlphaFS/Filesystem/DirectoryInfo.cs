@@ -1665,11 +1665,13 @@ namespace Alphaleonis.Win32.Filesystem
       private DirectoryInfo CreateSubdirectoryInternal(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
          string pathLp = Path.CombineInternal(false, LongFullName, path);
+         string templatePathLp = templatePath == null ? null : 
+            Path.GetExtendedLengthPathInternal(Transaction, templatePath, PathFormat.Auto, new GetFullPathInternalArgs(true, false, true, false, false, false));
 
          if (string.Compare(LongFullName, 0, pathLp, 0, LongFullName.Length, StringComparison.OrdinalIgnoreCase) != 0)
             throw new ArgumentException("Invalid SubPath", pathLp);
 
-         return Directory.CreateDirectoryInternal(Transaction, pathLp, templatePath, directorySecurity, compress, PathFormat.Auto);
+         return Directory.CreateDirectoryInternal(Transaction, pathLp, templatePathLp, directorySecurity, compress, PathFormat.ExtendedLength);
       }
 
       #endregion // CreateSubdirectoryInternal
