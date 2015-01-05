@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (pathFormat == PathFormat.Auto)
             Path.CheckValidPath(path, true, true);
 
-         LongFullName = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(true, false, !isFolder, false, true, false));
+         LongFullName = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | (!isFolder ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | GetFullPathOptions.ContinueOnNonExist);            
 
          FullPath = Path.GetRegularPathInternal(LongFullName, false, false, false, false);
 

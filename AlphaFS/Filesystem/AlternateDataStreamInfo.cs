@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          private set
          {
-            _longFullName = _pathFormat == PathFormat.ExtendedLength ? value : Path.GetLongPathInternal(value, new GetFullPathInternalArgs(false, false, false, false));
+            _longFullName = _pathFormat == PathFormat.ExtendedLength ? value : Path.GetLongPathInternal(value, GetFullPathOptions.None);
          }
       }
 
@@ -292,7 +292,7 @@ namespace Alphaleonis.Win32.Filesystem
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, false));
+            pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
             if (isFolder == null)
             {
@@ -446,7 +446,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void RemoveStreamInternal(bool? isFolder, KernelTransaction transaction, string path, string name, PathFormat pathFormat)
       {
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, false));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
          foreach (AlternateDataStreamInfo stream in EnumerateStreamsInternal(isFolder, transaction, null, pathLp, name, StreamType.AlternateData, PathFormat.ExtendedLength))
             File.DeleteFileInternal(transaction, string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{1}$DATA", pathLp, Path.StreamSeparator, stream.OriginalName), false, PathFormat.ExtendedLength);

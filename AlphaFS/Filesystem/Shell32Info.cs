@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Shell32 is limited to MAX_PATH length.
          // Get a full path of regular format.
 
-         FullPath = Path.GetExtendedLengthPathInternal(null, fileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         FullPath = Path.GetExtendedLengthPathInternal(null, fileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          Initialize();
       }

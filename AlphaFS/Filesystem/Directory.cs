@@ -5789,7 +5789,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CompressDecompressInternal(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, bool compress, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // Process directories and files.
          foreach (string fso in EnumerateFileSystemEntryInfosInternal<string>(transaction, pathLp, searchPattern, directoryEnumerationOptions | DirectoryEnumerationOptions.AsLongPath, PathFormat.ExtendedLength))
@@ -5849,8 +5849,8 @@ namespace Alphaleonis.Win32.Filesystem
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
          // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
 
-         string sourcePathLp = Path.GetExtendedLengthPathInternal(transaction, sourcePath, pathFormat, new GetFullPathInternalArgs(true, false, true, false, false, false));
-         string destinationPathLp = Path.GetExtendedLengthPathInternal(transaction, destinationPath, pathFormat, new GetFullPathInternalArgs(true, false, true, false, false, false));
+         string sourcePathLp = Path.GetExtendedLengthPathInternal(transaction, sourcePath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         string destinationPathLp = Path.GetExtendedLengthPathInternal(transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
          if (sourcePathLp.Equals(destinationPathLp, StringComparison.OrdinalIgnoreCase))
@@ -5964,7 +5964,7 @@ namespace Alphaleonis.Win32.Filesystem
             // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
             Path.CheckValidPath(path, false, false);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(true, false, true, false, false, false));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          // Return DirectoryInfo instance if the directory specified by path already exists.
          if (File.ExistsInternal(true, transaction, pathLp, PathFormat.ExtendedLength))
@@ -5977,7 +5977,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
             ? null
-            : Path.GetExtendedLengthPathInternal(transaction, templatePath, pathFormat, new GetFullPathInternalArgs(true, false, true, false, false, false));
+            : Path.GetExtendedLengthPathInternal(transaction, templatePath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          #region Construct Full Path
 
@@ -6084,7 +6084,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetDirectoryRootInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, false, true, false, false));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
          pathLp = Path.GetRegularPathInternal(pathLp, false, false, false, false);
          string rootPath = Path.GetPathRoot(pathLp, false);
 
@@ -6106,7 +6106,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DirectoryInfo GetParentInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, false, true, false, false));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
 
          pathLp = Path.GetRegularPathInternal(pathLp, false, false, false, false);
          string dirName = Path.GetDirectoryName(pathLp, false);
@@ -6151,7 +6151,7 @@ namespace Alphaleonis.Win32.Filesystem
             // The specified path is invalid (for example, it is on an unmapped drive). 
 
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(transaction,
-               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(true, false, true, false, false, false)), continueOnNotExist, PathFormat.ExtendedLength);
+               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotExist, PathFormat.ExtendedLength);
          }
 
          if (fileSystemEntryInfo == null)
@@ -6310,7 +6310,7 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
 
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(transaction,
-               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(true, false, true, true, false, true))
+               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional)
                , false, PathFormat.ExtendedLength);
          }
 
@@ -6356,7 +6356,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // EncryptionDisable()
          // In the ANSI version of this function, the name is limited to 248 characters.
@@ -6379,7 +6379,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void EncryptDecryptDirectoryInternal(string path, bool encrypt, bool recursive, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          var directoryEnumerationOptions = DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.AsLongPath;
 
@@ -6423,7 +6423,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
 
-            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
             safeHandle = File.CreateFileInternal(transaction, pathLp, ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, FileSystemRights.ReadData, shareMode, true, PathFormat.ExtendedLength);
          }
 
@@ -6653,7 +6653,7 @@ namespace Alphaleonis.Win32.Filesystem
          Array attributes = Enum.GetValues(typeOfAttrs);
          Dictionary<string, long> props = Enum.GetNames(typeOfAttrs).OrderBy(attrs => attrs).ToDictionary<string, string, long>(name => name, name => 0);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, directoryEnumerationOptions, PathFormat.ExtendedLength))
          {

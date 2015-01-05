@@ -6449,8 +6449,8 @@ namespace Alphaleonis.Win32.Filesystem
             Path.CheckValidPath(destFileName, false, false);
          }
 
-         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(transaction, sourceFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, false, false, false));
-         string destFileNameLp = Path.GetExtendedLengthPathInternal(transaction, destFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, false, false, false));
+         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(transaction, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         string destFileNameLp = Path.GetExtendedLengthPathInternal(transaction, destFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
 
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
@@ -6673,9 +6673,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CreateHardlinkInternal(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
       {
-         string fileNameLp = Path.GetExtendedLengthPathInternal(transaction, fileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string fileNameLp = Path.GetExtendedLengthPathInternal(transaction, fileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
-         string existingFileNameLp = Path.GetExtendedLengthPathInternal(transaction, existingFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string existingFileNameLp = Path.GetExtendedLengthPathInternal(transaction, existingFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -6714,9 +6714,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CreateSymbolicLinkInternal(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
-         string symlinkFileNameLp = Path.GetExtendedLengthPathInternal(transaction, symlinkFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string symlinkFileNameLp = Path.GetExtendedLengthPathInternal(transaction, symlinkFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
-         string targetFileNameLp = Path.GetExtendedLengthPathInternal(transaction, targetFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string targetFileNameLp = Path.GetExtendedLengthPathInternal(transaction, targetFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -6768,7 +6768,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (pathFormat == PathFormat.Auto)
             Path.CheckValidPath(path, true, true);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(true, false, true, false, false, false));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          // If the path points to a symbolic link, the symbolic link is deleted, not the target.
 
@@ -6862,7 +6862,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void EncryptDecryptFileInternal(bool isFolder, string path, bool encrypt, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // Reset file/directory attributes.
          // MSDN: If lpFileName specifies a read-only file, the function fails and GetLastError returns ERROR_FILE_READ_ONLY.
@@ -6911,7 +6911,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // Default buffer length, will be extended if needed, although this should not happen.
          uint length = NativeMethods.MaxPathUnicode;
@@ -7031,7 +7031,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(true, false, true, true, true, false));
+            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd |  GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);               
 
             var data = new NativeMethods.Win32FileAttributeData();
             int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
@@ -7227,7 +7227,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (privilegeEnabler)
          {
-            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
             IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
             SafeGlobalMemoryBufferHandle pSecurityDescriptor;
@@ -7292,7 +7292,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (pathFormat == PathFormat.Auto)
             Path.CheckValidPath(path, true, true);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, false));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
          var data = new NativeMethods.Win32FileAttributeData();
          int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
@@ -7327,7 +7327,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (pathFormat != PathFormat.ExtendedLength && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          uint fileSizeHigh;
          uint fileSizeLow = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -7381,7 +7381,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (pathFormat != PathFormat.ExtendedLength && Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
 
-            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
             safeHandle = CreateFileInternal(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, PathFormat.ExtendedLength);
          }
@@ -7474,7 +7474,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (pathFormat != PathFormat.ExtendedLength && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          FileEncryptionStatus status;
 
@@ -7613,7 +7613,7 @@ namespace Alphaleonis.Win32.Filesystem
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
             safeHandle = CreateFileInternal(transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, PathFormat.ExtendedLength);
          }
@@ -7812,10 +7812,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void ReplaceInternal(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
-         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(null, sourceFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
-         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(null, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
          // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
-         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationBackupFileName, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationBackupFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          const int replacefileWriteThrough = 1;
          const int replacefileIgnoreMergeErrors = 2;
@@ -7875,7 +7875,7 @@ namespace Alphaleonis.Win32.Filesystem
          byte[] managedDescriptor = objectSecurity.GetSecurityDescriptorBinaryForm();
          using (SafeGlobalMemoryBufferHandle hDescriptor = new SafeGlobalMemoryBufferHandle(managedDescriptor.Length))
          {
-            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, false));
+            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
             hDescriptor.CopyFrom(managedDescriptor, 0, managedDescriptor.Length);
 
@@ -7999,7 +7999,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(false, false, true, true, false, true));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 

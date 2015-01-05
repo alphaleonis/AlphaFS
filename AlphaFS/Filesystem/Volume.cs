@@ -738,7 +738,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeMountPoint");
 
          // The string must end with a trailing backslash ('\').
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, new GetFullPathInternalArgs(false, true, false, true, false, false));
+         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);            
 
          StringBuilder volumeGuid = new StringBuilder(100);
          StringBuilder uniqueName = new StringBuilder(100);
@@ -861,7 +861,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetFullPathInternal(null, path, true, new GetFullPathInternalArgs(false, false, false, true, false, true));
+         string pathLp = Path.GetFullPathInternal(null, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
          StringBuilder volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode);
          bool getOk;
          int lastError;
@@ -1010,9 +1010,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
-
-
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, new GetFullPathInternalArgs(false, true, false, true, false, true));
+         
+         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // This string must be of the form "\\?\Volume{GUID}\"
          volumeGuid = Path.AddDirectorySeparator(volumeGuid, false);

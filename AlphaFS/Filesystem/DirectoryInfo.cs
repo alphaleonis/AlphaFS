@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
          IsDirectory = true;
          Transaction = transaction;
 
-         LongFullName = Path.GetLongPathInternal(fullPath, new GetFullPathInternalArgs(false, false, false, false));
+         LongFullName = Path.GetLongPathInternal(fullPath, GetFullPathOptions.None);
 
          OriginalPath = Path.GetFileName(fullPath, true);
 
@@ -1590,7 +1590,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private CopyMoveResult CopyToMoveToInternal(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {
-         string destinationPathLp = Path.GetExtendedLengthPathInternal(null, destinationPath, pathFormat, new GetFullPathInternalArgs(true, false, true, true, false, true));
+         string destinationPathLp = Path.GetExtendedLengthPathInternal(null, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
          longFullPath = destinationPathLp;
 
          // Returns false when CopyMoveProgressResult is PROGRESS_CANCEL or PROGRESS_STOP.
@@ -1630,7 +1630,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = Path.CombineInternal(false, LongFullName, path);
          string templatePathLp = templatePath == null ? null : 
-            Path.GetExtendedLengthPathInternal(Transaction, templatePath, PathFormat.Auto, new GetFullPathInternalArgs(true, false, true, false, false, false));
+            Path.GetExtendedLengthPathInternal(Transaction, templatePath, PathFormat.Auto, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          if (string.Compare(LongFullName, 0, pathLp, 0, LongFullName.Length, StringComparison.OrdinalIgnoreCase) != 0)
             throw new ArgumentException("Invalid SubPath", pathLp);

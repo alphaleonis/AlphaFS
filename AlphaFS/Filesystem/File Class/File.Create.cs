@@ -297,7 +297,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       ///  <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in path.</returns>      
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "False positive")]
       [SecurityCritical]
@@ -365,7 +364,7 @@ namespace Alphaleonis.Win32.Filesystem
          // the path string should be the following form: "\\.\X:"
          // Do not use a trailing backslash (\), which indicates the root.
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, new GetFullPathInternalArgs(true, false, true, false, false, false));
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          PrivilegeEnabler privilegeEnabler = null;
          try

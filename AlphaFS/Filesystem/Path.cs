@@ -34,102 +34,10 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   [Flags]
-   internal enum GetFullPathOptions
-   {
-      TrimEnd = 1,
-      AddTrailingDirectorySeparator = 2,
-      RemoveTrailingDirectorySeparator = 4,
-      ContinueOnNonExist = 8,
-      CheckInvalidPathChars = 16,
-      CheckAdditional = 32
-   }
-
-   internal struct GetFullPathInternalArgs
-   {
-      private bool m_trimEnd;
-      private bool m_addDirectorySeparator;
-      private bool m_removeDirectorySeparator;
-      private bool m_continueOnNotExist;
-      private bool m_checkInvalidPathChars;
-      private bool m_checkAdditional;
-      /// <summary>
-      /// Summary for GetFullPathInternalArgs
-      /// </summary>
-      /// <param name="trimEnd"></param>
-      /// <param name="addDirectorySeparator"></param>
-      /// <param name="removeDirectorySeparator"></param>
-      /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
-      /// <param name="continueOnNotExist">
-      /// </param>
-      /// <param name="checkAdditional"></param>      
-      public GetFullPathInternalArgs(bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator, bool checkInvalidPathChars, bool continueOnNotExist, bool checkAdditional)
-      {
-         m_trimEnd = trimEnd;
-         m_addDirectorySeparator = addDirectorySeparator;
-         m_removeDirectorySeparator = removeDirectorySeparator;
-         m_continueOnNotExist = continueOnNotExist;
-         m_checkInvalidPathChars = checkInvalidPathChars;
-         m_checkAdditional = checkAdditional;
-      }
-
-      public GetFullPathInternalArgs(bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator, bool checkInvalidPathChars)
-         : this(trimEnd, addDirectorySeparator, removeDirectorySeparator, checkInvalidPathChars, false, false)
-      {
-      }
-
-      public bool TrimEnd
-      {
-         get
-         {
-            return m_trimEnd;
-         }
-      }
-      public bool AddDirectorySeparator
-      {
-         get
-         {
-            return m_addDirectorySeparator;
-         }
-      }
-      public bool RemoveDirectorySeparator
-      {
-         get
-         {
-            return m_removeDirectorySeparator;
-         }
-      }
-      /// <summary>
-      ///
-      ///
-      /// </summary>
-      public bool ContinueOnNotExist
-      {
-         get
-         {
-            return m_continueOnNotExist;
-         }
-      }
-      /// <summary>
-      /// Checks that the path contains only valid path-characters.
-      /// </summary>
-      public bool CheckInvalidPathChars
-      {
-         get
-         {
-            return m_checkInvalidPathChars;
-         }
-      }
-      public bool CheckAdditional
-      {
-         get
-         {
-            return m_checkAdditional;
-         }
-      }
-   }
-   
-/// <summary>Performs operations on String instances that contain file or directory path information. These operations are performed in a cross-platform manner.</summary>
+   /// <summary>
+   ///   Performs operations on String instances that contain file or directory path information. These operations are performed in a cross-
+   ///   platform manner.
+   /// </summary>
    public static class Path
    {
       #region Methods
@@ -469,7 +377,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(null, path, false, new GetFullPathInternalArgs(false, false, false, false, false, false));
+         return GetFullPathInternal(null, path, false, GetFullPathOptions.None);
       }
 
       #endregion // .NET
@@ -504,7 +412,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(null, path, asLongPath, new GetFullPathInternalArgs(false, false, false, true, false, true));
+         return GetFullPathInternal(null, path, asLongPath, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -537,9 +445,9 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(null, path, asLongPath, new GetFullPathInternalArgs(false, addDirectorySeparator, removeDirectorySeparator, true, false, true));
+         return GetFullPathInternal(null, path, asLongPath, (addDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
       }
-      
+
       #region Transacted
 
       #region .NET
@@ -575,7 +483,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(transaction, path, false, new GetFullPathInternalArgs(false, false, false, false, false, false));
+         return GetFullPathInternal(transaction, path, false, GetFullPathOptions.None);
       }
 
       #endregion // .NET
@@ -609,7 +517,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(transaction, path, asLongPath, new GetFullPathInternalArgs(false, false, false, true, false, true));
+         return GetFullPathInternal(transaction, path, asLongPath, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -643,7 +551,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(transaction, path, asLongPath, new GetFullPathInternalArgs(false, addDirectorySeparator, removeDirectorySeparator, true, false, true));
+         return GetFullPathInternal(transaction, path, asLongPath, (addDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars);
       }
 
       #endregion Transacted
@@ -948,7 +856,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // AddDirectorySeparator
-      
+
       #region GetDirectoryNameWithoutRoot
 
       /// <summary>
@@ -1029,7 +937,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetLongPath(string path)
       {
-         return GetLongPathInternal(path, new GetFullPathInternalArgs(false, false, false, false));
+         return GetLongPathInternal(path, GetFullPathOptions.None);
       }
 
       #endregion // GetLongPath
@@ -1214,7 +1122,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transacted
 
       #endregion // GetSuffixedDirectoryNameWithoutRoot
-      
+
       #region IsLocalPath
 
       /// <summary>[AlphaFS] Determines whether the specified path is a local path.</summary>
@@ -1369,7 +1277,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // LocalToUnc
-      
+
       #region RemoveDirectorySeparator
 
       /// <summary>[AlphaFS] Removes the <see cref="DirectorySeparatorChar"/> character from the string.</summary>
@@ -1465,7 +1373,7 @@ namespace Alphaleonis.Win32.Filesystem
                case 60:    // <  (less than)
                case 62:    // >  (greater than)
                case 124:   // |  (pipe)
-                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.IllegalCharactersInPath, (char) num), pathRp);
+                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.IllegalCharactersInPath, (char)num), pathRp);
 
                default:
                   // 32: space
@@ -1587,14 +1495,14 @@ namespace Alphaleonis.Win32.Filesystem
             ? c == DirectorySeparatorChar || c == AltDirectorySeparatorChar || c == VolumeSeparatorChar
 
             // Check for some separator characters.
-            : ((bool) checkSeparatorChar
+            : ((bool)checkSeparatorChar
                ? c == VolumeSeparatorChar
                : c == DirectorySeparatorChar || c == AltDirectorySeparatorChar);
       }
 
       #endregion // IsDVsc
 
-      internal static string GetExtendedLengthPathInternal(KernelTransaction transaction, string sourcePath, PathFormat pathFormat, GetFullPathInternalArgs options)
+      internal static string GetExtendedLengthPathInternal(KernelTransaction transaction, string sourcePath, PathFormat pathFormat, GetFullPathOptions options)
       {
          switch (pathFormat)
          {
@@ -1602,11 +1510,11 @@ namespace Alphaleonis.Win32.Filesystem
                return sourcePath;
 
             case PathFormat.Standard:
-               return Path.GetLongPathInternal(sourcePath, new GetFullPathInternalArgs(false, false, false, false));
+               return Path.GetLongPathInternal(sourcePath, GetFullPathOptions.None);
 
             case PathFormat.Auto:
 #if NET35
-               pathLp = Path.GetFullPathInternal(transaction, path, true, options);
+               return Path.GetFullPathInternal(transaction, sourcePath, true, options);
 #else
                // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before deleting the directory.
                return Path.GetFullPathInternal(transaction, sourcePath, true, options);
@@ -1742,7 +1650,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string GetFinalPathNameByHandleInternal(SafeFileHandle handle, FinalPathFormats finalPath)
       {
          NativeMethods.IsValidHandle(handle);
-         
+
          StringBuilder buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
 
@@ -1751,7 +1659,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (NativeMethods.IsAtLeastWindowsVista)
             {
-               if (NativeMethods.GetFinalPathNameByHandle(handle, buffer, (uint) buffer.Capacity, finalPath) == Win32Errors.ERROR_SUCCESS)
+               if (NativeMethods.GetFinalPathNameByHandle(handle, buffer, (uint)buffer.Capacity, finalPath) == Win32Errors.ERROR_SUCCESS)
                   // Throws IOException.
                   NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
 
@@ -1760,7 +1668,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          #region Older OperatingSystem
-         
+
          // Obtaining a File Name From a File Handle
          // http://msdn.microsoft.com/en-us/library/aa366789%28VS.85%29.aspx
 
@@ -1774,7 +1682,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (fileSizeHi == 0)
                return string.Empty;
 
-         
+
          // PAGE_READONLY
          // Allows views to be mapped for read-only or copy-on-write access. An attempt to write to a specific region results in an access violation.
          // The file handle that the hFile parameter specifies must be created with the GENERIC_READ access right.
@@ -1788,7 +1696,7 @@ namespace Alphaleonis.Win32.Filesystem
             using (SafeLocalMemoryBufferHandle pMem = NativeMethods.MapViewOfFile(handle2, 4, 0, 0, (UIntPtr)1))
             {
                if (NativeMethods.IsValidHandle(pMem, Marshal.GetLastWin32Error()))
-                  if (NativeMethods.GetMappedFileName(Process.GetCurrentProcess().Handle, pMem, buffer, (uint) buffer.Capacity))
+                  if (NativeMethods.GetMappedFileName(Process.GetCurrentProcess().Handle, pMem, buffer, (uint)buffer.Capacity))
                      NativeMethods.UnmapViewOfFile(pMem);
             }
          }
@@ -1852,14 +1760,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular
       ///   path.
       /// </param>
-      /// <param name="trimEnd"><see langword="true"/> removes trailing whitespace from <paramref name="path"/>.</param>
-      /// <param name="addDirectorySeparator"><see langword="true"/> adds a directory separator to that path.</param>
-      /// <param name="removeDirectorySeparator"><see langword="true"/> removes any directory separator to that path.</param>
-      /// <param name="continueOnNotExist">
-      ///   <see langword="true"/> does not throw an Exception when the file system object does not exist.
-      /// </param>
-      /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
-      /// <param name="checkAdditional"><see langword="true"/> also checks for ? and * characters.</param>
+      /// <param name="options">Options for controlling the operation.</param>
       /// <returns>Returns the fully qualified location of <paramref name="path"/>, such as "C:\MyFile.txt".</returns>
       ///
       /// <exception cref="ArgumentException">
@@ -1867,27 +1768,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// </exception>
       /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       [SecurityCritical]
-      internal static string GetFullPathInternal(KernelTransaction transaction, 
-                                                 string path, 
+      internal static string GetFullPathInternal(KernelTransaction transaction,
+                                                 string path,
                                                  bool asLongPath,
-                                                 GetFullPathInternalArgs options)
+                                                 GetFullPathOptions options)
       {
-         if (options.CheckInvalidPathChars)
-            CheckInvalidPathChars(path, options.CheckAdditional);
+         if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
+            CheckInvalidPathChars(path, (options & GetFullPathOptions.CheckAdditional) != 0);
 
          // Do not remove DirectorySeparator when path points to a drive like: "C:\"
          // In this case, removing DirectorySeparator will point to the current directory.
 
-         string pathLp = GetLongPathInternal(path, new GetFullPathInternalArgs(options.TrimEnd, options.AddDirectorySeparator, options.RemoveDirectorySeparator && path != null && path.Length > 3 && path[1] == VolumeSeparatorChar, false));
+         if (path == null || path.Length <= 3 || path[1] != VolumeSeparatorChar)
+         {
+            options &= ~GetFullPathOptions.RemoveTrailingDirectorySeparator;
+         }
 
-         uint bufferSize = NativeMethods.MaxPathUnicode/32;
+         string pathLp = GetLongPathInternal(path, options);
+
+         uint bufferSize = NativeMethods.MaxPathUnicode / 32;
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
-            startGetFullPathName:
+         startGetFullPathName:
 
-            StringBuilder buffer = new StringBuilder((int) bufferSize);
+            StringBuilder buffer = new StringBuilder((int)bufferSize);
             uint returnLength = (transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
                // GetFullPathName() / GetFullPathNameTransacted()
@@ -1908,14 +1814,14 @@ namespace Alphaleonis.Win32.Filesystem
             }
             else
             {
-               if (options.ContinueOnNotExist)
+               if ((options & GetFullPathOptions.ContinueOnNonExist) != 0)
                   return null;
 
                NativeError.ThrowException(pathLp);
             }
-            
+
             return asLongPath
-               ? GetLongPathInternal(buffer.ToString(), new GetFullPathInternalArgs(false, false, false, false))
+               ? GetLongPathInternal(buffer.ToString(), GetFullPathOptions.None)
                : GetRegularPathInternal(buffer.ToString(), false, false, false, false);
          }
       }
@@ -1936,15 +1842,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
       /// </exception>
       /// <param name="path">The path to the file or directory, this may also be an UNC path.</param>
-      /// <param name="trimEnd"><see langword="true"/> removes trailing whitespace from <paramref name="path"/>.</param>
-      /// <param name="addDirectorySeparator"><see langword="true"/> adds a directory separator to that path.</param>
-      /// <param name="removeDirectorySeparator"><see langword="true"/> removes any directory separator to that path.</param>
-      /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
+      /// <param name="options">Options for controlling the operation.</param>
       /// <returns>Returns the <paramref name="path"/> as a long path, such as "\\?\C:\MyFile.txt".</returns>
       [SecurityCritical]
-      internal static string GetLongPathInternal(string path, GetFullPathInternalArgs options)
+      internal static string GetLongPathInternal(string path, GetFullPathOptions options)
       {
-         if (options.CheckInvalidPathChars)
+         if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
             CheckInvalidPathChars(path, false);
          else
          {
@@ -1954,7 +1857,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
          }
-         
+
          // MSDN: Notes to Callers
          // http://msdn.microsoft.com/en-us/library/system.string.trimend%28v=vs.110%29.aspx
          //
@@ -1965,9 +1868,14 @@ namespace Alphaleonis.Win32.Filesystem
          // that the Trim() method in the .NET Framework 4 and later versions does not remove. In addition, the Trim() method in the .NET Framework 3.5 SP1 and earlier versions
          // does not trim three Unicode white-space characters: MONGOLIAN VOWEL SEPARATOR (U+180E), NARROW NO-BREAK SPACE (U+202F), and MEDIUM MATHEMATICAL SPACE (U+205F).
 
-         if (options.TrimEnd) path = path.TrimEnd();
-         if (options.AddDirectorySeparator) path = AddDirectorySeparator(path, false);
-         if (options.RemoveDirectorySeparator) path = RemoveDirectorySeparator(path, false);
+         if ((options & GetFullPathOptions.TrimEnd) != 0)
+            path = path.TrimEnd();
+
+         if ((options & GetFullPathOptions.AddTrailingDirectorySeparator) != 0)
+            path = AddDirectorySeparator(path, false);
+
+         if ((options & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0)
+            path = RemoveDirectorySeparator(path, false);
 
          if (path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) ||
              path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
@@ -2005,14 +1913,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static string GetLongShort83PathInternal(KernelTransaction transaction, string path, bool getShort)
       {
-         string pathLp = GetFullPathInternal(transaction, path, true, new GetFullPathInternalArgs(trimEnd: false, addDirectorySeparator: false, removeDirectorySeparator: false, checkInvalidPathChars: true, continueOnNotExist: false, checkAdditional: true));
+         string pathLp = GetFullPathInternal(transaction, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          StringBuilder buffer = new StringBuilder();
-         uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint) path.Length;
+         uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint)path.Length;
 
          while (actualLength > buffer.Capacity)
          {
-            buffer = new StringBuilder((int) actualLength);
+            buffer = new StringBuilder((int)actualLength);
             actualLength = getShort
 
                // GetShortPathName()
@@ -2020,22 +1928,22 @@ namespace Alphaleonis.Win32.Filesystem
                // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
                // 2014-01-29: MSDN confirms LongPath usage.
 
-               ? NativeMethods.GetShortPathName(pathLp, buffer, (uint) buffer.Capacity)
+               ? NativeMethods.GetShortPathName(pathLp, buffer, (uint)buffer.Capacity)
                : transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
                   // GetLongPathName()
-                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-                  // 2014-01-29: MSDN confirms LongPath usage.
+               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2014-01-29: MSDN confirms LongPath usage.
 
-                  ? NativeMethods.GetLongPathName(pathLp, buffer, (uint) buffer.Capacity)
-                  : NativeMethods.GetLongPathNameTransacted(pathLp, buffer, (uint) buffer.Capacity, transaction.SafeHandle);
+                  ? NativeMethods.GetLongPathName(pathLp, buffer, (uint)buffer.Capacity)
+                  : NativeMethods.GetLongPathNameTransacted(pathLp, buffer, (uint)buffer.Capacity, transaction.SafeHandle);
 
             if (actualLength == Win32Errors.ERROR_SUCCESS)
                NativeError.ThrowException(pathLp);
          }
 
-         return GetRegularPathInternal(buffer.ToString(), false, false, false, false); 
+         return GetRegularPathInternal(buffer.ToString(), false, false, false, false);
       }
 
       #endregion // GetLongShort83PathInternal
@@ -2089,15 +1997,15 @@ namespace Alphaleonis.Win32.Filesystem
          if (addDirectorySeparator)
             path = AddDirectorySeparator(path, false);
 
-         
+
          if (!path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase))
             return path;
 
-         
+
          if (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase))
             return UncPrefix + path.Substring(LongPathUncPrefix.Length);
 
-         
+
          return path.Substring(LongPathPrefix.Length);
       }
 
@@ -2196,7 +2104,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string LocalToUncInternal(string localPath, bool asLongPath, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator)
       {
          localPath = (localPath[0] == CurrentDirectoryPrefixChar) || !IsPathRooted(localPath, false)
-            ? GetFullPathInternal(null, localPath, asLongPath, new GetFullPathInternalArgs(trimEnd, addDirectorySeparator, removeDirectorySeparator, true, false, true))
+            ? GetFullPathInternal(null, localPath, asLongPath, (trimEnd ? GetFullPathOptions.TrimEnd : 0) | (addDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars)
             : GetRegularPathInternal(localPath, trimEnd, addDirectorySeparator, removeDirectorySeparator, true);
 
          if (IsUncPath(localPath, false))
@@ -2207,7 +2115,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(drive))
             return null;
 
-         
+
          Network.NativeMethods.RemoteNameInfo unc = Host.GetRemoteNameInfoInternal(drive, true);
 
          if (!Utils.IsNullOrWhiteSpace(unc.ConnectionName))
@@ -2252,7 +2160,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   PathSeparator = ';' A platform-specific separator character used to separate path strings in environment variables.
       /// </summary>
       public static readonly char PathSeparator = System.IO.Path.PathSeparator;
-      
+
       /// <summary>VolumeSeparatorChar = ':' Provides a platform-specific Volume Separator character.</summary>
       public static readonly char VolumeSeparatorChar = System.IO.Path.VolumeSeparatorChar;
 

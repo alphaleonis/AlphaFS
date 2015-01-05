@@ -53,10 +53,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Specifies whether to search the current directory, or the current directory and all subdirectories.</summary>
       Recursive = 32,
 
-      /// <summary>Enumerate directory using the <see cref="NativeMethods.FindExInfoLevels.Basic"/> option.</summary>
+      /// <summary>Enumerate directory using the FindExInfoLevels.Basic option.</summary>
       BasicSearch = 64,
 
-      /// <summary>Enumerate directory using the <see cref="NativeMethods.FindExAdditionalFlags.LargeFetch"/> option.</summary>
+      /// <summary>Enumerate directory using the NativeMethods.FindExAdditionalFlags.LargeFetch option.</summary>
       LargeCache = 128
    }
 }

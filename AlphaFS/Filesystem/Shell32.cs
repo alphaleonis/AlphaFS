@@ -725,7 +725,7 @@ namespace Alphaleonis.Win32.Filesystem
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-         return NativeMethods.PathFileExists(Path.GetFullPathInternal(null, path, true, new GetFullPathInternalArgs(false, false, false, true, true, true)));
+         return NativeMethods.PathFileExists(Path.GetFullPathInternal(null, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional | GetFullPathOptions.ContinueOnNonExist));            
       }
 
       #endregion // PathFileExists
