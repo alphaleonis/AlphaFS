@@ -198,12 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The full path and name of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (pathFormat == PathFormat.Auto)

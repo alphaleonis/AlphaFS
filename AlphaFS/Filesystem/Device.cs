@@ -396,11 +396,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
       /// <param name="compress"><see langword="true"/> = compress, <see langword="false"/> = decompress</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       
       [SecurityCritical]
       internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)

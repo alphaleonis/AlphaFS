@@ -621,11 +621,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves an instance of <see cref="Shell32Info"/> containing information about the specified file.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="Shell32Info"/> class instance.</returns>
       [SecurityCritical]
       public static Shell32Info GetShell32Info(string path, PathFormat pathFormat)

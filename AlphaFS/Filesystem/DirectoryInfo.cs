@@ -56,11 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
       /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       public DirectoryInfo(string path, PathFormat pathFormat) : this(null, path, pathFormat)
       {
@@ -102,11 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       public DirectoryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
@@ -875,11 +867,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public DirectoryInfo CopyTo1(string destinationPath, PathFormat pathFormat)
       {
@@ -904,11 +892,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public DirectoryInfo CopyTo1(string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
@@ -940,11 +924,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
@@ -975,11 +955,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
@@ -1413,11 +1389,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
       /// </param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public DirectoryInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
@@ -1455,11 +1427,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
@@ -1618,11 +1586,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="longFullPath">Returns the retrieved long full path.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       private CopyMoveResult CopyToMoveToInternal(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {

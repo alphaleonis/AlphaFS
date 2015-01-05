@@ -56,11 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(string fileName, PathFormat pathFormat) : this(null, fileName, pathFormat)
       {
@@ -80,11 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(KernelTransaction transaction, string fileName, PathFormat pathFormat)
       {
@@ -213,12 +205,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   behavior.</para>
       /// </remarks>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       ///
       /// <exception cref="ArgumentException">
@@ -249,12 +236,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="overwrite">
       ///   <see langword="true"/> to allow an existing file to be overwritten; otherwise, <see langword="false"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <see langword="true"/>.</para>
       ///   <para>If the file exists and <paramref name="overwrite"/> is <see langword="false"/>, an <see cref="IOException"/> is thrown.</para>
@@ -705,14 +687,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="true"/> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file;
       ///   otherwise, <see langword="false"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> will be
-      ///   checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is already an
-      ///   absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="FileInfo"/> object that encapsulates information about the file described by the
       ///   <paramref name="destinationFileName"/> parameter.
@@ -842,12 +817,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
       ///   <see cref="CopyOptions.FailIfExists"/>.</para>
@@ -888,12 +858,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates">
       ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
       ///   <see cref="CopyOptions.FailIfExists"/>.</para>
@@ -937,12 +902,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       ///   <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully copied.</para>
@@ -986,12 +946,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
@@ -1042,12 +997,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
@@ -1390,13 +1340,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions">
       ///   <see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as
-      ///   is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns><para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para></returns>
       ///
       /// <exception cref="ArgumentException">
@@ -1443,13 +1387,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as
-      ///   is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       ///
       /// <exception cref="ArgumentException">
@@ -1630,12 +1568,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This parameter can be <see langword="null"/>. The argument to be passed to the callback function.</para>
       /// </param>
       /// <param name="longFullPath">[out] Returns the retrieved long full path.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       ///
       /// <exception cref="ArgumentException">

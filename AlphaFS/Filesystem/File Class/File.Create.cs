@@ -76,13 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates or overwrites a file in the specified path.</summary>
       /// <param name="path">The path and name of the file to create.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="FileStream"/> that provides read/write access to the file specified in
       ///   <paramref name="path"/>.
@@ -96,13 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Creates or overwrites the specified file.</summary>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="FileStream"/> with the specified buffer size that provides read/write access to the file specified in
       ///   <paramref name="path"/>.
@@ -125,14 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   One of the <see cref="FileOptions"/> values that describes how to create or overwrite the
       ///   file.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A new file with the specified buffer size.</returns>
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, PathFormat pathFormat)
@@ -156,14 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   One of the <see cref="FileSecurity"/> values that determines the access control and audit
       ///   security for the file.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A new file with the specified buffer size, file options, and file security.
       /// </returns>
@@ -242,13 +216,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Creates or overwrites a file in the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file to create.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="FileStream"/> that provides read/write access to the file specified in
       ///   <paramref name="path"/>.
@@ -263,13 +231,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="FileStream"/> with the specified buffer size that provides read/write access to the file specified in
       ///   <paramref name="path"/>.
@@ -288,13 +250,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the file.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <param name="options">One of the <see cref="FileOptions"/> values that describes how to create or overwrite the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A new file with the specified buffer size.</returns>
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, PathFormat pathFormat)
@@ -313,13 +269,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileSecurity">
       ///   One of the <see cref="FileSecurity"/> values that determines the access control and audit security for the file.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, PathFormat pathFormat)
@@ -347,12 +297,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       ///  <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in path.</returns>      
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "False positive")]
       [SecurityCritical]
@@ -398,13 +343,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="FileShare"/> constant that determines how the file or directory will be shared by processes.
       /// </param>
       /// <param name="checkPath">.</param>
-      /// <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>      
       /// <returns>
       ///   Returns a <see cref="SafeFileHandle"/> that provides read/write access to the file or directory specified by
       ///   <paramref name="path"/>.

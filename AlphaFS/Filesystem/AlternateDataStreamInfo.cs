@@ -82,11 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The originalName of the stream.</param>
       /// <param name="originalName">The alternative data stream name originally specified by the user.</param>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory. <see langword="null"/> to retrieve automatically.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       private AlternateDataStreamInfo(NativeMethods.Win32StreamId stream, KernelTransaction transaction, string path, string name, string originalName, bool? isFolder, PathFormat pathFormat)
       {
          if (Utils.IsNullOrWhiteSpace(path))
@@ -243,11 +239,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file or directory.</param>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "StreamWriter() disposes of FileStream() object.")]
       [SecurityCritical]
       internal static void AddStreamInternal(bool isFolder, KernelTransaction transaction, string path, string name, IEnumerable<string> contents, PathFormat pathFormat)
@@ -287,14 +279,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="originalName">The name of the stream to retrieve.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file or
       ///   directory specified by path.
@@ -435,11 +420,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a file. Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</param>
       /// <param name="name">The name of the stream to retrieve or <see langword="null"/> to retrieve all streams.</param>
       /// <param name="streamType">The type of stream to retrieve or <see langword="null"/> to retrieve all streams.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The actual number of bytes of disk storage used by all or a specific alternate data streams (NTFS ADS).</returns>
       [SecurityCritical]
       public static long GetStreamSizeInternal(bool? isFolder, KernelTransaction transaction, SafeFileHandle handle, string path, string name, StreamType? streamType, PathFormat pathFormat)
@@ -458,11 +439,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file or directory.</param>
       /// <param name="name">The name of the stream to remove. When <see langword="null"/> all ADS are removed.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.
       /// No Exception is thrown if the stream does not exist.</remarks>      
       [SecurityCritical]

@@ -34,6 +34,17 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
+   [Flags]
+   internal enum GetFullPathOptions
+   {
+      TrimEnd = 1,
+      AddTrailingDirectorySeparator = 2,
+      RemoveTrailingDirectorySeparator = 4,
+      ContinueOnNonExist = 8,
+      CheckInvalidPathChars = 16,
+      CheckAdditional = 32
+   }
+
    internal struct GetFullPathInternalArgs
    {
       private bool m_trimEnd;

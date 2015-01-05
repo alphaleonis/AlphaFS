@@ -49,11 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       /// </summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       public Shell32Info(string fileName, PathFormat pathFormat)
       {
          if (Utils.IsNullOrWhiteSpace(fileName))
