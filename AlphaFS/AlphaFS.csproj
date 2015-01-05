@@ -219,6 +219,7 @@
     <Compile Include="Filesystem\File Class\File.GetEncryptionStatus.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileInfoByHandleC.cs" />
     <Compile Include="Filesystem\File Class\File.GetFileSystemEntryInfo.cs" />
+    <Compile Include="Filesystem\File Class\File.GetLinkTargetInfo.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />
