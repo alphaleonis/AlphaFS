@@ -202,6 +202,7 @@
     <Compile Include="Filesystem\File Class\File.ReadAllBytes.cs" />
     <Compile Include="Filesystem\File Class\File.ReadAllLines.cs" />
     <Compile Include="Filesystem\File Class\File.ReadAllText.cs" />
+    <Compile Include="Filesystem\File Class\File.ReadLines.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />
