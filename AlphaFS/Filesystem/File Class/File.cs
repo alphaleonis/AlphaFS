@@ -38,7 +38,6 @@ using StreamWriter = System.IO.StreamWriter;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-
    /// <summary>Provides static methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="FileStream"/> objects.
    /// <para>This class cannot be inherited.</para>
    /// </summary>
@@ -47,171 +46,11 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region .NET
 
-      #region GetLastWriteTime
+      
 
-      #region .NET
+      
 
-      /// <summary>Gets the date and time that the specified file was last written to.</summary>
-      /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
-      ///   expressed in local time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetLastWriteTime(string path)
-      {
-         return GetLastWriteTimeInternal(null, path, false, PathFormat.Auto).ToLocalTime();
-      }
 
-      #endregion //.NET
-
-      #region AlphaFS
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
-      /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
-      ///   expressed in local time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetLastWriteTime(string path, PathFormat pathFormat)
-      {
-         return GetLastWriteTimeInternal(null, path, false, pathFormat).ToLocalTime();
-      }
-
-      #endregion // IsFullPath
-
-      #region Transacted
-
-      #region .NET
-
-      /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
-      ///   expressed in local time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path)
-      {
-         return GetLastWriteTimeInternal(transaction, path, false, PathFormat.Auto).ToLocalTime();
-      }
-
-      #endregion // .NET
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
-      ///   expressed in local time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return GetLastWriteTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
-      }
-
-      #endregion // IsFullPath
-
-      #endregion // Transacted
-
-      #endregion // AlphaFS
-
-      #endregion // GetLastWriteTime
-
-      #region GetLastWriteTimeUtc
-
-      #region .NET
-
-      /// <summary>Gets the date and time, in coordinated universal time (UTC) time, that the specified file was last written to.</summary>
-      /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
-      ///   expressed in UTC time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(string path)
-      {
-         return GetLastWriteTimeInternal(null, path, true, PathFormat.Auto);
-      }
-
-      #endregion // .NET
-
-      #region AlphaFS
-
-      #region IsFullPath
-
-      /// <summary>
-      ///   [AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified file was last written to.
-      /// </summary>
-      /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
-      ///   expressed in UTC time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(string path, PathFormat pathFormat)
-      {
-         return GetLastWriteTimeInternal(null, path, true, pathFormat);
-      }
-
-      #endregion // IsFullPath
-
-      #region Transacted
-
-      #region .NET
-
-      /// <summary>
-      ///   [AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified file was last written to.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
-      ///   expressed in UTC time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path)
-      {
-         return GetLastWriteTimeInternal(transaction, path, true, PathFormat.Auto);
-      }
-
-      #endregion // .NET
-
-      #region IsFullPath
-
-      /// <summary>
-      ///   [AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified file was last written to.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
-      ///   expressed in UTC time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return GetLastWriteTimeInternal(transaction, path, true, pathFormat);
-      }
-
-      #endregion // IsFullPath
-
-      #endregion // Transacted
-
-      #endregion // AlphaFS
-
-      #endregion // GetLastWriteTimeUtc
 
       #region Open
 
@@ -4397,33 +4236,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       
 
-      #region GetLastWriteTimeUtcInternal
-
-      /// <summary>
-      ///   [AlphaFS] Gets the date and time, in coordinated universal time (UTC) or local time, that the specified file or directory was last
-      ///   written to.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file or directory for which to obtain write date and time information.</param>
-      /// <param name="getUtc">
-      ///   <see langword="true"/> gets the Coordinated Universal Time (UTC), <see langword="false"/> gets the local time.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file or directory was last written to.
-      ///   Depending on <paramref name="getUtc"/> this value is expressed in UTC- or local time.
-      /// </returns>
-      [SecurityCritical]
-      internal static DateTime GetLastWriteTimeInternal(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
-      {
-         NativeMethods.FileTime lastWriteTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, pathFormat).LastWriteTime;
-
-         return getUtc
-            ? DateTime.FromFileTimeUtc(lastWriteTime)
-            : DateTime.FromFileTime(lastWriteTime);
-      }
-
-      #endregion // GetLastWriteTimeUtcInternal
+      
 
       #region GetLinkTargetInfoInternal
 
