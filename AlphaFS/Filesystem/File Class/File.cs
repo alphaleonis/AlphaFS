@@ -1,4 +1,4 @@
-/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
+      /// <remarks>The method creates the file if it doesnï¿½t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       [SecurityCritical]
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>      
+      /// <remarks>The method creates the file if it doesnï¿½t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>      
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -82,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="path">
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="path">
@@ -127,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
@@ -147,7 +147,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
@@ -171,7 +171,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
@@ -192,7 +192,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
