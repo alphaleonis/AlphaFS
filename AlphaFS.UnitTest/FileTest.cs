@@ -1447,7 +1447,7 @@ namespace AlphaFS.UnitTest
             string report = Reporter();
             Assert.AreEqual(numCreate, (int)bhfi.NumberOfLinks);
 
-            Console.WriteLine("\n\tFileInfoByHandle for Input Path, see property: NumberOfLinks");
+            Console.WriteLine("\n\tByHandleFileInfo for Input Path, see property: NumberOfLinks");
             Dump(bhfi, -18);
             Console.WriteLine("\n{0}", report);
          }
@@ -1854,6 +1854,7 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine();
          Console.WriteLine(Reporter());
+         Assert.IsTrue(allOk);
 
          
          apply = FileAttributes.Normal;
