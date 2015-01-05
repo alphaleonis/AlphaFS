@@ -48,73 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       
 
-      #region GetAttributes
-
-      #region .NET
-
-      /// <summary>Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
-      /// <param name="path">The path to the file.</param>
-      /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
-      [SecurityCritical]
-      public static FileAttributes GetAttributes(string path)
-      {
-         return GetAttributesExInternal<FileAttributes>(null, path, PathFormat.Auto);
-      }
-
-      #endregion // .NET
-
-      #region AlphaFS
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
-      /// <param name="path">The path to the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
-      [SecurityCritical]
-      public static FileAttributes GetAttributes(string path, PathFormat pathFormat)
-      {
-         return GetAttributesExInternal<FileAttributes>(null, path, pathFormat);
-      }
-
-      #endregion // IsFullPath
-
-      #region Transacted
-
-      #region .NET
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file.</param>
-      /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
-      [SecurityCritical]
-      public static FileAttributes GetAttributes(KernelTransaction transaction, string path)
-      {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, PathFormat.Auto);
-      }
-
-      #endregion //.NET
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
-      [SecurityCritical]
-      public static FileAttributes GetAttributes(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, pathFormat);
-      }
-
-      #endregion // IsFullPath
-
-      #endregion // Transacted
-
-      #endregion // AlphaFS
-
-      #endregion GetAttributes
+      
 
       #region GetCreationTime
 
@@ -4604,42 +4538,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion //FillAttributeInfoInternal
 
-      #region GetAttributesExInternal
-
-      /// <summary>
-      ///   [AlphaFS] Gets the <see cref="FileAttributes"/> or <see cref="Alphaleonis.Win32.Filesystem.NativeMethods.Win32FileAttributeData"/>
-      ///   of the specified file or directory.
-      /// </summary>
-      /// <typeparam name="T">Generic type parameter.</typeparam>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path to the file or directory.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   Returns the <see cref="FileAttributes"/> or <see cref="Alphaleonis.Win32.Filesystem.NativeMethods.Win32FileAttributeData"/> of the
-      ///   specified file or directory.
-      /// </returns>
-      [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
-      [SecurityCritical]
-      internal static T GetAttributesExInternal<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         if (pathFormat == PathFormat.Auto)
-            Path.CheckValidPath(path, true, true);
-
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
-
-         var data = new NativeMethods.Win32FileAttributeData();
-         int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
-
-         if (dataInitialised != Win32Errors.ERROR_SUCCESS)
-            // Throws IOException.
-            NativeError.ThrowException(dataInitialised, pathLp, true);
-
-         return (typeof(T) == typeof(FileAttributes)
-            ? (T)(object)data.FileAttributes
-            : (T)(object)data);
-      }
-
-      #endregion // GetAttributesExInternal
+      
 
       #region GetCompressedSizeInternal
 
