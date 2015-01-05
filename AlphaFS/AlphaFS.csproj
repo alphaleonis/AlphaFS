@@ -196,6 +196,7 @@
     <Compile Include="Filesystem\File Class\File.GetAccessControl.cs" />
     <Compile Include="Filesystem\File Class\File.GetAttributes.cs" />
     <Compile Include="Filesystem\File Class\File.GetCreationTime.cs" />
+    <Compile Include="Filesystem\File Class\File.GetLastAccessTime.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />
@@ -326,7 +327,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
