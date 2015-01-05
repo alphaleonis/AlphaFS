@@ -195,6 +195,7 @@
     <Compile Include="Filesystem\File Class\File.Exists.cs" />
     <Compile Include="Filesystem\File Class\File.GetAccessControl.cs" />
     <Compile Include="Filesystem\File Class\File.GetAttributes.cs" />
+    <Compile Include="Filesystem\File Class\File.GetCreationTime.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />

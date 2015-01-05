@@ -38,6 +38,7 @@ using StreamWriter = System.IO.StreamWriter;
 
 namespace Alphaleonis.Win32.Filesystem
 {
+
    /// <summary>Provides static methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="FileStream"/> objects.
    /// <para>This class cannot be inherited.</para>
    /// </summary>
@@ -49,174 +50,6 @@ namespace Alphaleonis.Win32.Filesystem
       
 
       
-
-      #region GetCreationTime
-
-      #region .NET
-
-      /// <summary>Gets the creation date and time of the specified file.</summary>
-      /// <param name="path">The file for which to obtain creation date and time information.</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in
-      ///   local time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetCreationTime(string path)
-      {
-         return GetCreationTimeInternal(null, path, false, PathFormat.Auto).ToLocalTime();
-      }
-
-      #endregion // .NET
-
-      #region AlphaFS
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
-      /// <param name="path">The file for which to obtain creation date and time information.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in
-      ///   local time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetCreationTime(string path, PathFormat pathFormat)
-      {
-         return GetCreationTimeInternal(null, path, false, pathFormat).ToLocalTime();
-      }
-
-      #endregion // IsFullPath
-
-      #region Transacted
-
-      #region .NET
-
-      /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file for which to obtain creation date and time information.</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in
-      ///   local time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetCreationTime(KernelTransaction transaction, string path)
-      {
-         return GetCreationTimeInternal(transaction, path, false, PathFormat.Auto).ToLocalTime();
-      }
-
-      #endregion // .NET
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file for which to obtain creation date and time information.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in
-      ///   local time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetCreationTime(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return GetCreationTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
-      }
-
-      #endregion // IsFullPath
-
-      #endregion // Transacted
-
-      #endregion // AlphaFS
-
-      #endregion // GetCreationTime
-
-      #region GetCreationTimeUtc
-
-      #region .NET
-
-      /// <summary>Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
-      /// <param name="path">
-      ///   The file for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.
-      /// </param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in UTC
-      ///   time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(string path)
-      {
-         return GetCreationTimeInternal(null, path, true, PathFormat.Auto);
-      }
-
-      #endregion // .NET
-
-      #region AlphaFS
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
-      /// <param name="path">
-      ///   The file for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in UTC
-      ///   time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(string path, PathFormat pathFormat)
-      {
-         return GetCreationTimeInternal(null, path, true, pathFormat);
-      }
-
-      #endregion // IsFullPath
-
-      #region Transacted
-
-      #region .NET
-
-      /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">
-      ///   The file for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.
-      /// </param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in UTC
-      ///   time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path)
-      {
-         return GetCreationTimeInternal(transaction, path, true, PathFormat.Auto);
-      }
-
-      #endregion // .NET
-
-      #region IsFullPath
-
-      /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">
-      ///   The file for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in UTC
-      ///   time.
-      /// </returns>
-      [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return GetCreationTimeInternal(transaction, path, true, pathFormat);
-      }
-
-      #endregion // IsFullPath
-
-      #endregion // Transacted
-
-      #endregion // AlphaFS
-
-      #endregion // GetCreationTimeUtc
 
       #region GetLastAccessTime
 
@@ -4667,32 +4500,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetChangeTimeInternal
 
-      #region GetCreationTimeInternal
-
-      /// <summary>
-      ///   [AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) or local time, of the specified file or directory.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file or directory for which to obtain creation date and time information.</param>
-      /// <param name="getUtc">
-      ///   <see langword="true"/> gets the Coordinated Universal Time (UTC), <see langword="false"/> gets the local time.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>
-      ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file or directory. Depending on
-      ///   <paramref name="getUtc"/> this value is expressed in UTC- or local time.
-      /// </returns>
-      [SecurityCritical]
-      internal static DateTime GetCreationTimeInternal(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
-      {
-         NativeMethods.FileTime creationTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, pathFormat).CreationTime;
-
-         return getUtc
-            ? DateTime.FromFileTimeUtc(creationTime)
-            : DateTime.FromFileTime(creationTime);
-      }
-
-      #endregion // GetCreationTimeInternal
+      
 
       #region GetEncryptionStatusInternal
 
