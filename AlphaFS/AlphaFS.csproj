@@ -199,6 +199,7 @@
     <Compile Include="Filesystem\File Class\File.GetLastAccessTime.cs" />
     <Compile Include="Filesystem\File Class\File.GetLastWriteTime.cs" />
     <Compile Include="Filesystem\File Class\File.Open.cs" />
+    <Compile Include="Filesystem\File Class\File.ReadAllBytes.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />
