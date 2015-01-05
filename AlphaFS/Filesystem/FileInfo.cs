@@ -324,7 +324,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decrypt()
       {
-         File.EncryptDecryptFileInternal(false, LongFullName, false, null);
+         File.EncryptDecryptFileInternal(false, LongFullName, false, PathFormat.ExtendedLength);
       }
 
       #endregion // .NET
@@ -341,7 +341,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException">.</exception>
       public override void Delete()
       {
-         File.DeleteFileInternal(Transaction, LongFullName, false, null);
+         File.DeleteFileInternal(Transaction, LongFullName, false, PathFormat.ExtendedLength);
       }
 
       #endregion // .NET
@@ -353,7 +353,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
       public void Delete(bool ignoreReadOnly)
       {
-         File.DeleteFileInternal(Transaction, LongFullName, ignoreReadOnly, null);
+         File.DeleteFileInternal(Transaction, LongFullName, ignoreReadOnly, PathFormat.ExtendedLength);
       }
 
       #endregion // AlphaFS
@@ -368,7 +368,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt()
       {
-         File.EncryptDecryptFileInternal(false, LongFullName, true, null);
+         File.EncryptDecryptFileInternal(false, LongFullName, true, PathFormat.ExtendedLength);
       }
 
       #endregion // .NET
@@ -390,7 +390,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSecurity GetAccessControl()
       {
-         return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, null);
+         return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.ExtendedLength);
       }
 
       /// <summary>
@@ -407,7 +407,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSecurity GetAccessControl(AccessControlSections includeSections)
       {
-         return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, includeSections, null);
+         return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, includeSections, PathFormat.ExtendedLength);
       }
 
       #endregion // .NET
@@ -442,7 +442,7 @@ namespace Alphaleonis.Win32.Filesystem
       public void MoveTo(string destinationFullPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, true);
+         CopyToMoveToInternal(destinationFullPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, PathFormat.Standard);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
       }
 
@@ -462,7 +462,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.ExtendedLength);
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access.</summary>
@@ -472,7 +472,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.ExtendedLength);
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -489,7 +489,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access, FileShare share)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, share, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, share, ExtendedFileAttributes.Normal, PathFormat.ExtendedLength);
       }
 
       #endregion // .NET
@@ -508,7 +508,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, FileShare.None, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.ExtendedLength);
       }
 
       /// <summary>
@@ -528,7 +528,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights, FileShare share)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, share, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, share, ExtendedFileAttributes.Normal, PathFormat.ExtendedLength);
       }
 
       #endregion // AlphaFS
@@ -545,7 +545,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream OpenRead()
       {
-         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.ExtendedLength);
       }
 
       #endregion // .NET
@@ -564,7 +564,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText()
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.ExtendedLength), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -578,7 +578,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText(Encoding encoding)
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null), encoding);
+         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.ExtendedLength), encoding);
       }
 
       #endregion // AlphaFS
@@ -594,7 +594,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream OpenWrite()
       {
-         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.ExtendedLength);
       }
 
       #endregion // .NET
@@ -644,7 +644,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName)
       {
-         return Replace(destinationFileName, destinationBackupFileName, false, false);
+         return Replace(destinationFileName, destinationBackupFileName, false, PathFormat.Auto);
       }
 
       /// <summary>
@@ -675,7 +675,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
-         return Replace(destinationFileName, destinationBackupFileName, ignoreMetadataErrors, false);
+         return Replace(destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.Auto);
       }
 
       #endregion // .NET
@@ -733,9 +733,9 @@ namespace Alphaleonis.Win32.Filesystem
                ? Path.GetLongPathInternal(destinationBackupFileName, new GetFullPathInternalArgs(false, false, false, false))
                : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, new GetFullPathInternalArgs(false, false, true, true, false, true));
 
-         File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, null);
+         File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, PathFormat.ExtendedLength);
 
-         return new FileInfo(Transaction, destinationFileNameLp, true);
+         return new FileInfo(Transaction, destinationFileNameLp, PathFormat.Standard);
       }
 
       #endregion // IsFullPath
@@ -762,7 +762,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity)
       {
-         File.SetAccessControlInternal(LongFullName, null, fileSecurity, AccessControlSections.All, null);
+         File.SetAccessControlInternal(LongFullName, null, fileSecurity, AccessControlSections.All, PathFormat.ExtendedLength);
       }
 
       /// <summary>
@@ -783,7 +783,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         File.SetAccessControlInternal(LongFullName, null, fileSecurity, includeSections, null);
+         File.SetAccessControlInternal(LongFullName, null, fileSecurity, includeSections, PathFormat.ExtendedLength);
       }
 
       #endregion // .NET
@@ -817,7 +817,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, Transaction, LongFullName, name, contents, null);
+         AlternateDataStreamInfo.AddStreamInternal(false, Transaction, LongFullName, name, contents, PathFormat.ExtendedLength);
       }
 
       #endregion // AddStream
@@ -828,7 +828,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Compress()
       {
-         Device.ToggleCompressionInternal(false, Transaction, LongFullName, true, null);
+         Device.ToggleCompressionInternal(false, Transaction, LongFullName, true, PathFormat.ExtendedLength);
       }
 
       #endregion // Compress
@@ -879,7 +879,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, pathFormat);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.ExtendedLength);
       }
 
       /// <summary>
@@ -925,7 +925,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, pathFormat);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.ExtendedLength);
       }
 
       #endregion // FileInfo
@@ -1123,8 +1123,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, false);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, PathFormat.Auto);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.ExtendedLength);
       }
 
       /// <summary>
@@ -1163,8 +1163,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, false);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, PathFormat.Auto);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.ExtendedLength);
       }
 
       #endregion // FileInfo
@@ -1207,7 +1207,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, false);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Auto);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1254,7 +1254,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, false);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Auto);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1304,7 +1304,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, false);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Auto);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1320,7 +1320,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decompress()
       {
-         Device.ToggleCompressionInternal(false, Transaction, LongFullName, false, null);
+         Device.ToggleCompressionInternal(false, Transaction, LongFullName, false, PathFormat.ExtendedLength);
       }
 
       #endregion // Decompress
@@ -1332,7 +1332,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, null, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, null, PathFormat.ExtendedLength);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
@@ -1343,7 +1343,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, streamType, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, streamType, PathFormat.ExtendedLength);
       }
 
       #endregion // EnumerateStreams
@@ -1355,7 +1355,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long GetStreamSize()
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, null, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, null, PathFormat.ExtendedLength);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -1364,7 +1364,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long GetStreamSize(string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, name, StreamType.Data, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, name, StreamType.Data, PathFormat.ExtendedLength);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
@@ -1373,7 +1373,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long GetStreamSize(StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, type, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, type, PathFormat.ExtendedLength);
       }
 
       #endregion GetStreamSize
@@ -1423,7 +1423,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string destinationPathLp;
          CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, pathFormat);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.ExtendedLength);
       }
 
       #endregion // FileInfo
@@ -1517,8 +1517,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, true);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, PathFormat.Auto);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.ExtendedLength);
       }
 
       #endregion // FileInfo
@@ -1564,7 +1564,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, true);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.Auto);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
          return cmr;
       }
@@ -1592,7 +1592,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream()
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullName, null, null);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullName, null, PathFormat.ExtendedLength);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from the file.</summary>
@@ -1602,7 +1602,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream(string name)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullName, name, null);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullName, name, PathFormat.ExtendedLength);
       }
 
       #endregion // RemoveStream
@@ -1673,7 +1673,7 @@ namespace Alphaleonis.Win32.Filesystem
          longFullPath = destinationPathLp;
 
          // Returns false when CopyMoveProgressResult is PROGRESS_CANCEL or PROGRESS_STOP.
-         return File.CopyMoveInternal(false, Transaction, LongFullName, destinationPathLp, preserveDates, copyOptions, moveOptions, progressHandler, userProgressData, null);
+         return File.CopyMoveInternal(false, Transaction, LongFullName, destinationPathLp, preserveDates, copyOptions, moveOptions, progressHandler, userProgressData, PathFormat.ExtendedLength);
       }
 
       private void CopyToMoveToInternalRefresh(string destinationPath, string destinationPathLp)
@@ -1716,7 +1716,7 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             string dirName = DirectoryName;
-            return dirName == null ? null : new DirectoryInfo(Transaction, dirName, true);
+            return dirName == null ? null : new DirectoryInfo(Transaction, dirName, PathFormat.Standard);
          }
       }
 
