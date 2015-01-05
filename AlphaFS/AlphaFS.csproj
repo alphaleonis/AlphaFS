@@ -223,6 +223,7 @@
     <Compile Include="Filesystem\File Class\File.GetSize.cs" />
     <Compile Include="Filesystem\File Class\File.GetStreamSize.cs" />
     <Compile Include="Filesystem\File Class\File.RemoveStream.cs" />
+    <Compile Include="Filesystem\File Class\File.TransferTimestamps.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />
