@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, false, PathFormat.Auto);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, false, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.Auto);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>

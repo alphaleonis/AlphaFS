@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path)
       {
-         return GetSizeInternal(null, null, path, PathFormat.Auto);
+         return GetSizeInternal(null, null, path, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(SafeFileHandle handle)
       {
-         return GetSizeInternal(null, handle, null, PathFormat.ExtendedLength);
+         return GetSizeInternal(null, handle, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(KernelTransaction transaction, string path)
       {
-         return GetSizeInternal(transaction, null, path, PathFormat.Auto);
+         return GetSizeInternal(transaction, null, path, PathFormat.RelativeOrFullPath);
       }
 
       #endregion // GetSize
@@ -82,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
-            safeHandle = CreateFileInternal(transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, PathFormat.ExtendedLength);
+            safeHandle = CreateFileInternal(transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, PathFormat.LongFullPath);
          }
 
 

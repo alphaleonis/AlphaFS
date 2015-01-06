@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, PathFormat.Auto);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, PathFormat.Auto);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, PathFormat.Auto);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(SafeFileHandle handle, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, name, StreamType.Data, PathFormat.ExtendedLength);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, name, StreamType.Data, PathFormat.LongFullPath);
       }
 
       /// <summary>
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(SafeFileHandle handle, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, null, type, PathFormat.ExtendedLength);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, null, type, PathFormat.LongFullPath);
       }
 
       #endregion
@@ -147,7 +147,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, PathFormat.Auto);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -158,7 +158,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, null, PathFormat.Auto);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, PathFormat.Auto);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, PathFormat.RelativeOrFullPath);
       }
 
       #endregion // Transacted

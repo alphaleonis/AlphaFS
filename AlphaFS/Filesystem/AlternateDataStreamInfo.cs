@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
       /// <param name="path">The path to an existing file or directory.</param>
       public AlternateDataStreamInfo(string path) 
-         : this(new NativeMethods.Win32StreamId(), null, path, null, null, null, PathFormat.Auto)
+         : this(new NativeMethods.Win32StreamId(), null, path, null, null, null, PathFormat.RelativeOrFullPath)
       {
       }
 
@@ -64,14 +64,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file or directory.</param>
       public AlternateDataStreamInfo(KernelTransaction transaction, string path)
-         : this(new NativeMethods.Win32StreamId(), transaction, path, null, null, null, PathFormat.Auto)
+         : this(new NativeMethods.Win32StreamId(), transaction, path, null, null, null, PathFormat.RelativeOrFullPath)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
       /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the file or directory from which to retrieve the information.</param>
       public AlternateDataStreamInfo(SafeFileHandle handle)
-         : this(new NativeMethods.Win32StreamId(), null, Path.GetFinalPathNameByHandleInternal(handle, FinalPathFormats.None), null, null, null, PathFormat.Auto)
+         : this(new NativeMethods.Win32StreamId(), null, Path.GetFinalPathNameByHandleInternal(handle, FinalPathFormats.None), null, null, null, PathFormat.RelativeOrFullPath)
       {
       }
 
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (isFolder == null)
          {
-            FileAttributes attrs = File.GetAttributesExInternal<FileAttributes>(transaction, LongFullName, PathFormat.ExtendedLength);
+            FileAttributes attrs = File.GetAttributesExInternal<FileAttributes>(transaction, LongFullName, PathFormat.LongFullPath);
             IsDirectory = (attrs & FileAttributes.Directory) == FileAttributes.Directory;
          }
          else
@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          private set
          {
-            _longFullName = _pathFormat == PathFormat.ExtendedLength ? value : Path.GetLongPathInternal(value, GetFullPathOptions.None);
+            _longFullName = _pathFormat == PathFormat.LongFullPath ? value : Path.GetLongPathInternal(value, GetFullPathOptions.None);
          }
       }
 
@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
-         AddStreamInternal(IsDirectory, Transaction, LongFullName, name, contents, PathFormat.ExtendedLength);
+         AddStreamInternal(IsDirectory, Transaction, LongFullName, name, contents, PathFormat.LongFullPath);
       }
 
       /// <summary>
@@ -194,7 +194,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return EnumerateStreamsInternal(IsDirectory, Transaction, null, LongFullName, null, null, PathFormat.ExtendedLength);
+         return EnumerateStreamsInternal(IsDirectory, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
       }
       /// <summary>
       ///   [AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> of type
@@ -208,7 +208,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
-         return EnumerateStreamsInternal(IsDirectory, Transaction, null, LongFullName, null, streamType, PathFormat.ExtendedLength);
+         return EnumerateStreamsInternal(IsDirectory, Transaction, null, LongFullName, null, streamType, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file or directory.</summary>
@@ -217,7 +217,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream()
       {
-         RemoveStreamInternal(IsDirectory, Transaction, LongFullName, null, PathFormat.ExtendedLength);
+         RemoveStreamInternal(IsDirectory, Transaction, LongFullName, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file or directory.</summary>
@@ -227,7 +227,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream(string name)
       {
-         RemoveStreamInternal(IsDirectory, Transaction, LongFullName, name, PathFormat.ExtendedLength);
+         RemoveStreamInternal(IsDirectory, Transaction, LongFullName, name, PathFormat.LongFullPath);
       }
 
       #region Unified Internals
@@ -296,7 +296,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (isFolder == null)
             {
-               FileAttributes attrs = File.GetAttributesExInternal<FileAttributes>(transaction, pathLp, PathFormat.ExtendedLength);
+               FileAttributes attrs = File.GetAttributesExInternal<FileAttributes>(transaction, pathLp, PathFormat.LongFullPath);
                isFolder = (attrs & FileAttributes.Directory) == FileAttributes.Directory;
             }
 
@@ -304,7 +304,7 @@ namespace Alphaleonis.Win32.Filesystem
                (bool) isFolder
                   ? ExtendedFileAttributes.BackupSemantics
                   : ExtendedFileAttributes.Normal, null,
-               FileMode.Open, FileSystemRights.Read, FileShare.ReadWrite, false, PathFormat.ExtendedLength);
+               FileMode.Open, FileSystemRights.Read, FileShare.ReadWrite, false, PathFormat.LongFullPath);
          }
          else
             NativeMethods.IsValidHandle(safeHandle);
@@ -448,8 +448,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
-         foreach (AlternateDataStreamInfo stream in EnumerateStreamsInternal(isFolder, transaction, null, pathLp, name, StreamType.AlternateData, PathFormat.ExtendedLength))
-            File.DeleteFileInternal(transaction, string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{1}$DATA", pathLp, Path.StreamSeparator, stream.OriginalName), false, PathFormat.ExtendedLength);
+         foreach (AlternateDataStreamInfo stream in EnumerateStreamsInternal(isFolder, transaction, null, pathLp, name, StreamType.AlternateData, PathFormat.LongFullPath))
+            File.DeleteFileInternal(transaction, string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{1}$DATA", pathLp, Path.StreamSeparator, stream.OriginalName), false, PathFormat.LongFullPath);
       }
 
 

@@ -21,7 +21,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileInternal(null, path, false, PathFormat.Auto);
+         DeleteFileInternal(null, path, false, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly)
       {
-         DeleteFileInternal(null, path, ignoreReadOnly, PathFormat.Auto);
+         DeleteFileInternal(null, path, ignoreReadOnly, PathFormat.RelativeOrFullPath);
       }
 
       #region Transacted
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
       {
-         DeleteFileInternal(transaction, path, false, PathFormat.Auto);
+         DeleteFileInternal(transaction, path, false, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
-         DeleteFileInternal(transaction, path, ignoreReadOnly, PathFormat.Auto);
+         DeleteFileInternal(transaction, path, ignoreReadOnly, PathFormat.RelativeOrFullPath);
       }
 
       #endregion // Transacted
@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (pathFormat == PathFormat.Auto)
+         if (pathFormat == PathFormat.RelativeOrFullPath)
             Path.CheckValidPath(path, true, true);
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
                         if (ignoreReadOnly)
                         {
                            // Reset file attributes.
-                           SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, PathFormat.ExtendedLength);
+                           SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
                            goto startDeleteFile;
                         }
 

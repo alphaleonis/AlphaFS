@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(string sourcePath, string destinationPath)
       {
-         TransferTimestampsInternal(false, null, sourcePath, destinationPath, PathFormat.Auto);
+         TransferTimestampsInternal(false, null, sourcePath, destinationPath, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, PathFormat.Auto);
+         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, PathFormat.RelativeOrFullPath);
       }
 
 

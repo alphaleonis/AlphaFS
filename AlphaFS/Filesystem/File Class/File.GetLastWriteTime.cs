@@ -18,7 +18,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path)
       {
-         return GetLastWriteTimeInternal(null, path, false, PathFormat.Auto).ToLocalTime();
+         return GetLastWriteTimeInternal(null, path, false, PathFormat.RelativeOrFullPath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(KernelTransaction transaction, string path)
       {
-         return GetLastWriteTimeInternal(transaction, path, false, PathFormat.Auto).ToLocalTime();
+         return GetLastWriteTimeInternal(transaction, path, false, PathFormat.RelativeOrFullPath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path)
       {
-         return GetLastWriteTimeInternal(null, path, true, PathFormat.Auto);
+         return GetLastWriteTimeInternal(null, path, true, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path)
       {
-         return GetLastWriteTimeInternal(transaction, path, true, PathFormat.Auto);
+         return GetLastWriteTimeInternal(transaction, path, true, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>

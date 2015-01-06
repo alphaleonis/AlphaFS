@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(string path)
       {
-         return GetCompressedSizeInternal(null, path, PathFormat.Auto);
+         return GetCompressedSizeInternal(null, path, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(KernelTransaction transaction, string path)
       {
-         return GetCompressedSizeInternal(transaction, path, PathFormat.Auto);
+         return GetCompressedSizeInternal(transaction, path, PathFormat.RelativeOrFullPath);
       }
 
       #endregion // GetCompressedSize
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static long GetCompressedSizeInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         if (pathFormat != PathFormat.ExtendedLength && Utils.IsNullOrWhiteSpace(path))
+         if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);

@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(string fileName, string existingFileName)
       {
-         CreateHardlinkInternal(null, fileName, existingFileName, PathFormat.Auto);
+         CreateHardlinkInternal(null, fileName, existingFileName, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName)
       {
-         CreateHardlinkInternal(transaction, fileName, existingFileName, PathFormat.Auto);
+         CreateHardlinkInternal(transaction, fileName, existingFileName, PathFormat.RelativeOrFullPath);
       }
 
       #endregion // CreateHardlink

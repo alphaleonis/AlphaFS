@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
       {
-         CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, PathFormat.Auto);
+         CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Creates a symbolic link.</summary>
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLink(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
       {
-         CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, PathFormat.Auto);
+         CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, PathFormat.RelativeOrFullPath);
       }
 
       #endregion // CreateSymbolicLink

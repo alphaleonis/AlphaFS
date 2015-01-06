@@ -1506,13 +1506,13 @@ namespace Alphaleonis.Win32.Filesystem
       {
          switch (pathFormat)
          {
-            case PathFormat.ExtendedLength:
+            case PathFormat.LongFullPath:
                return sourcePath;
 
-            case PathFormat.Standard:
+            case PathFormat.FullPath:
                return Path.GetLongPathInternal(sourcePath, GetFullPathOptions.None);
 
-            case PathFormat.Auto:
+            case PathFormat.RelativeOrFullPath:
 #if NET35
                return Path.GetFullPathInternal(transaction, sourcePath, true, options);
 #else
@@ -1624,7 +1624,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path == null)
             return null;
 
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.Auto);
+         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.RelativeOrFullPath);
          return di != null && di.Parent != null ? di.Name : null;
       }
 
@@ -2027,7 +2027,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static string GetSuffixedDirectoryNameInternal(KernelTransaction transaction, string path)
       {
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.Auto);
+         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.RelativeOrFullPath);
          return di != null && di.Parent != null && di.Name != null
             ? AddDirectorySeparator(CombineInternal(false, di.Parent.FullName, di.Name), false)
             : null;
@@ -2051,7 +2051,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static string GetSuffixedDirectoryNameWithoutRootInternal(KernelTransaction transaction, string path)
       {
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.Auto);
+         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.RelativeOrFullPath);
          if (di == null || di.Parent == null)
             return null;
 

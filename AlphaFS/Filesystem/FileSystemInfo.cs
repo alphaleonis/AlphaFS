@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void RefreshEntryInfo()
       {
-         _entryInfo = File.GetFileSystemEntryInfoInternal(Transaction, LongFullName, true, PathFormat.ExtendedLength);
+         _entryInfo = File.GetFileSystemEntryInfoInternal(Transaction, LongFullName, true, PathFormat.LongFullPath);
    
          if (_entryInfo == null)
             DataInitialised = -1;
@@ -201,7 +201,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         if (pathFormat == PathFormat.Auto)
+         if (pathFormat == PathFormat.RelativeOrFullPath)
             Path.CheckValidPath(path, true, true);
 
          LongFullName = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | (isFolder ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | GetFullPathOptions.ContinueOnNonExist);            
@@ -265,7 +265,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetAttributesInternal(IsDirectory, Transaction, LongFullName, value, false, PathFormat.ExtendedLength);
+            File.SetAttributesInternal(IsDirectory, Transaction, LongFullName, value, false, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -340,7 +340,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, value, null, null, PathFormat.ExtendedLength);
+            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, value, null, null, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -457,7 +457,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, value, null, PathFormat.ExtendedLength);
+            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, value, null, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -521,7 +521,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, null, value, PathFormat.ExtendedLength);
+            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, null, value, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -626,7 +626,7 @@ namespace Alphaleonis.Win32.Filesystem
             
             bool isFolder = IsDirectory || Name == Path.CurrentDirectoryPrefix;
             
-            _lengthStreams = AlternateDataStreamInfo.GetStreamSizeInternal(isFolder, Transaction, null, LongFullName, null, null, PathFormat.ExtendedLength);
+            _lengthStreams = AlternateDataStreamInfo.GetStreamSizeInternal(isFolder, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
 
             return _lengthStreams;
          }

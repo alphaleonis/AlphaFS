@@ -18,7 +18,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path)
       {
-         return ReadAllBytesInternal(null, path, PathFormat.Auto);
+         return ReadAllBytesInternal(null, path, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static byte[] ReadAllBytes(KernelTransaction transaction, string path)
       {
-         return ReadAllBytesInternal(transaction, path, PathFormat.Auto);
+         return ReadAllBytesInternal(transaction, path, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>

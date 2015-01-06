@@ -22,7 +22,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytes(string path, byte[] bytes)
       {
-         WriteAllBytesInternal(null, path, bytes, PathFormat.Auto);
+         WriteAllBytesInternal(null, path, bytes, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytes(KernelTransaction transaction, string path, byte[] bytes)
       {
-         WriteAllBytesInternal(transaction, path, bytes, PathFormat.Auto);
+         WriteAllBytesInternal(transaction, path, bytes, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>

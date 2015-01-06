@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path)
       {
-         return GetEncryptionStatusInternal(path, PathFormat.Auto);
+         return GetEncryptionStatusInternal(path, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Unified method GetEncryptionStatusInternal() to retrieve the encryption status of the specified file.</summary>
@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static FileEncryptionStatus GetEncryptionStatusInternal(string path, PathFormat pathFormat)
       {
-         if (pathFormat != PathFormat.ExtendedLength && Utils.IsNullOrWhiteSpace(path))
+         if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
          string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);

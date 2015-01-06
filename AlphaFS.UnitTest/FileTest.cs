@@ -2323,7 +2323,7 @@ namespace AlphaFS.UnitTest
          using (FileStream fs = System.IO.File.Create(tempPathDot)) { fs.WriteByte(1); }
          Assert.IsTrue(System.IO.File.Exists(tempPathDot), "File should exist.");
          Assert.IsTrue(File.Exists(tempPathDot), "File should be visible to AlphaFS.");
-         Assert.IsFalse(File.Exists(tempPathDot, PathFormat.Standard), "File should be invisible to AlphaFS.");
+         Assert.IsFalse(File.Exists(tempPathDot, PathFormat.FullPath), "File should be invisible to AlphaFS.");
 
          using (StreamWriter sw = System.IO.File.AppendText(tempPathDot))
             sw.WriteLine(TextHelloWorld);
@@ -2339,19 +2339,19 @@ namespace AlphaFS.UnitTest
 
          #region AlphaFS
 
-         using (FileStream fs = File.Create(tempPathDot, PathFormat.Standard)) { fs.WriteByte(1); } // Create file without path normalization.
-         Assert.IsTrue(File.Exists(tempPathDot, PathFormat.Standard), "File should exist and visible to AlphaFS.");
+         using (FileStream fs = File.Create(tempPathDot, PathFormat.FullPath)) { fs.WriteByte(1); } // Create file without path normalization.
+         Assert.IsTrue(File.Exists(tempPathDot, PathFormat.FullPath), "File should exist and visible to AlphaFS.");
          Assert.IsFalse(System.IO.File.Exists(tempPathDot), "File should be invisible to System.IO.");
 
-         using (StreamWriter sw = File.AppendText(tempPathDot, PathFormat.Standard))
+         using (StreamWriter sw = File.AppendText(tempPathDot, PathFormat.FullPath))
             sw.WriteLine(TextHelloWorld);
 
          string lineAlphaFs;
-         using (StreamReader sr = File.OpenText(tempPathDot, PathFormat.Standard))
+         using (StreamReader sr = File.OpenText(tempPathDot, PathFormat.FullPath))
             lineAlphaFs = sr.ReadToEnd();
 
-         File.Delete(tempPathDot, true, PathFormat.Standard); // Delete file without path normalization.
-         Assert.IsFalse(File.Exists(tempPathDot, PathFormat.Standard), "File should not exist.");
+         File.Delete(tempPathDot, true, PathFormat.FullPath); // Delete file without path normalization.
+         Assert.IsFalse(File.Exists(tempPathDot, PathFormat.FullPath), "File should not exist.");
 
          #endregion // AlphaFS
 
@@ -2370,7 +2370,7 @@ namespace AlphaFS.UnitTest
          using (FileStream fs = System.IO.File.Create(tempPathSpace)) { fs.WriteByte(1); }
          Assert.IsTrue(System.IO.File.Exists(tempPathSpace), "File should exist.");
          Assert.IsTrue(File.Exists(tempPathSpace), "File should be visible to AlphaFS.");
-         Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.Standard), "File should be invisible to AlphaFS.");
+         Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.FullPath), "File should be invisible to AlphaFS.");
 
          using (StreamWriter sw = System.IO.File.AppendText(tempPathSpace))
             sw.WriteLine(TextHelloWorld);
@@ -2385,18 +2385,18 @@ namespace AlphaFS.UnitTest
 
          #region AlphaFS
 
-         using (FileStream fs = File.Create(tempPathSpace, PathFormat.Standard)) { fs.WriteByte(1); } // Create file without path normalization.
-         Assert.IsTrue(File.Exists(tempPathSpace, PathFormat.Standard), "File should exist and visible to AlphaFS.");
+         using (FileStream fs = File.Create(tempPathSpace, PathFormat.FullPath)) { fs.WriteByte(1); } // Create file without path normalization.
+         Assert.IsTrue(File.Exists(tempPathSpace, PathFormat.FullPath), "File should exist and visible to AlphaFS.");
          Assert.IsFalse(System.IO.File.Exists(tempPathSpace), "File should be invisible to System.IO.");
 
-         using (StreamWriter sw = File.AppendText(tempPathSpace, PathFormat.Standard))
+         using (StreamWriter sw = File.AppendText(tempPathSpace, PathFormat.FullPath))
             sw.WriteLine(TextHelloWorld);
 
-         using (StreamReader sr = File.OpenText(tempPathSpace, PathFormat.Standard))
+         using (StreamReader sr = File.OpenText(tempPathSpace, PathFormat.FullPath))
             lineAlphaFs = sr.ReadToEnd();
 
-         File.Delete(tempPathSpace, true, PathFormat.Standard); // Delete file without path normalization.
-         Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.Standard), "File should not exist.");
+         File.Delete(tempPathSpace, true, PathFormat.FullPath); // Delete file without path normalization.
+         Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.FullPath), "File should not exist.");
 
          #endregion // AlphaFS
 
@@ -2429,7 +2429,7 @@ namespace AlphaFS.UnitTest
 
             Assert.IsTrue(sysIoFi.Exists, "File should exist.");
             Assert.IsTrue(File.Exists(tempPathDot), "File should be visible to AlphaFS.");
-            Assert.IsFalse(File.Exists(tempPathDot, PathFormat.Standard), "File should be invisible to AlphaFS.");
+            Assert.IsFalse(File.Exists(tempPathDot, PathFormat.FullPath), "File should be invisible to AlphaFS.");
          }
 
          using (StreamWriter sw = sysIoFi.AppendText())
@@ -2445,7 +2445,7 @@ namespace AlphaFS.UnitTest
 
          #region AlphaFS
 
-         FileInfo alphaFsFi = new FileInfo(tempPathDot, PathFormat.Standard);
+         FileInfo alphaFsFi = new FileInfo(tempPathDot, PathFormat.FullPath);
          Assert.IsTrue(alphaFsFi.Name.EndsWith(characterDot), "Path should have a trailing dot.");
 
          using (FileStream fs = alphaFsFi.Create())
@@ -2453,19 +2453,19 @@ namespace AlphaFS.UnitTest
             fs.WriteByte(100);
 
             Assert.IsTrue(alphaFsFi.Exists, "File should exist.");
-            Assert.IsTrue(File.Exists(tempPathDot, PathFormat.Standard), "File should be visible to AlphaFS.");
+            Assert.IsTrue(File.Exists(tempPathDot, PathFormat.FullPath), "File should be visible to AlphaFS.");
             Assert.IsFalse(File.Exists(tempPathDot), "File should be invisible to AlphaFS.");
          }
 
          using (StreamWriter sw = alphaFsFi.AppendText())
             sw.WriteLine(TextHelloWorld);
 
-         using (StreamReader sr = File.OpenText(tempPathDot, PathFormat.Standard))
+         using (StreamReader sr = File.OpenText(tempPathDot, PathFormat.FullPath))
             lineAlphaFs = sr.ReadToEnd();
 
          alphaFsFi.Delete();
          alphaFsFi.Refresh(); // Must Refresh() to get actual state.
-         Assert.IsFalse(File.Exists(tempPathDot, PathFormat.Standard), "File should not exist.");
+         Assert.IsFalse(File.Exists(tempPathDot, PathFormat.FullPath), "File should not exist.");
 
          #endregion // AlphaFS
 
@@ -2490,7 +2490,7 @@ namespace AlphaFS.UnitTest
 
             Assert.IsTrue(sysIoFi.Exists, "File should exist.");
             Assert.IsTrue(File.Exists(tempPathSpace), "File should be visible to AlphaFS.");
-            Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.Standard), "File should be invisible to AlphaFS.");
+            Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.FullPath), "File should be invisible to AlphaFS.");
          }
 
          using (StreamWriter sw = sysIoFi.AppendText())
@@ -2506,7 +2506,7 @@ namespace AlphaFS.UnitTest
 
          #region AlphaFS
 
-         alphaFsFi = new FileInfo(tempPathSpace, PathFormat.Standard);
+         alphaFsFi = new FileInfo(tempPathSpace, PathFormat.FullPath);
          Assert.IsTrue(alphaFsFi.Name.EndsWith(characterSpace), "Path should have a trailing space.");
 
          using (FileStream fs = alphaFsFi.Create())
@@ -2514,19 +2514,19 @@ namespace AlphaFS.UnitTest
             fs.WriteByte(100);
 
             Assert.IsTrue(alphaFsFi.Exists, "File should exist.");
-            Assert.IsTrue(File.Exists(tempPathSpace, PathFormat.Standard), "File should be visible to AlphaFS.");
+            Assert.IsTrue(File.Exists(tempPathSpace, PathFormat.FullPath), "File should be visible to AlphaFS.");
             Assert.IsFalse(File.Exists(tempPathSpace), "File should be invisible to AlphaFS.");
          }
 
          using (StreamWriter sw = alphaFsFi.AppendText())
             sw.WriteLine(TextHelloWorld);
 
-         using (StreamReader sr = File.OpenText(tempPathSpace, PathFormat.Standard))
+         using (StreamReader sr = File.OpenText(tempPathSpace, PathFormat.FullPath))
             lineAlphaFs = sr.ReadToEnd();
          
          alphaFsFi.Delete();
          alphaFsFi.Refresh(); // Must Refresh() to get actual state.
-         Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.Standard), "File should not exist.");
+         Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.FullPath), "File should not exist.");
 
          #endregion // AlphaFS
 

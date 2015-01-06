@@ -19,7 +19,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(string path)
       {
-         return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto).ToArray();
+         return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativeOrFullPath).ToArray();
       }
 
       /// <summary>Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(string path, Encoding encoding)
       {
-         return ReadAllLinesInternal(null, path, encoding, PathFormat.Auto).ToArray();
+         return ReadAllLinesInternal(null, path, encoding, PathFormat.RelativeOrFullPath).ToArray();
       }
 
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(KernelTransaction transaction, string path)
       {
-         return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto).ToArray();
+         return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativeOrFullPath).ToArray();
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -73,7 +73,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return ReadAllLinesInternal(transaction, path, encoding, PathFormat.Auto).ToArray();
+         return ReadAllLinesInternal(transaction, path, encoding, PathFormat.RelativeOrFullPath).ToArray();
       }
 
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>

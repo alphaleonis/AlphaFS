@@ -19,7 +19,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path)
       {
-         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto);
+         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>Read the lines of a file that has a specified encoding.</summary>
@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path, Encoding encoding)
       {
-         return ReadLinesInternal(null, path, encoding, PathFormat.Auto);
+         return ReadLinesInternal(null, path, encoding, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Reads the lines of a file.</summary>
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path)
       {
-         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Auto);
+         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return ReadLinesInternal(transaction, path, encoding, PathFormat.Auto);
+         return ReadLinesInternal(transaction, path, encoding, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Reads the lines of a file.</summary>

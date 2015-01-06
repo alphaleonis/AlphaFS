@@ -18,7 +18,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(string path)
       {
-         return GetCreationTimeInternal(null, path, false, PathFormat.Auto).ToLocalTime();
+         return GetCreationTimeInternal(null, path, false, PathFormat.RelativeOrFullPath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(KernelTransaction transaction, string path)
       {
-         return GetCreationTimeInternal(transaction, path, false, PathFormat.Auto).ToLocalTime();
+         return GetCreationTimeInternal(transaction, path, false, PathFormat.RelativeOrFullPath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(string path)
       {
-         return GetCreationTimeInternal(null, path, true, PathFormat.Auto);
+         return GetCreationTimeInternal(null, path, true, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
@@ -112,7 +112,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path)
       {
-         return GetCreationTimeInternal(transaction, path, true, PathFormat.Auto);
+         return GetCreationTimeInternal(transaction, path, true, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>

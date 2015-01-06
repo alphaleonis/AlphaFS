@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, bool overwrite)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
@@ -145,7 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, bool overwrite)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativeOrFullPath);
       }
 
 
@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destinationFileName)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.RelativeOrFullPath);
       }
 
       #endregion // Transacted
@@ -403,7 +403,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(string sourceFileName, string destinationFileName, CopyOptions copyOptions)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -439,7 +439,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -482,7 +482,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy1(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Auto);
+         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativeOrFullPath);
       }
 
       #region Transacted
@@ -600,7 +600,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -636,7 +636,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -680,7 +680,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy1(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Auto);
+         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativeOrFullPath);
       }
 
       #endregion // Transacted
@@ -802,7 +802,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move1(string sourceFileName, string destinationFileName, MoveOptions moveOptions)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -845,7 +845,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move1(string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.Auto);
+         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativeOrFullPath);
       }
 
       #region Transacted
@@ -965,7 +965,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move1(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.Auto);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -1009,7 +1009,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move1(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.Auto);
+         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativeOrFullPath);
       }
 
       #endregion // Transacted
@@ -1075,7 +1075,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (pathFormat == PathFormat.Auto)
+         if (pathFormat == PathFormat.RelativeOrFullPath)
          {
             Path.CheckValidPath(sourceFileName, true, true);
             Path.CheckValidPath(destinationFileName, true, true);
@@ -1191,7 +1191,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // Check if destination directory already exists.
                      // Directory.Move()
                      // MSDN: .NET 3.5+: IOException: destDirName already exists. 
-                     if (ExistsInternal(true, transaction, destinationFileNameLp, PathFormat.ExtendedLength))
+                     if (ExistsInternal(true, transaction, destinationFileNameLp, PathFormat.LongFullPath))
                         NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destinationFileNameLp, true);
 
                      if (doMove)
@@ -1199,7 +1199,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // Ensure that the source file or directory exists.
                         // Directory.Move()
                         // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
-                        if (!ExistsInternal(isFolder, transaction, sourceFileNameLp, PathFormat.ExtendedLength))
+                        if (!ExistsInternal(isFolder, transaction, sourceFileNameLp, PathFormat.LongFullPath))
                            NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourceFileNameLp);
                      }
 
@@ -1208,7 +1208,7 @@ namespace Alphaleonis.Win32.Filesystem
                      string fileNameLp = destinationFileNameLp;
 
                      if (!isFolder)
-                        using (SafeFileHandle safeHandle = CreateFileInternal(transaction, sourceFileNameLp, ExtendedFileAttributes.None, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.ExtendedLength))
+                        using (SafeFileHandle safeHandle = CreateFileInternal(transaction, sourceFileNameLp, ExtendedFileAttributes.None, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.LongFullPath))
                            if (safeHandle.IsInvalid)
                               fileNameLp = sourceFileNameLp;
 
@@ -1219,7 +1219,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // File.Move()
                         // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
                         //   Directory exists with the same name as the file.
-                        if (!isFolder && ExistsInternal(true, transaction, destinationFileNameLp, PathFormat.ExtendedLength))
+                        if (!isFolder && ExistsInternal(true, transaction, destinationFileNameLp, PathFormat.LongFullPath))
                            NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, destinationFileNameLp), true);
 
                         else
@@ -1236,7 +1236,7 @@ namespace Alphaleonis.Win32.Filesystem
                                  if (overwrite)
                                  {
                                     // Reset directory attributes.
-                                    SetAttributesInternal(isFolder, transaction, destinationFileNameLp, FileAttributes.Normal, true, PathFormat.ExtendedLength);
+                                    SetAttributesInternal(isFolder, transaction, destinationFileNameLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
                                     goto startCopyMove;
                                  }
 
@@ -1285,7 +1285,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1))
                SetFsoDateTimeInternal(false, transaction, destinationFileNameLp,
-                  DateTime.FromFileTimeUtc(data.CreationTime), DateTime.FromFileTimeUtc(data.LastAccessTime), DateTime.FromFileTimeUtc(data.LastWriteTime), PathFormat.ExtendedLength);
+                  DateTime.FromFileTimeUtc(data.CreationTime), DateTime.FromFileTimeUtc(data.LastAccessTime), DateTime.FromFileTimeUtc(data.LastWriteTime), PathFormat.LongFullPath);
          }
 
          #endregion // Transfer Timestamps

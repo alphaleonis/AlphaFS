@@ -20,7 +20,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, PathFormat.Auto);
+         return GetAttributesExInternal<FileAttributes>(null, path, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(KernelTransaction transaction, string path)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, PathFormat.Auto);
+         return GetAttributesExInternal<FileAttributes>(transaction, path, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static T GetAttributesExInternal<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         if (pathFormat == PathFormat.Auto)
+         if (pathFormat == PathFormat.RelativeOrFullPath)
             Path.CheckValidPath(path, true, true);
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);

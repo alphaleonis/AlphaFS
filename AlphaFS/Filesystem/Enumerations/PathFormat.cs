@@ -25,18 +25,22 @@ namespace Alphaleonis.Win32.Filesystem
    /// <summary>Indicates the format of a path passed to a method.</summary>
    public enum PathFormat
    {
-      /// <summary>The format of the path is automatically detected by the method and internally converted to an extended length path.</summary>
-      Auto,
       /// <summary>
-      /// The path is a full path in standard format. Internally it will be converted to an extended length path. Using this option has a very slight performance
-      /// advantage compared to using <see cref="Auto"/>.
+      /// The format of the path is automatically detected by the method and internally converted to an extended length path. It can be 
+      /// either a standard (short) full path, an extended length (unicode) full path or a relative path.
       /// </summary>
-      Standard,
+      RelativeOrFullPath,
 
       /// <summary>
-      /// The path is an extended length path. No additional processing will be done on the path, and it will be used as is. This option has a slight performance 
-      /// advantage to using the <see cref="Auto"/> option.
+      /// The path is a full path in either normal or extended length (UNICODE) format. Internally it will be converted to an extended length 
+      /// (UNICODE) path. Using this option has a very slight performance advantage compared to using <see cref="RelativeOrFullPath"/>.
       /// </summary>
-      ExtendedLength
+      FullPath,
+
+      /// <summary>
+      /// The path is an extended length path. No additional processing will be done on the path, and it will be used as is. This option has 
+      /// a slight performance advantage to using the <see cref="RelativeOrFullPath"/> option.
+      /// </summary>
+      LongFullPath
    }
 }

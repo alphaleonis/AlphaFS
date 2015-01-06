@@ -161,8 +161,8 @@ namespace Alphaleonis.Win32.Filesystem
             // Return object instance of type FileSystemInfo.
             ? (T) (object) (fsei.IsDirectory
                ? (FileSystemInfo)
-                  new DirectoryInfo(Transaction, fsei.LongFullPath, PathFormat.ExtendedLength) {EntryInfo = fsei}
-               : new FileInfo(Transaction, fsei.LongFullPath, PathFormat.ExtendedLength) {EntryInfo = fsei})
+                  new DirectoryInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei}
+               : new FileInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei})
 
             // Return object instance of type FileSystemEntryInfo.
             : (T) (object) fsei;
