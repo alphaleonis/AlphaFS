@@ -161,6 +161,12 @@
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntries.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Exists.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetAccessControl.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetTimes.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetCurrentDirectory.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFileSystemEntries.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetDirectoryRoot.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetLogicalDrives.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetParent.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
