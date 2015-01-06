@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path)
       {
-         return CreateFileStreamInternal(null, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, PathFormat.Auto);
+         return CreateFileStreamInternal(null, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>Creates or overwrites the specified file.</summary>
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize)
       {
-         return CreateFileStreamInternal(null, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.Auto);
+         return CreateFileStreamInternal(null, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options)
       {
-         return CreateFileStreamInternal(null, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.Auto);
+         return CreateFileStreamInternal(null, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
-         return CreateFileStreamInternal(null, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.Auto);
+         return CreateFileStreamInternal(null, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>Creates or overwrites a file in the specified path.</summary>
@@ -181,7 +181,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path)
       {
-         return CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, PathFormat.Auto);
+         return CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>Creates or overwrites the specified file.</summary>
@@ -197,7 +197,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize)
       {
-         return CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.Auto);
+         return CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -212,7 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options)
       {
-         return CreateFileStreamInternal(transaction, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.Auto);
+         return CreateFileStreamInternal(transaction, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>
@@ -230,7 +230,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
-         return CreateFileStreamInternal(transaction, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.Auto);
+         return CreateFileStreamInternal(transaction, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativeOrFullPath);
       }
 
       /// <summary>Creates or overwrites a file in the specified path.</summary>
@@ -376,7 +376,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static SafeFileHandle CreateFileInternal(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, PathFormat pathFormat)
       {
-         if (checkPath && pathFormat == PathFormat.Auto)
+         if (checkPath && pathFormat == PathFormat.RelativeOrFullPath)
             Path.CheckValidPath(path, true, true);
 
          // When isFile == null, we're working with a device.
