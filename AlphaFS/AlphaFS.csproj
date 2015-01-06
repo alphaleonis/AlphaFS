@@ -167,6 +167,8 @@
     <Compile Include="Filesystem\Directory Class\Directory.GetDirectoryRoot.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetLogicalDrives.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetParent.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetAccessControl.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CopyMove.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
