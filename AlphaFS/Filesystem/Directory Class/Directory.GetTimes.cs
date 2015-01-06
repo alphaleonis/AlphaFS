@@ -1,3 +1,4 @@
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -270,5 +271,129 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // GetLastWriteTimeUtc
+
+      #region GetChangeTime
+
+      /// <summary>Gets the change date and time of the specified directory.</summary>
+      /// <param name="path">
+      ///   The directory for which to obtain creation date and time information.
+      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>
+      ///   A <see cref="System.DateTime"/> structure set to the change date and time for the specified
+      ///   directory. This value is expressed in local time.
+      /// </returns>
+      [SecurityCritical]
+      public static DateTime GetChangeTime(string path, PathFormat pathFormat)
+      {
+         return File.GetChangeTimeInternal(true, null, null, path, false, pathFormat);
+      }
+
+      /// <summary>Gets the change date and time of the specified directory.</summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
+      /// <param name="path">The directory for which to obtain creation date and time information.</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTime(string path)
+      {
+         return File.GetChangeTimeInternal(true, null, null, path, false, PathFormat.Relative);
+      }
+
+      /// <summary>Gets the change date and time of the specified directory.</summary>
+      /// <param name="safeHandle">
+      ///   An open handle to the directory from which to retrieve information.
+      /// </param>
+      /// <returns>
+      ///   A <see cref="System.DateTime"/> structure set to the change date and time for the specified
+      ///   directory. This value is expressed in local time.
+      /// </returns>
+      [SecurityCritical]
+      public static DateTime GetChangeTime(SafeFileHandle safeHandle)
+      {
+         return File.GetChangeTimeInternal(true, null, safeHandle, null, false, PathFormat.Relative);
+      }
+
+      /// <summary>Gets the change date and time of the specified directory.</summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory for which to obtain creation date and time information.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTime(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         return File.GetChangeTimeInternal(true, transaction, null, path, false, pathFormat);
+      }
+
+      /// <summary>Gets the change date and time of the specified directory.</summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in local time.</returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory for which to obtain creation date and time information.</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTime(KernelTransaction transaction, string path)
+      {
+         return File.GetChangeTimeInternal(true, transaction, null, path, false, PathFormat.Relative);
+      }
+
+      #endregion // GetChangeTime
+
+      #region GetChangeTimeUtc
+
+      /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
+      /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTimeUtc(string path, PathFormat pathFormat)
+      {
+         return File.GetChangeTimeInternal(true, null, null, path, true, pathFormat);
+      }
+
+      /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
+      /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTimeUtc(string path)
+      {
+         return File.GetChangeTimeInternal(true, null, null, path, true, PathFormat.Relative);
+      }
+
+      /// <summary>
+      ///   Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified
+      ///   directory.
+      /// </summary>
+      /// <param name="safeHandle">
+      ///   An open handle to the directory from which to retrieve information.
+      /// </param>
+      /// <returns>
+      ///   A <see cref="System.DateTime"/> structure set to the change date and time for the specified
+      ///   directory. This value is expressed in UTC time.
+      /// </returns>
+      [SecurityCritical]
+      public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
+      {
+         return File.GetChangeTimeInternal(true, null, safeHandle, null, true, PathFormat.Relative);
+      }
+
+      /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         return File.GetChangeTimeInternal(true, transaction, null, path, true, pathFormat);
+      }
+
+      /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified directory. This value is expressed in UTC time.</returns>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
+      [SecurityCritical]
+      public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path)
+      {
+         return File.GetChangeTimeInternal(true, transaction, null, path, true, PathFormat.Relative);
+      }
+
+      #endregion // GetChangeTimeUtc
    }
 }
