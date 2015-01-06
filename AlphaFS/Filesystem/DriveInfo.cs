@@ -346,7 +346,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                         // Do not use ?? expression here.
                         if (_rootDirectory == null)
-                           _rootDirectory = new DirectoryInfo(null, Name, PathFormat.RelativeOrFullPath);
+                           _rootDirectory = new DirectoryInfo(null, Name, PathFormat.Relative);
                         return _rootDirectory;
                   }
                   break;
