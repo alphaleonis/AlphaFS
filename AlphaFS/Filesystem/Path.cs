@@ -1502,6 +1502,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsDVsc
 
+      /// <summary>Gets the path as a long full path.</summary>
+      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">Full pathname of the source path to convert.</param>
+      /// <param name="pathFormat">The path format to use.</param>
+      /// <param name="options">Options for controlling the operation. Note that on .NET 3.5 the TrimEnd option has no effect.</param>
+      /// <returns>The path as an extended length path.</returns>
       internal static string GetExtendedLengthPathInternal(KernelTransaction transaction, string sourcePath, PathFormat pathFormat, GetFullPathOptions options)
       {
          switch (pathFormat)
@@ -1513,8 +1520,8 @@ namespace Alphaleonis.Win32.Filesystem
                return Path.GetLongPathInternal(sourcePath, GetFullPathOptions.None);
 
             case PathFormat.RelativeOrFullPath:
-#if NET35
-               return Path.GetFullPathInternal(transaction, sourcePath, true, options);
+#if NET35               
+               return Path.GetFullPathInternal(transaction, sourcePath, true, options & ~GetFullPathOptions.TrimEnd);
 #else
                // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before deleting the directory.
                return Path.GetFullPathInternal(transaction, sourcePath, true, options);
