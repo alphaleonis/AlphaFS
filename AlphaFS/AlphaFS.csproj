@@ -158,6 +158,9 @@
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Delete.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CreateDirectory.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntries.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.Exists.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetAccessControl.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
@@ -356,7 +359,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
