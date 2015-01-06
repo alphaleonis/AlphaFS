@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
       /// <param name="path">The path to an existing file or directory.</param>
       public AlternateDataStreamInfo(string path) 
-         : this(new NativeMethods.Win32StreamId(), null, path, null, null, null, PathFormat.RelativeOrFullPath)
+         : this(new NativeMethods.Win32StreamId(), null, path, null, null, null, PathFormat.Relative)
       {
       }
 
@@ -64,14 +64,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file or directory.</param>
       public AlternateDataStreamInfo(KernelTransaction transaction, string path)
-         : this(new NativeMethods.Win32StreamId(), transaction, path, null, null, null, PathFormat.RelativeOrFullPath)
+         : this(new NativeMethods.Win32StreamId(), transaction, path, null, null, null, PathFormat.Relative)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
       /// <param name="handle">A <see cref="SafeFileHandle"/> connected to the file or directory from which to retrieve the information.</param>
       public AlternateDataStreamInfo(SafeFileHandle handle)
-         : this(new NativeMethods.Win32StreamId(), null, Path.GetFinalPathNameByHandleInternal(handle, FinalPathFormats.None), null, null, null, PathFormat.RelativeOrFullPath)
+         : this(new NativeMethods.Win32StreamId(), null, Path.GetFinalPathNameByHandleInternal(handle, FinalPathFormats.None), null, null, null, PathFormat.Relative)
       {
       }
 

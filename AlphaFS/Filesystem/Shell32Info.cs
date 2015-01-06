@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       public Shell32Info(string fileName) 
-         : this(fileName, PathFormat.RelativeOrFullPath)
+         : this(fileName, PathFormat.Relative)
       {
       }
 
