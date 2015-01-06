@@ -156,6 +156,7 @@
   <ItemGroup>
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CreateDirectory.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
@@ -192,7 +193,7 @@
     <Compile Include="Filesystem\Enumerations\CopyOptions.cs" />
     <Compile Include="Filesystem\Enumerations\CopyMoveProgressCallbackReason.cs" />
     <Compile Include="Filesystem\Device.cs" />
-    <Compile Include="Filesystem\Directory.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.cs" />
     <Compile Include="Filesystem\DirectoryInfo.cs" />
     <Compile Include="Filesystem\File Class\File.cs" />
     <Compile Include="Filesystem\BackupFileStream.cs" />
@@ -354,7 +355,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
