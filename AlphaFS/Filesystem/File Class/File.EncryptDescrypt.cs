@@ -17,7 +17,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decrypt(string path)
       {
-         EncryptDecryptFileInternal(false, path, false, PathFormat.RelativeOrFullPath);
+         EncryptDecryptFileInternal(false, path, false, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Encrypt(string path)
       {
-         EncryptDecryptFileInternal(false, path, true, PathFormat.RelativeOrFullPath);
+         EncryptDecryptFileInternal(false, path, true, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>

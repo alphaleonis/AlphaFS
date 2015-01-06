@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public FileInfo(string fileName) : this(null, fileName, PathFormat.RelativeOrFullPath)
+      public FileInfo(string fileName) : this(null, fileName, PathFormat.Relative)
       {
       }
 
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(KernelTransaction transaction, string fileName)
-         : this(transaction, fileName, PathFormat.RelativeOrFullPath)
+         : this(transaction, fileName, PathFormat.Relative)
       {
       }
 
@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativeOrFullPath);
+         CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.Relative);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -187,7 +187,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, bool overwrite)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativeOrFullPath);
+         CopyToMoveToInternal(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.Relative);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -626,7 +626,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName)
       {
-         return Replace(destinationFileName, destinationBackupFileName, false, PathFormat.RelativeOrFullPath);
+         return Replace(destinationFileName, destinationBackupFileName, false, PathFormat.Relative);
       }
 
       /// <summary>
@@ -657,7 +657,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
-         return Replace(destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.RelativeOrFullPath);
+         return Replace(destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1063,7 +1063,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativeOrFullPath);
+         CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, PathFormat.Relative);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -1103,7 +1103,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativeOrFullPath);
+         CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, PathFormat.Relative);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -1147,7 +1147,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativeOrFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1194,7 +1194,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativeOrFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1244,7 +1244,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativeOrFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1445,7 +1445,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, PathFormat.RelativeOrFullPath);
+         CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, PathFormat.Relative);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -1492,7 +1492,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativeOrFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
          return cmr;
       }

@@ -20,7 +20,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter CreateText(string path)
       {
-         return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativeOrFullPath);
+         return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter CreateText(KernelTransaction transaction, string path)
       {
-         return CreateTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativeOrFullPath);
+         return CreateTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>

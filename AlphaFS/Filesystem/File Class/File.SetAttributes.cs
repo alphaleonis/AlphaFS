@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes)
       {
-         SetAttributesInternal(false, null, path, fileAttributes, false, PathFormat.RelativeOrFullPath);
+         SetAttributesInternal(false, null, path, fileAttributes, false, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Sets the specified <see cref="FileAttributes"/> of the file or directory on the specified path.</summary>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes)
       {
-         SetAttributesInternal(false, transaction, path, fileAttributes, false, PathFormat.RelativeOrFullPath);
+         SetAttributesInternal(false, transaction, path, fileAttributes, false, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Sets the specified <see cref="FileAttributes"/> of the file on the specified path.</summary>

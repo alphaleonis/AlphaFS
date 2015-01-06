@@ -23,7 +23,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path)
       {
-         return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativeOrFullPath);
+         return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       /// <summary>
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path, Encoding encoding)
       {
-         return AppendTextInternal(null, path, encoding, PathFormat.RelativeOrFullPath);
+         return AppendTextInternal(null, path, encoding, PathFormat.Relative);
       }
 
       #region Transacted
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path)
       {
-         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativeOrFullPath);
+         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       /// <summary>
@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return AppendTextInternal(transaction, path, encoding, PathFormat.RelativeOrFullPath);
+         return AppendTextInternal(transaction, path, encoding, PathFormat.Relative);
       }
 
       #endregion // Transacted

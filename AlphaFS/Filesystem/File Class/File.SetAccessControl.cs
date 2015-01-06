@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity)
       {
-         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, PathFormat.RelativeOrFullPath);
+         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, PathFormat.Relative);
       }
 
       /// <summary>
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         SetAccessControlInternal(path, null, fileSecurity, includeSections, PathFormat.RelativeOrFullPath);
+         SetAccessControlInternal(path, null, fileSecurity, includeSections, PathFormat.Relative);
       }
 
       /// <summary>
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         if (pathFormat == PathFormat.RelativeOrFullPath)
+         if (pathFormat == PathFormat.Relative)
             Path.CheckValidPath(path, true, true);
 
          if (objectSecurity == null)

@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(string path)
       {
-         return GetCompressedSizeInternal(null, path, PathFormat.RelativeOrFullPath);
+         return GetCompressedSizeInternal(null, path, PathFormat.Relative);
       }
 
       /// <summary>
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(KernelTransaction transaction, string path)
       {
-         return GetCompressedSizeInternal(transaction, path, PathFormat.RelativeOrFullPath);
+         return GetCompressedSizeInternal(transaction, path, PathFormat.Relative);
       }
 
       #endregion // GetCompressedSize
