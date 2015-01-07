@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             // Use a large buffer to prevent calling this function twice.
             int size = NativeMethods.DefaultFileBufferSize;
-            StringBuilder buffer = new StringBuilder(size);
+            var buffer = new StringBuilder(size);
 
             iQa.GetString(Shell32.AssociationAttributes.NoTruncate | Shell32.AssociationAttributes.RemapRunDll, assocString, shellVerb, buffer, out size);
 

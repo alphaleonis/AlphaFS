@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32
       {
          if (value.HasValue)
          {
-            SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(long)));
+            var safeBuffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(long)));
             Marshal.WriteInt64(safeBuffer.handle, value.Value);
             return safeBuffer;
          }

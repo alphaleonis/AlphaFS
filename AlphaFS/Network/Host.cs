@@ -1540,7 +1540,7 @@ namespace Alphaleonis.Win32.Network
 
          do
          {
-            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle((int)bufferSize))
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int)bufferSize))
             {
                // Structure: UNIVERSAL_NAME_INFO_LEVEL = 1 (not used in AlphaFS).
                // Structure: REMOTE_NAME_INFO_LEVEL    = 2

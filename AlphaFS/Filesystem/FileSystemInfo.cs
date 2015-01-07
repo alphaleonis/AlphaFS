@@ -204,7 +204,9 @@ namespace Alphaleonis.Win32.Filesystem
          if (pathFormat == PathFormat.Relative)
             Path.CheckValidPath(path, true, true);
 
-         LongFullName = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | (isFolder ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | GetFullPathOptions.ContinueOnNonExist);            
+         LongFullName = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | (isFolder ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.ContinueOnNonExist);
+
+         // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the FileSystemInfo instance.
 
          FullPath = Path.GetRegularPathInternal(LongFullName, false, false, false, false);
 

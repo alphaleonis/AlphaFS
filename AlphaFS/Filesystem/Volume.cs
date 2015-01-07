@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (bufferResult == 0)
             {
-               char[] cBuffer = new char[bufferSize];
+               var cBuffer = new char[bufferSize];
 
                // QueryDosDevice()
                // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -222,8 +222,8 @@ namespace Alphaleonis.Win32.Filesystem
                         break;
                   }
 
-               List<string> dosDev = new List<string>();
-               StringBuilder buffer = new StringBuilder();
+               var dosDev = new List<string>();
+               var buffer = new StringBuilder();
 
                for (int i = 0; i < bufferResult; i++)
                {
@@ -448,7 +448,7 @@ namespace Alphaleonis.Win32.Filesystem
          // A trailing backslash is required.
          volumeGuid = Path.AddDirectorySeparator(volumeGuid, false);
 
-         StringBuilder buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
+         var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -540,7 +540,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
             }
 
-         StringBuilder buffer = new StringBuilder(cBuffer.Length);
+         var buffer = new StringBuilder(cBuffer.Length);
          foreach (char c in cBuffer)
          {
             if (c != Path.StringTerminatorChar)
@@ -566,7 +566,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumes()
       {
-         StringBuilder buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
+         var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))

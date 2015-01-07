@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                   // Now we get the InstanceID of the USB level device.
-                  using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+                  using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
                   {
                      // CM_Get_Device_ID_Ex()
                      // Note: Using this function to access remote machines is not supported beginning with Windows 8 and Windows Server 2012,
@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   #region Get Registry Properties
 
-                  using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+                  using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
                   {
                      uint regType;
                      string dataString;
@@ -290,7 +290,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Start with a large buffer to prevent a 2nd call.
          uint bytesReturned = NativeMethods.MaxPathUnicode;
 
-         using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle((int)bytesReturned))
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int)bytesReturned))
          { 
             do
             {

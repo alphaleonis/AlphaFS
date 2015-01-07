@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (isFolder == null)
          {
-            FileAttributes attrs = File.GetAttributesExInternal<FileAttributes>(transaction, LongFullName, PathFormat.LongFullPath);
+            var attrs = File.GetAttributesExInternal<FileAttributes>(transaction, LongFullName, PathFormat.LongFullPath);
             IsDirectory = (attrs & FileAttributes.Directory) == FileAttributes.Directory;
          }
          else
@@ -296,7 +296,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (isFolder == null)
             {
-               FileAttributes attrs = File.GetAttributesExInternal<FileAttributes>(transaction, pathLp, PathFormat.LongFullPath);
+               var attrs = File.GetAttributesExInternal<FileAttributes>(transaction, pathLp, PathFormat.LongFullPath);
                isFolder = (attrs & FileAttributes.Directory) == FileAttributes.Directory;
             }
 
@@ -313,7 +313,7 @@ namespace Alphaleonis.Win32.Filesystem
          try
          {
             using (new PrivilegeEnabler(Privilege.Backup))
-            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                Type typeWin32Stream = typeof(NativeMethods.Win32StreamId);
                uint sizeOfType = (uint) Marshal.SizeOf(typeWin32Stream);
