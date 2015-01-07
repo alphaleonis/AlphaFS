@@ -23,7 +23,7 @@ using System;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Used by Win32 API GetFinalPathNameByHandle()</summary>
+   /// <summary>Determines the format to convert a path to using <see cref="Alphaleonis.Win32.Filesystem.Path.GetFinalPathNameByHandle(Microsoft.Win32.SafeHandles.SafeFileHandle)"/></summary>
    [Flags]
    public enum FinalPathFormats
    {
