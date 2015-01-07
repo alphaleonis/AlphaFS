@@ -548,7 +548,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Return DirectoryInfo instance if the directory specified by path already exists.
          if (File.ExistsInternal(true, transaction, pathLp, PathFormat.LongFullPath))
-            return new DirectoryInfo(transaction, pathLp, PathFormat.FullPath);
+            return new DirectoryInfo(transaction, pathLp, PathFormat.LongFullPath);
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
          if (File.ExistsInternal(false, transaction, pathLp, PathFormat.LongFullPath))

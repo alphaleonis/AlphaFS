@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(transaction,
                Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional)
-               , false, PathFormat.LongFullPath);
+               , false, pathFormat);
          }
 
          if (fileSystemEntryInfo == null)
