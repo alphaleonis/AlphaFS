@@ -256,6 +256,7 @@
     <Compile Include="Filesystem\FileSystemInfo.cs" />
     <Compile Include="Filesystem\Enumerations\GetFileExInfoLevels.cs" />
     <Compile Include="Filesystem\Enumerations\GetFullPathOptions.cs" />
+    <Compile Include="Filesystem\Path Class\Path.cs" />
     <Compile Include="Filesystem\Path Class\Path.ValidationAndChecks.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetComponents.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetFinalPathNameByHandle.cs" />
@@ -278,7 +279,6 @@
     <Compile Include="Filesystem\LinkTargetInfo.cs" />
     <Compile Include="Filesystem\Enumerations\MoveOptions.cs" />
     <Compile Include="Filesystem\Exceptions\NotAReparsePointException.cs" />
-    <Compile Include="Filesystem\Path Class\Path.cs" />
     <Compile Include="Filesystem\Shell32.cs" />
     <Compile Include="Filesystem\Structures\MountPointReparseBuffer.cs" />
     <Compile Include="Filesystem\Structures\ReparseDataBufferHeader.cs" />
@@ -388,7 +388,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
