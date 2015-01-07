@@ -741,6 +741,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region MoveTo
 
+      #region .NET
+
       /// <summary>Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path.</summary>
       /// <remarks>
       ///   <para>Use this method to prevent overwriting of an existing directory by default.</para>
@@ -765,6 +767,155 @@ namespace Alphaleonis.Win32.Filesystem
          CopyToMoveToInternal(destinationFullPath, null, MoveOptions.None, null, null, out destinationPathLp, PathFormat.FullPath);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
       }
+
+      #endregion // .NET
+
+      #region AlphaFS
+
+      /// <summary>
+      ///   [AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <remarks>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains
+      ///   <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in
+      ///   undesirable behavior.</para>
+      /// </remarks>
+      /// <param name="destinationFullPath">
+      ///   <para>The name and path to which to move this directory.</para>
+      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains
+      ///   <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
+      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
+      /// </param>
+      /// <param name="moveOptions">
+      ///   <see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.
+      /// </param>
+      /// <returns><para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para></returns>
+      ///
+      /// ### <exception cref="ArgumentException">
+      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
+      /// </exception>
+      /// ### <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// ### <exception cref="DirectoryNotFoundException">.</exception>
+      /// ### <exception cref="IOException">.</exception>
+      /// ### <exception cref="UnauthorizedAccessException">.</exception>
+      [SecurityCritical]
+      public DirectoryInfo MoveTo(string destinationFullPath, MoveOptions moveOptions)
+      {
+         string destinationPathLp;
+         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, PathFormat.Relative);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
+      }
+
+      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>
+      ///   <para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para>
+      /// </returns>
+      /// <remarks>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="destinationFullPath">
+      ///   <para>The name and path to which to move this directory.</para>
+      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
+      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
+      /// </param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public DirectoryInfo MoveTo(string destinationFullPath, MoveOptions moveOptions, PathFormat pathFormat)
+      {
+         string destinationPathLp;
+         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, pathFormat);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
+      }
+
+
+
+      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</para>
+      /// </returns>
+      /// <remarks>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
+      /// <param name="destinationFullPath">
+      ///   <para>The name and path to which to move this directory.</para>
+      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
+      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
+      /// </param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      [SecurityCritical]
+      public CopyMoveResult MoveTo(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         string destinationPathLp;
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
+         CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
+         return cmr;
+      }
+
+
+
+      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</para>
+      /// </returns>
+      /// <remarks>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
+      /// <param name="destinationFullPath">
+      ///   <para>The name and path to which to move this directory.</para>
+      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
+      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
+      /// </param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public CopyMoveResult MoveTo(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         string destinationPathLp;
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
+         return cmr;
+      }
+
+      #endregion // AlphaFS
 
       #endregion // MoveTo
 
@@ -1354,154 +1505,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion GetStreamSize
-
-      #region MoveTo
-
-      /// <summary>
-      ///   [AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// </summary>
-      /// <remarks>
-      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains
-      ///   <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in
-      ///   undesirable behavior.</para>
-      /// </remarks>
-      /// <param name="destinationFullPath">
-      ///   <para>The name and path to which to move this directory.</para>
-      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains
-      ///   <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
-      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
-      /// </param>
-      /// <param name="moveOptions">
-      ///   <see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <returns><para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para></returns>
-      ///
-      /// ### <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// ### <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// ### <exception cref="DirectoryNotFoundException">.</exception>
-      /// ### <exception cref="IOException">.</exception>
-      /// ### <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public DirectoryInfo MoveTo(string destinationFullPath, MoveOptions moveOptions)
-      {
-         string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, PathFormat.Relative);
-         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
-      }
-
-      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// </summary>
-      /// <returns>
-      ///   <para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para>
-      /// </returns>
-      /// <remarks>
-      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="destinationFullPath">
-      ///   <para>The name and path to which to move this directory.</para>
-      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
-      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
-      /// </param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public DirectoryInfo MoveTo(string destinationFullPath, MoveOptions moveOptions, PathFormat pathFormat)
-      {
-         string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, pathFormat);
-         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
-      }
-
-
-
-      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// </summary>
-      /// <returns>
-      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</para>
-      /// </returns>
-      /// <remarks>
-      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
-      /// <param name="destinationFullPath">
-      ///   <para>The name and path to which to move this directory.</para>
-      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
-      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
-      /// </param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      [SecurityCritical]
-      public CopyMoveResult MoveTo(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
-         CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
-         return cmr;
-      }
-
-
-
-      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// </summary>
-      /// <returns>
-      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</para>
-      /// </returns>
-      /// <remarks>
-      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
-      /// <param name="destinationFullPath">
-      ///   <para>The name and path to which to move this directory.</para>
-      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
-      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
-      /// </param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public CopyMoveResult MoveTo(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
-         return cmr;
-      }
       
-      #endregion // MoveTo
-
       #region RefreshEntryInfo
 
       /// <summary>Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo instance.</summary>
