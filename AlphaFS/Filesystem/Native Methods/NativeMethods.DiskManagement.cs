@@ -1,0 +1,69 @@
+using Alphaleonis.Win32.Security;
+using Microsoft.Win32.SafeHandles;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Security.AccessControl;
+using System.Text;
+
+namespace Alphaleonis.Win32.Filesystem
+{
+   internal static partial class NativeMethods
+   {
+      /// <summary>
+      ///   Retrieves information about the specified disk, including the amount of free space on the disk.
+      /// </summary>
+      /// <remarks>
+      ///   <para>Symbolic link behavior: If the path points to a symbolic link, the operation is performed on the target.</para>
+      ///   <para>If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").</para>
+      ///   <para>Furthermore, a drive specification must have a trailing backslash (for example, "C:\").</para>
+      ///   <para>The calling application must have FILE_LIST_DIRECTORY access rights for this directory.</para>
+      ///   <para>Minimum supported client: Windows XP [desktop apps only]</para>
+      ///   <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+      /// </remarks>
+      /// <param name="lpRootPathName">Full pathname of the root file.</param>
+      /// <param name="lpSectorsPerCluster">[out] The sectors per cluster.</param>
+      /// <param name="lpBytesPerSector">[out] The bytes per sector.</param>
+      /// <param name="lpNumberOfFreeClusters">[out] Number of free clusters.</param>
+      /// <param name="lpTotalNumberOfClusters">[out] The total number of clusters.</param>
+      /// <returns>
+      ///   <para>If the function succeeds, the return value is nonzero.</para>
+      ///   <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
+      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetDiskFreeSpaceW")]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      internal static extern bool GetDiskFreeSpace([MarshalAs(UnmanagedType.LPWStr)] string lpRootPathName, [MarshalAs(UnmanagedType.U4)] out uint lpSectorsPerCluster, [MarshalAs(UnmanagedType.U4)] out uint lpBytesPerSector, [MarshalAs(UnmanagedType.U4)] out uint lpNumberOfFreeClusters, [MarshalAs(UnmanagedType.U4)] out uint lpTotalNumberOfClusters);
+
+      /// <summary>
+      ///   Retrieves information about the amount of space that is available on a disk volume, which is the total amount of space,
+      ///   <para>the total amount of free space, and the total amount of free space available to the user that is associated with the calling
+      ///   thread.</para>
+      /// </summary>
+      /// <remarks>
+      ///   <para>Symbolic link behavior: If the path points to a symbolic link, the operation is performed on the target.</para>
+      ///   <para>The GetDiskFreeSpaceEx function returns zero (0) for lpTotalNumberOfFreeBytes and lpFreeBytesAvailable
+      ///   for all CD requests unless the disk is an unwritten CD in a CD-RW drive.</para>
+      ///   <para>If this parameter is a UNC name, it must include a trailing backslash, for example, "\\MyServer\MyShare\".</para>
+      ///   <para>This parameter does not have to specify the root directory on a disk.</para>
+      ///   <para>The function accepts any directory on a disk.</para>
+      ///   <para>The calling application must have FILE_LIST_DIRECTORY access rights for this directory.</para>
+      ///   <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
+      ///   <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
+      /// </remarks>
+      /// <param name="lpDirectoryName">Pathname of the directory.</param>
+      /// <param name="lpFreeBytesAvailable">[out] The free bytes available.</param>
+      /// <param name="lpTotalNumberOfBytes">[out] The total number of in bytes.</param>
+      /// <param name="lpTotalNumberOfFreeBytes">[out] The total number of free in bytes.</param>
+      /// <returns>
+      ///   <para>If the function succeeds, the return value is nonzero.</para>
+      ///   <para>If the function fails, the return value is zero (0). To get extended error information, call GetLastError.</para>
+      /// </returns>
+      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetDiskFreeSpaceExW")]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      internal static extern bool GetDiskFreeSpaceEx([MarshalAs(UnmanagedType.LPWStr)] string lpDirectoryName, [MarshalAs(UnmanagedType.U8)] out ulong lpFreeBytesAvailable, [MarshalAs(UnmanagedType.U8)] out ulong lpTotalNumberOfBytes, [MarshalAs(UnmanagedType.U8)] out ulong lpTotalNumberOfFreeBytes);
+   }
+}

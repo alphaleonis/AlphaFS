@@ -256,6 +256,16 @@
     <Compile Include="Filesystem\FileSystemInfo.cs" />
     <Compile Include="Filesystem\Enumerations\GetFileExInfoLevels.cs" />
     <Compile Include="Filesystem\Enumerations\GetFullPathOptions.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.KernelTransactions.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.Handles.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.FileManagement.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.DiskManagement.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.DirectoryManagement.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.DeviceManagement.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.Constants.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.BackupStreams.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.Utilities.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.PathManagement.cs" />
     <Compile Include="Filesystem\Path Class\Path.cs" />
     <Compile Include="Filesystem\Path Class\Path.ValidationAndChecks.cs" />
     <Compile Include="Filesystem\Path Class\Path.GetComponents.cs" />
@@ -364,7 +374,7 @@
     <Compile Include="Security\Structures\TokenPrivileges.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="Win32Errors.cs" />
-    <Compile Include="Filesystem\NativeMethods.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.VolumeManagement.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
