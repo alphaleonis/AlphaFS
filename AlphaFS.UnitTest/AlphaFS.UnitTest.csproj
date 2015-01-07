@@ -130,6 +130,7 @@
     <Compile Include="PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AlphaFS_VolumeTest.cs" />
+    <Compile Include="Utils\TemporaryDirectory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\AlphaFS.snk">

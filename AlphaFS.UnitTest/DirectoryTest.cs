@@ -3763,6 +3763,40 @@ namespace AlphaFS.UnitTest
          DumpGetFileSystemEntries(false);
       }
 
+      [TestMethod]
+      public void GetFileSystemEntries_LongPathWithPrefix_ShouldReturnCorrectEntries()
+      {
+         using (var tempDir = new TemporaryDirectory("GetFileSystemEntries"))
+         {
+            string longDir = Path.Combine(tempDir.Directory.FullName, new string('x', 128), new string('x', 128), new string('x', 128), new string('x', 128));
+            Directory.CreateDirectory(longDir);
+            Directory.CreateDirectory(Path.Combine(longDir, "A"));
+            Directory.CreateDirectory(Path.Combine(longDir, "B"));
+            File.WriteAllText(Path.Combine(longDir, "C"), "C");
+
+            var entries = Directory.GetFileSystemEntries("\\\\?\\" + longDir).ToArray();
+
+            Assert.AreEqual(3, entries.Length);
+         }
+      }
+
+      [TestMethod]
+      public void GetFileSystemEntries_LongPathWithoutPrefix_ShouldReturnCorrectEntries()
+      {
+         using (var tempDir = new TemporaryDirectory("GetFileSystemEntries"))
+         {
+            string longDir = Path.Combine(tempDir.Directory.FullName, new string('x', 128), new string('x', 128), new string('x', 128), new string('x', 128));
+            Directory.CreateDirectory(longDir);
+            Directory.CreateDirectory(Path.Combine(longDir, "A"));
+            Directory.CreateDirectory(Path.Combine(longDir, "B"));
+            File.WriteAllText(Path.Combine(longDir, "C"), "C");
+
+            var entries = Directory.GetFileSystemEntries(longDir).ToArray();
+
+            Assert.AreEqual(3, entries.Length);
+         }
+      }
+
       #endregion // GetFileSystemEntries
 
       #region GetLastAccessTime
