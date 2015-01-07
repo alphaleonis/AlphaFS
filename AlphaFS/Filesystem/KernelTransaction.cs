@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         using (Security.NativeMethods.SecurityAttributes securityAttributes = new Security.NativeMethods.SecurityAttributes(securityDescriptor))
+         using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(securityDescriptor))
          {
 
             _hTrans = NativeMethods.CreateTransaction(securityAttributes, IntPtr.Zero, 0, 0, 0, timeout, description);

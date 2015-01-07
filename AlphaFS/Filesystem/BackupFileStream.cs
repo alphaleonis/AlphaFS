@@ -302,7 +302,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (count < 0)
             throw new ArgumentOutOfRangeException("count", count, Resources.CountMustNotBeNegative);
 
-         using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(count))
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(count))
          {
             uint numberOfBytesRead;
 
@@ -372,7 +372,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (offset + count > buffer.Length)
             throw new ArgumentException(Resources.BufferIsNotLargeEnoughForTheRequestedOperation);
 
-         using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(count))
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(count))
          {
             safeBuffer.CopyFrom(buffer, offset, count);
 

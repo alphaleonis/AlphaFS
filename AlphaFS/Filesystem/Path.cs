@@ -1517,15 +1517,15 @@ namespace Alphaleonis.Win32.Filesystem
                return sourcePath;
 
             case PathFormat.FullPath:
-               return Path.GetLongPathInternal(sourcePath, GetFullPathOptions.None);
+               return GetLongPathInternal(sourcePath, GetFullPathOptions.None);
 
             case PathFormat.Relative:
 #if NET35               
-               return Path.GetFullPathInternal(transaction, sourcePath, true, options & ~GetFullPathOptions.TrimEnd);
-#else
-               // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before deleting the directory.
-               return Path.GetFullPathInternal(transaction, sourcePath, true, options);
+               // .NET 3.5 the TrimEnd option has no effect.
+               options = options & ~GetFullPathOptions.TrimEnd;
 #endif
+               return GetFullPathInternal(transaction, sourcePath, true, options);
+
             default:
                throw new ArgumentException("Invalid value for " + typeof(PathFormat).Name + ": " + pathFormat);
          }
@@ -1585,7 +1585,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
 
-         StringBuilder buffer = new StringBuilder(capacity);
+         var buffer = new StringBuilder(capacity);
          for (int index = num; index < paths.Length; ++index)
          {
             if (paths[index].Length != 0)
@@ -1658,7 +1658,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          NativeMethods.IsValidHandle(handle);
 
-         StringBuilder buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
+         var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
@@ -1775,10 +1775,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </exception>
       /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       [SecurityCritical]
-      internal static string GetFullPathInternal(KernelTransaction transaction,
-                                                 string path,
-                                                 bool asLongPath,
-                                                 GetFullPathOptions options)
+      internal static string GetFullPathInternal(KernelTransaction transaction, string path, bool asLongPath, GetFullPathOptions options)
       {
          if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
             CheckInvalidPathChars(path, (options & GetFullPathOptions.CheckAdditional) != 0);
@@ -1800,7 +1797,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
          startGetFullPathName:
 
-            StringBuilder buffer = new StringBuilder((int)bufferSize);
+            var buffer = new StringBuilder((int)bufferSize);
             uint returnLength = (transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
                // GetFullPathName() / GetFullPathNameTransacted()
@@ -1922,7 +1919,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = GetFullPathInternal(transaction, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
-         StringBuilder buffer = new StringBuilder();
+         var buffer = new StringBuilder();
          uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint)path.Length;
 
          while (actualLength > buffer.Capacity)

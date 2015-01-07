@@ -671,7 +671,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (urlPath == null)
             return null;
 
-         StringBuilder buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
+         var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
          uint bufferSize = (uint) buffer.Capacity;
 
          uint lastError = NativeMethods.PathCreateFromUrl(urlPath, buffer, ref bufferSize, 0);
@@ -765,7 +765,7 @@ namespace Alphaleonis.Win32.Filesystem
          // UrlCreateFromPath does not support extended paths.
          string pathRp = Path.GetRegularPathInternal(path, false, false, false, true);
 
-         StringBuilder buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
+         var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
          uint bufferSize = (uint) buffer.Capacity;
 
          uint lastError = NativeMethods.UrlCreateFromPath(pathRp, buffer, ref bufferSize, 0);

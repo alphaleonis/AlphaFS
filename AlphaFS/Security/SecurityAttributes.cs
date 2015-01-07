@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Security
             
             
             byte[] src = securityDescriptor.GetSecurityDescriptorBinaryForm();
-            SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(src.Length);
+            var safeBuffer = new SafeGlobalMemoryBufferHandle(src.Length);
             try
             {
                safeBuffer.CopyFrom(src, 0, src.Length);

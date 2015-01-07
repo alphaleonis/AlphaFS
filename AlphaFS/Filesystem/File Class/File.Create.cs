@@ -399,7 +399,7 @@ namespace Alphaleonis.Win32.Filesystem
                privilegeEnabler = new PrivilegeEnabler(Privilege.Security);
 
 
-            using (Security.NativeMethods.SecurityAttributes securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
+            using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
             {
                SafeFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
 

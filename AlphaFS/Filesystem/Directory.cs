@@ -5792,7 +5792,7 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // Process directories and files.
-         foreach (string fso in EnumerateFileSystemEntryInfosInternal<string>(transaction, pathLp, searchPattern, directoryEnumerationOptions | DirectoryEnumerationOptions.AsLongPath, PathFormat.LongFullPath))
+         foreach (var fso in EnumerateFileSystemEntryInfosInternal<string>(transaction, pathLp, searchPattern, directoryEnumerationOptions | DirectoryEnumerationOptions.AsLongPath, PathFormat.LongFullPath))
             Device.ToggleCompressionInternal(true, transaction, fso, compress, PathFormat.LongFullPath);
 
          // Compress the root directory, the given path.
@@ -5878,7 +5878,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             CreateDirectoryInternal(transaction, destinationPathLp, null, null, false, PathFormat.LongFullPath);
 
-            foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
+            foreach (var fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, sourcePathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
             {
                string newDestinationPathLp = Path.CombineInternal(false, destinationPathLp, fsei.FileName);
 
@@ -5968,7 +5968,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Return DirectoryInfo instance if the directory specified by path already exists.
          if (File.ExistsInternal(true, transaction, pathLp, PathFormat.LongFullPath))
-            return new DirectoryInfo(transaction, pathLp, PathFormat.FullPath);
+            return new DirectoryInfo(transaction, pathLp, PathFormat.LongFullPath);
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
          if (File.ExistsInternal(false, transaction, pathLp, PathFormat.LongFullPath))
@@ -6014,7 +6014,7 @@ namespace Alphaleonis.Win32.Filesystem
          #endregion // Construct Full Path
 
          // Directory security.
-         using (Security.NativeMethods.SecurityAttributes securityAttributes = new Security.NativeMethods.SecurityAttributes(directorySecurity))
+         using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(directorySecurity))
          {
             // Create the directory paths.
             while (list.Count > 0)
@@ -6151,7 +6151,8 @@ namespace Alphaleonis.Win32.Filesystem
             // The specified path is invalid (for example, it is on an unmapped drive). 
 
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(transaction,
-               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotExist, PathFormat.LongFullPath);
+               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator),
+                  continueOnNotExist, pathFormat);
          }
 
          if (fileSystemEntryInfo == null)
@@ -6183,7 +6184,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (recursive)
          {
             // Enumerate all file system objects.
-            foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
+            foreach (var fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
             {
                if (fsei.IsDirectory)
                   DeleteDirectoryInternal(fsei, transaction, null, true, ignoreReadOnly, requireEmpty, true, PathFormat.LongFullPath);
@@ -6221,7 +6222,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_DIRECTORY:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: Path refers to a file instead of a directory.
-                  if (File.ExistsInternal(false, transaction, path, PathFormat.LongFullPath))
+                  if (File.ExistsInternal(false, transaction, pathLp, PathFormat.LongFullPath))
                      throw new DirectoryNotFoundException(String.Format(CultureInfo.CurrentCulture, "({0}) {1}",
                         Win32Errors.ERROR_INVALID_PARAMETER, String.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp)));
                   break;
@@ -6311,7 +6312,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(transaction,
                Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional)
-               , false, PathFormat.LongFullPath);
+               , false, pathFormat);
          }
 
          if (fileSystemEntryInfo == null)
@@ -6325,11 +6326,11 @@ namespace Alphaleonis.Win32.Filesystem
          if (!fileSystemEntryInfo.IsDirectory)
             throw new IOException(String.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp));
 
-         DirectoryEnumerationOptions dirEnumOptions = DirectoryEnumerationOptions.Folders;
+         var dirEnumOptions = DirectoryEnumerationOptions.Folders;
          if (recursive)
             dirEnumOptions |= DirectoryEnumerationOptions.Recursive;
 
-         foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, dirEnumOptions, PathFormat.LongFullPath))
+         foreach (var fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, dirEnumOptions, PathFormat.LongFullPath))
             DeleteEmptyDirectoryInternal(fsei, transaction, null, recursive, ignoreReadOnly, false, PathFormat.LongFullPath);
 
 
@@ -6388,7 +6389,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          // Process folders and files.
-         foreach (string fso in EnumerateFileSystemEntryInfosInternal<string>(null, pathLp, Path.WildcardStarMatchAll, directoryEnumerationOptions, PathFormat.LongFullPath))
+         foreach (var fso in EnumerateFileSystemEntryInfosInternal<string>(null, pathLp, Path.WildcardStarMatchAll, directoryEnumerationOptions, PathFormat.LongFullPath))
             File.EncryptDecryptFileInternal(true, fso, encrypt, PathFormat.LongFullPath);
 
          // Process the root folder, the given path.
@@ -6435,7 +6436,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // 2014-10-16: Number of returned items depends on the size of the buffer.
             // That does not seem right, investigate.
-            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                NativeMethods.IsValidHandle(safeBuffer, Marshal.GetLastWin32Error());
 
@@ -6655,7 +6656,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
-         foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, directoryEnumerationOptions, PathFormat.LongFullPath))
+         foreach (var fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, directoryEnumerationOptions, PathFormat.LongFullPath))
          {
             total++;
 

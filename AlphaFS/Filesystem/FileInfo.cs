@@ -700,7 +700,7 @@ namespace Alphaleonis.Win32.Filesystem
           
          File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, PathFormat.LongFullPath);
 
-         return new FileInfo(Transaction, destinationFileNameLp, PathFormat.FullPath);
+         return new FileInfo(Transaction, destinationFileNameLp, PathFormat.LongFullPath);
       }
 
       #endregion // IsFullPath
