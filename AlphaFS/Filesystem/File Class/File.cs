@@ -19,10 +19,7 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Alphaleonis.Win32.Filesystem
 {

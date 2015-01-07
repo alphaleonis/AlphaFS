@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destination">Indicates the destination file or directory.</param>
       /// <param name="isDirectory">Indicates that the file system object is a directory.</param>
       /// <param name="isMove">Indicates if the action is a Copy or Move action.</param>
-      /// <param name="isCanceled">The result of the Copy or Move action.</param>
+      /// <param name="isCanceled">Indicates if the action was canceled.</param>
       /// <param name="errorCode">The error code encountered during the Copy or Move action.</param>
       public CopyMoveResult(string source, string destination, bool isDirectory, bool isMove, bool isCanceled, int errorCode)
       {

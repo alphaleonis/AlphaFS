@@ -431,7 +431,7 @@ namespace AlphaFS.UnitTest
             // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
             // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
 
-            FileSystemAccessRule rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
+            var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
 
             expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
@@ -681,7 +681,7 @@ namespace AlphaFS.UnitTest
 
             // 3rd parameter CopyOptions.None: overwrite existing.
             // 4rd parameter true: preserve timestamps of source.
-            File.Copy1(preserveReadOnlySource, readOnlyDestination, CopyOptions.None, true);
+            File.Copy(preserveReadOnlySource, readOnlyDestination, CopyOptions.None, true);
 
 
             Console.WriteLine("\tFile copied.{0}", Reporter());
@@ -1508,7 +1508,7 @@ namespace AlphaFS.UnitTest
             // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
             // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
 
-            FileSystemAccessRule rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
+            var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
 
             
             expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
@@ -1674,7 +1674,7 @@ namespace AlphaFS.UnitTest
                   Directory.CreateDirectory(folderfileName);
 
                   // MoveOptions.None: overwrite existing.
-                  File.Move1(file, folderfileName, MoveOptions.None);
+                  File.Move(file, folderfileName, MoveOptions.None);
                }
             }
             catch (Exception ex)
@@ -1771,7 +1771,7 @@ namespace AlphaFS.UnitTest
 
             // 3rd parameter MoveOptions.ReplaceExisting: overwrite existing.
             // File.Move() automatically preserves Timestamps.
-            File.Move1(readOnlySource, readOnlyDestination, MoveOptions.ReplaceExisting);
+            File.Move(readOnlySource, readOnlyDestination, MoveOptions.ReplaceExisting);
 
             Console.WriteLine("\tFile moved.{0}", Reporter());
 
@@ -3403,17 +3403,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // Compress
 
-      #region AlphaFS_Copy1
-
-      [TestMethod]
-      public void AlphaFS_Copy1()
-      {
-         Console.WriteLine("File.Copy1()");
-         Console.WriteLine("\nPlease see unit test: Copy()");
-      }
-
-      #endregion // AlphaFS_Copy1
-
       #region CreateHardlink
 
       [TestMethod]
@@ -3549,17 +3538,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetStreamSize
-
-      #region AlphaFS_Move1
-
-      [TestMethod]
-      public void AlphaFS_Move1()
-      {
-         Console.WriteLine("File.Move1()");
-         Console.WriteLine("\nPlease see unit test: Move()");
-      }
-
-      #endregion // AlphaFS_Move1
 
       #region RemoveStream
 

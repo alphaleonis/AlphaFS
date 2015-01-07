@@ -349,9 +349,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -362,13 +362,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern and search subdirectory option.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
-      /// <para> should include only the current directory or should include all subdirectories.</para>
+      ///   <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      ///   <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
       /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
@@ -400,9 +400,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
@@ -413,13 +413,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an enumerable collection of file information that matches a specified search pattern and search subdirectory option.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
-      /// <para> should include only the current directory or should include all subdirectories.</para>
+      ///   <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      ///   <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
       /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
@@ -452,9 +452,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
@@ -466,13 +466,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern and search subdirectory option.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
-      /// <para> should include only the current directory or should include all subdirectories.</para>
+      ///   <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      ///   <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
       /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
@@ -538,9 +538,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An array of type <see cref="DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
       /// <remarks>
@@ -556,13 +556,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria and using a value to determine whether to search subdirectories.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
-      /// <para> should include only the current directory or should include all subdirectories.</para>
+      ///   <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      ///   <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
       /// <returns>An array of type <see cref="DirectoryInfo"/> matching <paramref name="searchPattern"/>.</returns>
       /// <remarks>If there are no subdirectories, or no subdirectories match the searchPattern parameter, this method returns an empty array.</remarks>
@@ -607,9 +607,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns a file list from the current directory matching the given search pattern.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
@@ -627,13 +627,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns a file list from the current directory matching the given search pattern and using a value to determine whether to search subdirectories.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
-      /// <para> should include only the current directory or should include all subdirectories.</para>
+      ///   <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      ///   <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
       /// <returns>An array of type <see cref="FileInfo"/>.</returns>
       /// <remarks>The order of the returned file names is not guaranteed; use the Sort() method if a specific sort order is required.</remarks>
@@ -682,9 +682,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves an array of strongly typed <see cref="FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <returns>An array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
       /// <remarks>
@@ -705,13 +705,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves an array of strongly typed <see cref="FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="searchOption">
-      /// <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
-      /// <para> should include only the current directory or should include all subdirectories.</para>
+      ///   <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
+      ///   <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
       /// <returns>An array of strongly typed <see cref="FileSystemInfo"/> entries.</returns>
       /// <remarks>
@@ -741,13 +741,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region MoveTo
 
-      /// <summary>Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path.
-      /// </summary>
+      /// <summary>Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path.</summary>
       /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
-      /// <para>This method does not work across disk volumes.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to prevent overwriting of an existing directory by default.</para>
+      ///   <para>This method does not work across disk volumes.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
@@ -755,9 +754,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationFullPath">
-      /// <para>The name and path to which to move this directory.</para>
-      /// <para>The destination cannot be another disk volume or a directory with the identical name.</para>
-      /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
+      ///   <para>The name and path to which to move this directory.</para>
+      ///   <para>The destination cannot be another disk volume or a directory with the identical name.</para>
+      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
       /// </param>
       [SecurityCritical]
       public void MoveTo(string destinationFullPath)
@@ -845,231 +844,197 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // AddStream
 
-      #region CopyTo1
+      #region CopyTo
 
-      #region IsFullPath
+      // .NET 4.5 and below: DirectoryInfo class does not contain this method.
 
-      #region DirectoryInfo
+      // Mimic .NET FileInfo.CopyTo() methods.
 
-      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
-      /// </summary>
+      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.</summary>
       /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
       /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to prevent overwriting of an existing directory by default.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public DirectoryInfo CopyTo1(string destinationPath, PathFormat pathFormat)
-      {
-         string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
-         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
-      }
-
-      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
-      /// </summary>
-      /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
-      /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public DirectoryInfo CopyTo1(string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
-      {
-         string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, pathFormat);
-         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
-      }
-
-      #endregion // DirectoryInfo
-
-      #region CopyMoveResult
-
-      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// </summary>
-      /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
-      /// </returns>
-      /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
-         return cmr;
-      }
-
-      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// </summary>
-      /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
-      /// </returns>
-      /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
-         return cmr;
-      }
-
-      #endregion // CopyMoveResult
-
-      #endregion // IsFullPath
-
-      #region DirectoryInfo
-
-      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
-      /// </summary>
-      /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
-      /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The destination directory path.</param>
       [SecurityCritical]
-      public DirectoryInfo CopyTo1(string destinationPath)
+      public DirectoryInfo CopyTo(string destinationPath)
       {
          string destinationPathLp;
          CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.Relative);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
-      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
-      /// </summary>
+      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.</summary>
       /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely copied.</returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to prevent overwriting of an existing directory by default.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public DirectoryInfo CopyTo(string destinationPath, PathFormat pathFormat)
+      {
+         string destinationPathLp;
+         CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
+      }
+
+
+
+      /// <summary>Copies an existing directory to a new directory, allowing the overwriting of an existing directory.</summary>
+      /// <returns>
+      ///   <para>Returns a new directory, or an overwrite of an existing directory if <paramref name="overwrite"/> is <see langword="true"/>.</para>
+      ///   <para>If the directory exists and <paramref name="overwrite"/> is <see langword="false"/>, an <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      /// <remarks>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="overwrite"><see langword="true"/> if the destination directory should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>      
+      [SecurityCritical]
+      public DirectoryInfo CopyTo(string destinationPath, bool overwrite)
+      {
+         string destinationPathLp;
+         CopyToMoveToInternal(destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.Relative);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
+      }
+
+      /// <summary>Copies an existing directory to a new directory, allowing the overwriting of an existing directory.</summary>
+      /// <returns>
+      ///   <para>Returns a new directory, or an overwrite of an existing directory if <paramref name="overwrite"/> is <see langword="true"/>.</para>
+      ///   <para>If the directory exists and <paramref name="overwrite"/> is <see langword="false"/>, an <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      /// <remarks>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="overwrite"><see langword="true"/> if the destination directory should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public DirectoryInfo CopyTo(string destinationPath, bool overwrite, PathFormat pathFormat)
+      {
+         string destinationPathLp;
+         CopyToMoveToInternal(destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
+      }
+
+
+
+      /// <summary>[AlphaFS] Copies an existing directory to a new directory, allowing the overwriting of an existing directory, <see cref="CopyOptions"/> can be specified.</summary>
+      /// <returns>
+      ///   <para>Returns a new directory, or an overwrite of an existing directory if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the directory exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      public DirectoryInfo CopyTo1(string destinationPath, CopyOptions copyOptions)
+      public DirectoryInfo CopyTo(string destinationPath, CopyOptions copyOptions)
       {
          string destinationPathLp;
          CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, PathFormat.Relative);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
-      #endregion // DirectoryInfo
-
-      #region CopyMoveResult
-
-      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// </summary>
+      /// <summary>[AlphaFS] Copies an existing directory to a new directory, allowing the overwriting of an existing directory, <see cref="CopyOptions"/> can be specified.</summary>
       /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
+      ///   <para>Returns a new directory, or an overwrite of an existing directory if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the directory exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
       /// <remarks>
-      /// <para>Use this method to prevent overwriting of an existing directory by default.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public DirectoryInfo CopyTo(string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
-         return cmr;
+         CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, pathFormat);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
-      /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="CopyOptions"/> can be specified,
+
+
+      /// <summary>[AlphaFS] Copies an existing directory to a new directory, allowing the overwriting of an existing directory, <see cref="CopyOptions"/> can be specified.
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
+      ///   <para>Returns a new directory, or an overwrite of an existing directory if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the directory exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
       /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
          CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
@@ -1077,8 +1042,40 @@ namespace Alphaleonis.Win32.Filesystem
          return cmr;
       }
 
-      #endregion // CopyMoveResult
-
+      /// <summary>[AlphaFS] Copies an existing directory to a new directory, allowing the overwriting of an existing directory, <see cref="CopyOptions"/> can be specified.
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
+      ///   <para>Returns a new directory, or an overwrite of an existing directory if <paramref name="copyOptions"/> is not <see cref="CopyOptions.FailIfExists"/>.</para>
+      ///   <para>If the directory exists and <paramref name="copyOptions"/> contains <see cref="CopyOptions.FailIfExists"/>, an <see cref="IOException"/> is thrown.</para>
+      /// </returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         string destinationPathLp;
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         return cmr;
+      }
+      
       #endregion // CopyTo
 
       #region CountFileSystemObjects
@@ -1095,9 +1092,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   <para>The search string to match against the names of directories in path. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
       /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>The counted number of file system objects.</returns>
@@ -1358,88 +1355,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion GetStreamSize
 
-      #region MoveTo1
-
-      #region IsFullPath
-
-      #region DirectoryInfo
-
-      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// </summary>
-      /// <returns>
-      /// <para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para>
-      /// </returns>
-      /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="destinationFullPath">
-      /// <para>The name and path to which to move this directory.</para>
-      /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
-      /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
-      /// </param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public DirectoryInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions, PathFormat pathFormat)
-      {
-         string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, pathFormat);
-         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
-      }
-
-      #endregion // DirectoryInfo
-
-      #region CopyMoveResult
-
-      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
-      /// </summary>
-      /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</para>
-      /// </returns>
-      /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
-      /// <param name="destinationFullPath">
-      /// <para>The name and path to which to move this directory.</para>
-      /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
-      /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
-      /// </param>
-      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
-         return cmr;
-      }
-
-      #endregion // CopyMoveResult
-
-      #endregion // IsFullPath
-
-      #region DirectoryInfo
+      #region MoveTo
 
       /// <summary>
       ///   [AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
@@ -1472,28 +1388,58 @@ namespace Alphaleonis.Win32.Filesystem
       /// ### <exception cref="IOException">.</exception>
       /// ### <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      public DirectoryInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions)
+      public DirectoryInfo MoveTo(string destinationFullPath, MoveOptions moveOptions)
       {
          string destinationPathLp;
          CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, PathFormat.Relative);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
-      #endregion // DirectoryInfo
-
-      #region CopyMoveResult
-
       /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
-      /// <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
       /// <returns>
-      /// <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</para>
+      ///   <para>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</para>
       /// </returns>
       /// <remarks>
-      /// <para>Use this method to allow or prevent overwriting of an existing directory.</para>
-      /// <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="destinationFullPath">
+      ///   <para>The name and path to which to move this directory.</para>
+      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
+      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
+      /// </param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public DirectoryInfo MoveTo(string destinationFullPath, MoveOptions moveOptions, PathFormat pathFormat)
+      {
+         string destinationPathLp;
+         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, pathFormat);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
+      }
+
+
+
+      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</para>
+      /// </returns>
+      /// <remarks>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
@@ -1501,15 +1447,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationFullPath">
-      /// <para>The name and path to which to move this directory.</para>
-      /// <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
-      /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
+      ///   <para>The name and path to which to move this directory.</para>
+      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
+      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
       /// </param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public CopyMoveResult MoveTo(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
          CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
@@ -1517,9 +1463,44 @@ namespace Alphaleonis.Win32.Filesystem
          return cmr;
       }
 
-      #endregion // CopyMoveResult
 
-      #endregion // MoveTo1
+
+      /// <summary>[AlphaFS] Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path, <see cref="MoveOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>
+      ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</para>
+      /// </returns>
+      /// <remarks>
+      ///   <para>Use this method to allow or prevent overwriting of an existing directory.</para>
+      ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="UnauthorizedAccessException"/>      
+      /// <param name="destinationFullPath">
+      ///   <para>The name and path to which to move this directory.</para>
+      ///   <para>The destination cannot be another disk volume unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>, or a directory with the identical name.</para>
+      ///   <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
+      /// </param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public CopyMoveResult MoveTo(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         string destinationPathLp;
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
+         return cmr;
+      }
+      
+      #endregion // MoveTo
 
       #region RefreshEntryInfo
 
@@ -1567,17 +1548,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <remarks>
-      /// <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      /// <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
-      /// <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
-      /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
+      ///   <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
