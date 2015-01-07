@@ -1,4 +1,4 @@
-/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
                   // Now we get the InstanceID of the USB level device.
-                  using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+                  using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
                   {
                      // CM_Get_Device_ID_Ex()
                      // Note: Using this function to access remote machines is not supported beginning with Windows 8 and Windows Server 2012,
@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   #region Get Registry Properties
 
-                  using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+                  using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
                   {
                      uint regType;
                      string dataString;
@@ -290,7 +290,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Start with a large buffer to prevent a 2nd call.
          uint bytesReturned = NativeMethods.MaxPathUnicode;
 
-         using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle((int)bytesReturned))
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int)bytesReturned))
          { 
             do
             {
@@ -396,16 +396,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
       /// <param name="compress"><see langword="true"/> = compress, <see langword="false"/> = decompress</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       
       [SecurityCritical]
-      internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, bool? isFullPath)
+      internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
-         using (SafeFileHandle handle = File.CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, isFullPath))
+         using (SafeFileHandle handle = File.CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, pathFormat))
          {
             // DeviceIoControlMethod.Buffered = 0,
             // DeviceIoControlFileDevice.FileSystem = 9

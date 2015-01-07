@@ -87,7 +87,7 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
@@ -156,6 +156,8 @@
   <ItemGroup>
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
+    <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
+    <Compile Include="Filesystem\File Class\File.Create.cs" />
     <Compile Include="Filesystem\DeviceInfo.cs" />
     <Compile Include="Filesystem\DiskSpaceInfo.cs" />
     <Compile Include="Filesystem\DriveInfo.cs" />
@@ -180,7 +182,7 @@
     <Compile Include="Filesystem\Device.cs" />
     <Compile Include="Filesystem\Directory.cs" />
     <Compile Include="Filesystem\DirectoryInfo.cs" />
-    <Compile Include="Filesystem\File.cs" />
+    <Compile Include="Filesystem\File Class\File.cs" />
     <Compile Include="Filesystem\BackupFileStream.cs" />
     <Compile Include="Filesystem\Enumerations\FileEncryptionStatus.cs" />
     <Compile Include="Filesystem\ByHandleFileInfo.cs" />
@@ -191,6 +193,7 @@
     <Compile Include="Filesystem\FileSystemEntryInfo.cs" />
     <Compile Include="Filesystem\FileSystemInfo.cs" />
     <Compile Include="Filesystem\Enumerations\GetFileExInfoLevels.cs" />
+    <Compile Include="Filesystem\Enumerations\GetFullPathOptions.cs" />
     <Compile Include="Filesystem\SafeCmConnectMachineHandle.cs" />
     <Compile Include="Filesystem\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />

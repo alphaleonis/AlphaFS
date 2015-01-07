@@ -1,4 +1,4 @@
-/* Copyright (c) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -35,16 +35,11 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructor
 
-      public FindFileSystemEntryInfo(bool enumerate, KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, Type typeOfT, bool? isFullPath)
+      public FindFileSystemEntryInfo(bool enumerate, KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, Type typeOfT, PathFormat pathFormat)
       {
-         IsFullPath = isFullPath;
          Transaction = transaction;
 
-         InputPath = isFullPath == null
-            ? path
-            : (bool)isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(Transaction, path, true, false, false, true, false, true, true);
+         InputPath = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          SearchPattern = searchPattern;
          FileSystemObjectType = null;
@@ -166,8 +161,8 @@ namespace Alphaleonis.Win32.Filesystem
             // Return object instance of type FileSystemInfo.
             ? (T) (object) (fsei.IsDirectory
                ? (FileSystemInfo)
-                  new DirectoryInfo(Transaction, fsei.LongFullPath, null) {EntryInfo = fsei}
-               : new FileInfo(Transaction, fsei.LongFullPath, null) {EntryInfo = fsei})
+                  new DirectoryInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei}
+               : new FileInfo(Transaction, fsei.LongFullPath, PathFormat.LongFullPath) {EntryInfo = fsei})
 
             // Return object instance of type FileSystemEntryInfo.
             : (T) (object) fsei;
@@ -384,18 +379,6 @@ namespace Alphaleonis.Win32.Filesystem
       public bool IsDirectory { get; internal set; }
 
       #endregion // IsDirectory
-
-      #region IsFullPath
-
-      /// <summary>Gets or sets a value indicating how to process <see cref="InputPath"/>.</summary>
-      /// <value>
-      ///    <para><see langword="true"/> <see cref="InputPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <see cref="InputPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <see cref="InputPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </value>
-      public bool? IsFullPath { get; internal set; }
-
-      #endregion // IsFullPath
 
       #region LargeCache
 

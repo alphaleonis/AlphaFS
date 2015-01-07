@@ -1,4 +1,4 @@
-/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public FileInfo(string fileName) : this(null, fileName, false)
+      public FileInfo(string fileName) : this(null, fileName, PathFormat.Relative)
       {
       }
 
@@ -56,13 +56,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public FileInfo(string fileName, bool? isFullPath) : this(null, fileName, isFullPath)
+      public FileInfo(string fileName, PathFormat pathFormat) : this(null, fileName, pathFormat)
       {
       }
 
@@ -72,24 +68,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public FileInfo(KernelTransaction transaction, string fileName) : this(transaction, fileName, false)
+      public FileInfo(KernelTransaction transaction, string fileName)
+         : this(transaction, fileName, PathFormat.Relative)
       {
       }
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.FileInfo"/> class, which acts as a wrapper for a file path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
-      public FileInfo(KernelTransaction transaction, string fileName, bool? isFullPath)
+      public FileInfo(KernelTransaction transaction, string fileName, PathFormat pathFormat)
       {
-         InitializeInternal(false, transaction, fileName, isFullPath);
+         InitializeInternal(false, transaction, fileName, pathFormat);
 
-         _name = Path.GetFileName(Path.RemoveDirectorySeparator(fileName, false), isFullPath != null && (bool) isFullPath);
+         _name = Path.GetFileName(Path.RemoveDirectorySeparator(fileName, false), pathFormat != PathFormat.LongFullPath);            
       }
 
       #endregion // Transacted
@@ -116,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamWriter AppendText()
       {
-         return File.AppendTextInternal(Transaction, LongFullName, NativeMethods.DefaultFileEncoding, null);
+         return File.AppendTextInternal(Transaction, LongFullName, NativeMethods.DefaultFileEncoding, PathFormat.LongFullPath);
       }
 
       /// <summary>
@@ -127,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamWriter AppendText(Encoding encoding)
       {
-         return File.AppendTextInternal(Transaction, LongFullName, encoding, null);
+         return File.AppendTextInternal(Transaction, LongFullName, encoding, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -161,8 +154,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, false);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.Relative);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       /// <summary>Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
@@ -194,8 +187,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, bool overwrite)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, false);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.Relative);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -212,12 +205,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   behavior.</para>
       /// </remarks>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       ///
       /// <exception cref="ArgumentException">
@@ -230,11 +218,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException">.</exception>
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      public FileInfo CopyTo(string destinationPath, bool? isFullPath)
+      public FileInfo CopyTo(string destinationPath, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, isFullPath);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, allowing the overwriting of an existing file.</summary>
@@ -248,12 +236,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="overwrite">
       ///   <see langword="true"/> to allow an existing file to be overwritten; otherwise, <see langword="false"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="overwrite"/> is <see langword="true"/>.</para>
       ///   <para>If the file exists and <paramref name="overwrite"/> is <see langword="false"/>, an <see cref="IOException"/> is thrown.</para>
@@ -269,11 +252,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException">.</exception>
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      public FileInfo CopyTo(string destinationPath, bool overwrite, bool? isFullPath)
+      public FileInfo CopyTo(string destinationPath, bool overwrite, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, isFullPath);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // IsFullPath
@@ -291,7 +274,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Create()
       {
-         return File.CreateFileInternal(Transaction, LongFullName, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, null);
+         return File.CreateFileStreamInternal(Transaction, LongFullName, ExtendedFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -308,7 +291,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamWriter CreateText()
       {
-         return new StreamWriter(File.CreateFileInternal(Transaction, LongFullName, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, null), NativeMethods.DefaultFileEncoding);
+         return new StreamWriter(File.CreateFileStreamInternal(Transaction, LongFullName, ExtendedFileAttributes.Normal, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, PathFormat.LongFullPath), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -323,7 +306,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decrypt()
       {
-         File.EncryptDecryptFileInternal(false, LongFullName, false, null);
+         File.EncryptDecryptFileInternal(false, LongFullName, false, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -340,7 +323,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException">.</exception>
       public override void Delete()
       {
-         File.DeleteFileInternal(Transaction, LongFullName, false, null);
+         File.DeleteFileInternal(Transaction, LongFullName, false, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -352,7 +335,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
       public void Delete(bool ignoreReadOnly)
       {
-         File.DeleteFileInternal(Transaction, LongFullName, ignoreReadOnly, null);
+         File.DeleteFileInternal(Transaction, LongFullName, ignoreReadOnly, PathFormat.LongFullPath);
       }
 
       #endregion // AlphaFS
@@ -367,7 +350,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt()
       {
-         File.EncryptDecryptFileInternal(false, LongFullName, true, null);
+         File.EncryptDecryptFileInternal(false, LongFullName, true, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -389,7 +372,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSecurity GetAccessControl()
       {
-         return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, null);
+         return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.LongFullPath);
       }
 
       /// <summary>
@@ -406,7 +389,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSecurity GetAccessControl(AccessControlSections includeSections)
       {
-         return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, includeSections, null);
+         return File.GetAccessControlInternal<FileSecurity>(false, LongFullName, includeSections, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -441,7 +424,7 @@ namespace Alphaleonis.Win32.Filesystem
       public void MoveTo(string destinationFullPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, true);
+         CopyToMoveToInternal(destinationFullPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, PathFormat.FullPath);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
       }
 
@@ -461,7 +444,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access.</summary>
@@ -471,7 +454,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -488,7 +471,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access, FileShare share)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, share, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, share, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -507,7 +490,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, FileShare.None, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
       }
 
       /// <summary>
@@ -527,7 +510,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights, FileShare share)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, share, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, share, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
       }
 
       #endregion // AlphaFS
@@ -544,7 +527,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream OpenRead()
       {
-         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -563,7 +546,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText()
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -577,7 +560,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText(Encoding encoding)
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null), encoding);
+         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath), encoding);
       }
 
       #endregion // AlphaFS
@@ -593,7 +576,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream OpenWrite()
       {
-         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, null);
+         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -643,7 +626,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName)
       {
-         return Replace(destinationFileName, destinationBackupFileName, false, false);
+         return Replace(destinationFileName, destinationBackupFileName, false, PathFormat.Relative);
       }
 
       /// <summary>
@@ -674,7 +657,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
-         return Replace(destinationFileName, destinationBackupFileName, ignoreMetadataErrors, false);
+         return Replace(destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -704,37 +687,20 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="true"/> to ignore merge errors (such as attributes and ACLs) from the replaced file to the replacement file;
       ///   otherwise, <see langword="false"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> will be
-      ///   checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationFileName"/> and <paramref name="destinationBackupFileName"/> is already an
-      ///   absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="FileInfo"/> object that encapsulates information about the file described by the
       ///   <paramref name="destinationFileName"/> parameter.
       /// </returns>      
       [SecurityCritical]
-      public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
+      public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
-         string destinationFileNameLp = isFullPath == null
-            ? destinationFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
-               : Path.GetFullPathInternal(Transaction, destinationFileName, true, false, false, true, false, true, true);
+         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationBackupFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+          
+         File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, PathFormat.LongFullPath);
 
-         // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
-         string destinationBackupFileNameLp = isFullPath == null
-            ? destinationBackupFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
-               : Path.GetFullPathInternal(Transaction, destinationBackupFileName, true, false, false, true, false, true, true);
-
-         File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, null);
-
-         return new FileInfo(Transaction, destinationFileNameLp, true);
+         return new FileInfo(Transaction, destinationFileNameLp, PathFormat.LongFullPath);
       }
 
       #endregion // IsFullPath
@@ -761,7 +727,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity)
       {
-         File.SetAccessControlInternal(LongFullName, null, fileSecurity, AccessControlSections.All, null);
+         File.SetAccessControlInternal(LongFullName, null, fileSecurity, AccessControlSections.All, PathFormat.LongFullPath);
       }
 
       /// <summary>
@@ -782,7 +748,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         File.SetAccessControlInternal(LongFullName, null, fileSecurity, includeSections, null);
+         File.SetAccessControlInternal(LongFullName, null, fileSecurity, includeSections, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -816,7 +782,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, Transaction, LongFullName, name, contents, null);
+         AlternateDataStreamInfo.AddStreamInternal(false, Transaction, LongFullName, name, contents, PathFormat.LongFullPath);
       }
 
       #endregion // AddStream
@@ -827,7 +793,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Compress()
       {
-         Device.ToggleCompressionInternal(false, Transaction, LongFullName, true, null);
+         Device.ToggleCompressionInternal(false, Transaction, LongFullName, true, PathFormat.LongFullPath);
       }
 
       #endregion // Compress
@@ -851,12 +817,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
       ///   <see cref="CopyOptions.FailIfExists"/>.</para>
@@ -874,11 +835,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException">.</exception>
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool? isFullPath)
+      public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, isFullPath);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, pathFormat);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       /// <summary>
@@ -897,12 +858,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates">
       ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
       ///   <see cref="CopyOptions.FailIfExists"/>.</para>
@@ -920,11 +876,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException">.</exception>
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates, bool? isFullPath)
+      public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, isFullPath);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, pathFormat);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // FileInfo
@@ -946,12 +902,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       ///   <para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully copied.</para>
@@ -967,10 +918,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException">.</exception>
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -995,12 +946,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
@@ -1019,10 +965,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException">.</exception>
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1051,12 +997,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</para>
       ///   <para>Returns a new file, or an overwrite of an existing file if <paramref name="copyOptions"/> is not
@@ -1075,10 +1016,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException">.</exception>
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1122,8 +1063,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, false);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, PathFormat.Relative);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       /// <summary>
@@ -1162,8 +1103,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, false);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, PathFormat.Relative);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // FileInfo
@@ -1206,7 +1147,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, false);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1253,7 +1194,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, false);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1303,7 +1244,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, false);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1319,7 +1260,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decompress()
       {
-         Device.ToggleCompressionInternal(false, Transaction, LongFullName, false, null);
+         Device.ToggleCompressionInternal(false, Transaction, LongFullName, false, PathFormat.LongFullPath);
       }
 
       #endregion // Decompress
@@ -1331,7 +1272,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, null, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
@@ -1342,7 +1283,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, streamType, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, streamType, PathFormat.LongFullPath);
       }
 
       #endregion // EnumerateStreams
@@ -1354,7 +1295,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long GetStreamSize()
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, null, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -1363,7 +1304,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long GetStreamSize(string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, name, StreamType.Data, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, name, StreamType.Data, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
@@ -1372,7 +1313,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long GetStreamSize(StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, type, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, type, PathFormat.LongFullPath);
       }
 
       #endregion GetStreamSize
@@ -1399,13 +1340,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions">
       ///   <see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as
-      ///   is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns><para>Returns a new <see cref="FileInfo"/> instance with a fully qualified path when successfully moved,</para></returns>
       ///
       /// <exception cref="ArgumentException">
@@ -1418,11 +1353,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException">.</exception>
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      public FileInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions, bool? isFullPath)
+      public FileInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, isFullPath);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, pathFormat);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // FileInfo
@@ -1452,13 +1387,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as
-      ///   is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       ///
       /// <exception cref="ArgumentException">
@@ -1471,10 +1400,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException">.</exception>
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
          return cmr;
       }
@@ -1516,8 +1445,8 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, true);
-         return new FileInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, null, null, out destinationPathLp, PathFormat.Relative);
+         return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // FileInfo
@@ -1563,7 +1492,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, true);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
          return cmr;
       }
@@ -1591,7 +1520,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream()
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullName, null, null);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullName, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from the file.</summary>
@@ -1601,7 +1530,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream(string name)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullName, name, null);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullName, name, PathFormat.LongFullPath);
       }
 
       #endregion // RemoveStream
@@ -1639,12 +1568,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This parameter can be <see langword="null"/>. The argument to be passed to the callback function.</para>
       /// </param>
       /// <param name="longFullPath">[out] Returns the retrieved long full path.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix
-      ///   is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       ///
       /// <exception cref="ArgumentException">
@@ -1657,22 +1581,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException">.</exception>
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
-      private CopyMoveResult CopyToMoveToInternal(string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, bool? isFullPath)
+      private CopyMoveResult CopyToMoveToInternal(string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {
-         string destinationPathLp = isFullPath == null
-            ? destinationPath
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
-#if NET35
-               : Path.GetFullPathInternal(Transaction, destinationPath, true, false, false, true, false, true, true);
-#else
-               : Path.GetFullPathInternal(Transaction, destinationPath, true, true, false, true, false, true, true);
-#endif
+         string destinationPathLp = Path.GetExtendedLengthPathInternal(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          longFullPath = destinationPathLp;
 
          // Returns false when CopyMoveProgressResult is PROGRESS_CANCEL or PROGRESS_STOP.
-         return File.CopyMoveInternal(false, Transaction, LongFullName, destinationPathLp, preserveDates, copyOptions, moveOptions, progressHandler, userProgressData, null);
+         return File.CopyMoveInternal(false, Transaction, LongFullName, destinationPathLp, preserveDates, copyOptions, moveOptions, progressHandler, userProgressData, PathFormat.LongFullPath);
       }
 
       private void CopyToMoveToInternalRefresh(string destinationPath, string destinationPathLp)
@@ -1715,7 +1631,7 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             string dirName = DirectoryName;
-            return dirName == null ? null : new DirectoryInfo(Transaction, dirName, true);
+            return dirName == null ? null : new DirectoryInfo(Transaction, dirName, PathFormat.FullPath);
          }
       }
 

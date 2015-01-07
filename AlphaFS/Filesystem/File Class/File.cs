@@ -1,4 +1,4 @@
-/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// <para>This class cannot be inherited.</para>
    /// </summary>
    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]
-   public static class File
+   public static partial class File
    {
       #region .NET
 
@@ -51,24 +51,24 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
+      /// <remarks>The method creates the file if it doesnï¿½t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       [SecurityCritical]
       public static void AppendAllLines(string path, IEnumerable<string> contents)
       {
-         WriteAppendAllLinesInternal(null, path, contents, NativeMethods.DefaultFileEncoding, true, false, false);
+         WriteAppendAllLinesInternal(null, path, contents, NativeMethods.DefaultFileEncoding, true, false, PathFormat.Relative);
       }
 
       /// <summary>Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the specified lines to the file, and then closes the file.</summary>
-      /// <remarks>The method creates the file if it doesn’t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>      
+      /// <remarks>The method creates the file if it doesnï¿½t exist, but it doesn't create new directories. Therefore, the value of the path parameter must contain existing directories.</remarks>      
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       [SecurityCritical]
       public static void AppendAllLines(string path, IEnumerable<string> contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(null, path, contents, encoding, true, false, false);
+         WriteAppendAllLinesInternal(null, path, contents, encoding, true, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -82,25 +82,18 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="path">
       ///   The file to append the lines to. The file is created if it doesn't already exist.
       /// </param>
       /// <param name="contents">The lines to append to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllLines(string path, IEnumerable<string> contents, bool? isFullPath)
+      public static void AppendAllLines(string path, IEnumerable<string> contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, contents, NativeMethods.DefaultFileEncoding, true, false, isFullPath);
+         WriteAppendAllLinesInternal(null, path, contents, NativeMethods.DefaultFileEncoding, true, false, pathFormat);
       }
       /// <summary>
       ///   [AlphaFS] Appends lines to a file, and then closes the file. If the specified file does not
@@ -108,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="path">
@@ -116,18 +109,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllLines(string path, IEnumerable<string> contents, Encoding encoding, bool? isFullPath)
+      public static void AppendAllLines(string path, IEnumerable<string> contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, contents, encoding, true, false, isFullPath);
+         WriteAppendAllLinesInternal(null, path, contents, encoding, true, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -141,7 +127,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
@@ -152,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, NativeMethods.DefaultFileEncoding, true, false, false);
+         WriteAppendAllLinesInternal(transaction, path, contents, NativeMethods.DefaultFileEncoding, true, false, PathFormat.Relative);
       }
 
       /// <summary>
@@ -161,7 +147,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
@@ -173,7 +159,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, encoding, true, false, false);
+         WriteAppendAllLinesInternal(transaction, path, contents, encoding, true, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -185,7 +171,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
@@ -193,18 +179,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The file to append the lines to. The file is created if it doesn't already exist.
       /// </param>
       /// <param name="contents">The lines to append to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, bool? isFullPath)
+      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, NativeMethods.DefaultFileEncoding, true, false, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, contents, NativeMethods.DefaultFileEncoding, true, false, pathFormat);
       }
 
       /// <summary>
@@ -213,7 +192,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the file.
       /// </summary>
       /// <remarks>
-      ///   The method creates the file if it doesn’t exist, but it doesn't create new directories.
+      ///   The method creates the file if it doesnï¿½t exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
@@ -222,18 +201,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool? isFullPath)
+      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, encoding, true, false, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, contents, encoding, true, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -254,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllText(string path, string contents)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, false);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, PathFormat.Relative);
       }
 
       /// <summary>Appends the specified string to the file, creating the file if it does not already exist.</summary>
@@ -264,7 +236,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllText(string path, string contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, true, false, false);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, true, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -276,30 +248,22 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Appends the specified stringto the file, creating the file if it does not already exist.</summary>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllText(string path, string contents, bool? isFullPath)
+      public static void AppendAllText(string path, string contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, isFullPath);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllText(string path, string contents, Encoding encoding, bool? isFullPath)
+      public static void AppendAllText(string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, true, false, isFullPath);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, true, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -315,7 +279,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllText(KernelTransaction transaction, string path, string contents)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, false);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
@@ -326,7 +290,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllText(KernelTransaction transaction, string path, string contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, true, false, false);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, true, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -337,15 +301,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllText(KernelTransaction transaction, string path, string contents, bool? isFullPath)
+      public static void AppendAllText(KernelTransaction transaction, string path, string contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
@@ -353,19 +313,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, bool? isFullPath)
+      public static void AppendAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, true, false, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, true, false, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -387,7 +343,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path)
       {
-         return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, false);
+         return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -401,22 +357,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   specified file does not exist.
       /// </summary>
       /// <param name="path">The path to the file to append to.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the
       ///   specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(string path, bool? isFullPath)
+      public static StreamWriter AppendText(string path, PathFormat pathFormat)
       {
-         return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>
@@ -426,22 +375,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the
       ///   specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(string path, Encoding encoding, bool? isFullPath)
+      public static StreamWriter AppendText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return AppendTextInternal(null, path, encoding, isFullPath);
+         return AppendTextInternal(null, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -460,7 +402,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path, Encoding encoding)
       {
-         return AppendTextInternal(null, path, encoding, false);
+         return AppendTextInternal(null, path, encoding, PathFormat.Relative);
       }
 
       #region Transacted
@@ -480,7 +422,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path)
       {
-         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, false);
+         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -493,22 +435,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the
       ///   specified file or to a new file.
       /// </returns>      
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path, bool? isFullPath)
+      public static StreamWriter AppendText(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>
@@ -519,22 +454,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the
       ///   specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return AppendTextInternal(transaction, path, encoding, isFullPath);
+         return AppendTextInternal(transaction, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -554,7 +482,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return AppendTextInternal(transaction, path, encoding, false);
+         return AppendTextInternal(transaction, path, encoding, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -594,7 +522,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destFileName)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
       }
 
       /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.
@@ -618,7 +546,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destFileName, bool overwrite)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -646,16 +574,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="overwrite"><see langword="true"/> if the destination file should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Copy(string sourceFileName, string destFileName, bool overwrite, bool? isFullPath)
+      public static void Copy(string sourceFileName, string destFileName, bool overwrite, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
       #endregion // .NET
@@ -686,16 +610,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="overwrite"><see langword="true"/> if the destination file should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite, bool? isFullPath)
+      public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
       #endregion // .NET
@@ -725,7 +645,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
@@ -750,7 +670,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destFileName, bool overwrite)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -760,386 +680,6 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // AlphaFS
 
       #endregion // Copy
-
-      #region Create
-
-      #region .NET
-      /// <summary>Creates or overwrites a file in the specified path.</summary>
-      /// <param name="path">The path and name of the file to create.</param>
-      /// <returns>
-      ///   A <see cref="FileStream"/> that provides read/write access to the file specified in
-      ///   <paramref name="path"/>.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(string path)
-      {
-         return CreateFileInternal(null, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
-      }
-
-      /// <summary>Creates or overwrites the specified file.</summary>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <returns>
-      ///   A <see cref="FileStream"/> with the specified buffer size that provides read/write access
-      ///   to the file specified in <paramref name="path"/>.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(string path, int bufferSize)
-      {
-         return CreateFileInternal(null, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
-      }
-
-      /// <summary>
-      ///   Creates or overwrites the specified file, specifying a buffer size and a
-      ///   <see cref="FileOptions"/> value that describes how to create or overwrite the file.
-      /// </summary>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <param name="options">
-      ///   One of the <see cref="FileOptions"/> values that describes how to create or overwrite the
-      ///   file.
-      /// </param>
-      /// <returns>A new file with the specified buffer size.</returns>
-      [SecurityCritical]
-      public static FileStream Create(string path, int bufferSize, FileOptions options)
-      {
-         return CreateFileInternal(null, path, bufferSize, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
-      }
-
-      /// <summary>
-      ///   Creates or overwrites the specified file, specifying a buffer size and a
-      ///   <see cref="FileOptions"/> value that describes how to create or overwrite the file.
-      /// </summary>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <param name="options">
-      ///   One of the <see cref="FileOptions"/> values that describes how to create or overwrite the
-      ///   file.
-      /// </param>
-      /// <param name="fileSecurity">
-      ///   One of the <see cref="FileSecurity"/> values that determines the access control and audit
-      ///   security for the file.
-      /// </param>
-      /// <returns>
-      ///   A new file with the specified buffer size, file options, and file security.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
-      {
-         return CreateFileInternal(null, path, bufferSize, (ExtendedFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
-      }
-
-      #endregion // .NET
-
-      #region AlphaFS
-
-      #region IsFullPath
-      /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.</summary>
-      /// <param name="path">The path and name of the file to create.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
-      /// <returns>
-      ///   A <see cref="FileStream"/> that provides read/write access to the file specified in
-      ///   <paramref name="path"/>.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(string path, bool? isFullPath)
-      {
-         return CreateFileInternal(null, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
-      }
-
-      /// <summary>[AlphaFS] Creates or overwrites the specified file.</summary>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
-      /// <returns>
-      ///   A <see cref="FileStream"/> with the specified buffer size that provides read/write access
-      ///   to the file specified in <paramref name="path"/>.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(string path, int bufferSize, bool? isFullPath)
-      {
-         return CreateFileInternal(null, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a
-      ///   <see cref="FileOptions"/> value that describes how to create or overwrite the file.
-      /// </summary>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <param name="options">
-      ///   One of the <see cref="FileOptions"/> values that describes how to create or overwrite the
-      ///   file.
-      /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
-      /// <returns>A new file with the specified buffer size.</returns>
-      [SecurityCritical]
-      public static FileStream Create(string path, int bufferSize, FileOptions options, bool? isFullPath)
-      {
-         return CreateFileInternal(null, path, bufferSize, (ExtendedFileAttributes) options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a
-      ///   <see cref="FileOptions"/> value that describes how to create or overwrite the file.
-      /// </summary>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <param name="options">
-      ///   One of the <see cref="FileOptions"/> values that describes how to create or overwrite the
-      ///   file.
-      /// </param>
-      /// <param name="fileSecurity">
-      ///   One of the <see cref="FileSecurity"/> values that determines the access control and audit
-      ///   security for the file.
-      /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
-      /// <returns>
-      ///   A new file with the specified buffer size, file options, and file security.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, bool? isFullPath)
-      {
-         return CreateFileInternal(null, path, bufferSize, (ExtendedFileAttributes) options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
-      }
-
-      #endregion // IsFullPath
-
-      #region Transacted
-
-      #region .NET
-      /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path and name of the file to create.</param>
-      /// <returns>
-      ///   A <see cref="FileStream"/> that provides read/write access to the file specified in
-      ///   <paramref name="path"/>.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path)
-      {
-         return CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
-      }
-
-      /// <summary>[AlphaFS] Creates or overwrites the specified file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <returns>
-      ///   A <see cref="FileStream"/> with the specified buffer size that provides read/write access
-      ///   to the file specified in <paramref name="path"/>.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize)
-      {
-         return CreateFileInternal(transaction, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a
-      ///   <see cref="FileOptions"/> value that describes how to create or overwrite the file.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <param name="options">
-      ///   One of the <see cref="FileOptions"/> values that describes how to create or overwrite the
-      ///   file.
-      /// </param>
-      /// <returns>A new file with the specified buffer size.</returns>
-      [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options)
-      {
-         return CreateFileInternal(transaction, path, bufferSize, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a
-      ///   <see cref="FileOptions"/> value that describes how to create or overwrite the file.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <param name="options">
-      ///   One of the <see cref="FileOptions"/> values that describes how to create or overwrite the
-      ///   file.
-      /// </param>
-      /// <param name="fileSecurity">
-      ///   One of the <see cref="FileSecurity"/> values that determines the access control and audit
-      ///   security for the file.
-      /// </param>
-      /// <returns>
-      ///   A new file with the specified buffer size, file options, and file security.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
-      {
-         return CreateFileInternal(transaction, path, bufferSize, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, false);
-      }
-
-      #endregion // .NET
-
-      #region IsFullPath
-      /// <summary>[AlphaFS] Creates or overwrites a file in the specified path.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path and name of the file to create.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
-      /// <returns>
-      ///   A <see cref="FileStream"/> that provides read/write access to the file specified in
-      ///   <paramref name="path"/>.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, bool? isFullPath)
-      {
-         return CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
-      }
-
-      /// <summary>[AlphaFS] Creates or overwrites the specified file.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
-      /// <returns>
-      ///   A <see cref="FileStream"/> with the specified buffer size that provides read/write access
-      ///   to the file specified in <paramref name="path"/>.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, bool? isFullPath)
-      {
-         return CreateFileInternal(transaction, path, bufferSize, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a
-      ///   <see cref="FileOptions"/> value that describes how to create or overwrite the file.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <param name="options">
-      ///   One of the <see cref="FileOptions"/> values that describes how to create or overwrite the
-      ///   file.
-      /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
-      /// <returns>A new file with the specified buffer size.</returns>
-      [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, bool? isFullPath)
-      {
-         return CreateFileInternal(transaction, path, bufferSize, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Creates or overwrites the specified file, specifying a buffer size and a
-      ///   <see cref="FileOptions"/> value that describes how to create or overwrite the file.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">
-      ///   The number of bytes buffered for reads and writes to the file.
-      /// </param>
-      /// <param name="options">
-      ///   One of the <see cref="FileOptions"/> values that describes how to create or overwrite the
-      ///   file.
-      /// </param>
-      /// <param name="fileSecurity">
-      ///   One of the <see cref="FileSecurity"/> values that determines the access control and audit
-      ///   security for the file.
-      /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
-      /// <returns>
-      ///   A new file with the specified buffer size, file options, and file security.
-      /// </returns>
-      [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, bool? isFullPath)
-      {
-         return CreateFileInternal(transaction, path, bufferSize, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, isFullPath);
-      }
-
-      #endregion // IsFullPath
-      
-      #endregion // Transacted
-
-      #endregion // AlphaFS
-
-      #endregion // Create
 
       #region CreateText
 
@@ -1152,7 +692,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter CreateText(string path)
       {
-         return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, false);
+         return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1162,39 +702,25 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsFullPath
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(string path, bool? isFullPath)
+      public static StreamWriter CreateText(string path, PathFormat pathFormat)
       {
-         return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return CreateTextInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Creates or opens a file for writing UTF-8 encoded text.</summary>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(string path, Encoding encoding, bool? isFullPath)
+      public static StreamWriter CreateText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return CreateTextInternal(null, path, encoding, isFullPath);
+         return CreateTextInternal(null, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1210,7 +736,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter CreateText(KernelTransaction transaction, string path)
       {
-         return CreateTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, false);
+         return CreateTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1221,21 +747,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      public static StreamWriter CreateText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return CreateTextInternal(transaction, path, encoding, isFullPath);
+         return CreateTextInternal(transaction, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1248,11 +770,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a file to decrypt.</param>
-      
+
       [SecurityCritical]
       public static void Decrypt(string path)
       {
-         EncryptDecryptFileInternal(false, path, false, false);
+         EncryptDecryptFileInternal(false, path, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1263,16 +785,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a file to decrypt.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+
       [SecurityCritical]
-      public static void Decrypt(string path, bool? isFullPath)
+      public static void Decrypt(string path, PathFormat pathFormat)
       {
-         EncryptDecryptFileInternal(false, path, false, isFullPath);
+         EncryptDecryptFileInternal(false, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1293,7 +811,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileInternal(null, path, false, false);
+         DeleteFileInternal(null, path, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1310,18 +828,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly">
       ///   <see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute
-      ///   path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix.
-      ///   Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void Delete(string path, bool ignoreReadOnly, bool? isFullPath)
+      public static void Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileInternal(null, path, ignoreReadOnly, isFullPath);
+         DeleteFileInternal(null, path, ignoreReadOnly, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1337,7 +848,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly)
       {
-         DeleteFileInternal(null, path, ignoreReadOnly, false);
+         DeleteFileInternal(null, path, ignoreReadOnly, PathFormat.Relative);
       }
 
       #region Transacted
@@ -1353,7 +864,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
       {
-         DeleteFileInternal(transaction, path, false, false);
+         DeleteFileInternal(transaction, path, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1364,20 +875,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
+      public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileInternal(transaction, path, ignoreReadOnly, isFullPath);
+         DeleteFileInternal(transaction, path, ignoreReadOnly, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted. Wildcard characters are not supported.</param>
@@ -1385,8 +892,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>      
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly)
-      {         
-         DeleteFileInternal(transaction, path, ignoreReadOnly, false);
+      {
+         DeleteFileInternal(transaction, path, ignoreReadOnly, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -1401,11 +908,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
       /// <param name="path">A path that describes a file to encrypt.</param>
-      
+
       [SecurityCritical]
       public static void Encrypt(string path)
       {
-         EncryptDecryptFileInternal(false, path, true, false);
+         EncryptDecryptFileInternal(false, path, true, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1416,15 +923,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
       /// <param name="path">A path that describes a file to encrypt.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void Encrypt(string path, bool? isFullPath)
+      public static void Encrypt(string path, PathFormat pathFormat)
       {
-         EncryptDecryptFileInternal(false, path, true, isFullPath);
+         EncryptDecryptFileInternal(false, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1462,7 +965,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path)
       {
-         return ExistsInternal(false, null, path, false);
+         return ExistsInternal(false, null, path, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1489,23 +992,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   as Delete.</para>
       /// </remarks>
       /// <param name="path">The file to check.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an
-      ///   absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with
-      ///   Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns <see langword="true"/> if the caller has the required permissions and
       ///   <paramref name="path"/> contains the name of an existing file; otherwise,
       ///   <see langword="false"/></para>
       /// </returns>
       [SecurityCritical]
-      public static bool Exists(string path, bool? isFullPath)
+      public static bool Exists(string path, PathFormat pathFormat)
       {
-         return ExistsInternal(false, null, path, isFullPath);
+         return ExistsInternal(false, null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1544,7 +1040,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
       {
-         return ExistsInternal(false, transaction, path, false);
+         return ExistsInternal(false, transaction, path, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1573,27 +1069,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to check.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an
-      ///   absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with
-      ///   Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns <see langword="true"/> if the caller has the required permissions</para>
       ///   <para>and <paramref name="path"/> contains the name of an existing file; otherwise,
       ///   <see langword="false"/></para>
       /// </returns>
       [SecurityCritical]
-      public static bool Exists(KernelTransaction transaction, string path, bool? isFullPath)
+      public static bool Exists(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ExistsInternal(false, transaction, path, isFullPath);
+         return ExistsInternal(false, transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1619,7 +1108,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, false);
+         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.Relative);
       }
 
       /// <summary>
@@ -1641,7 +1130,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, false);
+         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1658,22 +1147,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The path to a file containing a <see cref="FileSecurity"/> object that describes the file's
       ///   access control list (ACL) information.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an
-      ///   absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with
-      ///   Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file
       ///   described by the <paramref name="path"/> parameter.
       /// </returns>      
       [SecurityCritical]
-      public static FileSecurity GetAccessControl(string path, bool? isFullPath)
+      public static FileSecurity GetAccessControl(string path, PathFormat pathFormat)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, isFullPath);
+         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, pathFormat);
       }
 
       /// <summary>
@@ -1686,21 +1168,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to
       ///   receive.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an
-      ///   absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with
-      ///   Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="FileSecurity"/> object that encapsulates the access control rules for the file described by the
       ///   <paramref name="path"/> parameter.
       /// </returns>
       [SecurityCritical]
-      public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections, bool? isFullPath)
+      public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, isFullPath);
+         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1719,7 +1195,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, false);
+         return GetAttributesExInternal<FileAttributes>(null, path, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1730,17 +1206,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
       /// <param name="path">The path to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
       [SecurityCritical]
-      public static FileAttributes GetAttributes(string path, bool? isFullPath)
+      public static FileAttributes GetAttributes(string path, PathFormat pathFormat)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, isFullPath);
+         return GetAttributesExInternal<FileAttributes>(null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1756,7 +1227,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(KernelTransaction transaction, string path)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, false);
+         return GetAttributesExInternal<FileAttributes>(transaction, path, PathFormat.Relative);
       }
 
       #endregion //.NET
@@ -1766,17 +1237,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
       [SecurityCritical]
-      public static FileAttributes GetAttributes(KernelTransaction transaction, string path, bool? isFullPath)
+      public static FileAttributes GetAttributes(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, isFullPath);
+         return GetAttributesExInternal<FileAttributes>(transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1800,7 +1266,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(string path)
       {
-         return GetCreationTimeInternal(null, path, false, false).ToLocalTime();
+         return GetCreationTimeInternal(null, path, false, PathFormat.Relative).ToLocalTime();
       }
 
       #endregion // .NET
@@ -1811,20 +1277,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in
       ///   local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTime(string path, bool? isFullPath)
+      public static DateTime GetCreationTime(string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(null, path, false, isFullPath).ToLocalTime();
+         return GetCreationTimeInternal(null, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -1843,7 +1304,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(KernelTransaction transaction, string path)
       {
-         return GetCreationTimeInternal(transaction, path, false, false).ToLocalTime();
+         return GetCreationTimeInternal(transaction, path, false, PathFormat.Relative).ToLocalTime();
       }
 
       #endregion // .NET
@@ -1853,24 +1314,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in
       ///   local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTime(KernelTransaction transaction, string path, bool? isFullPath)
+      public static DateTime GetCreationTime(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(transaction, path, false, isFullPath).ToLocalTime();
+         return GetCreationTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1892,7 +1348,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(string path)
       {
-         return GetCreationTimeInternal(null, path, true, false);
+         return GetCreationTimeInternal(null, path, true, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1905,20 +1361,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">
       ///   The file for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in UTC
       ///   time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(string path, bool? isFullPath)
+      public static DateTime GetCreationTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(null, path, true, isFullPath);
+         return GetCreationTimeInternal(null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -1939,7 +1390,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path)
       {
-         return GetCreationTimeInternal(transaction, path, true, false);
+         return GetCreationTimeInternal(transaction, path, true, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -1951,24 +1402,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">
       ///   The file for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file. This value is expressed in UTC
       ///   time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
+      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetCreationTimeInternal(transaction, path, true, isFullPath);
+         return GetCreationTimeInternal(transaction, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -1988,7 +1434,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(string path)
       {
-         return GetLastAccessTimeInternal(null, path, false, false).ToLocalTime();
+         return GetLastAccessTimeInternal(null, path, false, PathFormat.Relative).ToLocalTime();
       }
 
       #endregion // .NET
@@ -1999,20 +1445,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to obtain access date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last accessed. This value is
       ///   expressed in local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastAccessTime(string path, bool? isFullPath)
+      public static DateTime GetLastAccessTime(string path, PathFormat pathFormat)
       {
-         return GetLastAccessTimeInternal(null, path, false, isFullPath).ToLocalTime();
+         return GetLastAccessTimeInternal(null, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -2031,7 +1472,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(KernelTransaction transaction, string path)
       {
-         return GetLastAccessTimeInternal(transaction, path, false, false).ToLocalTime();
+         return GetLastAccessTimeInternal(transaction, path, false, PathFormat.Relative).ToLocalTime();
       }
 
       #endregion // .NET
@@ -2041,24 +1482,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last accessed.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain access date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last accessed. This value is
       ///   expressed in local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastAccessTime(KernelTransaction transaction, string path, bool? isFullPath)
+      public static DateTime GetLastAccessTime(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLastAccessTimeInternal(transaction, path, false, isFullPath).ToLocalTime();
+         return GetLastAccessTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2078,7 +1514,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(string path)
       {
-         return GetLastAccessTimeInternal(null, path, true, false);
+         return GetLastAccessTimeInternal(null, path, true, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -2089,20 +1525,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="path">The file for which to obtain access date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last accessed. This value is
       ///   expressed in UTC time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastAccessTimeUtc(string path, bool? isFullPath)
+      public static DateTime GetLastAccessTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetLastAccessTimeInternal(null, path, true, isFullPath);
+         return GetLastAccessTimeInternal(null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2121,7 +1552,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path)
       {
-         return GetLastAccessTimeInternal(transaction, path, true, false);
+         return GetLastAccessTimeInternal(transaction, path, true, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -2131,20 +1562,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain access date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last accessed. This value is
       ///   expressed in UTC time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
+      public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLastAccessTimeInternal(transaction, path, true, isFullPath);
+         return GetLastAccessTimeInternal(transaction, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2168,7 +1594,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path)
       {
-         return GetLastWriteTimeInternal(null, path, false, false).ToLocalTime();
+         return GetLastWriteTimeInternal(null, path, false, PathFormat.Relative).ToLocalTime();
       }
 
       #endregion //.NET
@@ -2179,20 +1605,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
       /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
       ///   expressed in local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTime(string path, bool? isFullPath)
+      public static DateTime GetLastWriteTime(string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(null, path, false, isFullPath).ToLocalTime();
+         return GetLastWriteTimeInternal(null, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -2211,7 +1632,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(KernelTransaction transaction, string path)
       {
-         return GetLastWriteTimeInternal(transaction, path, false, false).ToLocalTime();
+         return GetLastWriteTimeInternal(transaction, path, false, PathFormat.Relative).ToLocalTime();
       }
 
       #endregion // .NET
@@ -2221,20 +1642,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
       ///   expressed in local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, bool? isFullPath)
+      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(transaction, path, false, isFullPath).ToLocalTime();
+         return GetLastWriteTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
 
       #endregion // IsFullPath
@@ -2258,7 +1674,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path)
       {
-         return GetLastWriteTimeInternal(null, path, true, false);
+         return GetLastWriteTimeInternal(null, path, true, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -2271,20 +1687,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   [AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified file was last written to.
       /// </summary>
       /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
       ///   expressed in UTC time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(string path, bool? isFullPath)
+      public static DateTime GetLastWriteTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(null, path, true, isFullPath);
+         return GetLastWriteTimeInternal(null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2305,7 +1716,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path)
       {
-         return GetLastWriteTimeInternal(transaction, path, true, false);
+         return GetLastWriteTimeInternal(transaction, path, true, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -2317,24 +1728,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain write date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file was last written to. This value is
       ///   expressed in UTC time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
+      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(transaction, path, true, isFullPath);
+         return GetLastWriteTimeInternal(transaction, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2371,7 +1777,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destFileName)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -2400,16 +1806,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Move(string sourceFileName, string destFileName, bool? isFullPath)
+      public static void Move(string sourceFileName, string destFileName, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, pathFormat);
       }
 
       #endregion // .NET
@@ -2441,16 +1843,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destFileName">The new path for the file.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, bool? isFullPath)
+      public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, pathFormat);
       }
 
       #endregion // .NET
@@ -2482,7 +1880,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destFileName)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -2504,7 +1902,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode)
       {
-         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Relative);
       }
 
       /// <summary>Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2515,7 +1913,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access)
       {
-         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Relative);
       }
 
       /// <summary>Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -2527,7 +1925,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share)
       {
-         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -2542,17 +1940,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents
       ///   of existing files are retained or overwritten.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
       [SecurityCritical]
-      public static FileStream Open(string path, FileMode mode, bool? isFullPath)
+      public static FileStream Open(string path, FileMode mode, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2562,19 +1955,14 @@ namespace Alphaleonis.Win32.Filesystem
       ///   of existing files are retained or overwritten.
       /// </param>
       /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An unshared <see cref="FileStream"/> that provides access to the specified file, with the specified mode and access.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(string path, FileMode mode, FileAccess access, bool? isFullPath)
+      public static FileStream Open(string path, FileMode mode, FileAccess access, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       /// <summary>
@@ -2588,20 +1976,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
       /// <param name="share">A <see cref="FileShare"/> value specifying the type of access other threads have to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the
       ///   specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2621,7 +2004,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode)
       {
-         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2638,7 +2021,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access)
       {
-         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Relative);
       }
 
       /// <summary>
@@ -2660,7 +2043,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share)
       {
-         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -2674,17 +2057,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents
       ///   of existing files are retained or overwritten.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, bool? isFullPath)
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -2695,19 +2073,14 @@ namespace Alphaleonis.Win32.Filesystem
       ///   of existing files are retained or overwritten.
       /// </param>
       /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An unshared <see cref="FileStream"/> that provides access to the specified file, with the specified mode and access.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, bool? isFullPath)
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -2716,20 +2089,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="mode">A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
       /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
       /// <param name="share">A <see cref="FileShare"/> value specifying the type of access other threads have to the file.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2750,7 +2119,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(string path)
       {
-         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -2765,17 +2134,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
       /// </remarks>
       /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
       [SecurityCritical]
-      public static FileStream OpenRead(string path, bool? isFullPath)
+      public static FileStream OpenRead(string path, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -2795,7 +2159,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Relative);
       }
 
       #endregion //.NET
@@ -2809,21 +2173,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
       [SecurityCritical]
-      public static FileStream OpenRead(KernelTransaction transaction, string path, bool? isFullPath)
+      public static FileStream OpenRead(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -2841,7 +2200,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Relative), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -2852,35 +2211,25 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamReader OpenText(string path, bool? isFullPath)
+      public static StreamReader OpenText(string path, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamReader OpenText(string path, Encoding encoding, bool? isFullPath)
+      public static StreamReader OpenText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), encoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), encoding);
       }
 
       #endregion // IsFullPath
@@ -2893,7 +2242,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path, Encoding encoding)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), encoding);
+         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Relative), encoding);
       }
 
       #region Transacted
@@ -2907,7 +2256,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Relative), NativeMethods.DefaultFileEncoding);
       }
 
       #endregion // .NET
@@ -2917,34 +2266,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path, bool? isFullPath)
+      public static StreamReader OpenText(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, isFullPath), encoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), encoding);
       }
 
       #endregion // IsFullPath
@@ -2957,7 +2296,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, false), encoding);
+         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Relative), encoding);
       }
 
       #endregion // Transacted
@@ -2976,7 +2315,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(string path)
       {
-         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -2987,17 +2326,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
       [SecurityCritical]
-      public static FileStream OpenWrite(string path, bool? isFullPath)
+      public static FileStream OpenWrite(string path, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3013,7 +2347,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, false);
+         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3023,17 +2357,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
       [SecurityCritical]
-      public static FileStream OpenWrite(KernelTransaction transaction, string path, bool? isFullPath)
+      public static FileStream OpenWrite(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3054,7 +2383,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static byte[] ReadAllBytes(string path)
       {
-         return ReadAllBytesInternal(null, path, false);
+         return ReadAllBytesInternal(null, path, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3065,17 +2394,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      public static byte[] ReadAllBytes(string path, bool? isFullPath)
+      public static byte[] ReadAllBytes(string path, PathFormat pathFormat)
       {
-         return ReadAllBytesInternal(null, path, isFullPath);
+         return ReadAllBytesInternal(null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3091,7 +2415,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static byte[] ReadAllBytes(KernelTransaction transaction, string path)
       {
-         return ReadAllBytesInternal(transaction, path, false);
+         return ReadAllBytesInternal(transaction, path, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3101,21 +2425,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      public static byte[] ReadAllBytes(KernelTransaction transaction, string path, bool? isFullPath)
+      public static byte[] ReadAllBytes(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadAllBytesInternal(transaction, path, isFullPath);
+         return ReadAllBytesInternal(transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3132,7 +2451,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(string path)
       {
-         return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, false).ToArray();
+         return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative).ToArray();
       }
 
       /// <summary>Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -3142,7 +2461,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(string path, Encoding encoding)
       {
-         return ReadAllLinesInternal(null, path, encoding, false).ToArray();
+         return ReadAllLinesInternal(null, path, encoding, PathFormat.Relative).ToArray();
       }
 
       #endregion // .NET
@@ -3153,33 +2472,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(string path, bool? isFullPath)
+      public static string[] ReadAllLines(string path, PathFormat pathFormat)
       {
-         return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath).ToArray();
+         return ReadAllLinesInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat).ToArray();
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(string path, Encoding encoding, bool? isFullPath)
+      public static string[] ReadAllLines(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadAllLinesInternal(null, path, encoding, isFullPath).ToArray();
+         return ReadAllLinesInternal(null, path, encoding, pathFormat).ToArray();
       }
 
       #endregion // IsFullPath
@@ -3195,7 +2504,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(KernelTransaction transaction, string path)
       {
-         return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, false).ToArray();
+         return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative).ToArray();
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -3206,7 +2515,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] ReadAllLines(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return ReadAllLinesInternal(transaction, path, encoding, false).ToArray();
+         return ReadAllLinesInternal(transaction, path, encoding, PathFormat.Relative).ToArray();
       }
 
       #endregion // .NET
@@ -3216,34 +2525,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(KernelTransaction transaction, string path, bool? isFullPath)
+      public static string[] ReadAllLines(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath).ToArray();
+         return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat).ToArray();
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      public static string[] ReadAllLines(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadAllLinesInternal(transaction, path, encoding, isFullPath).ToArray();
+         return ReadAllLinesInternal(transaction, path, encoding, pathFormat).ToArray();
       }
 
       #endregion // IsFullPath
@@ -3264,7 +2563,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(string path)
       {
-         return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, false);
+         return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       /// <summary>Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -3274,7 +2573,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(string path, Encoding encoding)
       {
-         return ReadAllTextInternal(null, path, encoding, false);
+         return ReadAllTextInternal(null, path, encoding, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3285,33 +2584,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(string path, bool? isFullPath)
+      public static string ReadAllText(string path, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(string path, Encoding encoding, bool? isFullPath)
+      public static string ReadAllText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(null, path, encoding, isFullPath);
+         return ReadAllTextInternal(null, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3327,7 +2616,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(KernelTransaction transaction, string path)
       {
-         return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, false);
+         return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -3338,7 +2627,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return ReadAllTextInternal(transaction, path, encoding, false);
+         return ReadAllTextInternal(transaction, path, encoding, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3348,38 +2637,28 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(KernelTransaction transaction, string path, bool? isFullPath)
+      public static string ReadAllText(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      public static string ReadAllText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(transaction, path, encoding, isFullPath);
+         return ReadAllTextInternal(transaction, path, encoding, pathFormat);
       }
-      
+
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -3396,7 +2675,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path)
       {
-         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, false);
+         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       /// <summary>Read the lines of a file that has a specified encoding.</summary>
@@ -3406,7 +2685,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path, Encoding encoding)
       {
-         return ReadLinesInternal(null, path, encoding, false);
+         return ReadLinesInternal(null, path, encoding, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3417,33 +2696,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Reads the lines of a file.</summary>
       /// <param name="path">The file to read.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(string path, bool? isFullPath)
+      public static IEnumerable<string> ReadLines(string path, PathFormat pathFormat)
       {
-         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
       /// <param name="path">The file to read.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(string path, Encoding encoding, bool? isFullPath)
+      public static IEnumerable<string> ReadLines(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadLinesInternal(null, path, encoding, isFullPath);
+         return ReadLinesInternal(null, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3459,7 +2728,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path)
       {
-         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, false);
+         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
@@ -3470,7 +2739,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return ReadLinesInternal(transaction, path, encoding, false);
+         return ReadLinesInternal(transaction, path, encoding, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3480,34 +2749,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Reads the lines of a file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to read.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, bool? isFullPath)
+      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, isFullPath);
+         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to read.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadLinesInternal(transaction, path, encoding, isFullPath);
+         return ReadLinesInternal(transaction, path, encoding, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3545,7 +2804,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, false, false);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, false, PathFormat.Relative);
       }
 
       /// <summary>
@@ -3576,7 +2835,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, false);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3609,19 +2868,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="true"/> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the
       ///   replacement file; otherwise, <see langword="false"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are an absolute path.
-      ///   Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> will be checked and
-      ///   resolved to an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are already an absolute
-      ///   path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
+      public static void Replace(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
-         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, isFullPath);
+         ReplaceInternal(sourceFileName, destinationFileName, destinationBackupFileName, ignoreMetadataErrors, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3646,7 +2898,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity)
       {
-         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, false);
+         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, PathFormat.Relative);
       }
 
       /// <summary>
@@ -3664,7 +2916,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         SetAccessControlInternal(path, null, fileSecurity, includeSections, false);
+         SetAccessControlInternal(path, null, fileSecurity, includeSections, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3682,17 +2934,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A  <see cref="FileSecurity"/> object that describes an ACL entry to apply to the file described by the <paramref name="path"/>
       ///   parameter.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static void SetAccessControl(string path, FileSecurity fileSecurity, bool? isFullPath)
+      public static void SetAccessControl(string path, FileSecurity fileSecurity, PathFormat pathFormat)
       {
-         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, isFullPath);
+         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, pathFormat);
       }
 
       /// <summary>
@@ -3707,17 +2954,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to
       ///   set.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections, bool? isFullPath)
+      public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         SetAccessControlInternal(path, null, fileSecurity, includeSections, isFullPath);
+         SetAccessControlInternal(path, null, fileSecurity, includeSections, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3744,7 +2986,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes)
       {
-         SetAttributesInternal(false, null, path, fileAttributes, false, false);
+         SetAttributesInternal(false, null, path, fileAttributes, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3763,16 +3005,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetAttributes(string path, FileAttributes fileAttributes, bool? isFullPath)
+      public static void SetAttributes(string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         SetAttributesInternal(false, null, path, fileAttributes, false, isFullPath);
+         SetAttributesInternal(false, null, path, fileAttributes, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3795,7 +3032,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes)
       {
-         SetAttributesInternal(false, transaction, path, fileAttributes, false, false);
+         SetAttributesInternal(false, transaction, path, fileAttributes, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3813,16 +3050,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes, bool? isFullPath)
+      public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         SetAttributesInternal(false, transaction, path, fileAttributes, false, isFullPath);
+         SetAttributesInternal(false, transaction, path, fileAttributes, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3846,7 +3078,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), null, null, false);
+         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), null, null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3861,16 +3093,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetCreationTime(string path, DateTime creationTime, bool? isFullPath)
+      public static void SetCreationTime(string path, DateTime creationTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), null, null, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), null, null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3889,7 +3116,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), null, null, false);
+         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), null, null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3903,16 +3130,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime, bool? isFullPath)
+      public static void SetCreationTime(KernelTransaction transaction, string path, DateTime creationTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), null, null, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), null, null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3936,7 +3158,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, null, null, false);
+         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, null, null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3951,16 +3173,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc, bool? isFullPath)
+      public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, null, null, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, null, null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -3979,7 +3196,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, null, null, false);
+         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, null, null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -3993,20 +3210,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, bool? isFullPath)
+      public static void SetCreationTimeUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, null, null, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, null, null, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -4026,7 +3238,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(string path, DateTime lastAccessTime)
       {
-         SetFsoDateTimeInternal(false, null, path, null, lastAccessTime.ToUniversalTime(), null, false);
+         SetFsoDateTimeInternal(false, null, path, null, lastAccessTime.ToUniversalTime(), null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4041,16 +3253,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetLastAccessTime(string path, DateTime lastAccessTime, bool? isFullPath)
+      public static void SetLastAccessTime(string path, DateTime lastAccessTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, null, lastAccessTime.ToUniversalTime(), null, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, null, lastAccessTime.ToUniversalTime(), null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4069,7 +3276,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTime.ToUniversalTime(), null, false);
+         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTime.ToUniversalTime(), null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4083,16 +3290,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime, bool? isFullPath)
+      public static void SetLastAccessTime(KernelTransaction transaction, string path, DateTime lastAccessTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTime.ToUniversalTime(), null, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTime.ToUniversalTime(), null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4116,7 +3318,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc)
       {
-         SetFsoDateTimeInternal(false, null, path, null, lastAccessTimeUtc, null, false);
+         SetFsoDateTimeInternal(false, null, path, null, lastAccessTimeUtc, null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4131,16 +3333,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, bool? isFullPath)
+      public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, null, lastAccessTimeUtc, null, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, null, lastAccessTimeUtc, null, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4159,7 +3356,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTimeUtc, null, false);
+         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTimeUtc, null, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4173,20 +3370,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
       ///   value is expressed in UTC time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, bool? isFullPath)
+      public static void SetLastAccessTimeUtc(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTimeUtc, null, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, null, lastAccessTimeUtc, null, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -4206,7 +3398,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTime(string path, DateTime lastWriteTime)
       {
-         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTime.ToUniversalTime(), false);
+         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTime.ToUniversalTime(), PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4221,16 +3413,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetLastWriteTime(string path, DateTime lastWriteTime, bool? isFullPath)
+      public static void SetLastWriteTime(string path, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTime.ToUniversalTime(), isFullPath);
+         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4249,7 +3436,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTime.ToUniversalTime(), false);
+         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTime.ToUniversalTime(), PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4263,16 +3450,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime, bool? isFullPath)
+      public static void SetLastWriteTime(KernelTransaction transaction, string path, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTime.ToUniversalTime(), isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4296,7 +3478,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc)
       {
-         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTimeUtc, false);
+         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTimeUtc, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4313,16 +3495,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc, bool? isFullPath)
+      public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTimeUtc, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTimeUtc, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4343,7 +3520,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTimeUtc, false);
+         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTimeUtc, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4359,16 +3536,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, bool? isFullPath)
+      public static void SetLastWriteTimeUtc(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTimeUtc, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, null, null, lastWriteTimeUtc, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4393,7 +3565,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytes(string path, byte[] bytes)
       {
-         WriteAllBytesInternal(null, path, bytes, false);
+         WriteAllBytesInternal(null, path, bytes, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4408,17 +3580,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="path">The file to write to.</param>
       /// <param name="bytes">The bytes to write to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "bytes")]
       [SecurityCritical]
-      public static void WriteAllBytes(string path, byte[] bytes, bool? isFullPath)
+      public static void WriteAllBytes(string path, byte[] bytes, PathFormat pathFormat)
       {
-         WriteAllBytesInternal(null, path, bytes, isFullPath);
+         WriteAllBytesInternal(null, path, bytes, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4438,7 +3605,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytes(KernelTransaction transaction, string path, byte[] bytes)
       {
-         WriteAllBytesInternal(transaction, path, bytes, false);
+         WriteAllBytesInternal(transaction, path, bytes, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4452,17 +3619,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="bytes">The bytes to write to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "bytes")]
       [SecurityCritical]
-      public static void WriteAllBytes(KernelTransaction transaction, string path, byte[] bytes, bool? isFullPath)
+      public static void WriteAllBytes(KernelTransaction transaction, string path, byte[] bytes, PathFormat pathFormat)
       {
-         WriteAllBytesInternal(transaction, path, bytes, isFullPath);
+         WriteAllBytesInternal(transaction, path, bytes, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4484,7 +3646,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, IEnumerable<string> contents)
       {
-         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, false);
+         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.Relative);
       }
 
       /// <summary>Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
@@ -4493,7 +3655,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, string[] contents)
       {
-         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, false);
+         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.Relative);
       }
 
       /// <summary>
@@ -4505,7 +3667,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, IEnumerable<string> contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, false);
+         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, PathFormat.Relative);
       }
 
       /// <summary>Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
@@ -4515,7 +3677,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(string path, string[] contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, false);
+         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4528,16 +3690,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(string path, IEnumerable<string> contents, bool? isFullPath)
+      public static void WriteAllLines(string path, IEnumerable<string> contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
+         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
       /// <summary>
@@ -4545,16 +3702,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(string path, string[] contents, bool? isFullPath)
+      public static void WriteAllLines(string path, string[] contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
+         WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
       /// <summary>
@@ -4563,16 +3715,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(string path, IEnumerable<string> contents, Encoding encoding, bool? isFullPath)
+      public static void WriteAllLines(string path, IEnumerable<string> contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, isFullPath);
+         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, pathFormat);
       }
 
       /// <summary>
@@ -4581,16 +3728,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(string path, string[] contents, Encoding encoding, bool? isFullPath)
+      public static void WriteAllLines(string path, string[] contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, isFullPath);
+         WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4607,7 +3749,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, false);
+         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
@@ -4618,7 +3760,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, false);
+         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.Relative);
       }
 
       /// <summary>
@@ -4631,7 +3773,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, false);
+         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, PathFormat.Relative);
       }
 
       /// <summary>
@@ -4644,7 +3786,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, false);
+         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4656,16 +3798,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, bool? isFullPath)
+      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
@@ -4673,16 +3810,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, bool? isFullPath)
+      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
       /// <summary>
@@ -4692,16 +3824,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool? isFullPath)
+      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, pathFormat);
       }
 
       /// <summary>
@@ -4711,20 +3838,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, Encoding encoding, bool? isFullPath)
+      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, pathFormat);
       }
 
       #endregion // IsFullPath
-      
+
       #endregion // Transacted
 
       #endregion // AlphaFS
@@ -4745,7 +3867,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(string path, string contents)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, false);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, PathFormat.Relative);
       }
 
       /// <summary>
@@ -4758,7 +3880,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(string path, string contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, false, false, false);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, false, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4774,16 +3896,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This method uses UTF-8 encoding without a Byte-Order Mark (BOM)</remarks>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllText(string path, string contents, bool? isFullPath)
+      public static void WriteAllText(string path, string contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, isFullPath);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, new UTF8Encoding(false, true), false, false, pathFormat);
       }
 
       /// <summary>
@@ -4793,18 +3910,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllText(string path, string contents, Encoding encoding, bool? isFullPath)
+      public static void WriteAllText(string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, false, false, isFullPath);
+         WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, false, false, pathFormat);
       }
-      
+
       #endregion // IsFullPath
 
       #region Transacted
@@ -4822,7 +3934,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(KernelTransaction transaction, string path, string contents)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, false);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Creates a new file as part of a transaction, writes the specified string to the file using the specified encoding, and then closes the file. If the target file already exists, it is overwritten.</summary>
@@ -4833,7 +3945,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllText(KernelTransaction transaction, string path, string contents, Encoding encoding)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, false);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, PathFormat.Relative);
       }
 
       #endregion // .NET
@@ -4848,16 +3960,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllText(KernelTransaction transaction, string path, string contents, bool? isFullPath)
+      public static void WriteAllText(KernelTransaction transaction, string path, string contents, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, pathFormat);
       }
 
       /// <summary>
@@ -4868,16 +3975,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, bool? isFullPath)
+      public static void WriteAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
-         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, isFullPath);
+         WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4900,16 +4002,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void AddStream(string path, string name, string[] contents, bool? isFullPath)
+      public static void AddStream(string path, string name, string[] contents, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, null, path, name, contents, isFullPath);
+         AlternateDataStreamInfo.AddStreamInternal(false, null, path, name, contents, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4921,7 +4018,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AddStream(string path, string name, string[] contents)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, null, path, name, contents, false);
+         AlternateDataStreamInfo.AddStreamInternal(false, null, path, name, contents, PathFormat.Relative);
       }
 
       #region Transacted
@@ -4933,16 +4030,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
       /// <param name="contents">The lines to add to the stream.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents, bool? isFullPath)
+      public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, transaction, path, name, contents, isFullPath);
+         AlternateDataStreamInfo.AddStreamInternal(false, transaction, path, name, contents, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4955,7 +4047,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, transaction, path, name, contents, false);
+         AlternateDataStreamInfo.AddStreamInternal(false, transaction, path, name, contents, PathFormat.Relative);
       }
 
       #endregion Transacted
@@ -4968,16 +4060,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
       /// <param name="path">A path that describes a file to compress.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void Compress(string path, bool? isFullPath)
+      public static void Compress(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(false, null, path, true, isFullPath);
+         Device.ToggleCompressionInternal(false, null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -4987,7 +4074,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Compress(string path)
       {
-         Device.ToggleCompressionInternal(false, null, path, true, false);
+         Device.ToggleCompressionInternal(false, null, path, true, PathFormat.Relative);
       }
 
       #region Transacted
@@ -4997,16 +4084,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Compresses a file using NTFS compression.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a file to compress.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path, bool? isFullPath)
+      public static void Compress(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(false, transaction, path, true, isFullPath);
+         Device.ToggleCompressionInternal(false, transaction, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5017,7 +4099,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Compress(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionInternal(false, transaction, path, true, false);
+         Device.ToggleCompressionInternal(false, transaction, path, true, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -5047,14 +4129,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates">
       ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       ///
       /// <exception cref="ArgumentException">
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
@@ -5067,9 +4142,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, bool? isFullPath)
+      public static void Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, pathFormat);
       }
 
       /// <summary>
@@ -5098,14 +4173,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
       ///
       /// <exception cref="ArgumentException">
@@ -5119,9 +4187,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static CopyMoveResult Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public static CopyMoveResult Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, isFullPath);
+         return CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5156,7 +4224,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, copyOptions, null, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, copyOptions, null, null, null, PathFormat.Relative);
       }
 
       /// <summary>
@@ -5193,7 +4261,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, PathFormat.Relative);
       }
 
       /// <summary>
@@ -5237,7 +4305,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy1(string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, false);
+         return CopyMoveInternal(false, null, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
       }
 
       #region Transacted
@@ -5264,14 +4332,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates">
       ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       ///
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
       /// <exception cref="ArgumentException">
@@ -5285,9 +4346,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, bool? isFullPath)
+      public static void Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, pathFormat);
       }
 
       /// <summary>
@@ -5317,14 +4378,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
       ///
       /// <exception cref="ArgumentException">
@@ -5338,9 +4392,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static CopyMoveResult Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public static CopyMoveResult Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, isFullPath);
+         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5376,7 +4430,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, copyOptions, null, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, copyOptions, null, null, null, PathFormat.Relative);
       }
 
       /// <summary>
@@ -5413,7 +4467,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, null, null, PathFormat.Relative);
       }
 
       /// <summary>
@@ -5458,7 +4512,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy1(KernelTransaction transaction, string sourceFileName, string destFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, false);
+         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -5475,19 +4529,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="fileName"/> and <paramref name="existingFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="fileName"/> and <paramref name="existingFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="fileName"/> and <paramref name="existingFileName"/> are already an absolute path with
-      ///   Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      public static void CreateHardlink(string fileName, string existingFileName, bool? isFullPath)
+      public static void CreateHardlink(string fileName, string existingFileName, PathFormat pathFormat)
       {
-         CreateHardlinkInternal(null, fileName, existingFileName, isFullPath);
+         CreateHardlinkInternal(null, fileName, existingFileName, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5502,7 +4549,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(string fileName, string existingFileName)
       {
-         CreateHardlinkInternal(null, fileName, existingFileName, false);
+         CreateHardlinkInternal(null, fileName, existingFileName, PathFormat.Relative);
       }
 
       #region Transacted
@@ -5516,19 +4563,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="fileName"/> and <paramref name="existingFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="fileName"/> and <paramref name="existingFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="fileName"/> and <paramref name="existingFileName"/> are already an absolute path with
-      ///   Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName, bool? isFullPath)
+      public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
       {
-         CreateHardlinkInternal(transaction, fileName, existingFileName, isFullPath);
+         CreateHardlinkInternal(transaction, fileName, existingFileName, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5544,7 +4584,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName)
       {
-         CreateHardlinkInternal(transaction, fileName, existingFileName, false);
+         CreateHardlinkInternal(transaction, fileName, existingFileName, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -5559,19 +4599,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> will be checked and resolved
-      ///   to an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
-      public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool? isFullPath)
+      public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
-         CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, isFullPath);
+         CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5584,7 +4617,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
       {
-         CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, false);
+         CreateSymbolicLinkInternal(null, symlinkFileName, targetFileName, targetType, PathFormat.Relative);
       }
 
       #region Transacted
@@ -5596,19 +4629,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> will be checked and resolved
-      ///   to an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
-      public static void CreateSymbolicLink(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool? isFullPath)
+      public static void CreateSymbolicLink(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
-         CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, isFullPath);
+         CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5622,7 +4648,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateSymbolicLink(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
       {
-         CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, false);
+         CreateSymbolicLinkInternal(transaction, symlinkFileName, targetFileName, targetType, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -5635,16 +4661,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
       /// <param name="path">A path that describes a file to decompress.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void Decompress(string path, bool? isFullPath)
+      public static void Decompress(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(false, null, path, false, isFullPath);
+         Device.ToggleCompressionInternal(false, null, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5654,7 +4675,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decompress(string path)
       {
-         Device.ToggleCompressionInternal(false, null, path, false, false);
+         Device.ToggleCompressionInternal(false, null, path, false, PathFormat.Relative);
       }
 
       #region Transacted
@@ -5664,16 +4685,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Decompresses an NTFS compressed file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a file to decompress.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path, bool? isFullPath)
+      public static void Decompress(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(false, transaction, path, false, isFullPath);
+         Device.ToggleCompressionInternal(false, transaction, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5684,7 +4700,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path)
       {
-         Device.ToggleCompressionInternal(false, transaction, path, false, false);
+         Device.ToggleCompressionInternal(false, transaction, path, false, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -5697,18 +4713,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
       /// <param name="path">The name of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinks(string path, bool? isFullPath)
+      public static IEnumerable<string> EnumerateHardlinks(string path, PathFormat pathFormat)
       {
-         return EnumerateHardlinksInternal(null, path, isFullPath);
+         return EnumerateHardlinksInternal(null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5720,7 +4731,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(string path)
       {
-         return EnumerateHardlinksInternal(null, path, false);
+         return EnumerateHardlinksInternal(null, path, PathFormat.Relative);
       }
 
       #region Transacted
@@ -5730,18 +4741,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path, bool? isFullPath)
+      public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return EnumerateHardlinksInternal(transaction, path, isFullPath);
+         return EnumerateHardlinksInternal(transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5754,7 +4760,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path)
       {
-         return EnumerateHardlinksInternal(transaction, path, false);
+         return EnumerateHardlinksInternal(transaction, path, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -5770,19 +4776,14 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <paramref name="path"/>.
       /// </summary>
       /// <param name="path">The file to search.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.
       /// </returns>      
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, bool? isFullPath)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, isFullPath);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, pathFormat);
       }
 
       /// <summary>
@@ -5791,20 +4792,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="path">The file to search.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file specified
       ///   by <paramref name="path"/>.
       /// </returns>      
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType, bool? isFullPath)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, isFullPath);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5820,7 +4816,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, false);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, null, PathFormat.Relative);
       }
 
       /// <summary>
@@ -5836,7 +4832,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(string path, StreamType streamType)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, false);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, null, path, null, streamType, PathFormat.Relative);
       }
 
       /// <summary>
@@ -5850,7 +4846,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(SafeFileHandle handle)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, handle, null, null, null, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, handle, null, null, null, PathFormat.LongFullPath);
       }
 
       #region Transacted
@@ -5863,19 +4859,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to search.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.
       /// </returns>      
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, bool? isFullPath)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, isFullPath);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, pathFormat);
       }
 
       /// <summary>
@@ -5885,20 +4876,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to search.</param>
       /// <param name="streamType">The type of stream to retrieve.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file specified
       ///   by <paramref name="path"/>.
       /// </returns>      
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType, bool? isFullPath)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, isFullPath);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5915,7 +4901,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, false);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, null, PathFormat.Relative);
       }
 
       /// <summary>
@@ -5932,7 +4918,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateStreams(KernelTransaction transaction, string path, StreamType streamType)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, false);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, transaction, null, path, null, streamType, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -5945,20 +4931,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the change date and time of the specified file.</summary>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local
       ///   time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetChangeTime(string path, bool? isFullPath)
+      public static DateTime GetChangeTime(string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, null, null, path, false, isFullPath);
+         return GetChangeTimeInternal(false, null, null, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -5972,7 +4953,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(string path)
       {
-         return GetChangeTimeInternal(false, null, null, path, false, false);
+         return GetChangeTimeInternal(false, null, null, path, false, PathFormat.Relative);
       }
 
       /// <summary>Gets the change date and time of the specified file.</summary>
@@ -5984,7 +4965,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(SafeFileHandle safeHandle)
       {
-         return GetChangeTimeInternal(false, null, safeHandle, null, false, null);
+         return GetChangeTimeInternal(false, null, safeHandle, null, false, PathFormat.LongFullPath);
       }
 
       #region Transacted
@@ -5994,22 +4975,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets the change date and time of the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local
       ///   time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetChangeTime(KernelTransaction transaction, string path, bool? isFullPath)
+      public static DateTime GetChangeTime(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, false, isFullPath);
+         return GetChangeTimeInternal(false, transaction, null, path, false, pathFormat);
       }
-      
+
       #endregion // IsFullPath
 
       /// <summary>Gets the change date and time of the specified file.</summary>
@@ -6022,7 +4998,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(KernelTransaction transaction, string path)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, false, false);
+         return GetChangeTimeInternal(false, transaction, null, path, false, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -6035,20 +5011,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC
       ///   time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetChangeTimeUtc(string path, bool? isFullPath)
+      public static DateTime GetChangeTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, null, null, path, true, isFullPath);
+         return GetChangeTimeInternal(false, null, null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6062,7 +5033,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path)
       {
-         return GetChangeTimeInternal(false, null, null, path, true, false);
+         return GetChangeTimeInternal(false, null, null, path, true, PathFormat.Relative);
       }
 
       /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
@@ -6074,7 +5045,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
       {
-         return GetChangeTimeInternal(false, null, safeHandle, null, true, null);
+         return GetChangeTimeInternal(false, null, safeHandle, null, true, PathFormat.LongFullPath);
       }
 
       #region Transacted
@@ -6084,20 +5055,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in UTC
       ///   time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path, bool? isFullPath)
+      public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, true, isFullPath);
+         return GetChangeTimeInternal(false, transaction, null, path, true, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6112,7 +5078,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, true, false);
+         return GetChangeTimeInternal(false, transaction, null, path, true, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -6130,17 +5096,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   obtained is the sparse size of the specified file.
       /// </remarks>
       /// <param name="path"><para>The name of the file.</para></param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
-      public static long GetCompressedSize(string path, bool? isFullPath)
+      public static long GetCompressedSize(string path, PathFormat pathFormat)
       {
-         return GetCompressedSizeInternal(null, path, isFullPath);
+         return GetCompressedSizeInternal(null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6156,7 +5117,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(string path)
       {
-         return GetCompressedSizeInternal(null, path, false);
+         return GetCompressedSizeInternal(null, path, PathFormat.Relative);
       }
 
       #region Transacted
@@ -6171,17 +5132,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path"><para>The name of the file.</para></param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
-      public static long GetCompressedSize(KernelTransaction transaction, string path, bool? isFullPath)
+      public static long GetCompressedSize(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetCompressedSizeInternal(transaction, path, isFullPath);
+         return GetCompressedSizeInternal(transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6198,7 +5154,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetCompressedSize(KernelTransaction transaction, string path)
       {
-         return GetCompressedSizeInternal(transaction, path, false);
+         return GetCompressedSizeInternal(transaction, path, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -6211,17 +5167,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the encryption status of the specified file.</summary>
       /// <param name="path">The name of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>      
       [SecurityCritical]
-      public static FileEncryptionStatus GetEncryptionStatus(string path, bool? isFullPath)
+      public static FileEncryptionStatus GetEncryptionStatus(string path, PathFormat pathFormat)
       {
-         return GetEncryptionStatusInternal(path, isFullPath);
+         return GetEncryptionStatusInternal(path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6232,7 +5183,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileEncryptionStatus GetEncryptionStatus(string path)
       {
-         return GetEncryptionStatusInternal(path, false);
+         return GetEncryptionStatusInternal(path, PathFormat.Relative);
       }
 
       #endregion // GetEncryptionStatus
@@ -6265,16 +5216,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory.</returns>
       /// <param name="path">The path to the file or directory.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, bool? isFullPath)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, PathFormat pathFormat)
       {
-         return GetFileSystemEntryInfoInternal(null, path, false, isFullPath);
+         return GetFileSystemEntryInfoInternal(null, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6285,7 +5231,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
       {
-         return GetFileSystemEntryInfoInternal(null, path, false, false);
+         return GetFileSystemEntryInfoInternal(null, path, false, PathFormat.Relative);
       }
 
       #region Transacted
@@ -6296,16 +5242,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, bool? isFullPath)
+      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetFileSystemEntryInfoInternal(transaction, path, false, isFullPath);
+         return GetFileSystemEntryInfoInternal(transaction, path, false, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6317,7 +5258,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path)
       {
-         return GetFileSystemEntryInfoInternal(transaction, path, false, false);
+         return GetFileSystemEntryInfoInternal(transaction, path, false, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -6330,20 +5271,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <param name="path">The path to the reparse point.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
       ///   or mount point pointed to by <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      public static LinkTargetInfo GetLinkTargetInfo(string path, bool? isFullPath)
+      public static LinkTargetInfo GetLinkTargetInfo(string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoInternal(null, path, isFullPath);
+         return GetLinkTargetInfoInternal(null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6357,9 +5293,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path)
       {
-         return GetLinkTargetInfoInternal(null, path, false);
+         return GetLinkTargetInfoInternal(null, path, PathFormat.Relative);
       }
-      
+
       #region Transacted
 
       #region IsFullPath
@@ -6367,20 +5303,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the reparse point.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
       ///   or mount point pointed to by <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      public static LinkTargetInfo GetLinkTargetInfo(KernelTransaction transaction, string path, bool? isFullPath)
+      public static LinkTargetInfo GetLinkTargetInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoInternal(transaction, path, isFullPath);
+         return GetLinkTargetInfoInternal(transaction, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6395,7 +5326,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(KernelTransaction transaction, string path)
       {
-         return GetLinkTargetInfoInternal(transaction, path, false);
+         return GetLinkTargetInfoInternal(transaction, path, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -6408,17 +5339,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
       /// <param name="path">The path to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The file size, in bytes.</returns>      
       [SecurityCritical]
-      public static long GetSize(string path, bool? isFullPath)
+      public static long GetSize(string path, PathFormat pathFormat)
       {
-         return GetSizeInternal(null, null, path, isFullPath);
+         return GetSizeInternal(null, null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6429,7 +5355,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path)
       {
-         return GetSizeInternal(null, null, path, false);
+         return GetSizeInternal(null, null, path, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
@@ -6438,7 +5364,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(SafeFileHandle handle)
       {
-         return GetSizeInternal(null, handle, null, null);
+         return GetSizeInternal(null, handle, null, PathFormat.LongFullPath);
       }
 
       #region Transacted
@@ -6448,17 +5374,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
-      public static long GetSize(KernelTransaction transaction, string path, bool? isFullPath)
+      public static long GetSize(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetSizeInternal(transaction, null, path, isFullPath);
+         return GetSizeInternal(transaction, null, path, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6470,7 +5391,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(KernelTransaction transaction, string path)
       {
-         return GetSizeInternal(transaction, null, path, false);
+         return GetSizeInternal(transaction, null, path, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -6483,33 +5404,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
       /// <param name="path">The path to an existing file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by all data streams.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(string path, bool? isFullPath)
+      public static long GetStreamSize(string path, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
       /// <param name="path">The path to an existing file.</param>
       /// <param name="name">The name of the stream to retrieve.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by a named stream.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(string path, string name, bool? isFullPath)
+      public static long GetStreamSize(string path, string name, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, pathFormat);
       }
 
       /// <summary>
@@ -6517,17 +5428,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="path">The path to an existing file.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(string path, StreamType type, bool? isFullPath)
+      public static long GetStreamSize(string path, StreamType type, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6538,7 +5444,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -6548,7 +5454,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, PathFormat.Relative);
       }
 
       /// <summary>
@@ -6560,7 +5466,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(string path, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
@@ -6570,7 +5476,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(SafeFileHandle handle, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, name, StreamType.Data, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, name, StreamType.Data, PathFormat.LongFullPath);
       }
 
       /// <summary>
@@ -6582,7 +5488,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(SafeFileHandle handle, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, null, type, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, null, type, PathFormat.LongFullPath);
       }
 
       #region Transacted
@@ -6592,34 +5498,24 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by all data streams.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, bool? isFullPath)
+      public static long GetStreamSize(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file.</param>
       /// <param name="name">The name of the stream to retrieve.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by a named stream.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, string name, bool? isFullPath)
+      public static long GetStreamSize(KernelTransaction transaction, string path, string name, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, StreamType.Data, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, StreamType.Data, pathFormat);
       }
 
       /// <summary>
@@ -6628,17 +5524,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file.</param>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type, bool? isFullPath)
+      public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, isFullPath);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6650,7 +5541,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -6661,7 +5552,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, null, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
@@ -6672,7 +5563,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, false);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -6702,14 +5593,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions">
       ///   <see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       ///
       /// <exception cref="ArgumentException">
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
@@ -6722,9 +5606,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Move1(string sourceFileName, string destFileName, MoveOptions moveOptions, bool? isFullPath)
+      public static void Move1(string sourceFileName, string destFileName, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, null, null, isFullPath);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, null, null, pathFormat);
       }
 
       /// <summary>
@@ -6753,14 +5637,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       ///
       /// <exception cref="ArgumentException">
@@ -6774,9 +5651,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static CopyMoveResult Move1(string sourceFileName, string destFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public static CopyMoveResult Move1(string sourceFileName, string destFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, isFullPath);
+         return CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6814,7 +5691,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move1(string sourceFileName, string destFileName, MoveOptions moveOptions)
       {
-         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, null, null, false);
+         CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, null, null, PathFormat.Relative);
       }
 
       /// <summary>
@@ -6858,7 +5735,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move1(string sourceFileName, string destFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, false);
+         return CopyMoveInternal(false, null, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.Relative);
       }
 
       #region Transacted
@@ -6885,14 +5762,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions">
       ///   <see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       ///
       /// <exception cref="ArgumentException">
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
@@ -6905,9 +5775,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static void Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions, bool? isFullPath)
+      public static void Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions, PathFormat pathFormat)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, null, null, isFullPath);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, null, null, pathFormat);
       }
 
       /// <summary>
@@ -6937,14 +5807,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       ///
       /// <exception cref="ArgumentException">
@@ -6958,9 +5821,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dest")]
       [SecurityCritical]
-      public static CopyMoveResult Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public static CopyMoveResult Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, isFullPath);
+         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -6999,7 +5862,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, null, null, false);
+         CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, null, null, PathFormat.Relative);
       }
 
       /// <summary>
@@ -7044,7 +5907,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move1(KernelTransaction transaction, string sourceFileName, string destFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, false);
+         return CopyMoveInternal(false, transaction, sourceFileName, destFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -7057,17 +5920,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.</summary>
       /// <param name="path">The file path to open.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
       [SecurityCritical]
-      public static FileStream OpenBackupRead(string path, bool? isFullPath)
+      public static FileStream OpenBackupRead(string path, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, isFullPath);
+         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7081,7 +5939,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(string path)
       {
-         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null);
+         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, PathFormat.Relative);
       }
 
       #region Transacted
@@ -7091,17 +5949,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file path to open.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
       [SecurityCritical]
-      public static FileStream OpenBackupRead(KernelTransaction transaction, string path, bool? isFullPath)
+      public static FileStream OpenBackupRead(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, isFullPath);
+         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7113,13 +5966,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null);
+         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, PathFormat.Relative);
       }
 
       #endregion // Transacted
 
       #endregion // OpenBackupRead
-      
+
       #region RemoveStream
 
       #region IsFullPath
@@ -7128,16 +5981,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <param name="path">The path to an existing file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void RemoveStream(string path, bool? isFullPath)
+      public static void RemoveStream(string path, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, isFullPath);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -7145,18 +5993,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <param name="path">The path to an existing file.</param>
       /// <param name="name">The name of the stream to remove.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void RemoveStream(string path, string name, bool? isFullPath)
+      public static void RemoveStream(string path, string name, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, isFullPath);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, pathFormat);
       }
-      
+
       #endregion // IsFullPath
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file.</summary>
@@ -7166,7 +6009,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(string path)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, false);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -7177,7 +6020,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(string path, string name)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, false);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, PathFormat.Relative);
       }
 
       #region Transacted
@@ -7189,16 +6032,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void RemoveStream(KernelTransaction transaction, string path, bool? isFullPath)
+      public static void RemoveStream(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, isFullPath);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -7207,16 +6045,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file.</param>
       /// <param name="name">The name of the stream to remove.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void RemoveStream(KernelTransaction transaction, string path, string name, bool? isFullPath)
+      public static void RemoveStream(KernelTransaction transaction, string path, string name, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, isFullPath);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7229,7 +6062,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, false);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -7241,9 +6074,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, string name)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, false);
+         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, PathFormat.Relative);
       }
-      
+
       #endregion Transacted
 
       #endregion // RemoveStream
@@ -7266,16 +6099,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool? isFullPath)
+      public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), isFullPath);
+         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7297,7 +6125,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false);
+         SetFsoDateTimeInternal(false, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), PathFormat.Relative);
       }
 
       #region Transacted
@@ -7319,16 +6147,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool? isFullPath)
+      public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7351,7 +6174,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestamps(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false);
+         SetFsoDateTimeInternal(false, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -7376,16 +6199,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool? isFullPath)
+      public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, isFullPath);
+         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7407,7 +6225,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
       {
-         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false);
+         SetFsoDateTimeInternal(false, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, PathFormat.Relative);
       }
 
       #region Transacted
@@ -7429,16 +6247,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool? isFullPath)
+      public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, isFullPath);
+         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7461,7 +6274,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtc(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
       {
-         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false);
+         SetFsoDateTimeInternal(false, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, PathFormat.Relative);
       }
 
       #endregion // Transacted
@@ -7476,18 +6289,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This method does not change last access time for the source file.</remarks>
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to
-      ///   absolute paths. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with
-      ///   Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void TransferTimestamps(string sourcePath, string destinationPath, bool? isFullPath)
+      public static void TransferTimestamps(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         TransferTimestampsInternal(false, null, sourcePath, destinationPath, isFullPath);
+         TransferTimestampsInternal(false, null, sourcePath, destinationPath, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7499,7 +6305,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(string sourcePath, string destinationPath)
       {
-         TransferTimestampsInternal(false, null, sourcePath, destinationPath, false);
+         TransferTimestampsInternal(false, null, sourcePath, destinationPath, PathFormat.Relative);
       }
 
       #region Transacted
@@ -7511,18 +6317,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source file to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination file to set the date and time stamps.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to
-      ///   absolute paths. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with
-      ///   Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath, bool? isFullPath)
+      public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, isFullPath);
+         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -7535,9 +6334,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, false);
+         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, PathFormat.Relative);
       }
-      
+
       #endregion // Transacted
 
       #endregion // TransferTimestamps
@@ -7555,20 +6354,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.
       /// </returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static StreamWriter AppendTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      internal static StreamWriter AppendTextInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         FileStream fs = OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, isFullPath);
+         FileStream fs = OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
 
          try
          {
@@ -7634,23 +6428,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">
       ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/>
-      ///   will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destFileName"/> are
-      ///   already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>      
       /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static CopyMoveResult CopyMoveInternal(bool isFolder, KernelTransaction transaction, string sourceFileName, string destFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      internal static CopyMoveResult CopyMoveInternal(bool isFolder, KernelTransaction transaction, string sourceFileName, string destFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          #region Setup
 
-         if (isFullPath != null && (bool) !isFullPath)
+         if (pathFormat == PathFormat.Relative)
          {
             Path.CheckValidPath(sourceFileName, true, true);
             Path.CheckValidPath(destFileName, true, true);
@@ -7662,17 +6449,8 @@ namespace Alphaleonis.Win32.Filesystem
             Path.CheckValidPath(destFileName, false, false);
          }
 
-         string sourceFileNameLp = isFullPath == null
-            ? sourceFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, sourceFileName, true, false, false, true, false, false, false);
-
-         string destFileNameLp = isFullPath == null
-            ? destFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destFileName, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, destFileName, true, false, false, true, false, false, false);
+         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(transaction, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         string destFileNameLp = Path.GetExtendedLengthPathInternal(transaction, destFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
 
          // MSDN: If this flag is set to TRUE during the copy/move operation, the operation is canceled.
@@ -7687,8 +6465,8 @@ namespace Alphaleonis.Win32.Filesystem
             throw new NotSupportedException(Resources.UndeterminedCopyMoveAction);
 
          bool overwrite = doCopy
-            ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
-            : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
+            ? (((CopyOptions)copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
+            : (((MoveOptions)moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
 
          bool raiseException = progressHandler == null;
 
@@ -7697,11 +6475,11 @@ namespace Alphaleonis.Win32.Filesystem
             ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, hSourceFile, hDestinationFile, lpData)
                =>
                progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, userProgressData)
-            : (NativeMethods.NativeCopyMoveProgressRoutine) null;
+            : (NativeMethods.NativeCopyMoveProgressRoutine)null;
 
          #endregion //Setup
 
-         startCopyMove:
+      startCopyMove:
 
          uint lastError = Win32Errors.ERROR_SUCCESS;
 
@@ -7709,24 +6487,24 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
             ? doMove
-               // MoveFileWithProgress() / MoveFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-04-15: MSDN confirms LongPath usage.
+            // MoveFileWithProgress() / MoveFileTransacted()
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // 2013-04-15: MSDN confirms LongPath usage.
 
                // CopyFileEx() / CopyFileTransacted()
-               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-04-15: MSDN confirms LongPath usage.
+            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+            // 2013-04-15: MSDN confirms LongPath usage.
 
-               ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
-               : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
+               ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions)moveOptions)
+               : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions)copyOptions)
 
             : doMove
-               ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
-               : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle)))
+               ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions)moveOptions, transaction.SafeHandle)
+               : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions)copyOptions, transaction.SafeHandle)))
          {
-            lastError = (uint) Marshal.GetLastWin32Error();
+            lastError = (uint)Marshal.GetLastWin32Error();
 
             if (lastError == Win32Errors.ERROR_REQUEST_ABORTED)
             {
@@ -7775,7 +6553,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // Check if destination directory already exists.
                      // Directory.Move()
                      // MSDN: .NET 3.5+: IOException: destDirName already exists. 
-                     if (ExistsInternal(true, transaction, destFileNameLp, null))
+                     if (ExistsInternal(true, transaction, destFileNameLp, PathFormat.LongFullPath))
                         NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destFileNameLp, true);
 
                      if (doMove)
@@ -7783,7 +6561,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // Ensure that the source file or directory exists.
                         // Directory.Move()
                         // MSDN: .NET 3.5+: DirectoryNotFoundException: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive). 
-                        if (!ExistsInternal(isFolder, transaction, sourceFileNameLp, null))
+                        if (!ExistsInternal(isFolder, transaction, sourceFileNameLp, PathFormat.LongFullPath))
                            NativeError.ThrowException(isFolder ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, sourceFileNameLp);
                      }
 
@@ -7792,7 +6570,7 @@ namespace Alphaleonis.Win32.Filesystem
                      string fileNameLp = destFileNameLp;
 
                      if (!isFolder)
-                        using (SafeFileHandle safeHandle = CreateFileInternal(transaction, sourceFileNameLp, ExtendedFileAttributes.None, null, FileMode.Open, 0, FileShare.Read, false, null))
+                        using (SafeFileHandle safeHandle = CreateFileInternal(transaction, sourceFileNameLp, ExtendedFileAttributes.None, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.LongFullPath))
                            if (safeHandle.IsInvalid)
                               fileNameLp = sourceFileNameLp;
 
@@ -7803,7 +6581,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // File.Move()
                         // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
                         //   Directory exists with the same name as the file.
-                        if (!isFolder && ExistsInternal(true, transaction, destFileNameLp, null))
+                        if (!isFolder && ExistsInternal(true, transaction, destFileNameLp, PathFormat.LongFullPath))
                            NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, destFileNameLp), true);
 
                         else
@@ -7811,7 +6589,7 @@ namespace Alphaleonis.Win32.Filesystem
                            var data = new NativeMethods.Win32FileAttributeData();
                            FillAttributeInfoInternal(transaction, destFileNameLp, ref data, false, true);
 
-                           if (data.FileAttributes != (FileAttributes) (-1))
+                           if (data.FileAttributes != (FileAttributes)(-1))
                            {
                               if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                               {
@@ -7820,7 +6598,7 @@ namespace Alphaleonis.Win32.Filesystem
                                  if (overwrite)
                                  {
                                     // Reset directory attributes.
-                                    SetAttributesInternal(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, null);
+                                    SetAttributesInternal(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
                                     goto startCopyMove;
                                  }
 
@@ -7867,159 +6645,18 @@ namespace Alphaleonis.Win32.Filesystem
             var data = new NativeMethods.Win32FileAttributeData();
             int dataInitialised = FillAttributeInfoInternal(transaction, sourceFileNameLp, ref data, false, true);
 
-            if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1))
-               SetFsoDateTimeInternal(false, transaction, destFileNameLp,
-                  DateTime.FromFileTimeUtc(data.CreationTime), DateTime.FromFileTimeUtc(data.LastAccessTime), DateTime.FromFileTimeUtc(data.LastWriteTime), null);
+            if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes) (-1))
+               SetFsoDateTimeInternal(false, transaction, destFileNameLp, DateTime.FromFileTimeUtc(data.CreationTime),
+                  DateTime.FromFileTimeUtc(data.LastAccessTime), DateTime.FromFileTimeUtc(data.LastWriteTime), PathFormat.LongFullPath);
          }
 
          #endregion // Transfer Timestamps
 
          // The copy/move operation succeeded, failed or was canceled.
-         return new CopyMoveResult(sourceFileNameLp, destFileNameLp, isFolder, doMove, cancel, (int) lastError);
+         return new CopyMoveResult(sourceFileNameLp, destFileNameLp, isFolder, doMove, cancel, (int)lastError);
       }
 
       #endregion // CopyMoveInternal
-
-      #region CreateFileInternal
-
-      /// <summary>
-      ///   [AlphaFS] Unified method CreateFileInternal() to create or overwrite a file in the specified path.
-      /// </summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The name of the file.</param>
-      /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
-      /// <param name="attributes">The <see cref="ExtendedFileAttributes"/> additional advanced options to create a file.</param>
-      /// <param name="fileSecurity">
-      ///   A <see cref="FileSecurity"/> instance that determines the access control and audit security for the file.
-      /// </param>
-      /// <param name="mode">The <see cref="FileMode"/> option gives you more precise control over how you want to create a file.</param>
-      /// <param name="access">
-      ///   The <see cref="FileAccess"/> allow you additionally specify to default read/write capability - just write, bypassing any cache.
-      /// </param>
-      /// <param name="share">
-      ///   The <see cref="FileShare"/> option controls how you would like to share created file with other requesters.
-      /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in path.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SecurityCritical]
-      internal static FileStream CreateFileInternal(KernelTransaction transaction, string path, int bufferSize, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, bool? isFullPath)
-      {
-         SafeFileHandle safeHandle = CreateFileInternal(transaction, path, attributes, fileSecurity, mode, (FileSystemRights)access, share, true, isFullPath);
-         return new FileStream(safeHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
-      }
-
-      /// <summary>[AlphaFS] Unified method CreateFileInternal() to create or open a file, directory or I/O device.</summary>
-      /// <remarks>
-      ///   <para>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of
-      ///   dwFlagsAndAttributes.</para>
-      ///   <para>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape
-      ///   drive,</para>
-      ///   <para>communications resource, mailslot, and pipe.</para>
-      /// </remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path and name of the file or directory to create.</param>
-      /// <param name="attributes">
-      ///   One of the <see cref="ExtendedFileAttributes"/> values that describes how to create or overwrite the file or directory.
-      /// </param>
-      /// <param name="fileSecurity">
-      ///   A <see cref="FileSecurity"/> instance that determines the access control and audit security for the file or directory.
-      /// </param>
-      /// <param name="fileMode">A <see cref="FileMode"/> constant that determines how to open or create the file or directory.</param>
-      /// <param name="fileSystemRights">
-      ///   A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the
-      ///   file or directory.
-      /// </param>
-      /// <param name="fileShare">
-      ///   A <see cref="FileShare"/> constant that determines how the file or directory will be shared by processes.
-      /// </param>
-      /// <param name="checkPath">.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      /// <returns>
-      ///   Returns a <see cref="SafeFileHandle"/> that provides read/write access to the file or directory specified by
-      ///   <paramref name="path"/>.
-      /// </returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">.</exception>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
-      [SecurityCritical]
-      internal static SafeFileHandle CreateFileInternal(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, bool? isFullPath)
-      {
-         if (checkPath && isFullPath != null && (bool) !isFullPath)
-            Path.CheckValidPath(path, true, true);
-
-         // When isFile == null, we're working with a device.
-         // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),
-         // the path string should be the following form: "\\.\X:"
-         // Do not use a trailing backslash (\), which indicates the root.
-
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-#if NET35
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false);
-#else
-               // MSDN: .NET 4+: Trailing spaces are removed from the end of the path parameter before deleting the directory.
-               : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false);
-#endif
-
-         PrivilegeEnabler privilegeEnabler = null;
-         try
-         {
-            if (fileSecurity != null)
-               fileSystemRights |= (FileSystemRights)0x1000000;
-
-            // AccessSystemSecurity = 0x1000000    AccessSystemAcl access type.
-            // MaximumAllowed       = 0x2000000    MaximumAllowed access type.            
-            if ((fileSystemRights & (FileSystemRights)0x1000000) != 0 ||
-                (fileSystemRights & (FileSystemRights)0x2000000) != 0)
-               privilegeEnabler = new PrivilegeEnabler(Privilege.Security);
-
-
-            using (Security.NativeMethods.SecurityAttributes securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
-            {
-               SafeFileHandle handle = transaction == null || !NativeMethods.IsAtLeastWindowsVista
-
-                  // CreateFile() / CreateFileTransacted()
-                  // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-                  // 2013-01-13: MSDN confirms LongPath usage.
-
-                  ? NativeMethods.CreateFile(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero)
-                  : NativeMethods.CreateFileTransacted(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero, transaction.SafeHandle, IntPtr.Zero, IntPtr.Zero);
-
-               int lastError = Marshal.GetLastWin32Error();
-               if (handle.IsInvalid)
-               {
-                  handle.Close();
-                  NativeError.ThrowException(lastError, pathLp);
-               }
-
-               return handle;
-            }
-         }
-         finally
-         {
-            if (privilegeEnabler != null)
-               privilegeEnabler.Dispose();
-         }
-      }
-
-      #endregion // CreateFileInternal
 
       #region CreateHardlinkInternal
 
@@ -8031,30 +6668,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="fileName"/> and <paramref name="existingFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="fileName"/> and <paramref name="existingFileName"/> will be checked and resolved to
-      ///   an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="fileName"/> and <paramref name="existingFileName"/> are already an absolute path with
-      ///   Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      internal static void CreateHardlinkInternal(KernelTransaction transaction, string fileName, string existingFileName, bool? isFullPath)
+      internal static void CreateHardlinkInternal(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
       {
-         string fileNameLp = isFullPath == null
-            ? fileName
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(fileName, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, fileName, true, false, false, true, false, true, true);
+         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional;
 
-         string existingFileNameLp = isFullPath == null
-            ? existingFileName
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(existingFileName, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, existingFileName, true, false, false, true, false, true, true);
-
+         string fileNameLp = Path.GetExtendedLengthPathInternal(transaction, fileName, pathFormat, options);
+         string existingFileNameLp = Path.GetExtendedLengthPathInternal(transaction, existingFileName, pathFormat, options);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -8067,7 +6689,7 @@ namespace Alphaleonis.Win32.Filesystem
             : NativeMethods.CreateHardLinkTransacted(fileNameLp, existingFileNameLp, IntPtr.Zero, transaction.SafeHandle)))
          {
             int lastError = Marshal.GetLastWin32Error();
-            switch ((uint) lastError)
+            switch ((uint)lastError)
             {
                case Win32Errors.ERROR_INVALID_FUNCTION:
                   throw new NotSupportedException(Resources.HardLinksOnNonNTFSPartitionsIsNotSupported);
@@ -8089,28 +6711,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> will be checked and resolved
-      ///   to an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="symlinkFileName"/> and <paramref name="targetFileName"/> are already an absolute path
-      ///   with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void CreateSymbolicLinkInternal(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, bool? isFullPath)
+      internal static void CreateSymbolicLinkInternal(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
-         string symlinkFileNameLp = isFullPath == null
-            ? symlinkFileName
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(symlinkFileName, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, symlinkFileName, true, false, false, true, false, true, true);
+         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional;
 
-         string targetFileNameLp = isFullPath == null
-            ? targetFileName
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(targetFileName, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, targetFileName, true, false, false, true, false, true, true);
+         string symlinkFileNameLp = Path.GetExtendedLengthPathInternal(transaction, symlinkFileName, pathFormat, options);
+         string targetFileNameLp = Path.GetExtendedLengthPathInternal(transaction, targetFileName, pathFormat, options);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -8134,18 +6742,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to be opened for writing.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="StreamWriter"/> that writes to the specified file using NativeMethods.DefaultFileBufferSize encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static StreamWriter CreateTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      internal static StreamWriter CreateTextInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return new StreamWriter(CreateFileInternal(transaction, path, NativeMethods.DefaultFileBufferSize, ExtendedFileAttributes.SequentialScan, null, FileMode.Create, FileAccess.Write, FileShare.Read, isFullPath), encoding);
+         return new StreamWriter(CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.SequentialScan, null, FileMode.Create, FileAccess.Write, FileShare.Read, NativeMethods.DefaultFileBufferSize, pathFormat), encoding);
       }
 
       #endregion // CreateTextInternal
@@ -8158,37 +6761,23 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void DeleteFileInternal(KernelTransaction transaction, string path, bool ignoreReadOnly, bool? isFullPath)
+      internal static void DeleteFileInternal(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
          #region Setup
 
-         if (isFullPath != null && (bool) !isFullPath)
+         if (pathFormat == PathFormat.Relative)
             Path.CheckValidPath(path, true, true);
 
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-#if NET35
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, false, false);
-#else
-               // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the file.
-               : Path.GetFullPathInternal(transaction, path, true, true, false, true, false, false, false);
-#endif
-         
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+
          // If the path points to a symbolic link, the symbolic link is deleted, not the target.
-         
+
          #endregion // Setup
 
-         startDeleteFile:
-         
+      startDeleteFile:
+
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
             // DeleteFile() / DeleteFileTransacted()
@@ -8200,7 +6789,7 @@ namespace Alphaleonis.Win32.Filesystem
             : NativeMethods.DeleteFileTransacted(pathLp, transaction.SafeHandle)))
          {
             int lastError = Marshal.GetLastWin32Error();
-            switch ((uint) lastError)
+            switch ((uint)lastError)
             {
                case Win32Errors.ERROR_FILE_NOT_FOUND:
                   // MSDN: .NET 3.5+: If the file to be deleted does not exist, no exception is thrown.
@@ -8208,7 +6797,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_PATH_NOT_FOUND:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid (for example, it is on an unmapped drive).
-               NativeError.ThrowException(lastError, pathLp);
+                  NativeError.ThrowException(lastError, pathLp);
                   return;
 
                case Win32Errors.ERROR_SHARING_VIOLATION:
@@ -8220,7 +6809,7 @@ namespace Alphaleonis.Win32.Filesystem
                   var data = new NativeMethods.Win32FileAttributeData();
                   int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
-                  if (data.FileAttributes != (FileAttributes) (-1))
+                  if (data.FileAttributes != (FileAttributes)(-1))
                   {
                      if ((data.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: Path is a directory.
@@ -8233,13 +6822,13 @@ namespace Alphaleonis.Win32.Filesystem
                         if (ignoreReadOnly)
                         {
                            // Reset file attributes.
-                           SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, null);
+                           SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
                            goto startDeleteFile;
                         }
 
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: Path specified a read-only file.
                         throw new UnauthorizedAccessException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}: [{2}]",
-                           Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int) Win32Errors.ERROR_FILE_READ_ONLY).Message, pathLp));
+                           Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int)Win32Errors.ERROR_FILE_READ_ONLY).Message, pathLp));
                      }
                   }
 
@@ -8260,7 +6849,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // DeleteFileInternal
-      
+
       #region EncryptDecryptFileInternal
 
       /// <summary>
@@ -8271,24 +6860,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">A path that describes a file to encrypt.</param>
       /// <param name="encrypt"><see langword="true"/> encrypt, <see langword="false"/> decrypt.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void EncryptDecryptFileInternal(bool isFolder, string path, bool encrypt, bool? isFullPath)
+      internal static void EncryptDecryptFileInternal(bool isFolder, string path, bool encrypt, PathFormat pathFormat)
       {
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(null, path, true, false, false, true, false, true, true);
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // Reset file/directory attributes.
          // MSDN: If lpFileName specifies a read-only file, the function fails and GetLastError returns ERROR_FILE_READ_ONLY.
-         SetAttributesInternal(isFolder, null, pathLp, FileAttributes.Normal, true, null);
+         SetAttributesInternal(isFolder, null, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
 
          // EncryptFile() / DecryptFile()
          // In the ANSI version of this function, the name is limited to 248 characters.
@@ -8310,7 +6890,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                default:
                   if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND && isFolder)
-                     lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+                     lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
 
                   NativeError.ThrowException(lastError, pathLp);
                   break;
@@ -8326,30 +6906,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="PlatformNotSupportedException">Thrown when a Platform Not Supported error condition occurs.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
-      internal static IEnumerable<string> EnumerateHardlinksInternal(KernelTransaction transaction, string path, bool? isFullPath)
+      internal static IEnumerable<string> EnumerateHardlinksInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         string pathLp = isFullPath == null
-            ? path
-            : (bool)isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // Default buffer length, will be extended if needed, although this should not happen.
          uint length = NativeMethods.MaxPathUnicode;
-         StringBuilder builder = new StringBuilder((int) length);
+         StringBuilder builder = new StringBuilder((int)length);
 
 
-         getFindFirstFileName:
+      getFindFirstFileName:
 
          using (SafeFindFileHandle handle = transaction == null
 
@@ -8364,10 +6935,10 @@ namespace Alphaleonis.Win32.Filesystem
             if (handle.IsInvalid)
             {
                int lastError = Marshal.GetLastWin32Error();
-               switch ((uint) lastError)
+               switch ((uint)lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
-                     builder = new StringBuilder((int) length);
+                     builder = new StringBuilder((int)length);
                      handle.Close();
                      goto getFindFirstFileName;
 
@@ -8389,14 +6960,14 @@ namespace Alphaleonis.Win32.Filesystem
                while (!NativeMethods.FindNextFileName(handle, out length, builder))
                {
                   int lastError = Marshal.GetLastWin32Error();
-                  switch ((uint) lastError)
+                  switch ((uint)lastError)
                   {
-                        // We've reached the end of the enumeration.
+                     // We've reached the end of the enumeration.
                      case Win32Errors.ERROR_HANDLE_EOF:
                         yield break;
 
                      case Win32Errors.ERROR_MORE_DATA:
-                        builder = new StringBuilder((int) length);
+                        builder = new StringBuilder((int)length);
                         continue;
 
                      default:
@@ -8414,7 +6985,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // EnumerateHardlinksInternal
-      
+
       #region ExistsInternal
 
       /// <summary>[AlphaFS] Unified method ExistsInternal() to determine whether the specified file or directory exists.</summary>
@@ -8435,20 +7006,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to check.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns <see langword="true"/> if the caller has the required permissions</para>
       ///   <para>and <paramref name="path"/> contains the name of an existing file or directory; otherwise, <see langword="false"/></para>
       /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, bool? isFullPath)
-         {
+      internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
          // Will be caught later and be thrown as an ArgumentException or ArgumentNullException.
          // Let's take a shorter route, preventing an Exception from being thrown altogether.
          if (Utils.IsNullOrWhiteSpace(path))
@@ -8466,30 +7032,21 @@ namespace Alphaleonis.Win32.Filesystem
 
 
          try
-               {
-            string pathLp = isFullPath == null
-               ? path
-               : (bool) isFullPath
-                  ? Path.GetLongPathInternal(path, false, false, false, false)
-
-                  // MSDN: .NET 3.5+: Trailing spaces are removed from the end of the path parameter before before determining if the file exists.
-                  // MSDN: .NET 3.5+: Trailing spaces are removed from the end of the path parameter before checking whether the directory exists.
-
-                  : Path.GetFullPathInternal(transaction, path, true, true, false, true, true, true, false);
-
+         {
+            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd |  GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);               
 
             var data = new NativeMethods.Win32FileAttributeData();
             int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
-            return (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes) (-1) && (isFolder
+            return (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1) && (isFolder
                ? (data.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory
                : (data.FileAttributes & FileAttributes.Directory) != FileAttributes.Directory));
          }
          catch
          {
             return false;
-               }
-            }
+         }
+      }
 
       #endregion ExistsInternal
 
@@ -8510,7 +7067,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static int FillAttributeInfoInternal(KernelTransaction transaction, string pathLp, ref NativeMethods.Win32FileAttributeData win32AttrData, bool tryagain, bool returnErrorOnNotFound)
       {
-         int dataInitialised = (int) Win32Errors.ERROR_SUCCESS;
+         int dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
 
          #region Try Again
 
@@ -8549,8 +7106,8 @@ namespace Alphaleonis.Win32.Filesystem
                         if (!returnErrorOnNotFound)
                         {
                            // Return default value for backward compatibility
-                           dataInitialised = (int) Win32Errors.ERROR_SUCCESS;
-                           win32AttrData.FileAttributes = (FileAttributes) (-1);
+                           dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
+                           win32AttrData.FileAttributes = (FileAttributes)(-1);
                         }
                      }
 
@@ -8606,8 +7163,8 @@ namespace Alphaleonis.Win32.Filesystem
                   if (!returnErrorOnNotFound)
                   {
                      // Return default value for backward compbatibility.
-                     dataInitialised = (int) Win32Errors.ERROR_SUCCESS;
-                     win32AttrData.FileAttributes = (FileAttributes) (-1);
+                     dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
+                     win32AttrData.FileAttributes = (FileAttributes)(-1);
                   }
                }
             }
@@ -8635,12 +7192,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   One (or more) of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to
       ///   receive.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An <see cref="ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the
       ///   <paramref name="path"/> parameter.
@@ -8653,7 +7205,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static T GetAccessControlInternal<T>(bool isFolder, string path, AccessControlSections includeSections, bool? isFullPath)
+      internal static T GetAccessControlInternal<T>(bool isFolder, string path, AccessControlSections includeSections, PathFormat pathFormat)
       {
          SecurityInformation securityInfo = 0;
          PrivilegeEnabler privilegeEnabler = null;
@@ -8677,12 +7229,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (privilegeEnabler)
          {
-            string pathLp = isFullPath == null
-               ? path
-               : (bool) isFullPath
-                  ? Path.GetLongPathInternal(path, false, false, false, false)
-                  : Path.GetFullPathInternal(null, path, true, false, false, true, false, true, true);
-
+            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
             IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
             SafeGlobalMemoryBufferHandle pSecurityDescriptor;
@@ -8709,9 +7256,9 @@ namespace Alphaleonis.Win32.Filesystem
                //byte[] managedBuffer = new byte[length];
                //pSecurityDescriptor.CopyTo(managedBuffer, 0, (int) length);
 
-               byte[] managedBuffer = pSecurityDescriptor.ToByteArray(0, (int) length);
+               byte[] managedBuffer = pSecurityDescriptor.ToByteArray(0, (int)length);
 
-               objectSecurity = (isFolder) ? (ObjectSecurity) new DirectorySecurity() : new FileSecurity();
+               objectSecurity = (isFolder) ? (ObjectSecurity)new DirectorySecurity() : new FileSecurity();
                objectSecurity.SetSecurityDescriptorBinaryForm(managedBuffer);
             }
             finally
@@ -8720,7 +7267,7 @@ namespace Alphaleonis.Win32.Filesystem
                   pSecurityDescriptor.Close();
             }
 
-            return (T) (object) objectSecurity;
+            return (T)(object)objectSecurity;
          }
       }
 
@@ -8735,28 +7282,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <typeparam name="T">Generic type parameter.</typeparam>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   Returns the <see cref="FileAttributes"/> or <see cref="Alphaleonis.Win32.Filesystem.NativeMethods.Win32FileAttributeData"/> of the
       ///   specified file or directory.
       /// </returns>
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
       [SecurityCritical]
-      internal static T GetAttributesExInternal<T>(KernelTransaction transaction, string path, bool? isFullPath)
+      internal static T GetAttributesExInternal<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         if (isFullPath != null && (bool)!isFullPath)
+         if (pathFormat == PathFormat.Relative)
             Path.CheckValidPath(path, true, true);
 
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, false);
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
          var data = new NativeMethods.Win32FileAttributeData();
          int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
@@ -8765,10 +7303,10 @@ namespace Alphaleonis.Win32.Filesystem
             // Throws IOException.
             NativeError.ThrowException(dataInitialised, pathLp, true);
 
-         return (typeof (T) == typeof (FileAttributes)
-            ? (T) (object) data.FileAttributes
-            : (T) (object) data);
-         }
+         return (typeof(T) == typeof(FileAttributes)
+            ? (T)(object)data.FileAttributes
+            : (T)(object)data);
+      }
 
       #endregion // GetAttributesExInternal
 
@@ -8783,25 +7321,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path"><para>The name of the file.</para></param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The actual number of bytes of disk storage used to store the specified file.</returns>      
       [SecurityCritical]
-      internal static long GetCompressedSizeInternal(KernelTransaction transaction, string path, bool? isFullPath)
+      internal static long GetCompressedSizeInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         if (isFullPath != null)
-         if (Utils.IsNullOrWhiteSpace(path))
+         if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          uint fileSizeHigh;
          uint fileSizeLow = transaction == null || !NativeMethods.IsAtLeastWindowsVista
@@ -8836,12 +7364,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="getUtc">
       ///   <see langword="true"/> gets the Coordinated Universal Time (UTC), <see langword="false"/> gets the local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file.</para>
       ///   <para>This value is expressed in local time.</para>
@@ -8849,7 +7372,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
       [SecurityCritical]
-      internal static DateTime GetChangeTimeInternal(bool isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, bool getUtc, bool? isFullPath)
+      internal static DateTime GetChangeTimeInternal(bool isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, bool getUtc, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
@@ -8857,25 +7380,20 @@ namespace Alphaleonis.Win32.Filesystem
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            if (isFullPath != null)
-            if (Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentNullException("path");
+            if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
+               throw new ArgumentNullException("path");
 
-            string pathLp = isFullPath == null
-               ? path
-               : (bool) isFullPath
-                  ? Path.GetLongPathInternal(path, false, false, false, false)
-                  : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
+            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
-            safeHandle = CreateFileInternal(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, null);
+            safeHandle = CreateFileInternal(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, PathFormat.LongFullPath);
          }
 
-         
+
          try
          {
             NativeMethods.IsValidHandle(safeHandle);
 
-            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                NativeMethods.IsValidHandle(safeBuffer);
 
@@ -8883,7 +7401,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // Throws IOException.
                   NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
 
-               
+
                // CA2001:AvoidCallingProblematicMethods
 
                IntPtr buffer = IntPtr.Zero;
@@ -8900,7 +7418,7 @@ namespace Alphaleonis.Win32.Filesystem
                   NativeError.ThrowException(Resources.HandleDangerousRef);
 
                // CA2001:AvoidCallingProblematicMethods
-               
+
 
                NativeMethods.FileTime changeTime = Utils.MarshalPtrToStructure<NativeMethods.FileBasicInfo>(0, buffer).ChangeTime;
 
@@ -8929,20 +7447,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="getUtc">
       ///   <see langword="true"/> gets the Coordinated Universal Time (UTC), <see langword="false"/> gets the local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the creation date and time for the specified file or directory. Depending on
       ///   <paramref name="getUtc"/> this value is expressed in UTC- or local time.
       /// </returns>
       [SecurityCritical]
-      internal static DateTime GetCreationTimeInternal(KernelTransaction transaction, string path, bool getUtc, bool? isFullPath)
+      internal static DateTime GetCreationTimeInternal(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
       {
-         NativeMethods.FileTime creationTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, isFullPath).CreationTime;
+         NativeMethods.FileTime creationTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, pathFormat).CreationTime;
 
          return getUtc
             ? DateTime.FromFileTimeUtc(creationTime)
@@ -8955,24 +7468,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Unified method GetEncryptionStatusInternal() to retrieve the encryption status of the specified file.</summary>
       /// <param name="path">The name of the file.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The <see cref="FileEncryptionStatus"/> of the specified <paramref name="path"/>.</returns>
       [SecurityCritical]
-      internal static FileEncryptionStatus GetEncryptionStatusInternal(string path, bool? isFullPath)
+      internal static FileEncryptionStatus GetEncryptionStatusInternal(string path, PathFormat pathFormat)
       {
-         if (isFullPath != null)
-         if (Utils.IsNullOrWhiteSpace(path))
+         if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = isFullPath == null
-            ? path
-            : (bool)isFullPath
-            ? Path.GetLongPathInternal(path, false, false, false, false)
-            : Path.GetFullPathInternal(null, path, true, false, false, true, false, true, true);
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          FileEncryptionStatus status;
 
@@ -9002,13 +7506,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///    <para><c>true</c> suppress any Exception that might be thrown a result from a failure,</para>
       ///    <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
-      /// <param name="isFullPath">
-      ///    <para><c>true</c> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>false</c> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><c>null</c> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static FileSystemEntryInfo GetFileSystemEntryInfoInternal(KernelTransaction transaction, string path, bool continueOnException, bool? isFullPath)
+      internal static FileSystemEntryInfo GetFileSystemEntryInfoInternal(KernelTransaction transaction, string path, bool continueOnException, PathFormat pathFormat)
       {
          // // Enable BasicSearch and LargeCache by default.
          var directoryEnumerationOptions = DirectoryEnumerationOptions.BasicSearch | DirectoryEnumerationOptions.LargeCache;
@@ -9016,7 +7516,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (continueOnException)
             directoryEnumerationOptions |= DirectoryEnumerationOptions.ContinueOnException;
 
-         return (new FindFileSystemEntryInfo(false, transaction, path, Path.WildcardQuestion, directoryEnumerationOptions, typeof(FileSystemEntryInfo), isFullPath)).Get<FileSystemEntryInfo>();
+         return (new FindFileSystemEntryInfo(false, transaction, path, Path.WildcardQuestion, directoryEnumerationOptions, typeof(FileSystemEntryInfo), pathFormat)).Get<FileSystemEntryInfo>();
       }
 
       #endregion // GetFileSystemEntryInfoInternal
@@ -9032,20 +7532,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="getUtc">
       ///   <see langword="true"/> gets the Coordinated Universal Time (UTC), <see langword="false"/> gets the local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file or directory was last accessed.
       ///   Depending on <paramref name="getUtc"/> this value is expressed in UTC- or local time.
       /// </returns>
       [SecurityCritical]
-      internal static DateTime GetLastAccessTimeInternal(KernelTransaction transaction, string path, bool getUtc, bool? isFullPath)
+      internal static DateTime GetLastAccessTimeInternal(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
       {
-         NativeMethods.FileTime lastAccessTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, isFullPath).LastAccessTime;
+         NativeMethods.FileTime lastAccessTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, pathFormat).LastAccessTime;
 
          return getUtc
             ? DateTime.FromFileTimeUtc(lastAccessTime)
@@ -9065,20 +7560,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="getUtc">
       ///   <see langword="true"/> gets the Coordinated Universal Time (UTC), <see langword="false"/> gets the local time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   A <see cref="System.DateTime"/> structure set to the date and time that the specified file or directory was last written to.
       ///   Depending on <paramref name="getUtc"/> this value is expressed in UTC- or local time.
       /// </returns>
       [SecurityCritical]
-      internal static DateTime GetLastWriteTimeInternal(KernelTransaction transaction, string path, bool getUtc, bool? isFullPath)
+      internal static DateTime GetLastWriteTimeInternal(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
       {
-         NativeMethods.FileTime lastWriteTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, isFullPath).LastWriteTime;
+         NativeMethods.FileTime lastWriteTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, pathFormat).LastWriteTime;
 
          return getUtc
             ? DateTime.FromFileTimeUtc(lastWriteTime)
@@ -9095,20 +7585,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the reparse point.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   An instance of <see cref="LinkTargetInfo"/> or <see cref="SymbolicLinkTargetInfo"/> containing information about the symbolic link
       ///   or mount point pointed to by <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoInternal(KernelTransaction transaction, string path, bool? isFullPath)
+      internal static LinkTargetInfo GetLinkTargetInfoInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, true, isFullPath))
+         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, true, pathFormat))
             return Device.GetLinkTargetInfoInternal(safeHandle);
       }
 
@@ -9121,32 +7606,23 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeHandle">The <see cref="SafeFileHandle"/> to the file.</param>
       /// <param name="path">The path to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static long GetSizeInternal(KernelTransaction transaction, SafeFileHandle safeHandle, string path, bool? isFullPath)
+      internal static long GetSizeInternal(KernelTransaction transaction, SafeFileHandle safeHandle, string path, PathFormat pathFormat)
       {
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            string pathLp = isFullPath == null
-               ? path
-               : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
+            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
-            safeHandle = CreateFileInternal(transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, null);
+            safeHandle = CreateFileInternal(transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, PathFormat.LongFullPath);
          }
-         
+
 
          long fileSize;
-         
+
          try
          {
             NativeMethods.GetFileSizeEx(safeHandle, out fileSize);
@@ -9182,21 +7658,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
       /// <param name="share">A <see cref="FileShare"/> value specifying the type of access other threads have to the file.</param>
       /// <param name="attributes">Advanced <see cref="ExtendedFileAttributes"/> options for this file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>A <see cref="FileStream"/> instance on the specified path, having the specified mode with</para>
       ///   <para>read, write, or read/write access and the specified sharing option.</para>
       /// </returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, ExtendedFileAttributes attributes, bool? isFullPath)
+      internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, ExtendedFileAttributes attributes, PathFormat pathFormat)
       {
-         SafeFileHandle safeHandle = CreateFileInternal(transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights)access, share, true, isFullPath);
+         SafeFileHandle safeHandle = CreateFileInternal(transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights)access, share, true, pathFormat);
 
          return rights != 0
             ? new FileStream(safeHandle, FileAccess.Write)
@@ -9214,19 +7685,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException">Thrown when an IO failure occurred.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      internal static byte[] ReadAllBytesInternal(KernelTransaction transaction, string path, bool? isFullPath)
+      internal static byte[] ReadAllBytesInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          byte[] buffer;
 
-         using (FileStream fs = OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.None, isFullPath))
+         using (FileStream fs = OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.None, pathFormat))
          {
             int offset = 0;
             long length = fs.Length;
@@ -9259,18 +7725,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An IEnumerable string containing all lines of the file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static IEnumerable<string> ReadAllLinesInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      internal static IEnumerable<string> ReadAllLinesInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, isFullPath), encoding))
+         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, pathFormat), encoding))
          {
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -9289,18 +7750,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static string ReadAllTextInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      internal static string ReadAllTextInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, isFullPath), encoding))
+         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, pathFormat), encoding))
             return sr.ReadToEnd();
       }
 
@@ -9312,18 +7768,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to read.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static IEnumerable<string> ReadLinesInternal(KernelTransaction transaction, string path, Encoding encoding, bool? isFullPath)
+      internal static IEnumerable<string> ReadLinesInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, isFullPath), encoding))
+         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, pathFormat), encoding))
          {
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -9359,45 +7810,22 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="true"/> to ignore merge errors (such as attributes and access control lists (ACLs)) from the replaced file to the
       ///   replacement file; otherwise, <see langword="false"/>.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are an absolute path.
-      ///   Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> will be checked and
-      ///   resolved to an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are already an absolute
-      ///   path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void ReplaceInternal(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, bool? isFullPath)
+      internal static void ReplaceInternal(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
-         string sourceFileNameLp = isFullPath == null
-            ? sourceFileName
-            : (bool) isFullPath
-            ? Path.GetLongPathInternal(sourceFileName, false, false, false, false)
-            : Path.GetFullPathInternal(null, sourceFileName, true, false, false, true, false, true, true);
-
-         string destinationFileNameLp = isFullPath == null
-            ? destinationFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationFileName, false, false, false, false)
-               : Path.GetFullPathInternal(null, destinationFileName, true, false, false, true, false, true, true);
-
+         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(null, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
          // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
+         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationBackupFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
-         string destinationBackupFileNameLp = isFullPath == null
-            ? destinationBackupFileName
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(destinationBackupFileName, false, false, false, false)
-               : Path.GetFullPathInternal(null, destinationBackupFileName, true, false, false, true, false, true, true);
-         
-         
          const int replacefileWriteThrough = 1;
          const int replacefileIgnoreMergeErrors = 2;
 
-         FileSystemRights dwReplaceFlags = (FileSystemRights) replacefileWriteThrough;
+         FileSystemRights dwReplaceFlags = (FileSystemRights)replacefileWriteThrough;
          if (ignoreMetadataErrors)
-            dwReplaceFlags |= (FileSystemRights) replacefileIgnoreMergeErrors;
-         
+            dwReplaceFlags |= (FileSystemRights)replacefileIgnoreMergeErrors;
+
          // ReplaceFile()
          // In the ANSI version of this function, the name is limited to MAX_PATH characters.
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
@@ -9431,21 +7859,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to
       ///   set.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       ///
       /// <exception cref="ArgumentException">
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
       /// </exception>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, bool? isFullPath)
+      internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         if (isFullPath != null && (bool)!isFullPath)
+         if (pathFormat == PathFormat.Relative)
             Path.CheckValidPath(path, true, true);
 
          if (objectSecurity == null)
@@ -9454,11 +7877,7 @@ namespace Alphaleonis.Win32.Filesystem
          byte[] managedDescriptor = objectSecurity.GetSecurityDescriptorBinaryForm();
          using (SafeGlobalMemoryBufferHandle hDescriptor = new SafeGlobalMemoryBufferHandle(managedDescriptor.Length))
          {
-            string pathLp = isFullPath == null
-               ? path
-               : (bool) isFullPath
-                  ? Path.GetLongPathInternal(path, false, false, false, false)
-                  : Path.GetFullPathInternal(null, path, true, false, false, true, false, true, false);
+            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
             hDescriptor.CopyFrom(managedDescriptor, 0, managedDescriptor.Length);
 
@@ -9545,7 +7964,7 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   lastError = Security.NativeMethods.SetSecurityInfo(handle, ObjectType.FileObject, securityInfo, pOwner, pGroup, pDacl, pSacl);
                   if (lastError != Win32Errors.ERROR_SUCCESS)
-                     NativeError.ThrowException((int) lastError);
+                     NativeError.ThrowException((int)lastError);
                }
             }
             finally
@@ -9578,20 +7997,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="continueOnNotExist">
       ///   <see langword="true"/> does not throw an Exception when the file system object does not exist.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, bool? isFullPath)
+      internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, PathFormat pathFormat)
       {
-         string pathLp = isFullPath == null
-            ? path
-            : (bool) isFullPath
-               ? Path.GetLongPathInternal(path, false, false, false, false)
-               : Path.GetFullPathInternal(transaction, path, true, false, false, true, false, true, true);
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -9606,7 +8016,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (continueOnNotExist)
                return;
 
-            uint lastError = (uint) Marshal.GetLastWin32Error();
+            uint lastError = (uint)Marshal.GetLastWin32Error();
 
             switch (lastError)
             {
@@ -9616,7 +8026,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_FILE_NOT_FOUND:
                   if (isFolder)
-                     lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+                     lastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
 
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: The specified path is invalid, (for example, it is on an unmapped drive).
                   // MSDN: .NET 3.5+: FileNotFoundException: The file cannot be found.
@@ -9651,23 +8061,18 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
       ///   is expressed in UTC time.
       /// </param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void SetFsoDateTimeInternal(bool isFolder, KernelTransaction transaction, string path, DateTime? creationTimeUtc, DateTime? lastAccessTimeUtc, DateTime? lastWriteTimeUtc, bool? isFullPath)
+      internal static void SetFsoDateTimeInternal(bool isFolder, KernelTransaction transaction, string path, DateTime? creationTimeUtc, DateTime? lastAccessTimeUtc, DateTime? lastWriteTimeUtc, PathFormat pathFormat)
       {
          // Because we already check here, use false for CreateFileInternal() to prevent another check.
-         if (isFullPath != null && (bool) !isFullPath)
+         if (pathFormat == PathFormat.Relative)
             Path.CheckValidPath(path, false, false);
 
          using (SafeGlobalMemoryBufferHandle creationTime = SafeGlobalMemoryBufferHandle.CreateFromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastAccessTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastWriteTime = SafeGlobalMemoryBufferHandle.CreateFromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?)null))
-         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, isFullPath))
+         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, pathFormat))
             if (!NativeMethods.SetFileTime(safeHandle, creationTime, lastAccessTime, lastWriteTime))
                NativeError.ThrowException(path);
       }
@@ -9687,20 +8092,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source path.</param>
       /// <param name="destinationPath">The destination path.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are an absolute path. Unicode
-      ///   prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> will be checked and resolved to
-      ///   absolute paths. Unicode prefix is applied.</para>
-      ///   <para><see langword="null"/> <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are already an absolute path with
-      ///   Unicode prefix. Use as is.</para>
-      /// </param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void TransferTimestampsInternal(bool isFolder, KernelTransaction transaction, string sourcePath, string destinationPath, bool? isFullPath)
+      internal static void TransferTimestampsInternal(bool isFolder, KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         NativeMethods.Win32FileAttributeData attrs = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, sourcePath, isFullPath);
+         NativeMethods.Win32FileAttributeData attrs = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, sourcePath, pathFormat);
 
-         SetFsoDateTimeInternal(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.CreationTime), DateTime.FromFileTimeUtc(attrs.LastAccessTime), DateTime.FromFileTimeUtc(attrs.LastWriteTime), isFullPath);
+         SetFsoDateTimeInternal(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.CreationTime), DateTime.FromFileTimeUtc(attrs.LastAccessTime), DateTime.FromFileTimeUtc(attrs.LastWriteTime), pathFormat);
       }
 
       #endregion // TransferTimestampsInternal
@@ -9715,20 +8113,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="bytes">The bytes to write to the file.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "bytes")]
       [SecurityCritical]
-      internal static void WriteAllBytesInternal(KernelTransaction transaction, string path, byte[] bytes, bool? isFullPath)
+      internal static void WriteAllBytesInternal(KernelTransaction transaction, string path, byte[] bytes, PathFormat pathFormat)
       {
          if (bytes == null)
             throw new ArgumentNullException("bytes");
 
-         using (FileStream fs = OpenInternal(transaction, path, FileMode.Create, 0, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.None, isFullPath))
+         using (FileStream fs = OpenInternal(transaction, path, FileMode.Create, 0, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.None, pathFormat))
             fs.Write(bytes, 0, bytes.Length);
       }
 
@@ -9747,15 +8140,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       /// <param name="isAppend"><see langword="true"/> for file Append, <see langword="false"/> for file Write.</param>
       /// <param name="addNewLine"><see langword="true"/> to a line terminator, <see langword="false"/> to ommit the line terminator.</param>
-      /// <param name="isFullPath">
-      ///   <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      ///   <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is
-      ///   applied.</para>
-      ///   <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
       [SecurityCritical]
-      internal static void WriteAppendAllLinesInternal(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool isAppend, bool addNewLine, bool? isFullPath)
+      internal static void WriteAppendAllLinesInternal(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool isAppend, bool addNewLine, PathFormat pathFormat)
       {
          if (contents == null)
             throw new ArgumentNullException("contents");
@@ -9764,7 +8152,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("encoding");
 
 
-         using (FileStream stream = OpenInternal(transaction, path, (isAppend ? FileMode.OpenOrCreate : FileMode.Create), FileSystemRights.AppendData, FileAccess.Write, FileShare.ReadWrite, ExtendedFileAttributes.None, isFullPath))
+         using (FileStream stream = OpenInternal(transaction, path, (isAppend ? FileMode.OpenOrCreate : FileMode.Create), FileSystemRights.AppendData, FileAccess.Write, FileShare.ReadWrite, ExtendedFileAttributes.None, pathFormat))
          {
             if (isAppend)
                stream.Seek(0, SeekOrigin.End);

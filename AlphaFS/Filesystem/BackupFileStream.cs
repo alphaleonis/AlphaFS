@@ -1,4 +1,4 @@
-/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode)
-         : this(File.CreateFileInternal(null, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, false), FileSystemRights.Read | FileSystemRights.Write)
+         : this(File.CreateFileInternal(null, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, PathFormat.Relative), FileSystemRights.Read | FileSystemRights.Write)
       {
       }
 
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access)
-         : this(File.CreateFileInternal(null, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, false), access)
+         : this(File.CreateFileInternal(null, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, PathFormat.Relative), access)
       {
       }
 
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share)
-         : this(File.CreateFileInternal(null, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, false), access)
+         : this(File.CreateFileInternal(null, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, PathFormat.Relative), access)
       {
       }
 
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
-         : this(File.CreateFileInternal(null, path, attributes, null, mode, access, share, true, false), access)
+         : this(File.CreateFileInternal(null, path, attributes, null, mode, access, share, true, PathFormat.Relative), access)
       {
       }
 
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
-         : this(File.CreateFileInternal(null, path, attributes, security, mode, access, share, true, false), access)
+         : this(File.CreateFileInternal(null, path, attributes, security, mode, access, share, true, PathFormat.Relative), access)
       {
       }
 
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode)
-         : this(File.CreateFileInternal(transaction, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, false), FileSystemRights.Read | FileSystemRights.Write)
+         : this(File.CreateFileInternal(transaction, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, PathFormat.Relative), FileSystemRights.Read | FileSystemRights.Write)
       {
       }
 
@@ -129,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access)
-         : this(File.CreateFileInternal(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, false), access)
+         : this(File.CreateFileInternal(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, PathFormat.Relative), access)
       {
       }
 
@@ -142,7 +142,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share)
-         : this(File.CreateFileInternal(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, false), access)
+         : this(File.CreateFileInternal(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, PathFormat.Relative), access)
       {
       }
 
@@ -156,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
-         : this(File.CreateFileInternal(transaction, path, attributes, null, mode, access, share, true, false), access)
+         : this(File.CreateFileInternal(transaction, path, attributes, null, mode, access, share, true, PathFormat.Relative), access)
       {
       }
 
@@ -171,7 +171,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
-         : this(File.CreateFileInternal(transaction, path, attributes, security, mode, access, share, true, false), access)
+         : this(File.CreateFileInternal(transaction, path, attributes, security, mode, access, share, true, PathFormat.Relative), access)
       {
       }
 
@@ -302,7 +302,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (count < 0)
             throw new ArgumentOutOfRangeException("count", count, Resources.CountMustNotBeNegative);
 
-         using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(count))
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(count))
          {
             uint numberOfBytesRead;
 
@@ -372,7 +372,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (offset + count > buffer.Length)
             throw new ArgumentException(Resources.BufferIsNotLargeEnoughForTheRequestedOperation);
 
-         using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(count))
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(count))
          {
             safeBuffer.CopyFrom(buffer, offset, count);
 
@@ -521,7 +521,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(ObjectSecurity fileSecurity)
       {
-         File.SetAccessControlInternal(null, SafeFileHandle, fileSecurity, AccessControlSections.All, false);
+         File.SetAccessControlInternal(null, SafeFileHandle, fileSecurity, AccessControlSections.All, PathFormat.Relative);
       }
 
       #endregion // SetAccessControl
@@ -589,7 +589,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, SafeFileHandle, null, null, null, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, SafeFileHandle, null, null, null, PathFormat.LongFullPath);
       }
 
       #endregion // EnumerateStreams
@@ -603,7 +603,7 @@ namespace Alphaleonis.Win32.Filesystem
       public AlternateDataStreamInfo ReadStreamInfo()
       {
          // Return the first entry.
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, SafeFileHandle, null, null, null, null).FirstOrDefault();
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, SafeFileHandle, null, null, null, PathFormat.LongFullPath).FirstOrDefault();
       }
 
       #endregion // ReadStreamInfo

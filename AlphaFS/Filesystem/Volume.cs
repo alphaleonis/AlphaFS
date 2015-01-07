@@ -1,4 +1,4 @@
-/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (bufferResult == 0)
             {
-               char[] cBuffer = new char[bufferSize];
+               var cBuffer = new char[bufferSize];
 
                // QueryDosDevice()
                // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -222,8 +222,8 @@ namespace Alphaleonis.Win32.Filesystem
                         break;
                   }
 
-               List<string> dosDev = new List<string>();
-               StringBuilder buffer = new StringBuilder();
+               var dosDev = new List<string>();
+               var buffer = new StringBuilder();
 
                for (int i = 0; i < bufferResult; i++)
                {
@@ -370,7 +370,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsReady(string drivePath)
       {
-         return File.ExistsInternal(true, null, drivePath, true);
+         return File.ExistsInternal(true, null, drivePath, PathFormat.FullPath);
       }
 
       #endregion // IsReady
@@ -448,7 +448,7 @@ namespace Alphaleonis.Win32.Filesystem
          // A trailing backslash is required.
          volumeGuid = Path.AddDirectorySeparator(volumeGuid, false);
 
-         StringBuilder buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
+         var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -540,7 +540,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
             }
 
-         StringBuilder buffer = new StringBuilder(cBuffer.Length);
+         var buffer = new StringBuilder(cBuffer.Length);
          foreach (char c in cBuffer)
          {
             if (c != Path.StringTerminatorChar)
@@ -566,7 +566,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateVolumes()
       {
-         StringBuilder buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
+         var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -738,7 +738,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeMountPoint");
 
          // The string must end with a trailing backslash ('\').
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, false, true, false, false, true, false);
+         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);            
 
          StringBuilder volumeGuid = new StringBuilder(100);
          StringBuilder uniqueName = new StringBuilder(100);
@@ -861,7 +861,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetFullPathInternal(null, path, true, false, false, false, false, true, true);
+         string pathLp = Path.GetFullPathInternal(null, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
          StringBuilder volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode);
          bool getOk;
          int lastError;
@@ -1010,9 +1010,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
-
-
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, false, true, false, false, true, true);
+         
+         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // This string must be of the form "\\?\Volume{GUID}\"
          volumeGuid = Path.AddDirectorySeparator(volumeGuid, false);

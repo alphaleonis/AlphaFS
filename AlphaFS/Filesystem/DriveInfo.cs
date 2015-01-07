@@ -1,4 +1,4 @@
-/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -346,7 +346,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                         // Do not use ?? expression here.
                         if (_rootDirectory == null)
-                           _rootDirectory = new DirectoryInfo(null, Name, false);
+                           _rootDirectory = new DirectoryInfo(null, Name, PathFormat.Relative);
                         return _rootDirectory;
                   }
                   break;
@@ -445,7 +445,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public bool IsReady
       {
-         get { return File.ExistsInternal(true, null, Name, null); }
+         get { return File.ExistsInternal(true, null, Name, PathFormat.LongFullPath); }
       }
 
       #endregion // IsReady

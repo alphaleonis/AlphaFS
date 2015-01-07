@@ -1,4 +1,4 @@
-﻿/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Security
             
             
             byte[] src = securityDescriptor.GetSecurityDescriptorBinaryForm();
-            SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(src.Length);
+            var safeBuffer = new SafeGlobalMemoryBufferHandle(src.Length);
             try
             {
                safeBuffer.CopyFrom(src, 0, src.Length);

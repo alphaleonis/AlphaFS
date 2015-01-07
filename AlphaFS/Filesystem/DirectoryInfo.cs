@@ -1,4 +1,4 @@
-/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.
       /// The path parameter can be a file name, including a file on a Universal Naming Convention (UNC) share.
       /// </remarks>
-      public DirectoryInfo(string path) : this(null, path, false)
+      public DirectoryInfo(string path) : this(null, path, PathFormat.Relative)
       {
       }
 
@@ -55,13 +55,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
       /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
-      public DirectoryInfo(string path, bool? isFullPath) : this(null, path, isFullPath)
+      public DirectoryInfo(string path, PathFormat pathFormat) : this(null, path, pathFormat)
       {
       }
 
@@ -78,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
          IsDirectory = true;
          Transaction = transaction;
 
-         LongFullName = Path.GetLongPathInternal(fullPath, false, false, false, false);
+         LongFullName = Path.GetLongPathInternal(fullPath, GetFullPathOptions.None);
 
          OriginalPath = Path.GetFileName(fullPath, true);
 
@@ -93,22 +89,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
-      public DirectoryInfo(KernelTransaction transaction, string path) : this(transaction, path, false)
+      public DirectoryInfo(KernelTransaction transaction, string path) : this(transaction, path, PathFormat.Relative)
       {
       }
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path on which to create the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/>.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
-      public DirectoryInfo(KernelTransaction transaction, string path, bool? isFullPath)
+      public DirectoryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         InitializeInternal(true, transaction, path, isFullPath);
+         InitializeInternal(true, transaction, path, pathFormat);
       }
 
       #endregion // Transacted
@@ -133,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create()
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, false, null);
+         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, false, PathFormat.LongFullPath);
       }
 
       /// <summary>Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
@@ -144,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity)
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, false, null);
+         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, false, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -159,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create(bool compress)
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, compress, null);
+         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, null, compress, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Creates a directory using a <see cref="System.Security.AccessControl.DirectorySecurity"/> object.</summary>
@@ -171,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Create(DirectorySecurity directorySecurity, bool compress)
       {
-         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, compress, null);
+         Directory.CreateDirectoryInternal(Transaction, LongFullName, null, directorySecurity, compress, PathFormat.LongFullPath);
       }
 
       #endregion // AlphaFS
@@ -302,7 +294,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public override void Delete()
       {
-         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, false, false, true, false, null);
+         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, false, false, true, false, PathFormat.LongFullPath);
       }
 
       /// <summary>Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
@@ -318,7 +310,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive)
       {
-         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, recursive, false, !recursive, false, null);
+         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, recursive, false, !recursive, false, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -336,7 +328,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly)
       {
-         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, !recursive, false, null);
+         Directory.DeleteDirectoryInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, !recursive, false, PathFormat.LongFullPath);
       }
 
       #endregion // AlphaFS
@@ -352,7 +344,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories()
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
@@ -365,7 +357,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Folders, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Folders, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern and search subdirectory option.</summary>
@@ -387,7 +379,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (searchOption == SearchOption.AllDirectories)
             directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -403,7 +395,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles()
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
@@ -416,7 +408,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileInfo> EnumerateFiles(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Files, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file information that matches a specified search pattern and search subdirectory option.</summary>
@@ -438,7 +430,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (searchOption == SearchOption.AllDirectories)
             directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -455,7 +447,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos()
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern.</summary>
@@ -469,7 +461,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath);
       }
 
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern and search subdirectory option.</summary>
@@ -492,7 +484,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (searchOption == SearchOption.AllDirectories)
             directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null);
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -509,7 +501,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectorySecurity GetAccessControl()
       {
-         return File.GetAccessControlInternal<DirectorySecurity>(true, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, null);
+         return File.GetAccessControlInternal<DirectorySecurity>(true, LongFullName, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.LongFullPath);
       }
 
       /// <summary>Gets a <see cref="DirectorySecurity"/> object that encapsulates the specified type of access control list (ACL) entries for the directory described by the current <see cref="DirectoryInfo"/> object.</summary>
@@ -519,7 +511,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectorySecurity GetAccessControl(AccessControlSections includeSections)
       {
-         return File.GetAccessControlInternal<DirectorySecurity>(true, LongFullName, includeSections, null);
+         return File.GetAccessControlInternal<DirectorySecurity>(true, LongFullName, includeSections, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -541,7 +533,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories()
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Folders, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria.</summary>
@@ -559,7 +551,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo[] GetDirectories(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Folders, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Folders, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Returns an array of directories in the current <see cref="DirectoryInfo"/> matching the given search criteria and using a value to determine whether to search subdirectories.</summary>
@@ -587,7 +579,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (searchOption == SearchOption.AllDirectories)
             directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, PathFormat.LongFullPath).ToArray();
       }
 
       #endregion // .NET
@@ -610,7 +602,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo[] GetFiles()
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Returns a file list from the current directory matching the given search pattern.</summary>
@@ -630,7 +622,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo[] GetFiles(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Files, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Returns a file list from the current directory matching the given search pattern and using a value to determine whether to search subdirectories.</summary>
@@ -659,7 +651,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (searchOption == SearchOption.AllDirectories)
             directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, PathFormat.LongFullPath).ToArray();
       }
 
       #endregion // .NET
@@ -685,7 +677,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSystemInfo[] GetFileSystemInfos()
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Retrieves an array of strongly typed <see cref="FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
@@ -708,7 +700,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSystemInfo[] GetFileSystemInfos(string searchPattern)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath).ToArray();
       }
 
       /// <summary>Retrieves an array of strongly typed <see cref="FileSystemInfo"/> objects representing the files and subdirectories that match the specified search criteria.</summary>
@@ -740,7 +732,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (searchOption == SearchOption.AllDirectories)
             directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
 
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, PathFormat.LongFullPath).ToArray();
       }
 
       #endregion // .NET
@@ -771,7 +763,7 @@ namespace Alphaleonis.Win32.Filesystem
       public void MoveTo(string destinationFullPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, null, MoveOptions.None, null, null, out destinationPathLp, true);
+         CopyToMoveToInternal(destinationFullPath, null, MoveOptions.None, null, null, out destinationPathLp, PathFormat.FullPath);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
       }
 
@@ -803,7 +795,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity)
       {
-         File.SetAccessControlInternal(LongFullName, null, directorySecurity, AccessControlSections.All, null);
+         File.SetAccessControlInternal(LongFullName, null, directorySecurity, AccessControlSections.All, PathFormat.LongFullPath);
       }
 
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
@@ -814,7 +806,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity, AccessControlSections includeSections)
       {
-         File.SetAccessControlInternal(LongFullName, null, directorySecurity, includeSections, null);
+         File.SetAccessControlInternal(LongFullName, null, directorySecurity, includeSections, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -848,7 +840,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
-         AlternateDataStreamInfo.AddStreamInternal(true, Transaction, LongFullName, name, contents, null);
+         AlternateDataStreamInfo.AddStreamInternal(true, Transaction, LongFullName, name, contents, PathFormat.LongFullPath);
       }
 
       #endregion // AddStream
@@ -873,17 +865,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The destination directory path.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public DirectoryInfo CopyTo1(string destinationPath, bool? isFullPath)
+      public DirectoryInfo CopyTo1(string destinationPath, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, isFullPath);
-         return new DirectoryInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
@@ -902,17 +890,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>      
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public DirectoryInfo CopyTo1(string destinationPath, CopyOptions copyOptions, bool? isFullPath)
+      public DirectoryInfo CopyTo1(string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, isFullPath);
-         return new DirectoryInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, pathFormat);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // DirectoryInfo
@@ -938,16 +922,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory path.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -973,16 +953,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the directory is to be copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1011,8 +987,8 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo CopyTo1(string destinationPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, false);
-         return new DirectoryInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.Relative);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Copies a <see cref="DirectoryInfo"/> instance and its contents to a new path.
@@ -1035,8 +1011,8 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo CopyTo1(string destinationPath, CopyOptions copyOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, false);
-         return new DirectoryInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, PathFormat.Relative);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // DirectoryInfo
@@ -1066,7 +1042,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, false);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1096,7 +1072,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo1(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, false);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
@@ -1114,7 +1090,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long CountFileSystemObjects(DirectoryEnumerationOptions directoryEnumerationOptions)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<string>(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, null).Count();
+         return Directory.EnumerateFileSystemEntryInfosInternal<string>(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, PathFormat.LongFullPath).Count();
       }
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
@@ -1129,7 +1105,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long CountFileSystemObjects(string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<string>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, null).Count();
+         return Directory.EnumerateFileSystemEntryInfosInternal<string>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, PathFormat.LongFullPath).Count();
       }
 
       #endregion // CountFileSystemObjects
@@ -1142,7 +1118,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Compress()
       {
-         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, null);
+         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
@@ -1151,7 +1127,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Compress(DirectoryEnumerationOptions directoryEnumerationOptions)
       {
-         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, null);
+         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, PathFormat.LongFullPath);
       }
 
       #endregion // Compress
@@ -1167,7 +1143,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DisableCompression()
       {
-         Device.ToggleCompressionInternal(true, Transaction, LongFullName, false, null);
+         Device.ToggleCompressionInternal(true, Transaction, LongFullName, false, PathFormat.LongFullPath);
       }
 
       #endregion // DisableCompression
@@ -1181,7 +1157,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DisableEncryption()
       {
-         Directory.EnableDisableEncryptionInternal(LongFullName, false, null);
+         Directory.EnableDisableEncryptionInternal(LongFullName, false, PathFormat.LongFullPath);
       }
 
       #endregion // DisableEncryption
@@ -1194,7 +1170,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decompress()
       {
-         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, null);
+         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
@@ -1203,7 +1179,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decompress(DirectoryEnumerationOptions directoryEnumerationOptions)
       {
-         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, null);
+         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, PathFormat.LongFullPath);
       }
 
       #endregion // Decompress
@@ -1214,7 +1190,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decrypt()
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, false, false, null);
+         Directory.EncryptDecryptDirectoryInternal(LongFullName, false, false, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
@@ -1222,7 +1198,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decrypt(bool recursive)
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, false, recursive, null);
+         Directory.EncryptDecryptDirectoryInternal(LongFullName, false, recursive, PathFormat.LongFullPath);
       }
 
       #endregion // Decrypt
@@ -1233,7 +1209,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteEmpty()
       {
-         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, false, false, true, null);
+         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, false, false, true, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="DirectoryInfo"/> instance.</summary>
@@ -1241,7 +1217,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteEmpty(bool recursive)
       {
-         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, recursive, false, true, null);
+         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, recursive, false, true, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="DirectoryInfo"/> instance.</summary>
@@ -1250,7 +1226,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DeleteEmpty(bool recursive, bool ignoreReadOnly)
       {
-         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, true, null);
+         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, true, PathFormat.LongFullPath);
       }
 
       #endregion // DeleteEmpty
@@ -1266,7 +1242,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void EnableCompression()
       {
-         Device.ToggleCompressionInternal(true, Transaction, LongFullName, true, null);
+         Device.ToggleCompressionInternal(true, Transaction, LongFullName, true, PathFormat.LongFullPath);
       }
 
       #endregion // EnableCompression
@@ -1280,7 +1256,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void EnableEncryption()
       {
-         Directory.EnableDisableEncryptionInternal(LongFullName, true, null);
+         Directory.EnableDisableEncryptionInternal(LongFullName, true, PathFormat.LongFullPath);
       }
 
       #endregion // EnableEncryption
@@ -1291,7 +1267,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt()
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, true, false, null);
+         Directory.EncryptDecryptDirectoryInternal(LongFullName, true, false, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
@@ -1299,7 +1275,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt(bool recursive)
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, true, recursive, null);
+         Directory.EncryptDecryptDirectoryInternal(LongFullName, true, recursive, PathFormat.LongFullPath);
       }
 
       #endregion // Encrypt
@@ -1312,7 +1288,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(true, Transaction, null, LongFullName, null, null, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(true, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
       }
       /// <summary>
       ///   [AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/>
@@ -1326,7 +1302,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(true, Transaction, null, LongFullName, null, streamType, null);
+         return AlternateDataStreamInfo.EnumerateStreamsInternal(true, Transaction, null, LongFullName, null, streamType, PathFormat.LongFullPath);
       }
 
       #endregion // EnumerateStreams
@@ -1357,7 +1333,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long GetStreamSize()
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(true, Transaction, null, LongFullName, null, null, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(true, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -1367,7 +1343,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long GetStreamSize(string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(true, Transaction, null, LongFullName, name, StreamType.Data, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(true, Transaction, null, LongFullName, name, StreamType.Data, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
@@ -1377,7 +1353,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public long GetStreamSize(StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(true, Transaction, null, LongFullName, null, type, null);
+         return AlternateDataStreamInfo.GetStreamSizeInternal(true, Transaction, null, LongFullName, null, type, PathFormat.LongFullPath);
       }
 
       #endregion GetStreamSize
@@ -1411,17 +1387,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>It can be an existing directory to which you want to add this directory as a subdirectory.</para>
       /// </param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public DirectoryInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions, bool? isFullPath)
+      public DirectoryInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, isFullPath);
-         return new DirectoryInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, pathFormat);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // DirectoryInfo
@@ -1453,16 +1425,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the directory is to be moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="progressHandler">A callback function that is called each time another portion of the directory has been moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationFullPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationFullPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationFullPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, bool? isFullPath)
+      public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, isFullPath);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
          return cmr;
       }
@@ -1507,8 +1475,8 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo MoveTo1(string destinationFullPath, MoveOptions moveOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, true);
-         return new DirectoryInfo(Transaction, destinationPathLp, null);
+         CopyToMoveToInternal(destinationFullPath, null, moveOptions, null, null, out destinationPathLp, PathFormat.Relative);
+         return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
       #endregion // DirectoryInfo
@@ -1544,7 +1512,7 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult MoveTo1(string destinationFullPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         var cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, true);
+         CopyMoveResult cmr = CopyToMoveToInternal(destinationFullPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationFullPath, destinationPathLp);
          return cmr;
       }
@@ -1573,7 +1541,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream()
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(true, Transaction, LongFullName, null, null);
+         AlternateDataStreamInfo.RemoveStreamInternal(true, Transaction, LongFullName, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from the directory.</summary>
@@ -1584,7 +1552,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream(string name)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(true, Transaction, LongFullName, name, null);
+         AlternateDataStreamInfo.RemoveStreamInternal(true, Transaction, LongFullName, name, PathFormat.LongFullPath);
       }
 
       #endregion // RemoveStream
@@ -1616,28 +1584,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="longFullPath">Returns the retrieved long full path.</param>
-      /// <param name="isFullPath">
-      ///    <para><see langword="true"/> <paramref name="destinationPath"/> is an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="false"/> <paramref name="destinationPath"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      ///    <para><see langword="null"/> <paramref name="destinationPath"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      private CopyMoveResult CopyToMoveToInternal(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, bool? isFullPath)
+      private CopyMoveResult CopyToMoveToInternal(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {
-         string destinationPathLp = isFullPath == null
-            ? destinationPath
-            : (bool)isFullPath
-               ? Path.GetLongPathInternal(destinationPath, false, false, false, false)
-#if NET35
-               : Path.GetFullPathInternal(Transaction, destinationPath, true, false, false, true, false, true, true);
-#else
- : Path.GetFullPathInternal(Transaction, destinationPath, true, true, false, true, false, true, true);
-#endif
-
+         string destinationPathLp = Path.GetExtendedLengthPathInternal(null, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
          longFullPath = destinationPathLp;
 
          // Returns false when CopyMoveProgressResult is PROGRESS_CANCEL or PROGRESS_STOP.
-         return Directory.CopyMoveInternal(Transaction, LongFullName, destinationPathLp, copyOptions, moveOptions, progressHandler, userProgressData, null);
+         return Directory.CopyMoveInternal(Transaction, LongFullName, destinationPathLp, copyOptions, moveOptions, progressHandler, userProgressData, PathFormat.LongFullPath);
       }
 
       private void CopyToMoveToInternalRefresh(string destinationPath, string destinationPathLp)
@@ -1672,11 +1627,13 @@ namespace Alphaleonis.Win32.Filesystem
       private DirectoryInfo CreateSubdirectoryInternal(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
          string pathLp = Path.CombineInternal(false, LongFullName, path);
+         string templatePathLp = templatePath == null ? null : 
+            Path.GetExtendedLengthPathInternal(Transaction, templatePath, PathFormat.Relative, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          if (string.Compare(LongFullName, 0, pathLp, 0, LongFullName.Length, StringComparison.OrdinalIgnoreCase) != 0)
             throw new ArgumentException("Invalid SubPath", pathLp);
 
-         return Directory.CreateDirectoryInternal(Transaction, pathLp, templatePath, directorySecurity, compress, true);
+         return Directory.CreateDirectoryInternal(Transaction, pathLp, templatePathLp, directorySecurity, compress, PathFormat.LongFullPath);
       }
 
       #endregion // CreateSubdirectoryInternal
@@ -1778,7 +1735,7 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo Root
       {
          [SecurityCritical]
-         get { return new DirectoryInfo(Transaction, Path.GetPathRoot(FullPath, false), true); }
+         get { return new DirectoryInfo(Transaction, Path.GetPathRoot(FullPath, false), PathFormat.Relative); }
       }
 
       #endregion // Root

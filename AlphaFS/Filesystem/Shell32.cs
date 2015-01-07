@@ -1,4 +1,4 @@
-﻿/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -621,16 +621,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves an instance of <see cref="Shell32Info"/> containing information about the specified file.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="path"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="path"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="path"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="Shell32Info"/> class instance.</returns>
       [SecurityCritical]
-      public static Shell32Info GetShell32Info(string path, bool? isFullPath)
+      public static Shell32Info GetShell32Info(string path, PathFormat pathFormat)
       {
-         return new Shell32Info(path, isFullPath);
+         return new Shell32Info(path, pathFormat);
       }
 
       #endregion // GetShell32Info
@@ -675,7 +671,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (urlPath == null)
             return null;
 
-         StringBuilder buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
+         var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
          uint bufferSize = (uint) buffer.Capacity;
 
          uint lastError = NativeMethods.PathCreateFromUrl(urlPath, buffer, ref bufferSize, 0);
@@ -729,7 +725,7 @@ namespace Alphaleonis.Win32.Filesystem
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-         return NativeMethods.PathFileExists(Path.GetFullPathInternal(null, path, true, false, false, false, true, true, true));
+         return NativeMethods.PathFileExists(Path.GetFullPathInternal(null, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional | GetFullPathOptions.ContinueOnNonExist));            
       }
 
       #endregion // PathFileExists
@@ -769,7 +765,7 @@ namespace Alphaleonis.Win32.Filesystem
          // UrlCreateFromPath does not support extended paths.
          string pathRp = Path.GetRegularPathInternal(path, false, false, false, true);
 
-         StringBuilder buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
+         var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
          uint bufferSize = (uint) buffer.Capacity;
 
          uint lastError = NativeMethods.UrlCreateFromPath(pathRp, buffer, ref bufferSize, 0);

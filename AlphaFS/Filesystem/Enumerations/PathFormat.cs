@@ -19,27 +19,27 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.Win32.SafeHandles;
-using System.Security;
-
 namespace Alphaleonis.Win32.Filesystem
 {
-   internal static partial class NativeMethods
+   /// <summary>Indicates the format of a path passed to a method.</summary>
+   public enum PathFormat
    {
-      /// <summary>Represents a wrapper class for a handle used by the SetupDiGetClassDevs/SetupDiDestroyDeviceInfoList Win32 API functions.</summary>
-      [SecurityCritical]
-      internal sealed class SafeSetupDiClassDevsExHandle : SafeHandleZeroOrMinusOneIsInvalid
-      {
-         /// <summary>Initializes a new instance of the <see cref="SafeSetupDiClassDevsExHandle"/> class.</summary>
-         public SafeSetupDiClassDevsExHandle()
-            : base(true)
-         {
-         }
+      /// <summary>
+      /// The format of the path is automatically detected by the method and internally converted to an extended length path. It can be 
+      /// either a standard (short) full path, an extended length (unicode) full path or a relative path.
+      /// </summary>
+      Relative,
+      
+      /// <summary>
+      /// The path is a full path in either normal or extended length (UNICODE) format. Internally it will be converted to an extended length 
+      /// (UNICODE) path. Using this option has a very slight performance advantage compared to using <see cref="Relative"/>.
+      /// </summary>
+      FullPath,
 
-         protected override bool ReleaseHandle()
-         {
-            return SetupDiDestroyDeviceInfoList(handle);
-         }
-      }
+      /// <summary>
+      /// The path is an extended length path. No additional processing will be done on the path, and it will be used as is. This option has 
+      /// a slight performance advantage to using the <see cref="Relative"/> option.
+      /// </summary>
+      LongFullPath
    }
 }

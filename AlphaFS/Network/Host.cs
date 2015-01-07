@@ -1,4 +1,4 @@
-﻿/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -1540,7 +1540,7 @@ namespace Alphaleonis.Win32.Network
 
          do
          {
-            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle((int)bufferSize))
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int)bufferSize))
             {
                // Structure: UNIVERSAL_NAME_INFO_LEVEL = 1 (not used in AlphaFS).
                // Structure: REMOTE_NAME_INFO_LEVEL    = 2

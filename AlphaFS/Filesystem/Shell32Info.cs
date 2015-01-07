@@ -1,22 +1,22 @@
-/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the "Software"), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
  *  furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
  *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
  */
 
 using System;
@@ -39,7 +39,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       /// </summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      public Shell32Info(string fileName) : this(fileName, false)
+      public Shell32Info(string fileName) 
+         : this(fileName, PathFormat.Relative)
       {
       }
 
@@ -48,12 +49,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       /// </summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
-      /// <param name="isFullPath">
-      /// <para><see langword="true"/> <paramref name="fileName"/> is an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="false"/> <paramref name="fileName"/> will be checked and resolved to an absolute path. Unicode prefix is applied.</para>
-      /// <para><see langword="null"/> <paramref name="fileName"/> is already an absolute path with Unicode prefix. Use as is.</para>
-      /// </param>
-      public Shell32Info(string fileName, bool? isFullPath)
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      public Shell32Info(string fileName, PathFormat pathFormat)
       {
          if (Utils.IsNullOrWhiteSpace(fileName))
             throw new ArgumentNullException("fileName");
@@ -61,11 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Shell32 is limited to MAX_PATH length.
          // Get a full path of regular format.
 
-         FullPath = isFullPath == null
-            ? fileName
-            : (bool) isFullPath
-               ? Path.GetRegularPathInternal(fileName, false, false, true, false)
-               : Path.GetFullPathInternal(null, fileName, false, false, false, true, false, true, true);
+         FullPath = Path.GetExtendedLengthPathInternal(null, fileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          Initialize();
       }
@@ -115,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             // Use a large buffer to prevent calling this function twice.
             int size = NativeMethods.DefaultFileBufferSize;
-            StringBuilder buffer = new StringBuilder(size);
+            var buffer = new StringBuilder(size);
 
             iQa.GetString(Shell32.AssociationAttributes.NoTruncate | Shell32.AssociationAttributes.RemapRunDll, assocString, shellVerb, buffer, out size);
 
