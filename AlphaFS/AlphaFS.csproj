@@ -87,7 +87,7 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
@@ -105,6 +105,7 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net40|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -120,6 +121,7 @@
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net45|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -134,6 +136,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net451|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -148,6 +151,7 @@
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -156,7 +160,39 @@
   <ItemGroup>
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.DeleteEmpty.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.AlternateDataStreams.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.Delete.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CreateDirectory.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntries.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.Exists.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetAccessControl.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetTimes.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CurrentDirectory.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFileSystemEntries.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetDirectoryRoot.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetLogicalDrives.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetParent.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetAccessControl.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CopyMove.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetTimes.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.Compression.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.Encryption.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileIdBothDirectoryInfo.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetProperties.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
+    <Compile Include="Filesystem\File Class\File.EnumerateStreams.cs" />
+    <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
+    <Compile Include="Filesystem\File Class\File.CreateSymbolicLink.cs" />
+    <Compile Include="Filesystem\File Class\File.CreateHardlink.cs" />
+    <Compile Include="Filesystem\File Class\File.Compress.cs" />
+    <Compile Include="Filesystem\File Class\File.AddAlternateDataStream.cs" />
+    <Compile Include="Filesystem\File Class\File.Delete.cs" />
+    <Compile Include="Filesystem\File Class\File.EncryptDescrypt.cs" />
+    <Compile Include="Filesystem\File Class\File.CreateText.cs" />
+    <Compile Include="Filesystem\File Class\File.CopyMove.cs" />
+    <Compile Include="Filesystem\File Class\File.WriteText.cs" />
+    <Compile Include="Filesystem\File Class\File.AppendText.cs" />
     <Compile Include="Filesystem\File Class\File.Create.cs" />
     <Compile Include="Filesystem\DeviceInfo.cs" />
     <Compile Include="Filesystem\DiskSpaceInfo.cs" />
@@ -180,12 +216,38 @@
     <Compile Include="Filesystem\Enumerations\CopyOptions.cs" />
     <Compile Include="Filesystem\Enumerations\CopyMoveProgressCallbackReason.cs" />
     <Compile Include="Filesystem\Device.cs" />
-    <Compile Include="Filesystem\Directory.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.cs" />
     <Compile Include="Filesystem\DirectoryInfo.cs" />
     <Compile Include="Filesystem\File Class\File.cs" />
     <Compile Include="Filesystem\BackupFileStream.cs" />
     <Compile Include="Filesystem\Enumerations\FileEncryptionStatus.cs" />
     <Compile Include="Filesystem\ByHandleFileInfo.cs" />
+    <Compile Include="Filesystem\File Class\File.Exists.cs" />
+    <Compile Include="Filesystem\File Class\File.GetAccessControl.cs" />
+    <Compile Include="Filesystem\File Class\File.GetAttributes.cs" />
+    <Compile Include="Filesystem\File Class\File.GetCreationTime.cs" />
+    <Compile Include="Filesystem\File Class\File.GetLastAccessTime.cs" />
+    <Compile Include="Filesystem\File Class\File.GetLastWriteTime.cs" />
+    <Compile Include="Filesystem\File Class\File.Open.cs" />
+    <Compile Include="Filesystem\File Class\File.ReadAllBytes.cs" />
+    <Compile Include="Filesystem\File Class\File.ReadAllLines.cs" />
+    <Compile Include="Filesystem\File Class\File.ReadAllText.cs" />
+    <Compile Include="Filesystem\File Class\File.ReadLines.cs" />
+    <Compile Include="Filesystem\File Class\File.Replace.cs" />
+    <Compile Include="Filesystem\File Class\File.SetAccessControl.cs" />
+    <Compile Include="Filesystem\File Class\File.SetAttributes.cs" />
+    <Compile Include="Filesystem\File Class\File.SetFileTime.cs" />
+    <Compile Include="Filesystem\File Class\File.WriteAllBytes.cs" />
+    <Compile Include="Filesystem\File Class\File.GetChangeTime.cs" />
+    <Compile Include="Filesystem\File Class\File.GetCompressedSize.cs" />
+    <Compile Include="Filesystem\File Class\File.GetEncryptionStatus.cs" />
+    <Compile Include="Filesystem\File Class\File.GetFileInfoByHandleC.cs" />
+    <Compile Include="Filesystem\File Class\File.GetFileSystemEntryInfo.cs" />
+    <Compile Include="Filesystem\File Class\File.GetLinkTargetInfo.cs" />
+    <Compile Include="Filesystem\File Class\File.GetSize.cs" />
+    <Compile Include="Filesystem\File Class\File.GetStreamSize.cs" />
+    <Compile Include="Filesystem\File Class\File.RemoveStream.cs" />
+    <Compile Include="Filesystem\File Class\File.TransferTimestamps.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />

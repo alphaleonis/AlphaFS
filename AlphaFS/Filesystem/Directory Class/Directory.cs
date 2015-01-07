@@ -19,27 +19,25 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.Win32.SafeHandles;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
+using System.Security.AccessControl;
+using System.Security.Principal;
+using SearchOption = System.IO.SearchOption;
+
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Indicates the format of a path passed to a method.</summary>
-   public enum PathFormat
+   /// <summary>Exposes static methods for creating, moving, and enumerating through directories and subdirectories.
+   /// <para>This class cannot be inherited.</para>
+   /// </summary>
+   public static partial class Directory
    {
-      /// <summary>
-      /// The format of the path is automatically detected by the method and internally converted to an extended length path. It can be 
-      /// either a standard (short) full path, an extended length (unicode) full path or a relative path.
-      /// </summary>
-      Relative,
-
-      /// <summary>
-      /// The path is a full path in either normal or extended length (UNICODE) format. Internally it will be converted to an extended length 
-      /// (UNICODE) path. Using this option has a very slight performance advantage compared to using <see cref="Relative"/>.
-      /// </summary>
-      FullPath,
-
-      /// <summary>
-      /// The path is an extended length path. No additional processing will be done on the path, and it will be used as is. This option has 
-      /// a slight performance advantage to using the <see cref="Relative"/> option.
-      /// </summary>
-      LongFullPath
    }
 }

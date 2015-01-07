@@ -19,6 +19,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaFS.UnitTest", "AlphaFS.UnitTest\AlphaFS.UnitTest.csproj", "{BC336637-FDD7-4D13-9B24-1A888E85A944}"
 EndProject
 Project("{7CF6DF6D-3B04-46F8-A40B-537D21BCA0B4}") = "AlphaFS.Doc", "AlphaFS.Doc\AlphaFS.Doc.shfbproj", "{81ED470C-0A64-4B10-B37E-61A06DDC497C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA} = {F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
