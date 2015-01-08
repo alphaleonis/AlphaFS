@@ -1,22 +1,22 @@
-﻿/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the "Software"), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
+﻿/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
  *  furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
  *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
  */
 
 using Alphaleonis;
@@ -53,9 +53,6 @@ namespace AlphaFS.UnitTest
 
       private readonly string LocalHost = Environment.MachineName;
       private readonly string LocalHostShare = Environment.SystemDirectory;
-      private readonly bool _testMyServer = Environment.UserName.Equals(@"jjangli", StringComparison.OrdinalIgnoreCase);
-      private const string MyServer = "yomodo";
-      private const string MyServerShare = @"\\" + MyServer + @"\video";
       private const string Local = @"LOCAL";
       private const string Network = @"NETWORK";
 
@@ -387,7 +384,7 @@ namespace AlphaFS.UnitTest
 
 
          myAdsInstance = new AlternateDataStreamInfo(tempPath); // Class AlternateDataStreamInfo() instance.
-         FileInfo fi = new FileInfo(tempPath);  // Class FileInfo() instance.
+         var fi = new FileInfo(tempPath);  // Class FileInfo() instance.
 
          initialStreamsSizeAll = File.GetAlternateDataStreamSize(tempPath);
          initialStreamSizeData = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
@@ -423,7 +420,7 @@ namespace AlphaFS.UnitTest
          // Enumerate all streams from the file.
          foreach (AlternateDataStreamInfo stream in fi.EnumerateAlternateDataStreams())
          {
-            Assert.IsTrue(Dump(stream, -12));
+            Assert.IsTrue(Dump(stream, -11));
 
             // The default stream, a file as you know it.
             if (stream.Type == StreamType.Data)
@@ -441,7 +438,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tStream name: [{0}]", streamName);
 
             // Because of the colon, you must supply a full path and use isFullPath = true or a NotSupportedException is thrown: path is in an invalid format.
-            foreach (string line in File.ReadAllLines(tempPath + ":" + streamName, PathFormat.FullPath))
+            foreach (var line in File.ReadAllLines(tempPath + ":" + streamName, PathFormat.FullPath))
                Console.WriteLine("\t\t{0}", line);
          }
 
@@ -495,7 +492,7 @@ namespace AlphaFS.UnitTest
 
 
          // Create directory and instances.
-         DirectoryInfo di = Directory.CreateDirectory(tempPath); // Class DirectoryInfo() instance.
+         var di = Directory.CreateDirectory(tempPath); // Class DirectoryInfo() instance.
          myAdsInstance = new AlternateDataStreamInfo(tempPath); // Class AlternateDataStreamInfo() instance.
 
          initialStreamsSizeAll = Directory.GetAlternateDataStreamSize(tempPath);
@@ -526,7 +523,7 @@ namespace AlphaFS.UnitTest
 
          // Enumerate all streams from the directory.
          foreach (AlternateDataStreamInfo stream in di.EnumerateAlternateDataStreams())
-            Assert.IsTrue(Dump(stream, -12));
+            Assert.IsTrue(Dump(stream, -11));
 
          Console.WriteLine("\n\n\tCurrent stream Count(): [{0}]    {1}", newNumberofStreams, reporter);
          Assert.AreEqual(newNumberofStreams, File.EnumerateAlternateDataStreams(tempPath).Count(), "Total amount of streams do not match.");
@@ -538,7 +535,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tStream name: [{0}]", streamName);
 
             // Because of the colon, you must supply a full path and use isFullPath = true or a NotSupportedException is thrown: path is in an invalid format.
-            foreach (string line in File.ReadAllLines(tempPath + ":" + streamName, PathFormat.FullPath))
+            foreach (var line in File.ReadAllLines(tempPath + ":" + streamName, PathFormat.FullPath))
                Console.WriteLine("\t\t{0}", line);
          }
 
@@ -1545,7 +1542,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\n\t{0}", Reporter(true));
 
          if (noDomainConnection)
-            Assert.Inconclusive("Test skipped because the computer is probably not connected to a domain.");
+            Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
          else
             Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
@@ -1679,7 +1676,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
 
          DumpClassDeviceInfo(LocalHost);
-         //if (_testMyServer) DumpClassDeviceInfo(MyServer);
       }
 
       #endregion // Filesystem_Class_Shell32Info
@@ -1800,7 +1796,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Class Network.OpenConnectionInfo()");
 
          DumpOpenConnectionInfo(LocalHost);
-         if (_testMyServer) DumpOpenConnectionInfo(MyServer);
       }
 
       #endregion // Network_Class_OpenConnectionInfo
@@ -1813,7 +1808,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Class Network.OpenResourceInfo()");
 
          DumpClassOpenResourceInfo(LocalHost, LocalHostShare);
-         if (_testMyServer) DumpClassOpenResourceInfo(MyServer, MyServerShare);
       }
 
       #endregion // Network_Class_OpenResourceInfo
@@ -1826,7 +1820,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Class Network.ShareInfo()");
 
          DumpClassShareInfo(LocalHost);
-         if (_testMyServer) DumpClassShareInfo(MyServer);
       }
 
       #endregion // Network_Class_ShareInfo
