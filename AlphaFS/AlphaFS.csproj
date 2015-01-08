@@ -249,7 +249,30 @@
     <Compile Include="Filesystem\File Class\File.RemoveAlternateDataStream.cs" />
     <Compile Include="Filesystem\File Class\File.TransferTimestamps.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
-    <Compile Include="Filesystem\FileInfo.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.AddAlternateDataStream.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.RemoveAlternateDataStream.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.RefreshEntryInfo.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.GetAlternateDataStreamSize.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.EnumerateAlternateDataStreams.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.Decompress.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.Compress.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.ToString.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.SetAccessControl.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.Replace.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.Refresh.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.OpenWrite.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.OpenText.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.OpenRead.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.Open.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.GetAccessControl.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.Encrypt.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.Delete.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.Decrypt.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.CreateText.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.Create.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.CopyToMoveTo.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.AppendText.cs" />
+    <Compile Include="Filesystem\FileInfo Class\FileInfo.cs" />
     <Compile Include="Filesystem\Enumerations\ExtendedFileAttributes.cs" />
     <Compile Include="Filesystem\FindFileSystemEntryInfo.cs" />
     <Compile Include="Filesystem\FileSystemEntryInfo.cs" />
@@ -388,9 +411,7 @@
     </None>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Filesystem\FileInfo Class\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -401,7 +422,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
