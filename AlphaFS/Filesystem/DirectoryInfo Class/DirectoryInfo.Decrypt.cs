@@ -25,23 +25,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class DirectoryInfo
    {
-      #region AlphaFS
-
-      /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
-      [SecurityCritical]
-      public void Decrypt()
-      {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, false, false, PathFormat.LongFullPath);
-      }
-
-      /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
-      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt files and directories in the root of the directory.</param>
-      [SecurityCritical]
-      public void Decrypt(bool recursive)
-      {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, false, recursive, PathFormat.LongFullPath);
-      }
-
-      #endregion // AlphaFS
+      
    }
 }

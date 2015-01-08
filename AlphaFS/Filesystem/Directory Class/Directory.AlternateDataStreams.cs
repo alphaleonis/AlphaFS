@@ -25,8 +25,10 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public static partial class Directory
+   partial class Directory
    {
+      #region AlphaFS
+
       #region AddAlternateDataStream
 
       #region Non-Transactional
@@ -190,7 +192,7 @@ namespace Alphaleonis.Win32.Filesystem
          return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, transaction, null, path, null, streamType, pathFormat);
       }
       
-      #endregion // Transacted
+      #endregion // Transactional
 
       #endregion // EnumerateAlternateDataStreams
 
@@ -362,7 +364,7 @@ namespace Alphaleonis.Win32.Filesystem
          return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(true, transaction, null, path, null, type, pathFormat);
       }
       
-      #endregion // Transacted
+      #endregion // Transactional
 
       #endregion GetAlternateDataStreamSize
 
@@ -473,5 +475,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transactional
 
       #endregion // RemoveAlternateDataStream
+
+      #endregion // AlphaFS
    }
 }

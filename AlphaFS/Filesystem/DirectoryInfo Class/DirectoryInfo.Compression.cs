@@ -27,6 +27,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region AlphaFS
 
+      #region Compress
+
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
       /// <remarks>This will only compress the root items, non recursive.</remarks>
       [SecurityCritical]
@@ -42,6 +44,58 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, PathFormat.LongFullPath);
       }
+
+      #endregion // Compress
+
+      #region Decompress
+
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      [SecurityCritical]
+      public void Decompress()
+      {
+         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.LongFullPath);
+      }
+
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public void Decompress(DirectoryEnumerationOptions directoryEnumerationOptions)
+      {
+         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, PathFormat.LongFullPath);
+      }
+
+      #endregion // Decompress
+
+      #region DisableCompression
+
+      /// <summary>[AlphaFS] Disables compression of the specified directory and the files in it.</summary>
+      /// <remarks>
+      /// This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
+      /// However, newly created files and directories will be uncompressed.
+      /// </remarks>
+      [SecurityCritical]
+      public void DisableCompression()
+      {
+         Device.ToggleCompressionInternal(true, Transaction, LongFullName, false, PathFormat.LongFullPath);
+      }
+
+      #endregion // DisableCompression
+
+      #region EnableCompression
+
+      /// <summary>[AlphaFS] Enables compression of the specified directory and the files in it.</summary>
+      /// <remarks>
+      /// This method enables the directory-compression attribute. It will not compress the current contents of the directory.
+      /// However, newly created files and directories will be compressed.
+      /// </remarks>
+      [SecurityCritical]
+      public void EnableCompression()
+      {
+         Device.ToggleCompressionInternal(true, Transaction, LongFullName, true, PathFormat.LongFullPath);
+      }
+
+      #endregion // EnableCompression
 
       #endregion // AlphaFS
    }
