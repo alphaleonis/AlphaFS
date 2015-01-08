@@ -1,4 +1,4 @@
-/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,13 +19,33 @@
  *  THE SOFTWARE. 
  */
 
+using System.IO;
+using System.Security;
+using System.Text;
+
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Exposes static methods for creating, moving, and enumerating through directories and subdirectories.
-   ///   <para>This class cannot be inherited.</para>
-   /// </summary>
-   public static partial class Directory
+   partial class FileInfo
    {
-      // This file only exists for the documentation.
+      #region .NET
+
+      /// <summary>Creates a <see cref="System.IO.StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
+      /// <returns>A new <see cref="StreamWriter"/></returns>
+      [SecurityCritical]
+      public StreamWriter AppendText()
+      {
+         return File.AppendTextInternal(Transaction, LongFullName, NativeMethods.DefaultFileEncoding, PathFormat.LongFullPath);
+      }
+
+      /// <summary>Creates a <see cref="StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
+      /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
+      /// <returns>A new <see cref="StreamWriter"/></returns>
+      [SecurityCritical]
+      public StreamWriter AppendText(Encoding encoding)
+      {
+         return File.AppendTextInternal(Transaction, LongFullName, encoding, PathFormat.LongFullPath);
+      }
+
+      #endregion // .NET
    }
 }

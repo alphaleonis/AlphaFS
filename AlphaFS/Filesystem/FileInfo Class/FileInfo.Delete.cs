@@ -1,4 +1,4 @@
-/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,13 +19,35 @@
  *  THE SOFTWARE. 
  */
 
+using System.IO;
+
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Exposes static methods for creating, moving, and enumerating through directories and subdirectories.
-   ///   <para>This class cannot be inherited.</para>
-   /// </summary>
-   public static partial class Directory
+   partial class FileInfo
    {
-      // This file only exists for the documentation.
+      #region .NET
+
+      /// <summary>Permanently deletes a file.</summary>
+      /// <remarks>If the file does not exist, this method does nothing.</remarks>
+      ///
+      /// <exception cref="IOException">.</exception>
+      public override void Delete()
+      {
+         File.DeleteFileInternal(Transaction, LongFullName, false, PathFormat.LongFullPath);
+      }
+
+      #endregion // .NET
+
+      #region AlphaFS
+
+      /// <summary>[AlphaFS] Permanently deletes a file.</summary>
+      /// <remarks>If the file does not exist, this method does nothing.</remarks>
+      /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
+      public void Delete(bool ignoreReadOnly)
+      {
+         File.DeleteFileInternal(Transaction, LongFullName, ignoreReadOnly, PathFormat.LongFullPath);
+      }
+
+      #endregion // AlphaFS
    }
 }

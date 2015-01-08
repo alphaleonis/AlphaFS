@@ -23,9 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>
-   ///   Provides static methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of
-   ///   <see cref="System.IO.FileStream"/> objects.
+   /// <summary>Provides static methods for the creation, copying, deletion, moving, and opening of files, and aids in the creation of <see cref="System.IO.FileStream"/> objects.
    ///   <para>This class cannot be inherited.</para>
    /// </summary>
    [SuppressMessage("Microsoft.Maintainability", "CA1506:AvoidExcessiveClassCoupling")]   

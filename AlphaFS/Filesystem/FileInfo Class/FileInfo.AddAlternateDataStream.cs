@@ -1,4 +1,4 @@
-/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,13 +19,23 @@
  *  THE SOFTWARE. 
  */
 
+using System.Security;
+
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Exposes static methods for creating, moving, and enumerating through directories and subdirectories.
-   ///   <para>This class cannot be inherited.</para>
-   /// </summary>
-   public static partial class Directory
+   partial class FileInfo
    {
-      // This file only exists for the documentation.
+      #region AlphaFS
+
+      /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to the file.</summary>
+      /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
+      /// <param name="contents">The lines to add to the stream.</param>      
+      [SecurityCritical]
+      public void AddAlternateDataStream(string name, string[] contents)
+      {
+         AlternateDataStreamInfo.AddAlternateDataStreamInternal(false, Transaction, LongFullName, name, contents, PathFormat.LongFullPath);
+      }
+
+      #endregion // AlphaFS
    }
 }

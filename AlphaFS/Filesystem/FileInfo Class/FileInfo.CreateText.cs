@@ -1,4 +1,4 @@
-/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,13 +19,26 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Security;
+
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Exposes static methods for creating, moving, and enumerating through directories and subdirectories.
-   ///   <para>This class cannot be inherited.</para>
-   /// </summary>
-   public static partial class Directory
+   partial class FileInfo
    {
-      // This file only exists for the documentation.
+      #region .NET
+
+      /// <summary>Creates a <see crefe="StreamWriter"/> instance that writes a new text file.</summary>
+      /// <returns>A new <see cref="StreamWriter"/></returns>
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      [SecurityCritical]
+      public StreamWriter CreateText()
+      {
+         return new StreamWriter(File.CreateFileStreamInternal(Transaction, LongFullName, ExtendedFileAttributes.Normal, null,
+            FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, PathFormat.LongFullPath), NativeMethods.DefaultFileEncoding);
+      }
+
+      #endregion // .NET
    }
 }

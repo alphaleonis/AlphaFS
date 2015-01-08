@@ -1,4 +1,4 @@
-/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -19,13 +19,23 @@
  *  THE SOFTWARE. 
  */
 
+using System.IO;
+using System.Security;
+
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Exposes static methods for creating, moving, and enumerating through directories and subdirectories.
-   ///   <para>This class cannot be inherited.</para>
-   /// </summary>
-   public static partial class Directory
+   partial class FileInfo
    {
-      // This file only exists for the documentation.
+      #region .NET
+
+      /// <summary>Creates a write-only <see cref="FileStream"/>.</summary>
+      /// <returns>A write-only unshared <see cref="FileStream"/> object for a new or existing file.</returns>
+      [SecurityCritical]
+      public FileStream OpenWrite()
+      {
+         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
+      }
+
+      #endregion // .NET
    }
 }
