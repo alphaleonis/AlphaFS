@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
          // If this parameter is a UNC name, it must include a trailing backslash (for example, "\\MyServer\MyShare\").
          // Furthermore, a drive specification must have a trailing backslash (for example, "C:\").
          // The calling application must have FILE_LIST_DIRECTORY access rights for this directory.
-         DriveName = Path.AddDirectorySeparator(DriveName, false);
+         DriveName = Path.AddTrailingDirectorySeparator(DriveName, false);
       }
 
       /// <summary>Initializes a DiskSpaceInfo instance.</summary>

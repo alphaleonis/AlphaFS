@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")");
 
          // If an exception is thrown, the original drivePath is used.
-         _name = Path.AddDirectorySeparator(_name, false);
+         _name = Path.AddTrailingDirectorySeparator(_name, false);
 
 
          // Initiate VolumeInfo() lazyload instance.

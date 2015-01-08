@@ -172,7 +172,7 @@ namespace Alphaleonis.Win32.Filesystem
       public static IEnumerable<string> QueryDosDevice(string deviceName, params string[] options)
       {
          // The device name cannot have a trailing backslash.
-         deviceName = Path.RemoveDirectorySeparator(deviceName, false);
+         deviceName = Path.RemoveTrailingDirectorySeparator(deviceName, false);
          bool searchFilter = false;
 
          // Only process options if a device is supplied.
@@ -313,7 +313,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          // drivePath is allowed to be == null.
 
-         drivePath = Path.AddDirectorySeparator(drivePath, false);
+         drivePath = Path.AddTrailingDirectorySeparator(drivePath, false);
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups. 
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -446,7 +446,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
 
          // A trailing backslash is required.
-         volumeGuid = Path.AddDirectorySeparator(volumeGuid, false);
+         volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
 
@@ -516,7 +516,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
 
-         string volName = Path.AddDirectorySeparator(volumeGuid, false);
+         string volName = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
          uint requiredLength = 10;
          char[] cBuffer = new char[requiredLength];
@@ -642,7 +642,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(volumeName))
             throw new ArgumentNullException("volumeName");
 
-         volumeName = Path.RemoveDirectorySeparator(volumeName, false);
+         volumeName = Path.RemoveTrailingDirectorySeparator(volumeName, false);
 
          #region GlobalRoot
 
@@ -754,7 +754,7 @@ namespace Alphaleonis.Win32.Filesystem
                // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
                return NativeMethods.GetVolumeNameForVolumeMountPoint(volumeMountPoint, volumeGuid, (uint) volumeGuid.Capacity)
-                  ? NativeMethods.GetVolumeNameForVolumeMountPoint(Path.AddDirectorySeparator(volumeGuid.ToString(), false), uniqueName, (uint) uniqueName.Capacity)
+                  ? NativeMethods.GetVolumeNameForVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeGuid.ToString(), false), uniqueName, (uint) uniqueName.Capacity)
                      ? uniqueName.ToString()
                      : null
                   : null;
@@ -977,7 +977,7 @@ namespace Alphaleonis.Win32.Filesystem
          //if (!Path.IsLocalPath(rootPathName))
          //return false;
 
-         volumePath = Path.AddDirectorySeparator(volumePath, false);
+         volumePath = Path.AddTrailingDirectorySeparator(volumePath, false);
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          // NTFS uses a limit of 32 characters for the volume label as of Windows Server 2003.
@@ -1014,7 +1014,7 @@ namespace Alphaleonis.Win32.Filesystem
          volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // This string must be of the form "\\?\Volume{GUID}\"
-         volumeGuid = Path.AddDirectorySeparator(volumeGuid, false);
+         volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
@@ -1127,7 +1127,7 @@ namespace Alphaleonis.Win32.Filesystem
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            if (!NativeMethods.DeleteVolumeMountPoint(Path.AddDirectorySeparator(volumeMountPoint, false)))
+            if (!NativeMethods.DeleteVolumeMountPoint(Path.AddTrailingDirectorySeparator(volumeMountPoint, false)))
                lastError = Marshal.GetLastWin32Error();
 
             if (lastError != Win32Errors.ERROR_SUCCESS && !continueOnException)

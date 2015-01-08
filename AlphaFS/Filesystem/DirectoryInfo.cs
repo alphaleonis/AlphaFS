@@ -1419,7 +1419,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       private static string GetDirName(string path)
       {
-         return path.Length > 3 ? Path.GetFileName(Path.RemoveDirectorySeparator(path, false), true) : path;
+         return path.Length > 3 ? Path.GetFileName(Path.RemoveTrailingDirectorySeparator(path, false), true) : path;
       }
 
       #endregion // GetDirName
@@ -1663,7 +1663,7 @@ namespace Alphaleonis.Win32.Filesystem
             string path = FullPath;
 
             if (path.Length > 3)
-               path = Path.RemoveDirectorySeparator(FullPath, false);
+               path = Path.RemoveTrailingDirectorySeparator(FullPath, false);
 
             string dirName = Path.GetDirectoryName(path, false);
             return dirName == null ? null : new DirectoryInfo(Transaction, dirName, true, true);

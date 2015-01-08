@@ -235,7 +235,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             try
             {
-               string path = RemoveDirectorySeparator(drive, false);
+               string path = RemoveTrailingDirectorySeparator(drive, false);
                foreach (string devNt in Volume.QueryDosDevice(path).Where(dosDevice.StartsWith))
                   return dosDevice.Replace(devNt, deviceReplacement ?? path);
             }

@@ -19,9 +19,6 @@
 * THE SOFTWARE.
 */
 
-using System;
-using System.Linq;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>

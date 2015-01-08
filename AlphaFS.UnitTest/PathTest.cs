@@ -1016,31 +1016,31 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
 
-      #region AddDirectorySeparator
+      #region AddTrailingDirectorySeparator
 
       [TestMethod]
-      public void AlphaFS_AddDirectorySeparator()
+      public void AlphaFS_AddTrailingDirectorySeparator()
       {
-         Console.WriteLine("Path.AddDirectorySeparator()\n");
+         Console.WriteLine("Path.AddTrailingDirectorySeparator()\n");
 
          const string nonSlashedString = "SlashMe";
          Console.WriteLine("\tstring: [{0}];\n", nonSlashedString);
 
          // True, add DirectorySeparatorChar.
-         string hasBackslash = Path.AddDirectorySeparator(nonSlashedString, false);
+         string hasBackslash = Path.AddTrailingDirectorySeparator(nonSlashedString, false);
          bool addedBackslash = hasBackslash.EndsWith(Path.DirectorySeparatorChar.ToString()) && (nonSlashedString + Path.DirectorySeparatorChar).Equals(hasBackslash);
-         Console.WriteLine("\tAddDirectorySeparator(string);\n\tAdded == [{0}]: {1}\n\tResult: [{2}]\n", TextTrue, addedBackslash, hasBackslash);
+         Console.WriteLine("\tAddTrailingDirectorySeparator(string);\n\tAdded == [{0}]: {1}\n\tResult: [{2}]\n", TextTrue, addedBackslash, hasBackslash);
 
          // True, add AltDirectorySeparatorChar.
-         string hasSlash = Path.AddDirectorySeparator(nonSlashedString, true);
+         string hasSlash = Path.AddTrailingDirectorySeparator(nonSlashedString, true);
          bool addedSlash = hasSlash.EndsWith(Path.AltDirectorySeparatorChar.ToString(CultureInfo.CurrentCulture)) && (nonSlashedString + Path.AltDirectorySeparatorChar).Equals(hasSlash);
-         Console.WriteLine("\tAddDirectorySeparator(string, true);\n\tAdded == [{0}]: {1}\n\tResult: [{2}]\n", TextTrue, addedSlash, hasSlash);
+         Console.WriteLine("\tAddTrailingDirectorySeparator(string, true);\n\tAdded == [{0}]: {1}\n\tResult: [{2}]\n", TextTrue, addedSlash, hasSlash);
 
          Assert.IsTrue(addedBackslash);
          Assert.IsTrue(addedSlash);
       }
 
-      #endregion // AddDirectorySeparator
+      #endregion // AddTrailingDirectorySeparator
 
       #region GetDirectoryNameWithoutRoot
 
@@ -1278,32 +1278,32 @@ namespace AlphaFS.UnitTest
 
       #endregion // LocalToUnc
 
-      #region RemoveDirectorySeparator
+      #region RemoveTrailingDirectorySeparator
 
       [TestMethod]
-      public void AlphaFS_RemoveDirectorySeparator()
+      public void AlphaFS_RemoveTrailingDirectorySeparator()
       {
-         Console.WriteLine("Path.RemoveDirectorySeparator()\n");
+         Console.WriteLine("Path.RemoveTrailingDirectorySeparator()\n");
 
          const string backslashedString = @"Backslashed\";
          const string slashedString = "Slashed/";
          // True, add DirectorySeparatorChar.
-         string hasBackslash = Path.RemoveDirectorySeparator(backslashedString);
+         string hasBackslash = Path.RemoveTrailingDirectorySeparator(backslashedString);
          bool removedBackslash = !hasBackslash.EndsWith(Path.DirectorySeparatorChar.ToString(CultureInfo.CurrentCulture)) && !backslashedString.Equals(hasBackslash);
          Console.WriteLine("\tstring = @[{0}];\n", backslashedString);
-         Console.WriteLine("\tRemoveDirectorySeparator(string);\n\tRemoved == [{0}]: {1}\n\tResult: [{2}]\n", TextTrue, removedBackslash, hasBackslash);
+         Console.WriteLine("\tRemoveTrailingDirectorySeparator(string);\n\tRemoved == [{0}]: {1}\n\tResult: [{2}]\n", TextTrue, removedBackslash, hasBackslash);
 
          // True, add AltDirectorySeparatorChar.
-         string hasSlash = Path.RemoveDirectorySeparator(slashedString, true);
+         string hasSlash = Path.RemoveTrailingDirectorySeparator(slashedString, true);
          bool removedSlash = !hasSlash.EndsWith(Path.AltDirectorySeparatorChar.ToString(CultureInfo.CurrentCulture)) && !slashedString.Equals(hasSlash);
          Console.WriteLine("\tstring: [{0}];\n", slashedString);
-         Console.WriteLine("\tRemoveDirectorySeparator(string, true);\n\tRemoved == [{0}]: {1}\n\tResult: [{2}]\n", TextTrue, removedSlash, hasSlash);
+         Console.WriteLine("\tRemoveTrailingDirectorySeparator(string, true);\n\tRemoved == [{0}]: {1}\n\tResult: [{2}]\n", TextTrue, removedSlash, hasSlash);
 
          Assert.IsTrue(removedBackslash);
          Assert.IsTrue(removedSlash);
       }
 
-      #endregion // RemoveDirectorySeparator
+      #endregion // RemoveTrailingDirectorySeparator
 
       #endregion // AlphaFS
    }

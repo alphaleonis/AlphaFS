@@ -104,18 +104,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If a logical drive points to a network share path, the share path will be returned.</para>
       /// </summary>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
-      /// <param name="asLongPath">
-      ///   <see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.
-      /// </param>
-      /// <param name="addDirectorySeparator"><see langword="true"/> adds a directory separator to that path.</param>
-      /// <param name="removeDirectorySeparator"><see langword="true"/> removes any directory separator to that path.</param>
+      /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
+      /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="localPath"/>, when absent.</param>
+      /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="localPath"/>, when present.</param>
       /// <returns>
       ///   Returns a UNC path in long path format or <see langword="null"/> when <paramref name="localPath"/> is an empty string or <see langword="null"/>.
       /// </returns>      
       [SecurityCritical]
-      public static string LocalToUnc(string localPath, bool asLongPath, bool addDirectorySeparator, bool removeDirectorySeparator)
+      public static string LocalToUnc(string localPath, bool asLongPath, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
       {
-         return LocalToUncInternal(localPath, asLongPath, false, addDirectorySeparator, removeDirectorySeparator);
+         return LocalToUncInternal(localPath, asLongPath, false, addTrailingDirectorySeparator, removeTrailingDirectorySeparator);
       }
 
       #endregion // LocalToUnc
@@ -133,10 +131,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   path.
       /// </param>
       /// <param name="trimEnd"><see langword="true"/> removes trailing whitespace from <paramref name="localPath"/>.</param>
-      /// <param name="addDirectorySeparator"><see langword="true"/> adds a directory separator to that <paramref name="localPath"/>.</param>
-      /// <param name="removeDirectorySeparator">
-      ///   <see langword="true"/> removes any directory separator from <paramref name="localPath"/>.
-      /// </param>
+      /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="localPath"/>, when absent.</param>
+      /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="localPath"/>, when present.</param>
       /// <returns>
       ///   A UNC path or <see langword="null"/> when <paramref name="localPath"/> is an empty string or <see langword="null"/>.
       /// </returns>
@@ -146,11 +142,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// </exception>
       /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       [SecurityCritical]
-      internal static string LocalToUncInternal(string localPath, bool asLongPath, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator)
+      internal static string LocalToUncInternal(string localPath, bool asLongPath, bool trimEnd, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
       {
          localPath = (localPath[0] == CurrentDirectoryPrefixChar) || !IsPathRooted(localPath, false)
-            ? GetFullPathInternal(null, localPath, asLongPath, (trimEnd ? GetFullPathOptions.TrimEnd : 0) | (addDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars)
-            : GetRegularPathInternal(localPath, trimEnd, addDirectorySeparator, removeDirectorySeparator, true);
+            ? GetFullPathInternal(null, localPath, asLongPath, (trimEnd ? GetFullPathOptions.TrimEnd : 0) | (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars)
+            : GetRegularPathInternal(localPath, trimEnd, addTrailingDirectorySeparator, removeTrailingDirectorySeparator, true);
 
          if (IsUncPath(localPath, false))
             return localPath;
@@ -165,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!Utils.IsNullOrWhiteSpace(unc.ConnectionName))
             // Only leave trailing backslash if "localPath" also ends with backslash.
-            return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) ? AddDirectorySeparator(unc.ConnectionName, false) : RemoveDirectorySeparator(unc.ConnectionName, false);
+            return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) ? AddTrailingDirectorySeparator(unc.ConnectionName, false) : RemoveTrailingDirectorySeparator(unc.ConnectionName, false);
 
          // Split: localDrive[0] = "C", localDrive[1] = "\Windows"
          string[] localDrive = localPath.Split(VolumeSeparatorChar);
@@ -174,7 +170,7 @@ namespace Alphaleonis.Win32.Filesystem
          string pathUnc = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}${3}", Host.GetUncName(), DirectorySeparatorChar, localDrive[0], localDrive[1]);
 
          // Only leave trailing backslash if "localPath" also ends with backslash.
-         return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) ? AddDirectorySeparator(pathUnc, false) : RemoveDirectorySeparator(pathUnc, false);
+         return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) ? AddTrailingDirectorySeparator(pathUnc, false) : RemoveTrailingDirectorySeparator(pathUnc, false);
       }
 
       #endregion

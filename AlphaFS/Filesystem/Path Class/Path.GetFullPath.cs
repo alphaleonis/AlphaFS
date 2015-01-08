@@ -82,25 +82,18 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
-      /// <remarks>
-      ///   The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\
-      ///   PHYSICALDRIVE0".
-      /// </remarks>
+      /// <remarks>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</remarks>
       /// <remarks>GetFullPath is not recommended for multithreaded applications or shared library code.</remarks>
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
-      /// <param name="asLongPath">
-      ///   <see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.
-      /// </param>
-      /// <param name="addDirectorySeparator"><see langword="true"/> adds a directory separator to that path.</param>
-      /// <param name="removeDirectorySeparator"><see langword="true"/> removes any directory separator to that path.</param>
+      /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
+      /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="path"/>, when absent.</param>
+      /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="path"/>, when present.</param>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       ///
       /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       [SecurityCritical]
-      public static string GetFullPath(string path, bool asLongPath, bool addDirectorySeparator, bool removeDirectorySeparator)
+      public static string GetFullPath(string path, bool asLongPath, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
       {
          // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." : Current directory.
          if (path != null)
@@ -111,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(null, path, asLongPath, (addDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         return GetFullPathInternal(null, path, asLongPath, (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
       }
 
       #endregion
@@ -195,16 +188,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
-      /// <param name="asLongPath">
-      ///   <see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.
-      /// </param>
-      /// <param name="addDirectorySeparator"><see langword="true"/> adds a directory separator to that path.</param>
-      /// <param name="removeDirectorySeparator"><see langword="true"/> removes any directory separator to that path.</param>
+      /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
+      /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="path"/>, when absent.</param>
+      /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="path"/>, when present.</param>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       ///
       /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
       [SecurityCritical]
-      public static string GetFullPath(KernelTransaction transaction, string path, bool asLongPath, bool addDirectorySeparator, bool removeDirectorySeparator)
+      public static string GetFullPath(KernelTransaction transaction, string path, bool asLongPath, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
       {
          // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." : Current directory.
          if (path != null)
@@ -215,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(transaction, path, asLongPath, (addDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars);
+         return GetFullPathInternal(transaction, path, asLongPath, (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars);
       }
 
       #endregion Transacted
