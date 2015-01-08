@@ -86,111 +86,96 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetSuffixedDirectoryName
 
-      /// <summary>
-      ///   [AlphaFS] Returns the directory information for the specified <paramref name="path"/> with a trailing directory separator.
-      /// </summary>
-      /// <param name="path">The path.</param>
+      /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
-      ///   The suffixed directory information for the specified <paramref name="path"/> with a trailing directory separator, or <see langword="null"/> if
-      ///   <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").
+      ///   <para>The suffixed directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
+      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
       /// </returns>
+      /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
+      /// <param name="path">The path.</param>
       [SecurityCritical]
       public static string GetSuffixedDirectoryName(string path)
       {
          return GetSuffixedDirectoryNameInternal(null, path);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Returns the directory information for the specified <paramref name="path"/> with a trailing directory separator.
-      /// </summary>
+      /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
+      /// <returns>
+      ///   <para>The suffixed directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
+      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
+      /// </returns>
+      /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
-      /// <returns>
-      ///   The suffixed directory information for the specified <paramref name="path"/> with a trailing directory separator, or <see langword="null"/> if
-      ///   <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").
-      /// </returns>
       [SecurityCritical]
       public static string GetSuffixedDirectoryName(KernelTransaction transaction, string path)
       {
          return GetSuffixedDirectoryNameInternal(transaction, path);
       }
 
-
       #endregion // GetSuffixedDirectoryName
 
       #region GetSuffixedDirectoryNameWithoutRoot
 
-      /// <summary>
-      ///   [AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing
-      ///   directory separator.
-      /// </summary>
-      /// <param name="path">The path.</param>
+      /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
       /// <returns>
-      ///   The directory information for the specified <paramref name="path"/> without the root and with a trailing directory separator, or
-      ///   <see langword="null"/> if <paramref name="path"/> is <see langword="null"/>.
+      ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
+      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> is <see langword="null"/>.</para>
       /// </returns>
+      /// <param name="path">The path.</param>
       [SecurityCritical]
       public static string GetSuffixedDirectoryNameWithoutRoot(string path)
       {
          return GetSuffixedDirectoryNameWithoutRootInternal(null, path);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing
-      ///   directory separator.
-      /// </summary>
+      /// <summary>[AlphaFS] Returns the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
+      /// <returns>
+      ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
+      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> is <see langword="null"/>.</para>
+      /// </returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
-      /// <returns>
-      ///   The directory information for the specified <paramref name="path"/> without the root and with a trailing directory separator, or
-      ///   <see langword="null"/> if <paramref name="path"/> is <see langword="null"/>.
-      /// </returns>
       [SecurityCritical]
       public static string GetSuffixedDirectoryNameWithoutRoot(KernelTransaction transaction, string path)
       {
          return GetSuffixedDirectoryNameWithoutRootInternal(transaction, path);
       }
-
-
+      
       #endregion // GetSuffixedDirectoryNameWithoutRoot
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method GetSuffixedDirectoryNameInternal() to return the directory information for the specified
-      ///   <paramref name="path"/> with a trailing directory separator.
-      /// </summary>
+      /// <summary>[AlphaFS] Unified method GetSuffixedDirectoryNameInternal() to return the directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
+      /// <returns>
+      ///   <para>The suffixed directory information for the specified <paramref name="path"/> with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
+      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</para>
+      /// </returns>
+      /// <remarks>This method is similar to calling Path.GetDirectoryName() + Path.AddTrailingDirectorySeparator()</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
-      /// <returns>
-      ///   The suffixed directory information for the specified <paramref name="path"/> with a trailing directory separator, or
-      ///   <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\
-      ///   ", "C:", or * "\\server\share").
-      /// </returns>
       [SecurityCritical]
       private static string GetSuffixedDirectoryNameInternal(KernelTransaction transaction, string path)
       {
          DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.Relative);
+
          return di != null && di.Parent != null && di.Name != null
             ? AddTrailingDirectorySeparator(CombineInternal(false, di.Parent.FullName, di.Name), false)
             : null;
       }
 
-      /// <summary>
-      ///   [AlphaFS] Unified method GetSuffixedDirectoryNameWithoutRootInternal() to return the directory information for the specified
-      ///   <paramref name="path"/> with a trailing directory separator.
-      /// </summary>
+      /// <summary>[AlphaFS] Unified method GetSuffixedDirectoryNameWithoutRootInternal() to return the directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character.</summary>
+      /// <returns>
+      ///   <para>The directory information for the specified <paramref name="path"/> without the root and with a trailing <see cref="DirectorySeparatorChar"/> character,</para>
+      ///   <para>or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> is <see langword="null"/>.</para>
+      /// </returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
-      /// <returns>
-      ///   The suffixed directory information for the specified <paramref name="path"/> with a trailing directory separator, or
-      ///   <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\
-      ///   ", "C:", or * "\\server\share").
-      /// </returns>
       [SecurityCritical]
       private static string GetSuffixedDirectoryNameWithoutRootInternal(KernelTransaction transaction, string path)
       {
          DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.Relative);
+
          if (di == null || di.Parent == null)
             return null;
 
