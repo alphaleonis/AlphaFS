@@ -160,6 +160,7 @@
   <ItemGroup>
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CountFileSystemObjects.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.DeleteEmptySubdirectories.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.AlternateDataStreams.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Delete.cs" />
@@ -184,15 +185,10 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.RefreshEntryInfo.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetAlternateDataStreamSize.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateAlternateDataStreams.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Encrypt.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnableEncryption.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnableCompression.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Encryption.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.DeleteEmptySubdirectories.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Decrypt.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Decompress.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.DisableEncryption.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.DisableCompression.cs" />
-    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Compress.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Compression.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CountFileSystemObjects.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CopyToMoveTo.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.AddAlternateDataStream.cs" />
@@ -451,7 +447,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

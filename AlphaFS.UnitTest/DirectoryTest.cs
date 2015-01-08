@@ -3869,8 +3869,12 @@ namespace AlphaFS.UnitTest
 
             try
             {
+               // System.IO can not handle "\\?\": Illegal characters in path.
+               if (path != null && path.StartsWith(@"\\?", StringComparison.OrdinalIgnoreCase))
+                  continue;
+
                DirectoryInfo diActual = Directory.GetParent(path);
-               DirectoryInfo diExpected = Directory.GetParent(path);
+               System.IO.DirectoryInfo diExpected = System.IO.Directory.GetParent(path);
 
                if (diActual == null || diExpected == null)
                {
@@ -3887,7 +3891,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tCaught Exception: [{0}]: [{1}]", ex.Message.Replace(Environment.NewLine, "  "), path);
 
                // Exception to the Exception.
                if (path != null && !path.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
