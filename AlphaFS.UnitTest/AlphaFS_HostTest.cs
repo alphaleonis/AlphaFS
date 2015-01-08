@@ -1,22 +1,22 @@
-﻿/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
- *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the "Software"), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
+﻿/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
  *  furnished to do so, subject to the following conditions:
- *
- *  The above copyright notice and this permission notice shall be included in
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
  *  all copies or substantial portions of the Software.
- *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
  */
 
 using System.Net.NetworkInformation;
@@ -42,9 +42,6 @@ namespace AlphaFS.UnitTest
 
       private readonly string LocalHost = Environment.MachineName;
       private readonly string LocalHostShare = Environment.SystemDirectory;
-      private readonly bool _testMyServer = Environment.UserName.Equals(@"jjangli", StringComparison.OrdinalIgnoreCase);
-      private const string MyServer = "yomodo";
-      private const string MyServerShare = @"\\" + MyServer + @"\video";
       private static Stopwatch _stopWatcher;
       private static string StopWatcher(bool start = false)
       {
@@ -121,7 +118,7 @@ namespace AlphaFS.UnitTest
       private void DumpEnumerateDrives(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
-         string host = isLocal ? LocalHost : MyServer;
+         string host = LocalHost;
 
 
          if (isLocal)
@@ -161,53 +158,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpEnumerateDrives
-
-      #region DumpEnumerateShares
-
-      private void DumpEnumerateShares(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
-         string host = isLocal ? LocalHost : MyServer;
-
-
-         if (isLocal)
-         {
-            string nonX = Path.GetRandomFileName();
-            bool caughtException = false;
-            Console.WriteLine("\nEnumerating shares from (non-existing) host: [{0}]\n", nonX);
-            StopWatcher(true);
-            try
-            {
-               Host.EnumerateShares(nonX, false).Any();
-            }
-            catch (Exception ex)
-            {
-               caughtException = true;
-               Console.Write("Caught Exception (As expected): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.Write("\t{0}", Reporter(true));
-            Assert.IsTrue(caughtException, "No Exception was caught.");
-            Console.Write("\n\n");
-         }
-
-
-         Console.WriteLine("\nEnumerating shares from host: [{0}]\n", host);
-         int cnt = 0;
-         StopWatcher(true);
-         foreach (ShareInfo share in Host.EnumerateShares(host, true))
-         {
-            Console.WriteLine("\t#{0:000}\tShare: [{1}]\tPath on host: [{2}]", ++cnt, share, share.Path);
-
-            Dump(share, -18);
-            Console.Write("\n\n");
-         }
-
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
-         if (isLocal)
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-      }
-
-      #endregion // DumpEnumerateShares
 
       #endregion Dumpers
 
@@ -475,11 +425,14 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Network.Host.EnumerateDfsLinks()");
 
          int cnt = 0;
+         bool noDomainConnection = true;
          StopWatcher(true);
          try
          {
             foreach (string dfsNamespace in Host.EnumerateDomainDfsRoot())
             {
+               noDomainConnection = false;
+
                Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsNamespace);
                int cnt2 = 0;
 
@@ -510,7 +463,11 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (noDomainConnection)
+            Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
+         else
+            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -525,6 +482,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Network.Host.EnumerateDfsRoot()");
 
          int cnt = 0;
+         bool noDomainConnection = true;
          StopWatcher(true);
 
          // Drill down to get servers from the first namespace retrieved.
@@ -533,6 +491,8 @@ namespace AlphaFS.UnitTest
          { 
             foreach (string dfsName in Host.EnumerateDomainDfsRoot())
             {
+               noDomainConnection = false;
+
                Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsName);
 
                try
@@ -576,7 +536,11 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (noDomainConnection)
+            Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
+         else
+            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -592,11 +556,15 @@ namespace AlphaFS.UnitTest
 
          Console.Write("\nEnumerating DFS Root from user domain: [{0}]\n", NativeMethods.ComputerDomain);
          int cnt = 0;
+         bool noDomainConnection = true;
          StopWatcher(true);
          try
          {
             foreach (string dfsNamespace in Host.EnumerateDomainDfsRoot())
+            {
+               noDomainConnection = false;
                Console.Write("\n\t#{0:000}\tDFS Root: [{1}]", ++cnt, dfsNamespace);
+            }
          }
          catch (NetworkInformationException ex)
          {
@@ -608,7 +576,11 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (noDomainConnection)
+            Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
+         else
+            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -623,7 +595,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Network.Host.EnumerateDrives()");
 
          DumpEnumerateDrives(true);
-         DumpEnumerateDrives(false);
       }
 
       #endregion // EnumerateDrives
@@ -669,11 +640,14 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Network.Host.GetDfsClientInfo()");
 
          int cnt = 0;
+         bool noDomainConnection = true;
          StopWatcher(true);
          try
          {
             foreach (string dfsLink in Host.EnumerateDomainDfsRoot())
             {
+               noDomainConnection = false;
+
                try
                {
                   foreach (string dir in Directory.EnumerateDirectories(dfsLink))
@@ -705,7 +679,11 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (noDomainConnection)
+            Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
+         else
+            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
          Console.WriteLine();
       }

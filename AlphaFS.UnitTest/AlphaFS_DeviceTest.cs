@@ -1,4 +1,4 @@
-﻿/* Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -37,7 +37,6 @@ namespace AlphaFS.UnitTest
       #region DeviceTest Helpers
 
       private static readonly string LocalHost = Environment.MachineName; // Environment.MachineName equals using null.
-      private readonly string MyServer = @"\\" + LocalHost;
       private static Stopwatch _stopWatcher;
 
       private static string StopWatcher(bool start = false)
@@ -110,7 +109,7 @@ namespace AlphaFS.UnitTest
       private void DumpEnumerateDevices(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
-         string tempPath = isLocal ? LocalHost : MyServer;
+         string tempPath = LocalHost;
          Console.Write("\nEnumerating devices from host: [{0}]\n", tempPath);
 
          int classCnt = 0;
@@ -158,7 +157,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
 
          DumpEnumerateDevices(true);
-         //DumpEnumerateDevices(false);
       }
 
       #endregion // EnumerateDevices
