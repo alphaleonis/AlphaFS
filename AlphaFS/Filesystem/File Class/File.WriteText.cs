@@ -604,7 +604,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (isAppend)
                stream.Seek(0, SeekOrigin.End);
 
-            using (StreamWriter writer = new StreamWriter(stream, encoding))
+            using (var writer = new StreamWriter(stream, encoding))
             {
                if (addNewLine)
                   foreach (string line in contents)

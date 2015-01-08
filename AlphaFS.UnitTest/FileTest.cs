@@ -1250,14 +1250,14 @@ namespace AlphaFS.UnitTest
                sw.WriteLine(TextHelloWorld);
 
 
-         long fileGetStreamSize = File.GetStreamSize(tempPath);
-         long fileGetStreamsDataSize = File.GetStreamSize(tempPath, StreamType.Data);
+         long fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
+         long fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
          long fileGetSize = File.GetSize(tempPath); 
          long fileGetCompressedSize = File.GetCompressedSize(tempPath);
          long fiLength = fi.Length;
 
-         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
-         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
+         Console.WriteLine("\tFile.GetAlternateDataStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
+         Console.WriteLine("\tFile.GetAlternateDataStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
          
          Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
          Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
@@ -1287,8 +1287,8 @@ namespace AlphaFS.UnitTest
             report = Reporter(true);
             compressOk = true;
 
-            fileGetStreamSize = File.GetStreamSize(tempPath);
-            fileGetStreamsDataSize = File.GetStreamSize(tempPath, StreamType.Data);
+            fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
+            fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
             fileGetSize = File.GetSize(tempPath); 
             fileGetCompressedSize = File.GetCompressedSize(tempPath);
          }
@@ -1308,8 +1308,8 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n\n\tFile.Compress() (Should be True): [{0}]{1}\n", compressOk, report);
          
-         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
-         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
+         Console.WriteLine("\tFile.GetAlternateDataStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
+         Console.WriteLine("\tFile.GetAlternateDataStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
          
          Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
          Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
@@ -1340,8 +1340,8 @@ namespace AlphaFS.UnitTest
             report = Reporter(true);
             decompressOk = true;
 
-            fileGetStreamSize = File.GetStreamSize(tempPath);
-            fileGetStreamsDataSize = File.GetStreamSize(tempPath, StreamType.Data);
+            fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
+            fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
             fileGetSize = File.GetSize(tempPath);
             fileGetCompressedSize = File.GetCompressedSize(tempPath);
 
@@ -1362,8 +1362,8 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n\n\tFile.Decompress() (Should be True): [{0}]{1}\n", decompressOk, report);
 
-         Console.WriteLine("\tFile.GetStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
-         Console.WriteLine("\tFile.GetStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
+         Console.WriteLine("\tFile.GetAlternateDataStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
+         Console.WriteLine("\tFile.GetAlternateDataStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
 
          Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
          Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
@@ -3381,16 +3381,16 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
       
-      #region AddStream
+      #region AddAlternateDataStream
 
       [TestMethod]
-      public void AlphaFS_AddStream()
+      public void AlphaFS_AddAlternateDataStream()
       {
-         Console.WriteLine("File.GetStreamSize()");
+         Console.WriteLine("File.GetAlternateDataStreamSize()");
          Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
       }
 
-      #endregion // AddStream
+      #endregion // AddAlternateDataStream
 
       #region Compress
 
@@ -3438,16 +3438,16 @@ namespace AlphaFS.UnitTest
 
       #endregion // EnumerateHardlinks
 
-      #region EnumerateStreams
+      #region EnumerateAlternateDataStreams
 
       [TestMethod]
-      public void AlphaFS_EnumerateStreams()
+      public void AlphaFS_EnumerateAlternateDataStreams()
       {
-         Console.WriteLine("File.EnumerateStreams()");
+         Console.WriteLine("File.EnumerateAlternateDataStreams()");
          Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
       }
 
-      #endregion // EnumerateStreams
+      #endregion // EnumerateAlternateDataStreams
 
       #region GetChangeTime
 
@@ -3528,27 +3528,27 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetSize
 
-      #region GetStreamSize
+      #region GetAlternateDataStreamSize
 
       [TestMethod]
-      public void AlphaFS_GetStreamSize()
+      public void AlphaFS_GetAlternateDataStreamSize()
       {
-         Console.WriteLine("File.GetStreamSize()");
+         Console.WriteLine("File.GetAlternateDataStreamSize()");
          Console.WriteLine("\nPlease see unit test: AlphaFS_GetSize()");
       }
 
-      #endregion // GetStreamSize
+      #endregion // GetAlternateDataStreamSize
 
-      #region RemoveStream
+      #region RemoveAlternateDataStream
 
       [TestMethod]
-      public void AlphaFS_RemoveStream()
+      public void AlphaFS_RemoveAlternateDataStream()
             {
-         Console.WriteLine("File.RemoveStream()");
+         Console.WriteLine("File.RemoveAlternateDataStream()");
          Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
       }
 
-      #endregion // RemoveStream
+      #endregion // RemoveAlternateDataStream
 
       #region SetTimestamps
 

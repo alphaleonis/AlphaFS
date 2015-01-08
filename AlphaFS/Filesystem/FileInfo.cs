@@ -1161,7 +1161,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      #region AddStream
+      #region AddAlternateDataStream
 
       /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to the file.</summary>
       /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
@@ -1169,10 +1169,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void AddStream(string name, string[] contents)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, Transaction, LongFullName, name, contents, PathFormat.LongFullPath);
+         AlternateDataStreamInfo.AddAlternateDataStreamInternal(false, Transaction, LongFullName, name, contents, PathFormat.LongFullPath);
       }
 
-      #endregion // AddStream
+      #endregion // AddAlternateDataStream
 
       #region Compress
 
@@ -1197,14 +1197,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Decompress
 
-      #region EnumerateStreams
+      #region EnumerateAlternateDataStreams
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</returns>
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
+         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(false, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
@@ -1215,40 +1215,40 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(false, Transaction, null, LongFullName, null, streamType, PathFormat.LongFullPath);
+         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(false, Transaction, null, LongFullName, null, streamType, PathFormat.LongFullPath);
       }
 
-      #endregion // EnumerateStreams
+      #endregion // EnumerateAlternateDataStreams
 
-      #region GetStreamSize
+      #region GetAlternateDataStreamSize
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).</summary>
       /// <returns>The number of bytes used by all streams.</returns>      
       [SecurityCritical]
-      public long GetStreamSize()
+      public long GetAlternateDataStreamSize()
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>      
       [SecurityCritical]
-      public long GetStreamSize(string name)
+      public long GetAlternateDataStreamSize(string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, name, StreamType.Data, PathFormat.LongFullPath);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, Transaction, null, LongFullName, name, StreamType.Data, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>      
       [SecurityCritical]
-      public long GetStreamSize(StreamType type)
+      public long GetAlternateDataStreamSize(StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, Transaction, null, LongFullName, null, type, PathFormat.LongFullPath);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, Transaction, null, LongFullName, null, type, PathFormat.LongFullPath);
       }
 
-      #endregion GetStreamSize
+      #endregion GetAlternateDataStreamSize
       
       #region RefreshEntryInfo
 
@@ -1261,7 +1261,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // RefreshEntryInfo
 
-      #region RemoveStream
+      #region RemoveAlternateDataStream
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the file.</summary>
       /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
@@ -1269,7 +1269,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream()
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullName, null, PathFormat.LongFullPath);
+         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(false, Transaction, LongFullName, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from the file.</summary>
@@ -1279,10 +1279,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void RemoveStream(string name)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, Transaction, LongFullName, name, PathFormat.LongFullPath);
+         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(false, Transaction, LongFullName, name, PathFormat.LongFullPath);
       }
 
-      #endregion // RemoveStream
+      #endregion // RemoveAlternateDataStream
 
 
       #region Unified Internals

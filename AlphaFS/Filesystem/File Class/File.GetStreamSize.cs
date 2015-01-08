@@ -15,9 +15,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by all data streams.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(string path, PathFormat pathFormat)
+      public static long GetAlternateDataStreamSize(string path, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, pathFormat);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -26,9 +26,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by a named stream.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(string path, string name, PathFormat pathFormat)
+      public static long GetAlternateDataStreamSize(string path, string name, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, pathFormat);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, name, StreamType.Data, pathFormat);
       }
 
       /// <summary>
@@ -39,9 +39,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(string path, StreamType type, PathFormat pathFormat)
+      public static long GetAlternateDataStreamSize(string path, StreamType type, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, pathFormat);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, null, type, pathFormat);
       }
 
 
@@ -49,9 +49,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <returns>The number of bytes used by all data streams.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(string path)
+      public static long GetAlternateDataStreamSize(string path)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, null, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, null, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -59,9 +59,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(string path, string name)
+      public static long GetAlternateDataStreamSize(string path, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, name, StreamType.Data, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, name, StreamType.Data, PathFormat.Relative);
       }
 
       /// <summary>
@@ -71,9 +71,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(string path, StreamType type)
+      public static long GetAlternateDataStreamSize(string path, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, null, path, null, type, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, null, type, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
@@ -81,9 +81,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(SafeFileHandle handle, string name)
+      public static long GetAlternateDataStreamSize(SafeFileHandle handle, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, name, StreamType.Data, PathFormat.LongFullPath);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, handle, null, name, StreamType.Data, PathFormat.LongFullPath);
       }
 
       /// <summary>
@@ -93,9 +93,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(SafeFileHandle handle, StreamType type)
+      public static long GetAlternateDataStreamSize(SafeFileHandle handle, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, null, handle, null, null, type, PathFormat.LongFullPath);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, handle, null, null, type, PathFormat.LongFullPath);
       }
 
       #endregion
@@ -108,9 +108,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by all data streams.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static long GetAlternateDataStreamSize(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, pathFormat);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -120,9 +120,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by a named stream.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, string name, PathFormat pathFormat)
+      public static long GetAlternateDataStreamSize(KernelTransaction transaction, string path, string name, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, StreamType.Data, pathFormat);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, name, StreamType.Data, pathFormat);
       }
 
       /// <summary>
@@ -134,9 +134,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type, PathFormat pathFormat)
+      public static long GetAlternateDataStreamSize(KernelTransaction transaction, string path, StreamType type, PathFormat pathFormat)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, pathFormat);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, null, type, pathFormat);
       }
 
 
@@ -145,9 +145,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to an existing file.</param>
       /// <returns>The number of bytes used by all data streams.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path)
+      public static long GetAlternateDataStreamSize(KernelTransaction transaction, string path)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, null, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, null, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -156,9 +156,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="name">The name of the stream to retrieve.</param>
       /// <returns>The number of bytes used by a named stream.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, string name)
+      public static long GetAlternateDataStreamSize(KernelTransaction transaction, string path, string name)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, name, null, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, name, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
@@ -167,9 +167,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
       /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>      
       [SecurityCritical]
-      public static long GetStreamSize(KernelTransaction transaction, string path, StreamType type)
+      public static long GetAlternateDataStreamSize(KernelTransaction transaction, string path, StreamType type)
       {
-         return AlternateDataStreamInfo.GetStreamSizeInternal(false, transaction, null, path, null, type, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, null, type, PathFormat.Relative);
       }
 
       #endregion // Transacted

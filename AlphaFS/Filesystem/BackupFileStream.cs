@@ -579,7 +579,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Lock / Unlock
 
-      #region EnumerateStreams
+      #region EnumerateAlternateDataStreams
       /// <summary>
       ///   Returns <see cref="AlternateDataStreamInfo"/> instances, associated with the file.
       /// </summary>
@@ -589,10 +589,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
       {
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, SafeFileHandle, null, null, null, PathFormat.LongFullPath);
+         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, null, SafeFileHandle, null, null, null, PathFormat.LongFullPath);
       }
 
-      #endregion // EnumerateStreams
+      #endregion // EnumerateAlternateDataStreams
 
       #region ReadStreamInfo
 
@@ -603,7 +603,7 @@ namespace Alphaleonis.Win32.Filesystem
       public AlternateDataStreamInfo ReadStreamInfo()
       {
          // Return the first entry.
-         return AlternateDataStreamInfo.EnumerateStreamsInternal(null, null, SafeFileHandle, null, null, null, PathFormat.LongFullPath).FirstOrDefault();
+         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, null, SafeFileHandle, null, null, null, PathFormat.LongFullPath).FirstOrDefault();
       }
 
       #endregion // ReadStreamInfo

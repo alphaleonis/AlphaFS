@@ -17,7 +17,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(string path, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, pathFormat);
+         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(false, null, path, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(string path, string name, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, pathFormat);
+         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(false, null, path, name, pathFormat);
       }
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file.</summary>
@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(string path)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, null, PathFormat.Relative);
+         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(false, null, path, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(string path, string name)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, null, path, name, PathFormat.Relative);
+         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(false, null, path, name, PathFormat.Relative);
       }
       #endregion
 
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, pathFormat);
+         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(false, transaction, path, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, string name, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, pathFormat);
+         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(false, transaction, path, name, pathFormat);
       }
 
       /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from an existing file.</summary>
@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, null, PathFormat.Relative);
+         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(false, transaction, path, null, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from an existing file.</summary>
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void RemoveStream(KernelTransaction transaction, string path, string name)
       {
-         AlternateDataStreamInfo.RemoveStreamInternal(false, transaction, path, name, PathFormat.Relative);
+         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(false, transaction, path, name, PathFormat.Relative);
       }
 
       #endregion Transacted

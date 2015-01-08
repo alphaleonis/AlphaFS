@@ -7,7 +7,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      #region AddStream
+      #region AddAlternateDataStream
 
       #region IsFullPath
 
@@ -19,7 +19,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AddStream(string path, string name, string[] contents, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, null, path, name, contents, pathFormat);
+         AlternateDataStreamInfo.AddAlternateDataStreamInternal(false, null, path, name, contents, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AddStream(string path, string name, string[] contents)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, null, path, name, contents, PathFormat.Relative);
+         AlternateDataStreamInfo.AddAlternateDataStreamInternal(false, null, path, name, contents, PathFormat.Relative);
       }
 
       #region Transacted
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents, PathFormat pathFormat)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, transaction, path, name, contents, pathFormat);
+         AlternateDataStreamInfo.AddAlternateDataStreamInternal(false, transaction, path, name, contents, pathFormat);
       }
 
       #endregion // IsFullPath
@@ -60,12 +60,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AddStream(KernelTransaction transaction, string path, string name, string[] contents)
       {
-         AlternateDataStreamInfo.AddStreamInternal(false, transaction, path, name, contents, PathFormat.Relative);
+         AlternateDataStreamInfo.AddAlternateDataStreamInternal(false, transaction, path, name, contents, PathFormat.Relative);
       }
 
       #endregion Transacted
 
-      #endregion // AddStream
+      #endregion // AddAlternateDataStream
 
    }
 }
