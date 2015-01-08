@@ -453,16 +453,16 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
 
-      #region AddStream
+      #region AddAlternateDataStream
 
       [TestMethod]
-      public void AlphaFS_AddStream()
+      public void AlphaFS_AddAlternateDataStream()
       {
-         Console.WriteLine("FileInfo.AddStream()");
+         Console.WriteLine("FileInfo.AddAlternateDataStream()");
          Console.WriteLine("\nPlease see unit tests from class: File().");
       }
 
-      #endregion // AddStream
+      #endregion // AddAlternateDataStream
 
       #region Compress
 
@@ -486,38 +486,38 @@ namespace AlphaFS.UnitTest
 
       #endregion // Decompress]
 
-      #region EnumerateStreams
+      #region EnumerateAlternateDataStreams
 
       [TestMethod]
-      public void AlphaFS_EnumerateStreams()
+      public void AlphaFS_EnumerateAlternateDataStreams()
       {
-         Console.WriteLine("FileInfo.EnumerateStreams()");
+         Console.WriteLine("FileInfo.EnumerateAlternateDataStreams()");
          Console.WriteLine("\nPlease see unit tests from class: File().");
       }
 
-      #endregion // EnumerateStreams
+      #endregion // EnumerateAlternateDataStreams
 
-      #region GetStreamSize
+      #region GetAlternateDataStreamSize
 
       [TestMethod]
-      public void AlphaFS_GetStreamSize()
+      public void AlphaFS_GetAlternateDataStreamSize()
       {
-         Console.WriteLine("FileInfo.GetStreamSize()");
+         Console.WriteLine("FileInfo.GetAlternateDataStreamSize()");
          Console.WriteLine("\nPlease see unit tests from class: File().");
       }
 
-      #endregion // GetStreamSize
+      #endregion // GetAlternateDataStreamSize
 
-      #region RemoveStream
+      #region RemoveAlternateDataStream
 
       [TestMethod]
-      public void AlphaFS_RemoveStream()
+      public void AlphaFS_RemoveAlternateDataStream()
       {
-         Console.WriteLine("FileInfo.RemoveStream()");
+         Console.WriteLine("FileInfo.RemoveAlternateDataStream()");
          Console.WriteLine("\nPlease see unit tests from class: File().");
       }
 
-      #endregion // RemoveStream
+      #endregion // RemoveAlternateDataStream
 
       #endregion // AlphaFS
 

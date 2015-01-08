@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>
       ///   Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file,
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>Appends the specified stringto the file, creating the file if it does not already exist.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -351,7 +351,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
@@ -513,7 +513,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(null, path, new[] { contents }, encoding, false, false, pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>
       ///   [AlphaFS] Creates a new file as part of a transaction, write the contents to the file, and then closes the file. If the target file
@@ -604,7 +604,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (isAppend)
                stream.Seek(0, SeekOrigin.End);
 
-            using (StreamWriter writer = new StreamWriter(stream, encoding))
+            using (var writer = new StreamWriter(stream, encoding))
             {
                if (addNewLine)
                   foreach (string line in contents)

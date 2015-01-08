@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
          DeleteDirectoryInternal(null, null, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.Relative);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
       /// <param name="transaction">The transaction.</param>

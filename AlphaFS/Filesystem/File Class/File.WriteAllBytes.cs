@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAllBytesInternal(null, path, bytes, pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>
       ///   [AlphaFS] Creates a new file, writes the specified byte array to the file, and then closes the file. If the target file already

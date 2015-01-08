@@ -628,7 +628,7 @@ namespace Alphaleonis.Win32.Filesystem
             
             bool isFolder = IsDirectory || Name == Path.CurrentDirectoryPrefix;
             
-            _lengthStreams = AlternateDataStreamInfo.GetStreamSizeInternal(isFolder, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
+            _lengthStreams = AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(isFolder, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
 
             return _lengthStreams;
          }

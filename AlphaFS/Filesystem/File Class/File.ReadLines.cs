@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Reads the lines of a file.</summary>
       /// <param name="transaction">The transaction.</param>

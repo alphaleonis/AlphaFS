@@ -181,7 +181,7 @@
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetProperties.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
-    <Compile Include="Filesystem\File Class\File.EnumerateStreams.cs" />
+    <Compile Include="Filesystem\File Class\File.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
     <Compile Include="Filesystem\File Class\File.CreateSymbolicLink.cs" />
     <Compile Include="Filesystem\File Class\File.CreateHardlink.cs" />
@@ -245,8 +245,8 @@
     <Compile Include="Filesystem\File Class\File.GetFileSystemEntryInfo.cs" />
     <Compile Include="Filesystem\File Class\File.GetLinkTargetInfo.cs" />
     <Compile Include="Filesystem\File Class\File.GetSize.cs" />
-    <Compile Include="Filesystem\File Class\File.GetStreamSize.cs" />
-    <Compile Include="Filesystem\File Class\File.RemoveStream.cs" />
+    <Compile Include="Filesystem\File Class\File.GetAlternateDataStreamSize.cs" />
+    <Compile Include="Filesystem\File Class\File.RemoveAlternateDataStream.cs" />
     <Compile Include="Filesystem\File Class\File.TransferTimestamps.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\FileInfo.cs" />
@@ -398,7 +398,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -421,16 +421,16 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
 
-      #region AddStream
+      #region AddAlternateDataStream
 
       [TestMethod]
-      public void AlphaFS_AddStream()
+      public void AlphaFS_AddAlternateDataStream()
       {
-         Console.WriteLine("DirectoryInfo.AddStream()");
+         Console.WriteLine("DirectoryInfo.AddAlternateDataStream()");
          Console.WriteLine("\nPlease see unit tests from class: Directory().");
       }
 
-      #endregion // AddStream
+      #endregion // AddAlternateDataStream
 
       #region CopyTo
 
@@ -553,27 +553,27 @@ namespace AlphaFS.UnitTest
 
       #endregion // Encrypt
 
-      #region EnumerateStreams
+      #region EnumerateAlternateDataStreams
 
       [TestMethod]
-      public void AlphaFS_EnumerateStreams()
+      public void AlphaFS_EnumerateAlternateDataStreams()
       {
-         Console.WriteLine("DirectoryInfo.EnumerateStreams()");
+         Console.WriteLine("DirectoryInfo.EnumerateAlternateDataStreams()");
          Console.WriteLine("\nPlease see unit tests from class: Directory().");
       }
 
-      #endregion // EnumerateStreams
+      #endregion // EnumerateAlternateDataStreams
 
-      #region GetStreamSize
+      #region GetAlternateDataStreamSize
 
       [TestMethod]
-      public void AlphaFS_GetStreamSize()
+      public void AlphaFS_GetAlternateDataStreamSize()
       {
-         Console.WriteLine("DirectoryInfo.GetStreamSize()");
+         Console.WriteLine("DirectoryInfo.GetAlternateDataStreamSize()");
          Console.WriteLine("\nPlease see unit tests from class: Directory().");
       }
 
-      #endregion // GetStreamSize
+      #endregion // GetAlternateDataStreamSize
 
       #region AlphaFS_MoveTo
 
@@ -586,16 +586,16 @@ namespace AlphaFS.UnitTest
 
       #endregion // AlphaFS_MoveTo
 
-      #region RemoveStream
+      #region RemoveAlternateDataStream
 
       [TestMethod]
-      public void AlphaFS_RemoveStream()
+      public void AlphaFS_RemoveAlternateDataStream()
       {
-         Console.WriteLine("DirectoryInfo.RemoveStream()");
+         Console.WriteLine("DirectoryInfo.RemoveAlternateDataStream()");
          Console.WriteLine("\nPlease see unit tests from class: Directory().");
       }
 
-      #endregion // RemoveStream
+      #endregion // RemoveAlternateDataStream
 
       #endregion // AlphaFS
 

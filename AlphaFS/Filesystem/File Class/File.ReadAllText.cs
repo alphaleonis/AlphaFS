@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
          return ReadAllTextInternal(null, path, encoding, pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
