@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       ///
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException">
       ///   path contains a colon (":") that is not part of a volume identifier (for example, "c:\").
       /// </exception>
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       ///
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
       public static string GetFullPath(string path, bool asLongPath)
       {
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="path"/>, when present.</param>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       ///
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
       public static string GetFullPath(string path, bool asLongPath, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
       {
@@ -124,7 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       ///
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException">
       ///   path contains a colon (":") that is not part of a volume identifier (for example, "c:\").
       /// </exception>
@@ -161,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       ///
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
       public static string GetFullPath(KernelTransaction transaction, string path, bool asLongPath)
       {
@@ -193,7 +193,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="path"/>, when present.</param>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       ///
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
       public static string GetFullPath(KernelTransaction transaction, string path, bool asLongPath, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
       {
@@ -234,7 +234,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException">
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
       /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
       internal static string GetFullPathInternal(KernelTransaction transaction, string path, bool asLongPath, GetFullPathOptions options)
       {

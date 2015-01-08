@@ -24,7 +24,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>      
+      /// <exception cref="ArgumentNullException"/>      
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
       public static string[] GetDirectories(string path)
@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateDirectories can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -176,7 +176,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
       public static string[] GetFiles(string path)
@@ -194,7 +194,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -217,7 +217,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -252,7 +252,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
@@ -271,7 +271,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -295,7 +295,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -336,7 +336,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The directory for which file and subdirectory names are returned.</param>
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path)
@@ -353,7 +353,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to be searched.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -375,7 +375,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       /// <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
@@ -410,7 +410,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which file and subdirectory names are returned.</param>
       [SecurityCritical]
@@ -428,7 +428,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to be searched.</param>
       /// <param name="searchPattern">
@@ -451,7 +451,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">

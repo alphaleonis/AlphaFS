@@ -288,9 +288,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Deletes this <see cref="DirectoryInfo"/> if it is empty.</summary>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
-
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       [SecurityCritical]
       public override void Delete()
       {
@@ -298,15 +297,14 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete subdirectories and files.</summary>
-      /// <param name="recursive"><see langword="true"/> to delete this directory, its subdirectories, and all files; otherwise, <see langword="false"/>.</param>
       /// <remarks>
-      /// If the <see cref="DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if <paramref name="recursive"/> is <see langword="false"/>.
-      /// Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when <paramref name="recursive"/> is <see langword="false"/> throws an <see cref="IOException"/>.
+      ///   <para>If the <see cref="DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
+      ///   <para>Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
-
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <param name="recursive"><see langword="true"/> to delete this directory, its subdirectories, and all files; otherwise, <see langword="false"/>.</param>
       [SecurityCritical]
       public void Delete(bool recursive)
       {
@@ -318,13 +316,15 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Deletes this instance of a <see cref="DirectoryInfo"/>, specifying whether to delete files and subdirectories.</summary>
+      /// <remarks>
+      ///   <para>If the <see cref="DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.</para>
+      ///   <para>Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="recursive"><see langword="true"/> to delete this directory, its subdirectories, and all files; otherwise, <see langword="false"/>.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> ignores read only attribute of files and directories.</param>
-      /// <remarks>
-      /// If the <see cref="DirectoryInfo"/> has no files or subdirectories, this method deletes the <see cref="DirectoryInfo"/> even if recursive is <see langword="false"/>.
-      /// Attempting to delete a <see cref="DirectoryInfo"/> that is not empty when recursive is false throws an <see cref="IOException"/>.
-      /// </remarks>
-
       [SecurityCritical]
       public void Delete(bool recursive, bool ignoreReadOnly)
       {
@@ -1311,33 +1311,33 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Decrypt
 
-      #region DeleteEmpty
+      #region DeleteEmptySubdirectories
 
-      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="DirectoryInfo"/> instance.</summary>
+      /// <summary>[AlphaFS] Deletes empty subdirectories from the <see cref="DirectoryInfo"/> instance.</summary>
       [SecurityCritical]
       public void DeleteEmpty()
       {
-         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, false, false, true, PathFormat.LongFullPath);
+         Directory.DeleteEmptySubdirectoriesInternal(null, Transaction, LongFullName, false, false, true, PathFormat.LongFullPath);
       }
 
-      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="DirectoryInfo"/> instance.</summary>
+      /// <summary>[AlphaFS] Deletes empty subdirectories from the <see cref="DirectoryInfo"/> instance.</summary>
       /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
       [SecurityCritical]
       public void DeleteEmpty(bool recursive)
       {
-         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, recursive, false, true, PathFormat.LongFullPath);
+         Directory.DeleteEmptySubdirectoriesInternal(null, Transaction, LongFullName, recursive, false, true, PathFormat.LongFullPath);
       }
 
-      /// <summary>[AlphaFS] Deletes empty subdirectores from the <see cref="DirectoryInfo"/> instance.</summary>
+      /// <summary>[AlphaFS] Deletes empty subdirectories from the <see cref="DirectoryInfo"/> instance.</summary>
       /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       [SecurityCritical]
       public void DeleteEmpty(bool recursive, bool ignoreReadOnly)
       {
-         Directory.DeleteEmptyDirectoryInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, true, PathFormat.LongFullPath);
+         Directory.DeleteEmptySubdirectoriesInternal(null, Transaction, LongFullName, recursive, ignoreReadOnly, true, PathFormat.LongFullPath);
       }
 
-      #endregion // DeleteEmpty
+      #endregion // DeleteEmptySubdirectories
 
       #region EnableCompression
 

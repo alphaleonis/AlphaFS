@@ -122,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the
       ///   associated volume.</para>
       /// </remarks>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException">
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
       /// </exception>
@@ -228,7 +228,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Unified method GetRegularPathInternal() to get the regular path from a long path.</summary>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException">
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
       /// </exception>

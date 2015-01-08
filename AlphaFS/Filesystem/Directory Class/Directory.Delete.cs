@@ -17,8 +17,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       [SecurityCritical]
       public static void Delete(string path)
       {
@@ -30,8 +30,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       [SecurityCritical]
       public static void Delete(string path, bool recursive)
       {
@@ -45,8 +45,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
@@ -59,11 +59,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly)
       {
@@ -80,8 +77,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
@@ -93,8 +90,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
       {
@@ -107,8 +104,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive)
       {
@@ -123,8 +120,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
@@ -144,8 +141,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException ">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="fileSystemEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fileSystemEntryInfo"/> or <paramref name="path"/>, not both.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove. Use either <paramref name="path"/> or <paramref name="fileSystemEntryInfo"/>, not both.</param>

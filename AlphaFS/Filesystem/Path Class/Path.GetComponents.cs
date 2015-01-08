@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException">
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
       /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
       public static string GetExtension(string path)
       {

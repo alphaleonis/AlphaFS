@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see cref="FileSecurity"/> FileSecurity object to the specified file.
       /// </summary>
       /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">
       ///   A file to add or remove access control list (ACL) entries from. This parameter This parameter may be <see langword="null"/>.
       /// </param>

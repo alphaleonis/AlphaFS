@@ -4236,14 +4236,14 @@ namespace AlphaFS.UnitTest
 
       #endregion // CountFileSystemObjects
 
-      #region DeleteEmpty
+      #region DeleteEmptySubdirectories
 
       [TestMethod]
-      public void AlphaFS_DeleteEmpty()
+      public void AlphaFS_DeleteEmptySubdirectories()
       {
-         Console.WriteLine("Directory.DeleteEmpty()");
+         Console.WriteLine("Directory.DeleteEmptySubdirectories()");
 
-         string tempPath = Path.Combine(Path.GetTempPath(), "Directory.DeleteEmpty()-" + Path.GetRandomFileName());
+         string tempPath = Path.Combine(Path.GetTempPath(), "Directory.DeleteEmptySubdirectories()-" + Path.GetRandomFileName());
          long dirs0, dirs1, files0, files1;
 
          const int maxDepth = 10;
@@ -4265,7 +4265,7 @@ namespace AlphaFS.UnitTest
          bool deleteOk = false;
          try
          {
-            Directory.DeleteEmpty(tempPath, false);
+            Directory.DeleteEmptySubdirectories(tempPath, false);
             deleteOk = true;
          }
          catch
@@ -4273,11 +4273,11 @@ namespace AlphaFS.UnitTest
          }
 
 
-         // Issue-21123: Method Directory- and DirectoryInfo.DeleteEmpty() also deletes the given directories when totally empty.
+         // Issue-21123: Method Directory- and DirectoryInfo.DeleteEmptySubdirectories() also deletes the given directories when totally empty.
          Assert.IsTrue(Directory.Exists(tempPath), "Directory should exist.");
 
-         Console.WriteLine("\nDirectory.DeleteEmpty() (Should be True): [{0}]\n{1}", deleteOk, Reporter());
-         Assert.IsTrue(deleteOk, "DeleteEmpty() failed.");
+         Console.WriteLine("\nDirectory.DeleteEmptySubdirectories() (Should be True): [{0}]\n{1}", deleteOk, Reporter());
+         Assert.IsTrue(deleteOk, "DeleteEmptySubdirectories() failed.");
          
          searchPattern = Path.WildcardStarMatchAll;
 
@@ -4296,7 +4296,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue((emptyDirectories + remainingDirectories) == totalDirectories);
       }
 
-      #endregion // Delete
+      #endregion // DeleteEmptySubdirectories
 
       #region Encrypt/Decrypt
 

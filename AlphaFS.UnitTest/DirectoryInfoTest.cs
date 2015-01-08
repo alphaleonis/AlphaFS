@@ -509,16 +509,16 @@ namespace AlphaFS.UnitTest
 
       #endregion // Decrypt
 
-      #region DeleteEmpty
+      #region DeleteEmptySubdirectories
 
       [TestMethod]
-      public void AlphaFS_DeleteEmpty()
+      public void AlphaFS_DeleteEmptySubdirectories()
       {
-         Console.WriteLine("DirectoryInfo.DeleteEmpty()");
+         Console.WriteLine("DirectoryInfo.DeleteEmptySubdirectories()");
          Console.WriteLine("\nPlease see unit tests from class: Directory().");
       }
 
-      #endregion // DeleteEmpty
+      #endregion // DeleteEmptySubdirectories
 
       #region EnableCompression
 
