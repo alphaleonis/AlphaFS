@@ -660,7 +660,7 @@ namespace Alphaleonis.Win32.Filesystem
       public void MoveTo(string destinationPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, PathFormat.FullPath);
+         CopyToMoveToInternal(destinationPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, PathFormat.Relative);
          CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
       }
 
