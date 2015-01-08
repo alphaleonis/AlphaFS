@@ -475,11 +475,14 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Network.Host.EnumerateDfsLinks()");
 
          int cnt = 0;
+         bool noDomainConnection = true;
          StopWatcher(true);
          try
          {
             foreach (string dfsNamespace in Host.EnumerateDomainDfsRoot())
             {
+               noDomainConnection = false;
+
                Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsNamespace);
                int cnt2 = 0;
 
@@ -510,7 +513,11 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (noDomainConnection)
+            Assert.Inconclusive("Test skipped because the computer is probably not connected to a domain.");
+         else
+            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -525,6 +532,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Network.Host.EnumerateDfsRoot()");
 
          int cnt = 0;
+         bool noDomainConnection = true;
          StopWatcher(true);
 
          // Drill down to get servers from the first namespace retrieved.
@@ -533,6 +541,8 @@ namespace AlphaFS.UnitTest
          { 
             foreach (string dfsName in Host.EnumerateDomainDfsRoot())
             {
+               noDomainConnection = false;
+
                Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsName);
 
                try
@@ -576,7 +586,11 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (noDomainConnection)
+            Assert.Inconclusive("Test skipped because the computer is probably not connected to a domain.");
+         else
+            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -592,11 +606,15 @@ namespace AlphaFS.UnitTest
 
          Console.Write("\nEnumerating DFS Root from user domain: [{0}]\n", NativeMethods.ComputerDomain);
          int cnt = 0;
+         bool noDomainConnection = true;
          StopWatcher(true);
          try
          {
             foreach (string dfsNamespace in Host.EnumerateDomainDfsRoot())
+            {
+               noDomainConnection = false;
                Console.Write("\n\t#{0:000}\tDFS Root: [{1}]", ++cnt, dfsNamespace);
+            }
          }
          catch (NetworkInformationException ex)
          {
@@ -608,7 +626,11 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (noDomainConnection)
+            Assert.Inconclusive("Test skipped because the computer is probably not connected to a domain.");
+         else
+            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -669,11 +691,14 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Network.Host.GetDfsClientInfo()");
 
          int cnt = 0;
+         bool noDomainConnection = true;
          StopWatcher(true);
          try
          {
             foreach (string dfsLink in Host.EnumerateDomainDfsRoot())
             {
+               noDomainConnection = false;
+
                try
                {
                   foreach (string dir in Directory.EnumerateDirectories(dfsLink))
@@ -705,7 +730,11 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (noDomainConnection)
+            Assert.Inconclusive("Test skipped because the computer is probably not connected to a domain.");
+         else
+            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
          Console.WriteLine();
       }

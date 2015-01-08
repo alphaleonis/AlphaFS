@@ -1488,17 +1488,21 @@ namespace AlphaFS.UnitTest
       private void DumpClassDfsInfo()
       {
          int cnt = 0;
+         bool noDomainConnection = true;
+
          StopWatcher(true);
          try
          {
             foreach (string dfsNamespace in Host.EnumerateDomainDfsRoot())
             {
+               noDomainConnection = false;
+
                try
                {
                   Console.Write("\n#{0:000}\tDFS Root: [{1}]\n", ++cnt, dfsNamespace);
 
                   DfsInfo dfsInfo = Host.GetDfsInfo(dfsNamespace);
-
+                  
                   Console.Write("\nDirectory contents:\tSubdirectories: [{0}]\tFiles: [{1}]\n",
                      dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Folders),
                      dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Files));
@@ -1539,7 +1543,11 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\n\n\t{0}", Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (noDomainConnection)
+            Assert.Inconclusive("Test skipped because the computer is probably not connected to a domain.");
+         else
+            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 
          Console.WriteLine();
       }
