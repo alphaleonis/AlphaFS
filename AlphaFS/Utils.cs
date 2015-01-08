@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -46,7 +45,7 @@ namespace Alphaleonis
          //Array enumValArray = Enum.GetValues(enumType);
          //List<T> enumValList = new List<T>(enumValArray.Length);
          IOrderedEnumerable<T> enumValArray = Enum.GetValues(enumType).Cast<T>().OrderBy(e => e.ToString());
-         List<T> enumValList = new List<T>(enumValArray.Count());
+         var enumValList = new List<T>(enumValArray.Count());
 
          enumValList.AddRange(enumValArray.Select(val => (T)Enum.Parse(enumType, val.ToString())));
          return enumValList;
@@ -63,21 +62,11 @@ namespace Alphaleonis
       public static string GetEnumDescription(Enum enumValue)
       {
          FieldInfo fi = enumValue.GetType().GetField(enumValue.ToString());
-         DescriptionAttribute[] attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
+         var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
          return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
       }
 
       #endregion // GetEnumDescription
-
-      #region MarshalPtrToStructure
-
-      public static T MarshalPtrToStructure<T>(int offset, IntPtr buffer) where T : struct
-      {
-         var structure = new T();
-         return (T) Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
-      }
-
-      #endregion // MarshalPtrToStructure
 
       #region IsNullOrWhiteSpace
 
@@ -103,6 +92,16 @@ namespace Alphaleonis
       }
 
       #endregion // IsNullOrWhiteSpace
+
+      #region MarshalPtrToStructure
+
+      public static T MarshalPtrToStructure<T>(int offset, IntPtr buffer) where T : struct
+      {
+         var structure = new T();
+         return (T) Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
+      }
+
+      #endregion // MarshalPtrToStructure
       
       #region UnitSizeToText
 

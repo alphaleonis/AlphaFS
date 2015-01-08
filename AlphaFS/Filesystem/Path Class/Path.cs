@@ -21,11 +21,9 @@
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>
-   /// Performs operations on String instances that contain file or directory path information. These operations are performed in a cross-
-   /// platform manner.
-   /// </summary>
+   /// <summary>Performs operations on String instances that contain file or directory path information. These operations are performed in a cross-platform manner.</summary>
    public static partial class Path
    {
+      // This file only exists for the documentation.
    }
 }
