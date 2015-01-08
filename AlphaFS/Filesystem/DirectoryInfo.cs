@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
          DisplayPath = GetDisplayName(OriginalPath);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -1003,7 +1003,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The lines to add to the stream.</param>
 
       [SecurityCritical]
-      public void AddStream(string name, string[] contents)
+      public void AddAlternateDataStream(string name, string[] contents)
       {
          AlternateDataStreamInfo.AddAlternateDataStreamInternal(true, Transaction, LongFullName, name, contents, PathFormat.LongFullPath);
       }
@@ -1394,7 +1394,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</returns>
 
       [SecurityCritical]
-      public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
+      public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams()
       {
          return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(true, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
       }
@@ -1408,7 +1408,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see cref="StreamType"/> instances for the directory.
       /// </returns>      
       [SecurityCritical]
-      public IEnumerable<AlternateDataStreamInfo> EnumerateStreams(StreamType streamType)
+      public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(StreamType streamType)
       {
          return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(true, Transaction, null, LongFullName, null, streamType, PathFormat.LongFullPath);
       }
@@ -1484,7 +1484,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
 
       [SecurityCritical]
-      public void RemoveStream()
+      public void RemoveAlternateDataStream()
       {
          AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(true, Transaction, LongFullName, null, PathFormat.LongFullPath);
       }
@@ -1495,7 +1495,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
 
       [SecurityCritical]
-      public void RemoveStream(string name)
+      public void RemoveAlternateDataStream(string name)
       {
          AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(true, Transaction, LongFullName, name, PathFormat.LongFullPath);
       }

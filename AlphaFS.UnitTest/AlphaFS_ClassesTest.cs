@@ -38,7 +38,6 @@ using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
-using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
 using OperatingSystem = Alphaleonis.Win32.OperatingSystem;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
@@ -397,7 +396,7 @@ namespace AlphaFS.UnitTest
 
          Assert.AreEqual(defaultStreamsFile, currentNumberofStreams, "Total amount of default streams do not match.");
          Assert.AreEqual(currentNumberofStreams, File.EnumerateAlternateDataStreams(tempPath).Count(), "Total amount of File.EnumerateAlternateDataStreams() streams do not match.");
-         Assert.AreEqual(currentNumberofStreams, fi.EnumerateStreams().Count(), "Total amount of FileInfo() streams do not match.");
+         Assert.AreEqual(currentNumberofStreams, fi.EnumerateAlternateDataStreams().Count(), "Total amount of FileInfo() streams do not match.");
 
 
          fileSize = File.GetSize(tempPath);
@@ -409,20 +408,20 @@ namespace AlphaFS.UnitTest
          // Create alternate data streams.
          myAdsInstance.AddAlternateDataStream(myStream, myContent); // Class AlternateDataStreamInfo() instance method.
          reporter = Reporter();
-         File.AddStream(tempPath, myStream2, myContent2); // Class File() static method.
-         fi.AddStream(myStream3, myContent3); // Class FileInfo() instance method.
+         File.AddAlternateDataStream(tempPath, myStream2, myContent2); // Class File() static method.
+         fi.AddAlternateDataStream(myStream3, myContent3); // Class FileInfo() instance method.
          
 
          newNumberofStreams = myAdsInstance.EnumerateAlternateDataStreams().Count();
 
          // Count specific streams, should be 3.
          Assert.AreEqual(3, myAdsInstance.EnumerateAlternateDataStreams(StreamType.AlternateData).Count());
-         Assert.AreEqual(1, fi.EnumerateStreams(StreamType.Data).Count());
+         Assert.AreEqual(1, fi.EnumerateAlternateDataStreams(StreamType.Data).Count());
          Assert.AreEqual(1, File.EnumerateAlternateDataStreams(tempPath, StreamType.SecurityData).Count());
 
 
          // Enumerate all streams from the file.
-         foreach (AlternateDataStreamInfo stream in fi.EnumerateStreams())
+         foreach (AlternateDataStreamInfo stream in fi.EnumerateAlternateDataStreams())
          {
             Assert.IsTrue(Dump(stream, -12));
 
@@ -460,8 +459,8 @@ namespace AlphaFS.UnitTest
          // Remove our alternate data streams.
          myAdsInstance.RemoveAlternateDataStream(myStream); // Class AlternateDataStreamInfo() instance method.
          reporter = Reporter();
-         File.RemoveStream(tempPath, myStream2); // Class File() static method.
-         fi.RemoveStream(myStream3); // Class FileInfo() instance method.
+         File.RemoveAlternateDataStream(tempPath, myStream2); // Class File() static method.
+         fi.RemoveAlternateDataStream(myStream3); // Class FileInfo() instance method.
 
          
          newNumberofStreams = File.EnumerateAlternateDataStreams(tempPath).Count();
@@ -502,10 +501,10 @@ namespace AlphaFS.UnitTest
          initialStreamsSizeAll = Directory.GetAlternateDataStreamSize(tempPath);
          initialStreamSizeData = Directory.GetAlternateDataStreamSize(tempPath, StreamType.Data);
          
-         currentNumberofStreams = di.EnumerateStreams().Count();
+         currentNumberofStreams = di.EnumerateAlternateDataStreams().Count();
 
          Assert.AreEqual(defaultStreamsDirectory, currentNumberofStreams, "Total amount of streams do not match.");
-         Assert.AreEqual(currentNumberofStreams, new DirectoryInfo(tempPath).EnumerateStreams().Count(), "Total amount of streams do not match.");
+         Assert.AreEqual(currentNumberofStreams, new DirectoryInfo(tempPath).EnumerateAlternateDataStreams().Count(), "Total amount of streams do not match.");
 
 
          StopWatcher(true);
@@ -513,20 +512,20 @@ namespace AlphaFS.UnitTest
          // Create alternate data streams.
          myAdsInstance.AddAlternateDataStream(myStream, myContent); // Class AlternateDataStreamInfo() instance method.
          reporter = Reporter();
-         Directory.AddStream(tempPath, myStream2, myContent2); // Class Directory() static method.
-         di.AddStream(myStream3, myContent3); // Class DirectoryInfo() instance method.
+         Directory.AddAlternateDataStream(tempPath, myStream2, myContent2); // Class Directory() static method.
+         di.AddAlternateDataStream(myStream3, myContent3); // Class DirectoryInfo() instance method.
 
 
          newNumberofStreams = File.EnumerateAlternateDataStreams(tempPath).Count();
 
          // Count specific streams, should be 3.
          Assert.AreEqual(3, myAdsInstance.EnumerateAlternateDataStreams(StreamType.AlternateData).Count());
-         Assert.AreEqual(0, di.EnumerateStreams(StreamType.Data).Count()); // Directory does not have a default stream ($DATA).
-         Assert.AreEqual(1, Directory.EnumerateStreams(tempPath, StreamType.SecurityData).Count());
+         Assert.AreEqual(0, di.EnumerateAlternateDataStreams(StreamType.Data).Count()); // Directory does not have a default stream ($DATA).
+         Assert.AreEqual(1, Directory.EnumerateAlternateDataStreams(tempPath, StreamType.SecurityData).Count());
 
 
          // Enumerate all streams from the directory.
-         foreach (AlternateDataStreamInfo stream in di.EnumerateStreams())
+         foreach (AlternateDataStreamInfo stream in di.EnumerateAlternateDataStreams())
             Assert.IsTrue(Dump(stream, -12));
 
          Console.WriteLine("\n\n\tCurrent stream Count(): [{0}]    {1}", newNumberofStreams, reporter);
@@ -557,11 +556,11 @@ namespace AlphaFS.UnitTest
          // Remove our alternate data streams.
          myAdsInstance.RemoveAlternateDataStream(myStream); // Class AlternateDataStreamInfo() instance method.
          reporter = Reporter();
-         Directory.RemoveStream(tempPath, myStream2); // Class Directory() static method.
-         di.RemoveStream(myStream3); // Class DirectoryInfo() instance method.
+         Directory.RemoveAlternateDataStream(tempPath, myStream2); // Class Directory() static method.
+         di.RemoveAlternateDataStream(myStream3); // Class DirectoryInfo() instance method.
 
 
-         newNumberofStreams = Directory.EnumerateStreams(tempPath).Count();
+         newNumberofStreams = Directory.EnumerateAlternateDataStreams(tempPath).Count();
          Console.WriteLine("\n\tRemoved all three streams, new stream Count(): [{0}]    {1}", newNumberofStreams, reporter);
          Assert.AreEqual(currentNumberofStreams, newNumberofStreams, "Total amount of streams do not match.");
          Assert.IsTrue(Directory.Exists(tempPath), "Directory should exist.");

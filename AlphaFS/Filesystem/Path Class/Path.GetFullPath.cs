@@ -209,7 +209,7 @@ namespace Alphaleonis.Win32.Filesystem
          return GetFullPathInternal(transaction, path, asLongPath, (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars);
       }
 
-      #endregion Transacted
+      #endregion // Transactional
 
       #region Internal Methods
       

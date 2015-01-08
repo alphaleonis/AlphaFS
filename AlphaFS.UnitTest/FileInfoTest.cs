@@ -456,7 +456,7 @@ namespace AlphaFS.UnitTest
       #region AddAlternateDataStream
 
       [TestMethod]
-      public void AlphaFS_AddStream()
+      public void AlphaFS_AddAlternateDataStream()
       {
          Console.WriteLine("FileInfo.AddAlternateDataStream()");
          Console.WriteLine("\nPlease see unit tests from class: File().");

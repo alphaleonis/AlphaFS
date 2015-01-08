@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last accessed.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="transaction">The transaction.</param>

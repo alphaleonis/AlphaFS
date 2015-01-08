@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Sets the specified <see cref="FileAttributes"/> of the file on the specified path.</summary>
       /// <remarks>

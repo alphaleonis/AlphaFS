@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
          return AppendTextInternal(null, path, encoding, PathFormat.Relative);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>
       ///   Creates a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or

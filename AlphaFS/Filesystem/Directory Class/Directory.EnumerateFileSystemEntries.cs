@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Returns an enumerable collection of directory instances in a specified <paramref name="path"/>.</summary>
       /// <param name="transaction">The transaction.</param>

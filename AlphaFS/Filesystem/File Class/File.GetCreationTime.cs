@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
          return GetCreationTimeInternal(null, path, false, pathFormat).ToLocalTime();
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Gets the creation date and time of the specified file.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
          return GetCreationTimeInternal(null, path, true, pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
       /// <param name="transaction">The transaction.</param>

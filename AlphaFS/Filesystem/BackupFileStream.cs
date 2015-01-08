@@ -19,10 +19,10 @@
  *  THE SOFTWARE. 
  */
 
-using System.Collections.Generic;
 using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path and creation mode.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -580,14 +580,9 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Lock / Unlock
 
       #region EnumerateAlternateDataStreams
-      /// <summary>
-      ///   Returns <see cref="AlternateDataStreamInfo"/> instances, associated with the file.
-      /// </summary>
-      /// <returns>
-      ///   An <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file
-      ///   specified by path.
-      /// </returns>
-      public IEnumerable<AlternateDataStreamInfo> EnumerateStreams()
+      /// <summary>Returns <see cref="AlternateDataStreamInfo"/> instances, associated with the file.</summary>
+      /// <returns>An <see cref="IEnumerable{AlternateDataStreamInfo}"/> collection of streams for the file specified by path.</returns>
+      public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams()
       {
          return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, null, SafeFileHandle, null, null, null, PathFormat.LongFullPath);
       }

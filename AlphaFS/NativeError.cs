@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_NETWORK_ACCESS_DENIED:
                throw new UnauthorizedAccessException(errorMessage);
 
-            #region Transacted
+            #region Transactional
 
             case Win32Errors.ERROR_INVALID_TRANSACTION:
                throw new InvalidTransactionException(Resources.InvalidTransaction, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));

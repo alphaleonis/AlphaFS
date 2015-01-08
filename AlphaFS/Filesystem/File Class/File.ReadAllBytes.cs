@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Opens a binary file, reads the contents of the file into a byte array, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>

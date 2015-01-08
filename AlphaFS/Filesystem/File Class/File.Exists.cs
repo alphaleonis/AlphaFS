@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
          return ExistsInternal(false, null, path, pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>
       ///   [AlphaFS] Determines whether the specified file exists.

@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] (Transacted) Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -240,7 +240,7 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
       /// <remarks>
@@ -323,7 +323,7 @@ namespace Alphaleonis.Win32.Filesystem
          return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.Relative), encoding);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -395,7 +395,7 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -448,7 +448,7 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, PathFormat.Relative);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.</summary>
       /// <param name="transaction">The transaction.</param>

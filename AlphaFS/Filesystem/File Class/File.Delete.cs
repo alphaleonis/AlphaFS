@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
          DeleteFileInternal(null, path, ignoreReadOnly, PathFormat.Relative);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
@@ -191,7 +191,5 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // DeleteFileInternal
-
-
    }
 }

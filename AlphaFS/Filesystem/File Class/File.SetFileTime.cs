@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Sets the date and time the file was created.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
          SetFsoDateTimeInternal(false, null, path, creationTimeUtc, null, null, pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the file was created.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified file was last accessed.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -284,7 +284,7 @@ namespace Alphaleonis.Win32.Filesystem
          SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>[AlphaFS] Sets the date and time that the specified file was last written to.</summary>
       /// <param name="transaction">The transaction.</param>
@@ -347,7 +347,7 @@ namespace Alphaleonis.Win32.Filesystem
          SetFsoDateTimeInternal(false, null, path, null, null, lastWriteTimeUtc, pathFormat);
       }
 
-      #region Transacted
+      #region Transactional
 
       /// <summary>
       ///   [AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified file was last written to.
