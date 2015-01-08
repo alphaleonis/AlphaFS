@@ -157,16 +157,16 @@ namespace Alphaleonis.Win32.Filesystem
             path = path.TrimEnd();
 
          if ((options & GetFullPathOptions.AddTrailingDirectorySeparator) != 0)
-            path = AddDirectorySeparator(path, false);
+            path = AddTrailingDirectorySeparator(path, false);
 
          if ((options & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0)
-            path = RemoveDirectorySeparator(path, false);
+            path = RemoveTrailingDirectorySeparator(path, false);
 
          if (path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) ||
              path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
             return path;
 
-         //path = GetRegularPathInternal(path, false, trimEnd, addDirectorySeparator, removeDirectorySeparator);
+         //path = GetRegularPathInternal(path, false, trimEnd, AddTrailingDirectorySeparator, RemoveTrailingDirectorySeparator);
 
          // ".", "C:"
          return path.Length > 2 && (IsLocalPath(path, false) || IsUncPath(path, false))
@@ -234,8 +234,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// </exception>
       /// <param name="path">The path.</param>
       /// <param name="trimEnd"><see langword="true"/> removes trailing whitespace from <paramref name="path"/>.</param>
-      /// <param name="addDirectorySeparator"><see langword="true"/> adds a directory separator to that path.</param>
-      /// <param name="removeDirectorySeparator"><see langword="true"/> removes any directory separator to that path.</param>
+      /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="path"/>, when absent.</param>
+      /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="path"/>, when present.</param>
       /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
       /// <returns>
       ///   <para>Returns the regular form of a long <paramref name="path"/>.</para>
@@ -243,7 +243,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   file.txt".</para>
       /// </returns>
       [SecurityCritical]
-      internal static string GetRegularPathInternal(string path, bool trimEnd, bool addDirectorySeparator, bool removeDirectorySeparator, bool checkInvalidPathChars)
+      internal static string GetRegularPathInternal(string path, bool trimEnd, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator, bool checkInvalidPathChars)
       {
          if (checkInvalidPathChars)
             CheckInvalidPathChars(path, false);
@@ -268,11 +268,11 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (trimEnd) path = path.TrimEnd();
 
-         if (removeDirectorySeparator)
+         if (removeTrailingDirectorySeparator)
             path = path.TrimEnd(DirectorySeparatorChar, AltDirectorySeparatorChar);
 
-         if (addDirectorySeparator)
-            path = AddDirectorySeparator(path, false);
+         if (addTrailingDirectorySeparator)
+            path = AddTrailingDirectorySeparator(path, false);
 
 
          if (!path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase))

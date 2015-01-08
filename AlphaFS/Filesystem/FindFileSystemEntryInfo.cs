@@ -93,8 +93,8 @@ namespace Alphaleonis.Win32.Filesystem
             // 2013-01-13: MSDN confirms LongPath usage.
 
             // A trailing backslash is not allowed.
-            ? NativeMethods.FindFirstFileEx(Path.RemoveDirectorySeparator(pathLp, false), FindExInfoLevel, out win32FindData, _limitSearchToDirs, IntPtr.Zero, LargeCache)
-            : NativeMethods.FindFirstFileTransacted(Path.RemoveDirectorySeparator(pathLp, false), FindExInfoLevel, out win32FindData, _limitSearchToDirs, IntPtr.Zero, LargeCache, Transaction.SafeHandle);
+            ? NativeMethods.FindFirstFileEx(Path.RemoveTrailingDirectorySeparator(pathLp, false), FindExInfoLevel, out win32FindData, _limitSearchToDirs, IntPtr.Zero, LargeCache)
+            : NativeMethods.FindFirstFileTransacted(Path.RemoveTrailingDirectorySeparator(pathLp, false), FindExInfoLevel, out win32FindData, _limitSearchToDirs, IntPtr.Zero, LargeCache, Transaction.SafeHandle);
 
          if (handle.IsInvalid)
          {
@@ -198,7 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
             while (dirs.Count > 0)
             {
-               string path = Path.AddDirectorySeparator(dirs.Dequeue(), false);
+               string path = Path.AddTrailingDirectorySeparator(dirs.Dequeue(), false);
                string pathLp = path + Path.WildcardStarMatchAll;
                NativeMethods.Win32FindData win32FindData;
 

@@ -983,7 +983,7 @@ namespace Alphaleonis.Win32.Network
 
          // Always remove backslash for local device.
          if (!Utils.IsNullOrWhiteSpace(arguments.LocalName))
-            arguments.LocalName = Path.RemoveDirectorySeparator(arguments.LocalName, false).ToUpperInvariant();
+            arguments.LocalName = Path.RemoveTrailingDirectorySeparator(arguments.LocalName, false).ToUpperInvariant();
 
 
          #region Disconnect
@@ -1528,9 +1528,9 @@ namespace Alphaleonis.Win32.Network
          if (Path.IsUncPath(path, false))
             return new NativeMethods.RemoteNameInfo
             {
-               UniversalName = Path.AddDirectorySeparator(path, false),
-               ConnectionName = Path.RemoveDirectorySeparator(path, false),
-               RemainingPath = Path.DirectorySeparatorChar.ToString(CultureInfo.CurrentCulture)
+               UniversalName = Path.AddTrailingDirectorySeparator(path, false),
+               ConnectionName = Path.RemoveTrailingDirectorySeparator(path, false),
+               RemainingPath = Path.DirectorySeparator
             };
 
 
