@@ -19,19 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Microsoft.Win32.SafeHandles;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using SearchOption = System.IO.SearchOption;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Exposes static methods for creating, moving, and enumerating through directories and subdirectories.

@@ -32,7 +32,7 @@ Version 1.6
 * Mod: Method Directory.GetProperties() signature change.
 * Mod: Renamed method File.GetFileInformationByHandle() to File.GetFileInfoByHandle().
 * Mod: Removed overloaded method File.GetFileInformationByHandle(FileStream).h
-* Mod: Removed overloaded AlphaFS methods File.Move() using MoveFileOptions and CopyProgressRoutine, and added method File.Move1().
+* Mod: Removed overloaded AlphaFS methods File.Move() using MoveFileOptions and CopyProgressRoutine, and added method File.Move().
 * Mod: Renamed method Volume.GetDeviceForVolumeName() to Volume.GetVolumeDeviceName().
 * Mod: Renamed method Volume.GetDisplayNameForVolume() to Volume.GetVolumeDisplayName().
 * Mod: Renamed method Volume.GetVolumeInformation() to Volume.GetVolumeInfo().

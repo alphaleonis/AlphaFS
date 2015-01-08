@@ -431,9 +431,9 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpCompressDecompress
 
-      #region DumpCopy1
+      #region DumpCopy
 
-      private void DumpCopy1(bool isLocal)
+      private void DumpCopy(bool isLocal)
       {
          #region Setup
 
@@ -487,7 +487,7 @@ namespace AlphaFS.UnitTest
             // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
             // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
 
-            FileSystemAccessRule rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
+            var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
 
 
             expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
@@ -540,7 +540,7 @@ namespace AlphaFS.UnitTest
             try
             {
                Console.WriteLine("\nCatch: [{0}]: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive).", expectedException);
-               Directory.Copy1(letter + folderSource, letter + folderDestination, CopyOptions.FailIfExists);
+               Directory.Copy(letter + folderSource, letter + folderDestination, CopyOptions.FailIfExists);
             }
             catch (Exception ex)
             {
@@ -606,7 +606,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, Utils.UnitSizeToText(sourceSize));
             
             StopWatcher(true);
-            Directory.Copy1(tempPathSource, tempPathDestination, CopyOptions.FailIfExists);
+            Directory.Copy(tempPathSource, tempPathDestination, CopyOptions.FailIfExists);
             report = Reporter();
 
             props = Directory.GetProperties(tempPathDestination, DirectoryEnumerationOptions.Recursive);
@@ -625,7 +625,7 @@ namespace AlphaFS.UnitTest
             try
             {
                   Console.WriteLine("\n\nCatch: [{0}]: Copy same directory again: destDirName already exists.", expectedException);
-                  Directory.Copy1(tempPathSource, tempPathDestination, CopyOptions.FailIfExists);
+                  Directory.Copy(tempPathSource, tempPathDestination, CopyOptions.FailIfExists);
             }
             catch (Exception ex)
             {
@@ -649,7 +649,7 @@ namespace AlphaFS.UnitTest
 
             // Overwrite.
             StopWatcher(true);
-            Directory.Copy1(tempPathSource, tempPathDestination, CopyOptions.None | CopyOptions.NoBuffering);
+            Directory.Copy(tempPathSource, tempPathDestination, CopyOptions.None | CopyOptions.NoBuffering);
             report = Reporter();
 
             Console.WriteLine("\nCopy again with overwrite enabled: Directory.Copy(,, true)\n{0}", report);
@@ -667,7 +667,7 @@ namespace AlphaFS.UnitTest
          }
       }
 
-      #endregion // DumpCopy1
+      #endregion // DumpCopy
 
       #region DumpCreateDirectory
 
@@ -2862,7 +2862,7 @@ namespace AlphaFS.UnitTest
          if (!isLocal) fullPathDestinationParent = Path.LocalToUnc(fullPathDestinationParent);
          if (!isLocal) fullPathDestination = Path.LocalToUnc(fullPathDestination);
 
-         DirectoryInfo dirInfoParent = new DirectoryInfo(fullPathDestinationParent);
+         var dirInfoParent = new DirectoryInfo(fullPathDestinationParent);
 
          #endregion // Setup
 
@@ -2884,7 +2884,7 @@ namespace AlphaFS.UnitTest
             // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
             // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
 
-            FileSystemAccessRule rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
+            var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
 
             
             expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
@@ -3025,7 +3025,7 @@ namespace AlphaFS.UnitTest
             #region Move
             
             CreateDirectoriesAndFiles(tempPathSource0, 10, true);
-            Directory.Copy1(tempPathSource0, otherDisk, CopyOptions.FailIfExists);
+            Directory.Copy(tempPathSource0, otherDisk, CopyOptions.FailIfExists);
 
             Dictionary<string, long> props = Directory.GetProperties(otherDisk, DirectoryEnumerationOptions.Recursive);
             long sourceFolder = props["Directory"];
@@ -3036,7 +3036,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, Utils.UnitSizeToText(sourceSize));
 
             StopWatcher(true);
-            Directory.Move1(otherDisk, tempPathSource, MoveOptions.CopyAllowed);
+            Directory.Move(otherDisk, tempPathSource, MoveOptions.CopyAllowed);
             report = Reporter();
 
             props = Directory.GetProperties(tempPathSource, DirectoryEnumerationOptions.Recursive);
@@ -3053,7 +3053,7 @@ namespace AlphaFS.UnitTest
 
             #region IOException
 
-            Directory.Copy1(tempPathSource0, otherDisk, CopyOptions.FailIfExists);
+            Directory.Copy(tempPathSource0, otherDisk, CopyOptions.FailIfExists);
 
             expectedLastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
             expectedException = "System.IO.IOException";
@@ -3061,7 +3061,7 @@ namespace AlphaFS.UnitTest
             try
             {
                Console.WriteLine("\n\nCatch: [{0}]: Move same directory again: destDirName already exists.", expectedException);
-               Directory.Move1(otherDisk, tempPathSource, MoveOptions.CopyAllowed);
+               Directory.Move(otherDisk, tempPathSource, MoveOptions.CopyAllowed);
             }
             catch (Exception ex)
             {
@@ -3084,7 +3084,7 @@ namespace AlphaFS.UnitTest
 
             // Overwrite.
             StopWatcher(true);
-            Directory.Move1(otherDisk, tempPathSource, MoveOptions.CopyAllowed | MoveOptions.ReplaceExisting);
+            Directory.Move(otherDisk, tempPathSource, MoveOptions.CopyAllowed | MoveOptions.ReplaceExisting);
             report = Reporter();
 
             Console.WriteLine("\nMove again with overwrite enabled and other volume allowed.\n{0}", report);
@@ -4111,18 +4111,18 @@ namespace AlphaFS.UnitTest
 
       #endregion Compress/Decompress
 
-      #region Copy1
+      #region Copy
 
       [TestMethod]
-      public void AlphaFS_Copy1()
+      public void AlphaFS_Copy()
       {
-         Console.WriteLine("Directory.Copy1()");
+         Console.WriteLine("Directory.Copy()");
 
-         DumpCopy1(true);
-         DumpCopy1(false);
+         DumpCopy(true);
+         DumpCopy(false);
       }
 
-      #endregion // Copy1
+      #endregion // Copy
 
       #region CountFileSystemObjects
 
@@ -4465,17 +4465,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // HasInheritedPermissions
-
-      #region AlphaFS_Move1
-
-      [TestMethod]
-      public void AlphaFS_Move1()
-      {
-         Console.WriteLine("Directory.Move1()");
-         Console.WriteLine("\nPlease see unit test: Move()");
-      }
-
-      #endregion // AlphaFS_Move1
 
       #region RemoveStream
 

@@ -751,7 +751,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="typeName">
       ///   This parameter may be <see langword="null"/>. The name of the user or the name of the connection; If <paramref name="typeName"/>
       ///   does not begin with two backslashes ("\\") it indicates the name of the user. If <paramref name="typeName"/> begins with two
-      ///   backslashes ("\\") it indicates the name of the connection,.
+      ///   backslashes ("\\") it indicates the name of the connection.
       /// </param>
       /// <param name="continueOnException">
       ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
@@ -1241,7 +1241,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="typeName">
       ///   This parameter may be <see langword="null"/>. The name of the user or the name of the connection; If <paramref name="typeName"/>
       ///   does not begin with two backslashes ("\\") it indicates the name of the user. If <paramref name="typeName"/> begins with two
-      ///   backslashes ("\\") it indicates the name of the connection,.
+      ///   backslashes ("\\") it indicates the name of the connection.
       /// </param>
       /// <param name="continueOnException">
       ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>

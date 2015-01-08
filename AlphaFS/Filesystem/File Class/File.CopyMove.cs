@@ -1,19 +1,31 @@
-using Alphaleonis.Win32.Security;
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
+ */
+
 using Microsoft.Win32.SafeHandles;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Security.AccessControl;
-using System.Text;
-using FileStream = System.IO.FileStream;
-using StreamReader = System.IO.StreamReader;
-using StreamWriter = System.IO.StreamWriter;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -21,48 +33,40 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Copy
 
-      /// <summary>
-      ///   Copies an existing file to a new file. Overwriting a file of the same name is not allowed.
-      /// </summary>
+      #region .NET
+
+      /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
       /// <remarks>
       ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this
-      ///   method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an
-      ///   exception and/or result in undesirable behavior.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">
-      ///   The name of the destination file. This cannot be a directory or an existing file.
-      /// </param>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>            
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName)
       {
          CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
       }
 
-      /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.
-      /// </summary>
+      /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
       /// <remarks>
-      /// <para>The attributes of the original file are retained in the copied file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourceFileName">The file to copy. </param>
@@ -74,20 +78,47 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
-      /// </summary>
+      #endregion // .NET
+
+      #region AlphaFS
+
+      #region Non-Transactional
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
       /// <remarks>
-      /// <para>The attributes of the original file are retained in the copied file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The file to copy. </param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Copy(string sourceFileName, string destinationFileName, PathFormat pathFormat)
+      {
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
+      /// <remarks>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="overwrite"><see langword="true"/> if the destination file should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>
@@ -98,22 +129,93 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
-      #region Transacted
+      #endregion // Non-Transactional
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
-      /// </summary>
+      #region Transactional
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
       /// <remarks>
-      /// <para>The attributes of the original file are retained in the copied file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
+      [SecurityCritical]
+      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName)
+      {
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
+      /// <remarks>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy. </param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, PathFormat pathFormat)
+      {
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, pathFormat);
+      }
+
+
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
+      /// <remarks>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy. </param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="overwrite"><see langword="true"/> if the destination file should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>
+      [SecurityCritical]
+      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, bool overwrite)
+      {
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
+      /// <remarks>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The file to copy. </param>
       /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
@@ -125,104 +227,516 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.
-      /// </summary>
-      /// <remarks>
-      /// <para>The attributes of the original file are retained in the copied file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
-      [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName)
-      {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
-      }
+      #endregion // Transactional
 
-      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.
-      /// </summary>
-      /// <remarks>
-      /// <para>The attributes of the original file are retained in the copied file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The file to copy. </param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="overwrite"><see langword="true"/> if the destination file should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>
-      [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, bool overwrite)
-      {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
-      }
-
-
-      #endregion // Transacted
+      #endregion // AlphaFS
 
       #endregion // Copy
 
+      #region Copy (CopyOptions)
+
+      #region Non-Transactional
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      [SecurityCritical]
+      public static void Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions)
+      {
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, PathFormat pathFormat)
+      {
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, pathFormat);
+      }
+
+
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
+      [SecurityCritical]
+      public static void Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
+      {
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
+      {
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, pathFormat);
+      }
+
+
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
+      }
+
+      
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
+      }
+
+      #endregion // Non-Transactional
+
+      #region Transactional
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      [SecurityCritical]
+      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions)
+      {
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, PathFormat pathFormat)
+      {
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, pathFormat);
+      }
+
+
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
+      [SecurityCritical]
+      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
+      {
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
+      {
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, pathFormat);
+      }
+
+
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
+      }
+
+
+      
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      {
+         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
+      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// </summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <remarks>
+      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
+      ///   <para>The attributes of the original file are retained in the copied file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The file to copy.</param>
+      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      [SecurityCritical]
+      public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
+      }
+
+      #endregion // Transactional
+
+      #endregion // Copy (CopyOptions)
+
       #region Move
+
+      #region .NET
 
       /// <summary>Moves a specified file to a new location, providing the option to specify a new file name.</summary>
       /// <remarks>
       ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an
-      ///   <see cref="IOException"/>.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
       ///   <para>You cannot use the Move method to overwrite an existing file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destinationFileName">The new path for the file.</param>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SecurityCritical]
       public static void Move(string sourceFileName, string destinationFileName)
       {
          CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.Relative);
       }
 
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
-      /// </summary>
+      #endregion // .NET
+
+      #region AlphaFS
+
+      #region Non-Transactional
+
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
       /// <remarks>
-      /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
-      /// <para>You cannot use the Move method to overwrite an existing file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
       /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destinationFileName">The new path for the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -232,49 +746,23 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, pathFormat);
       }
 
-      #region Transacted
+      #endregion // Non-Transactional
 
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
-      /// </summary>
+      #region Transactional
+
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
       /// <remarks>
-      /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
-      /// <para>You cannot use the Move method to overwrite an existing file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>      
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The name of the file to move.</param>
-      /// <param name="destinationFileName">The new path for the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, PathFormat pathFormat)
-      {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.
-      /// </summary>
-      /// <remarks>
-      /// <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      /// <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
-      /// <para>You cannot use the Move method to overwrite an existing file.</para>
-      /// <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      /// <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="FileNotFoundException"/>
-      /// <exception cref="IOException"/>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -286,744 +774,271 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.Relative);
       }
 
-      #endregion // Transacted
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
+      /// <remarks>
+      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The name of the file to move.</param>
+      /// <param name="destinationFileName">The new path for the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, PathFormat pathFormat)
+      {
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, pathFormat);
+      }
+      
+      #endregion // Transactional
 
+      #endregion // AlphaFS
 
       #endregion // Move
 
-      #region Copy1
+      #region Move (MoveOptions)
 
+      #region Non-Transactional
 
-      /// <summary>
-      ///   [AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be
-      ///   specified.
-      /// </summary>
-      /// <remarks>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="preserveDates">
-      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static void Copy1(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
-      {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, pathFormat);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be
-      ///   specified, and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
-      /// <remarks>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="preserveDates">
-      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
-      /// </param>
-      /// <param name="progressHandler">
-      ///   A callback function that is called each time another portion of the file has been copied. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="userProgressData">
-      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static CopyMoveResult Copy1(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be
-      ///   specified.
-      /// </summary>
-      /// <remarks>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.
-      /// </param>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static void Copy1(string sourceFileName, string destinationFileName, CopyOptions copyOptions)
-      {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.Relative);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be
-      ///   specified.
-      /// </summary>
-      /// <remarks>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="preserveDates">
-      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
-      /// </param>
-      ///
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static void Copy1(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
-      {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.Relative);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be
-      ///   specified,.
-      /// </summary>
-      /// <remarks>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="preserveDates">
-      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
-      /// </param>
-      /// <param name="progressHandler">
-      ///   A callback function that is called each time another portion of the file has been copied. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="userProgressData">
-      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static CopyMoveResult Copy1(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
-      }
-
-      #region Transacted
-
-      /// <summary>
-      ///   [AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be
-      ///   specified.
-      /// </summary>
-      /// <remarks>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="preserveDates">
-      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      ///
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static void Copy1(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
-      {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, pathFormat);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be
-      ///   specified, and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
-      /// <remarks>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="preserveDates">
-      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
-      /// </param>
-      /// <param name="progressHandler">
-      ///   A callback function that is called each time another portion of the file has been copied. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="userProgressData">
-      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static CopyMoveResult Copy1(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be
-      ///   specified.
-      /// </summary>
-      /// <remarks>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.
-      /// </param>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static void Copy1(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions)
-      {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.Relative);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be
-      ///   specified.
-      /// </summary>
-      /// <remarks>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="preserveDates">
-      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
-      /// </param>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static void Copy1(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
-      {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.Relative);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be
-      ///   specified, and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
-      /// <remarks>
-      ///   <para>The attributes of the original file are retained in the copied file.</para>
-      ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The file to copy.</param>
-      /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="preserveDates">
-      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.
-      /// </param>
-      /// <param name="progressHandler">
-      ///   A callback function that is called each time another portion of the file has been copied. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="userProgressData">
-      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static CopyMoveResult Copy1(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
-      {
-         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
-      }
-
-      #endregion // Transacted
-
-      #endregion // Copy1
-
-      #region Move1
-
-
-      /// <summary>
-      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name and <see cref="MoveOptions"/>
-      ///   options.
-      /// </summary>
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
       /// <remarks>
       ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an
-      ///   <see cref="IOException"/>.</para>
-      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains
-      ///   <see cref="MoveOptions.ReplaceExisting"/>.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destinationFileName">The new path for the file.</param>
-      /// <param name="moveOptions">
-      ///   <see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      public static void Move1(string sourceFileName, string destinationFileName, MoveOptions moveOptions, PathFormat pathFormat)
-      {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, pathFormat);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/>
-      ///   options, and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
-      /// <remarks>
-      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an
-      ///   <see cref="IOException"/>.</para>
-      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains
-      ///   <see cref="MoveOptions.ReplaceExisting"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="sourceFileName">The name of the file to move.</param>
-      /// <param name="destinationFileName">The new path for the file.</param>
-      /// <param name="moveOptions">
-      ///   <see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="progressHandler">
-      ///   A callback function that is called each time another portion of the file has been moved. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="userProgressData">
-      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static CopyMoveResult Move1(string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name and <see cref="MoveOptions"/>
-      ///   options.
-      /// </summary>
-      /// <remarks>
-      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an
-      ///   <see cref="IOException"/>.</para>
-      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains
-      ///   <see cref="MoveOptions.ReplaceExisting"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="sourceFileName">The name of the file to move.</param>
-      /// <param name="destinationFileName">The new path for the file.</param>
-      /// <param name="moveOptions">
-      ///   <see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.
-      /// </param>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static void Move1(string sourceFileName, string destinationFileName, MoveOptions moveOptions)
+      public static void Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions)
       {
          CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.Relative);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/>
-      ///   options, and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
       /// <remarks>
       ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an
-      ///   <see cref="IOException"/>.</para>
-      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains
-      ///   <see cref="MoveOptions.ReplaceExisting"/>.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destinationFileName">The new path for the file.</param>
-      /// <param name="moveOptions">
-      ///   <see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="progressHandler">
-      ///   A callback function that is called each time another portion of the file has been moved. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="userProgressData">
-      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult Move1(string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public static void Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions, PathFormat pathFormat)
+      {
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, pathFormat);
+      }
+
+
+
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <remarks>
+      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The name of the file to move.</param>
+      /// <param name="destinationFileName">The new path for the file.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.Relative);
       }
 
-      #region Transacted
-
-      /// <summary>
-      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name and <see cref="MoveOptions"/>
-      ///   options.
-      /// </summary>
-      /// <remarks>
-      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an
-      ///   <see cref="IOException"/>.</para>
-      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains
-      ///   <see cref="MoveOptions.ReplaceExisting"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The name of the file to move.</param>
-      /// <param name="destinationFileName">The new path for the file.</param>
-      /// <param name="moveOptions">
-      ///   <see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static void Move1(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, PathFormat pathFormat)
-      {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, pathFormat);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/>
-      ///   options, and the possibility of notifying the application of its progress through a callback function.
-      /// </summary>
-      /// <remarks>
-      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an
-      ///   <see cref="IOException"/>.</para>
-      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains
-      ///   <see cref="MoveOptions.ReplaceExisting"/>.</para>
-      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
-      /// </remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="sourceFileName">The name of the file to move.</param>
-      /// <param name="destinationFileName">The new path for the file.</param>
-      /// <param name="moveOptions">
-      ///   <see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="progressHandler">
-      ///   A callback function that is called each time another portion of the file has been moved. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="userProgressData">
-      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
-      [SecurityCritical]
-      public static CopyMoveResult Move1(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
-      {
-         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
-      }
-
-      /// <summary>
-      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name and <see cref="MoveOptions"/>
-      ///   options.
-      /// </summary>
       /// <remarks>
       ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an
-      ///   <see cref="IOException"/>.</para>
-      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains
-      ///   <see cref="MoveOptions.ReplaceExisting"/>.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourceFileName">The name of the file to move.</param>
+      /// <param name="destinationFileName">The new path for the file.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
+      }
+
+      #endregion // Non-Transactional
+
+      #region Transactional
+
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
+      /// <remarks>
+      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destinationFileName">The new path for the file.</param>
-      /// <param name="moveOptions">
-      ///   <see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.
-      /// </param>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      public static void Move1(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions)
+      public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.Relative);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/>
-      ///   options,.
-      /// </summary>
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
       /// <remarks>
       ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
-      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an
-      ///   <see cref="IOException"/>.</para>
-      ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains
-      ///   <see cref="MoveOptions.ReplaceExisting"/>.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
-      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
-      ///   behavior.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destinationFileName">The new path for the file.</param>
-      /// <param name="moveOptions">
-      ///   <see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <param name="progressHandler">
-      ///   A callback function that is called each time another portion of the file has been moved. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="userProgressData">
-      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
-      /// </param>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult Move1(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, PathFormat pathFormat)
+      {
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, pathFormat);
+      }
+
+
+
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <remarks>
+      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The name of the file to move.</param>
+      /// <param name="destinationFileName">The new path for the file.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.Relative);
       }
 
-      #endregion // Transacted
+      /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <remarks>
+      ///   <para>This method works across disk volumes, and it does not throw an exception if the source and destination are the same.</para>
+      ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an <see cref="IOException"/>.</para>
+      ///   <para>You cannot use the Move method to overwrite an existing file.</para>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourceFileName">The name of the file to move.</param>
+      /// <param name="destinationFileName">The new path for the file.</param>
+      /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static CopyMoveResult Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      {
+         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
+      }
+      
+      #endregion // Transactional
 
-      #endregion // Move1
-
+      #endregion // Move (MoveOptions)
+      
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new
-      ///   location,
-      ///   <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,
-      ///   and the possibility of notifying the application of its progress through a callback function.
+      /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
+      ///   <para><see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified, and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
+      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>      
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>You cannot use the Move method to overwrite an existing file, unless
@@ -1033,42 +1048,23 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into
       ///   that directory, you get an IOException.</para>
       /// </remarks>
-      /// <exception cref="NotSupportedException">.</exception>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
       /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
       /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
-      /// <exception cref="ArgumentException">
-      ///   Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <param name="isFolder">
-      ///   Specifies that <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are a file or directory.
-      /// </param>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="isFolder">Specifies that <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourceFileName">The source directory path.</param>
       /// <param name="destinationFileName">The destination directory path.</param>
-      /// <param name="preserveDates">
-      ///   <see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise. This parameter is ignored for
-      ///   move operations.
-      /// </param>
-      /// <param name="copyOptions">
-      ///   <see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="moveOptions">
-      ///   Flags that specify how the file or directory is to be moved. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="progressHandler">
-      ///   A callback function that is called each time another portion of the file has been copied/moved. This parameter can be
-      ///   <see langword="null"/>.
-      /// </param>
-      /// <param name="userProgressData">
-      ///   The argument to be passed to the callback function. This parameter can be <see langword="null"/>.
-      /// </param>
+      /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise. This parameter is ignored for move operations.</param>
+      /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
+      /// <param name="moveOptions">Flags that specify how the file or directory is to be moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied/moved. This parameter can be <see langword="null"/>.</param>
+      /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>      
-      /// <exception cref="UnauthorizedAccessException">.</exception>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static CopyMoveResult CopyMoveInternal(bool isFolder, KernelTransaction transaction, string sourceFileName, string destinationFileName, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
@@ -1103,21 +1099,21 @@ namespace Alphaleonis.Win32.Filesystem
             throw new NotSupportedException(Resources.UndeterminedCopyMoveAction);
 
          bool overwrite = doCopy
-            ? (((CopyOptions)copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
-            : (((MoveOptions)moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
+            ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
+            : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
 
          bool raiseException = progressHandler == null;
 
          // Setup callback function for progress notifications.
-         NativeMethods.NativeCopyMoveProgressRoutine routine = (progressHandler != null)
+         var routine = (progressHandler != null)
             ? (totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, hSourceFile, hDestinationFile, lpData)
                =>
                progressHandler(totalFileSize, totalBytesTransferred, streamSize, streamBytesTransferred, dwStreamNumber, dwCallbackReason, userProgressData)
-            : (NativeMethods.NativeCopyMoveProgressRoutine)null;
+            : (NativeMethods.NativeCopyMoveProgressRoutine) null;
 
          #endregion //Setup
 
-      startCopyMove:
+         startCopyMove:
 
          uint lastError = Win32Errors.ERROR_SUCCESS;
 
@@ -1125,24 +1121,24 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
             ? doMove
-            // MoveFileWithProgress() / MoveFileTransacted()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-            // 2013-04-15: MSDN confirms LongPath usage.
+               // MoveFileWithProgress() / MoveFileTransacted()
+               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2013-04-15: MSDN confirms LongPath usage.
 
                // CopyFileEx() / CopyFileTransacted()
-            // In the ANSI version of this function, the name is limited to MAX_PATH characters.
-            // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-            // 2013-04-15: MSDN confirms LongPath usage.
+               // In the ANSI version of this function, the name is limited to MAX_PATH characters.
+               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+               // 2013-04-15: MSDN confirms LongPath usage.
 
-               ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions)moveOptions)
-               : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions)copyOptions)
+               ? NativeMethods.MoveFileWithProgress(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions)
+               : NativeMethods.CopyFileEx(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions)
 
             : doMove
-               ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions)moveOptions, transaction.SafeHandle)
-               : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions)copyOptions, transaction.SafeHandle)))
+               ? NativeMethods.MoveFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, (MoveOptions) moveOptions, transaction.SafeHandle)
+               : NativeMethods.CopyFileTransacted(sourceFileNameLp, destFileNameLp, routine, IntPtr.Zero, out cancel, (CopyOptions) copyOptions, transaction.SafeHandle)))
          {
-            lastError = (uint)Marshal.GetLastWin32Error();
+            lastError = (uint) Marshal.GetLastWin32Error();
 
             if (lastError == Win32Errors.ERROR_REQUEST_ABORTED)
             {
@@ -1180,7 +1176,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   case Win32Errors.ERROR_FILE_EXISTS:
                      // File.Copy()
-                     // Directory.Copy1()
+                     // Directory.Copy()
                      NativeError.ThrowException(lastError, destFileNameLp, true);
                      break;
 
@@ -1208,10 +1204,11 @@ namespace Alphaleonis.Win32.Filesystem
                      string fileNameLp = destFileNameLp;
 
                      if (!isFolder)
+                     {
                         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, sourceFileNameLp, ExtendedFileAttributes.None, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.LongFullPath))
                            if (safeHandle.IsInvalid)
                               fileNameLp = sourceFileNameLp;
-
+                     }
 
                      if (lastError == Win32Errors.ERROR_ACCESS_DENIED)
                      {
@@ -1227,7 +1224,7 @@ namespace Alphaleonis.Win32.Filesystem
                            var data = new NativeMethods.Win32FileAttributeData();
                            FillAttributeInfoInternal(transaction, destFileNameLp, ref data, false, true);
 
-                           if (data.FileAttributes != (FileAttributes)(-1))
+                           if (data.FileAttributes != (FileAttributes) (-1))
                            {
                               if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                               {
@@ -1235,7 +1232,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                                  if (overwrite)
                                  {
-                                    // Reset directory attributes.
+                                    // Reset file system object attributes.
                                     SetAttributesInternal(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
                                     goto startCopyMove;
                                  }
@@ -1251,7 +1248,6 @@ namespace Alphaleonis.Win32.Filesystem
                               if ((data.FileAttributes & FileAttributes.Hidden) == FileAttributes.Hidden)
                                  NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.FileHidden, destFileNameLp), true);
                            }
-
 
                            // Observation: .NET 3.5+: For files: UnauthorizedAccessException: The caller does not have the required permission.
                            // Observation: .NET 3.5+: For directories: IOException: The caller does not have the required permission.
@@ -1283,7 +1279,7 @@ namespace Alphaleonis.Win32.Filesystem
             var data = new NativeMethods.Win32FileAttributeData();
             int dataInitialised = FillAttributeInfoInternal(transaction, sourceFileNameLp, ref data, false, true);
 
-            if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1))
+            if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes) (-1))
                SetFsoDateTimeInternal(false, transaction, destFileNameLp, DateTime.FromFileTimeUtc(data.CreationTime),
                   DateTime.FromFileTimeUtc(data.LastAccessTime), DateTime.FromFileTimeUtc(data.LastWriteTime), PathFormat.LongFullPath);
          }
@@ -1291,9 +1287,9 @@ namespace Alphaleonis.Win32.Filesystem
          #endregion // Transfer Timestamps
 
          // The copy/move operation succeeded, failed or was canceled.
-         return new CopyMoveResult(sourceFileNameLp, destFileNameLp, isFolder, doMove, cancel, (int)lastError);
+         return new CopyMoveResult(sourceFileNameLp, destFileNameLp, isFolder, doMove, cancel, (int) lastError);
       }
 
-      #endregion // CopyMoveInternal
+      #endregion // Internal Methods
    }
 }
