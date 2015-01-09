@@ -57,6 +57,28 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(null, sourcePath, destinationPath, CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
       }
 
+      /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
+      /// <remarks>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Copy(string sourcePath, string destinationPath, PathFormat pathFormat)
+      {
+         CopyMoveInternal(null, sourcePath, destinationPath, CopyOptions.FailIfExists, null, null, null, pathFormat);
+      }
+
+
+
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
@@ -76,7 +98,28 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CopyMoveInternal(null, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
       }
-      
+
+      /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
+      /// <remarks>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="overwrite"><see langword="true"/> if the destination directory should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Copy(string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)
+      {
+         CopyMoveInternal(null, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
+      }
+
       #endregion // Non-Transactional
 
       #region Transactional
@@ -101,6 +144,29 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(transaction, sourcePath, destinationPath, CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
       }
 
+      /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
+      /// <remarks>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
+      {
+         CopyMoveInternal(transaction, sourcePath, destinationPath, CopyOptions.FailIfExists, null, null, null, pathFormat);
+      }
+
+
+
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
       /// <remarks>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
@@ -121,7 +187,29 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CopyMoveInternal(transaction, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
       }
-      
+
+      /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is allowed.</summary>
+      /// <remarks>
+      ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
+      ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
+      /// </remarks>
+      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
+      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
+      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="sourcePath">The source directory path.</param>
+      /// <param name="destinationPath">The destination directory path.</param>
+      /// <param name="overwrite"><see langword="true"/> if the destination directory should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>      
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void Copy(KernelTransaction transaction, string sourcePath, string destinationPath, bool overwrite, PathFormat pathFormat)
+      {
+         CopyMoveInternal(transaction, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
+      }
+
       #endregion // Transactional
 
       #endregion // AlphaFS
