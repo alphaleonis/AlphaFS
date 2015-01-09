@@ -22,23 +22,35 @@
 namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Indicates the format of a path passed to a method.</summary>
+   /// <remarks>
+   /// At some point in code you know the full path of file system objects, e.g.: "C:\Windows".
+   /// For example, Directory.EnumerateFileSystemEntries() will return all files and directories from a given path.
+   /// Most likely, some processing will happen on the results of the enum. The file or directory may be passed
+   /// on to another function. Whenever a file path is required, some performance can be gained.
+   /// 
+   /// A path like: "C:\Windows" or "\\server\share" is considered a full path for a directory because it is rooted.
+   /// If the method supports it, <see cref="PathFormat.FullPath"/> and <see cref="PathFormat.LongFullPath"/> will skip GetFullPath() calls,
+   /// for path resolving of the object, while also avoiding path validation and checks.
+   /// Using <see cref="PathFormat.FullPath"/> (default) will always call GetFullPath() and perform path validation and checks.
+   /// </remarks>
    public enum PathFormat
    {
-      /// <summary>
-      /// The format of the path is automatically detected by the method and internally converted to an extended length path. It can be 
-      /// either a standard (short) full path, an extended length (unicode) full path or a relative path.
+      /// <summary>The format of the path is automatically detected by the method and internally converted to an extended length path.
+      /// It can be either a standard (short) full path, an extended length (unicode) full path or a relative path.
+      /// Example relative path: "Windows".
       /// </summary>
       Relative,
 
-      /// <summary>
-      /// The path is a full path in either normal or extended length (UNICODE) format. Internally it will be converted to an extended length 
-      /// (UNICODE) path. Using this option has a very slight performance advantage compared to using <see cref="Relative"/>.
+      /// <summary>The path is a full path in either normal or extended length (UNICODE) format.
+      /// Internally it will be converted to an extended length (UNICODE) path.
+      /// Using this option has a very slight performance advantage compared to using <see cref="Relative"/>.
+      /// Example full path: "C:\Windows" or "\\server\share".
       /// </summary>
       FullPath,
 
-      /// <summary>
-      /// The path is an extended length path. No additional processing will be done on the path, and it will be used as is. This option has 
-      /// a slight performance advantage to using the <see cref="Relative"/> option.
+      /// <summary>The path is an extended length path. No additional processing will be done on the path, and it will be used as is.
+      /// This option has a slight performance advantage to using the <see cref="Relative"/> option.
+      /// Example long full path: "\\?\C:\Windows" or "\\?\UNC\server\share".
       /// </summary>
       LongFullPath
    }
