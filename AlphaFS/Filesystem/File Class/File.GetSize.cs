@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path)
       {
-         return GetSizeInternal(null, null, path, PathFormat.Relative);
+         return GetSizeInternal(null, null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(KernelTransaction transaction, string path)
       {
-         return GetSizeInternal(transaction, null, path, PathFormat.Relative);
+         return GetSizeInternal(transaction, null, path, PathFormat.RelativePath);
       }
 
       #endregion // GetSize

@@ -158,7 +158,7 @@ namespace Alphaleonis.Win32.Network
          {
             // Do not use ?? expression here.
             if (_directoryInfo == null)
-               _directoryInfo = new DirectoryInfo(Transaction, EntryPath, PathFormat.Relative);
+               _directoryInfo = new DirectoryInfo(Transaction, EntryPath, PathFormat.RelativePath);
 
             return _directoryInfo;
          }

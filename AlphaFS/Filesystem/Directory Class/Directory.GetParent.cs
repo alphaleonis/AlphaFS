@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo GetParent(string path)
       {
-         return GetParentInternal(null, path, PathFormat.Relative);
+         return GetParentInternal(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo GetParent(KernelTransaction transaction, string path)
       {
-         return GetParentInternal(transaction, path, PathFormat.Relative);
+         return GetParentInternal(transaction, path, PathFormat.RelativePath);
       }
 
       /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
          pathLp = Path.GetRegularPathInternal(pathLp, false, false, false, false);
          string dirName = Path.GetDirectoryName(pathLp, false);
 
-         return Utils.IsNullOrWhiteSpace(dirName) ? null : new DirectoryInfo(transaction, dirName, PathFormat.Relative);
+         return Utils.IsNullOrWhiteSpace(dirName) ? null : new DirectoryInfo(transaction, dirName, PathFormat.RelativePath);
       }
 
       #endregion // Internal Methods

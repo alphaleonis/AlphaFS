@@ -39,17 +39,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// It can be either a standard (short) full path, an extended length (unicode) full path or a relative path.
       /// Example relative path: "Windows".
       /// </summary>
-      Relative,
+      RelativePath,
 
       /// <summary>The path is a full path in either normal or extended length (UNICODE) format.
       /// Internally it will be converted to an extended length (UNICODE) path.
-      /// Using this option has a very slight performance advantage compared to using <see cref="Relative"/>.
+      /// Using this option has a very slight performance advantage compared to using <see cref="RelativePath"/>.
       /// Example full path: "C:\Windows" or "\\server\share".
       /// </summary>
       FullPath,
 
       /// <summary>The path is an extended length path. No additional processing will be done on the path, and it will be used as is.
-      /// This option has a slight performance advantage to using the <see cref="Relative"/> option.
+      /// This option has a slight performance advantage to using the <see cref="RelativePath"/> option.
       /// Example long full path: "\\?\C:\Windows" or "\\?\UNC\server\share".
       /// </summary>
       LongFullPath

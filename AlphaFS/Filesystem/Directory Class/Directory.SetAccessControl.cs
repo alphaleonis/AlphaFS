@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity)
       {
-         File.SetAccessControlInternal(path, null, directorySecurity, AccessControlSections.All, PathFormat.Relative);
+         File.SetAccessControlInternal(path, null, directorySecurity, AccessControlSections.All, PathFormat.RelativePath);
       }
 
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity, AccessControlSections includeSections)
       {
-         File.SetAccessControlInternal(path, null, directorySecurity, includeSections, PathFormat.Relative);
+         File.SetAccessControlInternal(path, null, directorySecurity, includeSections, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>

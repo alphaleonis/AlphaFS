@@ -21,7 +21,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileInternal(null, path, false, PathFormat.Relative);
+         DeleteFileInternal(null, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly)
       {
-         DeleteFileInternal(null, path, ignoreReadOnly, PathFormat.Relative);
+         DeleteFileInternal(null, path, ignoreReadOnly, PathFormat.RelativePath);
       }
 
       #region Transactional
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
       {
-         DeleteFileInternal(transaction, path, false, PathFormat.Relative);
+         DeleteFileInternal(transaction, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
-         DeleteFileInternal(transaction, path, ignoreReadOnly, PathFormat.Relative);
+         DeleteFileInternal(transaction, path, ignoreReadOnly, PathFormat.RelativePath);
       }
 
       #endregion // Transacted
@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (pathFormat == PathFormat.Relative)
+         if (pathFormat == PathFormat.RelativePath)
             Path.CheckValidPath(path, true, true);
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);

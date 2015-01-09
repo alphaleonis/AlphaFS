@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path == null)
             return null;
 
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.Relative);
+         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.RelativePath);
          return di != null && di.Parent != null ? di.Name : null;
       }
 

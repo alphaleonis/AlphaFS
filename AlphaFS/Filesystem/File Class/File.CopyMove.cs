@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, bool overwrite)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -152,7 +152,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is not allowed.</summary>
@@ -200,7 +200,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, bool overwrite)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.</summary>
@@ -257,7 +257,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
@@ -307,7 +307,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
@@ -362,7 +362,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
+         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
@@ -422,7 +422,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
+         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
@@ -480,7 +480,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
@@ -532,7 +532,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed. <see cref="CopyOptions"/> can be specified.</summary>
@@ -589,7 +589,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
+         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
@@ -651,7 +651,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.Relative);
+         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Copies an existing file to a new file. Overwriting a file of the same name is allowed.  <see cref="CopyOptions"/> can be specified,
@@ -713,7 +713,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destinationFileName)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -771,7 +771,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -830,7 +830,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions)
       {
-         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -884,7 +884,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.Relative);
+         return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -941,7 +941,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions)
       {
-         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.Relative);
+         CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -997,7 +997,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static CopyMoveResult Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
-         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.Relative);
+         return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name.</summary>
@@ -1071,7 +1071,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (pathFormat == PathFormat.Relative)
+         if (pathFormat == PathFormat.RelativePath)
          {
             Path.CheckValidPath(sourceFileName, true, true);
             Path.CheckValidPath(destinationFileName, true, true);

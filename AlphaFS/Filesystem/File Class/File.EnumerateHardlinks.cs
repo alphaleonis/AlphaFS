@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(string path)
       {
-         return EnumerateHardlinksInternal(null, path, PathFormat.Relative);
+         return EnumerateHardlinksInternal(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates an enumeration of all the hard links to the specified <paramref name="path"/>.</summary>
@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path)
       {
-         return EnumerateHardlinksInternal(transaction, path, PathFormat.Relative);
+         return EnumerateHardlinksInternal(transaction, path, PathFormat.RelativePath);
       }
 
       #endregion // EnumerateHardlinks
