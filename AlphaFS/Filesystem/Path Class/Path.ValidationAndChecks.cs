@@ -1,3 +1,24 @@
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
+ */
+
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -11,17 +32,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region HasExtension (.NET)
 
       /// <summary>Determines whether a path includes a file name extension.</summary>
-      /// <param name="path">
-      ///   The path to search for an extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.
-      /// </param>
-      /// <returns>
-      ///   <see langword="true"/> if the characters that follow the last directory separator (\\ or /) or volume separator (:) in the path include a
-      ///   period (.) followed by one or more characters; otherwise, <see langword="false"/>.
-      /// </returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
+      /// <returns><see langword="true"/> if the characters that follow the last directory separator (\\ or /) or volume separator (:) in the path include a period (.) followed by one or more characters; otherwise, <see langword="false"/>.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <param name="path">The path to search for an extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static bool HasExtension(string path)
       {
@@ -32,7 +45,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsPathRooted
 
+      #region .NET
+
       /// <summary>Gets a value indicating whether the specified path string contains absolute or relative path information.</summary>
+      /// <returns><see langword="true"/> if <paramref name="path"/> contains a root; otherwise, <see langword="false"/>.</returns>
       /// <remarks>
       ///   The IsPathRooted method returns true if the first character is a directory separator character such as
       ///   <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>). For
@@ -40,24 +56,21 @@ namespace Alphaleonis.Win32.Filesystem
       ///   path strings such as "MyDir".
       /// </remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
-      /// <param name="path">
-      ///   The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.
-      /// </param>
-      /// <returns><see langword="true"/> if <paramref name="path"/> contains a root; otherwise, <see langword="false"/>.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
+      /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static bool IsPathRooted(string path)
       {
          return IsPathRooted(path, true);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Gets a value indicating whether the specified path string contains absolute or relative path information.
-      /// </summary>
+      #endregion // .NET
+
+      #region AlphaFS
+
+      /// <summary>[AlphaFS] Gets a value indicating whether the specified path string contains absolute or relative path information.</summary>
+      /// <returns><see langword="true"/> if <paramref name="path"/> contains a root; otherwise, <see langword="false"/>.</returns>
       /// <remarks>
       ///   The IsPathRooted method returns true if the first character is a directory separator character such as
       ///   <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>). For
@@ -65,16 +78,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   path strings such as "MyDir".
       /// </remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
-      /// <param name="path">
-      ///   The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.
-      /// </param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
-      /// <returns><see langword="true"/> if <paramref name="path"/> contains a root; otherwise, <see langword="false"/>.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
+      /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
+      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static bool IsPathRooted(string path, bool checkInvalidPathChars)
       {
@@ -93,18 +100,19 @@ namespace Alphaleonis.Win32.Filesystem
          return false;
       }
 
+      #endregion // AlphaFS
+
       #endregion // IsPathRooted
 
       #region IsLocalPath
 
+      #region AlphaFS
+
       /// <summary>[AlphaFS] Determines whether the specified path is a local path.</summary>
-      /// <param name="path">The path to check.</param>
       /// <returns><see langword="true"/> if the specified path is a local path, <see langword="false"/> otherwise.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
+      /// <param name="path">The path to check.</param>
       [SecurityCritical]
       public static bool IsLocalPath(string path)
       {
@@ -112,14 +120,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Determines whether the specified path is a local path.</summary>
+      /// <returns><see langword="true"/> if the specified path is a local path, <see langword="false"/> otherwise.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to check.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
-      /// <returns><see langword="true"/> if the specified path is a local path, <see langword="false"/> otherwise.</returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
       public static bool IsLocalPath(string path, bool checkInvalidPathChars)
       {
@@ -134,11 +139,15 @@ namespace Alphaleonis.Win32.Filesystem
          return IsPathRooted(path) && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) && path[1] == VolumeSeparatorChar;
       }
 
+      #endregion // AlphaFS
+
       #endregion // IsLocalPath
 
       #region IsValidName
 
-      /// <summary>Check if file or folder name has any invalid characters.</summary>
+      #region AlphaFS
+      
+      /// <summary>[AlphaFS] Check if file or folder name has any invalid characters.</summary>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <param name="name">File or folder name.</param>
       /// <returns>Returns <see langword="true"/> if name contains any invalid characters. Otherwise <see langword="false"/></returns>
@@ -150,15 +159,13 @@ namespace Alphaleonis.Win32.Filesystem
          return name.IndexOfAny(GetInvalidFileNameChars()) < 0;
       }
 
+      #endregion // AlphaFS
+
       #endregion // IsValidName
 
       #region Internal Methods
 
-
-
-      /// <summary>
-      ///   MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-      /// </summary>
+      /// <summary>MSDN: .NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").</summary>
       /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <param name="path">A path to the file or directory.</param>
       /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
@@ -179,9 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Checks that the path contains only valid path-characters.</summary>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <param name="path">A path to the file or directory.</param>
       /// <param name="checkAdditional"><see langword="true"/> also checks for ? and * characters.</param>
       [SecurityCritical]
@@ -217,13 +222,10 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      /// <summary>
-      ///   [AlphaFS] Tranlates DosDevicePath, Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\
-      ///   filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".
-      /// </summary>
+      /// <summary>[AlphaFS] Tranlates DosDevicePath, Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".</summary>
+      /// <returns>A translated dos path.</returns>
       /// <param name="dosDevice">A DosDevicePath, for example: \Device\HarddiskVolumeX\path\filename.ext.</param>
       /// <param name="deviceReplacement">Alternate path/device text, usually <c>string.Empty</c> or <see langword="null"/>.</param>
-      /// <returns>A translated dos path.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       private static string DosDeviceToDosPath(string dosDevice, string deviceReplacement)
@@ -247,6 +249,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Check if <paramref name="path"/> ends with a directory- and/or volume-separator character.</summary>
+      /// <returns><see langword="true"/> if <paramref name="path"/> ends with a separator character.</returns>
       /// <param name="path">The patch to check.</param>
       /// <param name="checkVolumeSeparatorChar">
       ///   If <see langword="null"/>, checks for all separator characters: <see cref="DirectorySeparatorChar"/>,
@@ -255,7 +258,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///   If <see langword="false"/>, only checks for: <see cref="DirectorySeparatorChar"/> and <see cref="AltDirectorySeparatorChar"/>
       ///   If <see langword="true"/>, only checks for: <see cref="VolumeSeparatorChar"/>
       /// </param>
-      /// <returns><see langword="true"/> if <paramref name="path"/> ends with a separator character.</returns>
       [SecurityCritical]
       internal static bool EndsWithDVsc(string path, bool? checkVolumeSeparatorChar)
       {
@@ -294,6 +296,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Check if <paramref name="c"/> is a directory- and/or volume-separator character.</summary>
+      /// <returns><see langword="true"/> if <paramref name="c"/> is a separator character.</returns>
       /// <param name="c">The character to check.</param>
       /// <param name="checkSeparatorChar">
       ///   If <see langword="null"/>, checks for all separator characters: <see cref="DirectorySeparatorChar"/>,
@@ -301,7 +304,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///   If <see langword="false"/>, only checks for: <see cref="DirectorySeparatorChar"/> and <see cref="AltDirectorySeparatorChar"/>
       ///   If <see langword="true"/> only checks for: <see cref="VolumeSeparatorChar"/>
       /// </param>
-      /// <returns><see langword="true"/> if <paramref name="c"/> is a separator character.</returns>
       [SecurityCritical]
       internal static bool IsDVsc(char c, bool? checkSeparatorChar)
       {
@@ -316,7 +318,6 @@ namespace Alphaleonis.Win32.Filesystem
                : c == DirectorySeparatorChar || c == AltDirectorySeparatorChar);
       }
 
-      #endregion
-
+      #endregion // Internal Methods
    }
 }

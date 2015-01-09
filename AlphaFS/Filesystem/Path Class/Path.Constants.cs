@@ -1,37 +1,44 @@
-using System;
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
+ */
+
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
-using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      /// <summary>
-      ///   AltDirectorySeparatorChar = '/' Provides a platform-specific alternate character used to separate directory levels in a path string
-      ///   that reflects a hierarchical file system organization.
-      /// </summary>
+      /// <summary>AltDirectorySeparatorChar = '/' Provides a platform-specific alternate character used to separate directory levels in a path string that reflects a hierarchical file system organization.</summary>
       public static readonly char AltDirectorySeparatorChar = System.IO.Path.AltDirectorySeparatorChar;
 
-      /// <summary>
-      ///   DirectorySeparatorChar = '\' Provides a platform-specific character used to separate directory levels in a path string that
-      ///   reflects a hierarchical file system organization.
-      /// </summary>
+      /// <summary>DirectorySeparatorChar = '\' Provides a platform-specific character used to separate directory levels in a path string that reflects a hierarchical file system organization.</summary>
       public static readonly char DirectorySeparatorChar = System.IO.Path.DirectorySeparatorChar;
 
-      /// <summary>
-      ///   PathSeparator = ';' A platform-specific separator character used to separate path strings in environment variables.
-      /// </summary>
+      /// <summary>PathSeparator = ';' A platform-specific separator character used to separate path strings in environment variables.</summary>
       public static readonly char PathSeparator = System.IO.Path.PathSeparator;
 
       /// <summary>VolumeSeparatorChar = ':' Provides a platform-specific Volume Separator character.</summary>
       public static readonly char VolumeSeparatorChar = System.IO.Path.VolumeSeparatorChar;
 
-      /// <summary>
-      ///   [AlphaFS] AltDirectorySeparatorChar = "/" Provides a platform-specific alternate string used to separate directory levels in a path
-      ///   string that reflects a hierarchical file system organization.
-      /// </summary>
+      /// <summary>[AlphaFS] AltDirectorySeparatorChar = "/" Provides a platform-specific alternate string used to separate directory levels in a path string that reflects a hierarchical file system organization.</summary>
       public static readonly string AltDirectorySeparator = AltDirectorySeparatorChar.ToString(CultureInfo.CurrentCulture);
 
       /// <summary>[AlphaFS] CurrentDirectoryPrefix = '.' Provides a current directory character.</summary>
@@ -40,10 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] CurrentDirectoryPrefix = "." Provides a current directory string.</summary>
       public static readonly string CurrentDirectoryPrefix = CurrentDirectoryPrefixChar.ToString(CultureInfo.CurrentCulture);
 
-      /// <summary>
-      ///   [AlphaFS] DirectorySeparator = "\" Provides a platform-specific string used to separate directory levels in a path string that
-      ///   reflects a hierarchical file system organization.
-      /// </summary>
+      /// <summary>[AlphaFS] DirectorySeparator = "\" Provides a platform-specific string used to separate directory levels in a path string that reflects a hierarchical file system organization.</summary>
       public static readonly string DirectorySeparator = DirectorySeparatorChar.ToString(CultureInfo.CurrentCulture);
 
       /// <summary>[AlphaFS] ExtensionSeparatorChar = '.' Provides an Extension Separator character.</summary>
@@ -110,21 +114,5 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] DosDeviceUncPrefix = "\??\UNC\" Provides a SUBST.EXE Path UNC prefix to a network share.</summary>
       public static readonly string DosDeviceUncPrefix = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}", SubstitutePrefix, "UNC", DirectorySeparatorChar);
-
-      /// <summary>Gets an array containing the characters that are not allowed in file names.</summary>
-      /// <returns>An array containing the characters that are not allowed in file names.</returns>
-      [SecurityCritical]
-      public static char[] GetInvalidFileNameChars()
-      {
-         return System.IO.Path.GetInvalidFileNameChars();
-      }
-
-      /// <summary>Gets an array containing the characters that are not allowed in path names.</summary>
-      /// <returns>An array containing the characters that are not allowed in path names.</returns>
-      [SecurityCritical]
-      public static char[] GetInvalidPathChars()
-      {
-         return System.IO.Path.GetInvalidPathChars();
-      }
    }
 }

@@ -1,3 +1,24 @@
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
+ */
+
 using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System;
@@ -13,12 +34,12 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Path
    {
       /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
+      /// <returns>Returns the final path as a string.</returns>
       /// <remarks>
       ///   A final path is the path that is returned when a path is fully resolved. For example, for a symbolic link named "C:\tmp\mydir" that
       ///   points to "D:\yourdir", the final path would be "D:\yourdir".
       /// </remarks>
       /// <param name="handle">Then handle to a <see cref="SafeFileHandle"/> instance.</param>
-      /// <returns>Returns the final path as a string.</returns>
       [SecurityCritical]
       public static string GetFinalPathNameByHandle(SafeFileHandle handle)
       {
@@ -26,24 +47,21 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
+      /// <returns>Returns the final path as a string.</returns>
       /// <remarks>
       ///   A final path is the path that is returned when a path is fully resolved. For example, for a symbolic link named "C:\tmp\mydir" that
       ///   points to "D:\yourdir", the final path would be "D:\yourdir".
       /// </remarks>
       /// <param name="handle">Then handle to a <see cref="SafeFileHandle"/> instance.</param>
       /// <param name="finalPath">The final path, formatted as <see cref="FinalPathFormats"/></param>
-      /// <returns>Returns the final path as a string.</returns>
       [SecurityCritical]
       public static string GetFinalPathNameByHandle(SafeFileHandle handle, FinalPathFormats finalPath)
       {
          return GetFinalPathNameByHandleInternal(handle, finalPath);
       }
 
-
-      /// <summary>
-      ///   [AlphaFS] Unified method GetFinalPathNameByHandleInternal() to retrieve the final path for the specified file, formatted as
-      ///   <see cref="FinalPathFormats"/>.
-      /// </summary>
+      /// <summary>[AlphaFS] Unified method GetFinalPathNameByHandleInternal() to retrieve the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
+      /// <returns>Returns the final path as a string.</returns>
       /// <remarks>
       ///   A final path is the path that is returned when a path is fully resolved. For example, for a symbolic link named "C:\tmp\mydir" that
       ///   points to "D:\yourdir", the final path would be "D:\yourdir". The string that is returned by this function uses the
@@ -51,7 +69,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <param name="handle">Then handle to a <see cref="SafeFileHandle"/> instance.</param>
       /// <param name="finalPath">The final path, formatted as <see cref="FinalPathFormats"/></param>
-      /// <returns>Returns the final path as a string.</returns>
       [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.GetMappedFileName(System.IntPtr,Alphaleonis.Win32.SafeGlobalMemoryBufferHandle,System.Text.StringBuilder,System.UInt32)")]
       [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.GetMappedFileName(System.IntPtr,Alphaleonis.Win32.Security.SafeLocalMemoryBufferHandle,System.Text.StringBuilder,System.UInt32)")]
       [SecurityCritical]
