@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(string path)
       {
-         return GetPropertiesInternal(null, path, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.Relative);
+         return GetPropertiesInternal(null, path, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(string path, DirectoryEnumerationOptions directoryEnumerationOptions)
       {
-         return GetPropertiesInternal(null, path, directoryEnumerationOptions, PathFormat.Relative);
+         return GetPropertiesInternal(null, path, directoryEnumerationOptions, PathFormat.RelativePath);
       }
       
       #endregion
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path)
       {
-         return GetPropertiesInternal(transaction, path, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.Relative);
+         return GetPropertiesInternal(transaction, path, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
@@ -183,7 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions)
       {
-         return GetPropertiesInternal(transaction, path, directoryEnumerationOptions, PathFormat.Relative);
+         return GetPropertiesInternal(transaction, path, directoryEnumerationOptions, PathFormat.RelativePath);
       }
 
       #endregion // Transactional

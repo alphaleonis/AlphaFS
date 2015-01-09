@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName)
       {
-         return Replace(destinationFileName, destinationBackupFileName, false, PathFormat.Relative);
+         return Replace(destinationFileName, destinationBackupFileName, false, PathFormat.RelativePath);
       }
 
       /// <summary>Replaces the contents of a specified file with the file described by the current <see cref="FileInfo"/> object, deleting the original file, and creating a backup of the replaced file. Also specifies whether to ignore merge errors.</summary>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors)
       {
-         return Replace(destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.Relative);
+         return Replace(destinationFileName, destinationBackupFileName, ignoreMetadataErrors, PathFormat.RelativePath);
       }
 
       #endregion // .NET

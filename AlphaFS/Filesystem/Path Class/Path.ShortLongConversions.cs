@@ -294,7 +294,7 @@ namespace Alphaleonis.Win32.Filesystem
             case PathFormat.FullPath:
                return GetLongPathInternal(sourcePath, GetFullPathOptions.None);
 
-            case PathFormat.Relative:
+            case PathFormat.RelativePath:
 #if NET35
                // .NET 3.5 the TrimEnd option has no effect.
                options = options & ~GetFullPathOptions.TrimEnd;

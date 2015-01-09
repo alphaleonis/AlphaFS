@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decrypt(string path)
       {
-         EncryptDecryptDirectoryInternal(path, false, false, PathFormat.Relative);
+         EncryptDecryptDirectoryInternal(path, false, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decrypt(string path, bool recursive)
       {
-         EncryptDecryptDirectoryInternal(path, false, recursive, PathFormat.Relative);
+         EncryptDecryptDirectoryInternal(path, false, recursive, PathFormat.RelativePath);
       }
 
       #endregion // Decrypt
@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Encrypt(string path)
       {
-         EncryptDecryptDirectoryInternal(path, true, false, PathFormat.Relative);
+         EncryptDecryptDirectoryInternal(path, true, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Encrypt(string path, bool recursive)
       {
-         EncryptDecryptDirectoryInternal(path, true, recursive, PathFormat.Relative);
+         EncryptDecryptDirectoryInternal(path, true, recursive, PathFormat.RelativePath);
       }
 
       #endregion // Encrypt
@@ -125,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DisableEncryption(string path)
       {
-         EnableDisableEncryptionInternal(path, false, PathFormat.Relative);
+         EnableDisableEncryptionInternal(path, false, PathFormat.RelativePath);
       }
 
       #endregion // DisableEncryption
@@ -148,7 +148,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void EnableEncryption(string path)
       {
-         EnableDisableEncryptionInternal(path, true, PathFormat.Relative);
+         EnableDisableEncryptionInternal(path, true, PathFormat.RelativePath);
       }
 
       #endregion // EnableEncryption

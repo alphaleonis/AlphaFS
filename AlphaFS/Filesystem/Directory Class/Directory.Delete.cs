@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteDirectoryInternal(null, null, path, false, false, true, false, PathFormat.Relative);
+         DeleteDirectoryInternal(null, null, path, false, false, true, false, PathFormat.RelativePath);
       }
 
       /// <summary>Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive)
       {
-         DeleteDirectoryInternal(null, null, path, recursive, false, !recursive, false, PathFormat.Relative);
+         DeleteDirectoryInternal(null, null, path, recursive, false, !recursive, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteDirectoryInternal(null, null, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.Relative);
+         DeleteDirectoryInternal(null, null, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path)
       {
-         DeleteDirectoryInternal(null, transaction, path, false, false, true, false, PathFormat.Relative);
+         DeleteDirectoryInternal(null, transaction, path, false, false, true, false, PathFormat.RelativePath);
       }
 
       /// <summary>Deletes an empty directory from a specified path.</summary>
@@ -167,7 +167,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive)
       {
-         DeleteDirectoryInternal(null, transaction, path, recursive, false, !recursive, false, PathFormat.Relative);
+         DeleteDirectoryInternal(null, transaction, path, recursive, false, !recursive, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteDirectoryInternal(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.Relative);
+         DeleteDirectoryInternal(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -244,7 +244,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (pathFormat == PathFormat.Relative)
+         if (pathFormat == PathFormat.RelativePath)
             Path.CheckValidPath(path, true, true);
 
          if (fileSystemEntryInfo == null)

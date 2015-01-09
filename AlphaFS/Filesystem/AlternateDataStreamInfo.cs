@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
       /// <param name="path">The path to an existing file or directory.</param>
-      public AlternateDataStreamInfo(string path) : this(new NativeMethods.Win32StreamId(), null, path, null, null, null, PathFormat.Relative)
+      public AlternateDataStreamInfo(string path) : this(new NativeMethods.Win32StreamId(), null, path, null, null, null, PathFormat.RelativePath)
       {
       }
 
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a new instance of the <see cref="AlternateDataStreamInfo"/> class.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to an existing file or directory.</param>
-      public AlternateDataStreamInfo(KernelTransaction transaction, string path) : this(new NativeMethods.Win32StreamId(), transaction, path, null, null, null, PathFormat.Relative)
+      public AlternateDataStreamInfo(KernelTransaction transaction, string path) : this(new NativeMethods.Win32StreamId(), transaction, path, null, null, null, PathFormat.RelativePath)
       {
       }
 

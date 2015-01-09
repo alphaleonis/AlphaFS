@@ -49,7 +49,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AddAlternateDataStream(string path, string name, string[] contents)
       {
-         AlternateDataStreamInfo.AddAlternateDataStreamInternal(false, null, path, name, contents, PathFormat.Relative);
+         AlternateDataStreamInfo.AddAlternateDataStreamInternal(false, null, path, name, contents, PathFormat.RelativePath);
       }
 
       #region Transactional
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AddAlternateDataStream(KernelTransaction transaction, string path, string name, string[] contents)
       {
-         AlternateDataStreamInfo.AddAlternateDataStreamInternal(false, transaction, path, name, contents, PathFormat.Relative);
+         AlternateDataStreamInfo.AddAlternateDataStreamInternal(false, transaction, path, name, contents, PathFormat.RelativePath);
       }
 
       #endregion // Transactional

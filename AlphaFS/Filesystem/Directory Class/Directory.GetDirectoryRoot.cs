@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryRoot(string path)
       {
-         return GetDirectoryRootInternal(null, path, PathFormat.Relative);
+         return GetDirectoryRootInternal(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryRoot(KernelTransaction transaction, string path)
       {
-         return GetDirectoryRootInternal(transaction, path, PathFormat.Relative);
+         return GetDirectoryRootInternal(transaction, path, PathFormat.RelativePath);
       }
 
       #endregion // GetDirectoryRoot

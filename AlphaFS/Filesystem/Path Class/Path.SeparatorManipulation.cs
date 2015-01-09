@@ -157,7 +157,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static string GetSuffixedDirectoryNameInternal(KernelTransaction transaction, string path)
       {
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.Relative);
+         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.RelativePath);
 
          return di != null && di.Parent != null && di.Name != null
             ? AddTrailingDirectorySeparator(CombineInternal(false, di.Parent.FullName, di.Name), false)
@@ -174,7 +174,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static string GetSuffixedDirectoryNameWithoutRootInternal(KernelTransaction transaction, string path)
       {
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.Relative);
+         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.RelativePath);
 
          if (di == null || di.Parent == null)
             return null;

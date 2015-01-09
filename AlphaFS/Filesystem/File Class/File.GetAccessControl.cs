@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.Relative);
+         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, PathFormat.Relative);
+         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, PathFormat.RelativePath);
       }
 
       /// <summary>

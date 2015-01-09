@@ -152,7 +152,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = Path.CombineInternal(false, LongFullName, path);
          string templatePathLp = templatePath == null ? null :
-            Path.GetExtendedLengthPathInternal(Transaction, templatePath, PathFormat.Relative, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+            Path.GetExtendedLengthPathInternal(Transaction, templatePath, PathFormat.RelativePath, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          if (string.Compare(LongFullName, 0, pathLp, 0, LongFullName.Length, StringComparison.OrdinalIgnoreCase) != 0)
             throw new ArgumentException("Invalid SubPath", pathLp);

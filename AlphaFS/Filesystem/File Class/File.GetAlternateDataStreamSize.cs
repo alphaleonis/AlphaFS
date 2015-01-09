@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetAlternateDataStreamSize(string path)
       {
-         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, null, null, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetAlternateDataStreamSize(string path, string name)
       {
-         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, name, StreamType.Data, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, name, StreamType.Data, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetAlternateDataStreamSize(string path, StreamType type)
       {
-         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, null, type, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, null, null, path, null, type, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetAlternateDataStreamSize(KernelTransaction transaction, string path)
       {
-         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, null, null, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
@@ -176,7 +176,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetAlternateDataStreamSize(KernelTransaction transaction, string path, string name)
       {
-         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, name, null, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, name, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
@@ -187,7 +187,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetAlternateDataStreamSize(KernelTransaction transaction, string path, StreamType type)
       {
-         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, null, type, PathFormat.Relative);
+         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(false, transaction, null, path, null, type, PathFormat.RelativePath);
       }
 
       #endregion // Transacted

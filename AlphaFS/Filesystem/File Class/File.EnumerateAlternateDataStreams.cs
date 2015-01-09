@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path)
       {
-         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, null, null, path, null, null, PathFormat.Relative);
+         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, null, null, path, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</summary>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path, StreamType streamType)
       {
-         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, null, null, path, null, streamType, PathFormat.Relative);
+         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, null, null, path, null, streamType, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file specified by <paramref name="path"/>.</summary>
@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(KernelTransaction transaction, string path)
       {
-         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, transaction, null, path, null, null, PathFormat.Relative);
+         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, transaction, null, path, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file specified by <paramref name="path"/>.</summary>
@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(KernelTransaction transaction, string path, StreamType streamType)
       {
-         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, transaction, null, path, null, streamType, PathFormat.Relative);
+         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(null, transaction, null, path, null, streamType, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file specified by <paramref name="path"/>.</summary>

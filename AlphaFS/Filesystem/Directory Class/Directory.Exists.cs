@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path)
       {
-         return File.ExistsInternal(true, null, path, PathFormat.Relative);
+         return File.ExistsInternal(true, null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Determines whether the given path refers to an existing directory on disk.</summary>
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(KernelTransaction transaction, string path)
       {
-         return File.ExistsInternal(true, transaction, path, PathFormat.Relative);
+         return File.ExistsInternal(true, transaction, path, PathFormat.RelativePath);
       }
    }
 }

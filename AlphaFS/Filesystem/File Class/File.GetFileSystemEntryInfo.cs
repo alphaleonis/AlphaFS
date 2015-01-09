@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
       {
-         return GetFileSystemEntryInfoInternal(null, path, false, PathFormat.Relative);
+         return GetFileSystemEntryInfoInternal(null, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path)
       {
-         return GetFileSystemEntryInfoInternal(transaction, path, false, PathFormat.Relative);
+         return GetFileSystemEntryInfoInternal(transaction, path, false, PathFormat.RelativePath);
       }
 
       #endregion // GetFileSystemEntry

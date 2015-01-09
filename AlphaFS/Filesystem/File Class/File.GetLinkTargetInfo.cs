@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path)
       {
-         return GetLinkTargetInfoInternal(null, path, PathFormat.Relative);
+         return GetLinkTargetInfoInternal(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(KernelTransaction transaction, string path)
       {
-         return GetLinkTargetInfoInternal(transaction, path, PathFormat.Relative);
+         return GetLinkTargetInfoInternal(transaction, path, PathFormat.RelativePath);
       }
 
       #endregion // GetLinkTargetInfo
