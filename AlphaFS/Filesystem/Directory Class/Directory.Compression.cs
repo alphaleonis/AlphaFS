@@ -30,13 +30,33 @@ namespace Alphaleonis.Win32.Filesystem
       #region Non-Transactional
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <param name="path">A path that describes a directory to compress.</param>
       /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <param name="path">A path that describes a directory to compress.</param>
+      [SecurityCritical]
+      public static void Compress(string path)
+      {
+         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
+      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void Compress(string path, PathFormat pathFormat)
       {
          CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, pathFormat);
+      }
+
+
+
+      /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
+      /// <param name="path">A path that describes a directory to compress.</param>
+      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public static void Compress(string path, DirectoryEnumerationOptions directoryEnumerationOptions)
+      {
+         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
@@ -48,39 +68,42 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, pathFormat);
       }
-
-
-      /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <param name="path">A path that describes a directory to compress.</param>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
-      [SecurityCritical]
-      public static void Compress(string path)
-      {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.Relative);
-      }
-
-      /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <param name="path">A path that describes a directory to compress.</param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      [SecurityCritical]
-      public static void Compress(string path, DirectoryEnumerationOptions directoryEnumerationOptions)
-      {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, PathFormat.Relative);
-      }
-
+      
       #endregion
 
       #region Transactional
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
+      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path that describes a directory to compress.</param>
+      [SecurityCritical]
+      public static void Compress(KernelTransaction transaction, string path)
+      {
+         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
+      /// <remarks>This will only compress the root items, non recursive.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
       [SecurityCritical]
       public static void Compress(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, pathFormat);
+      }
+
+
+
+      /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path that describes a directory to compress.</param>
+      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public static void Compress(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions)
+      {
+         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
@@ -94,26 +117,6 @@ namespace Alphaleonis.Win32.Filesystem
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a directory to compress.</param>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
-      [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path)
-      {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.Relative);
-      }
-
-      /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a directory to compress.</param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions)
-      {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, PathFormat.Relative);
-      }
-
       #endregion // Transactional
 
       #endregion // Compress
@@ -123,13 +126,33 @@ namespace Alphaleonis.Win32.Filesystem
       #region Non-Transactional
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <param name="path">A path that describes a directory to decompress.</param>
+      [SecurityCritical]
+      public static void Decompress(string path)
+      {
+         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <remarks>This will only decompress the root items, non recursive.</remarks>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
       [SecurityCritical]
       public static void Decompress(string path, PathFormat pathFormat)
       {
          CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, pathFormat);
+      }
+
+
+
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <param name="path">A path that describes a directory to decompress.</param>
+      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public static void Decompress(string path, DirectoryEnumerationOptions directoryEnumerationOptions)
+      {
+         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
@@ -141,39 +164,42 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, pathFormat);
       }
-
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
-      [SecurityCritical]
-      public static void Decompress(string path)
-      {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.Relative);
-      }
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      [SecurityCritical]
-      public static void Decompress(string path, DirectoryEnumerationOptions directoryEnumerationOptions)
-      {
-         CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, PathFormat.Relative);
-      }
-
+      
       #endregion
 
       #region Transactional
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path that describes a directory to decompress.</param>
+      [SecurityCritical]
+      public static void Decompress(KernelTransaction transaction, string path)
+      {
+         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.Relative);
+      }
+
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <remarks>This will only decompress the root items, non recursive.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
       [SecurityCritical]
       public static void Decompress(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, pathFormat);
+      }
+
+      
+      
+      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path that describes a directory to decompress.</param>
+      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public static void Decompress(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions)
+      {
+         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, PathFormat.Relative);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
@@ -187,27 +213,6 @@ namespace Alphaleonis.Win32.Filesystem
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, pathFormat);
       }
 
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
-      [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path)
-      {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.Relative);
-      }
-
-      /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">A path that describes a directory to decompress.</param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions)
-      {
-         CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, PathFormat.Relative);
-      }
-
       #endregion // Transactional
 
       #endregion // Decompress
@@ -215,21 +220,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region DisableCompression
 
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
+      /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory. However, newly created files and directories will be uncompressed.</remarks>
       /// <param name="path">A path to a directory to decompress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
-      /// However, newly created files and directories will be uncompressed.</remarks>
-      [SecurityCritical]
-      public static void DisableCompression(string path, PathFormat pathFormat)
-      {
-         Device.ToggleCompressionInternal(true, null, path, false, pathFormat);
-      }
-
-
-      /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
-      /// <param name="path">A path to a directory to decompress.</param>
-      /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
-      /// However, newly created files and directories will be uncompressed.</remarks>
       [SecurityCritical]
       public static void DisableCompression(string path)
       {
@@ -237,48 +229,45 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory. However, newly created files and directories will be uncompressed.</remarks>
       /// <param name="path">A path to a directory to decompress.</param>
-      /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
-      /// However, newly created files and directories will be uncompressed.</remarks>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void DisableCompression(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void DisableCompression(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(true, transaction, path, false, pathFormat);
+         Device.ToggleCompressionInternal(true, null, path, false, pathFormat);
       }
 
+
+
       /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
+      /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory. However, newly created files and directories will be uncompressed.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory to decompress.</param>
-      /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory.
-      /// However, newly created files and directories will be uncompressed.</remarks>
       [SecurityCritical]
       public static void DisableCompression(KernelTransaction transaction, string path)
       {
          Device.ToggleCompressionInternal(true, transaction, path, false, PathFormat.Relative);
       }
 
-
+      /// <summary>[AlphaFS] Disables NTFS compression of the specified directory and the files in it.</summary>
+      /// <remarks>This method disables the directory-compression attribute. It will not decompress the current contents of the directory. However, newly created files and directories will be uncompressed.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="path">A path to a directory to decompress.</param>
+      [SecurityCritical]
+      public static void DisableCompression(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         Device.ToggleCompressionInternal(true, transaction, path, false, pathFormat);
+      }
+      
       #endregion // DisableCompression
 
       #region EnableCompression
 
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
+      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
       /// <param name="path">A path to a directory to compress.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory.
-      /// However, newly created files and directories will be compressed.</remarks>
-      [SecurityCritical]
-      public static void EnableCompression(string path, PathFormat pathFormat)
-      {
-         Device.ToggleCompressionInternal(true, null, path, true, pathFormat);
-      }
-
-      /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
-      /// <param name="path">A path to a directory to compress.</param>
-      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory.
-      /// However, newly created files and directories will be compressed.</remarks>
       [SecurityCritical]
       public static void EnableCompression(string path)
       {
@@ -286,29 +275,39 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
-      /// <param name="transaction">The transaction.</param>
+      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
       /// <param name="path">A path to a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory.
-      /// However, newly created files and directories will be compressed.</remarks>
       [SecurityCritical]
-      public static void EnableCompression(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void EnableCompression(string path, PathFormat pathFormat)
       {
-         Device.ToggleCompressionInternal(true, transaction, path, true, pathFormat);
+         Device.ToggleCompressionInternal(true, null, path, true, pathFormat);
       }
 
+
+
       /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
+      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory to compress.</param>
-      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory.
-      /// However, newly created files and directories will be compressed.</remarks>
       [SecurityCritical]
       public static void EnableCompression(KernelTransaction transaction, string path)
       {
          Device.ToggleCompressionInternal(true, transaction, path, true, PathFormat.Relative);
       }
 
-      #endregion //EnableCompression
+      /// <summary>[AlphaFS] Enables NTFS compression of the specified directory and the files in it.</summary>
+      /// <remarks>This method enables the directory-compression attribute. It will not compress the current contents of the directory. However, newly created files and directories will be compressed.</remarks>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">A path to a directory to compress.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void EnableCompression(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         Device.ToggleCompressionInternal(true, transaction, path, true, pathFormat);
+      }
+      
+      #endregion // EnableCompression
 
       #region Internal Methods
 
@@ -329,7 +328,7 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
          // Process directories and files.
-         foreach (string fso in EnumerateFileSystemEntryInfosInternal<string>(transaction, pathLp, searchPattern, directoryEnumerationOptions | DirectoryEnumerationOptions.AsLongPath, PathFormat.LongFullPath))
+         foreach (var fso in EnumerateFileSystemEntryInfosInternal<string>(transaction, pathLp, searchPattern, directoryEnumerationOptions | DirectoryEnumerationOptions.AsLongPath, PathFormat.LongFullPath))
             Device.ToggleCompressionInternal(true, transaction, fso, compress, PathFormat.LongFullPath);
 
          // Compress the root directory, the given path.

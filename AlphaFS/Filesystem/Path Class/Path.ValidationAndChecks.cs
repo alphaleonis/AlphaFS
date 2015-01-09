@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Don't use char.IsLetter() here as that can be misleading.
          // The only valid drive letters are: a-z and A-Z.
          char c = path[0];
-         return IsPathRooted(path) && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) && path[1] == VolumeSeparatorChar;
+         return IsPathRooted(path, false) && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) && path[1] == VolumeSeparatorChar;
       }
 
       #endregion // AlphaFS
