@@ -614,7 +614,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private CopyMoveResult CopyToMoveToInternal(string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {
-         string destinationPathLp = Path.GetExtendedLengthPathInternal(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         string destinationPathLp = Path.GetExtendedLengthPathInternal(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          longFullPath = destinationPathLp;
 

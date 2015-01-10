@@ -738,10 +738,10 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeMountPoint");
 
          // The string must end with a trailing backslash ('\').
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);            
+         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);            
 
-         StringBuilder volumeGuid = new StringBuilder(100);
-         StringBuilder uniqueName = new StringBuilder(100);
+         var volumeGuid = new StringBuilder(100);
+         var uniqueName = new StringBuilder(100);
 
          try
          {
@@ -865,7 +865,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             var volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode / 32);
-            string pathLp = Path.GetFullPathInternal(null, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+            string pathLp = Path.GetFullPathInternal(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
             // GetVolumePathName()
             // In the ANSI version of this function, the name is limited to 248 characters.
@@ -1008,8 +1008,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
-         
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, true, GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+
+         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // This string must be of the form "\\?\Volume{GUID}\"
          volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);

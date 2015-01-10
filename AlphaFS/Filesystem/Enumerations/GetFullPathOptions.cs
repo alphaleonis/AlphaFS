@@ -18,11 +18,12 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
  *  THE SOFTWARE. 
  */
+
 using System;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>A bitfield of flags for specifying options for various internal operation that converts path to full paths.</summary>
+   /// <summary>A bitfield of flags for specifying options for various internal operations that convert paths to full paths.</summary>
    [Flags]
    internal enum GetFullPathOptions
    {
@@ -32,21 +33,25 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Remove any trailing whitespace from the path.</summary>
       TrimEnd = 1,
 
-      /// <summary>
-      /// Add a trailing directory separator to the path (if one does not already exist).
-      /// </summary>
+      /// <summary>Add a trailing directory separator to the path (if one does not already exist).</summary>
       AddTrailingDirectorySeparator = 2,
 
       /// <summary>Remove the trailing directory separator from the path (if one exists).</summary>
       RemoveTrailingDirectorySeparator = 4,
 
+      /// <summary>Return full path as long full path (Unicode format).</summary>
+      AsLongPath = 8,
+
       /// <summary>Prevents and exception from being thrown if a filesystem object does not exist.</summary>
-      ContinueOnNonExist = 8,
+      ContinueOnNonExist = 16,
 
       /// <summary>Check that the path contains only valid path-characters.</summary>
-      CheckInvalidPathChars = 16,
+      CheckInvalidPathChars = 32,
 
       /// <summary>Also check for wildcard (? and *) characters.</summary>
-      CheckAdditional = 32
+      CheckAdditional = 64,
+
+      /// <summary>Performs both <see cref="CheckInvalidPathChars"/> and <see cref="CheckAdditional"/> checks.</summary>
+      FullCheck = CheckInvalidPathChars | CheckAdditional
    }
 }
