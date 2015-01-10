@@ -59,6 +59,7 @@ namespace AlphaFS.UnitTest
       private const string Local = @"LOCAL";
       private const string Network = @"NETWORK";
 
+      private static readonly string StartupFolder = AppDomain.CurrentDomain.BaseDirectory;
       private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
       private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
       private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
@@ -2342,7 +2343,7 @@ namespace AlphaFS.UnitTest
                              !string.IsNullOrWhiteSpace(actual.DiskSpaceInfo.AvailableFreeSpaceUnitSize));
             }
          }
-         Console.WriteLine("\n\t{0}", Reporter());
+         Console.WriteLine("\n{0}", Reporter());
       }
 
       #endregion // DumpGetDrives
