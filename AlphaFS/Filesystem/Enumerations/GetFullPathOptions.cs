@@ -22,7 +22,7 @@ using System;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>A bitfield of flags for specifying options for various internal operation that converts path to full paths.</summary>
+   /// <summary>A bitfield of flags for specifying options for various internal operations that convert paths to full paths.</summary>
    [Flags]
    internal enum GetFullPathOptions
    {
@@ -32,9 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Remove any trailing whitespace from the path.</summary>
       TrimEnd = 1,
 
-      /// <summary>
-      /// Add a trailing directory separator to the path (if one does not already exist).
-      /// </summary>
+      /// <summary>Add a trailing directory separator to the path (if one does not already exist).</summary>
       AddTrailingDirectorySeparator = 2,
 
       /// <summary>Remove the trailing directory separator from the path (if one exists).</summary>
