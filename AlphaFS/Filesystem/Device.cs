@@ -315,7 +315,7 @@ namespace Alphaleonis.Win32.Filesystem
                         }
 
                         // Throws IOException.
-                        NativeError.ThrowException(lastError, true);
+                        NativeError.ThrowException(lastError);
                         break;
                   }
                }
@@ -466,7 +466,7 @@ namespace Alphaleonis.Win32.Filesystem
             int lastError = Marshal.GetLastWin32Error();
             if (lastError != Win32Errors.NO_ERROR)
                // Throws IOException.
-               NativeError.ThrowException(lastError, true);
+               NativeError.ThrowException(lastError);
          }
 
          return didd;
@@ -501,7 +501,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   default:
                      // Throws IOException.
-                     NativeError.ThrowException(lastError, true);
+                     NativeError.ThrowException(lastError);
                      break;
                }
             }

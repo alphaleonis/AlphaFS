@@ -40,32 +40,32 @@ namespace Alphaleonis.Win32
       }
 
       [SecurityCritical]
-      public static void ThrowException(int errorCode, bool isIoException = false)
+      public static void ThrowException(int errorCode)
       {
-         ThrowException((uint)errorCode, null, null, isIoException);
+         ThrowException((uint)errorCode, null, null);
       }
 
       [SecurityCritical]
-      public static void ThrowException(int errorCode, string readPath, bool isIoException = false)
+      public static void ThrowException(int errorCode, string readPath)
       {
-         ThrowException((uint)errorCode, readPath, null, isIoException);
+         ThrowException((uint)errorCode, readPath, null);
       }
 
       [SecurityCritical]
-      public static void ThrowException(int errorCode, string readPath, string writePath, bool isIoException = false)
+      public static void ThrowException(int errorCode, string readPath, string writePath)
       {
-         ThrowException((uint)errorCode, readPath, writePath, isIoException);
+         ThrowException((uint)errorCode, readPath, writePath);
       }
 
       [SecurityCritical]
-      public static void ThrowException(uint errorCode, string readPath, bool isIoException = false)
+      public static void ThrowException(uint errorCode, string readPath)
       {
-         ThrowException(errorCode, readPath, null, isIoException);
+         ThrowException(errorCode, readPath, null);
       }
 
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      public static void ThrowException(uint errorCode, string readPath, string writePath, bool isIoException = false)
+      public static void ThrowException(uint errorCode, string readPath, string writePath)
       {
          string errorMessage = string.Format(CultureInfo.CurrentCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message);
 
@@ -74,9 +74,6 @@ namespace Alphaleonis.Win32
 
          if (!Utils.IsNullOrWhiteSpace(writePath))
             errorMessage = string.Format(CultureInfo.CurrentCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), writePath);
-
-         if (isIoException)
-            throw new IOException(errorMessage, (int)errorCode);
 
          switch (errorCode)
          {
@@ -157,15 +154,15 @@ namespace Alphaleonis.Win32
 
 
       [SecurityCritical]
-      public static void ThrowException(string readPath, bool isIoException = false)
+      public static void ThrowException(string readPath)
       {
-         ThrowException((uint)Marshal.GetLastWin32Error(), readPath, null, isIoException);
+         ThrowException((uint)Marshal.GetLastWin32Error(), readPath, null);
       }
 
       [SecurityCritical]
-      public static void ThrowException(string readPath, string writePath, bool isIoException = false)
+      public static void ThrowException(string readPath, string writePath)
       {
-         ThrowException((uint)Marshal.GetLastWin32Error(), readPath, writePath, isIoException);
+         ThrowException((uint)Marshal.GetLastWin32Error(), readPath, writePath);
       }
    }
 }

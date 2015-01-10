@@ -584,7 +584,7 @@ namespace Alphaleonis.Win32.Filesystem
                      yield break;
 
                   // Throws IOException.
-                  NativeError.ThrowException(lastError, true);
+                  NativeError.ThrowException(lastError);
                }
             }
          }
@@ -767,7 +767,7 @@ namespace Alphaleonis.Win32.Filesystem
             switch (lastError)
             {
                case Win32Errors.ERROR_INVALID_NAME:
-                  NativeError.ThrowException(lastError, volumeMountPoint, true);
+                  NativeError.ThrowException(lastError, volumeMountPoint);
                   break;
 
                case Win32Errors.ERROR_MORE_DATA:
@@ -778,7 +778,7 @@ namespace Alphaleonis.Win32.Filesystem
                   // (2) When volumeMountPoint is a network drive mapping or UNC path, lastError is set to Win32Errors.ERROR_INVALID_PARAMETER.
 
                   // Throw IOException.
-                  NativeError.ThrowException(lastError, volumeMountPoint, true);
+                  NativeError.ThrowException(lastError, volumeMountPoint);
                   break;
             }
          }

@@ -379,7 +379,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (!NativeMethods.BackupRead(SafeFileHandle, safeBuffer, (uint)safeBuffer.Capacity, out numberOfBytesRead, false, processSecurity, ref m_context))
                // Throws IOException.
-               NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
+               NativeError.ThrowException(Marshal.GetLastWin32Error());
 
             // See File.GetAccessControlInternal(): .CopyTo() does not work there?
             safeBuffer.CopyTo(buffer, offset, count);
@@ -447,7 +447,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (!NativeMethods.BackupWrite(SafeFileHandle, safeBuffer, (uint)safeBuffer.Capacity, out bytesWritten, false, processSecurity, out m_context))
                // Throws IOException.
-               NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
+               NativeError.ThrowException(Marshal.GetLastWin32Error());
          }
       }
 
@@ -501,7 +501,7 @@ namespace Alphaleonis.Win32.Filesystem
             // Error Code 25 indicates a seek error, we just skip that here.
             if (lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_SEEK)
                // Throws IOException.
-               NativeError.ThrowException(lastError, true);
+               NativeError.ThrowException(lastError);
          }
 
          return NativeMethods.ToLong(highSought, lowSought);
@@ -531,7 +531,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (lastError != Win32Errors.ERROR_SUCCESS)
                // Throws IOException.
-               NativeError.ThrowException((int)lastError, true);
+               NativeError.ThrowException((int)lastError);
 
             if (pSecurityDescriptor.IsInvalid)
                throw new IOException(Resources.InvalidSecurityDescriptorReturnedFromSystem);
@@ -582,7 +582,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!NativeMethods.LockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
             // Throws IOException.
-            NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
+            NativeError.ThrowException(Marshal.GetLastWin32Error());
       }
 
       /// <summary>Allows access by other processes to all or part of a file that was previously locked.</summary>
@@ -602,7 +602,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!NativeMethods.UnlockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
             // Throws IOException.
-            NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
+            NativeError.ThrowException(Marshal.GetLastWin32Error());
       }
 
       /// <summary>
