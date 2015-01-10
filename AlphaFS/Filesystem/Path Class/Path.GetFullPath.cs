@@ -302,7 +302,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = GetLongPathInternal(path, options);
 
-         bool useChangeErrorMode = (options & GetFullPathOptions.SkipChangeErrorMode) == 0;
          uint bufferSize = NativeMethods.MaxPathUnicode;
          
 

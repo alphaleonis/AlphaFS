@@ -47,11 +47,6 @@ namespace Alphaleonis.Win32.Filesystem
       CheckInvalidPathChars = 16,
 
       /// <summary>Also check for wildcard (? and *) characters.</summary>
-      CheckAdditional = 32,
-
-      /// <summary>
-      /// 
-      /// </summary>
-      SkipChangeErrorMode = 64
+      CheckAdditional = 32
    }
 }
