@@ -84,7 +84,9 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string GetDirectoryRootInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
+
          pathLp = Path.GetRegularPathInternal(pathLp, false, false, false, false);
+
          string rootPath = Path.GetPathRoot(pathLp, false);
 
          return Utils.IsNullOrWhiteSpace(rootPath) ? null : rootPath;
