@@ -165,8 +165,6 @@ namespace Alphaleonis.Win32.Filesystem
              path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
             return path;
 
-         //path = GetRegularPathInternal(path, false, trimEnd, AddTrailingDirectorySeparator, RemoveTrailingDirectorySeparator);
-
          // ".", "C:"
          return path.Length > 2 && (IsLocalPath(path, false) || IsUncPath(path, false))
             ? path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase)
