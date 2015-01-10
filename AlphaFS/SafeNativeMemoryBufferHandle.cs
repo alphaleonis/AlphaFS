@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32
 
       public void CopyFrom(char[] source, int startIndex, int length, int offset)
       {
-         Marshal.Copy(source, startIndex, IntPtr.Add(handle, offset), length);
+         Marshal.Copy(source, startIndex, new IntPtr(handle.ToInt64() + offset), length);
       }
 
       /// <summary>
@@ -236,7 +236,7 @@ namespace Alphaleonis.Win32
 
       public T PtrToStructure<T>(int offset)
       {
-         return Marshal.PtrToStructure<T>(IntPtr.Add(handle, offset));
+         return (T)Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof(T));
       }
 
       public string PtrToStringUni(int length)
@@ -246,7 +246,7 @@ namespace Alphaleonis.Win32
 
       public string PtrToStringUni(int offset, int length)
       {
-         return Marshal.PtrToStringUni(IntPtr.Add(handle, offset), length);
+         return Marshal.PtrToStringUni(new IntPtr(handle.ToInt64() + offset), length);
       }
 
       #endregion

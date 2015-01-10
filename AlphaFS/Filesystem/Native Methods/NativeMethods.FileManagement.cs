@@ -788,12 +788,15 @@ namespace Alphaleonis.Win32.Filesystem
          public string cStreamName;
       }
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       public static extern SafeFindFileHandle FindFirstStreamTransactedW(string fileName, StreamInfoLevels infoLevel, SafeGlobalMemoryBufferHandle lpFindStreamData, int flags, SafeHandle hTransaction);
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       public static extern SafeFindFileHandle FindFirstStreamW(string fileName, StreamInfoLevels infoLevel, SafeGlobalMemoryBufferHandle lpFindStreamData, int flags);
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
       public static extern bool FindNextStreamW(SafeFindFileHandle handle, SafeGlobalMemoryBufferHandle lpFindStreamData);
