@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
                while (true)
                {
                   NativeMethods.WIN32_FIND_STREAM_DATA data = buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>();
-                  yield return new AlternateDataStreamInfo(data.cStreamName, data.StreamSize);
+                  yield return new AlternateDataStreamInfo(path, data);
                   if (!NativeMethods.FindNextStreamW(handle, buffer))
                   {
                      int lastError = Marshal.GetLastWin32Error();

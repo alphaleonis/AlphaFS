@@ -2212,7 +2212,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpReadWriteAllBytes
 
-
       #region Create file with trailing dot/space
 
       private void DumpFileTrailingDotSpace(bool isLocal)
@@ -2512,6 +2511,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Create file with trailing dot/space
+
 
       #endregion // Unit Tests
 
@@ -3545,7 +3545,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // TransferTimestamps
-
 
       #region AlphaFS___FileTrailingDotSpace
 

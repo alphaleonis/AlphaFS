@@ -314,6 +314,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid stream name..
+        /// </summary>
+        internal static string InvalidStreamName {
+            get {
+                return ResourceManager.GetString("InvalidStreamName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid transaction object..
         /// </summary>
         internal static string InvalidTransaction {

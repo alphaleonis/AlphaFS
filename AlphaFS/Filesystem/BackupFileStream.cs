@@ -193,12 +193,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class for the specified file handle, with the specified read/write permission.</summary>
       /// <param name="handle">A file handle for the file that this <see cref="BackupFileStream"/> object will encapsulate.</param>
       /// <param name="access">A <see cref="FileSystemRights"/> constant that gets the <see cref="CanRead"/> and <see cref="CanWrite"/> properties of the <see cref="BackupFileStream"/> object.</param>
-      
+
       [SecurityCritical]
       public BackupFileStream(SafeFileHandle handle, FileSystemRights access)
       {
+         if (handle == null)
+            throw new ArgumentNullException("handle", "handle is null.");
+
          if (handle.IsInvalid)
             throw new ArgumentException(Alphaleonis.Win32.Resources.HandleInvalid);
+
          _safeFileHandle = handle;
          _canRead = (access & FileSystemRights.ReadData) != 0;
          _canWrite = (access & FileSystemRights.WriteData) != 0;
@@ -450,7 +454,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Clears all buffers for this stream and causes any buffered data to be written to the underlying device.</summary>
       public override void Flush()
       {
-         if (!NativeMethods.FlushFileBuffers(SafeFileHandle))            
+         if (!NativeMethods.FlushFileBuffers(SafeFileHandle))
             NativeError.ThrowException(Marshal.GetLastWin32Error());
       }
 
@@ -623,7 +627,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (numberOfBytesRead < Marshal.SizeOf(typeof(NativeMethods.WIN32_STREAM_ID)))
                throw new System.IO.IOException(Alphaleonis.Win32.Resources.IncompleteHeaderRead);
 
-            NativeMethods.WIN32_STREAM_ID streamID = (NativeMethods.WIN32_STREAM_ID)Marshal.PtrToStructure(hBuf.DangerousGetHandle(), typeof(NativeMethods.WIN32_STREAM_ID));
+            NativeMethods.WIN32_STREAM_ID streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>();
 
             uint nameLength = (uint)Math.Min(streamID.StreamNameSize, hBuf.Capacity);
             if (!NativeMethods.BackupRead(_safeFileHandle, hBuf, nameLength, out numberOfBytesRead, false, mProcessSecurity, ref m_context))

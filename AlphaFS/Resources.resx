@@ -272,4 +272,8 @@
     <value>Incomplete header read.</value>
     <comment>IncompleteHeaderRead description</comment>
   </data>
+  <data name="InvalidStreamName" xml:space="preserve">
+    <value>Invalid stream name.</value>
+    <comment>InvalidStreamName description</comment>
+  </data>
 </root>

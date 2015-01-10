@@ -399,7 +399,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(Dump(stream, -11));
 
             // The default stream, a file as you know it.
-            if (stream.Name == "")
+            if (stream.StreamName == "")
                Assert.AreEqual(fileSize, stream.Size);
          }
 

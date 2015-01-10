@@ -22,36 +22,40 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
 
-   /// <summary>Information about an alternate data stream.</summary>   
+   /// <summary>Information about an alternate data stream.</summary>  
+   /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams"/> 
    public struct AlternateDataStreamInfo
    {
       #region Private Fields
 
       private readonly string m_name;
       private readonly long m_size;
+      private readonly string m_filePath;
 
       #endregion
 
       #region Construction
 
-      /// <summary>Constructor.</summary>
-      /// <param name="name">The name of the stream. May be empty for the default stream.</param>
-      /// <param name="size">The size of the stream.</param>
-      public AlternateDataStreamInfo(string name, long size)
+      internal AlternateDataStreamInfo(string filePath, NativeMethods.WIN32_FIND_STREAM_DATA findData)
       {
-         m_name = name ?? String.Empty;
-         m_size = size;
+         m_name = ParseStreamName(findData.cStreamName);
+         m_size = findData.StreamSize;
+         m_filePath = filePath;
       }
 
       #endregion
 
       #region Public Properties
 
-      public string Name
+      /// <summary>Gets the name of the alternate data stream.</summary>
+      /// <remarks>This value is an empty string for the default stream (::$DATA), and for any other data stream it contains the name of the stream.</remarks>
+      /// <value>The name of the stream.</value>
+      public string StreamName
       {
          get
          {
@@ -59,11 +63,27 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
+      /// <summary>Gets the size of the stream.</summary>      
       public long Size
       {
          get
          {
             return m_size;
+         }
+      }
+
+      /// <summary>Gets the full path to the stream.</summary>
+      /// <remarks>
+      ///   This is a path in long path format that can be passed to <see cref="O:Alphaleonis.Win32.Filesystem.File.Open"/> to open the stream if
+      ///   <see cref="PathFormat.FullPath"/> or
+      ///   <see cref="PathFormat.LongFullPath"/> is specified.
+      /// </remarks>
+      /// <value>The full path to the stream in long path format.</value>
+      public string FullPath
+      {
+         get
+         {
+            return m_filePath + ":" + StreamName + ":$DATA";
          }
       }
 
@@ -88,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (obj is AlternateDataStreamInfo)
          {
             AlternateDataStreamInfo other = (AlternateDataStreamInfo)obj;
-            return Name.Equals(other.Name) && Size.Equals(other.Size);
+            return StreamName.Equals(other.StreamName) && Size.Equals(other.Size);
          }
 
          return false;
@@ -110,6 +130,30 @@ namespace Alphaleonis.Win32.Filesystem
       public static bool operator !=(AlternateDataStreamInfo first, AlternateDataStreamInfo second)
       {
          return !first.Equals(second);
+      }
+
+      #endregion
+
+      #region Private Methods
+
+      private static string ParseStreamName(string input)
+      {
+         if (input == null || input.Length < 2)
+            return String.Empty;
+
+         if (input[0] != Path.StreamSeparatorChar)
+            throw new ArgumentException(Alphaleonis.Win32.Resources.InvalidStreamName);
+         
+         StringBuilder sb = new StringBuilder();
+         for (int i = 1; i < input.Length; i++)
+         {
+            if (input[i] == Path.StreamSeparatorChar)
+               break;
+
+            sb.Append(input[i]);
+         }
+
+         return sb.ToString();
       }
 
       #endregion
