@@ -268,4 +268,8 @@
   <data name="InvalidFileAttribute" xml:space="preserve">
     <value>An attempt to set an invalid file attribute failed.</value>
   </data>
+  <data name="IncompleteHeaderRead" xml:space="preserve">
+    <value>Incomplete header read.</value>
+    <comment>IncompleteHeaderRead description</comment>
+  </data>
 </root>

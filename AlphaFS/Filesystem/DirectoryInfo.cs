@@ -996,20 +996,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      #region AddAlternateDataStream
-
-      /// <summary>[AlphaFS] Adds an alternate data stream (NTFS ADS) to the directory.</summary>
-      /// <param name="name">The name for the stream. If a stream with <paramref name="name"/> already exists, it will be overwritten.</param>
-      /// <param name="contents">The lines to add to the stream.</param>
-
-      [SecurityCritical]
-      public void AddAlternateDataStream(string name, string[] contents)
-      {
-         AlternateDataStreamInfo.AddAlternateDataStreamInternal(true, Transaction, LongFullName, name, contents, PathFormat.LongFullPath);
-      }
-
-      #endregion // AddAlternateDataStream
-
       #region CopyTo
 
       // .NET 4.5 and below: DirectoryInfo class does not contain this method.
@@ -1388,33 +1374,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Encrypt
 
-      #region EnumerateAlternateDataStreams
-
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</summary>
-      /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the directory.</returns>
-
-      [SecurityCritical]
-      public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams()
-      {
-         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(true, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
-      }
-      /// <summary>
-      ///   [AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/>
-      ///   instances for the directory.
-      /// </summary>
-      /// <param name="streamType">Type of the stream.</param>
-      /// <returns>
-      ///   An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type
-      ///   <see cref="StreamType"/> instances for the directory.
-      /// </returns>      
-      [SecurityCritical]
-      public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(StreamType streamType)
-      {
-         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(true, Transaction, null, LongFullName, null, streamType, PathFormat.LongFullPath);
-      }
-
-      #endregion // EnumerateAlternateDataStreams
-
       #region GetDirName
 
       private static string GetDirName(string path)
@@ -1433,38 +1392,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // GetDisplayName
 
-      #region GetAlternateDataStreamSize
-
-      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all data streams (NTFS ADS).</summary>
-      /// <returns>The number of bytes used by all data streams.</returns>
-
-      [SecurityCritical]
-      public long GetAlternateDataStreamSize()
-      {
-         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(true, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
-      }
-
-      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a named data streams (NTFS ADS).</summary>
-      /// <param name="name">The name of the stream to retrieve.</param>
-      /// <returns>The number of bytes used by a named stream.</returns>
-
-      [SecurityCritical]
-      public long GetAlternateDataStreamSize(string name)
-      {
-         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(true, Transaction, null, LongFullName, name, StreamType.Data, PathFormat.LongFullPath);
-      }
-
-      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by a <see cref="StreamType"/> data streams (NTFS ADS).</summary>
-      /// <param name="type">The <see cref="StreamType"/> of the stream to retrieve.</param>
-      /// <returns>The number of bytes used by stream of type <see cref="StreamType"/>.</returns>
-
-      [SecurityCritical]
-      public long GetAlternateDataStreamSize(StreamType type)
-      {
-         return AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(true, Transaction, null, LongFullName, null, type, PathFormat.LongFullPath);
-      }
-
-      #endregion GetAlternateDataStreamSize
       
       #region RefreshEntryInfo
 
@@ -1475,33 +1402,7 @@ namespace Alphaleonis.Win32.Filesystem
          base.RefreshEntryInfo();
       }
 
-      #endregion // RefreshEntryInfo
-
-      #region RemoveAlternateDataStream
-
-      /// <summary>[AlphaFS] Removes all alternate data streams (NTFS ADS) from the directory.</summary>
-      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
-      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-
-      [SecurityCritical]
-      public void RemoveAlternateDataStream()
-      {
-         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(true, Transaction, LongFullName, null, PathFormat.LongFullPath);
-      }
-
-      /// <summary>[AlphaFS] Removes an alternate data stream (NTFS ADS) from the directory.</summary>
-      /// <param name="name">The name of the stream to remove.</param>
-      /// <remarks>This method only removes streams of type <see cref="StreamType.AlternateData"/>.</remarks>
-      /// <remarks>No Exception is thrown if the stream does not exist.</remarks>
-
-      [SecurityCritical]
-      public void RemoveAlternateDataStream(string name)
-      {
-         AlternateDataStreamInfo.RemoveAlternateDataStreamInternal(true, Transaction, LongFullName, name, PathFormat.LongFullPath);
-      }
-
-      #endregion // RemoveAlternateDataStream
-
+      #endregion // RefreshEntryInfo      
 
       #region Unified Internals
 

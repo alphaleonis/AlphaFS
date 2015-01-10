@@ -343,7 +343,7 @@ namespace AlphaFS.UnitTest
          long initialStreamSizeData;
          long streamsSize;
 
-         AlternateDataStreamInfo myAdsInstance;
+         AlternateDataStreamInfoOld myAdsInstance;
 
          string random = Path.GetRandomFileName();
          string myStream = "ӍƔŞtrëƛɱ-" + random;
@@ -383,11 +383,11 @@ namespace AlphaFS.UnitTest
          File.WriteAllText(tempPath, TenNumbers);
 
 
-         myAdsInstance = new AlternateDataStreamInfo(tempPath); // Class AlternateDataStreamInfo() instance.
+         myAdsInstance = new AlternateDataStreamInfoOld(tempPath); // Class AlternateDataStreamInfo() instance.
          var fi = new FileInfo(tempPath);  // Class FileInfo() instance.
 
          initialStreamsSizeAll = File.GetAlternateDataStreamSize(tempPath);
-         initialStreamSizeData = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
+         initialStreamSizeData = File.GetAlternateDataStreamSize(tempPath, BackupStreamType.Data);
 
          currentNumberofStreams = myAdsInstance.EnumerateAlternateDataStreams().Count();
 
@@ -412,18 +412,18 @@ namespace AlphaFS.UnitTest
          newNumberofStreams = myAdsInstance.EnumerateAlternateDataStreams().Count();
 
          // Count specific streams, should be 3.
-         Assert.AreEqual(3, myAdsInstance.EnumerateAlternateDataStreams(StreamType.AlternateData).Count());
-         Assert.AreEqual(1, fi.EnumerateAlternateDataStreams(StreamType.Data).Count());
-         Assert.AreEqual(1, File.EnumerateAlternateDataStreams(tempPath, StreamType.SecurityData).Count());
+         Assert.AreEqual(3, myAdsInstance.EnumerateAlternateDataStreams(BackupStreamType.AlternateData).Count());
+         Assert.AreEqual(1, fi.EnumerateAlternateDataStreams(BackupStreamType.Data).Count());
+         Assert.AreEqual(1, File.EnumerateAlternateDataStreams(tempPath, BackupStreamType.SecurityData).Count());
 
 
          // Enumerate all streams from the file.
-         foreach (AlternateDataStreamInfo stream in fi.EnumerateAlternateDataStreams())
+         foreach (AlternateDataStreamInfoOld stream in fi.EnumerateAlternateDataStreams())
          {
             Assert.IsTrue(Dump(stream, -11));
 
             // The default stream, a file as you know it.
-            if (stream.Type == StreamType.Data)
+            if (stream.Type == BackupStreamType.Data)
                Assert.AreEqual(fileSize, stream.Size);
          }
 
@@ -470,7 +470,7 @@ namespace AlphaFS.UnitTest
          streamsSize = File.GetAlternateDataStreamSize(tempPath);
          Console.WriteLine("\n\tFile.GetAlternateDataStreamSize(): [{0}] [{1}]{2}", Utils.UnitSizeToText(streamsSize), streamsSize, Reporter());
          Assert.AreEqual(initialStreamsSizeAll, streamsSize);
-         Assert.AreEqual(initialStreamSizeData, File.GetAlternateDataStreamSize(tempPath, StreamType.Data));
+         Assert.AreEqual(initialStreamSizeData, File.GetAlternateDataStreamSize(tempPath, BackupStreamType.Data));
          
          #endregion Remove Stream
 
@@ -493,10 +493,10 @@ namespace AlphaFS.UnitTest
 
          // Create directory and instances.
          var di = Directory.CreateDirectory(tempPath); // Class DirectoryInfo() instance.
-         myAdsInstance = new AlternateDataStreamInfo(tempPath); // Class AlternateDataStreamInfo() instance.
+         myAdsInstance = new AlternateDataStreamInfoOld(tempPath); // Class AlternateDataStreamInfo() instance.
 
          initialStreamsSizeAll = Directory.GetAlternateDataStreamSize(tempPath);
-         initialStreamSizeData = Directory.GetAlternateDataStreamSize(tempPath, StreamType.Data);
+         initialStreamSizeData = Directory.GetAlternateDataStreamSize(tempPath, BackupStreamType.Data);
          
          currentNumberofStreams = di.EnumerateAlternateDataStreams().Count();
 
@@ -516,13 +516,13 @@ namespace AlphaFS.UnitTest
          newNumberofStreams = File.EnumerateAlternateDataStreams(tempPath).Count();
 
          // Count specific streams, should be 3.
-         Assert.AreEqual(3, myAdsInstance.EnumerateAlternateDataStreams(StreamType.AlternateData).Count());
-         Assert.AreEqual(0, di.EnumerateAlternateDataStreams(StreamType.Data).Count()); // Directory does not have a default stream ($DATA).
-         Assert.AreEqual(1, Directory.EnumerateAlternateDataStreams(tempPath, StreamType.SecurityData).Count());
+         Assert.AreEqual(3, myAdsInstance.EnumerateAlternateDataStreams(BackupStreamType.AlternateData).Count());
+         Assert.AreEqual(0, di.EnumerateAlternateDataStreams(BackupStreamType.Data).Count()); // Directory does not have a default stream ($DATA).
+         Assert.AreEqual(1, Directory.EnumerateAlternateDataStreams(tempPath, BackupStreamType.SecurityData).Count());
 
 
          // Enumerate all streams from the directory.
-         foreach (AlternateDataStreamInfo stream in di.EnumerateAlternateDataStreams())
+         foreach (AlternateDataStreamInfoOld stream in di.EnumerateAlternateDataStreams())
             Assert.IsTrue(Dump(stream, -11));
 
          Console.WriteLine("\n\n\tCurrent stream Count(): [{0}]    {1}", newNumberofStreams, reporter);
@@ -567,7 +567,7 @@ namespace AlphaFS.UnitTest
          streamsSize = Directory.GetAlternateDataStreamSize(tempPath);
          Console.WriteLine("\n\tDirectory.GetAlternateDataStreamSize(): [{0}] [{1}]{2}", Utils.UnitSizeToText(streamsSize), streamsSize, Reporter());
          Assert.AreEqual(initialStreamsSizeAll, streamsSize);
-         Assert.AreEqual(initialStreamSizeData, Directory.GetAlternateDataStreamSize(tempPath, StreamType.Data));
+         Assert.AreEqual(initialStreamSizeData, Directory.GetAlternateDataStreamSize(tempPath, BackupStreamType.Data));
 
          #endregion // Remove Stream
 

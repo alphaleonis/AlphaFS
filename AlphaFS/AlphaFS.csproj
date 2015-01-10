@@ -87,7 +87,7 @@
     <RegisterForComInterop>false</RegisterForComInterop>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <Prefer32Bit>false</Prefer32Bit>
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
@@ -159,9 +159,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
+    <Compile Include="Filesystem\BackupStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.DeleteEmptySubdirectories.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.AlternateDataStreams.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Delete.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CreateDirectory.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntries.cs" />
@@ -186,7 +186,6 @@
     <Compile Include="Filesystem\File Class\File.CreateSymbolicLink.cs" />
     <Compile Include="Filesystem\File Class\File.CreateHardlink.cs" />
     <Compile Include="Filesystem\File Class\File.Compress.cs" />
-    <Compile Include="Filesystem\File Class\File.AddAlternateDataStream.cs" />
     <Compile Include="Filesystem\File Class\File.Delete.cs" />
     <Compile Include="Filesystem\File Class\File.EncryptDescrypt.cs" />
     <Compile Include="Filesystem\File Class\File.CreateText.cs" />
@@ -211,7 +210,7 @@
     <Compile Include="Filesystem\Enumerations\ReparsePointTag.cs" />
     <Compile Include="Filesystem\Enumerations\SetupDiGetDeviceRegistryPropertyEnum.cs" />
     <Compile Include="Filesystem\Enumerations\StreamAttributes.cs" />
-    <Compile Include="Filesystem\Enumerations\StreamType.cs" />
+    <Compile Include="Filesystem\Enumerations\BackupStreamType.cs" />
     <Compile Include="Filesystem\Enumerations\VolumeInfoAttributes.cs" />
     <Compile Include="Filesystem\Enumerations\CopyOptions.cs" />
     <Compile Include="Filesystem\Enumerations\CopyMoveProgressCallbackReason.cs" />
@@ -245,14 +244,9 @@
     <Compile Include="Filesystem\File Class\File.GetFileSystemEntryInfo.cs" />
     <Compile Include="Filesystem\File Class\File.GetLinkTargetInfo.cs" />
     <Compile Include="Filesystem\File Class\File.GetSize.cs" />
-    <Compile Include="Filesystem\File Class\File.GetAlternateDataStreamSize.cs" />
-    <Compile Include="Filesystem\File Class\File.RemoveAlternateDataStream.cs" />
     <Compile Include="Filesystem\File Class\File.TransferTimestamps.cs" />
     <Compile Include="Filesystem\FileIdBothDirectoryInfo.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.AddAlternateDataStream.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.RemoveAlternateDataStream.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.RefreshEntryInfo.cs" />
-    <Compile Include="Filesystem\FileInfo Class\FileInfo.GetAlternateDataStreamSize.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.Decompress.cs" />
     <Compile Include="Filesystem\FileInfo Class\FileInfo.Compress.cs" />
@@ -362,6 +356,7 @@
     <Compile Include="SafeGlobalMemoryBufferHandle.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SafeNativeMemoryBufferHandle.cs" />
     <Compile Include="Security\Enumerations\ObjectType.cs" />
     <Compile Include="Security\Enumerations\SecurityDescriptorControl.cs" />
     <Compile Include="Security\Enumerations\SecurityInformation.cs" />

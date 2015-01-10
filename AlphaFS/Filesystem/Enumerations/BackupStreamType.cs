@@ -23,9 +23,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>WIN32_STREAM_ID structure - The type of the data contained in the backup stream.  This enum is used by the Filesystem classes BackupFileStream() and AlternateDataStreamInfo().</summary>
-
-   public enum StreamType
+   /// <summary>The type of the data contained in the backup stream.</summary>
+   public enum BackupStreamType
    {
       /// <summary>(0) This indicates an error.</summary>
       None = 0,

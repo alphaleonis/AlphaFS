@@ -1248,7 +1248,7 @@ namespace AlphaFS.UnitTest
 
 
          long fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
-         long fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
+         long fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, BackupStreamType.Data);
          long fileGetSize = File.GetSize(tempPath); 
          long fileGetCompressedSize = File.GetCompressedSize(tempPath);
          long fiLength = fi.Length;
@@ -1285,7 +1285,7 @@ namespace AlphaFS.UnitTest
             compressOk = true;
 
             fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
-            fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
+            fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, BackupStreamType.Data);
             fileGetSize = File.GetSize(tempPath); 
             fileGetCompressedSize = File.GetCompressedSize(tempPath);
          }
@@ -1338,7 +1338,7 @@ namespace AlphaFS.UnitTest
             decompressOk = true;
 
             fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
-            fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
+            fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, BackupStreamType.Data);
             fileGetSize = File.GetSize(tempPath);
             fileGetCompressedSize = File.GetCompressedSize(tempPath);
 

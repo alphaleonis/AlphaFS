@@ -26,27 +26,12 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region AlphaFS
-
       /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
       /// <returns>An enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</returns>
       [SecurityCritical]
       public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams()
       {
-         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(false, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
-      }
-
-      /// <summary>[AlphaFS] Returns an enumerable collection of <see cref="AlternateDataStreamInfo"/> instances for the file.</summary>
-      /// <param name="streamType">Type of the stream.</param>
-      /// <returns>
-      ///   An enumerable collection of <see cref="AlternateDataStreamInfo"/> of type <see cref="StreamType"/> instances for the file.
-      /// </returns>
-      [SecurityCritical]
-      public IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(StreamType streamType)
-      {
-         return AlternateDataStreamInfo.EnumerateAlternateDataStreamsInternal(false, Transaction, null, LongFullName, null, streamType, PathFormat.LongFullPath);
-      }
-
-      #endregion // AlphaFS
+         return File.EnumerateAlternateDataStreamsInternal(Transaction, LongFullName, PathFormat.LongFullPath);
+      }    
    }
 }
