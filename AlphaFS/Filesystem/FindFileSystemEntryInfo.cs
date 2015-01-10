@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Transaction = transaction;
 
-         InputPath = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         InputPath = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          SearchPattern = searchPattern;
          FileSystemObjectType = null;

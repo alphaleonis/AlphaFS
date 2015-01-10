@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // EncryptionDisable()
          // In the ANSI version of this function, the name is limited to 248 characters.
@@ -185,7 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void EncryptDecryptDirectoryInternal(string path, bool encrypt, bool recursive, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          var directoryEnumerationOptions = DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.AsLongPath;
 

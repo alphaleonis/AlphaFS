@@ -185,7 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       private static string GetLongShort83PathInternal(KernelTransaction transaction, string path, bool getShort)
       {
-         string pathLp = GetFullPathInternal(transaction, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         string pathLp = GetFullPathInternal(transaction, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
          var buffer = new StringBuilder();
          uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint)path.Length;
@@ -297,7 +297,7 @@ namespace Alphaleonis.Win32.Filesystem
                // .NET 3.5 the TrimEnd option has no effect.
                options = options & ~GetFullPathOptions.TrimEnd;
 #endif
-               return GetFullPathInternal(transaction, sourcePath, true, options);
+               return GetFullPathInternal(transaction, sourcePath, GetFullPathOptions.AsLongPath | options);
 
             default:
                throw new ArgumentException("Invalid value for " + typeof(PathFormat).Name + ": " + pathFormat);

@@ -133,10 +133,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void ReplaceInternal(string sourceFileName, string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
-         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(null, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
-         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
+
+         string sourceFileNameLp = Path.GetExtendedLengthPathInternal(null, sourceFileName, pathFormat, options);
+         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationFileName, pathFormat, options);
+         
          // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
-         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationBackupFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(null, destinationBackupFileName, pathFormat, options);
 
          const int replacefileWriteThrough = 1;
          const int replacefileIgnoreMergeErrors = 2;

@@ -149,7 +149,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (privilegeEnabler)
          {
-            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
             IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
             SafeGlobalMemoryBufferHandle pSecurityDescriptor;

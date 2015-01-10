@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Enumerate files and directories.</summary>
       FilesAndFolders = Files | Folders,
 
-      /// <summary>Return file/directory full path in Unicode format, only valid when return type is <see cref="string"/>.</summary>
+      /// <summary>Return full path as long full path (Unicode format), only valid when return type is <see cref="string"/>.</summary>
       AsLongPath = 4,
 
       /// <summary>Skip reparse points during directory enumeration.</summary>

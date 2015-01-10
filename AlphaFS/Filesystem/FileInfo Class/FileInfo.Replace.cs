@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, PathFormat pathFormat)
       {
-         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional;
+         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
          string destinationFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationFileName, pathFormat, options);
          string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationBackupFileName, pathFormat, options);
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileInfo Replace(string destinationFileName, string destinationBackupFileName, bool ignoreMetadataErrors, PathFormat pathFormat)
       {
-         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional;
+         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
          string destinationFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationFileName, pathFormat, options);
          string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationBackupFileName, pathFormat, options);

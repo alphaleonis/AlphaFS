@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void EncryptDecryptFileInternal(bool isFolder, string path, bool encrypt, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // Reset file/directory attributes.
          // MSDN: If lpFileName specifies a read-only file, the function fails and GetLastError returns ERROR_FILE_READ_ONLY.

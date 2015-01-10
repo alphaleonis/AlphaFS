@@ -40,18 +40,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Remove the trailing directory separator from the path (if one exists).</summary>
       RemoveTrailingDirectorySeparator = 4,
 
+      /// <summary>Return full path as long full path (Unicode format).</summary>
+      AsLongPath = 8,
+
       /// <summary>Prevents and exception from being thrown if a filesystem object does not exist.</summary>
-      ContinueOnNonExist = 8,
+      ContinueOnNonExist = 16,
 
       /// <summary>Check that the path contains only valid path-characters.</summary>
-      CheckInvalidPathChars = 16,
+      CheckInvalidPathChars = 32,
 
       /// <summary>Also check for wildcard (? and *) characters.</summary>
-      CheckAdditional = 32,
+      CheckAdditional = 64,
 
-      /// <summary>
-      /// 
-      /// </summary>
-      SkipChangeErrorMode = 64
+      /// <summary>Performs both <see cref="CheckInvalidPathChars"/> and <see cref="CheckAdditional"/> checks.</summary>
+      FullCheck = CheckInvalidPathChars | CheckAdditional
    }
 }

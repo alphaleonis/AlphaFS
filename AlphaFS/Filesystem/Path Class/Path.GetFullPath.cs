@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(null, path, false, GetFullPathOptions.None);
+         return GetFullPathInternal(null, path, GetFullPathOptions.None);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(null, path, asLongPath, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         return GetFullPathInternal(null, path, (asLongPath ? GetFullPathOptions.AsLongPath : 0) | GetFullPathOptions.FullCheck);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(null, path, asLongPath, (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         return GetFullPathInternal(null, path, (asLongPath ? GetFullPathOptions.AsLongPath : 0) | (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.FullCheck);
       }
 
       #endregion
@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(transaction, path, false, GetFullPathOptions.None);
+         return GetFullPathInternal(transaction, path, GetFullPathOptions.None);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -213,7 +213,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(transaction, path, asLongPath, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         return GetFullPathInternal(transaction, path, (asLongPath ? GetFullPathOptions.AsLongPath : 0) | GetFullPathOptions.FullCheck);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -251,7 +251,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
 
-         return GetFullPathInternal(transaction, path, asLongPath, (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars);
+         return GetFullPathInternal(transaction, path, (asLongPath ? GetFullPathOptions.AsLongPath : 0) | (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) | (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.CheckInvalidPathChars);
       }
 
       #endregion // Transactional
@@ -278,19 +278,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
-      /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
       /// <param name="options">Options for controlling the operation.</param>
       [SecurityCritical]
-      internal static string GetFullPathInternal(KernelTransaction transaction, string path, bool asLongPath, GetFullPathOptions options)
+      internal static string GetFullPathInternal(KernelTransaction transaction, string path, GetFullPathOptions options)
       {
          if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
          {
-            CheckInvalidPathChars(path, (options & GetFullPathOptions.CheckAdditional) != 0);
+            bool checkAdditional = (options & GetFullPathOptions.CheckAdditional) != 0;
+
+            CheckInvalidPathChars(path, checkAdditional);
 
             // Prevent duplicate checks.
             options &= ~GetFullPathOptions.CheckInvalidPathChars;
 
-            if ((options & GetFullPathOptions.CheckAdditional) != 0)
+            if (checkAdditional)
                options &= ~GetFullPathOptions.CheckAdditional;
          }
 
@@ -302,7 +303,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = GetLongPathInternal(path, options);
 
-         bool useChangeErrorMode = (options & GetFullPathOptions.SkipChangeErrorMode) == 0;
          uint bufferSize = NativeMethods.MaxPathUnicode;
          
 
@@ -338,7 +338,7 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException(pathLp);
             }
 
-            return asLongPath
+            return (options & GetFullPathOptions.AsLongPath) != 0
                ? GetLongPathInternal(buffer.ToString(), GetFullPathOptions.None)
                : GetRegularPathInternal(buffer.ToString(), false, false, false, false);
          }

@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // Default buffer length, will be extended if needed, although this should not happen.
          uint length = NativeMethods.MaxPathUnicode;
