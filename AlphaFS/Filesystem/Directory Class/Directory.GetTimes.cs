@@ -1,3 +1,24 @@
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
+ */
+
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
@@ -6,7 +27,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public static partial class Directory
+   partial class Directory
    {
       #region GetCreationTime
 
@@ -16,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(string path)
       {
-         return File.GetCreationTimeInternal(null, path, false, PathFormat.Relative).ToLocalTime();
+         return File.GetCreationTimeInternal(null, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the creation date and time of the specified directory.</summary>
@@ -47,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTime(KernelTransaction transaction, string path)
       {
-         return File.GetCreationTimeInternal(transaction, path, false, PathFormat.Relative).ToLocalTime();
+         return File.GetCreationTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       #endregion // GetCreationTime
@@ -60,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(string path)
       {
-         return File.GetCreationTimeInternal(null, path, true, PathFormat.Relative);
+         return File.GetCreationTimeInternal(null, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the creation date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
@@ -91,7 +112,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path)
       {
-         return File.GetCreationTimeInternal(transaction, path, true, PathFormat.Relative);
+         return File.GetCreationTimeInternal(transaction, path, true, PathFormat.RelativePath);
       }
 
       #endregion // GetCreationTimeUtc
@@ -104,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(string path)
       {
-         return File.GetLastAccessTimeInternal(null, path, false, PathFormat.Relative).ToLocalTime();
+         return File.GetLastAccessTimeInternal(null, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last accessed.</summary>
@@ -135,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(KernelTransaction transaction, string path)
       {
-         return File.GetLastAccessTimeInternal(transaction, path, false, PathFormat.Relative).ToLocalTime();
+         return File.GetLastAccessTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       #endregion // GetLastAccessTime
@@ -148,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(string path)
       {
-         return File.GetLastAccessTimeInternal(null, path, true, PathFormat.Relative);
+         return File.GetLastAccessTimeInternal(null, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
@@ -179,7 +200,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path)
       {
-         return File.GetLastAccessTimeInternal(transaction, path, true, PathFormat.Relative);
+         return File.GetLastAccessTimeInternal(transaction, path, true, PathFormat.RelativePath);
       }
 
       #endregion // GetLastAccessTimeUtc
@@ -192,7 +213,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path)
       {
-         return File.GetLastWriteTimeInternal(null, path, false, PathFormat.Relative).ToLocalTime();
+         return File.GetLastWriteTimeInternal(null, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last written to.</summary>
@@ -223,7 +244,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(KernelTransaction transaction, string path)
       {
-         return File.GetLastWriteTimeInternal(transaction, path, false, PathFormat.Relative).ToLocalTime();
+         return File.GetLastWriteTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       #endregion // GetLastWriteTime
@@ -236,7 +257,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path)
       {
-         return File.GetLastWriteTimeInternal(null, path, true, PathFormat.Relative);
+         return File.GetLastWriteTimeInternal(null, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified directory was last written to.</summary>
@@ -267,7 +288,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path)
       {
-         return File.GetLastWriteTimeInternal(transaction, path, true, PathFormat.Relative);
+         return File.GetLastWriteTimeInternal(transaction, path, true, PathFormat.RelativePath);
       }
 
       #endregion // GetLastWriteTimeUtc
@@ -295,7 +316,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(string path)
       {
-         return File.GetChangeTimeInternal(true, null, null, path, false, PathFormat.Relative);
+         return File.GetChangeTimeInternal(true, null, null, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>Gets the change date and time of the specified directory.</summary>
@@ -309,7 +330,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(SafeFileHandle safeHandle)
       {
-         return File.GetChangeTimeInternal(true, null, safeHandle, null, false, PathFormat.Relative);
+         return File.GetChangeTimeInternal(true, null, safeHandle, null, false, PathFormat.RelativePath);
       }
 
       /// <summary>Gets the change date and time of the specified directory.</summary>
@@ -330,7 +351,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(KernelTransaction transaction, string path)
       {
-         return File.GetChangeTimeInternal(true, transaction, null, path, false, PathFormat.Relative);
+         return File.GetChangeTimeInternal(true, transaction, null, path, false, PathFormat.RelativePath);
       }
 
       #endregion // GetChangeTime
@@ -353,7 +374,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path)
       {
-         return File.GetChangeTimeInternal(true, null, null, path, true, PathFormat.Relative);
+         return File.GetChangeTimeInternal(true, null, null, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -370,7 +391,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
       {
-         return File.GetChangeTimeInternal(true, null, safeHandle, null, true, PathFormat.Relative);
+         return File.GetChangeTimeInternal(true, null, safeHandle, null, true, PathFormat.RelativePath);
       }
 
       /// <summary>Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
@@ -391,7 +412,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path)
       {
-         return File.GetChangeTimeInternal(true, transaction, null, path, true, PathFormat.Relative);
+         return File.GetChangeTimeInternal(true, transaction, null, path, true, PathFormat.RelativePath);
       }
 
       #endregion // GetChangeTimeUtc

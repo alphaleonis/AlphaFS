@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(string fileName, string existingFileName)
       {
-         CreateHardlinkInternal(null, fileName, existingFileName, PathFormat.Relative);
+         CreateHardlinkInternal(null, fileName, existingFileName, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName)
       {
-         CreateHardlinkInternal(transaction, fileName, existingFileName, PathFormat.Relative);
+         CreateHardlinkInternal(transaction, fileName, existingFileName, PathFormat.RelativePath);
       }
 
       #endregion // CreateHardlink
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CreateHardlinkInternal(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
       {
-         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional;
+         var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
          string fileNameLp = Path.GetExtendedLengthPathInternal(transaction, fileName, pathFormat, options);
          string existingFileNameLp = Path.GetExtendedLengthPathInternal(transaction, existingFileName, pathFormat, options);

@@ -156,15 +156,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region RefreshEntryInfo
 
-      /// <summary>
-      ///   Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo instance.
-      /// </summary>
+      /// <summary>Refreshes the state of the <see cref="FileSystemEntryInfo"/> EntryInfo instance.</summary>
       /// <remarks>
       ///   <para>FileSystemInfo.RefreshEntryInfo() takes a snapshot of the file from the current file system.</para>
       ///   <para>Refresh cannot correct the underlying file system even if the file system returns incorrect or outdated information.</para>
       ///   <para>This can happen on platforms such as Windows 98.</para>
-      ///   <para>Calls must be made to Refresh() before attempting to get the attribute information, or the information will be
-      ///   outdated.</para>
+      ///   <para>Calls must be made to Refresh() before attempting to get the attribute information, or the information will be outdated.</para>
       /// </remarks>
       [SecurityCritical]
       protected void RefreshEntryInfo()
@@ -201,7 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         if (pathFormat == PathFormat.Relative)
+         if (pathFormat == PathFormat.RelativePath)
             Path.CheckValidPath(path, true, true);
 
          LongFullName = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | (isFolder ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.ContinueOnNonExist);

@@ -27,7 +27,7 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public static partial class Directory
+   partial class Directory
    {
       #region DeleteEmptySubdirectories
 
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectories(string path, bool recursive)
       {
-         DeleteEmptySubdirectoriesInternal(null, null, path, recursive, false, true, PathFormat.Relative);
+         DeleteEmptySubdirectoriesInternal(null, null, path, recursive, false, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectories(string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteEmptySubdirectoriesInternal(null, null, path, recursive, ignoreReadOnly, true, PathFormat.Relative);
+         DeleteEmptySubdirectoriesInternal(null, null, path, recursive, ignoreReadOnly, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectories(KernelTransaction transaction, string path, bool recursive)
       {
-         DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, false, true, PathFormat.Relative);
+         DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, false, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
@@ -131,7 +131,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectories(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, ignoreReadOnly, true, PathFormat.Relative);
+         DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, ignoreReadOnly, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (pathFormat == PathFormat.Relative)
+         if (pathFormat == PathFormat.RelativePath)
             Path.CheckValidPath(path, true, true);
 
          if (fileSystemEntryInfo == null)
@@ -182,7 +182,7 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
 
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(transaction,
-               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional)
+               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck)
                , false, pathFormat);
          }
 

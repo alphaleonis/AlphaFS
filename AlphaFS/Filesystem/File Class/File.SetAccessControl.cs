@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity)
       {
-         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, PathFormat.Relative);
+         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         SetAccessControlInternal(path, null, fileSecurity, includeSections, PathFormat.Relative);
+         SetAccessControlInternal(path, null, fileSecurity, includeSections, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -116,34 +116,34 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         if (pathFormat == PathFormat.Relative)
+         if (pathFormat == PathFormat.RelativePath)
             Path.CheckValidPath(path, true, true);
 
          if (objectSecurity == null)
             throw new ArgumentNullException("objectSecurity");
 
          byte[] managedDescriptor = objectSecurity.GetSecurityDescriptorBinaryForm();
-         using (SafeGlobalMemoryBufferHandle hDescriptor = new SafeGlobalMemoryBufferHandle(managedDescriptor.Length))
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle(managedDescriptor.Length))
          {
             string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
-            hDescriptor.CopyFrom(managedDescriptor, 0, managedDescriptor.Length);
+            safeBuffer.CopyFrom(managedDescriptor, 0, managedDescriptor.Length);
 
             SecurityDescriptorControl control;
             uint revision;
-            if (!Security.NativeMethods.GetSecurityDescriptorControl(hDescriptor, out control, out revision))
+            if (!Security.NativeMethods.GetSecurityDescriptorControl(safeBuffer, out control, out revision))
                NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
             PrivilegeEnabler privilegeEnabler = null;
             try
             {
-               SecurityInformation securityInfo = SecurityInformation.None;
+               var securityInfo = SecurityInformation.None;
 
                IntPtr pDacl = IntPtr.Zero;
                if ((includeSections & AccessControlSections.Access) != 0)
                {
                   bool daclDefaulted, daclPresent;
-                  if (!Security.NativeMethods.GetSecurityDescriptorDacl(hDescriptor, out daclPresent, out pDacl, out daclDefaulted))
+                  if (!Security.NativeMethods.GetSecurityDescriptorDacl(safeBuffer, out daclPresent, out pDacl, out daclDefaulted))
                      NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
                   if (daclPresent)
@@ -159,7 +159,7 @@ namespace Alphaleonis.Win32.Filesystem
                if ((includeSections & AccessControlSections.Audit) != 0)
                {
                   bool saclDefaulted, saclPresent;
-                  if (!Security.NativeMethods.GetSecurityDescriptorSacl(hDescriptor, out saclPresent, out pSacl, out saclDefaulted))
+                  if (!Security.NativeMethods.GetSecurityDescriptorSacl(safeBuffer, out saclPresent, out pSacl, out saclDefaulted))
                      NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
                   if (saclPresent)
@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
                if ((includeSections & AccessControlSections.Owner) != 0)
                {
                   bool ownerDefaulted;
-                  if (!Security.NativeMethods.GetSecurityDescriptorOwner(hDescriptor, out pOwner, out ownerDefaulted))
+                  if (!Security.NativeMethods.GetSecurityDescriptorOwner(safeBuffer, out pOwner, out ownerDefaulted))
                      NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
                   if (pOwner != IntPtr.Zero)
@@ -188,7 +188,7 @@ namespace Alphaleonis.Win32.Filesystem
                if ((includeSections & AccessControlSections.Group) != 0)
                {
                   bool groupDefaulted;
-                  if (!Security.NativeMethods.GetSecurityDescriptorGroup(hDescriptor, out pGroup, out groupDefaulted))
+                  if (!Security.NativeMethods.GetSecurityDescriptorGroup(safeBuffer, out pGroup, out groupDefaulted))
                      NativeError.ThrowException(Marshal.GetLastWin32Error(), pathLp);
 
                   if (pGroup != IntPtr.Zero)

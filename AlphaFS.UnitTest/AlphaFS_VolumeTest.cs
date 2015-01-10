@@ -88,7 +88,7 @@ namespace AlphaFS.UnitTest
 
       private static string Reporter(bool condensed = false, bool onlyTime = false)
       {
-         Win32Exception lastError = new Win32Exception();
+         var lastError = new Win32Exception();
 
          StopWatcher();
 
@@ -1048,12 +1048,6 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Volume.IsSameVolume()");
 
-         // My otherVolume is mapped to host.
-
-         const string drive = "M:";
-         const string otherVolume = drive + @"\Movies";
-         const string host = @"\\192.168.1.101\video\Movies";
-
          string file1 = Path.GetTempFileName();
          string file2 = Path.GetTempFileName();
          string fileTmp = file2;
@@ -1061,36 +1055,15 @@ namespace AlphaFS.UnitTest
          // Same C:
          StopWatcher(true);
          bool isSame = Volume.IsSameVolume(file1, fileTmp);
-         Console.WriteLine("\nOn same Volume (Should be True): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n{3}", isSame, file1, fileTmp, Reporter());
+         Console.WriteLine("\nOn same Volume (Should be True): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n\t{3}", isSame, file1, fileTmp, Reporter(true));
          Assert.IsTrue(isSame, "Should be the same volume.");
-
-         // Not same C: -> otherVolume
-         fileTmp = file2.Replace(SysDrive, otherVolume);
-         StopWatcher(true);
-         isSame = Volume.IsSameVolume(file1, fileTmp);
-         Console.WriteLine("\nOn same Volume (Should be False): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n{3}", isSame, file1, fileTmp, Reporter());
-         Assert.IsFalse(isSame, "Should not be the same volume.");
 
          // Same C: -> C$
          fileTmp = Path.LocalToUnc(file2);
          StopWatcher(true);
          isSame = Volume.IsSameVolume(file1, fileTmp);
-         Console.WriteLine("\nOn same Volume (Should be True): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n{3}", isSame, file1, fileTmp, Reporter());
+         Console.WriteLine("\nOn same Volume (Should be True): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n\t{3}", isSame, file1, fileTmp, Reporter(true));
          Assert.IsTrue(isSame, "Should be the same volume.");
-
-         // Same Z: -> \\192.168.1.101
-         fileTmp = host;
-         StopWatcher(true);
-         isSame = Volume.IsSameVolume(otherVolume, fileTmp);
-         Console.WriteLine("\nOn same Volume (Should be True): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n{3}", isSame, otherVolume, fileTmp, Reporter());
-         Assert.IsTrue(isSame, "Should be the same volume.");
-
-         // Not same C: -> Z:
-         fileTmp = otherVolume.Replace(drive, SysDrive);
-         StopWatcher(true);
-         isSame = Volume.IsSameVolume(otherVolume, fileTmp);
-         Console.WriteLine("\nOn same Volume (Should be False): [{0}]\n\tFile1: [{1}]\n\tFile2: [{2}]\n{3}", isSame, otherVolume, fileTmp, Reporter());
-         Assert.IsFalse(isSame, "Should not be the same volume.");
       }
 
       #endregion // IsSameVolume

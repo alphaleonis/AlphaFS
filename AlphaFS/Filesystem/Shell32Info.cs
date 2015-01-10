@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <param name="fileName">The fully qualified name of the new file, or the relative file name. Do not end the path with the directory separator character.</param>
       public Shell32Info(string fileName) 
-         : this(fileName, PathFormat.Relative)
+         : this(fileName, PathFormat.RelativePath)
       {
       }
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Shell32 is limited to MAX_PATH length.
          // Get a full path of regular format.
 
-         FullPath = Path.GetExtendedLengthPathInternal(null, fileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+         FullPath = Path.GetExtendedLengthPathInternal(null, fileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          Initialize();
       }

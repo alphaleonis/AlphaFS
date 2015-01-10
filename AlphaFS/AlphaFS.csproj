@@ -161,6 +161,7 @@
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\BackupStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CountFileSystemObjects.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.DeleteEmptySubdirectories.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Delete.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CreateDirectory.cs" />
@@ -180,6 +181,26 @@
     <Compile Include="Filesystem\Directory Class\Directory.Encryption.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileIdBothDirectoryInfo.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetProperties.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.RefreshEntryInfo.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Encryption.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.DeleteEmptySubdirectories.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Decrypt.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Compression.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CountFileSystemObjects.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CopyToMoveTo.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.ToString.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.SetAccessControl.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Refresh.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFileSystemInfos.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetFiles.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetDirectories.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.GetAccessControl.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateFileSystemInfos.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateFiles.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.EnumerateDirectories.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Delete.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectory.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Create.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
@@ -216,7 +237,7 @@
     <Compile Include="Filesystem\Enumerations\CopyMoveProgressCallbackReason.cs" />
     <Compile Include="Filesystem\Device.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.cs" />
-    <Compile Include="Filesystem\DirectoryInfo.cs" />
+    <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.cs" />
     <Compile Include="Filesystem\File Class\File.cs" />
     <Compile Include="Filesystem\BackupFileStream.cs" />
     <Compile Include="Filesystem\Enumerations\FileEncryptionStatus.cs" />
@@ -417,7 +438,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
