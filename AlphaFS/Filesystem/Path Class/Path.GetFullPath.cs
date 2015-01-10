@@ -284,19 +284,26 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string GetFullPathInternal(KernelTransaction transaction, string path, bool asLongPath, GetFullPathOptions options)
       {
          if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
+         {
             CheckInvalidPathChars(path, (options & GetFullPathOptions.CheckAdditional) != 0);
+
+            // Prevent duplicate checks.
+            options &= ~GetFullPathOptions.CheckInvalidPathChars;
+
+            if ((options & GetFullPathOptions.CheckAdditional) != 0)
+               options &= ~GetFullPathOptions.CheckAdditional;
+         }
 
          // Do not remove DirectorySeparator when path points to a drive like: "C:\"
          // In this case, removing DirectorySeparator will point to the current directory.
 
-         if (path == null || path.Length <= 3 || path[1] != VolumeSeparatorChar)
-         {
+         if (path == null || path.Length <= 3 || (!path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) && path[1] != VolumeSeparatorChar))
             options &= ~GetFullPathOptions.RemoveTrailingDirectorySeparator;
-         }
 
          string pathLp = GetLongPathInternal(path, options);
 
-         uint bufferSize = NativeMethods.MaxPathUnicode / 32;
+         bool useChangeErrorMode = (options & GetFullPathOptions.SkipChangeErrorMode) == 0;
+         uint bufferSize = NativeMethods.MaxPathUnicode;
          
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
