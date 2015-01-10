@@ -1560,9 +1560,9 @@ namespace AlphaFS.UnitTest
 
          StopWatcher(true);
          foreach (OpenConnectionInfo connectionInfo in Host.EnumerateOpenConnections(host, "IPC$", false))
-            Dump(connectionInfo, -17);
+            Dump(connectionInfo, -16);
 
-         Console.WriteLine(Reporter());
+         Console.WriteLine(Reporter(true));
          Console.WriteLine();
       }
       

@@ -63,7 +63,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("Failed to delete directory: [{0}}: [{1}}", _dirInfo, ex.Message);
+            Console.WriteLine("Failed to delete directory: [{0}]: [{1}]", _dirInfo, ex.Message);
          }
       }
 
