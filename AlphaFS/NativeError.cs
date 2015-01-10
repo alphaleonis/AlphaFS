@@ -33,41 +33,29 @@ namespace Alphaleonis.Win32
 {
    internal static class NativeError
    {
-      #region ThrowException
-
-      #region void
-
       [SecurityCritical]
       internal static void ThrowException()
       {
-         ThrowException((uint) Marshal.GetLastWin32Error(), null, null);
+         ThrowException((uint)Marshal.GetLastWin32Error(), null, null);
       }
-
-      #endregion // void
-
-      #region int
 
       [SecurityCritical]
       public static void ThrowException(int errorCode, bool isIoException = false)
       {
-         ThrowException((uint) errorCode, null, null, isIoException);
+         ThrowException((uint)errorCode, null, null, isIoException);
       }
 
       [SecurityCritical]
       public static void ThrowException(int errorCode, string readPath, bool isIoException = false)
       {
-         ThrowException((uint) errorCode, readPath, null, isIoException);
+         ThrowException((uint)errorCode, readPath, null, isIoException);
       }
 
       [SecurityCritical]
       public static void ThrowException(int errorCode, string readPath, string writePath, bool isIoException = false)
       {
-         ThrowException((uint) errorCode, readPath, writePath, isIoException);
+         ThrowException((uint)errorCode, readPath, writePath, isIoException);
       }
-
-      #endregion // int
-
-      #region uint
 
       [SecurityCritical]
       public static void ThrowException(uint errorCode, string readPath, bool isIoException = false)
@@ -79,7 +67,7 @@ namespace Alphaleonis.Win32
       [SecurityCritical]
       public static void ThrowException(uint errorCode, string readPath, string writePath, bool isIoException = false)
       {
-         string errorMessage = string.Format(CultureInfo.CurrentCulture, "({0}) {1}.", errorCode, new Win32Exception((int) errorCode).Message);
+         string errorMessage = string.Format(CultureInfo.CurrentCulture, "({0}) {1}.", errorCode, new Win32Exception((int)errorCode).Message);
 
          if (!Utils.IsNullOrWhiteSpace(readPath))
             errorMessage = string.Format(CultureInfo.CurrentCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), readPath);
@@ -87,9 +75,8 @@ namespace Alphaleonis.Win32
          if (!Utils.IsNullOrWhiteSpace(writePath))
             errorMessage = string.Format(CultureInfo.CurrentCulture, "{0}: [{1}]", errorMessage.TrimEnd('.'), writePath);
 
-
          if (isIoException)
-            throw new IOException(errorMessage, (int) errorCode);
+            throw new IOException(errorMessage, (int)errorCode);
 
          switch (errorCode)
          {
@@ -104,7 +91,7 @@ namespace Alphaleonis.Win32
 
             case Win32Errors.ERROR_PATH_NOT_FOUND:
                throw new DirectoryNotFoundException(errorMessage);
-               
+
             case Win32Errors.ERROR_BAD_RECOVERY_POLICY:
                throw new PolicyException(errorMessage);
 
@@ -112,6 +99,17 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_ACCESS_DENIED:
             case Win32Errors.ERROR_NETWORK_ACCESS_DENIED:
                throw new UnauthorizedAccessException(errorMessage);
+
+            case Win32Errors.ERROR_ALREADY_EXISTS:
+            case Win32Errors.ERROR_FILE_EXISTS:
+               throw new AlreadyExistsException(errorMessage);
+
+            case Win32Errors.ERROR_DIR_NOT_EMPTY:
+               throw new DirectoryNotEmptyException(writePath);
+
+            case Win32Errors.ERROR_NOT_READY:
+                  throw new DeviceNotReadyException(errorMessage);
+
 
             #region Transactional
 
@@ -142,7 +140,7 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
                throw new NotAReparsePointException(Resources.NotAReparsePoint, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
-               #endregion // Transacted
+            #endregion // Transacted
 
             case Win32Errors.ERROR_SUCCESS:
             case Win32Errors.ERROR_SUCCESS_REBOOT_INITIATED:
@@ -152,29 +150,22 @@ namespace Alphaleonis.Win32
                throw new NotImplementedException(string.Format(CultureInfo.CurrentCulture, "{0} {1}", Resources.AttemptingToGenerateExceptionFromSuccessfulOperation, errorMessage));
 
             default:
-               // We don't have a specific exception to generate for this error.
-               throw new IOException(errorMessage, (int) errorCode);
+               // We don't have a specific exception to generate for this error.               
+               throw new IOException(errorMessage, (int)errorCode);
          }
       }
 
-      #endregion // uint
-
-      #region string
 
       [SecurityCritical]
       public static void ThrowException(string readPath, bool isIoException = false)
       {
-         ThrowException((uint) Marshal.GetLastWin32Error(), readPath, null, isIoException);
+         ThrowException((uint)Marshal.GetLastWin32Error(), readPath, null, isIoException);
       }
 
       [SecurityCritical]
       public static void ThrowException(string readPath, string writePath, bool isIoException = false)
       {
-         ThrowException((uint) Marshal.GetLastWin32Error(), readPath, writePath, isIoException);
+         ThrowException((uint)Marshal.GetLastWin32Error(), readPath, writePath, isIoException);
       }
-
-      #endregion // string
-
-      #endregion // ThrowException
    }
 }

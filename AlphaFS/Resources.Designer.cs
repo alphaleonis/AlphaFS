@@ -179,6 +179,24 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The file or directory already exists..
+        /// </summary>
+        internal static string EFileOrDirectoryAlreadyExists {
+            get {
+                return ResourceManager.GetString("EFileOrDirectoryAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The file or directory is not a reparse point.
+        /// </summary>
+        internal static string ENotAReparsePoint {
+            get {
+                return ResourceManager.GetString("ENotAReparsePoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error code was.
         /// </summary>
         internal static string ErrorCodeWas0 {
@@ -455,6 +473,15 @@ namespace Alphaleonis.Win32 {
         internal static string StreamNameWithColon {
             get {
                 return ResourceManager.GetString("StreamNameWithColon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The device is not ready..
+        /// </summary>
+        internal static string EDeviceNotReady {
+            get {
+                return ResourceManager.GetString("EDeviceNotReady", resourceCulture);
             }
         }
         
