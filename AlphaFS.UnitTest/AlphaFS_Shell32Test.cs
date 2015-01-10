@@ -69,7 +69,7 @@ namespace AlphaFS.UnitTest
 
       private static string Reporter(bool condensed = false, bool onlyTime = false)
       {
-         Win32Exception lastError = new Win32Exception();
+         var lastError = new Win32Exception();
 
          StopWatcher();
 

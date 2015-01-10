@@ -129,7 +129,7 @@ namespace AlphaFS.UnitTest
 
       private static string Reporter(bool onlyTime = false)
       {
-         Win32Exception lastError = new Win32Exception();
+         var lastError = new Win32Exception();
 
          StopWatcher();
 
@@ -326,11 +326,11 @@ namespace AlphaFS.UnitTest
          int cnt = 0;
          Directory.CreateDirectory(tempPath);
          FileAttributes actual = File.GetAttributes(tempPath);
-         bool action = (actual & FileAttributes.Compressed) == FileAttributes.Compressed;
+         bool action = (actual & FileAttributes.Compressed) != 0;
 
          Console.WriteLine("\nCompressed (Should be False): [{0}]\t\tAttributes: [{1}]\n", action, actual);
          Assert.IsFalse(action, "Compression should be False");
-         Assert.IsFalse((actual & FileAttributes.Compressed) == FileAttributes.Compressed, "Compression should be False");
+         Assert.IsFalse((actual & FileAttributes.Compressed) != 0, "Compression should be False");
 
 
          // Create some directories and files.
@@ -346,7 +346,7 @@ namespace AlphaFS.UnitTest
             using (File.Create(Path.Combine(dir, Path.GetFileName(file, true)))) { }
 
             actual = File.GetAttributes(file);
-            action = (actual & FileAttributes.Compressed) == FileAttributes.Compressed;
+            action = (actual & FileAttributes.Compressed) != 0;
 
             Console.WriteLine("\t#{0:000}\tCompressed (Should be False): [{1}]\tAttributes: [{2}] [{3}]", ++cnt, action, actual, Path.GetFullPath(file));
             Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
@@ -373,14 +373,14 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine("\n\nDirectory compressed recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
          Assert.IsTrue(action, "Compression should be True");
-         Assert.IsTrue((actual & FileAttributes.Compressed) == FileAttributes.Compressed, "Compression should be True");
+         Assert.IsTrue((actual & FileAttributes.Compressed) != 0, "Compression should be True");
 
          // Check that everything is compressed.
          cnt = 0;
          foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
          {
             actual = fsei.Attributes;
-            action = (actual & FileAttributes.Compressed) == FileAttributes.Compressed;
+            action = (actual & FileAttributes.Compressed) != 0;
 
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tCompressed (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
             Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
@@ -406,14 +406,14 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine("\n\nDirectory decompressed recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
          Assert.IsTrue(action, "Compression should be True");
-         Assert.IsFalse((actual & FileAttributes.Compressed) == FileAttributes.Compressed, "Compression should be True");
+         Assert.IsFalse((actual & FileAttributes.Compressed) != 0, "Compression should be True");
 
          // Check that everything is decompressed.
          cnt = 0;
          foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
          {
             actual = fsei.Attributes;
-            action = (actual & FileAttributes.Compressed) != FileAttributes.Compressed;
+            action = (actual & FileAttributes.Compressed) == 0;
 
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tDecompressed (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
             Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
@@ -465,7 +465,7 @@ namespace AlphaFS.UnitTest
          DirectoryInfo dirInfoParent = new DirectoryInfo(fullPathDestinationParent);
 
          #endregion // Setup
-         
+
          try
          {
             #region UnauthorizedAccessException
@@ -487,7 +487,7 @@ namespace AlphaFS.UnitTest
             var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
 
 
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -531,7 +531,7 @@ namespace AlphaFS.UnitTest
 
             #region DirectoryNotFoundException (Local) / IOException (Network)
 
-            expectedLastError = (int) (isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+            expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
             expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
             exception = false;
             try
@@ -561,7 +561,7 @@ namespace AlphaFS.UnitTest
 
             #region IOException
 
-            expectedLastError = (int) Win32Errors.ERROR_SAME_DRIVE;
+            expectedLastError = (int)Win32Errors.ERROR_SAME_DRIVE;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -575,7 +575,7 @@ namespace AlphaFS.UnitTest
                //Win32Exception win32Error = new Win32Exception("", ex.InnerException);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-               
+
                string exceptionTypeName = ex.GetType().FullName;
                if (exceptionTypeName.Equals(expectedException))
                {
@@ -601,7 +601,7 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("\nCopy from Source Path: [{0}]", tempPathSource);
             Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, Utils.UnitSizeToText(sourceSize));
-            
+
             StopWatcher(true);
             Directory.Copy(tempPathSource, tempPathDestination, CopyOptions.FailIfExists);
             report = Reporter();
@@ -616,13 +616,13 @@ namespace AlphaFS.UnitTest
 
             #region IOException
 
-            expectedLastError = (int) Win32Errors.ERROR_FILE_EXISTS;
+            expectedLastError = (int)Win32Errors.ERROR_FILE_EXISTS;
             expectedException = "System.IO.IOException";
             exception = false;
             try
             {
-                  Console.WriteLine("\n\nCatch: [{0}]: Copy same directory again: destDirName already exists.", expectedException);
-                  Directory.Copy(tempPathSource, tempPathDestination, CopyOptions.FailIfExists);
+               Console.WriteLine("\n\nCatch: [{0}]: Copy same directory again: destDirName already exists.", expectedException);
+               Directory.Copy(tempPathSource, tempPathDestination, CopyOptions.FailIfExists);
             }
             catch (Exception ex)
             {
@@ -690,16 +690,16 @@ namespace AlphaFS.UnitTest
          string expectedException;
          string report;
          bool exist;
-         
+
          #endregion // Setup
 
          try
          {
             #region IOException
 
-            using (File.Create(tempPath)) {}
+            using (File.Create(tempPath)) { }
 
-            expectedLastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
+            expectedLastError = (int)Win32Errors.ERROR_ALREADY_EXISTS;
             expectedException = "System.IO.IOException";
             bool exception = false;
             try
@@ -735,7 +735,7 @@ namespace AlphaFS.UnitTest
 
             #region DirectoryNotFoundException (Local) / IOException (Network)
 
-            expectedLastError = (int) (isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+            expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
             expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
             exception = false;
             try
@@ -797,7 +797,7 @@ namespace AlphaFS.UnitTest
 
             #region NotSupportedException
 
-            expectedLastError = (int) (isLocal ? Win32Errors.ERROR_FILE_EXISTS : Win32Errors.NERR_UseNotFound);
+            expectedLastError = (int)(isLocal ? Win32Errors.ERROR_FILE_EXISTS : Win32Errors.NERR_UseNotFound);
             expectedException = "System.NotSupportedException";
             exception = false;
             try
@@ -849,7 +849,7 @@ namespace AlphaFS.UnitTest
 
             // dirInfo.Exists should be false.
             Assert.AreEqual(dirInfoSysIo.Exists, dirInfo.Exists, "AlphaFS Exists should match System.IO");
-            
+
 
             string root = Path.Combine(tempPath, "Another Sub Directory");
 
@@ -859,16 +859,16 @@ namespace AlphaFS.UnitTest
 
             StopWatcher(true);
             dirInfo = Directory.CreateDirectory(root);
-            report = Reporter(true);
+            report = Reporter();
 
             Console.WriteLine("\n\tCreated directory structure (Should be True): [{0}]{1}", dirInfo.Exists, report);
             Console.WriteLine("\n\tSubdirectory depth: [{0}], path length: [{1}] characters.", level, root.Length);
             Assert.IsTrue(Directory.Exists(root), "Directory should exist.");
 
-            bool compressed = (dirInfo.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed;
+            bool compressed = (dirInfo.Attributes & FileAttributes.Compressed) != 0;
             Console.WriteLine("\n\tCreated compressed directory (Should be True): [{0}]\n", compressed);
             Assert.IsTrue(compressed, "Directory should be compressed.");
-            
+
          }
          finally
          {
@@ -876,7 +876,7 @@ namespace AlphaFS.UnitTest
             {
                StopWatcher(true);
                Directory.Delete(tempPath, true, true);
-               report = Reporter(true);
+               report = Reporter();
 
                exist = Directory.Exists(tempPath);
                Console.WriteLine("\nDirectory.Delete() (Should be True): [{0}]{1}", !exist, report);
@@ -998,7 +998,7 @@ namespace AlphaFS.UnitTest
                // compared to Windows 8.1 X64 Enterprise.
                bool isWin8 = OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Windows8);
 
-               expectedLastError = (int) (isWin8 ? Win32Errors.ERROR_ACCESS_DENIED : Win32Errors.ERROR_SHARING_VIOLATION);
+               expectedLastError = (int)(isWin8 ? Win32Errors.ERROR_ACCESS_DENIED : Win32Errors.ERROR_SHARING_VIOLATION);
                expectedException = isWin8 ? "System.UnauthorizedAccessException" : "System.IO.IOException";
                exception = false;
                try
@@ -1030,7 +1030,7 @@ namespace AlphaFS.UnitTest
 
             #region DirectoryNotFoundException #1 (Local) / IOException (Network)
 
-            expectedLastError = (int) (isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+            expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
             expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
             exception = false;
             try
@@ -1061,7 +1061,7 @@ namespace AlphaFS.UnitTest
 
             #region DirectoryNotFoundException #2
 
-            expectedLastError = (int) Win32Errors.ERROR_DIRECTORY;
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
             expectedException = "System.IO.DirectoryNotFoundException";
             exception = false;
             try
@@ -1098,7 +1098,7 @@ namespace AlphaFS.UnitTest
 
             #region IOException #1
 
-            expectedLastError = (int) Win32Errors.ERROR_DIR_NOT_EMPTY;
+            expectedLastError = (int)Win32Errors.ERROR_DIR_NOT_EMPTY;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -1107,7 +1107,7 @@ namespace AlphaFS.UnitTest
 
                Directory.CreateDirectory(tempPath);
 
-               using (File.Create(Path.Combine(tempPath, "a-created-file.txt"))) {}
+               using (File.Create(Path.Combine(tempPath, "a-created-file.txt"))) { }
 
                Directory.Delete(tempPath);
             }
@@ -1135,7 +1135,7 @@ namespace AlphaFS.UnitTest
 
             File.SetAttributes(tempPath, FileAttributes.ReadOnly);
 
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -1169,7 +1169,7 @@ namespace AlphaFS.UnitTest
 
             #region IOException #3
 
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -1179,7 +1179,7 @@ namespace AlphaFS.UnitTest
                Directory.CreateDirectory(tempPath);
 
                string readOnlyFile = Path.Combine(tempPath, "a-read-only-created-file.txt");
-               using (File.Create(readOnlyFile)) {}
+               using (File.Create(readOnlyFile)) { }
                File.SetAttributes(readOnlyFile, FileAttributes.ReadOnly);
 
                Directory.Delete(tempPath, true);
@@ -1228,8 +1228,8 @@ namespace AlphaFS.UnitTest
          Directory.CreateDirectory(tempPath);
          FileAttributes actual = File.GetAttributes(tempPath);
          Console.WriteLine("Attributes: [{0}]", actual);
-         Assert.IsFalse((actual & FileAttributes.Compressed) == FileAttributes.Compressed);
-         Assert.IsTrue((actual & FileAttributes.Directory) == FileAttributes.Directory);
+         Assert.IsFalse((actual & FileAttributes.Compressed) != 0);
+         Assert.IsTrue((actual & FileAttributes.Directory) != 0);
 
 
          string report = string.Empty;
@@ -1243,13 +1243,14 @@ namespace AlphaFS.UnitTest
             actual = File.GetAttributes(tempPath);
          }
          catch (Exception ex)
-         {Console.WriteLine("\n");
+         {
+            Console.WriteLine("\n");
             Console.WriteLine("\n\tCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Console.WriteLine("\nEnableCompression() successful (Should be True): [{0}]", action);
          Console.WriteLine("Attributes: [{0}]\n\t{1}", actual, report);
          Assert.IsTrue(action, "Directory should have compression enabled.");
-         Assert.IsTrue((actual & FileAttributes.Compressed) == FileAttributes.Compressed, "Directory should have compression enabled.");
+         Assert.IsTrue((actual & FileAttributes.Compressed) != 0, "Directory should have compression enabled.");
 
 
          action = false;
@@ -1267,7 +1268,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nDisableCompression() successful (Should be True): [{0}]", action);
          Console.WriteLine("Attributes: [{0}]\n\t{1}", actual, report);
          Assert.IsTrue(action, "Directory should have compression disabled.");
-         Assert.IsFalse((actual & FileAttributes.Compressed) == FileAttributes.Compressed, "Directory should have compression disabled.");
+         Assert.IsFalse((actual & FileAttributes.Compressed) != 0, "Directory should have compression disabled.");
 
 
          Directory.Delete(tempPath, true);
@@ -1295,7 +1296,7 @@ namespace AlphaFS.UnitTest
          Directory.CreateDirectory(tempPath);
          FileAttributes actual = File.GetAttributes(tempPath);
          Console.WriteLine("Attributes: [{0}]", actual);
-         Assert.IsTrue((actual & FileAttributes.Directory) == FileAttributes.Directory);
+         Assert.IsTrue((actual & FileAttributes.Directory) != 0);
 
 
          string report = string.Empty;
@@ -1380,17 +1381,17 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
 
-         
+
          int cnt;
          string report = "";
          Directory.CreateDirectory(tempPath);
          FileAttributes actual = File.GetAttributes(tempPath);
-         bool action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
+         bool action = (actual & FileAttributes.Encrypted) != 0;
 
          Console.WriteLine("\nDirectory Encrypted (Should be False): [{0}]\tAttributes: [{1}]", action, actual);
          Assert.IsFalse(action, "Encryption should be False");
-         Assert.IsFalse((actual & FileAttributes.Encrypted) == FileAttributes.Encrypted, "Encryption should be False");
-         
+         Assert.IsFalse((actual & FileAttributes.Encrypted) != 0, "Encryption should be False");
+
          // Create some directories and files.
          for (int i = 0; i < 5; i++)
          {
@@ -1404,7 +1405,7 @@ namespace AlphaFS.UnitTest
             using (File.Create(Path.Combine(dir, Path.GetFileName(file, true)))) { }
 
             actual = File.GetAttributes(file);
-            action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
+            action = (actual & FileAttributes.Encrypted) != 0;
             Assert.IsFalse(action, "Encryption should be False");
          }
 
@@ -1429,17 +1430,17 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(action, "Unexpected Exception");
 
          actual = File.GetAttributes(tempPath);
-         action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
+         action = (actual & FileAttributes.Encrypted) != 0;
          Assert.IsTrue(action, "File system ojbect should be encrypted.");
          Console.WriteLine("\nDirectory Encrypted (Should be True): [{0}]\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
 
-         
+
          // Verify that everything is encrypted.
          cnt = 0;
          foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
          {
             actual = fsei.Attributes;
-            action = (actual & FileAttributes.Encrypted) == FileAttributes.Encrypted;
+            action = (actual & FileAttributes.Encrypted) != 0;
 
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tEncrypted (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
             Assert.IsTrue(action, "File system ojbect should be encrypted.");
@@ -1467,17 +1468,17 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(action, "Unexpected Exception");
 
          actual = File.GetAttributes(tempPath);
-         action = (actual & FileAttributes.Encrypted) != FileAttributes.Encrypted;
+         action = (actual & FileAttributes.Encrypted) == 0;
          Assert.IsTrue(action, "File system ojbect should be decrypted.");
          Console.WriteLine("\nDirectory Decrypted (Should be True): [{0}]\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
 
-         
+
          // Verify that everything is decrypted.
          cnt = 0;
          foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
          {
             actual = fsei.Attributes;
-            action = (actual & FileAttributes.Encrypted) != FileAttributes.Encrypted;
+            action = (actual & FileAttributes.Encrypted) == 0;
 
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tDecrypted (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
             Assert.IsTrue(action, "File system ojbect should be decrypted.");
@@ -1558,9 +1559,9 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            using (File.Create(tempPath)) {}
+            using (File.Create(tempPath)) { }
 
-            expectedLastError = (int) Win32Errors.ERROR_DIRECTORY;
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -1603,7 +1604,7 @@ namespace AlphaFS.UnitTest
          var di = new DirectoryInfo(tempPath);
          if (di.Exists)
          {
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -1642,7 +1643,7 @@ namespace AlphaFS.UnitTest
          foreach (DirectoryInfo dirInfo in new DirectoryInfo(path).EnumerateDirectories(searchPattern, searchOption))
          {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, dirInfo.FullName);
-            
+
             // Issue #21601: OverflowException when accessing EntryInfo.
             var isMountPoint = dirInfo.EntryInfo.IsMountPoint;
 
@@ -1700,7 +1701,7 @@ namespace AlphaFS.UnitTest
          StopWatcher(true);
          foreach (FileIdBothDirectoryInfo fibdi in Directory.EnumerateFileIdBothDirectoryInfo(tempPath))
          {
-            if ((fibdi.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
+            if ((fibdi.FileAttributes & FileAttributes.Directory) != 0)
                numDirectories++;
             else
                numFiles++;
@@ -1786,7 +1787,7 @@ namespace AlphaFS.UnitTest
          {
             using (File.Create(tempPath)) { }
 
-            expectedLastError = (int) Win32Errors.ERROR_DIRECTORY;
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -1830,7 +1831,7 @@ namespace AlphaFS.UnitTest
          var di = new DirectoryInfo(tempPath);
          if (di.Exists)
          {
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -1971,7 +1972,7 @@ namespace AlphaFS.UnitTest
          {
             using (File.Create(tempPath)) { }
 
-            expectedLastError = (int) Win32Errors.ERROR_DIRECTORY;
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -2015,7 +2016,7 @@ namespace AlphaFS.UnitTest
          var di = new DirectoryInfo(tempPath);
          if (di.Exists)
          {
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -2167,7 +2168,7 @@ namespace AlphaFS.UnitTest
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
-         
+
          bool exception;
          int expectedLastError;
          string expectedException;
@@ -2224,7 +2225,7 @@ namespace AlphaFS.UnitTest
          {
             using (File.Create(tempPath)) { }
 
-            expectedLastError = (int) Win32Errors.ERROR_DIRECTORY;
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -2267,7 +2268,7 @@ namespace AlphaFS.UnitTest
 
          if (Directory.Exists(tempPath))
          {
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -2414,7 +2415,7 @@ namespace AlphaFS.UnitTest
          {
             using (File.Create(tempPath)) { }
 
-            expectedLastError = (int) Win32Errors.ERROR_DIRECTORY;
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -2456,7 +2457,7 @@ namespace AlphaFS.UnitTest
 
          if (Directory.Exists(tempPath))
          {
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -2487,7 +2488,7 @@ namespace AlphaFS.UnitTest
          #endregion // UnauthorizedAccessException
 
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
-         
+
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet files, using \"SearchOption.{0}\"\n", searchOption);
 
@@ -2698,7 +2699,7 @@ namespace AlphaFS.UnitTest
          {
             using (File.Create(tempPath)) { }
 
-            expectedLastError = (int) Win32Errors.ERROR_DIRECTORY;
+            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -2741,7 +2742,7 @@ namespace AlphaFS.UnitTest
 
          if (Directory.Exists(tempPath))
          {
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -2794,7 +2795,7 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
          string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
-         
+
          Console.WriteLine("\n\tAggregated properties of file system objects from Directory: [{0}]\n", path);
 
          StopWatcher(true);
@@ -2883,8 +2884,8 @@ namespace AlphaFS.UnitTest
 
             var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
 
-            
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -2930,7 +2931,7 @@ namespace AlphaFS.UnitTest
 
             #region DirectoryNotFoundException
 
-            expectedLastError = (int) (isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+            expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
             expectedException = "System.IO.DirectoryNotFoundException"; // Exception is the same, even though last error is different.
             exception = false;
             try
@@ -2959,7 +2960,7 @@ namespace AlphaFS.UnitTest
 
             #region IOException #1
 
-            expectedLastError = (int) Win32Errors.ERROR_SAME_DRIVE;
+            expectedLastError = (int)Win32Errors.ERROR_SAME_DRIVE;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -2987,10 +2988,10 @@ namespace AlphaFS.UnitTest
             Console.WriteLine();
 
             #endregion // IOException #1
-            
+
             #region IOException #2
 
-            expectedLastError = (int) Win32Errors.ERROR_NOT_SAME_DEVICE;
+            expectedLastError = (int)Win32Errors.ERROR_NOT_SAME_DEVICE;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -3020,7 +3021,7 @@ namespace AlphaFS.UnitTest
             #endregion // IOException #2
 
             #region Move
-            
+
             CreateDirectoriesAndFiles(tempPathSource0, 10, true);
             Directory.Copy(tempPathSource0, otherDisk, CopyOptions.FailIfExists);
 
@@ -3052,7 +3053,7 @@ namespace AlphaFS.UnitTest
 
             Directory.Copy(tempPathSource0, otherDisk, CopyOptions.FailIfExists);
 
-            expectedLastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
+            expectedLastError = (int)Win32Errors.ERROR_ALREADY_EXISTS;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -3633,7 +3634,7 @@ namespace AlphaFS.UnitTest
       public void GetCreationTime()
       {
          Console.WriteLine("Directory.GetXxxTime()");
-         
+
          DumpGetXxxTime(true);
          DumpGetXxxTime(false);
       }
@@ -3686,51 +3687,40 @@ namespace AlphaFS.UnitTest
          bool allOk = true;
          int errorCnt = 0;
 
-         string tempPath = Path.GetTempPath();
-         string orgPathActual = Directory.GetCurrentDirectory();
-         string orgPathExpected = System.IO.Directory.GetCurrentDirectory();
-         Assert.AreEqual(orgPathExpected, orgPathActual, "AlphaFS != System.IO");
-
-         Directory.SetCurrentDirectory(tempPath);
-
+         StopWatcher(true);
          foreach (string path in InputPaths)
          {
-            Console.WriteLine("\nInput Path: [{0}]", path);
             string method = null;
 
             try
             {
                method = "AlphaFS";
                string actual = Directory.GetDirectoryRoot(path);
-               Console.WriteLine("\tAlphaFS  : [{0}]", actual);
 
                method = "System.IO";
                string expected = System.IO.Directory.GetDirectoryRoot(path);
-               Console.WriteLine("\tSystem.IO: [{0}]", expected);
 
+               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, path, actual, expected);
                Assert.AreEqual(expected, actual);
-               Assert.AreEqual(Directory.GetCurrentDirectory(), System.IO.Directory.GetCurrentDirectory(), "AlphaFS != System.IO");
 
                ++pathCnt;
             }
+            catch (ArgumentException ex)
+            {
+               Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
+            }
             catch (Exception ex)
             {
-               Console.WriteLine("\t{0} Exception: [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               allOk = false;
+               errorCnt++;
 
-               // Exception to the Exception.
-               if (path != null && !path.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) &&
-                  !ex.Message.Equals("Illegal characters in path.", StringComparison.OrdinalIgnoreCase))
-               {
-                  allOk = false;
-                  errorCnt++;
-               }
             }
          }
+         Console.WriteLine("\n\t{0}", Reporter(true));
 
          Assert.IsTrue(pathCnt > 0);
 
-         Directory.SetCurrentDirectory(tempPath);
-         Assert.AreEqual(Directory.GetCurrentDirectory(), System.IO.Directory.GetCurrentDirectory(), "AlphaFS != System.IO");
          Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
 
@@ -3863,44 +3853,48 @@ namespace AlphaFS.UnitTest
          bool allOk = true;
          int errorCnt = 0;
 
-         foreach (string input in InputPaths)
+         StopWatcher(true);
+         foreach (string path in InputPaths)
          {
-            string path = input;
+            string method = null;
 
             try
             {
-               // System.IO can not handle "\\?\": Illegal characters in path.
-               if (path != null && path.StartsWith(@"\\?", StringComparison.OrdinalIgnoreCase))
-                  continue;
-
+               method = "AlphaFS";
                DirectoryInfo diActual = Directory.GetParent(path);
+
+               method = "System.IO";
                System.IO.DirectoryInfo diExpected = System.IO.Directory.GetParent(path);
 
                if (diActual == null || diExpected == null)
                {
-                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, diActual, diExpected);
+                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, path, diActual, diExpected);
                   Assert.AreEqual(diActual, diExpected);
                }
                else
                {
+                  method = "AlphaFS";
                   string actual = diActual.FullName;
+
+                  method = "System.IO";
                   string expected = diExpected.FullName;
-                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, input, diActual.FullName, diExpected.FullName);
+
+                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, path, diActual.FullName, diExpected.FullName);
                   Assert.AreEqual(expected, actual);
                }
             }
+            catch (ArgumentException ex)
+            {
+               Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
+            }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\tCaught Exception: [{0}]: [{1}]", ex.Message.Replace(Environment.NewLine, "  "), path);
-
-               // Exception to the Exception.
-               if (path != null && !path.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
-               {
-                  allOk = false;
-                  errorCnt++;
-               }
+               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               allOk = false;
+               errorCnt++;
             }
          }
+         Console.WriteLine("\n\t{0}", Reporter(true));
 
          Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
@@ -3919,7 +3913,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Move
-      
+
       #region SetAccessControl
 
       [TestMethod]
@@ -3979,7 +3973,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // SetAccessControl
-      
+
       #region SetCreationTime
 
       [TestMethod]
@@ -4062,7 +4056,7 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
-      
+
       #region AddAlternateDataStream
 
       [TestMethod]
@@ -4139,13 +4133,13 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nCount Directories");
 
          string path = SysRoot;
-         
+
          string searchPattern = Path.WildcardStarMatchAll;
 
          Console.WriteLine("\n\tsearchPattern: \"{0}\", abort on error.", searchPattern);
 
          #region Exception
-         
+
          bool gotException = false;
          try
          {
@@ -4279,7 +4273,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nDirectory.DeleteEmptySubdirectories() (Should be True): [{0}]\n{1}", deleteOk, Reporter());
          Assert.IsTrue(deleteOk, "DeleteEmptySubdirectories() failed.");
-         
+
          searchPattern = Path.WildcardStarMatchAll;
 
          StopWatcher(true);
@@ -4387,7 +4381,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // EnumerateLogicalDrives
-      
+
       #region GetChangeTime
 
       [TestMethod]

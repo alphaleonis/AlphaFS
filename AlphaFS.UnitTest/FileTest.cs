@@ -127,7 +127,7 @@ namespace AlphaFS.UnitTest
 
       private static string Reporter(bool onlyTime = false)
       {
-         Win32Exception lastError = new Win32Exception();
+         var lastError = new Win32Exception();
 
          StopWatcher();
 
@@ -430,7 +430,7 @@ namespace AlphaFS.UnitTest
 
             var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
 
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -478,7 +478,7 @@ namespace AlphaFS.UnitTest
 
             #region FileNotFoundException
 
-            expectedLastError = (int) Win32Errors.ERROR_FILE_NOT_FOUND;
+            expectedLastError = (int)Win32Errors.ERROR_FILE_NOT_FOUND;
             expectedException = "System.IO.FileNotFoundException";
             exception = false;
             try
@@ -507,7 +507,7 @@ namespace AlphaFS.UnitTest
 
             #region DirectoryNotFoundException
 
-            expectedLastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+            expectedLastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
             expectedException = "System.IO.DirectoryNotFoundException";
             exception = false;
             try
@@ -538,10 +538,10 @@ namespace AlphaFS.UnitTest
 
             Directory.CreateDirectory(folderSource);
             Directory.CreateDirectory(folderDestination);
-            using (File.Create(fullPathSource)){}
-            using (File.Create(fullPathDestination)){}
+            using (File.Create(fullPathSource)) { }
+            using (File.Create(fullPathDestination)) { }
 
-            expectedLastError = (int) Win32Errors.ERROR_FILE_EXISTS;
+            expectedLastError = (int)Win32Errors.ERROR_FILE_EXISTS;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -575,7 +575,7 @@ namespace AlphaFS.UnitTest
 
             string folderfileName = null;
 
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -654,20 +654,20 @@ namespace AlphaFS.UnitTest
             #region Preserve Timestamps
 
             // Test preservation of timestamps.
-            int seed = (int) DateTime.Now.Ticks & 0x0000FFFF;
+            int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
             DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-            seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+            seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
             DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-            seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+            seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
             DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-            
+
             string preservePath = Path.Combine(tempPath, "PreserveTimestamps");
             string preserveFile = Path.GetFileName(readOnlySource);
             string preserveReadOnlySource = Path.Combine(preservePath, preserveFile);
 
             Directory.CreateDirectory(preservePath);
             File.Copy(readOnlySource, preserveReadOnlySource);
-            
+
             File.SetCreationTime(preserveReadOnlySource, creationTime);
             File.SetLastAccessTime(preserveReadOnlySource, lastAccessTime);
             File.SetLastWriteTime(preserveReadOnlySource, lastWriteTime);
@@ -735,7 +735,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(Dump(fs, -14));
             Assert.IsTrue(Dump(fs.SafeFileHandle, -9));
          }
-         
+
          using (StreamReader stream = File.OpenText(tempPath))
          {
             Console.WriteLine("\n\n\tEncoding: [{0}]", stream.CurrentEncoding.EncodingName);
@@ -744,7 +744,7 @@ namespace AlphaFS.UnitTest
             while (!string.IsNullOrWhiteSpace((line = stream.ReadLine())))
                Console.WriteLine("\tContent : [{0}]", line);
          }
-         
+
          File.Delete(tempPath);
          Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
          Console.WriteLine();
@@ -852,7 +852,7 @@ namespace AlphaFS.UnitTest
 
             #region UnauthorizedAccessException
 
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -883,7 +883,7 @@ namespace AlphaFS.UnitTest
 
             #region DirectoryNotFoundException (Local) / IOException (Network)
 
-            expectedLastError = (int) (isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
+            expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
             expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
             exception = false;
             try
@@ -914,7 +914,7 @@ namespace AlphaFS.UnitTest
 
             #region UnauthorizedAccessException #1
 
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -954,7 +954,7 @@ namespace AlphaFS.UnitTest
             }
             FileStream streamCreate2 = File.Open(tempPath, FileMode.Open);
 
-            expectedLastError = (int) Win32Errors.ERROR_SHARING_VIOLATION;
+            expectedLastError = (int)Win32Errors.ERROR_SHARING_VIOLATION;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -985,8 +985,8 @@ namespace AlphaFS.UnitTest
             #endregion // IOException
 
             #region UnauthorizedAccessException #2
-            
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
             try
@@ -1191,7 +1191,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t", changeTimeUtcActual);
 
          fi.MoveTo(fi.FullName.Replace(fileName, fileName + "-Renamed"));
-         
+
          // Pause for at least a second so that the difference in time can be seen.
          int sleep = new Random().Next(2000, 4000);
          Thread.Sleep(sleep);
@@ -1237,7 +1237,7 @@ namespace AlphaFS.UnitTest
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          Console.WriteLine("\nInput File Path: [{0}]\n", tempPath);
-         
+
          int randomLines = new Random().Next(1000, 100000);
 
          // Create file with contents.
@@ -1249,27 +1249,27 @@ namespace AlphaFS.UnitTest
 
          long fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
          long fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
-         long fileGetSize = File.GetSize(tempPath); 
+         long fileGetSize = File.GetSize(tempPath);
          long fileGetCompressedSize = File.GetCompressedSize(tempPath);
          long fiLength = fi.Length;
 
          Console.WriteLine("\tFile.GetAlternateDataStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
          Console.WriteLine("\tFile.GetAlternateDataStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
-         
+
          Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
          Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
 
          Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fiLength), fiLength);
          Console.WriteLine("\tFileInfo().Attributes\t\t== [{0}]", fi.Attributes);
 
-         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != FileAttributes.Compressed, "File should be uncompressed.");
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == 0, "File should be uncompressed.");
          Assert.IsTrue(fiLength == fileGetSize, "Uncompressed size should match.");
          Assert.IsTrue(fiLength == fileGetCompressedSize, "Uncompressed size should match.");
          Assert.IsTrue(fiLength < fileGetStreamSize, "Uncompressed size should be less than size of all streams.");
          Assert.IsTrue(fileGetStreamSize > fileGetSize, "Size of all streams should be greater than size of file.");
          Assert.IsTrue(fileGetStreamSize != fileGetStreamsDataSize, "Size of all streams should be greater than size of StreamType.Data.");
          Assert.AreEqual(fileGetSize, fileGetStreamsDataSize, "Size of file should match size of StreamType.Data.");
-         
+
          #endregion // Setup
 
          #region Compress
@@ -1286,7 +1286,7 @@ namespace AlphaFS.UnitTest
 
             fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
             fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
-            fileGetSize = File.GetSize(tempPath); 
+            fileGetSize = File.GetSize(tempPath);
             fileGetCompressedSize = File.GetCompressedSize(tempPath);
          }
          catch (Exception ex)
@@ -1295,28 +1295,28 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tFile.Compress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         
+
          // FileInfo() must Refresh().
-         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != FileAttributes.Compressed, "FileInfo() should not know it is compressed.");
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == 0, "FileInfo() should not know it is compressed.");
          fi.Refresh();
          fiLength = fi.Length;
-         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed, "FileInfo() should know it is compressed.");
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != 0, "FileInfo() should know it is compressed.");
 
 
          Console.WriteLine("\n\n\tFile.Compress() (Should be True): [{0}]{1}\n", compressOk, report);
-         
+
          Console.WriteLine("\tFile.GetAlternateDataStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
          Console.WriteLine("\tFile.GetAlternateDataStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
-         
+
          Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
          Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
-         
+
          Console.WriteLine("\tFileInfo().Length\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fiLength), fiLength);
          Console.WriteLine("\tFileInfo().Attributes\t\t== [{0}]", fi.Attributes);
 
          Assert.IsTrue(compressOk);
 
-         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed, "File should be compressed.");
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != 0, "File should be compressed.");
          Assert.IsTrue(fiLength != fileGetCompressedSize, "FileInfo() size should not match compressed size.");
          Assert.IsTrue(fiLength == fileGetSize, "File size should match FileInfo() size.");
          Assert.IsTrue(fiLength < fileGetStreamSize, "Compressed size should be less than size of all streams.");
@@ -1349,12 +1349,12 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tFile.Decompress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         
+
          // FileInfo() must Refresh().
-         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == FileAttributes.Compressed, "FileInfo() should not know it is compressed.");
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != 0, "FileInfo() should not know it is compressed.");
          fi.Refresh();
          fiLength = fi.Length;
-         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != FileAttributes.Compressed, "FileInfo() should know it is compressed.");
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == 0, "FileInfo() should know it is compressed.");
 
 
          Console.WriteLine("\n\n\tFile.Decompress() (Should be True): [{0}]{1}\n", decompressOk, report);
@@ -1370,7 +1370,7 @@ namespace AlphaFS.UnitTest
 
          Assert.IsTrue(decompressOk);
 
-         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != FileAttributes.Compressed, "File should be uncompressed.");
+         Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == 0, "File should be uncompressed.");
          Assert.IsTrue(fiLength == fileGetSize, "Uncompressed size should match.");
          Assert.IsTrue(fiLength == fileGetCompressedSize, "Uncompressed size should match.");
          Assert.IsTrue(fiLength < fileGetStreamSize, "Uncompressed size should be less than size of all streams.");
@@ -1387,7 +1387,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpGetSize
-      
+
       #region DumpEnumerateHardlinks
 
       private void DumpEnumerateHardlinks(bool isLocal)
@@ -1497,7 +1497,7 @@ namespace AlphaFS.UnitTest
             DirectorySecurity dirSecurity;
 
             string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
-            
+
             // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
             // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
             // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
@@ -1507,8 +1507,8 @@ namespace AlphaFS.UnitTest
 
             var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
 
-            
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
             exception = false;
 
@@ -1550,14 +1550,14 @@ namespace AlphaFS.UnitTest
                Directory.Delete(tempPath, true, true);
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-            
+
             Console.WriteLine();
 
             #endregion // UnauthorizedAccessException
-            
+
             #region FileNotFoundException
 
-            expectedLastError = (int) Win32Errors.ERROR_FILE_NOT_FOUND;
+            expectedLastError = (int)Win32Errors.ERROR_FILE_NOT_FOUND;
             expectedException = "System.IO.FileNotFoundException";
             exception = false;
             try
@@ -1586,7 +1586,7 @@ namespace AlphaFS.UnitTest
 
             #region DirectoryNotFoundException
 
-            expectedLastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+            expectedLastError = (int)Win32Errors.ERROR_PATH_NOT_FOUND;
             expectedException = "System.IO.DirectoryNotFoundException";
             exception = false;
             try
@@ -1617,10 +1617,10 @@ namespace AlphaFS.UnitTest
 
             Directory.CreateDirectory(folderSource);
             Directory.CreateDirectory(folderDestination);
-            using (File.Create(fullPathSource)){}
-            using (File.Create(fullPathDestination)){}
+            using (File.Create(fullPathSource)) { }
+            using (File.Create(fullPathDestination)) { }
 
-            expectedLastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
+            expectedLastError = (int)Win32Errors.ERROR_ALREADY_EXISTS;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -1656,7 +1656,7 @@ namespace AlphaFS.UnitTest
 
             string folderfileName = null;
 
-            expectedLastError = (int) Win32Errors.ERROR_ACCESS_DENIED;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.IO.IOException";
             exception = false;
             try
@@ -1763,7 +1763,7 @@ namespace AlphaFS.UnitTest
             File.SetLastWriteTime(readOnlySource, lastWriteTime);
 
             #endregion Preserve Timestamps
-            
+
             StopWatcher(true);
 
             // 3rd parameter MoveOptions.ReplaceExisting: overwrite existing.
@@ -1853,7 +1853,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine(Reporter());
          Assert.IsTrue(allOk);
 
-         
+
          apply = FileAttributes.Normal;
          Console.WriteLine("\nSetAttributes(): [{0}]", apply);
 
@@ -1902,7 +1902,7 @@ namespace AlphaFS.UnitTest
          if (!isLocal) path = Path.LocalToUnc(path);
 
          Console.WriteLine("\nInput File Path: [{0}]\n", path);
-         
+
          using (File.Create(path)) { }
 
          #endregion // Setup
@@ -1912,7 +1912,7 @@ namespace AlphaFS.UnitTest
          #region SetCreationTimeXxx
 
          //Thread.Sleep(new Random().Next(250, 500));
-         int seed = (int) DateTime.Now.Ticks & 0x0000FFFF;
+         int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
          File.SetCreationTime(path, creationTime);
          DateTime actual = File.GetCreationTime(path);
@@ -1923,7 +1923,7 @@ namespace AlphaFS.UnitTest
 
 
          //Thread.Sleep(new Random().Next(250, 500));
-         seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime creationTimeUtc = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
          File.SetCreationTimeUtc(path, creationTimeUtc);
          actual = File.GetCreationTimeUtc(path);
@@ -1937,7 +1937,7 @@ namespace AlphaFS.UnitTest
          #region SetLastAccessTimeXxx
 
          //Thread.Sleep(new Random().Next(250, 500));
-         seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
          File.SetLastAccessTime(path, lastAccessTime);
          actual = File.GetLastAccessTime(path);
@@ -1945,10 +1945,10 @@ namespace AlphaFS.UnitTest
          expected = System.IO.File.GetLastAccessTime(path);
          Console.WriteLine("\tSetLastAccessTime()   : [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-         
+
 
          //Thread.Sleep(new Random().Next(250, 500));
-         seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastAccessTimeUtc = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
          File.SetLastAccessTimeUtc(path, lastAccessTimeUtc);
          actual = File.GetLastAccessTimeUtc(path);
@@ -1962,7 +1962,7 @@ namespace AlphaFS.UnitTest
          #region SetLastWriteTimeXxx
 
          //Thread.Sleep(new Random().Next(250, 500));
-         seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
          File.SetLastWriteTime(path, lastWriteTime);
          actual = File.GetLastWriteTime(path);
@@ -1970,10 +1970,10 @@ namespace AlphaFS.UnitTest
          expected = System.IO.File.GetLastWriteTime(path);
          Console.WriteLine("\tSetLastWriteTime()    : [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-         
+
 
          //Thread.Sleep(new Random().Next(250, 500));
-         seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastWriteTimeUtc = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
          File.SetLastWriteTimeUtc(path, lastWriteTimeUtc);
          actual = File.GetLastWriteTimeUtc(path);
@@ -2004,15 +2004,15 @@ namespace AlphaFS.UnitTest
          using (File.Create(path)) { }
 
          Thread.Sleep(new Random().Next(250, 500));
-         int seed = (int) DateTime.Now.Ticks & 0x0000FFFF;
+         int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
          Thread.Sleep(new Random().Next(250, 500));
-         seed = (int) DateTime.Now.Ticks & 0x0000FFFF;
+         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
          Thread.Sleep(new Random().Next(250, 500));
-         seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
          DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
          Console.WriteLine("\n");
@@ -2099,15 +2099,15 @@ namespace AlphaFS.UnitTest
          try
          {
             Thread.Sleep(new Random().Next(250, 500));
-            int seed = (int) DateTime.Now.Ticks & 0x0000FFFF;
+            int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
             DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
             Thread.Sleep(new Random().Next(250, 500));
-            seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+            seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
             DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
             Thread.Sleep(new Random().Next(250, 500));
-            seed += (int) DateTime.Now.Ticks & 0x0000FFFF;
+            seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
             DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
 
             File.SetTimestamps(path, creationTime, lastAccessTime, lastWriteTime);
@@ -2134,7 +2134,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(File.GetLastWriteTime(path), File.GetLastWriteTime(path2));
          }
          finally
-         { 
+         {
             File.Delete(path);
             File.Delete(path2);
 
@@ -2267,14 +2267,14 @@ namespace AlphaFS.UnitTest
          sysIo = System.IO.Path.GetFullPath(tempPathSpace);
          Assert.IsFalse(sysIo.EndsWith(characterSpace), "Path should not have a trailing space.");
 
-         
+
          string alphaFs = Path.GetFullPath(tempPathDot);
          Assert.IsFalse(alphaFs.EndsWith(characterDot), "Path should not have a trailing dot.");
 
          alphaFs = Path.GetFullPath(tempPathSpace);
          Assert.IsFalse(alphaFs.EndsWith(characterSpace), "Path should not have a trailing space.");
 
-         
+
          Assert.AreEqual(sysIo, alphaFs, "Paths should be the same.");
 
          #endregion // Path.GetFullPath(), Path Normalization
@@ -2520,7 +2520,7 @@ namespace AlphaFS.UnitTest
 
          using (StreamReader sr = File.OpenText(tempPathSpace, PathFormat.FullPath))
             lineAlphaFs = sr.ReadToEnd();
-         
+
          alphaFsFi.Delete();
          alphaFsFi.Refresh(); // Must Refresh() to get actual state.
          Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.FullPath), "File should not exist.");
@@ -2697,13 +2697,13 @@ namespace AlphaFS.UnitTest
       public void Copy()
       {
          Console.WriteLine("File.Copy()");
-         
+
          DumpCopy(true);
          DumpCopy(false);
       }
 
       #endregion // Copy
-      
+
       #region Create
 
       [TestMethod]
@@ -2969,7 +2969,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Move
-      
+
       #region Open
 
       [TestMethod]
@@ -3002,7 +3002,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\n\nOpening the file twice is disallowed.");
 
                // Try to get another handle to the same file.
-               using (FileStream fs2 = File.Open(path, FileMode.Open)) {}
+               using (FileStream fs2 = File.Open(path, FileMode.Open)) { }
             }
             catch (Exception ex)
             {
@@ -3377,7 +3377,7 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
-      
+
       #region AddAlternateDataStream
 
       [TestMethod]
@@ -3423,7 +3423,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Compress/Decompress
-      
+
       #region EnumerateHardlinks
 
       [TestMethod]
@@ -3540,7 +3540,7 @@ namespace AlphaFS.UnitTest
 
       [TestMethod]
       public void AlphaFS_RemoveAlternateDataStream()
-            {
+      {
          Console.WriteLine("File.RemoveAlternateDataStream()");
          Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
       }
