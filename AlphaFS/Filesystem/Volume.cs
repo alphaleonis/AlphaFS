@@ -850,52 +850,50 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Retrieves the volume mount point where the specified path is mounted.</summary>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <param name="path">The path to the volume, for example: C:\Windows.</param>
+      /// <param name="path">The path to the volume, for example: "C:\Windows".</param>
       /// <returns>
       ///   <para>Returns the nearest volume root path for a given directory.</para>
-      ///   <para>The volume path name, for example: "C:\Windows" --&gt; "C:\".</para>
+      ///   <para>The volume path name, for example: "C:\Windows" returns: "C:\".</para>
       /// </returns>
       [SecurityCritical]
       public static string GetVolumePathName(string path)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
-
-         string pathLp = Path.GetFullPathInternal(null, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
-         StringBuilder volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode);
-         bool getOk;
-         int lastError;
-
+         
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
+            var volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode / 32);
+            string pathLp = Path.GetFullPathInternal(null, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+
             // GetVolumePathName()
             // In the ANSI version of this function, the name is limited to 248 characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            getOk = NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint)volumeRootPath.Capacity);
-            lastError = Marshal.GetLastWin32Error();
+            bool getOk = NativeMethods.GetVolumePathName(pathLp, volumeRootPath, (uint) volumeRootPath.Capacity);
+            int lastError = Marshal.GetLastWin32Error();
+
+            if (getOk)
+               return Path.GetRegularPathInternal(volumeRootPath.ToString(), false, false, false, false);
+
+            switch ((uint) lastError)
+            {
+                  // Don't throw exception on these errors.
+               case Win32Errors.ERROR_NO_MORE_FILES:
+               case Win32Errors.ERROR_INVALID_PARAMETER:
+               case Win32Errors.ERROR_INVALID_NAME:
+                  break;
+
+               default:
+                  NativeError.ThrowException(lastError, path);
+                  break;
+            }
+
+            // Return original path.
+            return path;
          }
-
-         if (getOk)
-            return Path.GetRegularPathInternal(volumeRootPath.ToString(), false, false, false, false);
-
-         switch ((uint)lastError)
-         {
-            // Don't throw exception on these errors.
-            case Win32Errors.ERROR_NO_MORE_FILES:
-            case Win32Errors.ERROR_INVALID_PARAMETER:
-            case Win32Errors.ERROR_INVALID_NAME:
-               break;
-
-            default:
-               NativeError.ThrowException(lastError, path);
-               break;
-         }
-
-         // Return original path.
-         return path;
       }
 
       #endregion // GetVolumePathName
@@ -912,8 +910,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          try
          {
-            VolumeInfo volInfo1 = new VolumeInfo(GetVolumePathName(path1), true, true);
-            VolumeInfo volInfo2 = new VolumeInfo(GetVolumePathName(path2), true, true);
+            var volInfo1 = new VolumeInfo(GetVolumePathName(path1), true, true);
+            var volInfo2 = new VolumeInfo(GetVolumePathName(path2), true, true);
 
             return volInfo1.SerialNumber == volInfo2.SerialNumber;
          }

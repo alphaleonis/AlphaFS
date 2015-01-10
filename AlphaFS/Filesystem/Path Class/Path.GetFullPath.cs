@@ -297,11 +297,12 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = GetLongPathInternal(path, options);
 
          uint bufferSize = NativeMethods.MaxPathUnicode / 32;
+         
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
-         startGetFullPathName:
+            startGetFullPathName:
 
             var buffer = new StringBuilder((int)bufferSize);
             uint returnLength = (transaction == null || !NativeMethods.IsAtLeastWindowsVista

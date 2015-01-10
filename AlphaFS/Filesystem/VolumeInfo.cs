@@ -37,10 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a VolumeInfo instance.</summary>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
-      /// <param name="volumeName">
-      ///   A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\
-      ///   server\share.
-      /// </param>
+      /// <param name="volumeName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share.</param>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
       public VolumeInfo(string volumeName)
       {
@@ -62,14 +59,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Initializes a VolumeInfo instance.</summary>
-      /// <param name="driveName">
-      ///   A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\
-      ///   server\share.
-      /// </param>
+      /// <param name="driveName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: "\\server\share".</param>
       /// <param name="refresh">Refreshes the state of the object.</param>
-      /// <param name="continueOnException">
-      ///   <see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.
-      /// </param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public VolumeInfo(string driveName, bool refresh, bool continueOnException) : this(driveName)
       {
@@ -90,9 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a VolumeInfo instance.</summary>
       /// <param name="volumeHandle">An instance to a <see cref="SafeFileHandle"/> handle.</param>
       /// <param name="refresh">Refreshes the state of the object.</param>
-      /// <param name="continueOnException">
-      ///   <see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.
-      /// </param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public VolumeInfo(SafeFileHandle volumeHandle, bool refresh, bool continueOnException) : this(volumeHandle)
       {
@@ -118,8 +108,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Refreshes the state of the object.</summary>
       public void Refresh()
       {
-         StringBuilder volumeNameBuffer = new StringBuilder(NativeMethods.MaxPath);
-         StringBuilder fileSystemNameBuffer = new StringBuilder(NativeMethods.MaxPath);
+         var volumeNameBuffer = new StringBuilder(NativeMethods.MaxPath/32);
+         var fileSystemNameBuffer = new StringBuilder(NativeMethods.MaxPath/32);
          uint maximumComponentLength;
          uint serialNumber;
 

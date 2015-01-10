@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AlphaFS
 
-      /// <summary>[AlphaFS] Returns the directory information for the specified path string without the root information, for example: C:\Windows\system32 --> Windows.</summary>
+      /// <summary>[AlphaFS] Returns the directory information for the specified path string without the root information, for example: "C:\Windows\system32" returns: "Windows".</summary>
       /// <returns>The <paramref name="path"/>without the file name part and without the root information (if any), or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</returns>
       /// <param name="path">The path.</param>
       [SecurityCritical]
@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
          return GetDirectoryNameWithoutRoot(null, path);
       }
 
-      /// <summary>[AlphaFS] Returns the directory information for the specified path string without the root information, for example: C:\Windows\system32 --> Windows.</summary>
+      /// <summary>[AlphaFS] Returns the directory information for the specified path string without the root information, for example: "C:\Windows\system32" returns: "Windows".</summary>
       /// <returns>The <paramref name="path"/>without the file name part and without the root information (if any), or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/> or if <paramref name="path"/> denotes a root (such as "\", "C:", or * "\\server\share").</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
