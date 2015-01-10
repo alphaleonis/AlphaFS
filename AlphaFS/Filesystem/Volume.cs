@@ -865,7 +865,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             var volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode / 32);
-            string pathLp = Path.GetFullPathInternal(null, path, true, GetFullPathOptions.SkipChangeErrorMode | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+            string pathLp = Path.GetFullPathInternal(null, path, true, GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
 
             // GetVolumePathName()
             // In the ANSI version of this function, the name is limited to 248 characters.
