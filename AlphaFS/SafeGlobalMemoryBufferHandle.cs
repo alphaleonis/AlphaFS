@@ -23,83 +23,43 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
+using System.Text;
 #if NET35
 using System.Security.Permissions;
 #endif
 
 namespace Alphaleonis.Win32
 {
-   /// <summary>An IntPtr wrapper which can be used as the result of a Marshal.AllocHGlobal operation.
-   /// <para>Calls Marshal.FreeHGlobal when disposed or finalized.</para>
+   /// <summary>
+   /// Represents a block of native memory of a specified size allocated using the LocalAlloc function from Kernel32.dll.
    /// </summary>
-   internal sealed class SafeGlobalMemoryBufferHandle : SafeHandleZeroOrMinusOneIsInvalid
+   internal sealed class SafeGlobalMemoryBufferHandle : SafeNativeMemoryBufferHandle
    {
-      #region Constructors
-
-      /// <summary>Creates new instance with zero IntPtr.</summary>
-      public SafeGlobalMemoryBufferHandle() : base(true)
+      /// <summary>
+      /// Creates new instance with zero IntPtr
+      /// </summary>
+      public SafeGlobalMemoryBufferHandle()
+         : base(true)
       {
-         _capacity = 0;
       }
 
-      /// <summary>Creates new instance which allocates unmanaged memory of given size. Can throw OutOfMemoryException</summary>      
-      public SafeGlobalMemoryBufferHandle(int capacity) : base(true)
+      /// <summary>
+      /// Initializes a new instance of the <see cref="SafeGlobalMemoryBufferHandle"/> class allocating the specified number of bytes of unmanaged memory.
+      /// </summary>
+      /// <param name="capacity">The capacity.</param>
+      public SafeGlobalMemoryBufferHandle(int capacity) :
+         base(capacity)
       {
          SetHandle(Marshal.AllocHGlobal(capacity));
-         _capacity = capacity;
       }
 
-      #endregion // Constructors
-
-      #region Methods
-      
-      #region CopyFrom
-
-      /// <summary>Copies data from a one-dimensional, managed 8-bit unsigned integer array to the unmanaged memory pointer referenced by this instance.</summary>
-      /// <param name="source">The one-dimensional array to copy from.</param>
-      /// <param name="startIndex">The zero-based index into the array where Copy should start.</param>
-      /// <param name="length">The number of array elements to copy.</param>
-#if NET35
-      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
-#endif
-      public void CopyFrom(byte[] source, int startIndex, int length)
+      private SafeGlobalMemoryBufferHandle(IntPtr buffer, int capacity)
+         : base(buffer, capacity)
       {
-         Marshal.Copy(source, startIndex, handle, length);
       }
 
-      #endregion // CopyFrom
-
-      #region CopyTo
-
-#if NET35
-      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
-#endif
-      public void CopyTo(byte[] destination, int destinationOffset, int length)
-      {
-         if (destination == null)
-            throw new ArgumentNullException("destination");
-
-         if (destinationOffset < 0)
-            throw new ArgumentOutOfRangeException("destinationOffset", Resources.SafeMemoryBufferHandle_CopyTo_Destination_offset_must_not_be_negative);
-
-         if (length < 0)
-            throw new ArgumentOutOfRangeException("length", Resources.SafeMemoryBufferHandle_CopyTo_Length_must_not_be_negative);
-
-         if (destinationOffset + length > destination.Length)
-            throw new ArgumentException("Destination buffer not large enough for the requested operation.");
-
-         if (length > Capacity)
-            throw new ArgumentOutOfRangeException("length", Resources.SafeGlobalMemoryBufferHandle_CopyTo_Source_offset_and_length_outside_the_bounds_of_the_array);
-
-         Marshal.Copy(handle, destination, destinationOffset, length);
-      }
-
-      #endregion // CopyTo
-
-      #region CreateFromLong
-
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static SafeGlobalMemoryBufferHandle CreateFromLong(long? value)
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      public static SafeGlobalMemoryBufferHandle FromLong(long? value)
       {
          if (value.HasValue)
          {
@@ -111,53 +71,21 @@ namespace Alphaleonis.Win32
          return new SafeGlobalMemoryBufferHandle();
       }
 
-      #endregion // CreateFromLong
-      
-      #region ReleaseHandle
+      public static SafeGlobalMemoryBufferHandle FromStringUni(string str)
+      {
+         if (str == null)
+            throw new ArgumentNullException("str");
 
-      /// <summary>Called when object is disposed or finalized.</summary>
-#if NET35
-      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
-#endif
+         return new SafeGlobalMemoryBufferHandle(Marshal.StringToHGlobalUni(str), str.Length * UnicodeEncoding.CharSize + UnicodeEncoding.CharSize);
+      }
+
+      /// <summary>
+      /// Called when object is disposed or finalized.
+      /// </summary>
       protected override bool ReleaseHandle()
       {
-         if (handle != IntPtr.Zero)
-            Marshal.FreeHGlobal(handle);
-
+         Marshal.FreeHGlobal(handle);
          return true;
       }
-
-      #endregion // ReleaseHandle
-
-      #region ToByteArray
-
-      public byte[] ToByteArray(int startIndex, int length)
-      {
-         if (IsInvalid)
-            return null;
-
-         byte[] arr = new byte[length];
-         Marshal.Copy(handle, arr, startIndex, length);
-         return arr;
-      }
-
-      #endregion // ToByteArray
-
-      #endregion // Methods
-
-      #region Properties
-
-      #region Capacity
-
-      private readonly int _capacity;
-
-      public int Capacity
-      {
-         get { return _capacity; }
-      }
-
-      #endregion // Capacity
-
-      #endregion // Properties
    }
 }

@@ -27,21 +27,25 @@ namespace Alphaleonis.Win32.Filesystem
    internal static partial class NativeMethods
    {
       /// <summary>WIN32_STREAM_ID structure - Contains stream data.</summary>
-      [StructLayout(LayoutKind.Sequential, Pack = 4, CharSet = CharSet.Unicode)]
+      [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode)]
       [SerializableAttribute]
-      internal struct Win32StreamId
+      internal struct WIN32_STREAM_ID
       {
          /// <summary>Type of stream data.</summary>
-         public readonly StreamType StreamType;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly BackupStreamType StreamType;
 
          /// <summary>Attributes of data to facilitate cross-operating system transfer.</summary>
+         [MarshalAs(UnmanagedType.U4)]
          public readonly StreamAttributes StreamAttributes;
 
          /// <summary>Size of data, in bytes.</summary>
+         [MarshalAs(UnmanagedType.U8)]
          public readonly ulong StreamSize;
 
          /// <summary>Length of the name of the alternative data stream, in bytes.</summary>
-         public readonly uint StreamNameSize;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly uint StreamNameSize;         
       }
    }
 }
