@@ -32,8 +32,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Returns the absolute path for the specified path string.</summary>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       /// <remarks>
-      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0"</para>
-      /// <para>GetFullPath is not recommended for multithreaded applications or shared library code.</para>
+      /// <para>GetFullPathName merges the name of the current drive and directory with a specified file name to determine the full path and file name of a specified file.</para>
+      /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
+      /// <para>&#160;</para>
+      /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</para>
+      /// <para>&#160;</para>
+      /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
+      /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
+      /// <para>therefore multithreaded applications cannot reliably use this value without possible data corruption from other threads that may also be reading or setting this value.</para>
+      /// <para>This limitation also applies to the SetCurrentDirectory and GetCurrentDirectory functions. The exception being when the application is guaranteed to be running in a single thread,</para>
+      /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
+      /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
@@ -58,8 +68,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
-      /// <remarks>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</remarks>
-      /// <remarks>GetFullPath is not recommended for multithreaded applications or shared library code.</remarks>
+      /// <remarks>
+      /// <para>GetFullPathName merges the name of the current drive and directory with a specified file name to determine the full path and file name of a specified file.</para>
+      /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
+      /// <para>&#160;</para>
+      /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</para>
+      /// <para>&#160;</para>
+      /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
+      /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
+      /// <para>therefore multithreaded applications cannot reliably use this value without possible data corruption from other threads that may also be reading or setting this value.</para>
+      /// <para>This limitation also applies to the SetCurrentDirectory and GetCurrentDirectory functions. The exception being when the application is guaranteed to be running in a single thread,</para>
+      /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
+      /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
@@ -81,8 +103,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
-      /// <remarks>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</remarks>
-      /// <remarks>GetFullPath is not recommended for multithreaded applications or shared library code.</remarks>
+      /// <remarks>
+      /// <para>GetFullPathName merges the name of the current drive and directory with a specified file name to determine the full path and file name of a specified file.</para>
+      /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
+      /// <para>&#160;</para>
+      /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</para>
+      /// <para>&#160;</para>
+      /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
+      /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
+      /// <para>therefore multithreaded applications cannot reliably use this value without possible data corruption from other threads that may also be reading or setting this value.</para>
+      /// <para>This limitation also applies to the SetCurrentDirectory and GetCurrentDirectory functions. The exception being when the application is guaranteed to be running in a single thread,</para>
+      /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
+      /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
@@ -110,8 +144,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
-      /// <remarks>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</remarks>
-      /// <remarks>GetFullPath is not recommended for multithreaded applications or shared library code.</remarks>
+      /// <remarks>
+      /// <para>GetFullPathName merges the name of the current drive and directory with a specified file name to determine the full path and file name of a specified file.</para>
+      /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
+      /// <para>&#160;</para>
+      /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</para>
+      /// <para>&#160;</para>
+      /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
+      /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
+      /// <para>therefore multithreaded applications cannot reliably use this value without possible data corruption from other threads that may also be reading or setting this value.</para>
+      /// <para>This limitation also applies to the SetCurrentDirectory and GetCurrentDirectory functions. The exception being when the application is guaranteed to be running in a single thread,</para>
+      /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
+      /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NotSupportedException">path contains a colon (":") that is not part of a volume identifier (for example, "c:\").</exception>
@@ -136,8 +182,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
-      /// <remarks>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</remarks>
-      /// <remarks>GetFullPath is not recommended for multithreaded applications or shared library code.</remarks>
+      /// <remarks>
+      /// <para>GetFullPathName merges the name of the current drive and directory with a specified file name to determine the full path and file name of a specified file.</para>
+      /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
+      /// <para>&#160;</para>
+      /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</para>
+      /// <para>&#160;</para>
+      /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
+      /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
+      /// <para>therefore multithreaded applications cannot reliably use this value without possible data corruption from other threads that may also be reading or setting this value.</para>
+      /// <para>This limitation also applies to the SetCurrentDirectory and GetCurrentDirectory functions. The exception being when the application is guaranteed to be running in a single thread,</para>
+      /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
+      /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
@@ -160,8 +218,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
-      /// <remarks>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</remarks>
-      /// <remarks>GetFullPath is not recommended for multithreaded applications or shared library code.</remarks>
+      /// <remarks>
+      /// <para>GetFullPathName merges the name of the current drive and directory with a specified file name to determine the full path and file name of a specified file.</para>
+      /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
+      /// <para>&#160;</para>
+      /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</para>
+      /// <para>&#160;</para>
+      /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
+      /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
+      /// <para>therefore multithreaded applications cannot reliably use this value without possible data corruption from other threads that may also be reading or setting this value.</para>
+      /// <para>This limitation also applies to the SetCurrentDirectory and GetCurrentDirectory functions. The exception being when the application is guaranteed to be running in a single thread,</para>
+      /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
+      /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
+      /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
@@ -191,9 +261,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Unified method GetFullPathInternal() to retrieve the absolute path for the specified <paramref name="path"/> string.</summary>
       /// <returns>Returns the fully qualified location of <paramref name="path"/>, such as "C:\MyFile.txt".</returns>
       /// <remarks>
-      ///   <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
-      ///   <para>GetFullPath does not work reliable with relative paths.</para>
-      ///   <para>GetFullPath is not recommended for multithreaded applications or shared library code.</para>
+      /// <para>GetFullPathName merges the name of the current drive and directory with a specified file name to determine the full path and file name of a specified file.</para>
+      /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
+      /// <para>&#160;</para>
+      /// <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
+      /// <para>The .NET Framework does not support direct access to physical disks through paths that are device names, such as "\\.\PHYSICALDRIVE0".</para>
+      /// <para>&#160;</para>
+      /// <para>MSDN: Multithreaded applications and shared library code should not use the GetFullPathName function and</para>
+      /// <para>should avoid using relative path names. The current directory state written by the SetCurrentDirectory function is stored as a global variable in each process,</para>
+      /// <para>therefore multithreaded applications cannot reliably use this value without possible data corruption from other threads that may also be reading or setting this value.</para>
+      /// <para>This limitation also applies to the SetCurrentDirectory and GetCurrentDirectory functions. The exception being when the application is guaranteed to be running in a single thread,</para>
+      /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
+      /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
       /// </remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
