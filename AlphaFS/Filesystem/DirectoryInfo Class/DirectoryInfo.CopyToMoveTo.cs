@@ -241,6 +241,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>Moves a <see cref="DirectoryInfo"/> instance and its contents to a new path.</summary>
+      /// <returns>Returns a new <see cref="DirectoryInfo"/> instance if the directory was completely moved.</returns>
       /// <remarks>
       ///   <para>Use this method to prevent overwriting of an existing directory by default.</para>
       ///   <para>This method does not work across disk volumes.</para>

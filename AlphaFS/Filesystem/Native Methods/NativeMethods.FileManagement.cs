@@ -779,5 +779,31 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool UnmapViewOfFile(SafeLocalMemoryBufferHandle lpBaseAddress);
+
+      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+      public struct WIN32_FIND_STREAM_DATA
+      {
+         public long StreamSize;
+         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = NativeMethods.MaxPath + 36)]
+         public string cStreamName;
+      }
+
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      public static extern SafeFindFileHandle FindFirstStreamTransactedW(string fileName, StreamInfoLevels infoLevel, SafeGlobalMemoryBufferHandle lpFindStreamData, int flags, SafeHandle hTransaction);
+
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      public static extern SafeFindFileHandle FindFirstStreamW(string fileName, StreamInfoLevels infoLevel, SafeGlobalMemoryBufferHandle lpFindStreamData, int flags);
+
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      public static extern bool FindNextStreamW(SafeFindFileHandle handle, SafeGlobalMemoryBufferHandle lpFindStreamData);
+
+      public enum StreamInfoLevels
+      {
+         FindStreamInfoStandard = 0
+      }
    }
 }

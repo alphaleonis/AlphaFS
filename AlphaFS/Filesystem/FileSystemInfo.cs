@@ -256,7 +256,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
+               NativeError.ThrowException(DataInitialised, LongFullName);
 
             return Win32AttributeData.FileAttributes;
          }
@@ -331,7 +331,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
+               NativeError.ThrowException(DataInitialised, LongFullName);
 
             return DateTime.FromFileTimeUtc(Win32AttributeData.CreationTime);
          }
@@ -448,7 +448,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
+               NativeError.ThrowException(DataInitialised, LongFullName);
 
             return DateTime.FromFileTimeUtc(Win32AttributeData.LastAccessTime);
          }
@@ -512,7 +512,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
+               NativeError.ThrowException(DataInitialised, LongFullName);
 
             return DateTime.FromFileTimeUtc(Win32AttributeData.LastWriteTime);
          }
@@ -575,7 +575,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised > 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
+               NativeError.ThrowException(DataInitialised, LongFullName);
 
             return _entryInfo;
          }
@@ -599,39 +599,6 @@ namespace Alphaleonis.Win32.Filesystem
       protected internal bool IsDirectory { get; set; }
 
       #endregion // IsDirectory
-
-      #region LengthStreams
-
-      private long _lengthStreams = -1;
-
-      /// <summary>[AlphaFS] Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).</summary>
-      /// <returns>The number of bytes used by all streams.</returns>
-      [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations", Justification = "We do the same for FileInfo.Length property.")]
-      public long LengthStreams
-      {
-         [SecurityCritical]
-         get
-         {
-            if (DataInitialised == -1)
-            {
-               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
-               Refresh();
-            }
-
-            // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
-            if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
-
-            
-            bool isFolder = IsDirectory || Name == Path.CurrentDirectoryPrefix;
-            
-            _lengthStreams = AlternateDataStreamInfo.GetAlternateDataStreamSizeInternal(isFolder, Transaction, null, LongFullName, null, null, PathFormat.LongFullPath);
-
-            return _lengthStreams;
-         }
-      }
-
-      #endregion // LengthStreams
 
       #region LongFullName
 

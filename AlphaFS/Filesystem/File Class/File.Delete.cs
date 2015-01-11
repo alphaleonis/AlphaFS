@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_SHARING_VIOLATION:
                   // MSDN: .NET 3.5+: IOException: The specified file is in use or there is an open handle on the file.
-                  NativeError.ThrowException(lastError, pathLp, true);
+                  NativeError.ThrowException(lastError, pathLp);
                   break;
 
                case Win32Errors.ERROR_ACCESS_DENIED:
@@ -186,7 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
             // There is an open handle on the file, and the operating system is Windows XP or earlier.
 
             // Throws IOException.
-            NativeError.ThrowException(lastError, pathLp, true);
+            NativeError.ThrowException(lastError, pathLp);
          }
       }
 

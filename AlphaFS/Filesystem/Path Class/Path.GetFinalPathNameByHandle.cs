@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                if (NativeMethods.GetFinalPathNameByHandle(handle, buffer, (uint)buffer.Capacity, finalPath) == Win32Errors.ERROR_SUCCESS)
                   // Throws IOException.
-                  NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
+                  NativeError.ThrowException(Marshal.GetLastWin32Error());
 
                return buffer.ToString();
             }

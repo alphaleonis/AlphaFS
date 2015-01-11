@@ -131,7 +131,7 @@ namespace Alphaleonis.Win32.Filesystem
                      default:
                         //If the function fails, the return value is zero (0).
                         // Throws IOException.
-                        NativeError.ThrowException(lastError, true);
+                        NativeError.ThrowException(lastError);
                         break;
                   }
                }

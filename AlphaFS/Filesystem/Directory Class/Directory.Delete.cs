@@ -319,7 +319,7 @@ namespace Alphaleonis.Win32.Filesystem
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   if (requireEmpty)
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory. 
-                     NativeError.ThrowException(lastError, pathLp, true);
+                     NativeError.ThrowException(lastError, pathLp);
 
                   goto startRemoveDirectory;
 
@@ -339,7 +339,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_SHARING_VIOLATION:
                   // MSDN: .NET 3.5+: IOException: The directory is being used by another process or there is an open handle on the directory.
-                  NativeError.ThrowException(lastError, pathLp, true);
+                  NativeError.ThrowException(lastError, pathLp);
                   break;
 
                case Win32Errors.ERROR_ACCESS_DENIED:
@@ -360,7 +360,7 @@ namespace Alphaleonis.Win32.Filesystem
                         }
 
                         // MSDN: .NET 3.5+: IOException: The directory is read-only or contains a read-only file.
-                        NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, pathLp, true);
+                        NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, pathLp);
                      }
                   }
 
@@ -379,7 +379,7 @@ namespace Alphaleonis.Win32.Filesystem
             // The directory is being used by another process.
 
             // Throws IOException.
-            NativeError.ThrowException(lastError, pathLp, true);
+            NativeError.ThrowException(lastError, pathLp);
          }
 
          #endregion // Remove

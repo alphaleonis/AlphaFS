@@ -747,7 +747,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
          if (File.ExistsInternal(false, transaction, pathLp, PathFormat.LongFullPath))
-            NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp, true);
+            NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp);
 
 
          string templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
@@ -816,14 +816,14 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
                         if (File.ExistsInternal(false, transaction, pathLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(lastError, pathLp, true);
+                           NativeError.ThrowException(lastError, pathLp);
 
                         if (File.ExistsInternal(false, transaction, folderLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, folderLp, true);
+                           NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, folderLp);
                         break;
 
                      case Win32Errors.ERROR_BAD_NET_NAME:
-                        NativeError.ThrowException(lastError, pathLp, true);
+                        NativeError.ThrowException(lastError, pathLp);
                         break;
 
                      case Win32Errors.ERROR_DIRECTORY:

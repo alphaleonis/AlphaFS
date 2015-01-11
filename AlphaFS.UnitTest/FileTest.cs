@@ -127,7 +127,7 @@ namespace AlphaFS.UnitTest
 
       private static string Reporter(bool onlyTime = false)
       {
-         var lastError = new Win32Exception();
+         Win32Exception lastError = new Win32Exception();
 
          StopWatcher();
 
@@ -542,7 +542,6 @@ namespace AlphaFS.UnitTest
             using (File.Create(fullPathDestination)) { }
 
             expectedLastError = (int)Win32Errors.ERROR_FILE_EXISTS;
-            expectedException = "System.IO.IOException";
             exception = false;
             try
             {
@@ -555,7 +554,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is IOException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
@@ -599,7 +598,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is IOException)
                {
                   exception = true;
                   Directory.Delete(folderfileName);
@@ -1247,14 +1246,9 @@ namespace AlphaFS.UnitTest
                sw.WriteLine(TextHelloWorld);
 
 
-         long fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
-         long fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
          long fileGetSize = File.GetSize(tempPath);
          long fileGetCompressedSize = File.GetCompressedSize(tempPath);
          long fiLength = fi.Length;
-
-         Console.WriteLine("\tFile.GetAlternateDataStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
-         Console.WriteLine("\tFile.GetAlternateDataStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
 
          Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
          Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
@@ -1265,10 +1259,6 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == 0, "File should be uncompressed.");
          Assert.IsTrue(fiLength == fileGetSize, "Uncompressed size should match.");
          Assert.IsTrue(fiLength == fileGetCompressedSize, "Uncompressed size should match.");
-         Assert.IsTrue(fiLength < fileGetStreamSize, "Uncompressed size should be less than size of all streams.");
-         Assert.IsTrue(fileGetStreamSize > fileGetSize, "Size of all streams should be greater than size of file.");
-         Assert.IsTrue(fileGetStreamSize != fileGetStreamsDataSize, "Size of all streams should be greater than size of StreamType.Data.");
-         Assert.AreEqual(fileGetSize, fileGetStreamsDataSize, "Size of file should match size of StreamType.Data.");
 
          #endregion // Setup
 
@@ -1284,8 +1274,6 @@ namespace AlphaFS.UnitTest
             report = Reporter(true);
             compressOk = true;
 
-            fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
-            fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
             fileGetSize = File.GetSize(tempPath);
             fileGetCompressedSize = File.GetCompressedSize(tempPath);
          }
@@ -1305,9 +1293,6 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n\n\tFile.Compress() (Should be True): [{0}]{1}\n", compressOk, report);
 
-         Console.WriteLine("\tFile.GetAlternateDataStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
-         Console.WriteLine("\tFile.GetAlternateDataStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
-
          Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
          Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
 
@@ -1319,10 +1304,6 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) != 0, "File should be compressed.");
          Assert.IsTrue(fiLength != fileGetCompressedSize, "FileInfo() size should not match compressed size.");
          Assert.IsTrue(fiLength == fileGetSize, "File size should match FileInfo() size.");
-         Assert.IsTrue(fiLength < fileGetStreamSize, "Compressed size should be less than size of all streams.");
-         Assert.IsTrue(fileGetStreamSize > fileGetSize, "Size of all streams should be greater than size of file.");
-         Assert.IsTrue(fileGetStreamSize != fileGetStreamsDataSize, "Size of all streams should be greater than size of StreamType.Data.");
-         Assert.AreEqual(fileGetSize, fileGetStreamsDataSize, "Size of file should match size of StreamType.Data.");
 
          #endregion // Compress
 
@@ -1337,8 +1318,6 @@ namespace AlphaFS.UnitTest
             report = Reporter(true);
             decompressOk = true;
 
-            fileGetStreamSize = File.GetAlternateDataStreamSize(tempPath);
-            fileGetStreamsDataSize = File.GetAlternateDataStreamSize(tempPath, StreamType.Data);
             fileGetSize = File.GetSize(tempPath);
             fileGetCompressedSize = File.GetCompressedSize(tempPath);
 
@@ -1359,9 +1338,6 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n\n\tFile.Decompress() (Should be True): [{0}]{1}\n", decompressOk, report);
 
-         Console.WriteLine("\tFile.GetAlternateDataStreamSize()\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamSize), fileGetStreamSize);
-         Console.WriteLine("\tFile.GetAlternateDataStreamSize(Data)\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetStreamsDataSize), fileGetStreamsDataSize);
-
          Console.WriteLine("\tFile.GetSize()\t\t\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetSize), fileGetSize);
          Console.WriteLine("\tFile.GetCompressedSize()\t== [{0}] [{1} bytes]", Utils.UnitSizeToText(fileGetCompressedSize), fileGetCompressedSize);
 
@@ -1373,10 +1349,6 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue((fi.Attributes & FileAttributes.Compressed) == 0, "File should be uncompressed.");
          Assert.IsTrue(fiLength == fileGetSize, "Uncompressed size should match.");
          Assert.IsTrue(fiLength == fileGetCompressedSize, "Uncompressed size should match.");
-         Assert.IsTrue(fiLength < fileGetStreamSize, "Uncompressed size should be less than size of all streams.");
-         Assert.IsTrue(fileGetStreamSize > fileGetSize, "Size of all streams should be greater than size of file.");
-         Assert.IsTrue(fileGetStreamSize != fileGetStreamsDataSize, "Size of all streams should be greater than size of StreamType.Data.");
-         Assert.AreEqual(fileGetSize, fileGetStreamsDataSize, "Size of file should match size of StreamType.Data.");
 
          #endregion //Decompress
 
@@ -1620,8 +1592,7 @@ namespace AlphaFS.UnitTest
             using (File.Create(fullPathSource)) { }
             using (File.Create(fullPathDestination)) { }
 
-            expectedLastError = (int)Win32Errors.ERROR_ALREADY_EXISTS;
-            expectedException = "System.IO.IOException";
+            expectedLastError = (int)Win32Errors.ERROR_ALREADY_EXISTS;            
             exception = false;
             try
             {
@@ -1636,7 +1607,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is IOException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
@@ -2239,7 +2210,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpReadWriteAllBytes
 
-
       #region Create file with trailing dot/space
 
       private void DumpFileTrailingDotSpace(bool isLocal)
@@ -2539,6 +2509,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Create file with trailing dot/space
+
 
       #endregion // Unit Tests
 
@@ -3572,7 +3543,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // TransferTimestamps
-
 
       #region AlphaFS___FileTrailingDotSpace
 

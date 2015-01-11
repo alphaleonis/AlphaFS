@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   case Win32Errors.ERROR_DIRECTORY:
                      // MSDN: .NET 3.5+: IOException: path is a file name.
-                     NativeError.ThrowException(lastError, path, true);
+                     NativeError.ThrowException(lastError, path);
                      break;
 
                   case Win32Errors.ERROR_ACCESS_DENIED:
@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
                // MSDN: .NET 3.5+: IOException
-               NativeError.ThrowException(lastError, path, true);
+               NativeError.ThrowException(lastError, path);
             }
          }
 

@@ -507,7 +507,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is UnauthorizedAccessException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
@@ -632,7 +632,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is IOException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
@@ -701,11 +701,10 @@ namespace AlphaFS.UnitTest
             using (File.Create(tempPath)) { }
 
             expectedLastError = (int)Win32Errors.ERROR_ALREADY_EXISTS;
-            expectedException = "System.IO.IOException";
             bool exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: File already exist with same name.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]: File already exist with same name.", typeof(IOException).FullName);
                Directory.CreateDirectory(tempPath);
             }
             catch (Exception ex)
@@ -717,7 +716,7 @@ namespace AlphaFS.UnitTest
                   string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is IOException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
@@ -726,7 +725,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName,
                      ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+            Assert.IsTrue(exception, "[{0}] should have been caught.", typeof(IOException).Name);
             Console.WriteLine();
 
             File.Delete(tempPath);
@@ -1119,7 +1118,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is IOException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
@@ -1137,7 +1136,7 @@ namespace AlphaFS.UnitTest
             File.SetAttributes(tempPath, FileAttributes.ReadOnly);
 
             expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
-            expectedException = "System.IO.IOException";
+            expectedException = "UnauthorizedAccessException";
             exception = false;
             try
             {
@@ -1152,7 +1151,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(ex.Message.StartsWith("(" + Win32Errors.ERROR_FILE_READ_ONLY + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is UnauthorizedAccessException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
@@ -2837,8 +2836,7 @@ namespace AlphaFS.UnitTest
          string tempPathDestination = Path.Combine(tempPath, "Destination");
 
          bool exception;
-         int expectedLastError;
-         string expectedException;
+         int expectedLastError;         
          string report;
 
          string random = Path.GetRandomFileName();
@@ -2885,9 +2883,8 @@ namespace AlphaFS.UnitTest
 
             var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
 
-
-            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
-            expectedException = "System.IO.IOException";
+            string expectedException = typeof(IOException).FullName;
+            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;            
             exception = false;
             try
             {
@@ -2905,7 +2902,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is UnauthorizedAccessException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
@@ -3068,7 +3065,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is IOException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));

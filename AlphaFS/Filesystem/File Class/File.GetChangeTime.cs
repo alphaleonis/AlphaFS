@@ -197,7 +197,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                if (!NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, safeBuffer, NativeMethods.DefaultFileBufferSize))
                   // Throws IOException.
-                  NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
+                  NativeError.ThrowException(Marshal.GetLastWin32Error());
 
 
                // CA2001:AvoidCallingProblematicMethods

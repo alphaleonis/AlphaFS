@@ -16,6 +16,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Open
 
+      #region Non-Transactional
+
       /// <summary>Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
@@ -101,6 +103,31 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, pathFormat);
       }
+
+      /// <summary>
+      ///   [AlphaFS] Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access
+      ///   and the specified sharing option.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">
+      ///   A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents
+      ///   of existing files are retained or overwritten.
+      /// </param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
+      /// <param name="share">A <see cref="FileShare"/> value specifying the type of access other threads have to the file.</param>
+      /// <param name="extendedAttributes">The extended attributes.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the
+      ///   specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
+      {
+         return OpenInternal(null, path, mode, 0, access, share, extendedAttributes, pathFormat);
+      }
+
+      #endregion
 
 
       #region Transactional
@@ -205,6 +232,29 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, pathFormat);
       }
 
+      /// <summary>
+      ///   [AlphaFS] Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access
+      ///   and the specified sharing option.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">
+      ///   A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents
+      ///   of existing files are retained or overwritten.
+      /// </param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
+      /// <param name="share">A <see cref="FileShare"/> value specifying the type of access other threads have to the file.</param>
+      /// <param name="extendedAttributes">The extended attributes.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the
+      ///   specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
+      {
+         return OpenInternal(transaction, path, mode, 0, access, share, extendedAttributes, pathFormat);
+      }
 
       #endregion // Transacted
 
