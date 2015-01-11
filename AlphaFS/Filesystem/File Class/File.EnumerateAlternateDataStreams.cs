@@ -85,7 +85,13 @@ namespace Alphaleonis.Win32.Filesystem
                : NativeMethods.FindFirstStreamTransactedW(path, NativeMethods.StreamInfoLevels.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
             {
                if (handle.IsInvalid)
-                  NativeError.ThrowException();
+               {
+                  int errorCode = Marshal.GetLastWin32Error();
+                  if (errorCode == Win32Errors.ERROR_HANDLE_EOF)
+                     yield break;
+
+                  NativeError.ThrowException(errorCode);
+               }
 
                while (true)
                {

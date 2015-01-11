@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32
                throw new AlreadyExistsException(errorMessage);
 
             case Win32Errors.ERROR_DIR_NOT_EMPTY:
-               throw new DirectoryNotEmptyException(writePath);
+               throw new DirectoryNotEmptyException(errorMessage);
 
             case Win32Errors.ERROR_NOT_READY:
                   throw new DeviceNotReadyException(errorMessage);
