@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This can be either uppercase or lowercase,</para>
       ///   <para>'a' to 'z' or a network share in the format: \\server\share</para>
       /// </param>
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace checks for null and whitespace.")]
       [SecurityCritical]
       public DriveInfo(string driveName)
       {

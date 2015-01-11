@@ -996,7 +996,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   or a directory on another volume (for example, "Y:\MountX\").
       /// </param>
       /// <param name="volumeGuid">A <see cref="string"/> containing the volume <see cref="Guid"/>.</param>      
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1")]
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "1", Justification = "Utils.IsNullOrWhiteSpace checks for null and whitespace.")]
       [SecurityCritical]
       public static void SetVolumeMountPoint(string volumeMountPoint, string volumeGuid)
       {

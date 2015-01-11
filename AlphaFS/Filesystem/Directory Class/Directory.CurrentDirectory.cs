@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
       /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
       /// </remarks>
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace checks for null and whitespace.")]
       [SecurityCritical]
       public static void SetCurrentDirectory(string path)
       {
