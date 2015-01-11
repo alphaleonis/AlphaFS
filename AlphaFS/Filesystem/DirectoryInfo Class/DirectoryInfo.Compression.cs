@@ -38,11 +38,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public void Compress(DirectoryEnumerationOptions directoryEnumerationOptions)
+      public void Compress(DirectoryEnumerationOptions options)
       {
-         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, true, PathFormat.LongFullPath);
+         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, options, true, PathFormat.LongFullPath);
       }
 
       #endregion // Compress
@@ -58,11 +58,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public void Decompress(DirectoryEnumerationOptions directoryEnumerationOptions)
+      public void Decompress(DirectoryEnumerationOptions options)
       {
-         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, false, PathFormat.LongFullPath);
+         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, options, false, PathFormat.LongFullPath);
       }
 
       #endregion // Decompress

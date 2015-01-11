@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructor
 
-      public FindFileSystemEntryInfo(bool enumerate, KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, Type typeOfT, PathFormat pathFormat)
+      public FindFileSystemEntryInfo(bool enumerate, KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, Type typeOfT, PathFormat pathFormat)
       {
          Transaction = transaction;
 
@@ -44,18 +44,18 @@ namespace Alphaleonis.Win32.Filesystem
          SearchPattern = searchPattern;
          FileSystemObjectType = null;
 
-         ContinueOnException = (directoryEnumerationOptions & DirectoryEnumerationOptions.ContinueOnException) == DirectoryEnumerationOptions.ContinueOnException;
+         ContinueOnException = (options & DirectoryEnumerationOptions.ContinueOnException) == DirectoryEnumerationOptions.ContinueOnException;
 
-         AsLongPath = (directoryEnumerationOptions & DirectoryEnumerationOptions.AsLongPath) == DirectoryEnumerationOptions.AsLongPath;
+         AsLongPath = (options & DirectoryEnumerationOptions.AsLongPath) == DirectoryEnumerationOptions.AsLongPath;
 
          AsString = typeOfT == typeof(string);
          AsFileSystemInfo = !AsString && (typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo));
 
-         FindExInfoLevel = (directoryEnumerationOptions & DirectoryEnumerationOptions.BasicSearch) == DirectoryEnumerationOptions.BasicSearch && NativeMethods.IsAtLeastWindows7
+         FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) == DirectoryEnumerationOptions.BasicSearch && NativeMethods.IsAtLeastWindows7
             ? NativeMethods.FindExInfoLevels.Basic
             : NativeMethods.FindExInfoLevels.Standard;
 
-         LargeCache = (directoryEnumerationOptions & DirectoryEnumerationOptions.LargeCache) == DirectoryEnumerationOptions.LargeCache && NativeMethods.IsAtLeastWindows7
+         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) == DirectoryEnumerationOptions.LargeCache && NativeMethods.IsAtLeastWindows7
             ? NativeMethods.FindExAdditionalFlags.LargeFetch
             : NativeMethods.FindExAdditionalFlags.None;
 
@@ -64,16 +64,16 @@ namespace Alphaleonis.Win32.Filesystem
          if (IsDirectory)
          {
             // Need files or folders to enumerate.
-            if ((directoryEnumerationOptions & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.None)
-               directoryEnumerationOptions |= DirectoryEnumerationOptions.FilesAndFolders;
+            if ((options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.None)
+               options |= DirectoryEnumerationOptions.FilesAndFolders;
 
-            FileSystemObjectType = (directoryEnumerationOptions & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.FilesAndFolders
+            FileSystemObjectType = (options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.FilesAndFolders
                ? (bool?)null
-               : (directoryEnumerationOptions & DirectoryEnumerationOptions.Folders) == DirectoryEnumerationOptions.Folders;
+               : (options & DirectoryEnumerationOptions.Folders) == DirectoryEnumerationOptions.Folders;
 
-            Recursive = (directoryEnumerationOptions & DirectoryEnumerationOptions.Recursive) == DirectoryEnumerationOptions.Recursive;
+            Recursive = (options & DirectoryEnumerationOptions.Recursive) == DirectoryEnumerationOptions.Recursive;
 
-            SkipReparsePoints = (directoryEnumerationOptions & DirectoryEnumerationOptions.SkipReparsePoints) == DirectoryEnumerationOptions.SkipReparsePoints;
+            SkipReparsePoints = (options & DirectoryEnumerationOptions.SkipReparsePoints) == DirectoryEnumerationOptions.SkipReparsePoints;
          }
       }
 

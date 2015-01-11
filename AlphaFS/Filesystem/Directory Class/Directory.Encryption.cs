@@ -187,14 +187,14 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.AsLongPath;
+         var options = DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.AsLongPath;
 
          if (recursive)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
+            options |= DirectoryEnumerationOptions.Recursive;
 
 
          // Process folders and files.
-         foreach (string fso in EnumerateFileSystemEntryInfosInternal<string>(null, pathLp, Path.WildcardStarMatchAll, directoryEnumerationOptions, PathFormat.LongFullPath))
+         foreach (string fso in EnumerateFileSystemEntryInfosInternal<string>(null, pathLp, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath))
             File.EncryptDecryptFileInternal(true, fso, encrypt, PathFormat.LongFullPath);
 
          // Process the root folder, the given path.

@@ -94,12 +94,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectories(string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.Folders;
+         var options = DirectoryEnumerationOptions.Folders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, options, PathFormat.RelativePath).ToArray();
       }
 
       #endregion
@@ -169,12 +166,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetDirectories(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.Folders;
+         var options = DirectoryEnumerationOptions.Folders |
+                       ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, options, PathFormat.RelativePath).ToArray();
       }
 
       #endregion // Transactional
@@ -250,12 +245,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFiles(string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.Files;
+         var options = DirectoryEnumerationOptions.Files |
+                       ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, options, PathFormat.RelativePath).ToArray();
       }
       #endregion
 
@@ -329,12 +322,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.Files;
+         var options = DirectoryEnumerationOptions.Files |
+                       ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, options, PathFormat.RelativePath).ToArray();
       }
 
 
@@ -408,12 +399,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFileSystemEntries(string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.FilesAndFolders;
+         var options = DirectoryEnumerationOptions.FilesAndFolders |
+                       ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, options, PathFormat.RelativePath).ToArray();
       }
 
       #endregion
@@ -485,12 +474,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.FilesAndFolders;
+         var options = DirectoryEnumerationOptions.FilesAndFolders |
+                       ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath).ToArray();
+         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, options, PathFormat.RelativePath).ToArray();
       }
 
 
