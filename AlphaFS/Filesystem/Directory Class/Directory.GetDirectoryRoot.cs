@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
 
-         pathLp = Path.GetRegularPathInternal(pathLp, false, false, false, false);
+         pathLp = Path.GetRegularPathInternal(pathLp, GetFullPathOptions.None);
 
          string rootPath = Path.GetPathRoot(pathLp, false);
 

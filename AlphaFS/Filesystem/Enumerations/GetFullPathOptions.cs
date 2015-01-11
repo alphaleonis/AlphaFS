@@ -39,10 +39,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Remove the trailing directory separator from the path (if one exists).</summary>
       RemoveTrailingDirectorySeparator = 4,
 
-      /// <summary>Return full path as long full path (Unicode format).</summary>
+      /// <summary>Return full path as long full path (Unicode format). Not valid for <see cref="Path.GetRegularPath"/>.</summary>
       AsLongPath = 8,
 
-      /// <summary>Prevents and exception from being thrown if a filesystem object does not exist.</summary>
+      /// <summary>Prevents and exception from being thrown if a filesystem object does not exist. Not valid for <see cref="Path.GetRegularPath"/>.</summary>
       ContinueOnNonExist = 16,
 
       /// <summary>Check that the path contains only valid path-characters.</summary>

@@ -66,14 +66,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetRegularPath
 
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: \\?\C:\Temp\file.txt to C:\Temp\file.txt or: \\?\UNC\Server\share\file.txt to \\Server\share\file.txt.</summary>
+      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
       /// <returns>Regular form path string.</returns>
       /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
       /// <param name="path">The path.</param>
       [SecurityCritical]
       public static string GetRegularPath(string path)
       {
-         return GetRegularPathInternal(path, false, false, false, true);
+         return GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars);
       }
 
       #endregion // GetRegularPath
@@ -188,7 +188,7 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = GetFullPathInternal(transaction, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
          var buffer = new StringBuilder();
-         uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint)path.Length;
+         uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint) path.Length;
 
          while (actualLength > buffer.Capacity)
          {
@@ -215,60 +215,7 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException(pathLp);
          }
 
-         return GetRegularPathInternal(buffer.ToString(), false, false, false, false);
-      }
-
-      /// <summary>[AlphaFS] Unified method GetRegularPathInternal() to get the regular path from a long path.</summary>
-      /// <returns>
-      ///   <para>Returns the regular form of a long <paramref name="path"/>.</para>
-      ///   <para>For example: "\\?\C:\Temp\file.txt" to: "C:\Temp\file.txt", or: "\\?\UNC\Server\share\file.txt" to: "\\Server\share\file.txt".</para>
-      /// </returns>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <param name="path">The path.</param>
-      /// <param name="trimEnd"><see langword="true"/> removes trailing whitespace from <paramref name="path"/>.</param>
-      /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="path"/>, when absent.</param>
-      /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="path"/>, when present.</param>
-      /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
-      [SecurityCritical]
-      internal static string GetRegularPathInternal(string path, bool trimEnd, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator, bool checkInvalidPathChars)
-      {
-         if (checkInvalidPathChars)
-            CheckInvalidPathChars(path, false);
-         else
-         {
-            if (path == null)
-               throw new ArgumentNullException("path");
-
-            if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
-         }
-
-         // MSDN: Notes to Callers
-         // http://msdn.microsoft.com/en-us/library/system.string.trimend%28v=vs.110%29.aspx
-         //
-         // The .NET Framework 3.5 SP1 and earlier versions maintains an internal list of white-space characters that this method trims if trimChars is null or an empty array.
-         // Starting with the .NET Framework 4, if trimChars is null or an empty array, the method trims all Unicode white-space characters
-         // (that is, characters that produce a true return value when they are passed to the Char.IsWhiteSpace method). Because of this change,
-         // the Trim() method in the .NET Framework 3.5 SP1 and earlier versions removes two characters, ZERO WIDTH SPACE (U+200B) and ZERO WIDTH NO-BREAK SPACE (U+FEFF),
-         // that the Trim() method in the .NET Framework 4 and later versions does not remove. In addition, the Trim() method in the .NET Framework 3.5 SP1 and earlier versions
-         // does not trim three Unicode white-space characters: MONGOLIAN VOWEL SEPARATOR (U+180E), NARROW NO-BREAK SPACE (U+202F), and MEDIUM MATHEMATICAL SPACE (U+205F).
-
-         if (trimEnd) path = path.TrimEnd();
-
-         if (removeTrailingDirectorySeparator)
-            path = path.TrimEnd(DirectorySeparatorChar, AltDirectorySeparatorChar);
-
-         if (addTrailingDirectorySeparator)
-            path = AddTrailingDirectorySeparator(path, false);
-
-         if (!path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase))
-            return path;
-
-         if (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase))
-            return UncPrefix + path.Substring(LongPathUncPrefix.Length);
-
-         return path.Substring(LongPathPrefix.Length);
+         return GetRegularPathInternal(buffer.ToString(), GetFullPathOptions.None);
       }
 
       /// <summary>[AlphaFS] Unified method GetRegularPathInternal() to get the regular path from a long path.</summary>

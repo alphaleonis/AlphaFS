@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using Alphaleonis.Win32.Filesystem;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -1117,7 +1118,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetDfsEnum(stripUnc, 300, prefMaxLen, out safeBuffer, out entriesRead, out resumeHandle);
 
@@ -1153,7 +1154,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathInternal(domain, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathInternal(domain, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetDfsEnum(stripUnc, 200, prefMaxLen, out safeBuffer, out entriesRead, out resumeHandle);
 
@@ -1184,7 +1185,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetServerDiskEnum(stripUnc, 0, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resume);
 
@@ -1220,7 +1221,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetConnectionEnum(stripUnc, functionData.ExtraData1, 1, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
@@ -1251,7 +1252,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static IEnumerable<OpenResourceInfo> EnumerateOpenResourcesInternal(string host, string basePath, string typeName, bool continueOnException)
       {
-         basePath = Utils.IsNullOrWhiteSpace(basePath) ? null : Path.GetRegularPathInternal(basePath, false, false, false, true);
+         basePath = Utils.IsNullOrWhiteSpace(basePath) ? null : Path.GetRegularPathInternal(basePath, GetFullPathOptions.CheckInvalidPathChars);
          typeName = Utils.IsNullOrWhiteSpace(typeName) ? null : typeName;
          
          
@@ -1267,7 +1268,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetFileEnum(stripUnc, fd.ExtraData1, fd.ExtraData2, 3, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
@@ -1389,7 +1390,7 @@ namespace Alphaleonis.Win32.Network
          // However, the resulting OpenResourceInfo.Host property will be empty.
          // So, explicitly state Environment.MachineName to prevent this.
          // Furthermore, the UNC prefix: \\ is not required and always removed.
-         string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+         string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
          var fd = new FunctionData();
          bool hasItems = false;
@@ -1522,7 +1523,7 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         path = Path.GetRegularPathInternal(path, false, false, false, true); 
+         path = Path.GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars); 
 
          // If path already is a network share path, we fill the RemoteNameInfo structure ourselves.
          if (Path.IsUncPath(path, false))
@@ -1616,7 +1617,7 @@ namespace Alphaleonis.Win32.Network
          // However, the resulting OpenResourceInfo.Host property will be empty.
          // So, explicitly state Environment.MachineName to prevent this.
          // Furthermore, the UNC prefix: \\ is not required and always removed.
-         string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, false, false, false, true).Replace(Path.UncPrefix, string.Empty);
+         string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
          
          bool fallback = false;
          

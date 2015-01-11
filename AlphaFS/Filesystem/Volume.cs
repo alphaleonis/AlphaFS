@@ -876,7 +876,7 @@ namespace Alphaleonis.Win32.Filesystem
             int lastError = Marshal.GetLastWin32Error();
 
             if (getOk)
-               return Path.GetRegularPathInternal(volumeRootPath.ToString(), false, false, false, false);
+               return Path.GetRegularPathInternal(volumeRootPath.ToString(), GetFullPathOptions.None);
 
             switch ((uint) lastError)
             {
@@ -1075,7 +1075,7 @@ namespace Alphaleonis.Win32.Filesystem
             // targetPath is allowed to be null.
 
             // In no case is a trailing backslash ("\") allowed.
-            deviceName = Path.GetRegularPathInternal(deviceName, false, false, true, true);
+            deviceName = Path.GetRegularPathInternal(deviceName, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
             // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))

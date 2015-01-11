@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
       public string FullName
       {
          get { return _fullName; }
-         private set { LongFullName = value; _fullName = Path.GetRegularPathInternal(LongFullName, false, false, false, false); }
+         private set { LongFullName = value; _fullName = Path.GetRegularPathInternal(LongFullName, GetFullPathOptions.None); }
       }
 
       /// <summary>The type of the data in the stream.</summary>

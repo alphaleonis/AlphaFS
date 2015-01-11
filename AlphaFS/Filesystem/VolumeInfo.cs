@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException(Name);
          }
 
-         FullPath = Path.GetRegularPathInternal(Name, false, false, false, false);
+         FullPath = Path.GetRegularPathInternal(Name, GetFullPathOptions.None);
          Name = volumeNameBuffer.ToString();
 
          FileSystemName = fileSystemNameBuffer.ToString();

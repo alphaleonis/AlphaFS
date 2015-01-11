@@ -763,10 +763,10 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
          // UrlCreateFromPath does not support extended paths.
-         string pathRp = Path.GetRegularPathInternal(path, false, false, false, true);
+         string pathRp = Path.GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars);
 
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
-         uint bufferSize = (uint) buffer.Capacity;
+         var bufferSize = (uint) buffer.Capacity;
 
          uint lastError = NativeMethods.UrlCreateFromPath(pathRp, buffer, ref bufferSize, 0);
 
@@ -914,7 +914,7 @@ namespace Alphaleonis.Win32.Filesystem
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
             // However, the function fails when using Unicode format.
 
-            IntPtr shGetFileInfo = NativeMethods.ShGetFileInfo(Path.GetRegularPathInternal(path, false, false, false, checkInvalidPathChars), attributes, out fileInfo, (uint) Marshal.SizeOf(fileInfo), fileAttributes);
+            IntPtr shGetFileInfo = NativeMethods.ShGetFileInfo(Path.GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0), attributes, out fileInfo, (uint) Marshal.SizeOf(fileInfo), fileAttributes);
 
             if (shGetFileInfo == IntPtr.Zero && !continueOnException)
                NativeError.ThrowException(Marshal.GetLastWin32Error(), path);

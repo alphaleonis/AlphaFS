@@ -757,7 +757,7 @@ namespace Alphaleonis.Win32.Filesystem
          #region Construct Full Path
 
          string longPathPrefix = Path.IsUncPath(path, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
-         path = Path.GetRegularPathInternal(pathLp, false, false, false, false);
+         path = Path.GetRegularPathInternal(pathLp, GetFullPathOptions.None);
 
          int length = path.Length;
          if (length >= 2 && Path.IsDVsc(path[length - 1], false))

@@ -131,7 +131,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             return false;
 
-         path = GetRegularPathInternal(path, false, false, false, checkInvalidPathChars);
+         path = GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0);
 
          // Don't use char.IsLetter() here as that can be misleading.
          // The only valid drive letters are: a-z and A-Z.
@@ -174,7 +174,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (!Utils.IsNullOrWhiteSpace(path) && path.Length >= 2)
          {
-            string regularPath = GetRegularPathInternal(path, false, false, false, false);
+            string regularPath = GetRegularPathInternal(path, GetFullPathOptions.None);
 
             if (regularPath.Length >= 2 && regularPath.IndexOf(VolumeSeparatorChar, 2) != -1)
                throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, regularPath));
@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
 
          // Will fail on a Unicode path.
-         string pathRp = GetRegularPathInternal(path, false, false, false, false);
+         string pathRp = GetRegularPathInternal(path, GetFullPathOptions.None);
 
          for (int index = 0, l = pathRp.Length; index < l; ++index)
          {
@@ -210,7 +210,7 @@ namespace Alphaleonis.Win32.Filesystem
                case 60:    // <  (less than)
                case 62:    // >  (greater than)
                case 124:   // |  (pipe)
-                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.IllegalCharactersInPath, (char)num), pathRp);
+                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.IllegalCharactersInPath, (char) num), pathRp);
 
                default:
                   // 32: space

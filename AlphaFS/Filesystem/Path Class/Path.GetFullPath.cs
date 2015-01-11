@@ -176,7 +176,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             return (options & GetFullPathOptions.AsLongPath) != 0
                ? GetLongPathInternal(buffer.ToString(), GetFullPathOptions.None)
-               : GetRegularPathInternal(buffer.ToString(), false, false, false, false);
+               : GetRegularPathInternal(buffer.ToString(), GetFullPathOptions.None);
          }
       }
 
@@ -187,7 +187,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." which is the current directory.
          if (path != null)
          {
-            string tackle = GetRegularPathInternal(path, false, false, false, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
+            string tackle = GetRegularPathInternal(path, GetFullPathOptions.None).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
 
             if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
