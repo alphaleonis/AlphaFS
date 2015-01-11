@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
       /// <param name="volumeName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share.</param>
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace checks for null and whitespace.")]
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       public VolumeInfo(string volumeName)
       {
          if (Utils.IsNullOrWhiteSpace(volumeName))

@@ -848,7 +848,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Gets the host and Server Message Block (SMB) share name for the given <paramref name="uncPath"/>.</summary>
       /// <param name="uncPath">The share in the format: \\host\share.</param>
       /// <returns>string[0] = host, string[1] = share;</returns>
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace checks for null and whitespace.")]
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
       public static string[] GetHostShareFromPath(string uncPath)
       {
@@ -946,7 +946,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Return the host name in UNC format, for example: \\hostname.</summary>
       /// <param name="computerName">Name of the computer.</param>
       /// <returns>The unc name.</returns>
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace checks for null and whitespace.")]
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate")]
       [SecurityCritical]
       public static string GetUncName(string computerName)
