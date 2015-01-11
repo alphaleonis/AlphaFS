@@ -69,8 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static FileSystemEntryInfo GetFileSystemEntryInfoInternal(KernelTransaction transaction, string path, bool continueOnException, PathFormat pathFormat)
       {
          // Enable BasicSearch and LargeCache by default.
-         var options = DirectoryEnumerationOptions.BasicSearch | DirectoryEnumerationOptions.LargeCache |
-                       (continueOnException ? DirectoryEnumerationOptions.ContinueOnException : 0);
+         var options = DirectoryEnumerationOptions.BasicSearch | DirectoryEnumerationOptions.LargeCache | (continueOnException ? DirectoryEnumerationOptions.ContinueOnException : 0);
 
          return (new FindFileSystemEntryInfo(false, transaction, path, Path.WildcardQuestion, options, typeof (FileSystemEntryInfo), pathFormat)).Get<FileSystemEntryInfo>();
       }

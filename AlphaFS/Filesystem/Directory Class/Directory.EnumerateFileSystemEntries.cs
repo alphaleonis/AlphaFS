@@ -858,7 +858,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static IEnumerable<T> EnumerateFileSystemEntryInfosInternal<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
          // Enable BasicSearch and LargeCache by default.
-         options &= DirectoryEnumerationOptions.BasicSearch | DirectoryEnumerationOptions.LargeCache;
+         options |= DirectoryEnumerationOptions.BasicSearch | DirectoryEnumerationOptions.LargeCache;
 
          return (new FindFileSystemEntryInfo(true, transaction, path, searchPattern, options, typeof(T), pathFormat)).Enumerate<T>();
       }

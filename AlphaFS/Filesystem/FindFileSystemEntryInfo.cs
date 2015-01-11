@@ -44,18 +44,18 @@ namespace Alphaleonis.Win32.Filesystem
          SearchPattern = searchPattern;
          FileSystemObjectType = null;
 
-         ContinueOnException = (options & DirectoryEnumerationOptions.ContinueOnException) == DirectoryEnumerationOptions.ContinueOnException;
+         ContinueOnException = (options & DirectoryEnumerationOptions.ContinueOnException) != 0;
 
-         AsLongPath = (options & DirectoryEnumerationOptions.AsLongPath) == DirectoryEnumerationOptions.AsLongPath;
+         AsLongPath = (options & DirectoryEnumerationOptions.AsLongPath) != 0;
 
          AsString = typeOfT == typeof(string);
          AsFileSystemInfo = !AsString && (typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo));
 
-         FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) == DirectoryEnumerationOptions.BasicSearch && NativeMethods.IsAtLeastWindows7
+         FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 && NativeMethods.IsAtLeastWindows7
             ? NativeMethods.FindExInfoLevels.Basic
             : NativeMethods.FindExInfoLevels.Standard;
 
-         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) == DirectoryEnumerationOptions.LargeCache && NativeMethods.IsAtLeastWindows7
+         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 && NativeMethods.IsAtLeastWindows7
             ? NativeMethods.FindExAdditionalFlags.LargeFetch
             : NativeMethods.FindExAdditionalFlags.None;
 
@@ -67,13 +67,13 @@ namespace Alphaleonis.Win32.Filesystem
             if ((options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.None)
                options |= DirectoryEnumerationOptions.FilesAndFolders;
 
-            FileSystemObjectType = (options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.FilesAndFolders
+            FileSystemObjectType = (options & DirectoryEnumerationOptions.FilesAndFolders) != 0
                ? (bool?)null
-               : (options & DirectoryEnumerationOptions.Folders) == DirectoryEnumerationOptions.Folders;
+               : (options & DirectoryEnumerationOptions.Folders) != 0;
 
-            Recursive = (options & DirectoryEnumerationOptions.Recursive) == DirectoryEnumerationOptions.Recursive;
+            Recursive = (options & DirectoryEnumerationOptions.Recursive) != 0;
 
-            SkipReparsePoints = (options & DirectoryEnumerationOptions.SkipReparsePoints) == DirectoryEnumerationOptions.SkipReparsePoints;
+            SkipReparsePoints = (options & DirectoryEnumerationOptions.SkipReparsePoints) != 0;
          }
       }
 

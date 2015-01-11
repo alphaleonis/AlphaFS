@@ -187,11 +187,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         var options = DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.AsLongPath;
-
-         if (recursive)
-            options |= DirectoryEnumerationOptions.Recursive;
-
+         var options = DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.AsLongPath | (recursive ? DirectoryEnumerationOptions.Recursive : 0);
 
          // Process folders and files.
          foreach (string fso in EnumerateFileSystemEntryInfosInternal<string>(null, pathLp, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath))
