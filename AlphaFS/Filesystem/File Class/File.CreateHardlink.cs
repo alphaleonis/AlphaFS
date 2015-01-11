@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                default:
                   // Throws IOException.
-                  NativeError.ThrowException(lastError, fileNameLp, existingFileName, true);
+                  NativeError.ThrowException(lastError, fileNameLp, existingFileName);
                   break;
             }
          }

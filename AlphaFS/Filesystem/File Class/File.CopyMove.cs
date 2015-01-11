@@ -1177,7 +1177,7 @@ namespace Alphaleonis.Win32.Filesystem
                   case Win32Errors.ERROR_FILE_EXISTS:
                      // File.Copy()
                      // Directory.Copy()
-                     NativeError.ThrowException(lastError, destFileNameLp, true);
+                     NativeError.ThrowException(lastError, destFileNameLp);
                      break;
 
                   default:
@@ -1188,7 +1188,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // Directory.Move()
                      // MSDN: .NET 3.5+: IOException: destDirName already exists. 
                      if (ExistsInternal(true, transaction, destFileNameLp, PathFormat.LongFullPath))
-                        NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destFileNameLp, true);
+                        NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, destFileNameLp);
 
                      if (doMove)
                      {
@@ -1217,7 +1217,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
                         //   Directory exists with the same name as the file.
                         if (!isFolder && ExistsInternal(true, transaction, destFileNameLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, destFileNameLp), true);
+                           NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, destFileNameLp));
 
                         else
                         {
@@ -1240,25 +1240,25 @@ namespace Alphaleonis.Win32.Filesystem
                                  // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationFileName is read-only.
                                  // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                                  // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                                 NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, destFileNameLp, true);
+                                 NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, destFileNameLp);
                               }
 
                               // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                               // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
                               if ((data.FileAttributes & FileAttributes.Hidden) == FileAttributes.Hidden)
-                                 NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.FileHidden, destFileNameLp), true);
+                                 NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.FileHidden, destFileNameLp));
                            }
 
                            // Observation: .NET 3.5+: For files: UnauthorizedAccessException: The caller does not have the required permission.
                            // Observation: .NET 3.5+: For directories: IOException: The caller does not have the required permission.
-                           NativeError.ThrowException(lastError, destFileNameLp, isFolder);
+                           NativeError.ThrowException(lastError, destFileNameLp);
                         }
                      }
 
                      // MSDN: .NET 3.5+: An I/O error has occurred. 
                      // File.Copy(): IOException: destinationFileName exists and overwrite is false.
                      // File.Move(): The destination file already exists or sourceFileName was not found.
-                     NativeError.ThrowException(lastError, fileNameLp, true);
+                     NativeError.ThrowException(lastError, fileNameLp);
                      break;
                }
 

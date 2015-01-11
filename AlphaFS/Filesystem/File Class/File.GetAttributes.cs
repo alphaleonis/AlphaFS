@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
             // Throws IOException.
-            NativeError.ThrowException(dataInitialised, pathLp, true);
+            NativeError.ThrowException(dataInitialised, pathLp);
 
          return (typeof(T) == typeof(FileAttributes)
             ? (T)(object)data.FileAttributes
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      // If we're already returning an error, don't throw another one.
                      if (!error)
-                        NativeError.ThrowException(dataInitialised, pathLp, true);
+                        NativeError.ThrowException(dataInitialised, pathLp);
                   }
                }
             }

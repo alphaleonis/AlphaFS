@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -28,15 +29,18 @@ namespace Alphaleonis.Win32.Filesystem
    [SerializableAttribute]
    public class NotAReparsePointException : System.IO.IOException
    {
+      private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_NOT_A_REPARSE_POINT);
+
       /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
       public NotAReparsePointException()
+         : base(Alphaleonis.Win32.Resources.ENotAReparsePoint, s_errorCode)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
       /// <param name="message">The message.</param>
       public NotAReparsePointException(string message)
-         : base(message)
+         : base(message, s_errorCode)
       {
       }
 

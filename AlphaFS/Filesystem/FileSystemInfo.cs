@@ -256,7 +256,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
+               NativeError.ThrowException(DataInitialised, LongFullName);
 
             return Win32AttributeData.FileAttributes;
          }
@@ -331,7 +331,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
+               NativeError.ThrowException(DataInitialised, LongFullName);
 
             return DateTime.FromFileTimeUtc(Win32AttributeData.CreationTime);
          }
@@ -448,7 +448,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
+               NativeError.ThrowException(DataInitialised, LongFullName);
 
             return DateTime.FromFileTimeUtc(Win32AttributeData.LastAccessTime);
          }
@@ -512,7 +512,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised != 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
+               NativeError.ThrowException(DataInitialised, LongFullName);
 
             return DateTime.FromFileTimeUtc(Win32AttributeData.LastWriteTime);
          }
@@ -575,7 +575,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: IOException: Refresh cannot initialize the data. 
             if (DataInitialised > 0)
-               NativeError.ThrowException(DataInitialised, LongFullName, true);
+               NativeError.ThrowException(DataInitialised, LongFullName);
 
             return _entryInfo;
          }

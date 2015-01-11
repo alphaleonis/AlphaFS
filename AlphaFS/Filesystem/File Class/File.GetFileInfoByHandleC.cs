@@ -21,7 +21,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (!NativeMethods.GetFileInformationByHandle(handle, out info))
             // Throws IOException.
-            NativeError.ThrowException(Marshal.GetLastWin32Error(), true);
+            NativeError.ThrowException(Marshal.GetLastWin32Error());
 
          return new ByHandleFileInfo(info);
       }

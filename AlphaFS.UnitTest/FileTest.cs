@@ -542,7 +542,6 @@ namespace AlphaFS.UnitTest
             using (File.Create(fullPathDestination)) { }
 
             expectedLastError = (int)Win32Errors.ERROR_FILE_EXISTS;
-            expectedException = "System.IO.IOException";
             exception = false;
             try
             {
@@ -555,7 +554,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is IOException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
@@ -599,7 +598,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is IOException)
                {
                   exception = true;
                   Directory.Delete(folderfileName);
@@ -1593,8 +1592,7 @@ namespace AlphaFS.UnitTest
             using (File.Create(fullPathSource)) { }
             using (File.Create(fullPathDestination)) { }
 
-            expectedLastError = (int)Win32Errors.ERROR_ALREADY_EXISTS;
-            expectedException = "System.IO.IOException";
+            expectedLastError = (int)Win32Errors.ERROR_ALREADY_EXISTS;            
             exception = false;
             try
             {
@@ -1609,7 +1607,7 @@ namespace AlphaFS.UnitTest
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
                string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
+               if (ex is IOException)
                {
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));

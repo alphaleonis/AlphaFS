@@ -276,4 +276,16 @@
     <value>Invalid stream name.</value>
     <comment>InvalidStreamName description</comment>
   </data>
+  <data name="ENotAReparsePoint" xml:space="preserve">
+    <value>The file or directory is not a reparse point</value>
+    <comment>ENotAReparsePoint description</comment>
+  </data>
+  <data name="EFileOrDirectoryAlreadyExists" xml:space="preserve">
+    <value>The file or directory already exists.</value>
+    <comment>EFileOrDirectoryAlreadyExists description</comment>
+  </data>
+  <data name="EDeviceNotReady" xml:space="preserve">
+    <value>The device is not ready.</value>
+    <comment>EDeviceNotReady description</comment>
+  </data>
 </root>

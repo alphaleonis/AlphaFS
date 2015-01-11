@@ -202,6 +202,9 @@
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.CreateSubdirectory.cs" />
     <Compile Include="Filesystem\DirectoryInfo Class\DirectoryInfo.Create.cs" />
     <Compile Include="Filesystem\Enumerations\PathFormat.cs" />
+    <Compile Include="Filesystem\Exceptions\AlreadyExistsException.cs" />
+    <Compile Include="Filesystem\Exceptions\DeviceNotReadyException.cs" />
+    <Compile Include="Filesystem\Exceptions\DirectoryNotEmptyException.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
     <Compile Include="Filesystem\File Class\File.CreateSymbolicLink.cs" />

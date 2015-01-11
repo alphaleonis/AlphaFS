@@ -799,7 +799,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
          if (sourcePathLp.Equals(destinationPathLp, StringComparison.OrdinalIgnoreCase))
-            NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPathLp, true);
+            NativeError.ThrowException(Win32Errors.ERROR_SAME_DRIVE, destinationPathLp);
 
 
          // Determine Copy or Move action.
@@ -845,7 +845,7 @@ namespace Alphaleonis.Win32.Filesystem
             // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
             if (((MoveOptions)moveOptions & MoveOptions.CopyAllowed) != MoveOptions.CopyAllowed)
                if (!Path.GetPathRoot(sourcePathLp, false).Equals(Path.GetPathRoot(destinationPathLp, false), StringComparison.OrdinalIgnoreCase))
-                  NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, destinationPathLp, true);
+                  NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, destinationPathLp);
 
 
             // MoveOptions.ReplaceExisting: This value cannot be used if lpNewFileName or lpExistingFileName names a directory.
