@@ -1628,7 +1628,7 @@ namespace AlphaFS.UnitTest
             string folderfileName = null;
 
             expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
-            expectedException = "System.IO.IOException";
+            expectedException = "Alphaleonis.Win32.Filesystem.AlreadyExistsException";
             exception = false;
             try
             {
@@ -1645,7 +1645,7 @@ namespace AlphaFS.UnitTest
                   File.Move(file, folderfileName, MoveOptions.None);
                }
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
@@ -1659,6 +1659,10 @@ namespace AlphaFS.UnitTest
                }
                else
                   Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
