@@ -205,7 +205,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the FileSystemInfo instance.
 
-         FullPath = Path.GetRegularPathInternal(LongFullName, false, false, false, false);
+         FullPath = Path.GetRegularPathInternal(LongFullName, GetFullPathOptions.None);
 
          IsDirectory = isFolder;
          Transaction = transaction;

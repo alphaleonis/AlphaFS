@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (input[0] != Path.StreamSeparatorChar)
             throw new ArgumentException(Alphaleonis.Win32.Resources.InvalidStreamName);
-         
+
          StringBuilder sb = new StringBuilder();
          for (int i = 1; i < input.Length; i++)
          {

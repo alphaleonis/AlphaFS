@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
          set
          {
             LongFullPath = value;
-            _fullPath = Path.GetRegularPathInternal(LongFullPath, false, false, false, false);
+            _fullPath = Path.GetRegularPathInternal(LongFullPath, GetFullPathOptions.None);
          }
       }
 

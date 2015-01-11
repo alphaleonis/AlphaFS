@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       public static bool IsUncPath(string path, bool checkInvalidPathChars)
       {
          Uri uri;
-         return Uri.TryCreate(GetRegularPathInternal(path, false, false, false, checkInvalidPathChars), UriKind.Absolute, out uri) && uri.IsUnc;
+         return Uri.TryCreate(GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0), UriKind.Absolute, out uri) && uri.IsUnc;
       }
 
       #endregion // IsUncPath
@@ -140,20 +140,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string LocalToUncInternal(string localPath, bool asLongPath, bool trimEnd, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
       {
+         var options = GetFullPathOptions.CheckInvalidPathChars |
+                       (asLongPath ? GetFullPathOptions.AsLongPath : 0) |
+                       (trimEnd ? GetFullPathOptions.TrimEnd : 0) |
+                       (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) |
+                       (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0);
+
          localPath = (localPath[0] == CurrentDirectoryPrefixChar) || !IsPathRooted(localPath, false)
-            ? GetFullPathInternal(null, localPath,
-
-               (asLongPath ? GetFullPathOptions.AsLongPath : 0) |
-
-               (trimEnd ? GetFullPathOptions.TrimEnd : 0) |
-
-               (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) |
-
-               (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) |
-
-               GetFullPathOptions.CheckInvalidPathChars)
-
-            : GetRegularPathInternal(localPath, trimEnd, addTrailingDirectorySeparator, removeTrailingDirectorySeparator, true);
+            ? GetFullPathInternal(null, localPath, options)
+            : GetRegularPathInternal(localPath, options);
 
          if (IsUncPath(localPath, false))
             return localPath;

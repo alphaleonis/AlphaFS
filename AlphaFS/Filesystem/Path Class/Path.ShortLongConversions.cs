@@ -66,14 +66,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetRegularPath
 
-      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: \\?\C:\Temp\file.txt to C:\Temp\file.txt or: \\?\UNC\Server\share\file.txt to \\Server\share\file.txt.</summary>
+      /// <summary>[AlphaFS] Gets the regular path from long prefixed one. i.e.: "\\?\C:\Temp\file.txt" to C:\Temp\file.txt" or: "\\?\UNC\Server\share\file.txt" to "\\Server\share\file.txt".</summary>
       /// <returns>Regular form path string.</returns>
       /// <remarks>This method does not handle paths with volume names, eg. \\?\Volume{GUID}\Folder\file.txt.</remarks>
       /// <param name="path">The path.</param>
       [SecurityCritical]
       public static string GetRegularPath(string path)
       {
-         return GetRegularPathInternal(path, false, false, false, true);
+         return GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars);
       }
 
       #endregion // GetRegularPath
@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Determines whether the specified path starts with a <see cref="LongPathPrefix"/> or <see cref="LongPathUncPrefix"/>.</summary>
       /// <returns>Returns <see langword="true"/> if the specified path has a long path (UNC) prefix, <see langword="false"/> otherwise.</returns>
       /// <param name="path">The path to the file or directory.</param>
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
       public static bool IsLongPath(string path)
       {
@@ -119,11 +119,14 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsLongPath
 
-      #region Internals
+      #region Internals Methods
 
       /// <summary>[AlphaFS] Unified method GetLongPathInternal() to get a long path (Unicode path) of the specified <paramref name="path"/>.</summary>
       /// <returns>Returns the <paramref name="path"/> as a long path, such as "\\?\C:\MyFile.txt".</returns>
-      /// <remarks><para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para></remarks>
+      /// <remarks>
+      ///   <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
+      ///   MSDN: String.TrimEnd Method notes to Callers: http://msdn.microsoft.com/en-us/library/system.string.trimend%28v=vs.110%29.aspx
+      /// </remarks>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <param name="path">The path to the file or directory, this may also be an UNC path.</param>
@@ -131,36 +134,28 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetLongPathInternal(string path, GetFullPathOptions options)
       {
-         if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
-            CheckInvalidPathChars(path, false);
-         else
-         {
-            if (path == null)
-               throw new ArgumentNullException("path");
+         if (path == null)
+            throw new ArgumentNullException("path");
 
-            if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
+         if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
+            throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
+
+         if (options != GetFullPathOptions.None)
+         {
+            if ((options & GetFullPathOptions.TrimEnd) != 0)
+               path = path.TrimEnd();
+
+            if ((options & GetFullPathOptions.AddTrailingDirectorySeparator) != 0)
+               path = AddTrailingDirectorySeparator(path, false);
+
+            if ((options & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0)
+               path = RemoveTrailingDirectorySeparator(path, false);
+
+            if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
+               CheckInvalidPathChars(path, false);
          }
 
-         // MSDN: Notes to Callers
-         // http://msdn.microsoft.com/en-us/library/system.string.trimend%28v=vs.110%29.aspx
-         //
-         // The .NET Framework 3.5 SP1 and earlier versions maintains an internal list of white-space characters that this method trims if trimChars is null or an empty array.
-         // Starting with the .NET Framework 4, if trimChars is null or an empty array, the method trims all Unicode white-space characters
-         // (that is, characters that produce a true return value when they are passed to the Char.IsWhiteSpace method). Because of this change,
-         // the Trim() method in the .NET Framework 3.5 SP1 and earlier versions removes two characters, ZERO WIDTH SPACE (U+200B) and ZERO WIDTH NO-BREAK SPACE (U+FEFF),
-         // that the Trim() method in the .NET Framework 4 and later versions does not remove. In addition, the Trim() method in the .NET Framework 3.5 SP1 and earlier versions
-         // does not trim three Unicode white-space characters: MONGOLIAN VOWEL SEPARATOR (U+180E), NARROW NO-BREAK SPACE (U+202F), and MEDIUM MATHEMATICAL SPACE (U+205F).
-
-         if ((options & GetFullPathOptions.TrimEnd) != 0)
-            path = path.TrimEnd();
-
-         if ((options & GetFullPathOptions.AddTrailingDirectorySeparator) != 0)
-            path = AddTrailingDirectorySeparator(path, false);
-
-         if ((options & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0)
-            path = RemoveTrailingDirectorySeparator(path, false);
-
+         
          if (path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) ||
              path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
             return path;
@@ -171,6 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
                ? LongPathUncPrefix + path.Substring(UncPrefix.Length)
                : LongPathPrefix + path
             : path;
+         // 2015-01-11 Issue #50: Path.GetLongPath() does not prefix on "C:", should it?
       }
 
       /// <summary>[AlphaFS] Unified method GetLongShort83PathInternal() to retrieve the short path form, or the regular long form of the specified <paramref name="path"/>.</summary>
@@ -188,7 +184,7 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = GetFullPathInternal(transaction, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
          var buffer = new StringBuilder();
-         uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint)path.Length;
+         uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint) path.Length;
 
          while (actualLength > buffer.Capacity)
          {
@@ -215,7 +211,7 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException(pathLp);
          }
 
-         return GetRegularPathInternal(buffer.ToString(), false, false, false, false);
+         return GetRegularPathInternal(buffer.ToString(), GetFullPathOptions.None);
       }
 
       /// <summary>[AlphaFS] Unified method GetRegularPathInternal() to get the regular path from a long path.</summary>
@@ -223,57 +219,45 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Returns the regular form of a long <paramref name="path"/>.</para>
       ///   <para>For example: "\\?\C:\Temp\file.txt" to: "C:\Temp\file.txt", or: "\\?\UNC\Server\share\file.txt" to: "\\Server\share\file.txt".</para>
       /// </returns>
+      /// <remarks>
+      ///   MSDN: String.TrimEnd Method notes to Callers: http://msdn.microsoft.com/en-us/library/system.string.trimend%28v=vs.110%29.aspx
+      /// </remarks>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <param name="path">The path.</param>
-      /// <param name="trimEnd"><see langword="true"/> removes trailing whitespace from <paramref name="path"/>.</param>
-      /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="path"/>, when absent.</param>
-      /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="path"/>, when present.</param>
-      /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
+      /// <param name="options">Options for controlling the operation.</param>
       [SecurityCritical]
-      internal static string GetRegularPathInternal(string path, bool trimEnd, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator, bool checkInvalidPathChars)
+      internal static string GetRegularPathInternal(string path, GetFullPathOptions options)
       {
-         if (checkInvalidPathChars)
-            CheckInvalidPathChars(path, false);
-         else
-         {
-            if (path == null)
-               throw new ArgumentNullException("path");
+         if (path == null)
+            throw new ArgumentNullException("path");
 
-            if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
-               throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
+         if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
+            throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
+
+         if (options != GetFullPathOptions.None)
+         {
+            if ((options & GetFullPathOptions.TrimEnd) != 0)
+               path = path.TrimEnd();
+
+            if ((options & GetFullPathOptions.AddTrailingDirectorySeparator) != 0)
+               path = AddTrailingDirectorySeparator(path, false);
+
+            if ((options & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0)
+               path = RemoveTrailingDirectorySeparator(path, false);
+
+            if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
+               CheckInvalidPathChars(path, false);
          }
 
-         // MSDN: Notes to Callers
-         // http://msdn.microsoft.com/en-us/library/system.string.trimend%28v=vs.110%29.aspx
-         //
-         // The .NET Framework 3.5 SP1 and earlier versions maintains an internal list of white-space characters that this method trims if trimChars is null or an empty array.
-         // Starting with the .NET Framework 4, if trimChars is null or an empty array, the method trims all Unicode white-space characters
-         // (that is, characters that produce a true return value when they are passed to the Char.IsWhiteSpace method). Because of this change,
-         // the Trim() method in the .NET Framework 3.5 SP1 and earlier versions removes two characters, ZERO WIDTH SPACE (U+200B) and ZERO WIDTH NO-BREAK SPACE (U+FEFF),
-         // that the Trim() method in the .NET Framework 4 and later versions does not remove. In addition, the Trim() method in the .NET Framework 3.5 SP1 and earlier versions
-         // does not trim three Unicode white-space characters: MONGOLIAN VOWEL SEPARATOR (U+180E), NARROW NO-BREAK SPACE (U+202F), and MEDIUM MATHEMATICAL SPACE (U+205F).
-
-         if (trimEnd) path = path.TrimEnd();
-
-         if (removeTrailingDirectorySeparator)
-            path = path.TrimEnd(DirectorySeparatorChar, AltDirectorySeparatorChar);
-
-         if (addTrailingDirectorySeparator)
-            path = AddTrailingDirectorySeparator(path, false);
-
-
+         
          if (!path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase))
             return path;
 
-
-         if (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase))
-            return UncPrefix + path.Substring(LongPathUncPrefix.Length);
-
-
-         return path.Substring(LongPathPrefix.Length);
+         return path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase)
+            ? UncPrefix + path.Substring(LongPathUncPrefix.Length)
+            : path.Substring(LongPathPrefix.Length);
       }
-
 
       /// <summary>Gets the path as a long full path.</summary>
       /// <returns>The path as an extended length path.</returns>
@@ -303,7 +287,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException("Invalid value for " + typeof(PathFormat).Name + ": " + pathFormat);
          }
       }
-      #endregion
 
+      #endregion // Internals Methods
    }
 }

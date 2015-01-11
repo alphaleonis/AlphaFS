@@ -118,24 +118,28 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetFullPathInternal(KernelTransaction transaction, string path, GetFullPathOptions options)
       {
-         if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
+         if (options != GetFullPathOptions.None)
          {
-            bool checkAdditional = (options & GetFullPathOptions.CheckAdditional) != 0;
+            if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
+            {
+               bool checkAdditional = (options & GetFullPathOptions.CheckAdditional) != 0;
 
-            CheckInvalidPathChars(path, checkAdditional);
+               CheckInvalidPathChars(path, checkAdditional);
 
-            // Prevent duplicate checks.
-            options &= ~GetFullPathOptions.CheckInvalidPathChars;
+               // Prevent duplicate checks.
+               options &= ~GetFullPathOptions.CheckInvalidPathChars;
 
-            if (checkAdditional)
-               options &= ~GetFullPathOptions.CheckAdditional;
+               if (checkAdditional)
+                  options &= ~GetFullPathOptions.CheckAdditional;
+            }
+
+            // Do not remove trailing directory separator when path points to a drive like: "C:\"
+            // Doing so makes path point to the current directory.
+
+            if (path == null || path.Length <= 3 || (!path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) && path[1] != VolumeSeparatorChar))
+               options &= ~GetFullPathOptions.RemoveTrailingDirectorySeparator;
          }
 
-         // Do not remove DirectorySeparator when path points to a drive like: "C:\"
-         // In this case, removing DirectorySeparator will point to the current directory.
-
-         if (path == null || path.Length <= 3 || (!path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) && path[1] != VolumeSeparatorChar))
-            options &= ~GetFullPathOptions.RemoveTrailingDirectorySeparator;
 
          string pathLp = GetLongPathInternal(path, options);
 
@@ -176,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             return (options & GetFullPathOptions.AsLongPath) != 0
                ? GetLongPathInternal(buffer.ToString(), GetFullPathOptions.None)
-               : GetRegularPathInternal(buffer.ToString(), false, false, false, false);
+               : GetRegularPathInternal(buffer.ToString(), GetFullPathOptions.None);
          }
       }
 
@@ -187,7 +191,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." which is the current directory.
          if (path != null)
          {
-            string tackle = GetRegularPathInternal(path, false, false, false, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
+            string tackle = GetRegularPathInternal(path, GetFullPathOptions.None).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
 
             if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);

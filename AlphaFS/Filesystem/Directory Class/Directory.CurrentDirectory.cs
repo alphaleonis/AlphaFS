@@ -54,14 +54,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
       /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
       /// </remarks>
-      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
       public static void SetCurrentDirectory(string path)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathRp = Path.GetRegularPathInternal(path, false, false, false, true);
+         string pathRp = Path.GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars);
 
          // System.IO SetCurrentDirectory() does not handle long paths.
          System.IO.Directory.SetCurrentDirectory(path.Length > 255 ? Path.GetShort83Path(pathRp) : pathRp);

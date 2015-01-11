@@ -441,7 +441,7 @@ namespace Alphaleonis.Win32.Filesystem
       private void CopyToMoveToInternalRefresh(string destinationPath, string destinationPathLp)
       {
          LongFullName = destinationPathLp;
-         FullPath = Path.GetRegularPathInternal(destinationPathLp, false, false, false, false);
+         FullPath = Path.GetRegularPathInternal(destinationPathLp, GetFullPathOptions.None);
 
          OriginalPath = destinationPath;
          DisplayPath = OriginalPath;
