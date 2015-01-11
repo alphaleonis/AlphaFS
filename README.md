@@ -1,18 +1,19 @@
 # AlphaFS
 
 AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes.
-Download the latest development build
 
 ## Introduction
 
 The file system support in .NET is pretty good for most uses. However there are a few shortcomings, which this library tries to alleviate. The most notable deficiency of the standard .NET System.IO is the lack of support of advanced NTFS features, most notably extended length path support (eg. file/directory paths longer than 260 characters).
-Feature Highlights
+
+### Feature Highlights
 
 * Support for extended length paths (longer than 260 characters)
 * Creating Hardlinks
 * Accessing hidden volumes
 * Enumeration of volumes
 * Transactional file operations
+* Support for NTFS Alternate Data Streams
 * ...and much more. 
 
 ## What does AlphaFS provide?
