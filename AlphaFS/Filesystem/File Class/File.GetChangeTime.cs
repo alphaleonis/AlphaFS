@@ -210,33 +210,14 @@ namespace Alphaleonis.Win32.Filesystem
          {
             NativeMethods.IsValidHandle(safeHandle);
 
-            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                NativeMethods.IsValidHandle(safeBuffer);
 
                if (!NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, safeBuffer, NativeMethods.DefaultFileBufferSize))
                   NativeError.ThrowException(Marshal.GetLastWin32Error());
 
-
-               // CA2001:AvoidCallingProblematicMethods
-
-               IntPtr buffer = IntPtr.Zero;
-               bool successRef = false;
-               safeBuffer.DangerousAddRef(ref successRef);
-
-               // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
-               if (successRef)
-                  buffer = safeBuffer.DangerousGetHandle();
-
-               safeBuffer.DangerousRelease();
-
-               if (buffer == IntPtr.Zero)
-                  NativeError.ThrowException(Resources.HandleDangerousRef);
-
-               // CA2001:AvoidCallingProblematicMethods
-
-
-               NativeMethods.FileTime changeTime = Utils.MarshalPtrToStructure<NativeMethods.FileBasicInfo>(0, buffer).ChangeTime;
+               NativeMethods.FileTime changeTime = safeBuffer.PtrToStructure<NativeMethods.FileBasicInfo>().ChangeTime;
 
                return getUtc
                   ? DateTime.FromFileTimeUtc(changeTime)

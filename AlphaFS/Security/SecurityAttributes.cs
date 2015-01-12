@@ -37,15 +37,11 @@ namespace Alphaleonis.Win32.Security
 
          private readonly SafeGlobalMemoryBufferHandle lpSecurityDescriptor;
 
-         [MarshalAs(UnmanagedType.Bool)]
-         private bool bInheritHandle;
-
          public SecurityAttributes(ObjectSecurity securityDescriptor)
          {
-            SafeGlobalMemoryBufferHandle safeBuffer = ToUnmanagedSecurityAttributes(securityDescriptor);
+            var safeBuffer = ToUnmanagedSecurityAttributes(securityDescriptor);
             nLength = safeBuffer.Capacity;
             lpSecurityDescriptor = safeBuffer;
-            bInheritHandle = false;
          }
 
          /// <summary>

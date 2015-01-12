@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         using (SafeGlobalMemoryBufferHandle buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
+         using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
          {
             path = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
             using (var handle = transaction == null 
