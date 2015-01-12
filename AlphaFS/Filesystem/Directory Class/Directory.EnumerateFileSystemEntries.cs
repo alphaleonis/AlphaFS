@@ -22,7 +22,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Security;
 using SearchOption = System.IO.SearchOption;
 
@@ -72,12 +71,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.Folders;
+         var options = DirectoryEnumerationOptions.Folders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, options, PathFormat.RelativePath);
       }
 
       #endregion
@@ -125,12 +121,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDirectories(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.Folders;
+         var options = DirectoryEnumerationOptions.Folders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, options, PathFormat.RelativePath);
       }
 
 
@@ -180,12 +173,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.Files;
+         var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, options, PathFormat.RelativePath);
       }
 
       #endregion
@@ -233,12 +223,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.Files;
+         var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, options, PathFormat.RelativePath);
       }
 
       #endregion // Transactional
@@ -287,12 +274,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, System.IO.SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.FilesAndFolders;
+         var options = DirectoryEnumerationOptions.FilesAndFolders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, options, PathFormat.RelativePath);
       }
 
       #endregion
@@ -340,12 +324,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.FilesAndFolders;
+         var options = DirectoryEnumerationOptions.FilesAndFolders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, options, PathFormat.RelativePath);
       }
 
       #endregion // Transactional
@@ -454,7 +435,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
       ///   <para>characters, but doesn't support regular expressions.</para>
       /// </param>
-      /// <param name="directoryEnumerationOptions">
+      /// <param name="options">
       ///   <see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be
       ///   enumerated.
       /// </param>
@@ -466,9 +447,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentNullException">.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, PathFormat pathFormat)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosInternal<T>(null, path, searchPattern, directoryEnumerationOptions, pathFormat);
+         return EnumerateFileSystemEntryInfosInternal<T>(null, path, searchPattern, options, pathFormat);
       }
 
 
@@ -584,7 +565,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see cref="Path.WildcardQuestion"/>)
       ///   characters, but doesn't support regular expressions.
       /// </param>
-      /// <param name="directoryEnumerationOptions">
+      /// <param name="options">
       ///   <see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be
       ///   enumerated.
       /// </param>
@@ -594,9 +575,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions options)
       {
-         return EnumerateFileSystemEntryInfosInternal<T>(null, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<T>(null, path, searchPattern, options, PathFormat.RelativePath);
       }
       #endregion
 
@@ -719,13 +700,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
       /// <para>characters, but does not support regular expressions.</para>
       /// </param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, PathFormat pathFormat)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosInternal<T>(transaction, path, searchPattern, directoryEnumerationOptions, pathFormat);
+         return EnumerateFileSystemEntryInfosInternal<T>(transaction, path, searchPattern, options, pathFormat);
       }
 
 
@@ -843,12 +824,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
       /// <para>characters, but does not support regular expressions.</para>
       /// </param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
-      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions)
+      public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options)
       {
-         return EnumerateFileSystemEntryInfosInternal<T>(transaction, path, searchPattern, directoryEnumerationOptions, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<T>(transaction, path, searchPattern, options, PathFormat.RelativePath);
       }
 
       #endregion // Transactional
@@ -871,20 +852,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
       /// <para>characters, but does not support regular expressions.</para>
       /// </param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static IEnumerable<T> EnumerateFileSystemEntryInfosInternal<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions, PathFormat pathFormat)
+      internal static IEnumerable<T> EnumerateFileSystemEntryInfosInternal<T>(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         // Enable BasicSearch by default, when absent.
-         if ((directoryEnumerationOptions & DirectoryEnumerationOptions.BasicSearch) != DirectoryEnumerationOptions.BasicSearch)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.BasicSearch;
+         // Enable BasicSearch and LargeCache by default.
+         options |= DirectoryEnumerationOptions.BasicSearch | DirectoryEnumerationOptions.LargeCache;
 
-         // Enable LargeCache by default, when absent.
-         if ((directoryEnumerationOptions & DirectoryEnumerationOptions.LargeCache) != DirectoryEnumerationOptions.LargeCache)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.LargeCache;
-
-         return (new FindFileSystemEntryInfo(true, transaction, path, searchPattern, directoryEnumerationOptions, typeof(T), pathFormat)).Enumerate<T>();
+         return (new FindFileSystemEntryInfo(true, transaction, path, searchPattern, options, typeof(T), pathFormat)).Enumerate<T>();
       }
 
       #endregion // EnumerateFileSystemEntryInfosInternal

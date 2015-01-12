@@ -95,12 +95,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileSystemInfo[] GetFileSystemInfos(string searchPattern, SearchOption searchOption)
       {
-         var directoryEnumerationOptions = DirectoryEnumerationOptions.FilesAndFolders;
+         var options = DirectoryEnumerationOptions.FilesAndFolders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
-         if (searchOption == SearchOption.AllDirectories)
-            directoryEnumerationOptions |= DirectoryEnumerationOptions.Recursive;
-
-         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, PathFormat.LongFullPath).ToArray();
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath).ToArray();
       }
 
       #endregion // .NET

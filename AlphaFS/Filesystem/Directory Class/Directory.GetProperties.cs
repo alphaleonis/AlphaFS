@@ -61,13 +61,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="path">The target directory.</param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
-      public static Dictionary<string, long> GetProperties(string path, DirectoryEnumerationOptions directoryEnumerationOptions, PathFormat pathFormat)
+      public static Dictionary<string, long> GetProperties(string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return GetPropertiesInternal(null, path, directoryEnumerationOptions, pathFormat);
+         return GetPropertiesInternal(null, path, options, pathFormat);
       }
 
 
@@ -98,12 +98,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="path">The target directory.</param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
-      public static Dictionary<string, long> GetProperties(string path, DirectoryEnumerationOptions directoryEnumerationOptions)
+      public static Dictionary<string, long> GetProperties(string path, DirectoryEnumerationOptions options)
       {
-         return GetPropertiesInternal(null, path, directoryEnumerationOptions, PathFormat.RelativePath);
+         return GetPropertiesInternal(null, path, options, PathFormat.RelativePath);
       }
       
       #endregion
@@ -140,13 +140,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
-      public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions, PathFormat pathFormat)
+      public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return GetPropertiesInternal(transaction, path, directoryEnumerationOptions, pathFormat);
+         return GetPropertiesInternal(transaction, path, options, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
@@ -178,12 +178,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
-      public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions)
+      public static Dictionary<string, long> GetProperties(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
       {
-         return GetPropertiesInternal(transaction, path, directoryEnumerationOptions, PathFormat.RelativePath);
+         return GetPropertiesInternal(transaction, path, options, PathFormat.RelativePath);
       }
 
       #endregion // Transactional
@@ -204,11 +204,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
       [SecurityCritical]
-      internal static Dictionary<string, long> GetPropertiesInternal(KernelTransaction transaction, string path, DirectoryEnumerationOptions directoryEnumerationOptions, PathFormat pathFormat)
+      internal static Dictionary<string, long> GetPropertiesInternal(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
          const string propFile = "File";
          const string propTotal = "Total";
@@ -221,7 +221,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-         foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, directoryEnumerationOptions, PathFormat.LongFullPath))
+         foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath))
          {
             total++;
 

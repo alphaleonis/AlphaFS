@@ -29,13 +29,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>The counted number of file system objects.</returns>
       /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
       [SecurityCritical]
-      public long CountFileSystemObjects(DirectoryEnumerationOptions directoryEnumerationOptions)
+      public long CountFileSystemObjects(DirectoryEnumerationOptions options)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<string>(Transaction, LongFullName, Path.WildcardStarMatchAll, directoryEnumerationOptions, PathFormat.LongFullPath).Count();
+         return Directory.EnumerateFileSystemEntryInfosInternal<string>(Transaction, LongFullName, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath).Count();
       }
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
@@ -44,13 +44,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
       ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
-      /// <param name="directoryEnumerationOptions"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <returns>The counted number of file system objects.</returns>
       /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
       [SecurityCritical]
-      public long CountFileSystemObjects(string searchPattern, DirectoryEnumerationOptions directoryEnumerationOptions)
+      public long CountFileSystemObjects(string searchPattern, DirectoryEnumerationOptions options)
       {
-         return Directory.EnumerateFileSystemEntryInfosInternal<string>(Transaction, LongFullName, searchPattern, directoryEnumerationOptions, PathFormat.LongFullPath).Count();
+         return Directory.EnumerateFileSystemEntryInfosInternal<string>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath).Count();
       }
 
       #endregion // AlphaFS
