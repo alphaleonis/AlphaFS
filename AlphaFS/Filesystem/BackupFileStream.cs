@@ -22,10 +22,8 @@
 using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
@@ -201,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("handle", "handle is null.");
 
          if (handle.IsInvalid)
-            throw new ArgumentException(Alphaleonis.Win32.Resources.HandleInvalid);
+            throw new ArgumentException(Resources.HandleInvalid);
 
          _safeFileHandle = handle;
          _canRead = (access & FileSystemRights.ReadData) != 0;
@@ -625,7 +623,7 @@ namespace Alphaleonis.Win32.Filesystem
                return null;
 
             if (numberOfBytesRead < Marshal.SizeOf(typeof(NativeMethods.WIN32_STREAM_ID)))
-               throw new System.IO.IOException(Alphaleonis.Win32.Resources.IncompleteHeaderRead);
+               throw new IOException(Resources.IncompleteHeaderRead);
 
             NativeMethods.WIN32_STREAM_ID streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>();
 

@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System.IO;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem

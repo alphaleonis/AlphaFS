@@ -19,8 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods

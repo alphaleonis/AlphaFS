@@ -20,8 +20,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -142,7 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
             return String.Empty;
 
          if (input[0] != Path.StreamSeparatorChar)
-            throw new ArgumentException(Alphaleonis.Win32.Resources.InvalidStreamName);
+            throw new ArgumentException(Resources.InvalidStreamName);
 
          StringBuilder sb = new StringBuilder();
          for (int i = 1; i < input.Length; i++)

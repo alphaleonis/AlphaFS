@@ -19,8 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System.Security;
-
 namespace Alphaleonis.Win32.Filesystem
 {
    partial class DirectoryInfo
