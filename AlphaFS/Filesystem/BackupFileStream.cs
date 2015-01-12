@@ -376,7 +376,6 @@ namespace Alphaleonis.Win32.Filesystem
             uint numberOfBytesRead;
 
             if (!NativeMethods.BackupRead(SafeFileHandle, safeBuffer, (uint)safeBuffer.Capacity, out numberOfBytesRead, false, processSecurity, ref m_context))
-               // Throws IOException.
                NativeError.ThrowException(Marshal.GetLastWin32Error());
 
             // See File.GetAccessControlInternal(): .CopyTo() does not work there?
@@ -444,7 +443,6 @@ namespace Alphaleonis.Win32.Filesystem
             uint bytesWritten;
 
             if (!NativeMethods.BackupWrite(SafeFileHandle, safeBuffer, (uint)safeBuffer.Capacity, out bytesWritten, false, processSecurity, out m_context))
-               // Throws IOException.
                NativeError.ThrowException(Marshal.GetLastWin32Error());
          }
       }
@@ -498,7 +496,6 @@ namespace Alphaleonis.Win32.Filesystem
 
             // Error Code 25 indicates a seek error, we just skip that here.
             if (lastError != Win32Errors.NO_ERROR && lastError != Win32Errors.ERROR_SEEK)
-               // Throws IOException.
                NativeError.ThrowException(lastError);
          }
 
@@ -528,7 +525,6 @@ namespace Alphaleonis.Win32.Filesystem
          try
          {
             if (lastError != Win32Errors.ERROR_SUCCESS)
-               // Throws IOException.
                NativeError.ThrowException((int)lastError);
 
             if (pSecurityDescriptor.IsInvalid)
@@ -579,7 +575,6 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentOutOfRangeException("length", length, Resources.BackupFileStream_Unlock_Backup_FileStream_Lock_Length_must_not_be_negative_);
 
          if (!NativeMethods.LockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
-            // Throws IOException.
             NativeError.ThrowException(Marshal.GetLastWin32Error());
       }
 
@@ -599,7 +594,6 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentOutOfRangeException("length", length, Resources.BackupFileStream_Unlock_Backup_FileStream_Lock_Length_must_not_be_negative_);
 
          if (!NativeMethods.UnlockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
-            // Throws IOException.
             NativeError.ThrowException(Marshal.GetLastWin32Error());
       }
 

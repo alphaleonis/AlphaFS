@@ -204,7 +204,6 @@ namespace Alphaleonis.Win32.Filesystem
             // The specified file is in use.
             // There is an open handle on the file, and the operating system is Windows XP or earlier.
 
-            // Throws IOException.
             NativeError.ThrowException(lastError, pathLp);
          }
       }

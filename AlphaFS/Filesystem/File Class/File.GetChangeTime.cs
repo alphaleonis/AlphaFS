@@ -215,7 +215,6 @@ namespace Alphaleonis.Win32.Filesystem
                NativeMethods.IsValidHandle(safeBuffer);
 
                if (!NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, safeBuffer, NativeMethods.DefaultFileBufferSize))
-                  // Throws IOException.
                   NativeError.ThrowException(Marshal.GetLastWin32Error());
 
 

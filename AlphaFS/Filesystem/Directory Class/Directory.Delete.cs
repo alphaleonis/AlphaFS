@@ -378,7 +378,6 @@ namespace Alphaleonis.Win32.Filesystem
             // The directory contains a read-only file.
             // The directory is being used by another process.
 
-            // Throws IOException.
             NativeError.ThrowException(lastError, pathLp);
          }
 

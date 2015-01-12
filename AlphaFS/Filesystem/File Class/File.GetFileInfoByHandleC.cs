@@ -38,7 +38,6 @@ namespace Alphaleonis.Win32.Filesystem
          NativeMethods.ByHandleFileInfo info;
 
          if (!NativeMethods.GetFileInformationByHandle(handle, out info))
-            // Throws IOException.
             NativeError.ThrowException(Marshal.GetLastWin32Error());
 
          return new ByHandleFileInfo(info);

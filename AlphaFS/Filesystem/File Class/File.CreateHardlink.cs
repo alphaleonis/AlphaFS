@@ -125,7 +125,6 @@ namespace Alphaleonis.Win32.Filesystem
                   throw new NotSupportedException(Resources.HardLinksOnNonNTFSPartitionsIsNotSupported);
 
                default:
-                  // Throws IOException.
                   NativeError.ThrowException(lastError, fileNameLp, existingFileName);
                   break;
             }
