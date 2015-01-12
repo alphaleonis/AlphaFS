@@ -34,7 +34,7 @@
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <RootNamespaceTitle>API Reference</RootNamespaceTitle>
     <HelpTitle>AlphaFS 1.6 Documentation</HelpTitle>
-    <CopyrightText>Copyright %28c%29 2008-2015 Peter Palotas, Alexandr Normuradov, Jeffrey Jangli</CopyrightText>
+    <CopyrightText>Copyright %28c%29 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</CopyrightText>
     <PresentationStyle>VS2013</PresentationStyle>
     <SyntaxFilters>Standard</SyntaxFilters>
     <HelpFileVersion>1.0.0.9300</HelpFileVersion>
