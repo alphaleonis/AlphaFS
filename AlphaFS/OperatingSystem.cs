@@ -31,54 +31,49 @@ namespace Alphaleonis.Win32
    {
       #region OperatingSystem Name Enum
 
-      /// <summary>
-      ///   A set of flags that describe the named Windows versions.      
-      /// </summary>
-      /// <remarks>
-      ///   <para>The values of the enumeration are ordered. A a later released OS version</para>
-      ///   <para>has a higher number, so comparisons between named versions are meaningful.</para>
-      /// </remarks>
+      /// <summary>A set of flags that describe the named Windows versions.</summary>
+      /// <remarks>The values of the enumeration are ordered. A later released operating system version has a higher number, so comparisons between named versions are meaningful.</remarks>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Os")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Os")]
       public enum EnumOsName
       {
-         /// <summary>(-1) A Windows version earlier than Windows 2000.</summary>
+         /// <summary>A Windows version earlier than Windows 2000.</summary>
          Earlier = -1,
 
-         /// <summary>(0) Windows 2000 (Server or Professional).</summary>
+         /// <summary>Windows 2000 (Server or Professional).</summary>
          Windows2000 = 0,
 
-         /// <summary>(1) Windows XP.</summary>
+         /// <summary>Windows XP.</summary>
          WindowsXP = 1,
 
-         /// <summary>(2) Windows Server 2003.</summary>
+         /// <summary>Windows Server 2003.</summary>
          WindowsServer2003 = 2,
 
-         /// <summary>(3) Windows Vista.</summary>
+         /// <summary>Windows Vista.</summary>
          WindowsVista = 3,
 
-         /// <summary>(4) Windows Server 2008.</summary>
+         /// <summary>Windows Server 2008.</summary>
          WindowsServer2008 = 4,
 
-         /// <summary>(5) Windows 7.</summary>
+         /// <summary>Windows 7.</summary>
          Windows7 = 5,
 
-         /// <summary>(6) Windows Server 2008 R2.</summary>
+         /// <summary>Windows Server 2008 R2.</summary>
          WindowsServer2008R2 = 6,
 
-         /// <summary>(7) Windows 8.</summary>
+         /// <summary>Windows 8.</summary>
          Windows8 = 7,
 
-         /// <summary>(8) Windows Server 2012.</summary>
+         /// <summary>Windows Server 2012.</summary>
          WindowsServer2012 = 8,
 
-         /// <summary>(9) Windows 8.1.</summary>
+         /// <summary>Windows 8.1.</summary>
          Windows81 = 9,
 
-         /// <summary>(10) Windows Server 2012 R2.</summary>
+         /// <summary>Windows Server 2012 R2.</summary>
          WindowsServer2012R2 = 10,
 
-         /// <summary>(65535) A later version of Windows than currently installed.</summary>
+         /// <summary>A later version of Windows than currently installed.</summary>
          Later = 65535
       }
 
@@ -86,31 +81,29 @@ namespace Alphaleonis.Win32
 
       #region ProcessorArchitecture Name enum
 
-      /// <summary>A set of flags used by class <see cref="OperatingSystem"/> to indicate the current processor
-      /// <para> architecture for which the OS is targeted and running.</para>
-      /// </summary>
+      /// <summary>A set of flags to indicate the current processor architecture for which the operating system is targeted and running.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Pa")]
       [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
       public enum EnumProcessorArchitecture : ushort
       {
-         /// <summary>(0) PROCESSOR_ARCHITECTURE_INTEL
+         /// <summary>PROCESSOR_ARCHITECTURE_INTEL
          /// <para>The system is running a 32-bit version of Windows.</para>
          /// </summary>
          X86 = 0,
 
-         /// <summary>(6) PROCESSOR_ARCHITECTURE_IA64
+         /// <summary>PROCESSOR_ARCHITECTURE_IA64
          /// <para>The system is running on a Itanium processor.</para>
          /// </summary>
          [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Ia")]
          [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Ia")]
          IA64 = 6,
 
-         /// <summary>(9) PROCESSOR_ARCHITECTURE_AMD64
+         /// <summary>PROCESSOR_ARCHITECTURE_AMD64
          /// <para>The system is running a 64-bit version of Windows.</para>
          /// </summary>
          X64 = 9,
 
-         /// <summary>(65535) PROCESSOR_ARCHITECTURE_UNKNOWN
+         /// <summary>PROCESSOR_ARCHITECTURE_UNKNOWN
          /// <para>Unknown architecture.</para>
          /// </summary>
          Unknown = 65535
@@ -125,8 +118,8 @@ namespace Alphaleonis.Win32
 
       private static bool _isServer;
 
-      /// <summary>Gets a value indicating whether the OS is a server OS.</summary>
-      /// <value><see langword="true"/> if the current OS is a server OS; otherwise, <see langword="false"/>.</value>
+      /// <summary>Gets a value indicating whether the operating system is a server operating system.</summary>
+      /// <value><see langword="true"/> if the current operating system is a server operating system; otherwise, <see langword="false"/>.</value>
       public static bool IsServer
       {
          get
@@ -143,8 +136,7 @@ namespace Alphaleonis.Win32
 
       private static bool? _isWow64Process;
 
-      /// <summary>Determines whether the current process is running under WOW64.      
-      /// </summary>
+      /// <summary>Gets a value indicating whether the current process is running under WOW64.</summary>
       /// <value><see langword="true"/> if the current process is running under WOW64; otherwise, <see langword="false"/>.</value>
       public static bool IsWow64Process
       {
@@ -173,7 +165,8 @@ namespace Alphaleonis.Win32
 
       #region OSVersion
 
-      /// <summary>Gets the numeric version of the OS. This is the same as returned by <see cref="System.Environment.OSVersion"/>.</summary>            
+      /// <summary>Gets the numeric version of the operating system. This is the same as returned by <see cref="System.Environment.OSVersion"/>.</summary>            
+      /// <value>The numeric version of the operating system.</value>
       public static Version OSVersion
       {
          get { return Environment.OSVersion.Version; }
@@ -185,9 +178,8 @@ namespace Alphaleonis.Win32
 
       private static EnumOsName _enumOsName = EnumOsName.Later;
 
-      /// <summary>Gets the named version of the OS.
-      /// </summary>
-      /// <value>Returns the named version of the OS.</value>
+      /// <summary>Gets the named version of the operating system.</summary>
+      /// <value>The named version of the operating system.</value>
       public static EnumOsName VersionName
       {
          get
@@ -204,9 +196,8 @@ namespace Alphaleonis.Win32
 
       private static EnumProcessorArchitecture _processorArchitecture;
 
-      /// <summary>Gets the processor architecture for which the OS is targeted.
-      /// </summary>
-      /// <value>Returns the processor architecture for which the OS is targeted.</value>
+      /// <summary>Gets the processor architecture for which the operating system is targeted.</summary>
+      /// <value>The processor architecture for which the operating system is targeted.</value>
       /// <remarks>If running under WOW64 this will return a 32-bit processor. Use <see cref="IsWow64Process"/> to determine if this is the case.</remarks>
       public static EnumProcessorArchitecture ProcessorArchitecture
       {
@@ -224,8 +215,8 @@ namespace Alphaleonis.Win32
 
       private static Version _servicePackVersion;
 
-      /// <summary>Gets the version of the service pack currently installed on the OS.</summary>
-      /// <value>The version of the service pack currently installed on the OS.</value>
+      /// <summary>Gets the version of the service pack currently installed on the operating system.</summary>
+      /// <value>The version of the service pack currently installed on the operating system.</value>
       /// <remarks>Only the <see cref="System.Version.Major"/> and <see cref="System.Version.Minor"/> fields are used.</remarks>
       public static Version ServicePackVersion
       {
@@ -245,18 +236,18 @@ namespace Alphaleonis.Win32
 
       #region IsAtLeast
 
-      /// <summary>Determines whether the OS is of the specified version or later.</summary>
+      /// <summary>Determines whether the operating system is of the specified version or later.</summary>
+      /// <returns><see langword="true"/> if the operating system is of the specified <paramref name="version"/> or later; otherwise, <see langword="false"/>.</returns>      
       /// <param name="version">The lowest version for which to return true.</param>
-      /// <returns><see langword="true"/> if the OS is of the specified <paramref name="version"/> or later; otherwise, <see langword="false"/>.</returns>      
       public static bool IsAtLeast(EnumOsName version)
       {
          return VersionName >= version;
       }
 
-      /// <summary>Determines whether OS is of the specified version or later, allowing specification of a minimum service pack that must be installed on the lowest version.</summary>
+      /// <summary>Determines whether the operating system is of the specified version or later, allowing specification of a minimum service pack that must be installed on the lowest version.</summary>
+      /// <returns><see langword="true"/> if the operating system matches the specified <paramref name="version"/> with the specified service pack, or if the operating system is of a later version; otherwise, <see langword="false"/>.</returns>      
       /// <param name="version">The minimum required version.</param>
       /// <param name="servicePackVersion">The major version of the service pack that must be installed on the minimum required version to return true. This can be 0 to indicate that no service pack is required.</param>
-      /// <returns><see langword="true"/> if the OS matches the specified <paramref name="version"/> with the specified service pack, or if the OS is of a later version; otherwise, <see langword="false"/>.</returns>      
       public static bool IsAtLeast(EnumOsName version, int servicePackVersion)
       {
          return IsAtLeast(version) && ServicePackVersion.Major >= servicePackVersion;
@@ -445,7 +436,7 @@ namespace Alphaleonis.Win32
 
          #region GetVersionEx
 
-         /// <summary>Retrieves information about the current OS.</summary>
+         /// <summary>Retrieves information about the current operating system.</summary>
          /// <returns>
          /// If the function succeeds, the return value is a nonzero value.
          /// If the function fails, the return value is zero. To get extended error information, call GetLastError. The function fails if you specify an invalid value for the dwOSVersionInfoSize member of the OSVERSIONINFO or OSVERSIONINFOEX structure.
