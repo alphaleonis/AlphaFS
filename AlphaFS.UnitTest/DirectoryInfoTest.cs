@@ -663,7 +663,7 @@ namespace AlphaFS.UnitTest
          ds.SetAccessRuleProtection(true, false);
          ds.AddAccessRule(new FileSystemAccessRule(
                identity: new SecurityIdentifier(WellKnownSidType.WorldSid, null),
-               fileSystemRights: System.Security.AccessControl.FileSystemRights.FullControl,
+               fileSystemRights: FileSystemRights.FullControl,
                inheritanceFlags: InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
                propagationFlags: PropagationFlags.None,
                type: AccessControlType.Allow
@@ -690,7 +690,7 @@ namespace AlphaFS.UnitTest
          ds.SetAccessRuleProtection(true, false);
          ds.AddAccessRule(new FileSystemAccessRule(
            identity: new SecurityIdentifier(WellKnownSidType.WorldSid, null),
-           fileSystemRights: System.Security.AccessControl.FileSystemRights.FullControl,
+           fileSystemRights: FileSystemRights.FullControl,
            inheritanceFlags: InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
            propagationFlags: PropagationFlags.None,
            type: AccessControlType.Allow

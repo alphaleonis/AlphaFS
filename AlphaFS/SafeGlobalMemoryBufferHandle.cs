@@ -20,13 +20,8 @@
  */
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using Microsoft.Win32.SafeHandles;
 using System.Text;
-#if NET35
-using System.Security.Permissions;
-#endif
 
 namespace Alphaleonis.Win32
 {

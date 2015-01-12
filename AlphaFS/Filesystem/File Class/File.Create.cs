@@ -18,22 +18,16 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
  *  THE SOFTWARE. 
  */
+
 using Alphaleonis.Win32.Security;
 using Microsoft.Win32.SafeHandles;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.AccessControl;
-using System.Text;
 using FileStream = System.IO.FileStream;
-using StreamReader = System.IO.StreamReader;
-using StreamWriter = System.IO.StreamWriter;
 
 namespace Alphaleonis.Win32.Filesystem
 {
@@ -318,7 +312,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///  <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>
       /// <param name="bufferSize">The number of bytes buffered for reads and writes to the file.</param>
       /// <returns>Returns a <see cref="FileStream"/> that provides read/write access to the file specified in path.</returns>      
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "False positive")]
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "False positive")]
       [SecurityCritical]
       internal static FileStream CreateFileStreamInternal(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, int bufferSize, PathFormat pathFormat)
       {

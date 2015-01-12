@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Linq;
 using System.Security;
 using SearchOption = System.IO.SearchOption;
 

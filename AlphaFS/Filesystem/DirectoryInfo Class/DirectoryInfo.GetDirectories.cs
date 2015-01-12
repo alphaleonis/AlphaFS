@@ -20,7 +20,6 @@
  */
 
 using System.IO;
-using System.Linq;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem

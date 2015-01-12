@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis;
 using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Network;

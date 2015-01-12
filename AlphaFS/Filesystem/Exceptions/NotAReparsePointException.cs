@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -33,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
       public NotAReparsePointException()
-         : base(Alphaleonis.Win32.Resources.ENotAReparsePoint, s_errorCode)
+         : base(Resources.ENotAReparsePoint, s_errorCode)
       {
       }
 
