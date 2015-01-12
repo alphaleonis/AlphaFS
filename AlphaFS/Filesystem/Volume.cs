@@ -583,7 +583,6 @@ namespace Alphaleonis.Win32.Filesystem
                   if (lastError == Win32Errors.ERROR_NO_MORE_FILES)
                      yield break;
 
-                  // Throws IOException.
                   NativeError.ThrowException(lastError);
                }
             }
