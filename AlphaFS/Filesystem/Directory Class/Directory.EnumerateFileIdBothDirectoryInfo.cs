@@ -174,7 +174,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // 2014-10-16: Number of returned items depends on the size of the buffer.
             // That does not seem right, investigate.
-            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                NativeMethods.IsValidHandle(safeBuffer, Marshal.GetLastWin32Error());
 

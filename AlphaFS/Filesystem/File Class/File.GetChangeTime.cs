@@ -210,7 +210,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             NativeMethods.IsValidHandle(safeHandle);
 
-            using (SafeGlobalMemoryBufferHandle safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
             {
                NativeMethods.IsValidHandle(safeBuffer);
 
