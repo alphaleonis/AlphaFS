@@ -650,7 +650,7 @@ namespace AlphaFS.UnitTest
             Directory.Copy(tempPathSource, tempPathDestination, CopyOptions.None | CopyOptions.NoBuffering);
             report = Reporter();
 
-            Console.WriteLine("\nCopy again with overwrite enabled: Directory.Copy(,, true)\n{0}", report);
+            Console.WriteLine("\nCopy again with overwrite enabled.\n{0}", report);
 
             #endregion // Copy
          }
