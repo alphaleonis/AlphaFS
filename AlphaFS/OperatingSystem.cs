@@ -166,6 +166,7 @@ namespace Alphaleonis.Win32
       #region OSVersion
 
       /// <summary>Gets the numeric version of the operating system. This is the same as returned by <see cref="System.Environment.OSVersion"/>.</summary>            
+      /// <value>The numeric version of the operating system.</value>
       public static Version OSVersion
       {
          get { return Environment.OSVersion.Version; }
@@ -178,7 +179,7 @@ namespace Alphaleonis.Win32
       private static EnumOsName _enumOsName = EnumOsName.Later;
 
       /// <summary>Gets the named version of the operating system.</summary>
-      /// <value>Returns the named version of the operating system.</value>
+      /// <value>The named version of the operating system.</value>
       public static EnumOsName VersionName
       {
          get
@@ -195,9 +196,8 @@ namespace Alphaleonis.Win32
 
       private static EnumProcessorArchitecture _processorArchitecture;
 
-      /// <summary>Gets the processor architecture for which the operating system is targeted.
-      /// </summary>
-      /// <value>Returns the processor architecture for which the operating system is targeted.</value>
+      /// <summary>Gets the processor architecture for which the operating system is targeted.</summary>
+      /// <value>The processor architecture for which the operating system is targeted.</value>
       /// <remarks>If running under WOW64 this will return a 32-bit processor. Use <see cref="IsWow64Process"/> to determine if this is the case.</remarks>
       public static EnumProcessorArchitecture ProcessorArchitecture
       {
