@@ -103,7 +103,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          uint lastError = NativeMethods.GetLogicalDrives();
          if (lastError == Win32Errors.ERROR_SUCCESS)
-            // Throws IOException.
             NativeError.ThrowException((int)lastError);
 
          uint drives = lastError;

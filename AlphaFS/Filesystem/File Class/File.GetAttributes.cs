@@ -100,7 +100,6 @@ namespace Alphaleonis.Win32.Filesystem
          int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
-            // Throws IOException.
             NativeError.ThrowException(dataInitialised, pathLp);
 
          return (typeof(T) == typeof(FileAttributes)

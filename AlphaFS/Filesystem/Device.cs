@@ -314,7 +314,6 @@ namespace Alphaleonis.Win32.Filesystem
                            break;
                         }
 
-                        // Throws IOException.
                         NativeError.ThrowException(lastError);
                         break;
                   }
@@ -465,7 +464,6 @@ namespace Alphaleonis.Win32.Filesystem
          {
             int lastError = Marshal.GetLastWin32Error();
             if (lastError != Win32Errors.NO_ERROR)
-               // Throws IOException.
                NativeError.ThrowException(lastError);
          }
 
@@ -500,7 +498,6 @@ namespace Alphaleonis.Win32.Filesystem
                      break;
 
                   default:
-                     // Throws IOException.
                      NativeError.ThrowException(lastError);
                      break;
                }
