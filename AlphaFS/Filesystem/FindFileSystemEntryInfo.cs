@@ -51,11 +51,11 @@ namespace Alphaleonis.Win32.Filesystem
          AsString = typeOfT == typeof(string);
          AsFileSystemInfo = !AsString && (typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo));
 
-         FindExInfoLevel = (options & DirectoryEnumerationOptions.BasicSearch) != 0 && NativeMethods.IsAtLeastWindows7
+         FindExInfoLevel = NativeMethods.IsAtLeastWindows7 && (options & DirectoryEnumerationOptions.BasicSearch) != 0
             ? NativeMethods.FindExInfoLevels.Basic
             : NativeMethods.FindExInfoLevels.Standard;
 
-         LargeCache = (options & DirectoryEnumerationOptions.LargeCache) != 0 && NativeMethods.IsAtLeastWindows7
+         LargeCache = NativeMethods.IsAtLeastWindows7 && (options & DirectoryEnumerationOptions.LargeCache) != 0
             ? NativeMethods.FindExAdditionalFlags.LargeFetch
             : NativeMethods.FindExAdditionalFlags.None;
 
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
             if ((options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.None)
                options |= DirectoryEnumerationOptions.FilesAndFolders;
 
-            FileSystemObjectType = (options & DirectoryEnumerationOptions.FilesAndFolders) != 0
+            FileSystemObjectType = (options & DirectoryEnumerationOptions.FilesAndFolders) == DirectoryEnumerationOptions.FilesAndFolders
                ? (bool?)null
                : (options & DirectoryEnumerationOptions.Folders) != 0;
 
