@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Globalization;
 using System.IO;
 using System.Security;
 
@@ -40,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // Constructor
-
+      
       #region Properties
 
       #region AlternateFileName
@@ -218,5 +219,12 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Win32FindData
 
       #endregion // Properties
+
+      /// <summary>Returns the <see cref="ReparsePointTag"/> of the <see cref="FileSystemEntryInfo"/>.</summary>
+      /// <returns>The <see cref="ReparsePointTag"/> connverted to a string.</returns>
+      public override string ToString()
+      {
+         return String.Format(CultureInfo.InvariantCulture, "{0}", ReparsePointTag);
+      }
    }
 }
