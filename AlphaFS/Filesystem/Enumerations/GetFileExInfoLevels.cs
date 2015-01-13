@@ -23,14 +23,10 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>
-      /// Defines values that are used with the GetFileAttributesEx and GetFileAttributesTransacted functions to specify the information level of the returned data.
-      /// </summary>
+      /// <summary>Defines values that are used with the GetFileAttributesEx and GetFileAttributesTransacted functions to specify the information level of the returned data.</summary>
       public enum GetFileExInfoLevels
       {
-         /// <summary>
-         /// The GetFileAttributesEx or GetFileAttributesTransacted function retrieves a standard set of attribute information. The data is returned in a WIN32_FILE_ATTRIBUTE_DATA structure.
-         /// </summary>
+         /// <summary>The GetFileAttributesEx or GetFileAttributesTransacted function retrieves a standard set of attribute information. The data is returned in a WIN32_FILE_ATTRIBUTE_DATA structure.</summary>
          GetFileExInfoStandard = 0
       }
    }

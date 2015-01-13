@@ -23,20 +23,14 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>
-      ///   FINDEX_INFO_LEVELS Enumeration - Defines values that are used with the FindFirstFileEx function
-      ///   <para>to specify the information level of the returned data.</para>
-      /// </summary>
+      /// <summary>FINDEX_INFO_LEVELS Enumeration - Defines values that are used with the FindFirstFileEx function to specify the information level of the returned data.</summary>
       /// <remarks>
       ///   <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
       ///   <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
       /// </remarks>
       internal enum FindExInfoLevels
       {
-         /// <summary>The FindFirstFileEx function retrieves a standard set of attribute information.
-         /// <para>&#160;</para>
-         /// <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure.</para>
-         /// </summary>
+         /// <summary>The FindFirstFileEx function retrieves a standard set of attribute information. The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure.</summary>
          Standard = 0,
 
          /// <summary>The FindFirstFileEx function does not query the short file name,

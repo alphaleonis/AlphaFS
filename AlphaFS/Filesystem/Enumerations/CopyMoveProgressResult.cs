@@ -21,21 +21,27 @@
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Used by CopyFileXxx and MoveFileXxx.
-   /// <para>The <see cref="CopyMoveProgressRoutine"/> function should return one of the following values.</para>
-   /// </summary>
+   /// <summary>Used by CopyFileXxx and MoveFileXxx. The <see cref="CopyMoveProgressRoutine"/> function should return one of the following values.</summary>
    public enum CopyMoveProgressResult 
    {
-      /// <summary>(0) PROGRESS_CONTINUE - Continue the copy operation.</summary>
+      /// <summary>PROGRESS_CONTINUE
+      /// <para>Continue the copy operation.</para>
+      /// </summary>
       Continue = 0,
 
-      /// <summary>(1) PROGRESS_CANCEL - Cancel the copy operation and delete the destination file.</summary>
+      /// <summary>PROGRESS_CANCEL
+      /// <para>Cancel the copy operation and delete the destination file.</para>
+      /// </summary>
       Cancel = 1,
 
-      /// <summary>(2) PROGRESS_STOP - Stop the copy operation. It can be restarted at a later time.</summary>
+      /// <summary>PROGRESS_STOP
+      /// <para>Stop the copy operation. It can be restarted at a later time.</para>
+      /// </summary>
       Stop = 2,
 
-      /// <summary>(3) PROGRESS_QUIET - Continue the copy operation, but stop invoking <see cref="CopyMoveProgressRoutine"/> to report progress.</summary>
+      /// <summary>PROGRESS_QUIET
+      /// <para>Continue the copy operation, but stop invoking <see cref="CopyMoveProgressRoutine"/> to report progress.</para>
+      /// </summary>
       Quiet = 3
    }
 }

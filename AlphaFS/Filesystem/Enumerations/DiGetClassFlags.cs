@@ -29,20 +29,31 @@ namespace Alphaleonis.Win32.Filesystem
       [Flags]
       internal enum SetupDiGetClassDevsExFlags
       {
-         /// <summary>DIGCF_DEFAULT - Return only the device that is associated with the system default device interface, if one is set, for the specified device interface classes.</summary>
+         /// <summary>DIGCF_DEFAULT
+         /// <para>Return only the device that is associated with the system default device interface, if one is set, for the specified device interface classes.</para>
+         /// </summary>
          Default = 1, // only valid with DIGCF_DEVICEINTERFACE
 
-         /// <summary>DIGCF_PRESENT - Return only devices that are currently present.</summary>
+         /// <summary>DIGCF_PRESENT
+         /// <para>Return only devices that are currently present.</para>
+         /// </summary>
          Present = 2,
 
-         /// <summary>DIGCF_ALLCLASSES - Return a list of installed devices for the specified device setup classes or device interface classes.</summary>
+         /// <summary>DIGCF_ALLCLASSES
+         /// <para>Return a list of installed devices for the specified device setup classes or device interface classes.</para>
+         /// </summary>
          AllClasses = 4,
 
-         /// <summary>DIGCF_PROFILE - Return only devices that are a part of the current hardware profile.</summary>
+         /// <summary>DIGCF_PROFILE
+         /// <para>Return only devices that are a part of the current hardware profile.</para>
+         /// </summary>
          Profile = 8,
 
-         /// <summary>DIGCF_DEVICEINTERFACE - Return devices that support device interfaces for the specified device interface classes.
+         /// <summary>DIGCF_DEVICEINTERFACE
+         /// <para>
+         /// Return devices that support device interfaces for the specified device interface classes.
          /// This flag must be set in the Flags parameter if the Enumerator parameter specifies a Device Instance ID. 
+         /// </para>
          /// </summary>
          DeviceInterface = 16,
       }

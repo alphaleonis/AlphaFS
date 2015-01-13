@@ -35,8 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>Searches are case-sensitive.</summary>
          CaseSensitive = 1,
 
-         /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.
-         /// </summary>
+         /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.</summary>
          /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
          LargeFetch = 2
       }

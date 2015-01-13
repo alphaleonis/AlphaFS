@@ -27,23 +27,28 @@ namespace Alphaleonis.Win32.Filesystem
    [Flags]
    public enum StreamAttributes
    {
-      /// <summary>(0) STREAM_NORMAL_ATTRIBUTE - This backup stream has no special attributes.</summary>
+      /// <summary>STREAM_NORMAL_ATTRIBUTE
+      /// <para>This backup stream has no special attributes.</para>
+      /// </summary>
       None = 0,
 
-      /// <summary>(1) STREAM_MODIFIED_WHEN_READ - Attribute set if the stream contains data that is modified when read.
+      /// <summary>STREAM_MODIFIED_WHEN_READ
+      /// <para>Attribute set if the stream contains data that is modified when read.</para>
       /// <para>Allows the backup application to know that verification of data will fail.</para>
       /// </summary>
       ModifiedWhenRead = 1,
 
-      /// <summary>(2) STREAM_CONTAINS_SECURITY - The backup stream contains security information.
+      /// <summary>STREAM_CONTAINS_SECURITY
+      /// <para>The backup stream contains security information.</para>
       /// <para>This attribute applies only to backup stream of type <see cref="BackupStreamType.SecurityData"/>.</para>
       /// </summary>
       ContainsSecurity = 2,
 
-      /// <summary>(4) Reserved.</summary>
+      /// <summary>Reserved.</summary>
       ContainsProperties = 4,
 
-      /// <summary>(8) STREAM_SPARSE_ATTRIBUTE - The backup stream is part of a sparse file stream.
+      /// <summary>STREAM_SPARSE_ATTRIBUTE
+      /// <para>The backup stream is part of a sparse file stream.</para>
       /// <para>This attribute applies only to backup stream of type <see cref="BackupStreamType.Data"/>, <see cref="BackupStreamType.AlternateData"/>, and <see cref="BackupStreamType.SparseBlock"/>.</para>
       /// </summary>
       Sparse = 8

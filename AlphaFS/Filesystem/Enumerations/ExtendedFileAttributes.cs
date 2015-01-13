@@ -93,28 +93,28 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // FILE_ATTRIBUTE - Attributes applying to any file
 
-      /// <summary>(0x8000) The directory or user data stream is configured with integrity (only supported on ReFS volumes). It is not included in an ordinary directory listing. The integrity setting persists with the file if it's renamed. If a file is copied the destination file will have integrity set if either the source file or destination directory have integrity set.</summary>
+      /// <summary>The directory or user data stream is configured with integrity (only supported on ReFS volumes). It is not included in an ordinary directory listing. The integrity setting persists with the file if it's renamed. If a file is copied the destination file will have integrity set if either the source file or destination directory have integrity set.</summary>
       /// <remarks>This flag is not supported until Windows Server 2012.</remarks>
       IntegrityStream = 32768,
 
-      /// <summary>(0x20000) The user data stream not to be read by the background data integrity scanner (AKA scrubber). When set on a directory it only provides inheritance. This flag is only supported on Storage Spaces and ReFS volumes. It is not included in an ordinary directory listing.</summary>
+      /// <summary>The user data stream not to be read by the background data integrity scanner (AKA scrubber). When set on a directory it only provides inheritance. This flag is only supported on Storage Spaces and ReFS volumes. It is not included in an ordinary directory listing.</summary>
       /// <remarks>This flag is not supported until Windows Server 2012.</remarks>
       NoScrubData = 131072,
 
-      /// <summary>0x80000</summary>
+      /// <summary>...</summary>
       FirstPipeInstance = 524288,
 
-      /// <summary>(0x100000) The file data is requested, but it should continue to be located in remote storage. It should not be transported back to local storage. This flag is for use by remote storage systems.</summary>
+      /// <summary>The file data is requested, but it should continue to be located in remote storage. It should not be transported back to local storage. This flag is for use by remote storage systems.</summary>
       OpenNoRecall = 1048576,
 
-      /// <summary>(0x200000) Normal reparse point processing will not occur; an attempt to open the reparse point will be made. When a file is opened, a file handle is returned, whether or not the filter that controls the reparse point is operational. See MSDN documentation for more information.</summary>
+      /// <summary>Normal reparse point processing will not occur; an attempt to open the reparse point will be made. When a file is opened, a file handle is returned, whether or not the filter that controls the reparse point is operational. See MSDN documentation for more information.</summary>
       OpenReparsePoint = 2097152,
 
-      /// <summary>(0x1000000) Access will occur according to POSIX rules. This includes allowing multiple files with names, differing only in case, for file systems that support that naming. Use care when using this option, because files created with this flag may not be accessible by applications that are written for MS-DOS or 16-bit Windows.</summary>
+      /// <summary>Access will occur according to POSIX rules. This includes allowing multiple files with names, differing only in case, for file systems that support that naming. Use care when using this option, because files created with this flag may not be accessible by applications that are written for MS-DOS or 16-bit Windows.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Posix")]
       PosixSemantics = 16777216,
 
-      /// <summary>(0x2000000) The file is being opened or created for a backup or restore operation. The system ensures that the calling process overrides file security checks when the process has SE_BACKUP_NAME and SE_RESTORE_NAME privileges. You must set this flag to obtain a handle to a directory. A directory handle can be passed to some functions instead of a file handle.</summary>
+      /// <summary>The file is being opened or created for a backup or restore operation. The system ensures that the calling process overrides file security checks when the process has SE_BACKUP_NAME and SE_RESTORE_NAME privileges. You must set this flag to obtain a handle to a directory. A directory handle can be passed to some functions instead of a file handle.</summary>
       BackupSemantics = 33554432,
 
       /// <summary>The file is to be deleted immediately after all of its handles are closed, which includes the specified handle and any other open or duplicated handles. If there are existing open handles to a file, the call fails unless they were all opened with the <see cref="FileShare.Delete"/> share mode. Subsequent open requests for the file fail, unless the <see cref="FileShare.Delete"/> share mode is specified.</summary>
@@ -129,14 +129,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Equals <see cref="FileOptions.RandomAccess"/>268435456</remarks>
       RandomAccess = FileOptions.RandomAccess,
 
-      /// <summary>(0x20000000) There are strict requirements for successfully working with files opened with the <see cref="NoBuffering"/> flag, for details see the section on "File Buffering" in the online MSDN documentation.</summary>
+      /// <summary>There are strict requirements for successfully working with files opened with the <see cref="NoBuffering"/> flag, for details see the section on "File Buffering" in the online MSDN documentation.</summary>
       NoBuffering = 536870912,
 
       /// <summary>The file or device is being opened or created for asynchronous I/O.</summary>
       /// <remarks>Equals <see cref="FileOptions.Asynchronous"/>1073741824</remarks>
       Overlapped = FileOptions.Asynchronous,
 
-      /// <summary>(0x80000000) Write operations will not go through any intermediate cache, they will go directly to disk.</summary>
+      /// <summary>Write operations will not go through any intermediate cache, they will go directly to disk.</summary>
       /// <remarks>Equals .NET <see cref="FileOptions.WriteThrough"/>-2147483648</remarks>
       WriteThrough = 2147483648
    }
