@@ -251,7 +251,7 @@ namespace Alphaleonis.Win32.Network
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "NetShareGetInfo")]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint NetShareGetInfo([MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string netName, [MarshalAs(UnmanagedType.U4)] uint level, out SafeNetApiBuffer lpBuffer);
+      internal static extern uint NetShareGetInfo([MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string netName, [MarshalAs(UnmanagedType.U4)] uint level, out IntPtr lpBuffer);
 
       #endregion // NetShareGetInfo
 

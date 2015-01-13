@@ -1590,10 +1590,9 @@ namespace Alphaleonis.Win32.Network
 
       #region GetShareInfoInternal
 
-      /// <summary>
-      ///   Unified method GetShareInfoInternal() to get the <see cref="ShareInfo"/> structure of a Server Message Block (SMB) share.
-      /// </summary>
-      /// <exception cref="NetworkInformationException">.</exception>
+      /// <summary>Unified method GetShareInfoInternal() to get the <see cref="ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available.</returns>
+      /// <exception cref="NetworkInformationException"></exception>
       /// <param name="structureLevel">
       ///   Possible structure levels: 503, 2,
       ///   1 and 1005.
@@ -1604,9 +1603,7 @@ namespace Alphaleonis.Win32.Network
       ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
       ///   <para>such as unavailable resources.</para>
       /// </param>
-      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available.</returns>
-      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
+      [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Network.NativeMethods.NetApiBufferFree(System.IntPtr)")]
       [SecurityCritical]
       internal static ShareInfo GetShareInfoInternal(int structureLevel, string host, string share, bool continueOnException)
       {
@@ -1621,34 +1618,18 @@ namespace Alphaleonis.Win32.Network
          
          bool fallback = false;
          
+         
          startNetShareGetInfo:
 
-         SafeNetApiBuffer safeBuffer;
-         uint lastError = NativeMethods.NetShareGetInfo(stripUnc, share, (uint)structureLevel, out safeBuffer);
+         var buffer = IntPtr.Zero;
 
-         using (safeBuffer)
+         try
+         {
+            uint lastError = NativeMethods.NetShareGetInfo(stripUnc, share, (uint) structureLevel, out buffer);
+
             switch (lastError)
             {
                case Win32Errors.NERR_Success:
-
-                  // CA2001:AvoidCallingProblematicMethods
-
-                  IntPtr buffer = IntPtr.Zero;
-                  bool successRef = false;
-                  safeBuffer.DangerousAddRef(ref successRef);
-
-                  // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
-                  if (successRef)
-                     buffer = safeBuffer.DangerousGetHandle();
-
-                  safeBuffer.DangerousRelease();
-
-                  if (buffer == IntPtr.Zero)
-                     NativeError.ThrowException(Resources.HandleDangerousRef);
-
-                  // CA2001:AvoidCallingProblematicMethods
-
-
                   switch (structureLevel)
                   {
                      case 1005:
@@ -1667,16 +1648,17 @@ namespace Alphaleonis.Win32.Network
                         return new ShareInfo(stripUnc, structureLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo1>(0, buffer));
                   }
                   break;
-               
+
+
+               // Observed when ShareInfo503 is requested, but not supported/possible.
+               // Fall back on ShareInfo2 structure and try again.
+               case Win32Errors.RPC_X_BAD_STUB_DATA:
 
                case Win32Errors.ERROR_ACCESS_DENIED:
-
-                  // Observed when ShareInfo503 is requested, but not supported/possible.
-                  // Fall back on ShareInfo2 structure and try again.
-               case Win32Errors.RPC_X_BAD_STUB_DATA:
                   if (!fallback && structureLevel != 2)
                   {
-                     safeBuffer.Close();
+                     NativeMethods.NetApiBufferFree(buffer);
+
                      structureLevel = 2;
                      fallback = true;
                      goto startNetShareGetInfo;
@@ -1685,11 +1667,19 @@ namespace Alphaleonis.Win32.Network
 
                default:
                   if (!continueOnException)
-                     throw new NetworkInformationException((int)lastError);
+                     throw new NetworkInformationException((int) lastError);
                   break;
             }
 
-         return null;
+
+            return null;
+         }
+         finally
+         {
+            if (buffer != IntPtr.Zero)
+               NativeMethods.NetApiBufferFree(buffer);
+         }
+
       }
 
       #endregion // GetShareInfoInternal
