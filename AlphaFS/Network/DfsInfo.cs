@@ -26,33 +26,26 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Network
 {
-   /// <summary>Contains information about a Distributed File System (DFS) root or link.
-   /// <para>This structure contains the name, status, GUID, time-out, number of targets,</para>
-   /// <para>and information about each target of the root or link.</para>
+   /// <summary>Contains information about a Distributed File System (DFS) root or link. This class cannot be inherited.
+   /// <para>This structure contains the name, status, GUID, time-out, number of targets, and information about each target of the root or link.</para>
    /// </summary>
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
    public sealed class DfsInfo
    {
       #region Constructor
 
-      /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class,
-      /// <para>which acts as a wrapper for a DFS root or link target.</para>
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class which acts as a wrapper for a DFS root or link target.</summary>
       public DfsInfo()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class,
-      /// <para>which acts as a wrapper for a DFS root or link target.</para>
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class, which acts as a wrapper for a DFS root or link target.</summary>
       /// <param name="structure">An initialized <see cref="NativeMethods.DfsInfo4"/> instance.</param>
       internal DfsInfo(NativeMethods.DfsInfo4 structure) : this(null, structure)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class,
-      /// <para>which acts as a wrapper for a DFS root or link target.</para>
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class, which acts as a wrapper for a DFS root or link target.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="structure">An initialized <see cref="NativeMethods.DfsInfo4"/> instance.</param>
       private DfsInfo(KernelTransaction transaction, NativeMethods.DfsInfo4 structure)
@@ -87,6 +80,25 @@ namespace Alphaleonis.Win32.Network
       #endregion // Methods
 
       #region Properties
+
+      #region DirectoryInfo
+
+      private DirectoryInfo _directoryInfo;
+
+      /// <summary>The <see cref="DirectoryInfo"/> instance of the DFS root or link.</summary>
+      public DirectoryInfo DirectoryInfo
+      {
+         get
+         {
+            // Do not use ?? expression here.
+            if (_directoryInfo == null)
+               _directoryInfo = new DirectoryInfo(Transaction, EntryPath, PathFormat.RelativePath);
+
+            return _directoryInfo;
+         }
+      }
+
+      #endregion // DirectoryInfo
 
       #region Comment
 
@@ -144,36 +156,12 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // Timeout
 
-
-      #region AlphaFS
-
-      #region DirectoryInfo
-
-      private DirectoryInfo _directoryInfo;
-
-      /// <summary>The <see cref="DirectoryInfo"/> instance of the DFS root or link.</summary>
-      public DirectoryInfo DirectoryInfo
-      {
-         get
-         {
-            // Do not use ?? expression here.
-            if (_directoryInfo == null)
-               _directoryInfo = new DirectoryInfo(Transaction, EntryPath, PathFormat.RelativePath);
-
-            return _directoryInfo;
-         }
-      }
-
-      #endregion // DirectoryInfo
-
       #region Transaction
 
       /// <summary>The transaction associated with the DirectoryInfo instance of the DFS root or link.</summary>
       public KernelTransaction Transaction { get; set; }
 
       #endregion // Transaction
-
-      #endregion // AlphaFS
 
       #endregion // Properties
    }
