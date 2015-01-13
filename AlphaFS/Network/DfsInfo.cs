@@ -29,6 +29,7 @@ namespace Alphaleonis.Win32.Network
    /// <summary>Contains information about a Distributed File System (DFS) root or link. This class cannot be inherited.
    /// <para>This structure contains the name, status, GUID, time-out, number of targets, and information about each target of the root or link.</para>
    /// </summary>
+   [SerializableAttribute]
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
    public sealed class DfsInfo
    {
@@ -158,8 +159,14 @@ namespace Alphaleonis.Win32.Network
 
       #region Transaction
 
+      [NonSerialized] private KernelTransaction _transaction;
+
       /// <summary>The transaction associated with the DirectoryInfo instance of the DFS root or link.</summary>
-      public KernelTransaction Transaction { get; set; }
+      public KernelTransaction Transaction
+      {
+         get { return _transaction; }
+         internal set { _transaction = value; }
+      }
 
       #endregion // Transaction
 
