@@ -1,0 +1,114 @@
+/* Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
+ */
+
+using Alphaleonis.Win32.Filesystem;
+using System;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Security;
+
+namespace Alphaleonis.Win32.Network
+{
+   partial class Host
+   {
+      #region EnumerateOpenResources
+
+      /// <summary>Enumerates open resources from the local host.</summary>
+      /// <returns>Returns <see cref="IEnumerable{T}"/> open resources from the local host.</returns>
+      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="NetworkInformationException"></exception>
+      [SecurityCritical]
+      public static IEnumerable<OpenResourceInfo> EnumerateOpenResources()
+      {
+         return EnumerateOpenResourcesInternal(null, null, null, false);
+      }
+
+      /// <summary>Enumerates open resources from the specified host.</summary>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
+      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="NetworkInformationException"></exception>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
+      /// <param name="basePath">
+      ///   This parameter may be <see langword="null"/>. Enumerates only resources that have the value of the basepath parameter as a prefix.
+      ///   (A prefix is the portion of a path that comes before a backslash.)
+      /// </param>
+      /// <param name="typeName">
+      ///   This parameter may be <see langword="null"/>. The name of the user or the name of the connection; If <paramref name="typeName"/>
+      ///   does not begin with two backslashes ("\\") it indicates the name of the user. If <paramref name="typeName"/> begins with two
+      ///   backslashes ("\\") it indicates the name of the connection.
+      /// </param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      [SecurityCritical]
+      public static IEnumerable<OpenResourceInfo> EnumerateOpenResources(string host, string basePath, string typeName, bool continueOnException)
+      {
+         return EnumerateOpenResourcesInternal(host, basePath, typeName, continueOnException);
+      }
+
+      #endregion // EnumerateOpenResources
+
+
+      #region Internal Methods
+
+      /// <summary>>Unified method EnumerateOpenResourcesInternal() to enumerate open resources from the specified host.</summary>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
+      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="NetworkInformationException"></exception>
+      /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
+      /// <param name="basePath">
+      ///   This parameter may be <see langword="null"/>. Enumerates only resources that have the value of the basepath parameter as a prefix.
+      ///   (A prefix is the portion of a path that comes before a backslash.)
+      /// </param>
+      /// <param name="typeName">
+      ///   This parameter may be <see langword="null"/>. The name of the user or the name of the connection; If <paramref name="typeName"/>
+      ///   does not begin with two backslashes ("\\") it indicates the name of the user. If <paramref name="typeName"/> begins with two
+      ///   backslashes ("\\") it indicates the name of the connection.
+      /// </param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      [SecurityCritical]
+      private static IEnumerable<OpenResourceInfo> EnumerateOpenResourcesInternal(string host, string basePath, string typeName, bool continueOnException)
+      {
+         basePath = Utils.IsNullOrWhiteSpace(basePath) ? null : Path.GetRegularPathInternal(basePath, GetFullPathOptions.CheckInvalidPathChars);
+         typeName = Utils.IsNullOrWhiteSpace(typeName) ? null : typeName;
+
+
+         var fd = new FunctionData { ExtraData1 = basePath, ExtraData2 = typeName };
+
+         return EnumerateNetworkObjectInternal(fd, (NativeMethods.FileInfo3 structure, SafeNetApiBuffer safeBuffer) =>
+
+            new OpenResourceInfo(host, structure),
+
+            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            {
+               // When host == null, the local computer is used.
+               // However, the resulting OpenResourceInfo.Host property will be empty.
+               // So, explicitly state Environment.MachineName to prevent this.
+               // Furthermore, the UNC prefix: \\ is not required and always removed.
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+
+               return NativeMethods.NetFileEnum(stripUnc, fd.ExtraData1, fd.ExtraData2, 3, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
+
+            },
+            continueOnException);
+      }
+
+      #endregion // Internal Methods
+   }
+}

@@ -24,10 +24,7 @@ using System;
 namespace Alphaleonis.Win32.Network
 {
    /// <summary>A set of bit flags that describe the permissions for the shared resource's on servers running with share-level security.</summary>
-   /// <remarks>
-   /// <para>Note that Windows does not support share-level security.</para>
-   /// <para>This member is ignored on a server running user-level security.</para>
-   /// </remarks>
+   /// <remarks>Note that Windows does not support share-level security. This member is ignored on a server running user-level security.</remarks>
    [Flags]
    public enum AccessPermissions
    {

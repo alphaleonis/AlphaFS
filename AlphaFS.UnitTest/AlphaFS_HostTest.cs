@@ -743,7 +743,7 @@ namespace AlphaFS.UnitTest
          try
          {
             StopWatcher(true);
-            using (Host.DriveConnection connection = new Host.DriveConnection(share))
+            using (var connection = new DriveConnection(share))
             {
                Console.WriteLine("\nUsing DriveConnection(): [{0}] to: [{1}]\n\n\t{2}\n", connection.LocalName, share, Reporter(true));
                connectOk = true;
