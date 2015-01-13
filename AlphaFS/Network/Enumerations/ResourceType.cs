@@ -23,10 +23,8 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>NETRESOURCE structure
-      /// <para>&#160;</para>
+      /// <summary>NETRESOURCE structure.
       /// <para>ResourceType: The type of resource.</para>
-      /// <para>&#160;</para>
       /// <remarks>
       /// <para>If a network provider cannot distinguish between</para>
       /// <para>print and disk resources, it can enumerate all resources.</para>
@@ -34,26 +32,21 @@ namespace Alphaleonis.Win32.Network
       /// </summary>
       internal enum ResourceType
       {
-         /// <summary>(0) RESOURCETYPE_ANY
-         /// <para>&#160;</para>
+         /// <summary>RESOURCETYPE_ANY
          /// <para>ResourceType: All resources.</para>
-         /// <para>&#160;</para>
          /// <remarks>
-         /// <para>If a network provider cannot distinguish between</para>
-         /// <para>print and disk resources, it can enumerate all resources.</para>
+         /// <para>If a network provider cannot distinguish between print and disk resources, it can enumerate all resources.</para>
          /// <para>This value cannot be combined with <see cref="Disk"/> or <see cref="ResourceType.Print"/>.</para>
          /// </remarks>
          /// </summary>
          Any = 0,
 
-         /// <summary>(1) RESOURCETYPE_DISK
-         /// <para>&#160;</para>
+         /// <summary>RESOURCETYPE_DISK
          /// <para>All disk resources.</para>
          /// </summary>
          Disk = 1,
 
-         /// <summary>(2) RESOURCETYPE_PRINT
-         /// <para>&#160;</para>
+         /// <summary>RESOURCETYPE_PRINT
          /// <para>All print resources.</para>
          /// </summary>
          Print = 2,

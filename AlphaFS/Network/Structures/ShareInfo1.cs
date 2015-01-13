@@ -25,7 +25,9 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>SHARE_INFO_1 - Contains information about the shared resource, including the name and type of the resource, and a comment associated with the resource.</summary>
+      /// <summary>SHARE_INFO_1
+      /// <para>Contains information about the shared resource, including the name and type of the resource, and a comment associated with the resource.</para>
+      /// </summary>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]

@@ -25,44 +25,60 @@ using System.Diagnostics.CodeAnalysis;
 namespace Alphaleonis.Win32.Network
 {
    /// <summary>Contains information about the shared resource.</summary>
-   /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-   /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
-   [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flavor")]
-   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
+   /// <remarks>
+   /// <para>Minimum supported client: Windows XP [desktop apps only]</para>
+   /// <para>Minimum supported server: Windows Server 2003 [desktop apps only]</para>
+   /// </remarks>
    [Flags]
    public enum ShareResourceTypes
    {
-      /// <summary></summary>
+      /// <summary>No specific resource type used.</summary>
       None = 0,
 
-      /// <summary>SHI1005_FLAGS_DFS (0x0001) - The specified share is present in a Dfs tree structure. This flag cannot be set with NetShareSetInfo.</summary>
+      /// <summary>SHI1005_FLAGS_DFS
+      /// <para>The specified share is present in a DFS tree structure. This flag cannot be set with NetShareSetInfo.</para>
+      /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       Dfs = 1,
 
-      /// <summary>SHI1005_FLAGS_DFS_ROOT (0x0002) - The specified share is the root volume in a Dfs tree structure. This flag cannot be set with NetShareSetInfo.</summary>
+      /// <summary>SHI1005_FLAGS_DFS_ROOT
+      /// <para>The specified share is the root volume in a DFS tree structure. This flag cannot be set with NetShareSetInfo.</para>
+      /// </summary>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       DfsRoot = 2,
 
-      /// <summary>SHI1005_FLAGS_RESTRICT_EXCLUSIVE_OPENS (0x0100) - The specified share disallows exclusive file opens, where reads to an open file are disallowed.</summary>
+      /// <summary>SHI1005_FLAGS_RESTRICT_EXCLUSIVE_OPENS 
+      /// <para>The specified share disallows exclusive file opens, where reads to an open file are disallowed.</para>
+      /// </summary>
       RestrictExclusiveOpens = 256,
 
-      /// <summary>SHI1005_FLAGS_FORCE_SHARED_DELETE (0x0200) - Shared files in the specified share can be forcibly deleted.</summary>
+      /// <summary>SHI1005_FLAGS_FORCE_SHARED_DELETE
+      /// <para>Shared files in the specified share can be forcibly deleted.</para>
+      /// </summary>
       ForceSharedDelete = 512,
 
-      /// <summary>SHI1005_FLAGS_ALLOW_NAMESPACE_CACHING (0x0400) - Clients are allowed to cache the namespace of the specified share.</summary>
+      /// <summary>SHI1005_FLAGS_ALLOW_NAMESPACE_CACHING
+      /// <para>Clients are allowed to cache the namespace of the specified share.</para>
+      /// </summary>
       AllowNamespaceCaching = 1024,
 
-      /// <summary>SHI1005_FLAGS_ACCESS_BASED_DIRECTORY_ENUM (0x0800) - The server will filter directory entries based on the access permissions that the user on the client computer has for the server on which the files reside.
-      /// Only files for which the user has read access and directories for which the user has FILE_LIST_DIRECTORY access will be returned. If the user has SeBackupPrivilege, all available information will be returned.
+      /// <summary>SHI1005_FLAGS_ACCESS_BASED_DIRECTORY_ENUM
+      /// <para>The server will filter directory entries based on the access permissions that the user on the client computer has for the server on which the files reside.</para>
+      /// <para>Only files for which the user has read access and directories for which the user has FILE_LIST_DIRECTORY access will be returned. If the user has SeBackupPrivilege, all available information will be returned.</para>
       /// </summary>
       /// <remarks>This flag is supported only on servers running Windows Server 2003 with SP1 or later.</remarks>
       AccessBasedDirectoryEnum = 2048,
 
-      /// <summary>SHI1005_FLAGS_FORCE_LEVELII_OPLOCK (0x1000) - Prevents exclusive caching modes that can cause delays for highly shared read-only data.</summary>
+      /// <summary>SHI1005_FLAGS_FORCE_LEVELII_OPLOCK
+      /// <para>Prevents exclusive caching modes that can cause delays for highly shared read-only data.</para>
+      /// </summary>
       /// <remarks>This flag is supported only on servers running Windows Server 2008 R2 or later.</remarks>
       ForceLevel2OpLock = 4096,
 
-      /// <summary>SHI1005_FLAGS_ENABLE_HASH (0x2000) - Enables server-side functionality needed for peer caching support. Clients on high-latency or low-bandwidth connections can use alternate methods to retrieve data from peers if available, instead of sending requests to the server. This is only supported on shares configured for manual caching (CSC_CACHE_MANUAL_REINT).</summary>
+      /// <summary>SHI1005_FLAGS_ENABLE_HASH</summary>
+      /// <para>Enables server-side functionality needed for peer caching support.</para>
+      /// <para>Clients on high-latency or low-bandwidth connections can use alternate methods to retrieve data from peers if available, instead of sending requests to the server.</para>
+      /// <para>This is only supported on shares configured for manual caching (CSC_CACHE_MANUAL_REINT).</para>
       /// <remarks>This flag is supported only on servers running Windows Server 2008 R2 or later.</remarks>
       EnableHash = 8192,
 

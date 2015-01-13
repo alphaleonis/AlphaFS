@@ -23,9 +23,7 @@ using System;
 
 namespace Alphaleonis.Win32.Network
 {
-   /// <summary>A set of bit flags that describe the permissions for the shared resource's
-   /// <para>on servers running with share-level security.</para>
-   /// </summary>
+   /// <summary>A set of bit flags that describe the permissions for the shared resource's on servers running with share-level security.</summary>
    /// <remarks>
    /// <para>Note that Windows does not support share-level security.</para>
    /// <para>This member is ignored on a server running user-level security.</para>
@@ -36,47 +34,43 @@ namespace Alphaleonis.Win32.Network
       /// <summary>No permissions.</summary>
       None = 0,
 
-      /// <summary>Permission to read data from a resource and, by default, to execute the resource.
-      /// <para>Win32: ACCESS_READ = 0x00000001</para>
+      /// <summary>ACCESS_READ
+      /// <para>Permission to read data from a resource and, by default, to execute the resource.</para>
       /// </summary>
       Read = 1,
 
-      /// <summary>Permission to write data to the resource.
-      /// <para>Win32: ACCESS_WRITE = 0x00000002</para>
+      /// <summary>ACCESS_WRITE
+      /// <para>Permission to write data to the resource.</para>
       /// </summary>
       Write = 2,
 
-      /// <summary>Permission to create an instance of the resource (such as a file);
-      /// <para>data can be written to the resource as the resource is created.</para>
-      /// <para>Win32: ACCESS_CREATE = 0x00000004</para>
+      /// <summary>ACCESS_CREATE
+      /// <para>Permission to create an instance of the resource (such as a file); data can be written to the resource as the resource is created.</para>
       /// </summary>
       Create = 4,
 
-      /// <summary>Permission to execute the resource.
-      /// <para>Win32: ACCESS_EXEC = 0x00000008</para>
+      /// <summary>ACCESS_EXEC
+      /// <para>Permission to execute the resource.</para>
       /// </summary>
       Execute = 8,
 
-      /// <summary>Permission to delete the resource.
-      /// <para>Win32: ACCESS_DELETE = 0x00000010</para>
+      /// <summary>ACCESS_DELETE
+      /// <para>Permission to delete the resource.</para>
       /// </summary>
       Delete = 16,
 
-      /// <summary>Permission to modify the resource's attributes,
-      /// <para>such as the date and time when a file was last modified.</para>
-      /// <para>Win32: ACCESS_ATRIB = 0x00000020</para>
+      /// <summary>ACCESS_ATRIB
+      /// <para>Permission to modify the resource's attributes, such as the date and time when a file was last modified.</para>
       /// </summary>
       Attributes = 32,
 
-      /// <summary>Permission to modify the permissions (read, write, create, execute, and delete)
-      /// <para>assigned to a resource for a user or application.</para>
-      /// <para>Win32: ACCESS_PERM = 0x00000040</para>
+      /// <summary>ACCESS_PERM
+      /// <para>Permission to modify the permissions (read, write, create, execute, and delete) assigned to a resource for a user or application.</para>
       /// </summary>
       Permissions = 64,
 
-      /// <summary>Permission to read, write, create, execute, and delete resources,
-      /// <para>and to modify their attributes and permissions.</para>
-      /// <para>Win32: ACCESS_ALL = 0x00008000</para>
+      /// <summary>ACCESS_ALL
+      /// <para>Permission to read, write, create, execute, and delete resources, and to modify their attributes and permissions.</para>
       /// </summary>
       All = 32768
    }

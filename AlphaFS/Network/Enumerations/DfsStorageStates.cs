@@ -32,19 +32,19 @@ namespace Alphaleonis.Win32.Network
       /// <summary>No storage state.</summary>
       None = 0,
 
-      /// <summary>The DFS root or link target is offline.
-      /// <para>Win32: DFS_STORAGE_STATE_OFFLINE = 0x00000001</para>
+      /// <summary>DFS_STORAGE_STATE_OFFLINE
+      /// <para>The DFS root or link target is offline.</para>
       /// </summary>
       /// <remarks>Windows Server 2003: The state of a root target cannot be set to DFS_STORAGE_STATE_OFFLINE.</remarks>
       Offline = 1,
 
-      /// <summary>The DFS root or link target is online.
-      /// <para>Win32: DFS_STORAGE_STATE_ONLINE = 0x00000002</para>
+      /// <summary>DFS_STORAGE_STATE_ONLINE
+      /// <para>The DFS root or link target is online.</para>
       /// </summary>
       Online = 2,
 
-      /// <summary>The DFS root or link target is the active target.
-      /// <para>Win32: DFS_STORAGE_STATE_ACTIVE = 0x00000004</para>
+      /// <summary>DFS_STORAGE_STATE_ACTIVE
+      /// <para>The DFS root or link target is the active target.</para>
       /// </summary>
       Active = 4
    }

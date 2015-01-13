@@ -26,8 +26,9 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>SHARE_INFO_503 - Contains information about the shared resource,
-      /// including the server name, name of the resource, type, and permissions, the number of connections, and other pertinent information.
+      /// <summary>SHARE_INFO_503
+      /// <para>Contains information about the shared resource, including the server name, name of the resource, type, and permissions,
+      /// the number of connections, and other pertinent information.</para>
       /// </summary>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>

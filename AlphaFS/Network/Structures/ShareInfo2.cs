@@ -25,9 +25,9 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>SHARE_INFO_2 - Contains information about the shared resource, including the name, type,
-      /// and permissions of the resource, comments associated with the resource, the maximum number of concurrent connections,
-      /// the number of current connections, the local path for the resource, and a password for the current connection.
+      /// <summary>SHARE_INFO_2
+      /// Contains information about the shared resource, including the name, type, and permissions of the resource, comments associated with the resource,
+      /// the maximum number of concurrent connections, the number of current connections, the local path for the resource, and a password for the current connection.
       /// </summary>
       /// <remarks>Share information, NT, level 2, requires admin rights to work.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>

@@ -35,19 +35,19 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Creates a <see cref="ShareInfo"/> instance.</summary>
       /// <param name="host">A host to retrieve shares from.</param>
-      /// <param name="shareLevel">Possible structure levels: 503, 2,  1 and 1005.</param>
+      /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="shareInfo">A <see cref="NativeMethods.ShareInfo2"/> or <see cref="NativeMethods.ShareInfo503"/> instance.</param>
-      internal ShareInfo(string host, int shareLevel, object shareInfo)
+      internal ShareInfo(string host, ShareInfoLevel shareLevel, object shareInfo)
       {
          switch (shareLevel)
          {
-            case 1005:
+            case ShareInfoLevel.Info1005:
                NativeMethods.ShareInfo1005 s1005 = (NativeMethods.ShareInfo1005) shareInfo;
                ServerName = host ?? Environment.MachineName;
                ResourceType = s1005.ShareResourceType;
                break;
 
-            case 503:
+            case ShareInfoLevel.Info503:
                NativeMethods.ShareInfo503 s503 = (NativeMethods.ShareInfo503) shareInfo;
                CurrentUses = s503.CurrentUses;
                MaxUses = s503.MaxUses;
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Network
                SecurityDescriptor = s503.SecurityDescriptor;
                break;
 
-            case 2:
+            case ShareInfoLevel.Info2:
                NativeMethods.ShareInfo2 s2 = (NativeMethods.ShareInfo2)shareInfo;
                CurrentUses = s2.CurrentUses;
                MaxUses = s2.MaxUses;
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Network
                ShareType = s2.ShareType;
                break;
 
-            case 1:
+            case ShareInfoLevel.Info1:
                NativeMethods.ShareInfo1 s1 = (NativeMethods.ShareInfo1)shareInfo;
                CurrentUses = 0;
                MaxUses = 0;
@@ -88,7 +88,9 @@ namespace Alphaleonis.Win32.Network
                break;
          }
 
+         
          NetFullPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Filesystem.Path.UncPrefix, ServerName, Filesystem.Path.DirectorySeparatorChar, NetName);
+
          ShareLevel = shareLevel;
       }
 
@@ -223,7 +225,7 @@ namespace Alphaleonis.Win32.Network
          get
          {
             if (_shareResourceType == ShareResourceTypes.None && !Utils.IsNullOrWhiteSpace(NetName))
-               _shareResourceType = (Host.GetShareInfoInternal(1005, ServerName, NetName, true)).ResourceType;
+               _shareResourceType = (Host.GetShareInfoInternal(ShareInfoLevel.Info1005, ServerName, NetName, true)).ResourceType;
 
             return _shareResourceType;
          }
@@ -233,11 +235,10 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // ResourceType
 
-
       #region ShareLevel
 
-      /// <summary>The structure level for the ShareInfo instance. Possible structure levels: 503, 2, 1 and 1005.</summary>
-      public int ShareLevel { get; private set; }
+      /// <summary>The structure level for the ShareInfo instance.</summary>
+      public ShareInfoLevel ShareLevel { get; private set; }
 
       #endregion // ShareLevel
       

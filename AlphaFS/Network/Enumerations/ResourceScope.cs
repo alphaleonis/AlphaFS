@@ -23,39 +23,33 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>NETRESOURCE structure
-      /// <para>&#160;</para>
+      /// <summary>NETRESOURCE structure.
       /// <para>ResourceScope: The scope of the enumeration.</para>
       /// </summary>
       internal enum ResourceScope
       {
-         /// <summary>(1) RESOURCE_CONNECTED
-         /// <para>&#160;</para>
+         /// <summary>RESOURCE_CONNECTED
          /// <para>Enumerate all currently connected resources.</para>
          /// <para>The function ignores the <see cref="ResourceUsage"/> parameter.</para>
          /// </summary>
          Connected = 1,
 
-         /// <summary>(2) RESOURCE_GLOBALNET
-         /// <para>&#160;</para>
+         /// <summary>RESOURCE_GLOBALNET
          /// <para>Enumerate all resources on the network.</para>
          /// </summary>
          GlobalNet = 2,
 
-         /// <summary>(3) RESOURCE_REMEMBERED
-         /// <para>&#160;</para>
+         /// <summary>RESOURCE_REMEMBERED
          /// <para>Enumerate all remembered (persistent) connections.</para>
          /// <para>The function ignores the <see cref="ResourceUsage"/> parameter.</para>
          /// </summary>
          Remembered = 3,
 
-         /// <summary>(4) RESOURCE_RECENT</summary>
+         /// <summary>RESOURCE_RECENT</summary>
          Recent = 4,
 
-         /// <summary>(5) RESOURCE_CONTEXT
-         /// <para>&#160;</para>
-         /// <para>Enumerate only resources in the network context of the caller.</para>
-         /// <para>Specify this value for a Network Neighborhood view.</para>
+         /// <summary>RESOURCE_CONTEXT
+         /// <para>Enumerate only resources in the network context of the caller. Specify this value for a Network Neighborhood view.</para>
          /// <para>The function ignores the <see cref="ResourceUsage"/> parameter.</para>
          /// </summary>
          Context = 5

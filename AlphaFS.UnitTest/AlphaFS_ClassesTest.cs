@@ -1364,7 +1364,7 @@ namespace AlphaFS.UnitTest
                      Dump(store, -10);
 
                      // DFS shares (non SMB) cannot be retrieved.
-                     ShareInfo share = Host.GetShareInfo(1005, store.ServerName, store.ShareName, true);
+                     ShareInfo share = Host.GetShareInfo(ShareInfoLevel.Info1005, store.ServerName, store.ShareName, true);
                      Dump(share, -18);
                      Console.Write("\n");
                   }

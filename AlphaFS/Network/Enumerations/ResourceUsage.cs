@@ -25,50 +25,37 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>
-      ///   NETRESOURCE structure
-      ///   <para>&#160;</para>
+      /// <summary>NETRESOURCE structure.
       ///   <para>ResourceUsage: A set of bit flags describing how the resource can be used.</para>
-      ///   <para>&#160;</para>
       /// </summary>
-      /// <remarks>
-      ///   <para>Note that this member can be specified only if</para>
-      ///   <para>the <see cref="ResourceScope"/> member is equal to <see cref="ResourceScope.GlobalNet"/>.</para>
-      /// </remarks>
+      /// <remarks>Note that this member can be specified only if the <see cref="ResourceScope"/> member is equal to <see cref="ResourceScope.GlobalNet"/>.</remarks>
       [Flags]
       internal enum ResourceUsage
       {
-         /// <summary>(1) RESOURCEUSAGE_CONNECTABLE
-         /// <para>&#160;</para>
+         /// <summary>RESOURCEUSAGE_CONNECTABLE
          /// <para>The resource is a connectable resource.</para>
-         /// <para>The name pointed to by the lpRemoteName member can be passed</para>
-         /// <para>to the WNetAddConnection function to make a network connection.</para>
+         /// <para>The name pointed to by the lpRemoteName member can be passed to the WNetAddConnection function to make a network connection.</para>
          /// </summary>
          Connectable = 1,
 
-         /// <summary>(2) RESOURCEUSAGE_CONTAINER
-         /// <para>&#160;</para>
+         /// <summary>RESOURCEUSAGE_CONTAINER
          /// <para>The resource is a container resource.</para>
-         /// <para>The name pointed to by the lpRemoteName member can be passed</para>
-         /// <para>to the WNetOpenEnum function to enumerate the resources in the container.</para>
+         /// <para>The name pointed to by the lpRemoteName member can be passed to the WNetAddConnection function to make a network connection.</para>
          /// </summary>
          Container = 2,
 
-         /// <summary>(4) RESOURCEUSAGE_NOLOCALDEVICE
-         /// <para>&#160;</para>
+         /// <summary>RESOURCEUSAGE_NOLOCALDEVICE
          /// <para>The resource is not a local device.</para>
          /// </summary>
          NoLocalDevice = 4,
 
-         /// <summary>(8) RESOURCEUSAGE_SIBLING
-         /// <para>&#160;</para>
+         /// <summary>RESOURCEUSAGE_SIBLING
          /// <para>The resource is a sibling.</para>
          /// <para>This value is not used by Windows.</para>
          /// </summary>
          Sibling = 8,
 
-         /// <summary>(16) RESOURCEUSAGE_ATTACHED
-         /// <para>&#160;</para>
+         /// <summary>RESOURCEUSAGE_ATTACHED
          /// <para>The resource must be attached.</para>
          /// <para>This value specifies that a function to enumerate this resource should fail</para>
          /// <para>if the caller is not authenticated, even if the network permits enumeration without authentication.</para>
@@ -77,9 +64,7 @@ namespace Alphaleonis.Win32.Network
 
 
          /// <summary>RESOURCEUSAGE_ALL
-         /// <para>&#160;</para>
-         /// <para>Setting this value is equivalent to setting:</para>
-         /// <para><see cref="ResourceUsage.Connectable"/>, <see cref="ResourceUsage.Container"/>, and <see cref="ResourceUsage.Attached"/>.</para>
+         /// <para>Setting this value is equivalent to setting: <see cref="ResourceUsage.Connectable"/>, <see cref="ResourceUsage.Container"/>, and <see cref="ResourceUsage.Attached"/>.</para>
          /// </summary>
          All = (Connectable | Container | Attached)
       }

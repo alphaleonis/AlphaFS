@@ -36,35 +36,35 @@ namespace Alphaleonis.Win32.Network
       /// <summary>No volume state.</summary>
       None = 0,
 
-      /// <summary>The specified DFS root or link is in the normal state.
-      /// <para>Win32: DFS_VOLUME_STATE_OK = 0x00000001</para>
+      /// <summary>DFS_VOLUME_STATE_OK
+      /// <para>The specified DFS root or link is in the normal state.</para>
       /// </summary>
       Ok = 1,
 
-      /// <summary>The internal DFS database is inconsistent with the specified DFS root or link.
+      /// <summary>DFS_VOLUME_STATE_INCONSISTENT
+      /// <para>The internal DFS database is inconsistent with the specified DFS root or link.</para>
       /// <para>Attempts to repair the inconsistency have failed.</para>
-      /// <para>Win32: DFS_VOLUME_STATE_INCONSISTENT = 0x00000002</para>
       /// </summary>
       Inconsistent = 2,
 
-      /// <summary>The specified DFS root or link is offline or unavailable.
-      /// <para>Win32: DFS_VOLUME_STATE_OFFLINE = 0x00000003</para>
+      /// <summary>DFS_VOLUME_STATE_OFFLINE
+      /// <para>The specified DFS root or link is offline or unavailable.</para>
       /// </summary>
       Offline = 3,
 
-      /// <summary>The specified DFS root or link is available.
-      /// <para>Win32: DFS_VOLUME_STATE_ONLINE = 0x00000004</para>
+      /// <summary>DFS_VOLUME_STATE_ONLINE
+      /// <para>The specified DFS root or link is available.</para>
       /// </summary>
       Online = 4,
 
-      /// <summary>The system sets this flag if the root is associated with a stand-alone DFS namespace.
-      /// <para>Win32: DFS_VOLUME_FLAVOR_STANDALONE = 0x00000100</para>
+      /// <summary>DFS_VOLUME_FLAVOR_STANDALONE
+      /// <para>The system sets this flag if the root is associated with a stand-alone DFS namespace.</para>
       /// </summary>
       /// <remarks>Windows XP: This value is not supported.</remarks>
       FlavorStandalone = 256,
 
-      /// <summary>The system sets this flag if the root is associated with a domain-based DFS namespace.
-      /// <para>Win32: DFS_VOLUME_FLAVOR_AD_BLOB = 0x00000200</para>
+      /// <summary>DFS_VOLUME_FLAVOR_AD_BLOB
+      /// <para>The system sets this flag if the root is associated with a domain-based DFS namespace.</para>
       /// </summary>
       /// <remarks>Windows XP: This value is not supported.</remarks>
       FlavorAdBlob = 512

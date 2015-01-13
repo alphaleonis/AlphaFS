@@ -25,7 +25,9 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>SHARE_INFO_1005 - Contains information about the shared resource.</summary>
+      /// <summary>SHARE_INFO_1005
+      /// <para>Contains information about the shared resource.</para>
+      /// </summary>
       /// <remarks>This structure can be retrieved by calling the NetShareGetInfo function.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>

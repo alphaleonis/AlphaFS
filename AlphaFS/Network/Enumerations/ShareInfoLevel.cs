@@ -19,37 +19,28 @@
  *  THE SOFTWARE. 
  */
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-
 namespace Alphaleonis.Win32.Network
 {
-   internal static partial class NativeMethods
+   /// <summary>The <see cref="ShareInfo"/> information level.</summary>
+   public enum ShareInfoLevel
    {
-      /// <summary>Contains the name and type (domain-based or stand-alone) of a DFS namespace.</summary>
-      /// <remarks>Minimum supported client: Windows XP with SP1 [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
-      [Flags]
-      internal enum DfsNamespaceFlavors
-      {
-         /// <summary></summary>
-         Unknown = 0,
+      /// <summary>No specific information level used.</summary>
+      None = 0,
 
-         /// <summary>DFS_VOLUME_FLAVOR_STANDALONE
-         /// <para>Specifies a stand-alone DFS namespace.</para>
-         /// </summary>
-         Standalone = 256,
+      /// <summary>Contains information about the shared resource, including the name and type of the resource, and a comment associated with the resource.</summary>
+      Info1 = 1,
 
-         /// <summary>DFS_VOLUME_FLAVOR_AD_BLOB
-         /// <para>Specifies a domain-based DFS namespace.</para>
-         /// </summary>
-         AdBlob = 512,
+      /// <summary>Contains information about the shared resource, including the name, type, and permissions of the resource, comments associated with the resource,
+      /// the maximum number of concurrent connections, the number of current connections, the local path for the resource, and a password for the current connection.
+      /// </summary>
+      Info2 = 2,
 
-         /// <summary>DFS_VOLUME_FLAVORS bitmask (0x00000300)
-         /// <para>Used to extract the DFS namespace flavor.</para>
-         /// </summary>
-         All = 768
-      }
+      /// <summary>Contains information about the shared resource, including the server name, name of the resource, type, and permissions,
+      /// the number of connections, and other pertinent information.
+      /// </summary>
+      Info503 = 503,
+
+      /// <summary>Contains information about the shared resource.</summary>
+      Info1005 = 1005,
    }
 }
