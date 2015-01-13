@@ -23,26 +23,20 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Network
 {
-   /// <summary>
-   /// <para>Contains information about a DFS root or link target in a DFS namespace</para>
-   /// <para>or from the cache maintained by the DFS client.</para>
-   /// <para>Win32: DFS_STORAGE_INFO structure.</para>
+   /// <summary>DFS_STORAGE_INFO
+   /// <para>Contains information about a DFS root or link target in a DFS namespace or from the cache maintained by the DFS client. This class cannot be inherited.</para>
    /// </summary>
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
    public sealed class DfsStorage
    {
       #region Constructor
 
-      /// <summary>Initializes a new instance of the <see cref="DfsStorage"/> class,
-      /// <para>which acts as a wrapper for a DFS root or link target.</para>
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="DfsStorage"/> class, which acts as a wrapper for a DFS root or link target.</summary>
       public DfsStorage()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="DfsStorage"/> class,
-      /// <para>which acts as a wrapper for a DFS root or link target.</para>
-      /// </summary>
+      /// <summary>Initializes a new instance of the <see cref="DfsStorage"/> class, which acts as a wrapper for a DFS root or link target.</summary>
       /// <param name="structure">An initialized <see cref="NativeMethods.DfsStorageInfo"/> instance.</param>
       internal DfsStorage(NativeMethods.DfsStorageInfo structure)
       {
