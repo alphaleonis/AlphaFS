@@ -360,7 +360,7 @@
     <Compile Include="Network\Host Class\DriveConnection.cs" />
     <Compile Include="Network\Host Class\DistributedFileSystem.cs" />
     <Compile Include="Network\Host Class\Connect.cs" />
-    <Compile Include="Network\Host.cs" />
+    <Compile Include="Network\Host Class\Host.cs" />
     <Compile Include="Network\NativeMethods.cs" />
     <Compile Include="Network\OpenConnectionInfo.cs" />
     <Compile Include="Network\SafeNetApiBuffer.cs" />
