@@ -454,7 +454,7 @@ namespace Alphaleonis.Win32.Network
             connect = connect | NativeMethods.Connect.UpdateProfile;
 
          if (arguments.SaveCredentials)
-            connect = connect | NativeMethods.Connect.CmdSaveCred;
+            connect = connect | NativeMethods.Connect.SaveCredentialManager;
 
 
          // Initialize structure.

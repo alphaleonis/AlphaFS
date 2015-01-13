@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Network
          //CommandLine = 2048,
 
          /// <summary>If this flag is set, and the operating system prompts for a credential, the credential should be saved by the credential manager. If the credential manager is disabled for the caller's logon session, or if the network provider does not support saving credentials, this flag is ignored. This flag is also ignored unless you set the "CommandLine" flag.</summary>
-         CmdSaveCred = 4096
+         SaveCredentialManager = 4096
       }
    }
 }
