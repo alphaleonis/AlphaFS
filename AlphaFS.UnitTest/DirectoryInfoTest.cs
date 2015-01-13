@@ -418,17 +418,6 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
 
-      #region AddAlternateDataStream
-
-      [TestMethod]
-      public void AlphaFS_AddAlternateDataStream()
-      {
-         Console.WriteLine("DirectoryInfo.AddAlternateDataStream()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // AddAlternateDataStream
-
       #region CopyTo
 
       [TestMethod]
@@ -582,17 +571,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // AlphaFS_MoveTo
-
-      #region RemoveAlternateDataStream
-
-      [TestMethod]
-      public void AlphaFS_RemoveAlternateDataStream()
-      {
-         Console.WriteLine("DirectoryInfo.RemoveAlternateDataStream()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // RemoveAlternateDataStream
 
       #endregion // AlphaFS
 

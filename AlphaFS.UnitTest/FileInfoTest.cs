@@ -504,18 +504,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetAlternateDataStreamSize
-
-      #region RemoveAlternateDataStream
-
-      [TestMethod]
-      public void AlphaFS_RemoveAlternateDataStream()
-      {
-         Console.WriteLine("FileInfo.RemoveAlternateDataStream()");
-         Console.WriteLine("\nPlease see unit tests from class: File().");
-      }
-
-      #endregion // RemoveAlternateDataStream
-
+      
       #endregion // AlphaFS
 
       #endregion // Unit Test Callers
