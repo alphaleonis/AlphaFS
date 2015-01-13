@@ -38,16 +38,20 @@ namespace Alphaleonis.Win32.Network
       /// <returns>Returns <see cref="IEnumerable{T}"/> of DFS namespaces.</returns>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PlatformNotSupportedException"></exception>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
       [SecurityCritical]
       public static IEnumerable<DfsInfo> EnumerateDfsLinks(string dfsName)
       {
+         if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
+            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+
          if (Utils.IsNullOrWhiteSpace(dfsName))
             throw new ArgumentNullException("dfsName");
 
-         FunctionData fd = new FunctionData();
+         var fd = new FunctionData();
 
          return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo4 structure, SafeNetApiBuffer safeBuffer) =>
 
@@ -68,6 +72,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Enumerates the DFS namespaces from the local host.</summary>
       /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from the local host.</returns>
       /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PlatformNotSupportedException"></exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDfsRoot()
@@ -75,10 +80,11 @@ namespace Alphaleonis.Win32.Network
          return EnumerateDfsRootInternal(null, false);
       }
 
-      /// <summary>Enumerates the DFS namespaces from a remote host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from a remote host.</returns>
+      /// <summary>Enumerates the DFS namespaces from a host.</summary>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from a host.</returns>
       /// <exception cref="NetworkInformationException"></exception>
-      /// <param name="host">The DNS or NetBIOS name of a remote host.</param>
+      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <param name="host">The DNS or NetBIOS name of a host.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
@@ -94,6 +100,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Enumerates the DFS namespaces from the domain.</summary>
       /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from the domain.</returns>
       /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PlatformNotSupportedException"></exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDomainDfsRoot()
@@ -104,6 +111,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Enumerates the DFS namespaces from a domain.</summary>
       /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
       /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PlatformNotSupportedException"></exception>
       /// <param name="domain">A domain name.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
@@ -121,6 +129,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Gets information about a DFS root or link from the cache maintained by the DFS client.</summary>
       /// <returns>Returns a <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PlatformNotSupportedException"></exception>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
@@ -133,6 +142,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Gets information about a DFS root or link from the cache maintained by the DFS client.</summary>
       /// <returns>Returns a <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PlatformNotSupportedException"></exception>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       /// <param name="serverName">The name of the DFS root target or link target server.</param>
       /// <param name="shareName">The name of the share corresponding to the DFS root target or link target.</param>
@@ -151,6 +161,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Gets information about a specified DFS root or link in a DFS namespace.</summary>
       /// <returns>Returns a <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PlatformNotSupportedException"></exception>
       /// <param name="dfsName">The Universal Naming Convention (UNC) path of a DFS root or link.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
@@ -165,18 +176,20 @@ namespace Alphaleonis.Win32.Network
 
       #region Internal Methods
 
-      #region EnumerateDfsRootInternal
-
-      /// <summary>Unified method EnumerateDfsRootInternal() to enumerate the DFS namespaces from a remote host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from a remote host.</returns>
+      /// <summary>Unified method EnumerateDfsRootInternal() to enumerate the DFS namespaces from a host.</summary>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from a host.</returns>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <exception cref="NetworkInformationException"></exception>
-      /// <param name="host">The DNS or NetBIOS name of a remote host.</param>
+      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <param name="host">The DNS or NetBIOS name of a host.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDfsRootInternal(string host, bool continueOnException)
       {
+         if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
+            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+
          return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo300 structure, SafeNetApiBuffer safeBuffer) =>
 
             new DfsInfo { EntryPath = structure.DfsName },
@@ -196,20 +209,21 @@ namespace Alphaleonis.Win32.Network
             }, continueOnException).Select(dfs => dfs.EntryPath);
       }
 
-      #endregion // EnumerateDfsRootInternal
-
-      #region EnumerateDomainDfsRootInternal
 
       /// <summary>Unified method EnumerateDomainDfsRootInternal() to enumerate the DFS namespaces from a domain.</summary>
       /// <returns>Returns <see cref="IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PlatformNotSupportedException"></exception>
       /// <param name="domain">A domain name.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDomainDfsRootInternal(string domain, bool continueOnException)
       {
+         if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
+            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+
          return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo200 structure, SafeNetApiBuffer safeBuffer) =>
 
             new DfsInfo { EntryPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Path.UncPrefix, NativeMethods.ComputerDomain, Path.DirectorySeparatorChar, structure.FtDfsName) },
@@ -229,13 +243,11 @@ namespace Alphaleonis.Win32.Network
             }, continueOnException).Select(dfs => dfs.EntryPath);
       }
 
-      #endregion // EnumerateDomainDfsRootInternal
-
-      #region GetDfsInfoInternal
 
       /// <summary>Retrieves information about a specified DFS root or link in a DFS namespace.</summary>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PlatformNotSupportedException"></exception>
       /// <param name="getFromClient">
       ///   <see langword="true"/> retrieves information about a Distributed File System (DFS) root or link from the cache maintained by the
       ///   DFS client. When <see langword="false"/> retrieves information about a specified Distributed File System (DFS) root or link in a
@@ -257,6 +269,9 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static DfsInfo GetDfsInfoInternal(bool getFromClient, string dfsName, string serverName, string shareName)
       {
+         if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
+            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+
          if (Utils.IsNullOrWhiteSpace(dfsName))
             throw new ArgumentNullException("dfsName");
 
@@ -299,8 +314,6 @@ namespace Alphaleonis.Win32.Network
 
          return null;
       }
-
-      #endregion // GetDfsInfoInternal
 
       #endregion // Internal Methods
    }
