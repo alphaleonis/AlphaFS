@@ -28,16 +28,18 @@ namespace Alphaleonis.Win32.Filesystem
    /// Most likely, some processing will happen on the results of the enum. The file or directory may be passed
    /// on to another function. Whenever a file path is required, some performance can be gained.
    /// <para>&#160;</para>
-   /// A path like: "C:\Windows" or "\\server\share" is considered a full path for a directory because it is rooted.
+   /// A path like: "C:\Windows" or "\\server\share" is considered a full path for a directory because it is rooted and has a drive/unc path.
    /// If the method supports it, <see cref="PathFormat.FullPath"/> and <see cref="PathFormat.LongFullPath"/> will skip GetFullPath()
    /// calls for path resolving of the object, while also avoiding path validation and checks.
    /// Using <see cref="PathFormat.RelativePath"/> (default) will always call GetFullPath() and perform path validation and checks.
+   /// <para>&#160;</para>
+   /// When working in a loop with thousands of files, <see cref="PathFormat.LongFullPath"/> will give the best performance.
    /// </remarks>
    public enum PathFormat
    {
       /// <summary>The format of the path is automatically detected by the method and internally converted to an extended length path.
       /// It can be either a standard (short) full path, an extended length (unicode) full path or a relative path.
-      /// <para>Example relative path: "Windows" or "\Windows".</para>
+      /// <para>Example relative path: "Windows".</para>
       /// </summary>
       RelativePath,
 
