@@ -21,7 +21,6 @@ Version 1.6
 * Mod: Enabled KernelTransaction parameter for all Win32 API functions that support it.
 * Mod: Added public read only properties to class FileSystemInfo(). Available for: DirectoryInfo() / FileInfo():
 	* EntryInfo	 : Instance of the FileSystemEntryInfo() class.
-	* LengthStreams: Retrieves the actual number of bytes of disk storage used by all streams (NTFS ADS).
 	* Transaction  : Represents the KernelTransaction that was passed to the constructor.	
 * Mod: Added more entries to enum ReparsePointTag.
 * Mod: Removed method Directory.CountFiles() and added method Directory.CountFileSystemObjects().	
@@ -51,12 +50,9 @@ Version 1.6
 * Mod: Class DiskSpaceInfo() properties added.
 * Mod: Added method DiskSpaceInfo.Refresh().
 * Mod: Refactored Path() class.
+* Mod: Improved upon the correct (.NET) exceptions thrown. Added AlphaFS specific: DirectoryReadOnlyException.
 * Removed classes PathInfoXxx().
 * Removed method Path.IsValidPath(), was part of PathInfo() class.
-* Improved upon the correct exceptions thrown, resulting in the removal of Alpha Exception types:
-* Removed AlreadyExistsException.
-* Removed DeviceNotReadyException.
-* Removed DirectoryNotEmptyException.
 * Removed IllegalPathException.
 * Removed enum DriveType in favor of System.IO.DriveType enum.
 * Removed enum FileAccess in favor of System.IO.FileAccess enum.

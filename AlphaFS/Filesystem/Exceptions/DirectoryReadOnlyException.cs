@@ -25,34 +25,34 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>The operation could not be completed because the directory was not empty.</summary>
+   /// <summary>The operation could not be completed because the directory is read-only.</summary>
    [Serializable]
-   public class DirectoryNotEmptyException : System.IO.IOException
+   public class DirectoryReadOnlyException : System.IO.IOException
    {
       private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_DIR_NOT_EMPTY);
 
-      /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
-      public DirectoryNotEmptyException() : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is not empty", Win32Errors.ERROR_DIR_NOT_EMPTY), s_errorCode)
+      /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
+      public DirectoryReadOnlyException() : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is read-only", Win32Errors.ERROR_FILE_READ_ONLY), s_errorCode)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public DirectoryNotEmptyException(string message) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is not empty: [{1}]", Win32Errors.ERROR_DIR_NOT_EMPTY, message), s_errorCode)
+      public DirectoryReadOnlyException(string message) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), s_errorCode)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public DirectoryNotEmptyException(string message, Exception innerException) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is not empty: [{1}]", Win32Errors.ERROR_DIR_NOT_EMPTY, message), innerException)
+      public DirectoryReadOnlyException(string message, Exception innerException) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), innerException)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="DirectoryNotEmptyException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
-      protected DirectoryNotEmptyException(SerializationInfo info, StreamingContext context) : base(info, context)
+      protected DirectoryReadOnlyException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
    }

@@ -318,8 +318,8 @@ namespace Alphaleonis.Win32.Filesystem
             {
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   if (requireEmpty)
-                     // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory. 
-                     NativeError.ThrowException(lastError, pathLp);
+                     // MSDN: .NET 3.5+: IOException: The directory specified by path is not an empty directory. 
+                     throw new DirectoryNotEmptyException(pathLp);
 
                   goto startRemoveDirectory;
 
@@ -350,7 +350,7 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                      {
-                        // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory.
+                        // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
 
                         if (ignoreReadOnly)
                         {
@@ -359,8 +359,8 @@ namespace Alphaleonis.Win32.Filesystem
                            goto startRemoveDirectory;
                         }
 
-                        // MSDN: .NET 3.5+: IOException: The directory is read-only or contains a read-only file.
-                        NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, pathLp);
+                        // MSDN: .NET 3.5+: IOException: The directory is read-only.
+                        throw new DirectoryReadOnlyException(pathLp);
                      }
                   }
 

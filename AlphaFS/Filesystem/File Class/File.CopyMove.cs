@@ -1228,7 +1228,7 @@ namespace Alphaleonis.Win32.Filesystem
                            {
                               if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                               {
-                                 // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only, or recursive is false and path is not an empty directory.
+                                 // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
 
                                  if (overwrite)
                                  {
