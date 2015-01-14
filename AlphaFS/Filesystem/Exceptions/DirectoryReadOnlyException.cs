@@ -29,7 +29,7 @@ namespace Alphaleonis.Win32.Filesystem
    [Serializable]
    public class DirectoryReadOnlyException : System.IO.IOException
    {
-      private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_DIR_NOT_EMPTY);
+      private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_FILE_READ_ONLY);
 
       /// <summary>Initializes a new instance of the <see cref="DirectoryReadOnlyException"/> class.</summary>
       public DirectoryReadOnlyException() : base(string.Format(CultureInfo.CurrentCulture, "({0}) The directory is read-only", Win32Errors.ERROR_FILE_READ_ONLY), s_errorCode)
