@@ -64,10 +64,8 @@ Version 1.6
 * Removed enum FileType, obsolete.
 * Removed enum EnumerationExceptionDecision, obsolete.
 * Removed enum IoControlCode.cs, obsolete.
-* Renamed enum BackupStreamType to StreamType.
 * Renamed enum CopyProgressResult to CopyMoveProgressResult.
 * Renamed enum MoveFileOptions to MoveOptions.
-* Renamed class BackupStreamInfo to AlternateDataStreamInfo.
 * Renamed class DeviceIo to Device.
 * Renamed delegate CopyProgressResult to CopyMoveProgressResult.
 
