@@ -66,11 +66,11 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDrivesInternal(string host, bool continueOnException)
       {
-         return EnumerateNetworkObjectInternal(new FunctionData { EnumType = 1 }, (string structure, SafeNetApiBuffer safeBuffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData { EnumType = 1 }, (string structure, IntPtr buffer) =>
 
             structure,
 
-            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resume) =>
+            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resume) =>
             {
                // When host == null, the local computer is used.
                // However, the resulting OpenResourceInfo.Host property will be empty.
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Network
 
                string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
-               return NativeMethods.NetServerDiskEnum(stripUnc, 0, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resume);
+               return NativeMethods.NetServerDiskEnum(stripUnc, 0, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resume);
 
             }, continueOnException);
       }

@@ -189,11 +189,11 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(share))
             throw new ArgumentNullException("share");
 
-         return EnumerateNetworkObjectInternal(new FunctionData { ExtraData1 = share }, (NativeMethods.ConnectionInfo1 structure, SafeNetApiBuffer safeBuffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData { ExtraData1 = share }, (NativeMethods.ConnectionInfo1 structure, IntPtr buffer) =>
 
                new OpenConnectionInfo(host, structure),
 
-            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                // When host == null, the local computer is used.
                // However, the resulting OpenResourceInfo.Host property will be empty.
@@ -201,7 +201,7 @@ namespace Alphaleonis.Win32.Network
                // Furthermore, the UNC prefix: \\ is not required and always removed.
                string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
-               return NativeMethods.NetConnectionEnum(stripUnc, functionData.ExtraData1, 1, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
+               return NativeMethods.NetConnectionEnum(stripUnc, functionData.ExtraData1, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
             },
             continueOnException);
@@ -224,17 +224,18 @@ namespace Alphaleonis.Win32.Network
          // However, the resulting OpenResourceInfo.Host property will be empty.
          // So, explicitly state Environment.MachineName to prevent this.
          // Furthermore, the UNC prefix: \\ is not required and always removed.
-         string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+         string stripUnc = Utils.IsNullOrWhiteSpace(host)
+            ? Environment.MachineName
+            : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
          var fd = new FunctionData();
          bool hasItems = false;
 
          // Try ShareInfo503 structure.
-         foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo503 structure, SafeNetApiBuffer safeBuffer) =>
+         foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo503 structure, IntPtr buffer) =>
             new ShareInfo(stripUnc, ShareInfoLevel.Info503, structure),
-            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-               NativeMethods.NetShareEnum(stripUnc, 503, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
-            continueOnException))
+            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+               NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
          {
             yield return si;
             hasItems = true;
@@ -243,11 +244,10 @@ namespace Alphaleonis.Win32.Network
          // ShareInfo503 is requested, but not supported/possible.
          // Try again with ShareInfo2 structure.
          if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo2 structure, SafeNetApiBuffer safeBuffer) =>
+            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo2 structure, IntPtr buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info2, structure),
-               (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                  NativeMethods.NetShareEnum(stripUnc, 2, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
-               continueOnException))
+               (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+                  NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
             {
                yield return si;
                hasItems = true;
@@ -256,11 +256,10 @@ namespace Alphaleonis.Win32.Network
          // ShareInfo2 is requested, but not supported/possible.
          // Try again with ShareInfo1 structure.
          if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo1 structure, SafeNetApiBuffer safeBuffer) =>
+            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo1 structure, IntPtr buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info1, structure),
-               (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                  NativeMethods.NetShareEnum(stripUnc, 1, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle),
-               continueOnException))
+               (FunctionData functionData, out  IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+                  NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
             {
                yield return si;
             }

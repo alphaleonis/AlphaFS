@@ -53,14 +53,14 @@ namespace Alphaleonis.Win32.Network
 
          var fd = new FunctionData();
 
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo4 structure, SafeNetApiBuffer safeBuffer) =>
+         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo4 structure, IntPtr buffer) =>
 
             new DfsInfo(structure),
 
-            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle1) =>
+            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle1) =>
             {
                totalEntries = 0;
-               return NativeMethods.NetDfsEnum(dfsName, 4, prefMaxLen, out safeBuffer, out entriesRead, out resumeHandle1);
+               return NativeMethods.NetDfsEnum(dfsName, 4, prefMaxLen, out buffer, out entriesRead, out resumeHandle1);
 
             }, false);
       }
@@ -190,11 +190,11 @@ namespace Alphaleonis.Win32.Network
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo300 structure, SafeNetApiBuffer safeBuffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo300 structure, IntPtr buffer) =>
 
             new DfsInfo { EntryPath = structure.DfsName },
 
-            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                totalEntries = 0;
 
@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Network
                // Furthermore, the UNC prefix: \\ is not required and always removed.
                string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
-               return NativeMethods.NetDfsEnum(stripUnc, 300, prefMaxLen, out safeBuffer, out entriesRead, out resumeHandle);
+               return NativeMethods.NetDfsEnum(stripUnc, 300, prefMaxLen, out buffer, out entriesRead, out resumeHandle);
 
             }, continueOnException).Select(dfs => dfs.EntryPath);
       }
@@ -224,11 +224,11 @@ namespace Alphaleonis.Win32.Network
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo200 structure, SafeNetApiBuffer safeBuffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo200 structure, IntPtr buffer) =>
 
             new DfsInfo { EntryPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Path.UncPrefix, NativeMethods.ComputerDomain, Path.DirectorySeparatorChar, structure.FtDfsName) },
 
-            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                totalEntries = 0;
 
@@ -238,7 +238,7 @@ namespace Alphaleonis.Win32.Network
                // Furthermore, the UNC prefix: \\ is not required and always removed.
                string stripUnc = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathInternal(domain, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
-               return NativeMethods.NetDfsEnum(stripUnc, 200, prefMaxLen, out safeBuffer, out entriesRead, out resumeHandle);
+               return NativeMethods.NetDfsEnum(stripUnc, 200, prefMaxLen, out buffer, out entriesRead, out resumeHandle);
 
             }, continueOnException).Select(dfs => dfs.EntryPath);
       }

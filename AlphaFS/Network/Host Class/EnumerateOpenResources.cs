@@ -91,11 +91,11 @@ namespace Alphaleonis.Win32.Network
 
          var fd = new FunctionData { ExtraData1 = basePath, ExtraData2 = typeName };
 
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.FileInfo3 structure, SafeNetApiBuffer safeBuffer) =>
+         return EnumerateNetworkObjectInternal(fd, (NativeMethods.FileInfo3 structure, IntPtr buffer) =>
 
             new OpenResourceInfo(host, structure),
 
-            (FunctionData functionData, out SafeNetApiBuffer safeBuffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                // When host == null, the local computer is used.
                // However, the resulting OpenResourceInfo.Host property will be empty.
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Network
                // Furthermore, the UNC prefix: \\ is not required and always removed.
                string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
-               return NativeMethods.NetFileEnum(stripUnc, fd.ExtraData1, fd.ExtraData2, 3, out safeBuffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
+               return NativeMethods.NetFileEnum(stripUnc, fd.ExtraData1, fd.ExtraData2, 3, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
             },
             continueOnException);
