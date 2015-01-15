@@ -50,7 +50,7 @@ Version 1.6
 * Mod: Class DiskSpaceInfo() properties added.
 * Mod: Added method DiskSpaceInfo.Refresh().
 * Mod: Refactored Path() class.
-* Mod: Improved upon the correct (.NET) exceptions thrown. Added AlphaFS specific: DirectoryReadOnlyException.
+* Mod: Improved upon the correct (.NET) exceptions thrown. Added AlphaFS specific: DirectoryReadOnlyException and FileReadOnlyException.
 * Removed classes PathInfoXxx().
 * Removed method Path.IsValidPath(), was part of PathInfo() class.
 * Removed IllegalPathException.
