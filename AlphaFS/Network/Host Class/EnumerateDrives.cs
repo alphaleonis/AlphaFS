@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Network
    partial class Host
    {
       /// <summary>Enumerates drives from the local host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{T}"/> drives from the local host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{String}"/> drives from the local host.</returns>
       /// <exception cref="NetworkInformationException"></exception>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDrives()

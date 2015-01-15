@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateShares
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{T}"/> shares from the specified host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares()
       {

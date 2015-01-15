@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateDfsLinks
 
       /// <summary>Enumerates the DFS Links from a DFS namespace.</summary>
-      /// <returns>Returns <see cref="IEnumerable{T}"/> of DFS namespaces.</returns>
+      /// <returns>Returns <see cref="IEnumerable{DfsInfo}"/> of DFS namespaces.</returns>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <exception cref="NetworkInformationException"></exception>
       /// <exception cref="PlatformNotSupportedException"></exception>

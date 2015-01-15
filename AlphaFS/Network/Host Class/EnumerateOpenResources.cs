@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateOpenResources
 
       /// <summary>Enumerates open resources from the local host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{T}"/> open resources from the local host.</returns>
+      /// <returns>Returns <see cref="IEnumerable{OpenResourceInfo}"/> open resources from the local host.</returns>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <exception cref="NetworkInformationException"></exception>
       [SecurityCritical]
