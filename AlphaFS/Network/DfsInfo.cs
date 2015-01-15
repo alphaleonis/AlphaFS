@@ -42,16 +42,8 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class, which acts as a wrapper for a DFS root or link target.</summary>
       /// <param name="structure">An initialized <see cref="NativeMethods.DfsInfo4"/> instance.</param>
-      internal DfsInfo(NativeMethods.DfsInfo4 structure) : this(null, structure)
+      internal DfsInfo(NativeMethods.DfsInfo4 structure)
       {
-      }
-
-      /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class, which acts as a wrapper for a DFS root or link target.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="structure">An initialized <see cref="NativeMethods.DfsInfo4"/> instance.</param>
-      private DfsInfo(KernelTransaction transaction, NativeMethods.DfsInfo4 structure)
-      {
-         Transaction = transaction;
          Comment = structure.Comment;
          EntryPath = structure.EntryPath;
          State = structure.State;
@@ -93,7 +85,7 @@ namespace Alphaleonis.Win32.Network
          {
             // Do not use ?? expression here.
             if (_directoryInfo == null)
-               _directoryInfo = new DirectoryInfo(Transaction, EntryPath, PathFormat.RelativePath);
+               _directoryInfo = new DirectoryInfo(null, EntryPath, PathFormat.FullPath);
 
             return _directoryInfo;
          }
@@ -156,19 +148,6 @@ namespace Alphaleonis.Win32.Network
       public ulong Timeout { get; internal set; }
 
       #endregion // Timeout
-
-      #region Transaction
-
-      [NonSerialized] private KernelTransaction _transaction;
-
-      /// <summary>The transaction associated with the DirectoryInfo instance of the DFS root or link.</summary>
-      public KernelTransaction Transaction
-      {
-         get { return _transaction; }
-         internal set { _transaction = value; }
-      }
-
-      #endregion // Transaction
 
       #endregion // Properties
    }
