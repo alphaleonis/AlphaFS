@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region VolumeSerialNumber
 
-      /// <summary>Gets the the serial number of the volume that contains a file.</summary>
+      /// <summary>Gets the serial number of the volume that contains a file.</summary>
       /// <value>The serial number of the volume that contains a file.</value>
       public uint VolumeSerialNumber { get; private set; }
 

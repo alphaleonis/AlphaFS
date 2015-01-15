@@ -696,7 +696,7 @@ namespace AlphaFS.UnitTest
       public void GetDfsInfo()
       {
          Console.WriteLine("Network.Host.GetDfsInfo()");
-         Console.WriteLine("\nPlease see unit test: EnumerateDfsRoot()()");
+         Console.WriteLine("\nPlease see unit test: EnumerateDfsRoot()");
       }
 
       #endregion // GetDfsInfo

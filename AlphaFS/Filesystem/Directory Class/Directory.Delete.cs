@@ -235,7 +235,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove. Use either <paramref name="path"/> or <paramref name="fileSystemEntryInfo"/>, not both.</param>
       /// <param name="recursive"><see langword="true"/> to remove all files and subdirectories recursively; <see langword="false"/> otherwise only the top level empty directory.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only attribute of files and directories.</param>
-      /// <param name="requireEmpty"><see langword="true"/> requires the the directory must be empty.</param>
+      /// <param name="requireEmpty"><see langword="true"/> requires the directory must be empty.</param>
       /// <param name="continueOnNotExist"><see langword="true"/> does not throw an Exception when the file system object does not exist.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
