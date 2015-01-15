@@ -448,18 +448,16 @@ namespace AlphaFS.UnitTest
 
                fileInfo.CopyTo(fullPathDestination);
             }
-            catch (Exception ex)
+            catch (UnauthorizedAccessException ex)
             {
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             finally
             {
@@ -471,7 +469,6 @@ namespace AlphaFS.UnitTest
                Directory.Delete(tempPath, true, true);
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-
             Console.WriteLine();
 
             #endregion // UnauthorizedAccessException
@@ -484,21 +481,20 @@ namespace AlphaFS.UnitTest
             try
             {
                Console.WriteLine("\nCatch: [{0}]: sourceFileName was not found.", expectedException);
+               
                File.Copy(isLocal ? fileSource : Path.LocalToUnc(fileSource), isLocal ? fileDestination : Path.LocalToUnc(fileDestination));
             }
-            catch (Exception ex)
+            catch (FileNotFoundException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -513,28 +509,27 @@ namespace AlphaFS.UnitTest
             try
             {
                Console.WriteLine("\nCatch: [{0}]: The path specified in sourceFileName or destFileName is invalid (for example, it is on an unmapped drive).", expectedException);
+               
                File.Copy(fullPathSource, fullPathDestination);
             }
-            catch (Exception ex)
+            catch (DirectoryNotFoundException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));               
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
 
             #endregion // DirectoryNotFoundException
 
-            #region IOException #1
+            #region IOException #1 (AlreadyExistsException)
 
             Directory.CreateDirectory(folderSource);
             Directory.CreateDirectory(folderDestination);
@@ -542,25 +537,25 @@ namespace AlphaFS.UnitTest
             using (File.Create(fullPathDestination)) { }
 
             expectedLastError = (int)Win32Errors.ERROR_FILE_EXISTS;
+            expectedException = "System.IO.IOException";
             exception = false;
             try
             {
                Console.WriteLine("\nCatch: [{0}]: destFileName exists and overwrite is false.", expectedException);
+
                File.Copy(fullPathSource, fullPathDestination);
             }
-            catch (Exception ex)
+            catch (AlreadyExistsException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (ex is IOException)
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -568,7 +563,7 @@ namespace AlphaFS.UnitTest
             Directory.Delete(folderSource, true);
             Directory.Delete(folderDestination, true);
 
-            #endregion // IOException #1
+            #endregion // IOException #1 (AlreadyExistsException)
 
             #region IOException #2
 
@@ -592,20 +587,18 @@ namespace AlphaFS.UnitTest
                   File.Copy(file, folderfileName, true);
                }
             }
-            catch (Exception ex)
+            catch (AlreadyExistsException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (ex is IOException)
-               {
-                  exception = true;
-                  Directory.Delete(folderfileName);
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Directory.Delete(folderfileName);
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -625,7 +618,7 @@ namespace AlphaFS.UnitTest
                string newFile = Path.Combine(tempPath, Path.GetFileName(file, true));
                File.Copy(file, newFile);
 
-               // A read-only file triggers UnauthorizedAccessException when copying again.
+               // Set the first file as read-only to trigger an Exception when copying again.
                if (cnt == 0)
                {
                   File.SetAttributes(newFile, FileAttributes.ReadOnly);
@@ -640,15 +633,6 @@ namespace AlphaFS.UnitTest
             Console.WriteLine();
 
             #endregion // Copy
-
-            // Copy again, use overwrite to prevent IOException: destFileName exists and overwrite is false.
-
-            #region Remove Read-Only Attribute, Copy Again
-
-            Console.WriteLine("\nRemove read-only attribute and copy again.");
-
-            // Remove read-only attribute and copy again.
-            //File.SetAttributes(readOnlyDestination, FileAttributes.Normal);
 
             #region Preserve Timestamps
 
@@ -670,15 +654,12 @@ namespace AlphaFS.UnitTest
             File.SetCreationTime(preserveReadOnlySource, creationTime);
             File.SetLastAccessTime(preserveReadOnlySource, lastAccessTime);
             File.SetLastWriteTime(preserveReadOnlySource, lastWriteTime);
-
-            #endregion Preserve Timestamps
-
+            
             StopWatcher(true);
 
             // 3rd parameter CopyOptions.None: overwrite existing.
             // 4rd parameter true: preserve timestamps of source.
             File.Copy(preserveReadOnlySource, readOnlyDestination, CopyOptions.None, true);
-
 
             Console.WriteLine("\tFile copied.{0}", Reporter());
 
@@ -690,7 +671,7 @@ namespace AlphaFS.UnitTest
             Assert.AreEqual(File.GetLastWriteTime(readOnlyDestination), lastWriteTime, "File LastWriteTime should match.");
             Console.WriteLine("\nTimestamps are transferred.");
 
-            #endregion // Remove Read-Only Attribute, Copy Again
+            #endregion Preserve Timestamps
          }
          finally
          {
@@ -795,17 +776,15 @@ namespace AlphaFS.UnitTest
 
                File.Delete(sysDrive + @"\<>");
             }
+            catch (ArgumentException ex)
+            {
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+
+            }
             catch (Exception ex)
             {
-               string exceptionTypeName = ex.GetType().FullName;
-
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -826,7 +805,7 @@ namespace AlphaFS.UnitTest
 
                File.Delete(invalidPath);
             }
-            catch (Exception ex)
+            catch (NotSupportedException ex)
             {
                // win32Error is always 0 for local.
                if (!isLocal)
@@ -835,14 +814,12 @@ namespace AlphaFS.UnitTest
                   Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                }
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));  
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -860,20 +837,18 @@ namespace AlphaFS.UnitTest
 
                File.Delete(SysRoot32 + @"\kernel32.dll");
             }
-            catch (Exception ex)
+            catch (UnauthorizedAccessException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));  
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -903,8 +878,6 @@ namespace AlphaFS.UnitTest
                   exception = true;
                   Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
                }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -924,20 +897,18 @@ namespace AlphaFS.UnitTest
 
                File.Delete(tempPath);
             }
-            catch (Exception ex)
+            catch (UnauthorizedAccessException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + Win32Errors.ERROR_INVALID_PARAMETER + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Directory.Delete(tempPath);
@@ -962,20 +933,18 @@ namespace AlphaFS.UnitTest
 
                File.Delete(tempPath);
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             streamCreate2.Close();
@@ -983,7 +952,7 @@ namespace AlphaFS.UnitTest
 
             #endregion // IOException
 
-            #region UnauthorizedAccessException #2
+            #region UnauthorizedAccessException #2 (FileReadOnlyException)
 
             expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             expectedException = "System.UnauthorizedAccessException";
@@ -996,25 +965,23 @@ namespace AlphaFS.UnitTest
 
                File.Delete(tempPath);
             }
-            catch (Exception ex)
+            catch (FileReadOnlyException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + Win32Errors.ERROR_FILE_READ_ONLY + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
 
-            #endregion // UnauthorizedAccessException #2
+            #endregion // UnauthorizedAccessException #2 (FileReadOnlyException)
          }
          finally
          {
@@ -1537,19 +1504,17 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\nCatch: [{0}]: sourceFileName was not found.", expectedException);
                File.Move(isLocal ? fileSource : Path.LocalToUnc(fileSource), isLocal ? fileDestination : Path.LocalToUnc(fileDestination));
             }
-            catch (Exception ex)
+            catch (FileNotFoundException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));  
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -1566,19 +1531,17 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\nCatch: [{0}]: The path specified in sourceFileName or destFileName is invalid (for example, it is on an unmapped drive).", expectedException);
                File.Move(fullPathSource, fullPathDestination);
             }
-            catch (Exception ex)
+            catch (DirectoryNotFoundException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -1592,28 +1555,28 @@ namespace AlphaFS.UnitTest
             using (File.Create(fullPathSource)) { }
             using (File.Create(fullPathDestination)) { }
 
-            expectedLastError = (int)Win32Errors.ERROR_ALREADY_EXISTS;            
+            expectedLastError = (int)Win32Errors.ERROR_ALREADY_EXISTS;
+            expectedException = "System.IO.IOException";
             exception = false;
             try
             {
                Console.WriteLine("\nCatch: [{0}]: The destination file already exists.", expectedException);
+
                File.Move(fullPathSource, fullPathDestination);
             }
-            catch (Exception ex)
+            catch (AlreadyExistsException ex)
             {
                // win32Error is always 0
                //var win32Error = new Win32Exception("", ex);
                //Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (ex is IOException)
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));  
             }
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
@@ -1628,7 +1591,7 @@ namespace AlphaFS.UnitTest
             string folderfileName = null;
 
             expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
-            expectedException = "Alphaleonis.Win32.Filesystem.AlreadyExistsException";
+            expectedException = "System.IO.IOException";
             exception = false;
             try
             {
@@ -1645,20 +1608,14 @@ namespace AlphaFS.UnitTest
                   File.Move(file, folderfileName, MoveOptions.None);
                }
             }
-            catch (IOException ex)
+            catch (AlreadyExistsException ex)
             {
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
 
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Directory.Delete(folderfileName);
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught Unexpected Exception: [{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
+               exception = true;
+               Directory.Delete(folderfileName);
+               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
             catch (Exception ex)
             {

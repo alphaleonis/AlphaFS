@@ -1240,7 +1240,8 @@ namespace Alphaleonis.Win32.Filesystem
                                  // MSDN: .NET 3.5+: UnauthorizedAccessException: destinationFileName is read-only.
                                  // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                                  // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                                 NativeError.ThrowException(Win32Errors.ERROR_FILE_READ_ONLY, destFileNameLp);
+
+                                 throw new FileReadOnlyException(destFileNameLp);
                               }
 
                               // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists

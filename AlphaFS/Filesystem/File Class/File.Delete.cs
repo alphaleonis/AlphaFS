@@ -188,8 +188,7 @@ namespace Alphaleonis.Win32.Filesystem
                         }
 
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: Path specified a read-only file.
-                        throw new UnauthorizedAccessException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}: [{2}]",
-                           Win32Errors.ERROR_FILE_READ_ONLY, new Win32Exception((int)Win32Errors.ERROR_FILE_READ_ONLY).Message, pathLp));
+                        throw new FileReadOnlyException(pathLp);
                      }
                   }
 

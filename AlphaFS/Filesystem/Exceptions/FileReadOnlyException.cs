@@ -20,40 +20,37 @@
  */
 
 using System;
+using System.Globalization;
 using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>
-   /// The exception that is thrown when an attempt to create a directory or file that already exists was made.
-   /// </summary>
+   /// <summary>The operation could not be completed because the file is read-only.</summary>
    [Serializable]
-   public class AlreadyExistsException : System.IO.IOException
+   public class FileReadOnlyException : UnauthorizedAccessException
    {
-      private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_ALREADY_EXISTS);
-
-      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
-      public AlreadyExistsException() : base(Resources.EFileOrDirectoryAlreadyExists, s_errorCode)
+      /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
+      public FileReadOnlyException() : base(string.Format(CultureInfo.CurrentCulture, "({0}) The file is read-only.", Win32Errors.ERROR_FILE_READ_ONLY))
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="message">The message.</param>
-      public AlreadyExistsException(string message) : base(message, s_errorCode)
+      public FileReadOnlyException(string message) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The file is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message))
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="message">The message.</param>
       /// <param name="innerException">The inner exception.</param>
-      public AlreadyExistsException(string message, Exception innerException) : base(message, innerException)
+      public FileReadOnlyException(string message, Exception innerException) : base(string.Format(CultureInfo.CurrentCulture, "({0}) The file is read-only: [{1}]", Win32Errors.ERROR_FILE_READ_ONLY, message), innerException)
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
+      /// <summary>Initializes a new instance of the <see cref="FileReadOnlyException"/> class.</summary>
       /// <param name="info">The data for serializing or deserializing the object.</param>
       /// <param name="context">The source and destination for the object.</param>
-      protected AlreadyExistsException(SerializationInfo info, StreamingContext context) : base(info, context)
+      protected FileReadOnlyException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
    }

@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the reparse point tag of this entry.</summary>
       /// <value>The reparse point tag of this entry.</value>
-      internal ReparsePointTag ReparsePointTag
+      public ReparsePointTag ReparsePointTag
       {
          get { return IsReparsePoint ? _win32FindData.Reserved0 : ReparsePointTag.None; }
       }
