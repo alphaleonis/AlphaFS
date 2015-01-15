@@ -27,7 +27,10 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Retrieves information about the amount of space that is available on a disk volume, which is the total amount of space, the total amount of free space, and the total amount of free space available to the user that is associated with the calling thread.</summary>
+   /// <summary>Retrieves information about the amount of space that is available on a disk volume, which is the total amount of space,
+   /// the total amount of free space, and the total amount of free space available to the user that is associated with the calling thread.
+   /// <para>This class cannot be inherited.</para>
+   /// </summary>
    [SerializableAttribute]
    [SecurityCritical]
    public sealed class DiskSpaceInfo
@@ -107,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
             int lastError = (int) Win32Errors.NO_ERROR;
 
             #region Get size information.
-            
+
             if (_initGetSpaceInfo)
             {
                ulong freeBytesAvailable, totalNumberOfBytes, totalNumberOfFreeBytes;
@@ -161,19 +164,10 @@ namespace Alphaleonis.Win32.Filesystem
       private void Reset()
       {
          if (_initGetSpaceInfo)
-         {
-            FreeBytesAvailable =
-               TotalNumberOfBytes =
-                  TotalNumberOfFreeBytes = 0;
-         }
+            FreeBytesAvailable = TotalNumberOfBytes = TotalNumberOfFreeBytes = 0;
 
          if (_initGetClusterInfo)
-         {
-            BytesPerSector =
-               NumberOfFreeClusters =
-                  SectorsPerCluster =
-                     TotalNumberOfClusters = 0;
-         }
+            BytesPerSector = NumberOfFreeClusters = SectorsPerCluster = TotalNumberOfClusters = 0;
       }
 
       #endregion // Reset
@@ -210,7 +204,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Indicates the amount of available free space on a drive, formatted as a unit size.</summary>
       public string AvailableFreeSpaceUnitSize
       {
-         get { return Utils.UnitSizeToText(TotalNumberOfFreeBytes, UsePercentSuffix); }
+         get { return Utils.UnitSizeToText(TotalNumberOfFreeBytes); }
       }
 
       #endregion // AvailableFreeSpaceUnitSize
@@ -239,17 +233,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The total number of bytes on a disk that are available to the user who is associated with the calling thread, formatted as a unit size.</summary>
       public string TotalSizeUnitSize
       {
-         get { return Utils.UnitSizeToText(TotalNumberOfBytes, UsePercentSuffix); }
+         get { return Utils.UnitSizeToText(TotalNumberOfBytes); }
       }
 
       #endregion // TotalSizeUnitSize
-
-      #region UsePercentSuffix
-
-      /// <summary><see langword="true"/> = suffix with "%"</summary>
-      public bool UsePercentSuffix { get; set; }
-
-      #endregion // UsePercentSuffix
 
       #region UsedSpacePercent
 
@@ -269,7 +256,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Indicates the amount of used space on a drive, formatted as a unit size.</summary>
       public string UsedSpaceUnitSize
       {
-         get { return Utils.UnitSizeToText(TotalNumberOfBytes - FreeBytesAvailable, UsePercentSuffix); }
+         get { return Utils.UnitSizeToText(TotalNumberOfBytes - FreeBytesAvailable); }
       }
 
       #endregion // UsedSpaceUnitSize
@@ -278,7 +265,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region FreeBytesAvailable
 
       /// <summary>The total number of free bytes on a disk that are available to the user who is associated with the calling thread.</summary>
-      /// <remarks>GetDiskFreeSpaceEx()</remarks>
       public ulong FreeBytesAvailable { get; private set; }
 
       #endregion // FreeBytesAvailable
@@ -286,7 +272,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region TotalNumberOfBytes
 
       /// <summary>The total number of bytes on a disk that are available to the user who is associated with the calling thread.</summary>
-      /// <remarks>GetDiskFreeSpaceEx()</remarks>
       public ulong TotalNumberOfBytes { get; private set; }
 
       #endregion // TotalNumberOfBytes
@@ -294,7 +279,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region TotalNumberOfFreeBytes
 
       /// <summary>The total number of free bytes on a disk.</summary>
-      /// <remarks>GetDiskFreeSpaceEx()</remarks>
       public ulong TotalNumberOfFreeBytes { get; private set; }
 
       #endregion // TotalNumberOfFreeBytes
@@ -303,7 +287,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region BytesPerSector
 
       /// <summary>The number of bytes per sector.</summary>
-      /// <remarks>GetDiskFreeSpace()</remarks>
       public uint BytesPerSector { get; private set; }
 
       #endregion // BytesPerSector
@@ -311,7 +294,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region NumberOfFreeClusters
 
       /// <summary>The total number of free clusters on the disk that are available to the user who is associated with the calling thread.</summary>
-      /// <remarks>GetDiskFreeSpace()</remarks>
       public uint NumberOfFreeClusters { get; private set; }
 
       #endregion // NumberOfFreeClusters
@@ -319,7 +301,6 @@ namespace Alphaleonis.Win32.Filesystem
       #region SectorsPerCluster
 
       /// <summary>The number of sectors per cluster.</summary>
-      /// <remarks>GetDiskFreeSpace()</remarks>
       public uint SectorsPerCluster { get; private set; }
 
       #endregion // SectorsPerCluster
@@ -329,7 +310,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The total number of clusters on the disk that are available to the user who is associated with the calling thread.
       /// If per-user disk quotas are in use, this value may be less than the total number of clusters on the disk.
       /// </summary>
-      /// <remarks>GetDiskFreeSpace()</remarks>
       public uint TotalNumberOfClusters { get; private set; }
 
       #endregion // TotalNumberOfClusters
