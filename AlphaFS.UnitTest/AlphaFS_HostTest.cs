@@ -638,54 +638,7 @@ namespace AlphaFS.UnitTest
       public void GetDfsClientInfo()
       {
          Console.WriteLine("Network.Host.GetDfsClientInfo()");
-
-         int cnt = 0;
-         bool noDomainConnection = true;
-         StopWatcher(true);
-         try
-         {
-            foreach (string dfsLink in Host.EnumerateDomainDfsRoot())
-            {
-               noDomainConnection = false;
-
-               try
-               {
-                  foreach (string dir in Directory.EnumerateDirectories(dfsLink))
-                  {
-                     Console.Write("\n#{0:000}\tDFS Target Directory: [{1}]\n", ++cnt, dir);
-                     StopWatcher(true);
-                     Dump(Host.GetDfsClientInfo(dir).NumberOfStorages.First(), -10);
-                     Console.Write("\n\t{0}\n", Reporter(true));
-                     break;
-                  }
-               }
-               catch (NetworkInformationException ex)
-               {
-                  Console.WriteLine("\n\tNetworkInformationException #1: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               catch (Exception ex)
-               {
-                  Console.WriteLine("\n\tException (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-               }
-            }
-         }
-         catch (NetworkInformationException ex)
-         {
-            Console.WriteLine("\n\tNetworkInformationException #2: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tException (2): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         Console.WriteLine("\n\n\t{0}", Reporter(true));
-
-         if (noDomainConnection)
-            Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
-         else
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-
-         Console.WriteLine();
+         Console.WriteLine("\nPlease see unit test: Network_Class_DfsXxx()");
       }
 
       #endregion // GetDfsClientInfo
