@@ -22,6 +22,7 @@
 using Alphaleonis.Win32.Network;
 using System;
 using System.Globalization;
+using System.Net.NetworkInformation;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -32,7 +33,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the connection name of the locally mapped drive.</summary>
       /// <returns>The server and share as: \\servername\sharename.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="System.IO.PathTooLongException">When <paramref name="path"/> exceeds maximum path length.</exception>
+      /// <exception cref="NetworkInformationException"></exception>
       /// <param name="path">The local path with drive name.</param>
       [SecurityCritical]
       public static string GetMappedConnectionName(string path)
@@ -46,7 +50,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the network share name from the locally mapped path.</summary>
       /// <returns>The network share connection name of <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <exception cref="System.IO.PathTooLongException">When <paramref name="path"/> exceeds maximum path length.</exception>
+      /// <exception cref="NetworkInformationException"></exception>
       /// <param name="path">The local path with drive name.</param>
       [SecurityCritical]
       public static string GetMappedUncName(string path)
@@ -87,6 +94,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If a logical drive points to a network share path, the share path will be returned.</para>
       /// </summary>
       /// <returns>Returns a UNC path or <see langword="null"/> when <paramref name="localPath"/> is an empty string or <see langword="null"/>.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="System.IO.PathTooLongException">When <paramref name="localPath"/> exceeds maximum path length.</exception>
+      /// <exception cref="NetworkInformationException"></exception>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
       [SecurityCritical]
       public static string LocalToUnc(string localPath)
@@ -99,6 +110,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If a logical drive points to a network share path, the share path will be returned.</para>
       /// </summary>
       /// <returns>Returns a UNC path in long path format or <see langword="null"/> when <paramref name="localPath"/> is an empty string or <see langword="null"/>.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="System.IO.PathTooLongException">When <paramref name="localPath"/> exceeds maximum path length.</exception>
+      /// <exception cref="NetworkInformationException"></exception>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
       /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
       [SecurityCritical]
@@ -112,6 +127,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If a logical drive points to a network share path, the share path will be returned.</para>
       /// </summary>
       /// <returns>Returns a UNC path in long path format or <see langword="null"/> when <paramref name="localPath"/> is an empty string or <see langword="null"/>.</returns>      
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="System.IO.PathTooLongException">When <paramref name="localPath"/> exceeds maximum path length.</exception>
+      /// <exception cref="NetworkInformationException"></exception>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
       /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
       /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="localPath"/>, when absent.</param>
@@ -132,6 +151,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A UNC path or <see langword="null"/> when <paramref name="localPath"/> is an empty string or <see langword="null"/>.</returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="System.IO.PathTooLongException">When <paramref name="localPath"/> exceeds maximum path length.</exception>
+      /// <exception cref="NetworkInformationException"></exception>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
       /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
       /// <param name="trimEnd"><see langword="true"/> removes trailing whitespace from <paramref name="localPath"/>.</param>

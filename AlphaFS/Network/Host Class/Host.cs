@@ -158,9 +158,9 @@ namespace Alphaleonis.Win32.Network
       /// <summary>This method uses <see cref="NativeMethods.RemoteNameInfo"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
       /// <returns>A <see cref="NativeMethods.RemoteNameInfo"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid.</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="System.IO.PathTooLongException">When <paramref name="path"/> exceeds maximum path length.</exception>
       /// <exception cref="NetworkInformationException"></exception>
       /// <param name="path">The local path with drive name.</param>
       /// <param name="continueOnException">
@@ -188,53 +188,46 @@ namespace Alphaleonis.Win32.Network
 
          // Start with a large buffer to prevent multiple calls.
          uint bufferSize = 1024;
-         uint lastError;
+         var buffer = new IntPtr(bufferSize);
 
-         do
+         try
          {
-            using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int)bufferSize))
+            uint lastError;
+            do
             {
+               // Allocate the memory.
+               buffer = Marshal.AllocHGlobal((int) bufferSize);
+
                // Structure: UNIVERSAL_NAME_INFO_LEVEL = 1 (not used in AlphaFS).
                // Structure: REMOTE_NAME_INFO_LEVEL    = 2
-               lastError = NativeMethods.WNetGetUniversalName(path, 2, safeBuffer, out bufferSize);
+               lastError = NativeMethods.WNetGetUniversalName(path, 2, buffer, out bufferSize);
 
                switch (lastError)
                {
                   case Win32Errors.NO_ERROR:
-
-                     // CA2001:AvoidCallingProblematicMethods
-
-                     IntPtr buffer = IntPtr.Zero;
-                     bool successRef = false;
-                     safeBuffer.DangerousAddRef(ref successRef);
-
-                     // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
-                     if (successRef)
-                        buffer = safeBuffer.DangerousGetHandle();
-
-                     safeBuffer.DangerousRelease();
-
-                     if (buffer == IntPtr.Zero)
-                        NativeError.ThrowException(Resources.HandleDangerousRef);
-
-                     // CA2001:AvoidCallingProblematicMethods
-
-
                      return Utils.MarshalPtrToStructure<NativeMethods.RemoteNameInfo>(0, buffer);
 
                   case Win32Errors.ERROR_MORE_DATA:
-                     //bufferSize = Received the required buffer size.
+                     //bufferSize = Received the required buffer size, retry.
+
+                     if (buffer != IntPtr.Zero)
+                        Marshal.FreeHGlobal(buffer);
                      break;
                }
-            }
 
-         } while (lastError == Win32Errors.ERROR_MORE_DATA);
+            } while (lastError == Win32Errors.ERROR_MORE_DATA);
 
-         if (!continueOnException && lastError != Win32Errors.NO_ERROR)
-            throw new NetworkInformationException((int)lastError);
+            if (!continueOnException && lastError != Win32Errors.NO_ERROR)
+               throw new NetworkInformationException((int) lastError);
 
-         // Return an empty structure (all fields set to null).
-         return new NativeMethods.RemoteNameInfo();
+            // Return an empty structure (all fields set to null).
+            return new NativeMethods.RemoteNameInfo();
+         }
+         finally
+         {
+            if (buffer != IntPtr.Zero)
+               Marshal.FreeHGlobal(buffer);
+         }
       }
 
       #endregion // GetRemoteNameInfoInternal
