@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #endregion // Transacted
+      #endregion // Transactional
 
       #endregion // AppendAllLines
 
@@ -273,13 +273,14 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, true, false, pathFormat);
       }
 
-
-      #endregion // Transacted
+      #endregion // Transactional
 
 
       #endregion // AppendAllText
 
       #region WriteAllLines
+
+      #region .NET
 
       /// <summary>Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
@@ -299,10 +300,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.RelativePath);
       }
-
-      /// <summary>
-      ///   Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.
-      /// </summary>
+      
+      /// <summary>Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -322,6 +321,8 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, PathFormat.RelativePath);
       }
 
+      #endregion // .NET
+
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
       /// <param name="path">The file to write to.</param>
@@ -333,9 +334,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.
-      /// </summary>
+      /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -345,9 +344,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(null, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.
-      /// </summary>
+      /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -358,9 +355,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(null, path, contents, encoding, false, true, pathFormat);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.
-      /// </summary>
+      /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -373,7 +368,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transactional
 
-      /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
+      #region .NET
+      
+      /// <summary>Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
@@ -384,7 +381,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.RelativePath);
       }
 
-      /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
+      /// <summary>Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
@@ -395,9 +392,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.RelativePath);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.
-      /// </summary>
+      /// <summary>Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -408,9 +403,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, PathFormat.RelativePath);
       }
 
-      /// <summary>
-      ///   Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.
-      /// </summary>
+      /// <summary>Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -420,6 +413,8 @@ namespace Alphaleonis.Win32.Filesystem
       {
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, PathFormat.RelativePath);
       }
+
+      #endregion // .NET
 
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
@@ -433,8 +428,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
+      /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -445,9 +439,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.
-      /// </summary>
+      /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -459,9 +451,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, pathFormat);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.
-      /// </summary>
+      /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -473,7 +463,7 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, pathFormat);
       }
 
-      #endregion // Transacted
+      #endregion // Transactional
 
       #endregion // WriteAllLines
 
@@ -590,16 +580,13 @@ namespace Alphaleonis.Win32.Filesystem
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, pathFormat);
       }
 
-      #endregion // Transacted
+      #endregion // Transactional
 
       #endregion // WriteAllText
 
-      #region Internal
+      #region Internal Method
 
-      /// <summary>
-      ///   Unified method WriteAppendAllLinesInternal() to create/append a new file by using the specified encoding, writes a
-      ///   collection of strings to the file, and then closes the file.
-      /// </summary>
+      /// <summary>Unified method WriteAppendAllLinesInternal() to create/append a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
@@ -636,6 +623,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
       }
-      #endregion
+      
+      #endregion // Method
    }
 }

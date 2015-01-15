@@ -342,17 +342,16 @@ namespace AlphaFS.UnitTest
          string myStream = "ӍƔŞtrëƛɱ-" + random;
          string myStream2 = "myStreamTWO-" + random;
 
-         string myContent =
-            "(1) The quick brown fox jumps over the lazy dog" + 
-            "(2) Albert Einstein: \"Science is a wonderful thing if one does not have to earn one's living at it.\"" + 
+         var arrayContent = new[]
+         {
+            "(1) The quick brown fox jumps over the lazy dog.",
+            "(2) Albert Einstein: \"Science is a wonderful thing if one does not have to earn one's living at it.",
             "(3) " + TextHelloWorld + " " + TextUnicode
-         ;
+         };
 
-         string myContent2 = "(1) Computer: [" + LocalHost + "]" + "(2) Hello there, " + Environment.UserName;
+         string stringContent = "(1) Computer: [" + LocalHost + "]" + "\tHello there, " + Environment.UserName;
 
          #endregion // Setup
-
-         #region File
 
          #region Create Stream
 
@@ -378,24 +377,22 @@ namespace AlphaFS.UnitTest
 
          fileSize = File.GetSize(tempPath);
          Assert.AreEqual(TenNumbers.Length, fileSize);
+         
+         
+         // Create alternate data streams.
+         // Because of the colon, you must supply a full path and use PathFormat.FullPath or a NotSupportedException is thrown: path is in an invalid format.
 
+         File.WriteAllLines(tempPath + ":" + myStream, arrayContent, PathFormat.FullPath);
+         File.WriteAllText(tempPath + ":" + myStream2, stringContent, PathFormat.FullPath);
 
          StopWatcher(true);
-
-         // Create alternate data streams.
-
-         File.WriteAllText(tempPath + ":" + myStream, myContent, PathFormat.LongFullPath);
-         reporter = Reporter();
-         File.WriteAllText(tempPath + ":" + myStream2, myContent2, PathFormat.LongFullPath);
-
          newNumberofStreams = File.EnumerateAlternateDataStreams(tempPath).Count();
-
-
+         reporter = Reporter(true);
 
          // Enumerate all streams from the file.
          foreach (AlternateDataStreamInfo stream in fi.EnumerateAlternateDataStreams())
          {
-            Assert.IsTrue(Dump(stream, -11));
+            Assert.IsTrue(Dump(stream, -10));
 
             // The default stream, a file as you know it.
             if (stream.StreamName == "")
@@ -412,7 +409,7 @@ namespace AlphaFS.UnitTest
          {
             Console.WriteLine("\n\tStream name: [{0}]", streamName);
 
-            // Because of the colon, you must supply a full path and use isFullPath = true or a NotSupportedException is thrown: path is in an invalid format.
+            // Because of the colon, you must supply a full path and use PathFormat.FullPath or a NotSupportedException is thrown: path is in an invalid format.
             foreach (var line in File.ReadAllLines(tempPath + ":" + streamName, PathFormat.FullPath))
                Console.WriteLine("\t\t{0}", line);
          }
@@ -425,8 +422,6 @@ namespace AlphaFS.UnitTest
          File.Delete(tempPath);
          Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
          Console.WriteLine();
-
-         #endregion // File         
       }
 
       #endregion // DumpClassAlternateDataStreamInfo
