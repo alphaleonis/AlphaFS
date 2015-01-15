@@ -56,8 +56,8 @@ namespace Alphaleonis
       #region GetEnumDescription
 
       /// <summary>Gets an attribute on an enum field value.</summary>
+      /// <returns>The description belonging to the enum option, as a string</returns>
       /// <param name="enumValue">One of the <see cref="Alphaleonis.Win32.Filesystem.DeviceGuid"/> enum types.</param>
-      /// <returns></returns>
       [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
       public static string GetEnumDescription(Enum enumValue)
       {
@@ -102,11 +102,11 @@ namespace Alphaleonis
       }
 
       #endregion // MarshalPtrToStructure
-      
+
       #region UnitSizeToText
 
       /// <summary>Converts a number of type T to string with UnitSize or Percentage suffixed.</summary>
-      public static string UnitSizeToText<T>(T numberOfBytes, bool usePercent = false)
+      public static string UnitSizeToText<T>(T numberOfBytes)
       {
          string template = "{0:0.00}{1}";
          string sfx = "B";
@@ -120,11 +120,11 @@ namespace Alphaleonis
          else if (bytes >= 1048576) { sfx = "MB"; bytes /= 1048576; }
          else if (bytes >= 1024) { sfx = "KB"; bytes /= 1024; }
 
-         else if (!usePercent)
+         else
             // Will return "512 B" instead of "512,00 B".
             template = "{0:0}{1}";
 
-         return string.Format(CultureInfo.CurrentCulture, template, bytes, usePercent ? "%" : " " + sfx);
+         return string.Format(CultureInfo.CurrentCulture, template, bytes, " " + sfx);
       }
 
       /// <summary>Calculates a percentage value.</summary>
