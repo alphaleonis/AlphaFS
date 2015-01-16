@@ -245,6 +245,7 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Retrieves information about a specified DFS root or link in a DFS namespace.</summary>
+      /// <returns>Returns an <see cref="DfsInfo"/> instance.</returns>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <exception cref="NetworkInformationException"></exception>
       /// <exception cref="PlatformNotSupportedException"></exception>
@@ -262,10 +263,7 @@ namespace Alphaleonis.Win32.Network
       ///   The name of the share corresponding to the DFS root target or link target. If <paramref name="getFromClient"/> is
       ///   <see langword="false"/>, this parameter is always <see langword="null"/>.
       /// </param>
-      /// <returns>Returns <see cref="IEnumerable{DfsInfo}"/></returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "dfs")]
+      [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Network.NativeMethods.NetApiBufferFree(System.IntPtr)", Justification = "Result is not needed.")]
       [SecurityCritical]
       private static DfsInfo GetDfsInfoInternal(bool getFromClient, string dfsName, string serverName, string shareName)
       {
@@ -278,41 +276,27 @@ namespace Alphaleonis.Win32.Network
          serverName = Utils.IsNullOrWhiteSpace(serverName) ? null : serverName;
          shareName = Utils.IsNullOrWhiteSpace(shareName) ? null : shareName;
 
-         SafeNetApiBuffer safeBuffer;
-         uint lastError = getFromClient
-            ? NativeMethods.NetDfsGetClientInfo(dfsName, serverName, shareName, 4, out safeBuffer) // Max level: 4 (DFS_INFO_4)
-            : NativeMethods.NetDfsGetInfo(dfsName, null, null, 4, out safeBuffer);                 // MSDN: These parameters are currently ignored and should be null.
+         // MSDN: This buffer is allocated by the system (the API).
+         var buffer = IntPtr.Zero;
 
-         using (safeBuffer)
+         try
          {
-            if (Filesystem.NativeMethods.IsValidHandle(safeBuffer, (int)lastError))
-            {
-               // CA2001:AvoidCallingProblematicMethods
+            // Level 4 = DFS_INFO_4
 
-               IntPtr buffer = IntPtr.Zero;
-               bool successRef = false;
-               safeBuffer.DangerousAddRef(ref successRef);
+            uint lastError = getFromClient
+               ? NativeMethods.NetDfsGetClientInfo(dfsName, serverName, shareName, 4, out buffer)
+               : NativeMethods.NetDfsGetInfo(dfsName, null, null, 4, out buffer);
 
-               // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
-               if (successRef)
-                  buffer = safeBuffer.DangerousGetHandle();
-
-               safeBuffer.DangerousRelease();
-
-               if (buffer == IntPtr.Zero)
-                  NativeError.ThrowException(Resources.HandleDangerousRef);
-
-               // CA2001:AvoidCallingProblematicMethods
-
-
+            if (lastError == Win32Errors.NERR_Success)
                return new DfsInfo(Utils.MarshalPtrToStructure<NativeMethods.DfsInfo4>(0, buffer));
-            }
 
-            if (lastError != Win32Errors.NERR_Success)
-               throw new NetworkInformationException((int)lastError);
+            throw new NetworkInformationException((int) lastError);
          }
-
-         return null;
+         finally
+         {
+            if (buffer != IntPtr.Zero)
+               NativeMethods.NetApiBufferFree(buffer);
+         }
       }
 
       #endregion // Internal Methods

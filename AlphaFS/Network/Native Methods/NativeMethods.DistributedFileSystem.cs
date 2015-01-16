@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Network
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint NetDfsGetClientInfo([MarshalAs(UnmanagedType.LPWStr)] string dfsEntryPath,
          [MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string shareName,
-         [MarshalAs(UnmanagedType.U4)] uint level, out SafeNetApiBuffer buffer);
+         [MarshalAs(UnmanagedType.U4)] uint level, out IntPtr buffer);
 
       
       /// <summary>Retrieves information about a specified Distributed File System (DFS) root or link in a DFS namespace.</summary>
@@ -79,6 +79,6 @@ namespace Alphaleonis.Win32.Network
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint NetDfsGetInfo([MarshalAs(UnmanagedType.LPWStr)] string dfsEntryPath,
          [MarshalAs(UnmanagedType.LPWStr)] string serverName, [MarshalAs(UnmanagedType.LPWStr)] string shareName,
-         [MarshalAs(UnmanagedType.U4)] uint level, out SafeNetApiBuffer buffer);
+         [MarshalAs(UnmanagedType.U4)] uint level, out IntPtr buffer);
    }
 }
