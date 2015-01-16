@@ -48,6 +48,8 @@ baseurl: ""
 menu:
    - title: Home
      url: /index.html
+   - title: News
+     url: /news/index.html
    - title: Documentation
      submenus:
          - title: Version 2.0
@@ -61,7 +63,7 @@ menu:
 
 markdown: kramdown
 highlighter: pygments
-permalink: /:title/
+permalink: /news/:title/
 
 # The release of Jekyll Now that you're using
 version: v1.0.0
