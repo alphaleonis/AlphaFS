@@ -6,12 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{478C6563-C321-4AB5-9D4D-ABFC9C88EBF0}"
 	ProjectSection(SolutionItems) = preProject
 		AlphaFS.nuspec = AlphaFS.nuspec
-		Documentation\AlphaFS.png = Documentation\AlphaFS.png
 		AlphaFS.testrunconfig = AlphaFS.testrunconfig
 		AlphaFS.vsmdi = AlphaFS.vsmdi
 		CHANGELOG.md = CHANGELOG.md
-		Documentation\Content Layout.content = Documentation\Content Layout.content
-		Documentation\License.aml = Documentation\License.aml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlphaFS", "AlphaFS\AlphaFS.csproj", "{F0F9AF1E-D5B5-4D72-804A-5380622FBDEA}"

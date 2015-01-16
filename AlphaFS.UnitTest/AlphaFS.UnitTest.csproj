@@ -118,6 +118,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\AlphaFS\AssemblyVersionInfo.cs">
+      <Link>AssemblyVersionInfo.cs</Link>
+    </Compile>
     <Compile Include="AlphaFS_DeviceTest.cs" />
     <Compile Include="AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS_ClassesTest.cs" />

@@ -158,6 +158,7 @@
     <Reference Include="System.Transactions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyVersionInfo.cs" />
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\BackupStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
@@ -385,6 +386,7 @@
     <Compile Include="Network\Structures\ShareInfo2.cs" />
     <Compile Include="Network\Structures\ShareInfo503.cs" />
     <Compile Include="OperatingSystem.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -422,7 +424,6 @@
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyCommittedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionException.cs" />
     <Compile Include="Filesystem\Volume.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Filesystem\VolumeInfo.cs" />
     <Compile Include="Security\Structures\Luid.cs" />
     <Compile Include="Security\SecurityAttributes.cs" />
@@ -454,7 +455,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

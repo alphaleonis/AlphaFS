@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>AlphaFS</id>
-        <version>1.6.0.0</version>
+        <version>2.0.0.0</version>
         <title>AlphaFS</title>
         <authors>Peter Palotas,Jeffrey Jangli,Alexandr Normuradov</authors>
         <owners>Peter Palotas</owners>
@@ -12,7 +12,7 @@
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <description>AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes. Features highlights: creating hardlinks, accessing hidden volumes, enumeration of volumes, transactional file operations and much more.</description>
         <releaseNotes>Many bugfixes and new features.</releaseNotes>
-        <copyright>Copyright 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</copyright>
+        <copyright>Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</copyright>
         <tags>Win32, Filesystem</tags>
         <frameworkAssemblies>
             <frameworkAssembly assemblyName="System" targetFramework="" />

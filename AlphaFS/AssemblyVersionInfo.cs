@@ -18,9 +18,18 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
  *  THE SOFTWARE. 
  */
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Resources;
 
-namespace Alphaleonis.Win32.Filesystem
-{
-   /// <summary>Callback used by CopyFileXxx and MoveFileXxx to report progress about the copy/move operation.</summary>
-   public delegate CopyMoveProgressResult CopyMoveProgressRoutine(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, uint streamNumber, CopyMoveProgressCallbackReason callbackReason, object userData);
-}
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("AlphaFS")]
+[assembly: AssemblyCopyright("© 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov")]
+[assembly: AssemblyTrademark("")]
+
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyInformationalVersion("2.0")]
+[assembly: NeutralResourcesLanguageAttribute("en-US")]
+

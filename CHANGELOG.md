@@ -1,4 +1,4 @@
-Version 1.6
+Version 2.0
 -----------
 
 * New: The public key of AlphaFS.dll has changed, delay-signing is no longer used.

@@ -33,7 +33,7 @@
     <FrameworkVersion>.NET Framework 4.0</FrameworkVersion>
     <RootNamespaceContainer>True</RootNamespaceContainer>
     <RootNamespaceTitle>API Reference</RootNamespaceTitle>
-    <HelpTitle>AlphaFS 1.6 Documentation</HelpTitle>
+    <HelpTitle>AlphaFS 2.0 Documentation</HelpTitle>
     <CopyrightText>Copyright %28C%29 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov</CopyrightText>
     <PresentationStyle>VS2013</PresentationStyle>
     <SyntaxFilters>Standard</SyntaxFilters>
