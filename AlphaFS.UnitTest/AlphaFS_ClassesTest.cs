@@ -1350,11 +1350,11 @@ namespace AlphaFS.UnitTest
                      dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Folders),
                      dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Files));
 
-                  Dump(dfsInfo, -16);
+                  Dump(dfsInfo, -21);
 
-                  Console.Write("\n\tNumber of Storages: [{0}]\n", dfsInfo.NumberOfStorages.Count());
+                  Console.Write("\n\tNumber of Storages: [{0}]\n", dfsInfo.StorageInfoCollection.Count());
 
-                  foreach (DfsStorageInfo store in dfsInfo.NumberOfStorages)
+                  foreach (DfsStorageInfo store in dfsInfo.StorageInfoCollection)
                   {
                      Dump(store, -10);
 

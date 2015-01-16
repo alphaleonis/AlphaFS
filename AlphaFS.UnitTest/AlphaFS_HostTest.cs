@@ -499,18 +499,13 @@ namespace AlphaFS.UnitTest
                {
                   DfsInfo dfsInfo = Host.GetDfsInfo(dfsName);
 
-                  foreach (DfsStorageInfo storage in dfsInfo.NumberOfStorages)
+                  foreach (DfsStorageInfo storage in dfsInfo.StorageInfoCollection)
                   {
                      int cnt2 = 0;
                      Console.Write("\n\tEnumerating DFS Namespaces from host: [{0}]\n", storage.ServerName);
 
                      foreach (string dfsNamespace in Host.EnumerateDfsRoot(storage.ServerName, true))
-                     {
                         Console.Write("\t#{0:000}\tDFS Root: [{1}]\n", ++cnt2, dfsNamespace);
-
-                        //ShareInfo share = Host.GetShareInfo(storage.ServerName, storage.ShareName, true);
-                        //Dump(share, -18);
-                     }
                   }
                }
                catch (NetworkInformationException ex)

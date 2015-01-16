@@ -50,9 +50,10 @@ namespace Alphaleonis.Win32.Network
          Timeout = structure.Timeout;
          Guid = structure.Guid;
 
-         _numberOfStorages = new List<DfsStorageInfo>();
+         _storageInfoCollection = new List<DfsStorageInfo>();
+
          for (int i = 0; i < structure.NumberOfStorages; i++)
-            _numberOfStorages.Add(new DfsStorageInfo(Utils.MarshalPtrToStructure<NativeMethods.DfsStorageInfo>(i, structure.Storage)));
+            _storageInfoCollection.Add(new DfsStorageInfo(Utils.MarshalPtrToStructure<NativeMethods.DfsStorageInfo>(i, structure.Storage)));
       }
 
       #endregion // Constructor
@@ -114,17 +115,17 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // Guid
 
-      #region NumberOfStorages
+      #region StorageInfoCollection
 
-      private readonly List<DfsStorageInfo> _numberOfStorages;
+      private readonly List<DfsStorageInfo> _storageInfoCollection;
 
-      /// <summary>The number of DFS targets of the DFS root or link.</summary>
-      public IEnumerable<DfsStorageInfo> NumberOfStorages
+      /// <summary>The collection of DFS targets of the DFS root or link.</summary>
+      public IEnumerable<DfsStorageInfo> StorageInfoCollection
       {
-         get { return _numberOfStorages; }
+         get { return _storageInfoCollection; }
       }
 
-      #endregion // NumberOfStorages
+      #endregion // StorageInfoCollection
 
       #region State
 
