@@ -176,16 +176,18 @@ namespace Alphaleonis.Win32.Filesystem
          try
          {
             NativeMethods.IsValidHandle(safeHandle);
+            
+            // TODO: Change this to use safe handles for the memory buffer!
 
             // Allocate the memory.
-            var bufferSize = IntPtr.Size + Marshal.SizeOf<NativeMethods.FileBasicInfo>();
+            var bufferSize = IntPtr.Size + Marshal.SizeOf(typeof(NativeMethods.FileBasicInfo));
             buffer = Marshal.AllocHGlobal(bufferSize);
 
             if (!NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, buffer, (uint) bufferSize))
                NativeError.ThrowException(Marshal.GetLastWin32Error());
-            
-            
-            var changeTime = Marshal.PtrToStructure<NativeMethods.FileBasicInfo>(buffer).ChangeTime;
+
+
+            var changeTime = ((NativeMethods.FileBasicInfo)Marshal.PtrToStructure(buffer, typeof(NativeMethods.FileBasicInfo))).ChangeTime;
 
             return getUtc
                ? DateTime.FromFileTimeUtc(changeTime)
