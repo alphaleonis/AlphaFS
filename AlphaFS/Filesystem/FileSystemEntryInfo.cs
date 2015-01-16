@@ -26,7 +26,9 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Represents information about a file system entry. </summary>
+   /// <summary>Represents information about a file system entry.
+   /// <para>This class cannot be inherited.</para>
+   /// </summary>
    [SerializableAttribute]
    [SecurityCritical]
    public sealed class FileSystemEntryInfo
@@ -220,11 +222,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Properties
 
-      /// <summary>Returns the <see cref="ReparsePointTag"/> of the <see cref="FileSystemEntryInfo"/>.</summary>
-      /// <returns>The <see cref="ReparsePointTag"/> connverted to a string.</returns>
+      #region Methods
+
+      /// <summary>Returns the <see cref="ReparsePointTag"/> of the <see cref="FileSystemEntryInfo"/> instance.</summary>
+      /// <returns>The <see cref="ReparsePointTag"/> instance as a string.</returns>
       public override string ToString()
       {
          return String.Format(CultureInfo.InvariantCulture, "{0}", ReparsePointTag);
       }
+
+      #endregion // Methods
    }
 }

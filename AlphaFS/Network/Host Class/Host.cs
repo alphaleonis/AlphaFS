@@ -163,11 +163,7 @@ namespace Alphaleonis.Win32.Network
       /// <exception cref="System.IO.PathTooLongException">When <paramref name="path"/> exceeds maximum path length.</exception>
       /// <exception cref="NetworkInformationException"></exception>
       /// <param name="path">The local path with drive name.</param>
-      /// <param name="continueOnException">
-      ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
-      ///   <para>such as unavailable resources.</para>
-      /// </param>
-      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       internal static NativeMethods.RemoteNameInfo GetRemoteNameInfoInternal(string path, bool continueOnException)
       {
@@ -186,7 +182,7 @@ namespace Alphaleonis.Win32.Network
             };
 
 
-         // Start with a large buffer to prevent multiple calls.
+         // Use large enough buffer to prevent a 2nd call.
          uint bufferSize = 1024;
          var buffer = new IntPtr(bufferSize);
 
@@ -200,6 +196,7 @@ namespace Alphaleonis.Win32.Network
 
                // Structure: UNIVERSAL_NAME_INFO_LEVEL = 1 (not used in AlphaFS).
                // Structure: REMOTE_NAME_INFO_LEVEL    = 2
+
                lastError = NativeMethods.WNetGetUniversalName(path, 2, buffer, out bufferSize);
 
                switch (lastError)
