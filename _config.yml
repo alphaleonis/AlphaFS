@@ -50,8 +50,8 @@ menu:
      url: /index.html
    - title: Documentation
      submenus:
-         - title: Version 1.6
-           url: /doc/1.6/index.html
+         - title: Version 2.0
+           url: /doc/2.0/index.html
    - title: Changelog
      url: /changelog/
 
