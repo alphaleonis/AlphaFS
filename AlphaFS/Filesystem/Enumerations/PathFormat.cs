@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       FullPath,
 
       /// <summary>The path is an extended length path. No additional processing will be done on the path, and it will be used as is.
-      /// This option has a slight performance advantage to using the <see cref="RelativePath"/> option.
+      /// Using this option has a slight performance advantage compared to using <see cref="RelativePath"/>.
       /// <para>Example long full path: "\\?\C:\Windows" or "\\?\UNC\server\share".</para>
       /// </summary>
       LongFullPath

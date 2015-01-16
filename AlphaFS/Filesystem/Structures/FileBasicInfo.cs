@@ -21,15 +21,13 @@
 
 using System.IO;
 using System.Runtime.InteropServices;
-//using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>
-      ///   FILE_BASIC_INFO structure - Contains the basic information for a file.
-      ///   <para>Used for file handles.</para>
+      /// <summary>FILE_BASIC_INFO structure
+      ///   <para>Contains the basic information for a file. Used for file handles.</para>
       /// </summary>
       /// <remarks>
       ///   <para>Specifying -1 for <see cref="LastAccessTime"/>, <see cref="ChangeTime"/>, or <see cref="LastWriteTime"/></para>

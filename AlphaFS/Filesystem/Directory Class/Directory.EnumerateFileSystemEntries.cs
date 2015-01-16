@@ -444,7 +444,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///    The matching file system entries. The type of the items is determined by the type <typeparamref name="T"/>.
       /// </returns>
       /// <exception cref="ArgumentException">.</exception>
-      /// <exception cref="ArgumentNullException">.</exception>
+      /// <exception cref="ArgumentNullException"></exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public static IEnumerable<T> EnumerateFileSystemEntryInfos<T>(string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)

@@ -332,6 +332,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Unified method CreateFileInternal() to create or open a file, directory or I/O device.</summary>
+      /// <returns>Returns a <see cref="SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentNullException"></exception>
       /// <remarks>
       ///   <para>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of
       ///   dwFlagsAndAttributes.</para>
@@ -357,15 +360,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="checkPath">.</param>
       /// <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>      
-      /// <returns>
-      ///   Returns a <see cref="SafeFileHandle"/> that provides read/write access to the file or directory specified by
-      ///   <paramref name="path"/>.
-      /// </returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
-      /// <exception cref="ArgumentNullException">.</exception>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]
       [SecurityCritical]
       internal static SafeFileHandle CreateFileInternal(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, PathFormat pathFormat)

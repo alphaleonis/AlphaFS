@@ -178,7 +178,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                long fileNameOffset = Marshal.OffsetOf(typeof(NativeMethods.FileIdBothDirInfo), "FileName").ToInt64();
 
-               while (NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, NativeMethods.DefaultFileBufferSize))
+               while (NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer.DangerousGetHandle(), NativeMethods.DefaultFileBufferSize))
                {
                   // CA2001:AvoidCallingProblematicMethods
 
