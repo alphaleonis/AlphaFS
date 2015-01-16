@@ -27,7 +27,10 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>DFS_INFO_4 - Contains information about a Distributed File System (DFS) root or link. This structure contains the name, status, GUID, time-out, number of targets, and information about each target of the root or link.</summary>
+      /// <summary>DFS_INFO_4
+      /// <para>Contains information about a Distributed File System (DFS) root or link.</para>
+      /// <para>This structure contains the name, status, GUID, time-out, number of targets, and information about each target of the root or link.</para>
+      /// </summary>
       /// <remarks>A DFS_INFO_4 structure contains one or more <see cref="DfsStorageInfo"/> structures, one for each DFS target.</remarks>
       /// <remarks>This structure is only for use with the NetDfsEnum, NetDfsGetClientInfo, and NetDfsGetInfo functions.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
@@ -55,7 +58,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>Specifies the number of DFS targets.</summary>
          [MarshalAs(UnmanagedType.U4)] public readonly uint NumberOfStorages;
 
-         /// <summary>An array of <see cref="DfsStorageInfo"/> structures. The NumberOfStorages member specifies the number of structures in the array.</summary>
+         /// <summary>An array of <see cref="DfsStorageInfo"/> structures.</summary>
          public readonly IntPtr Storage;
       }
    }

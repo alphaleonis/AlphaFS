@@ -343,7 +343,7 @@
     <Compile Include="Filesystem\Structures\Win32FindData.cs" />
     <Compile Include="Filesystem\Structures\Win32StreamId.cs" />
     <Compile Include="Network\DfsInfo.cs" />
-    <Compile Include="Network\DfsStorage.cs" />
+    <Compile Include="Network\DfsStorageInfo.cs" />
     <Compile Include="Network\Enumerations\ShareInfoLevel.cs" />
     <Compile Include="Network\Enumerations\ResourceUsage.cs" />
     <Compile Include="Network\Enumerations\ResourceType.cs" />
@@ -454,7 +454,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

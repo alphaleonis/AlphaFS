@@ -1354,7 +1354,7 @@ namespace AlphaFS.UnitTest
 
                   Console.Write("\n\tNumber of Storages: [{0}]\n", dfsInfo.NumberOfStorages.Count());
 
-                  foreach (DfsStorage store in dfsInfo.NumberOfStorages)
+                  foreach (DfsStorageInfo store in dfsInfo.NumberOfStorages)
                   {
                      Dump(store, -10);
 
@@ -1627,7 +1627,7 @@ namespace AlphaFS.UnitTest
       public void Network_Class_DfsXxx()
       {
          Console.WriteLine("Class Network.DfsInfo()");
-         Console.WriteLine("Class Network.DfsStorage()");
+         Console.WriteLine("Class Network.DfsStorageInfo()");
 
          DumpClassDfsInfo();
       }

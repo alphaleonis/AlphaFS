@@ -20,25 +20,26 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 namespace Alphaleonis.Win32.Network
 {
-   /// <summary>DFS_STORAGE_INFO
-   /// <para>Contains information about a DFS root or link target in a DFS namespace or from the cache maintained by the DFS client. This class cannot be inherited.</para>
+   /// <summary>Contains information about a DFS root or link target in a DFS namespace or from the cache maintained by the DFS client.
+   /// <para>This class cannot be inherited.</para>
    /// </summary>
    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
-   public sealed class DfsStorage
+   public sealed class DfsStorageInfo
    {
       #region Constructor
 
-      /// <summary>Initializes a new instance of the <see cref="DfsStorage"/> class, which acts as a wrapper for a DFS root or link target.</summary>
-      public DfsStorage()
+      /// <summary>Initializes a new instance of the <see cref="DfsStorageInfo"/> class, which acts as a wrapper for a DFS root or link target.</summary>
+      public DfsStorageInfo()
       {
       }
 
-      /// <summary>Initializes a new instance of the <see cref="DfsStorage"/> class, which acts as a wrapper for a DFS root or link target.</summary>
+      /// <summary>Initializes a new instance of the <see cref="DfsStorageInfo"/> class, which acts as a wrapper for a DFS root or link target.</summary>
       /// <param name="structure">An initialized <see cref="NativeMethods.DfsStorageInfo"/> instance.</param>
-      internal DfsStorage(NativeMethods.DfsStorageInfo structure)
+      internal DfsStorageInfo(NativeMethods.DfsStorageInfo structure)
       {
          ServerName = structure.ServerName;
          ShareName = structure.ShareName;
@@ -46,6 +47,21 @@ namespace Alphaleonis.Win32.Network
       }
 
       #endregion // Constructor
+
+      #region Methods
+
+      #region ToString
+
+      /// <summary>The share name of the DFS root target or link target.</summary>
+      /// <returns>A string that represents this instance.</returns>
+      public override string ToString()
+      {
+         return string.Format(CultureInfo.CurrentCulture, "{0}", ShareName);
+      }
+
+      #endregion // ToString
+
+      #endregion // Methods
 
       #region Properties
 

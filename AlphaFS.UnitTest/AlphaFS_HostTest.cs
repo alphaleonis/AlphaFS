@@ -499,7 +499,7 @@ namespace AlphaFS.UnitTest
                {
                   DfsInfo dfsInfo = Host.GetDfsInfo(dfsName);
 
-                  foreach (DfsStorage storage in dfsInfo.NumberOfStorages)
+                  foreach (DfsStorageInfo storage in dfsInfo.NumberOfStorages)
                   {
                      int cnt2 = 0;
                      Console.Write("\n\tEnumerating DFS Namespaces from host: [{0}]\n", storage.ServerName);
