@@ -1362,15 +1362,15 @@ namespace AlphaFS.UnitTest
 
       #endregion Filesystem
 
-      #region UnitTestConstants.Network
+      #region Network
 
       #region Network_Class_DfsXxx
 
       [TestMethod]
       public void Network_Class_DfsXxx()
       {
-         Console.WriteLine("Class UnitTestConstants.Network.DfsInfo()");
-         Console.WriteLine("Class UnitTestConstants.Network.DfsStorageInfo()");
+         Console.WriteLine("Class Network.DfsInfo()");
+         Console.WriteLine("Class Network.DfsStorageInfo()");
 
          DumpClassDfsInfo();
       }
@@ -1382,7 +1382,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Network_Class_OpenConnectionInfo()
       {
-         Console.WriteLine("Class UnitTestConstants.Network.OpenConnectionInfo()");
+         Console.WriteLine("Class Network.OpenConnectionInfo()");
 
          DumpOpenConnectionInfo(UnitTestConstants.LocalHost);
       }
@@ -1394,7 +1394,7 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Network_Class_OpenResourceInfo()
       {
-         Console.WriteLine("Class UnitTestConstants.Network.OpenResourceInfo()");
+         Console.WriteLine("Class Network.OpenResourceInfo()");
 
          DumpClassOpenResourceInfo(UnitTestConstants.LocalHost, UnitTestConstants.LocalHostShare);
       }
@@ -1406,14 +1406,14 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Network_Class_ShareInfo()
       {
-         Console.WriteLine("Class UnitTestConstants.Network.ShareInfo()");
+         Console.WriteLine("Class Network.ShareInfo()");
 
          DumpClassShareInfo(UnitTestConstants.LocalHost);
       }
 
       #endregion // Network_Class_ShareInfo
 
-      #endregion // UnitTestConstants.Network
+      #endregion // Network
 
       #region OperatingSystem
 
