@@ -370,7 +370,7 @@
     <Compile Include="Network\Native Methods\NativeMethods.DistributedFileSystem.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.cs" />
     <Compile Include="Network\OpenConnectionInfo.cs" />
-    <Compile Include="Network\SafeNetApiBuffer.cs" />
+    <Compile Include="Network\SafeNetApiBufferHandle.cs" />
     <Compile Include="Network\OpenResourceInfo.cs" />
     <Compile Include="Network\ShareInfo.cs" />
     <Compile Include="Network\Structures\NetResource.cs" />
@@ -455,7 +455,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

@@ -27,9 +27,9 @@ namespace Alphaleonis.Win32.Network
 {
    /// <summary>Represents a wrapper class for a handle used by the NetApiBufferFree/NetXxx Win32 API functions.</summary>
    [SecurityCritical]
-   internal sealed class SafeNetApiBuffer : SafeHandleMinusOneIsInvalid
+   internal sealed class SafeNetApiBufferHandle : SafeHandleMinusOneIsInvalid
    {
-      private SafeNetApiBuffer()
+      private SafeNetApiBufferHandle()
          : base(true)
       {
       }
