@@ -40,7 +40,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("shlwapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint AssocCreate(Guid clsid, ref Guid riid, [MarshalAs(UnmanagedType.Interface)] out IQueryAssociations ppv);
+      internal static extern uint AssocCreate(Guid clsid, ref Guid riid,
+         [MarshalAs(UnmanagedType.Interface)] out IQueryAssociations ppv);
 
       /// <summary>Searches for and retrieves a file or protocol association-related string from the registry.</summary>
       /// <returns>Return value Type: HRESULT. Returns a standard COM error value, including the following: S_OK, E_POINTER and S_FALSE.</returns>
@@ -49,7 +50,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("shlwapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "AssocQueryStringW")]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint AssocQueryString(Shell32.AssociationAttributes flags, Shell32.AssociationString str, [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc, [MarshalAs(UnmanagedType.LPWStr)] string pszExtra, StringBuilder pszOut, [MarshalAs(UnmanagedType.U4)] out uint pcchOut);
+      internal static extern uint AssocQueryString(Shell32.AssociationAttributes flags, Shell32.AssociationString str,
+         [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc, [MarshalAs(UnmanagedType.LPWStr)] string pszExtra,
+         StringBuilder pszOut, [MarshalAs(UnmanagedType.U4)] out uint pcchOut);
 
 
       #region IQueryAssociations
@@ -65,7 +68,9 @@ namespace Alphaleonis.Win32.Filesystem
          /// <returns>If this method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</returns>
          /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
          /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
-         void Init(Shell32.AssociationAttributes flags, [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc, IntPtr hkProgid, IntPtr hwnd);
+         void Init(Shell32.AssociationAttributes flags, [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc,
+            IntPtr hkProgid, IntPtr hwnd);
+
          //[return: MarshalAs(UnmanagedType.U4)]
          //uint Init(Shell32.AssociationAttributes flags, [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc, IntPtr hkProgid, IntPtr hwnd);
 
@@ -73,7 +78,10 @@ namespace Alphaleonis.Win32.Filesystem
          /// <returns>Returns a standard COM error value, including the following: S_OK, E_POINTER, S_FALSE</returns>
          /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
          /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
-         void GetString(Shell32.AssociationAttributes flags, Shell32.AssociationString str, [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, StringBuilder pwszOut, [MarshalAs(UnmanagedType.I4)] out int pcchOut);
+         void GetString(Shell32.AssociationAttributes flags, Shell32.AssociationString str,
+            [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, StringBuilder pwszOut,
+            [MarshalAs(UnmanagedType.I4)] out int pcchOut);
+
          //[return: MarshalAs(UnmanagedType.U4)]
          //void GetString(Shell32.AssociationAttributes flags, Shell32.AssociationString str, [MarshalAs(UnmanagedType.LPWStr)] string pwszExtra, StringBuilder pwszOut, [MarshalAs(UnmanagedType.I4)] out int pcchOut);
 
@@ -126,7 +134,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CopyFileExW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool CopyFileEx([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.Bool)] out bool pbCancel, CopyOptions dwCopyFlags);
+      internal static extern bool CopyFileEx([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine,
+         IntPtr lpData, [MarshalAs(UnmanagedType.Bool)] out bool pbCancel, CopyOptions dwCopyFlags);
 
       /// <summary>
       ///   Copies an existing file to a new file as a transacted operation, notifying the application of its progress through a callback
@@ -150,7 +160,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CopyFileTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool CopyFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.Bool)] out bool pbCancel, CopyOptions dwCopyFlags, SafeHandle hTransaction);
+      internal static extern bool CopyFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine,
+         IntPtr lpData, [MarshalAs(UnmanagedType.Bool)] out bool pbCancel, CopyOptions dwCopyFlags,
+         SafeHandle hTransaction);
 
       /// <summary>
       ///   Creates or opens a file or I/O device. The most commonly used I/O devices are as follows: file, file stream, directory, physical
@@ -164,7 +177,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateFileW")]
-      internal static extern SafeFileHandle CreateFile([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] FileSystemRights dwDesiredAccess, [MarshalAs(UnmanagedType.U4)] FileShare dwShareMode, [MarshalAs(UnmanagedType.LPStruct)] Security.NativeMethods.SecurityAttributes lpSecurityAttributes, [MarshalAs(UnmanagedType.U4)] FileMode dwCreationDisposition, [MarshalAs(UnmanagedType.U4)] ExtendedFileAttributes dwFlagsAndAttributes, IntPtr hTemplateFile);
+      internal static extern SafeFileHandle CreateFile([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.U4)] FileSystemRights dwDesiredAccess,
+         [MarshalAs(UnmanagedType.U4)] FileShare dwShareMode,
+         [MarshalAs(UnmanagedType.LPStruct)] Security.NativeMethods.SecurityAttributes lpSecurityAttributes,
+         [MarshalAs(UnmanagedType.U4)] FileMode dwCreationDisposition,
+         [MarshalAs(UnmanagedType.U4)] ExtendedFileAttributes dwFlagsAndAttributes, IntPtr hTemplateFile);
 
       /// <summary>
       ///   Creates or opens a file or I/O device. The most commonly used I/O devices are as follows: file, file stream, directory, physical
@@ -178,7 +196,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateFileTransactedW")]
-      internal static extern SafeFileHandle CreateFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] FileSystemRights dwDesiredAccess, [MarshalAs(UnmanagedType.U4)] FileShare dwShareMode, [MarshalAs(UnmanagedType.LPStruct)] Security.NativeMethods.SecurityAttributes lpSecurityAttributes, [MarshalAs(UnmanagedType.U4)] FileMode dwCreationDisposition, [MarshalAs(UnmanagedType.U4)] ExtendedFileAttributes dwFlagsAndAttributes, IntPtr hTemplateFile, SafeHandle hTransaction, IntPtr pusMiniVersion, IntPtr pExtendedParameter);
+      internal static extern SafeFileHandle CreateFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.U4)] FileSystemRights dwDesiredAccess,
+         [MarshalAs(UnmanagedType.U4)] FileShare dwShareMode,
+         [MarshalAs(UnmanagedType.LPStruct)] Security.NativeMethods.SecurityAttributes lpSecurityAttributes,
+         [MarshalAs(UnmanagedType.U4)] FileMode dwCreationDisposition,
+         [MarshalAs(UnmanagedType.U4)] ExtendedFileAttributes dwFlagsAndAttributes, IntPtr hTemplateFile,
+         SafeHandle hTransaction, IntPtr pusMiniVersion, IntPtr pExtendedParameter);
 
       /// <summary>Creates or opens a named or unnamed file mapping object for a specified file.</summary>
       /// <remarks>Minimum supported client: Windows XP.</remarks>
@@ -189,7 +213,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode, EntryPoint = "CreateFileMappingW")]
-      internal static extern SafeFileHandle CreateFileMapping(SafeFileHandle hFile, SafeHandle lpSecurityAttributes, [MarshalAs(UnmanagedType.U4)] uint flProtect, [MarshalAs(UnmanagedType.U4)] uint dwMaximumSizeHigh, [MarshalAs(UnmanagedType.U4)] uint dwMaximumSizeLow, [MarshalAs(UnmanagedType.LPWStr)] string lpName);
+      internal static extern SafeFileHandle CreateFileMapping(SafeFileHandle hFile, SafeHandle lpSecurityAttributes,
+         [MarshalAs(UnmanagedType.U4)] uint flProtect, [MarshalAs(UnmanagedType.U4)] uint dwMaximumSizeHigh,
+         [MarshalAs(UnmanagedType.U4)] uint dwMaximumSizeLow, [MarshalAs(UnmanagedType.LPWStr)] string lpName);
 
       /// <summary>
       ///   Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only
@@ -204,7 +230,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateHardLinkW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool CreateHardLink([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, IntPtr lpSecurityAttributes);
+      internal static extern bool CreateHardLink([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, IntPtr lpSecurityAttributes);
 
       /// <summary>
       ///   Establishes a hard link between an existing file and a new file as a transacted operation. This function is only supported on the
@@ -219,7 +246,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateHardLinkTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool CreateHardLinkTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, IntPtr lpSecurityAttributes, SafeHandle hTransaction);
+      internal static extern bool CreateHardLinkTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, IntPtr lpSecurityAttributes,
+         SafeHandle hTransaction);
 
       /// <summary>Creates a symbolic link.</summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
@@ -231,7 +260,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateSymbolicLinkW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool CreateSymbolicLink([MarshalAs(UnmanagedType.LPWStr)] string lpSymlinkFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpTargetFileName, [MarshalAs(UnmanagedType.U4)] SymbolicLinkTarget dwFlags);
+      internal static extern bool CreateSymbolicLink([MarshalAs(UnmanagedType.LPWStr)] string lpSymlinkFileName,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpTargetFileName,
+         [MarshalAs(UnmanagedType.U4)] SymbolicLinkTarget dwFlags);
 
       /// <summary>Creates a symbolic link as a transacted operation.</summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
@@ -243,7 +274,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateSymbolicLinkTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool CreateSymbolicLinkTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpSymlinkFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpTargetFileName, [MarshalAs(UnmanagedType.U4)] SymbolicLinkTarget dwFlags, SafeHandle hTransaction);
+      internal static extern bool CreateSymbolicLinkTransacted(
+         [MarshalAs(UnmanagedType.LPWStr)] string lpSymlinkFileName,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpTargetFileName,
+         [MarshalAs(UnmanagedType.U4)] SymbolicLinkTarget dwFlags, SafeHandle hTransaction);
 
       /// <summary>Decrypts an encrypted file or directory.</summary>
       /// <remarks>
@@ -261,7 +295,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "DecryptFileW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool DecryptFile([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] uint dwReserved);
+      internal static extern bool DecryptFile([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.U4)] uint dwReserved);
 
       /// <summary>Deletes an existing file.</summary>
       /// <remarks>
@@ -293,7 +328,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "DeleteFileTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool DeleteFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, SafeHandle hTransaction);
+      internal static extern bool DeleteFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         SafeHandle hTransaction);
 
       /// <summary>
       ///   Encrypts a file or directory. All data streams in a file are encrypted. All new files created in an encrypted directory are
@@ -335,7 +371,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool EncryptionDisable([MarshalAs(UnmanagedType.LPWStr)] string dirPath, [MarshalAs(UnmanagedType.Bool)] bool disable);
+      internal static extern bool EncryptionDisable([MarshalAs(UnmanagedType.LPWStr)] string dirPath,
+         [MarshalAs(UnmanagedType.Bool)] bool disable);
 
       /// <summary>Retrieves the encryption status of the specified file.</summary>
       /// <remarks>Minimum supported client: Windows XP Professional [desktop apps only].</remarks>
@@ -347,7 +384,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FileEncryptionStatusW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool FileEncryptionStatus([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, out FileEncryptionStatus lpStatus);
+      internal static extern bool FileEncryptionStatus([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         out FileEncryptionStatus lpStatus);
 
       /// <summary>
       ///   Closes a file search handle opened by the FindFirstFile, FindFirstFileEx, FindFirstFileNameW, FindFirstFileNameTransactedW,
@@ -376,7 +414,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileExW")]
-      internal static extern SafeFindFileHandle FindFirstFileEx([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FindExInfoLevels fInfoLevelId, out Win32FindData lpFindFileData, FindExSearchOps fSearchOp, IntPtr lpSearchFilter, FindExAdditionalFlags dwAdditionalFlags);
+      internal static extern SafeFindFileHandle FindFirstFileEx([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         FindExInfoLevels fInfoLevelId, out Win32FindData lpFindFileData, FindExSearchOps fSearchOp,
+         IntPtr lpSearchFilter, FindExAdditionalFlags dwAdditionalFlags);
 
       /// <summary>
       ///   Searches a directory for a file or subdirectory with a name that matches a specific name as a transacted operation.
@@ -392,7 +432,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileTransactedW")]
-      internal static extern SafeFindFileHandle FindFirstFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FindExInfoLevels fInfoLevelId, out Win32FindData lpFindFileData, FindExSearchOps fSearchOp, IntPtr lpSearchFilter, FindExAdditionalFlags dwAdditionalFlags, SafeHandle hTransaction);
+      internal static extern SafeFindFileHandle FindFirstFileTransacted(
+         [MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FindExInfoLevels fInfoLevelId,
+         out Win32FindData lpFindFileData, FindExSearchOps fSearchOp, IntPtr lpSearchFilter,
+         FindExAdditionalFlags dwAdditionalFlags, SafeHandle hTransaction);
 
       /// <summary>
       ///   Creates an enumeration of all the hard links to the specified file. The FindFirstFileNameW function returns a handle to the
@@ -407,7 +450,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileNameW")]
-      internal static extern SafeFindFileHandle FindFirstFileName([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] uint dwFlags, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName);
+      internal static extern SafeFindFileHandle FindFirstFileName([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.U4)] uint dwFlags, [MarshalAs(UnmanagedType.U4)] out uint stringLength,
+         StringBuilder linkName);
 
       /// <summary>
       ///   Creates an enumeration of all the hard links to the specified file as a transacted operation. The function returns a handle to the
@@ -422,7 +467,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileNameTransactedW")]
-      internal static extern SafeFindFileHandle FindFirstFileNameTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] uint dwFlags, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName, SafeHandle hTransaction);
+      internal static extern SafeFindFileHandle FindFirstFileNameTransacted(
+         [MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] uint dwFlags,
+         [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName, SafeHandle hTransaction);
 
       /// <summary>
       ///   Continues a file search from a previous call to the FindFirstFile, FindFirstFileEx, or FindFirstFileTransacted functions.
@@ -452,7 +499,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindNextFileNameW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool FindNextFileName(SafeFindFileHandle hFindStream, [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName);
+      internal static extern bool FindNextFileName(SafeFindFileHandle hFindStream,
+         [MarshalAs(UnmanagedType.U4)] out uint stringLength, StringBuilder linkName);
 
       /// <summary>Flushes the buffers of a specified file and causes all buffered data to be written to a file.</summary>
       /// <remarks>Minimum supported client: Windows XP [desktop apps | Windows Store apps].</remarks>
@@ -480,7 +528,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetCompressedFileSizeW")]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint GetCompressedFileSize([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] out uint lpFileSizeHigh);
+      internal static extern uint GetCompressedFileSize([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.U4)] out uint lpFileSizeHigh);
 
       /// <summary>Retrieves the actual number of bytes of disk storage used to store a specified file as a transacted operation.</summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
@@ -496,7 +545,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetCompressedFileSizeTransactedW")]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint GetCompressedFileSizeTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] out uint lpFileSizeHigh, SafeHandle hTransaction);
+      internal static extern uint GetCompressedFileSizeTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.U4)] out uint lpFileSizeHigh, SafeHandle hTransaction);
 
       /// <summary>
       ///   Retrieves attributes for a specified file or directory.
@@ -521,7 +571,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFileAttributesExW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetFileAttributesEx([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] GetFileExInfoLevels fInfoLevelId, out Win32FileAttributeData lpFileInformation);
+      internal static extern bool GetFileAttributesEx([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.U4)] GetFileExInfoLevels fInfoLevelId, out Win32FileAttributeData lpFileInformation);
 
       /// <summary>Retrieves attributes for a specified file or directory.</summary>
       /// <remarks>
@@ -549,7 +600,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFileAttributesTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetFileAttributesTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] GetFileExInfoLevels fInfoLevelId, out Win32FileAttributeData lpFileInformation, SafeHandle hTransaction);
+      internal static extern bool GetFileAttributesTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.U4)] GetFileExInfoLevels fInfoLevelId, out Win32FileAttributeData lpFileInformation,
+         SafeHandle hTransaction);
 
       /// <summary>Retrieves file information for the specified file.</summary>
       /// <returns>
@@ -565,7 +618,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetFileInformationByHandle(SafeFileHandle hFile, [MarshalAs(UnmanagedType.Struct)] out ByHandleFileInfo lpByHandleFileInformation);
+      internal static extern bool GetFileInformationByHandle(SafeFileHandle hFile,
+         [MarshalAs(UnmanagedType.Struct)] out ByHandleFileInfo lpByHandleFileInformation);
 
       /// <summary>
       ///   Retrieves file information for the specified file.
@@ -587,7 +641,32 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetFileInformationByHandleEx(SafeFileHandle hFile, [MarshalAs(UnmanagedType.I4)] FileInfoByHandleClass fileInfoByHandleClass, IntPtr lpFileInformation, [MarshalAs(UnmanagedType.U4)] uint dwBufferSize);
+      internal static extern bool GetFileInformationByHandleEx(SafeFileHandle hFile,
+         [MarshalAs(UnmanagedType.I4)] FileInfoByHandleClass fileInfoByHandleClass, IntPtr lpFileInformation,
+         [MarshalAs(UnmanagedType.U4)] uint dwBufferSize);
+
+      /// <summary>Retrieves file information for the specified file.</summary>
+      /// <remarks>
+      ///   <para>Minimum supported client: Windows Vista [desktop apps | Windows Store apps]</para>
+      ///   <para>Minimum supported server: Windows Server 2008 [desktop apps | Windows Store apps]</para>
+      ///   <para>Redistributable: Windows SDK on Windows Server 2003 and Windows XP.</para>
+      /// </remarks>
+      /// <returns>
+      ///   <para>If the function succeeds, the return value is nonzero and file information data is contained in the buffer pointed to by the
+      ///   lpByHandleFileInformation parameter.</para>
+      ///   <para>If the function fails, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
+      /// <param name="hFile">The file.</param>
+      /// <param name="fileInfoByHandleClass">The file information by handle class.</param>
+      /// <param name="lpFileInformation">Information describing the file.</param>
+      /// <param name="dwBufferSize">Size of the buffer.</param>
+      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
+      [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFileInformationByHandleEx")]
+      [return: MarshalAs(UnmanagedType.Bool)]
+      internal static extern bool GetFileInformationByHandleEx_FileBasicInfo(SafeFileHandle hFile,
+         [MarshalAs(UnmanagedType.I4)] FileInfoByHandleClass fileInfoByHandleClass,
+         [MarshalAs(UnmanagedType.Struct)] out FileBasicInfo lpFileInformation,
+         [MarshalAs(UnmanagedType.U4)] uint dwBufferSize);
 
       /// <summary>
       ///   Retrieves the size of the specified file.
@@ -615,7 +694,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFinalPathNameByHandleW")]
       [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint GetFinalPathNameByHandle(SafeFileHandle hFile, StringBuilder lpszFilePath, [MarshalAs(UnmanagedType.U4)] uint cchFilePath, FinalPathFormats dwFlags);
+      internal static extern uint GetFinalPathNameByHandle(SafeFileHandle hFile, StringBuilder lpszFilePath,
+         [MarshalAs(UnmanagedType.U4)] uint cchFilePath, FinalPathFormats dwFlags);
 
       /// <summary>
       ///   Checks whether the specified address is within a memory-mapped file in the address space of the specified process. If so, the
@@ -630,7 +710,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("psapi.dll", SetLastError = false, CharSet = CharSet.Unicode, EntryPoint = "GetMappedFileNameW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool GetMappedFileName(IntPtr hProcess, SafeLocalMemoryBufferHandle lpv, StringBuilder lpFilename, [MarshalAs(UnmanagedType.U4)] uint nSize);
+      internal static extern bool GetMappedFileName(IntPtr hProcess, SafeLocalMemoryBufferHandle lpv,
+         StringBuilder lpFilename, [MarshalAs(UnmanagedType.U4)] uint nSize);
 
       /// <summary>Locks the specified file for exclusive access by the calling process.</summary>
       /// <remarks>Minimum supported client: Windows XP.</remarks>
@@ -642,7 +723,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool LockFile(SafeFileHandle hFile, [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetLow, [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetHigh, [MarshalAs(UnmanagedType.U4)] uint nNumberOfBytesToLockLow, [MarshalAs(UnmanagedType.U4)] uint nNumberOfBytesToLockHigh);
+      internal static extern bool LockFile(SafeFileHandle hFile, [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetLow,
+         [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetHigh, [MarshalAs(UnmanagedType.U4)] uint nNumberOfBytesToLockLow,
+         [MarshalAs(UnmanagedType.U4)] uint nNumberOfBytesToLockHigh);
 
       /// <summary>Maps a view of a file mapping into the address space of a calling process.</summary>
       /// <remarks>Minimum supported client: Windows XP.</remarks>
@@ -653,7 +736,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
-      internal static extern SafeLocalMemoryBufferHandle MapViewOfFile(SafeFileHandle hFileMappingObject, [MarshalAs(UnmanagedType.U4)] uint dwDesiredAccess, [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetHigh, [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetLow, UIntPtr dwNumberOfBytesToMap);
+      internal static extern SafeLocalMemoryBufferHandle MapViewOfFile(SafeFileHandle hFileMappingObject,
+         [MarshalAs(UnmanagedType.U4)] uint dwDesiredAccess, [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetHigh,
+         [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetLow, UIntPtr dwNumberOfBytesToMap);
 
       /// <summary>
       ///   Moves a file or directory, including its children.
@@ -677,7 +762,9 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "MoveFileWithProgressW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool MoveFileWithProgress([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.U4)] MoveOptions dwFlags);
+      internal static extern bool MoveFileWithProgress([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine,
+         IntPtr lpData, [MarshalAs(UnmanagedType.U4)] MoveOptions dwFlags);
 
       /// <summary>
       ///   Moves an existing file or a directory, including its children, as a transacted operation.
@@ -694,14 +781,19 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "MoveFileTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool MoveFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine, IntPtr lpData, [MarshalAs(UnmanagedType.U4)] MoveOptions dwCopyFlags, SafeHandle hTransaction);
+      internal static extern bool MoveFileTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpExistingFileName,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpNewFileName, NativeCopyMoveProgressRoutine lpProgressRoutine,
+         IntPtr lpData, [MarshalAs(UnmanagedType.U4)] MoveOptions dwCopyFlags, SafeHandle hTransaction);
 
       /// <summary>An application-defined callback function used with the CopyFileEx, MoveFileTransacted, and MoveFileWithProgress functions.
       /// <para>It is called when a portion of a copy or move operation is completed.</para>
       /// <para>The LPPROGRESS_ROUTINE type defines a pointer to this callback function.</para>
       /// <para>NativeCopyMoveProgressRoutine (NativeCopyMoveProgressRoutine) is a placeholder for the application-defined function name.</para>
       /// </summary>
-      internal delegate CopyMoveProgressResult NativeCopyMoveProgressRoutine(long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred, [MarshalAs(UnmanagedType.U4)] uint dwStreamNumber, CopyMoveProgressCallbackReason dwCallbackReason, IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);
+      internal delegate CopyMoveProgressResult NativeCopyMoveProgressRoutine(
+         long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred,
+         [MarshalAs(UnmanagedType.U4)] uint dwStreamNumber, CopyMoveProgressCallbackReason dwCallbackReason,
+         IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);
 
       /// <summary>Determines whether a path to a file system object such as a file or folder is valid.</summary>
       /// <returns><see langword="true"/> if the file exists; otherwise, <see langword="false"/>. Call GetLastError for extended error information.</returns>
@@ -728,7 +820,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "ReplaceFileW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool ReplaceFile([MarshalAs(UnmanagedType.LPWStr)] string lpReplacedFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpReplacementFileName, [MarshalAs(UnmanagedType.LPWStr)] string lpBackupFileName, FileSystemRights dwReplaceFlags, IntPtr lpExclude, IntPtr lpReserved);
+      internal static extern bool ReplaceFile([MarshalAs(UnmanagedType.LPWStr)] string lpReplacedFileName,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpReplacementFileName,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpBackupFileName, FileSystemRights dwReplaceFlags, IntPtr lpExclude,
+         IntPtr lpReserved);
 
       /// <summary>Sets the attributes for a file or directory.</summary>
       /// <returns>
@@ -741,7 +836,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Usage", "CA2205:UseManagedEquivalentsOfWin32Api")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SetFileAttributesW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool SetFileAttributes([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] FileAttributes dwFileAttributes);
+      internal static extern bool SetFileAttributes([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.U4)] FileAttributes dwFileAttributes);
 
       /// <summary>Sets the attributes for a file or directory as a transacted operation.</summary>
       /// <returns>
@@ -753,7 +849,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SetFileAttributesTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool SetFileAttributesTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName, [MarshalAs(UnmanagedType.U4)] FileAttributes dwFileAttributes, SafeHandle hTransaction);
+      internal static extern bool SetFileAttributesTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
+         [MarshalAs(UnmanagedType.U4)] FileAttributes dwFileAttributes, SafeHandle hTransaction);
 
       /// <summary>Sets the date and time that the specified file or directory was created, last accessed, or last modified.</summary>
       /// <returns>
@@ -765,7 +862,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool SetFileTime(SafeFileHandle hFile, SafeGlobalMemoryBufferHandle lpCreationTime, SafeGlobalMemoryBufferHandle lpLastAccessTime, SafeGlobalMemoryBufferHandle lpLastWriteTime);
+      internal static extern bool SetFileTime(SafeFileHandle hFile, SafeGlobalMemoryBufferHandle lpCreationTime,
+         SafeGlobalMemoryBufferHandle lpLastAccessTime, SafeGlobalMemoryBufferHandle lpLastWriteTime);
 
       /// <summary>Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
       /// <remarks>You should call this function from a background thread. Failure to do so could cause the UI to stop responding.</remarks>
@@ -773,7 +871,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("shell32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "SHGetFileInfoW")]
-      internal static extern IntPtr ShGetFileInfo([MarshalAs(UnmanagedType.LPWStr)] string pszPath, FileAttributes dwFileAttributes, [MarshalAs(UnmanagedType.Struct)] out Shell32.FileInfo psfi, [MarshalAs(UnmanagedType.U4)] uint cbFileInfo, [MarshalAs(UnmanagedType.U4)] Shell32.FileAttributes uFlags);
+      internal static extern IntPtr ShGetFileInfo([MarshalAs(UnmanagedType.LPWStr)] string pszPath,
+         FileAttributes dwFileAttributes, [MarshalAs(UnmanagedType.Struct)] out Shell32.FileInfo psfi,
+         [MarshalAs(UnmanagedType.U4)] uint cbFileInfo, [MarshalAs(UnmanagedType.U4)] Shell32.FileAttributes uFlags);
 
       /// <summary>Unlocks a region in an open file. Unlocking a region enables other processes to access the region.</summary>
       /// <returns>
@@ -785,7 +885,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool UnlockFile(SafeFileHandle hFile, [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetLow, [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetHigh, [MarshalAs(UnmanagedType.U4)] uint nNumberOfBytesToUnlockLow, [MarshalAs(UnmanagedType.U4)] uint nNumberOfBytesToUnlockHigh);
+      internal static extern bool UnlockFile(SafeFileHandle hFile, [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetLow,
+         [MarshalAs(UnmanagedType.U4)] uint dwFileOffsetHigh,
+         [MarshalAs(UnmanagedType.U4)] uint nNumberOfBytesToUnlockLow,
+         [MarshalAs(UnmanagedType.U4)] uint nNumberOfBytesToUnlockHigh);
 
       /// <summary>Unmaps a mapped view of a file from the calling process's address space.</summary>
       /// <remarks>Minimum supported client: Windows XP.</remarks>
@@ -804,22 +907,24 @@ namespace Alphaleonis.Win32.Filesystem
       public struct WIN32_FIND_STREAM_DATA
       {
          public long StreamSize;
-         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath + 36)]
-         public string cStreamName;
+         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath + 36)] public string cStreamName;
       }
 
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-      internal static extern SafeFindFileHandle FindFirstStreamTransactedW(string fileName, StreamInfoLevels infoLevel, SafeGlobalMemoryBufferHandle lpFindStreamData, int flags, SafeHandle hTransaction);
+      internal static extern SafeFindFileHandle FindFirstStreamTransactedW(string fileName, StreamInfoLevels infoLevel,
+         SafeGlobalMemoryBufferHandle lpFindStreamData, int flags, SafeHandle hTransaction);
 
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-      internal static extern SafeFindFileHandle FindFirstStreamW(string fileName, StreamInfoLevels infoLevel, SafeGlobalMemoryBufferHandle lpFindStreamData, int flags);
+      internal static extern SafeFindFileHandle FindFirstStreamW(string fileName, StreamInfoLevels infoLevel,
+         SafeGlobalMemoryBufferHandle lpFindStreamData, int flags);
 
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool FindNextStreamW(SafeFindFileHandle handle, SafeGlobalMemoryBufferHandle lpFindStreamData);
+      internal static extern bool FindNextStreamW(SafeFindFileHandle handle,
+         SafeGlobalMemoryBufferHandle lpFindStreamData);
 
       public enum StreamInfoLevels
       {
