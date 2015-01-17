@@ -208,6 +208,7 @@
     <Compile Include="Filesystem\Exceptions\DirectoryReadOnlyException.cs" />
     <Compile Include="Filesystem\Exceptions\DirectoryNotEmptyException.cs" />
     <Compile Include="Filesystem\Exceptions\FileReadOnlyException.cs" />
+    <Compile Include="Filesystem\File Class\File.EncryptedFileRaw.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateAlternateDataStreams.cs" />
     <Compile Include="Filesystem\File Class\File.EnumerateHardlinks.cs" />
     <Compile Include="Filesystem\File Class\File.CreateSymbolicLink.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="Filesystem\FileSystemInfo.cs" />
     <Compile Include="Filesystem\Enumerations\GetFileExInfoLevels.cs" />
     <Compile Include="Filesystem\Enumerations\GetFullPathOptions.cs" />
+    <Compile Include="Filesystem\Native Methods\NativeMethods.EncryptedFileRaw.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.KernelTransactions.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.Handles.cs" />
     <Compile Include="Filesystem\Native Methods\NativeMethods.FileManagement.cs" />
@@ -322,6 +324,7 @@
     <Compile Include="Filesystem\Path Class\Path.ShortLongConversions.cs" />
     <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
     <Compile Include="Filesystem\SafeCmConnectMachineHandle.cs" />
+    <Compile Include="Filesystem\SafeEncryptedFileRawHandle.cs" />
     <Compile Include="Filesystem\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
     <Compile Include="Filesystem\Structures\CopyMoveResult.cs" />
