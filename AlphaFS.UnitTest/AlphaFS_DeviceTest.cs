@@ -23,10 +23,6 @@ using Alphaleonis;
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
@@ -34,86 +30,16 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class AlphaFS_DeviceTest
    {
-      #region DeviceTest Helpers
-
-      private static readonly string LocalHost = Environment.MachineName; // Environment.MachineName equals using null.
-      private static Stopwatch _stopWatcher;
-
-      private static string StopWatcher(bool start = false)
-      {
-         if (_stopWatcher == null)
-            _stopWatcher = new Stopwatch();
-
-         if (start)
-         {
-            _stopWatcher.Restart();
-            return null;
-         }
-
-         _stopWatcher.Stop();
-         long ms = _stopWatcher.ElapsedMilliseconds;
-         TimeSpan elapsed = _stopWatcher.Elapsed;
-
-         return string.Format(CultureInfo.CurrentCulture, "*Duration: {0, 4} ms. ({1})", ms, elapsed);
-      }
-
-      private static string Reporter(bool condensed = false)
-      {
-         var lastError = new Win32Exception();
-
-         StopWatcher();
-
-         if (condensed)
-            return string.Format(CultureInfo.CurrentCulture, "{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode,
-                                 lastError.Message);
-
-         return string.Format(CultureInfo.CurrentCulture, "\t\t{0}\t*Win32 Result: [{1, 4}]\t*Win32 Message: [{2}]",
-                              StopWatcher(), lastError.NativeErrorCode, lastError.Message);
-      }
-
-      /// <summary>Shows the Object's available Properties and Values.</summary>
-      private static void Dump(object obj, int width = -35, bool indent = false)
-      {
-         int cnt = 0;
-         const string nulll = "\t\tnull";
-         string template = "\t{0}#{1:000}\t{2, " + width + "} == \t[{3}]";
-
-         if (obj == null)
-         {
-            Console.WriteLine(nulll);
-            return;
-         }
-
-         Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
-
-         foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
-         {
-            string propValue = null;
-            try
-            {
-               object value = descriptor.GetValue(obj);
-               propValue = (value == null) ? "null" : value.ToString();
-            }
-            catch (Exception ex)
-            {
-               // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, "  ");
-            }
-
-            Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
-         }
-      }
-
       #region DumpEnumerateDevices
 
       private void DumpEnumerateDevices(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
-         string tempPath = LocalHost;
+         string tempPath = UnitTestConstants.LocalHost;
          Console.Write("\nEnumerating devices from host: [{0}]\n", tempPath);
 
          int classCnt = 0;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          try
          {
@@ -125,7 +51,7 @@ namespace AlphaFS.UnitTest
                foreach (DeviceInfo device in Device.EnumerateDevices(tempPath, guid))
                {
                   Console.WriteLine("\n\t#{0:000}\tDevice Description: [{1}]", ++cnt, device.DeviceDescription);
-                  Dump(device, -24);
+                  UnitTestConstants.Dump(device, -24);
                }
             }
          }
@@ -135,15 +61,12 @@ namespace AlphaFS.UnitTest
          }
 
 
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
          if (isLocal)
             Assert.IsTrue(classCnt > 0, "Nothing was enumerated.");
       }
 
       #endregion //DumpEnumerateDevices
-
-      #endregion // DeviceTest Helpers
-
 
       #region EnumerateDevices
 

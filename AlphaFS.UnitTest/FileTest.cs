@@ -26,8 +26,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
@@ -47,245 +45,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class FileTest
    {
-      #region Unit Test Helpers
-
-      #region Fields
-
-      private readonly string LocalHost = Environment.MachineName;
-      private readonly string LocalHostShare = Environment.SystemDirectory;
-      private const string Local = @"LOCAL";
-      private const string Network = @"NETWORK";
-
-      private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
-      private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
-      private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
-      private static string NotepadExe = Path.Combine(SysRoot32, "notepad.exe");
-
-      private const string TextTrue = "IsTrue";
-      private const string TenNumbers = "0123456789";
-      private const string TextHelloWorld = "Hëllõ Wørld!";
-      private const string TextGoodByeWorld = "GóödByé Wôrld!";
-      private const string TextAppend = "GóödByé Wôrld!";
-      private const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
-
-      #endregion // Fields
-
-      #region CreateDirectoriesAndFiles
-
-      private static void CreateDirectoriesAndFiles(string rootPath, int max, bool recurse)
-      {
-         for (int i = 0; i < max; i++)
-         {
-            string file = Path.Combine(rootPath, Path.GetRandomFileName());
-            string dir = file + "-" + i + "-dir";
-            file = file + "-" + i + "-file";
-
-            Directory.CreateDirectory(dir);
-
-            // Some directories will remain empty.
-            if (i % 2 != 0)
-            {
-               File.WriteAllText(file, TextHelloWorld);
-               File.WriteAllText(Path.Combine(dir, Path.GetFileName(file)), TextGoodByeWorld);
-            }
-         }
-
-         if (recurse)
-         {
-            foreach (string dir in Directory.EnumerateDirectories(rootPath))
-               CreateDirectoriesAndFiles(dir, max, false);
-         }
-      }
-
-      #endregion // CreateDirectoriesAndFiles
-
-      #region StopWatcher
-
-      private static Stopwatch _stopWatcher;
-
-      private static string StopWatcher(bool start = false)
-      {
-         if (_stopWatcher == null)
-            _stopWatcher = new Stopwatch();
-
-         if (start)
-         {
-            _stopWatcher.Restart();
-            return null;
-         }
-
-         _stopWatcher.Stop();
-         long ms = _stopWatcher.ElapsedMilliseconds;
-         TimeSpan elapsed = _stopWatcher.Elapsed;
-
-         return string.Format(CultureInfo.CurrentCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
-      }
-
-      #endregion // StopWatcher
-
-      #region Reporter
-
-      private static string Reporter(bool onlyTime = false)
-      {
-         Win32Exception lastError = new Win32Exception();
-
-         StopWatcher();
-
-         return onlyTime
-            ? string.Format(CultureInfo.CurrentCulture, "\t\t{0}", StopWatcher())
-            : string.Format(CultureInfo.CurrentCulture, "\t{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
-      }
-
-      #endregion // Reporter
-
-      #region IsAdmin
-
-      private static bool IsAdmin()
-      {
-         bool isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
-
-         if (!isAdmin)
-            Console.WriteLine("\n\tThis Unit Test must be run as Administrator.");
-
-         return isAdmin;
-      }
-
-      #endregion // IsAdmin
-
-      #region Dump
-
-      /// <summary>Shows the Object's available Properties and Values.</summary>
-      private static bool Dump(object obj, int width = -35, bool indent = false)
-      {
-         int cnt = 0;
-         const string nulll = "\t\tnull";
-         string template = "\t{0}#{1:000}\t{2, " + width + "} == \t[{3}]";
-
-         if (obj == null)
-         {
-            Console.WriteLine(nulll);
-            return false;
-         }
-
-         Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
-
-         bool loopOk = false;
-         foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
-         {
-            string propValue;
-            try
-            {
-               object value = descriptor.GetValue(obj);
-               propValue = (value == null) ? "null" : value.ToString();
-
-               loopOk = true;
-            }
-            catch (Exception ex)
-            {
-               // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, "  ");
-            }
-
-            Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
-         }
-
-         return loopOk;
-      }
-
-      #endregion //Dump
-
-      #region InputPaths
-
-      static readonly string[] InputPaths =
-      {
-         @".",
-         @".zip",
-         
-         Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture),
-         Path.DirectorySeparatorChar + @"Program Files\Microsoft Office",
-         
-         Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
-         Path.VolumePrefix + @"{12345678-aac3-31de-3321-3124565341ed}\Program Files\notepad.exe",
-
-         @"Program Files\Microsoft Office",
-         SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         SysDrive,
-         SysDrive + @"\",
-         SysDrive + @"\a",
-         SysDrive + @"\a\",
-         SysDrive + @"\a\b",
-         SysDrive + @"\a\b\",
-         SysDrive + @"\a\b\c",
-         SysDrive + @"\a\b\c\",
-         SysDrive + @"\a\b\c\f",
-         SysDrive + @"\a\b\c\f.",
-         SysDrive + @"\a\b\c\f.t",
-         SysDrive + @"\a\b\c\f.tx",
-         SysDrive + @"\a\b\c\f.txt",
-
-         Path.LongPathPrefix + @"Program Files\Microsoft Office",
-         Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         Path.LongPathPrefix + SysDrive,
-         Path.LongPathPrefix + SysDrive + @"\",
-         Path.LongPathPrefix + SysDrive + @"\a",
-         Path.LongPathPrefix + SysDrive + @"\a\",
-         Path.LongPathPrefix + SysDrive + @"\a\b",
-         Path.LongPathPrefix + SysDrive + @"\a\b\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
-
-         Path.UncPrefix + @"Server\Share\",
-         Path.UncPrefix + @"Server\Share\d",
-         Path.UncPrefix + @"Server\Share\d1",
-         Path.UncPrefix + @"Server\Share\d1\",
-         Path.UncPrefix + @"Server\Share\d1\d",
-         Path.UncPrefix + @"Server\Share\d1\d2",
-         Path.UncPrefix + @"Server\Share\d1\d2\",
-         Path.UncPrefix + @"Server\Share\d1\d2\f",
-         Path.UncPrefix + @"Server\Share\d1\d2\fi",
-         Path.UncPrefix + @"Server\Share\d1\d2\fil",
-         Path.UncPrefix + @"Server\Share\d1\d2\file",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ext",
-
-         Path.LongPathUncPrefix + @"Server\Share\",
-         Path.LongPathUncPrefix + @"Server\Share\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1",
-         Path.LongPathUncPrefix + @"Server\Share\d1\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\f",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fi",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fil",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ext"
-      };
-
-      #endregion // InputPaths
-
-      #region StringToByteArray
-
-      private static byte[] StringToByteArray(string str, params Encoding[] encoding)
-      {
-         Encoding encode = encoding != null && encoding.Any() ? encoding[0] : new UTF8Encoding(true, true);
-         return encode.GetBytes(str);
-      }
-
-      #endregion // StringToByteArray
-
-      #endregion // Unit Test Helpers
-
       #region Unit Tests
 
       #region DumpAccessRules
@@ -296,15 +55,15 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesProtected: [{0}]", dsAlpha.AreAccessRulesProtected);
          Assert.AreEqual(dsSystem.AreAccessRulesProtected, dsAlpha.AreAccessRulesProtected);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesProtected: [{0}]", dsAlpha.AreAuditRulesProtected);
          Assert.AreEqual(dsSystem.AreAuditRulesProtected, dsAlpha.AreAuditRulesProtected);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesCanonical: [{0}]", dsAlpha.AreAccessRulesCanonical);
          Assert.AreEqual(dsSystem.AreAccessRulesCanonical, dsAlpha.AreAccessRulesCanonical);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesCanonical: [{0}]", dsAlpha.AreAuditRulesCanonical);
          Assert.AreEqual(dsSystem.AreAuditRulesCanonical, dsAlpha.AreAuditRulesCanonical);
       }
@@ -317,7 +76,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempFolder = Path.GetTempPath();
          string tempPath = Path.Combine(tempFolder, "File.Delete-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
@@ -326,7 +85,7 @@ namespace AlphaFS.UnitTest
          string tempFile = Path.GetTempFileName();
          if (!isLocal) tempFile = Path.LocalToUnc(tempFile);
 
-         IEnumerable<string> allLines = new[] { TenNumbers, TextHelloWorld, TextAppend, TextUnicode };
+         IEnumerable<string> allLines = new[] { UnitTestConstants.TenNumbers, UnitTestConstants.TextHelloWorld, UnitTestConstants.TextAppend, UnitTestConstants.TextUnicode };
 
          #endregion // Setup
 
@@ -386,8 +145,8 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
          string tempPath = Path.GetTempPath("File-Copy-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -612,7 +371,7 @@ namespace AlphaFS.UnitTest
             string readOnlySource = null;
             string readOnlyDestination = null;
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             foreach (string file in Directory.EnumerateFiles(path))
             {
                string newFile = Path.Combine(tempPath, Path.GetFileName(file, true));
@@ -629,7 +388,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\t#{0:000}\tCopied to: [{1}]", ++cnt, newFile);
                Assert.IsTrue(File.Exists(newFile));
             }
-            Console.WriteLine("\n\tTotal Size: [{0}]{1}", Utils.UnitSizeToText(Directory.GetProperties(tempPath)["Size"]), Reporter());
+            Console.WriteLine("\n\tTotal Size: [{0}]{1}", Utils.UnitSizeToText(Directory.GetProperties(tempPath)["Size"]), UnitTestConstants.Reporter());
             Console.WriteLine();
 
             #endregion // Copy
@@ -655,13 +414,13 @@ namespace AlphaFS.UnitTest
             File.SetLastAccessTime(preserveReadOnlySource, lastAccessTime);
             File.SetLastWriteTime(preserveReadOnlySource, lastWriteTime);
             
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
 
             // 3rd parameter CopyOptions.None: overwrite existing.
             // 4rd parameter true: preserve timestamps of source.
             File.Copy(preserveReadOnlySource, readOnlyDestination, CopyOptions.None, true);
 
-            Console.WriteLine("\tFile copied.{0}", Reporter());
+            Console.WriteLine("\tFile copied.{0}", UnitTestConstants.Reporter());
 
             Assert.IsTrue(File.Exists(preserveReadOnlySource));
             Assert.IsTrue(File.Exists(readOnlyDestination));
@@ -690,17 +449,17 @@ namespace AlphaFS.UnitTest
 
       private void DumpCreate(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempFolder = Path.GetTempPath();
          string tempPath = Path.Combine(tempFolder, "File-Create-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          using (FileStream fs = File.Create(tempPath))
          {
-            int ten = TenNumbers.Length;
+            int ten = UnitTestConstants.TenNumbers.Length;
 
             // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-            fs.Write(StringToByteArray(TenNumbers), 0, ten);
+            fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
 
             long fileSize = fs.Length;
             bool isTen = fileSize == ten;
@@ -712,8 +471,8 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(File.Exists(tempPath), "File should exist.");
             Assert.IsTrue(isTen, "File should be [{0}] bytes in size.", ten);
 
-            Assert.IsTrue(Dump(fs, -14));
-            Assert.IsTrue(Dump(fs.SafeFileHandle, -9));
+            Assert.IsTrue(UnitTestConstants.Dump(fs, -14));
+            Assert.IsTrue(UnitTestConstants.Dump(fs.SafeFileHandle, -9));
          }
 
          using (StreamReader stream = File.OpenText(tempPath))
@@ -738,20 +497,20 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempFolder = Path.GetTempPath();
          string tempPath = Path.Combine(tempFolder, "File.Delete-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         string notePad = isLocal ? NotepadExe : Path.LocalToUnc(NotepadExe);
+         string notePad = isLocal ? UnitTestConstants.NotepadExe : Path.LocalToUnc(UnitTestConstants.NotepadExe);
 
-         string nonExistingFile = SysRoot32 + @"\NonExistingFile-" + Path.GetRandomFileName();
+         string nonExistingFile = UnitTestConstants.SysRoot32 + @"\NonExistingFile-" + Path.GetRandomFileName();
          if (!isLocal) nonExistingFile = Path.LocalToUnc(nonExistingFile);
 
-         string sysDrive = SysDrive;
+         string sysDrive = UnitTestConstants.SysDrive;
          if (!isLocal) sysDrive = Path.LocalToUnc(sysDrive);
 
-         string sysRoot = SysRoot;
+         string sysRoot = UnitTestConstants.SysRoot;
          if (!isLocal) sysRoot = Path.LocalToUnc(sysRoot);
 
          string letter = DriveInfo.GetFreeDriveLetter() + @":\";
@@ -800,7 +559,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch #{0}: [{1}]: path is in an invalid format.", ++catchCount, expectedException);
 
-               string invalidPath = SysDrive + @"\dev\test\aaa:aaa.txt";
+               string invalidPath = UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt";
                if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + ":aaa.txt";
 
                File.Delete(invalidPath);
@@ -835,7 +594,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch #{0}: [{1}]: The caller does not have the required permission.", ++catchCount, expectedException);
 
-               File.Delete(SysRoot32 + @"\kernel32.dll");
+               File.Delete(UnitTestConstants.SysRoot32 + @"\kernel32.dll");
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -855,7 +614,7 @@ namespace AlphaFS.UnitTest
 
             #endregion // UnauthorizedAccessException
 
-            #region DirectoryNotFoundException (Local) / IOException (Network)
+            #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
             expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
             expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
@@ -882,7 +641,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
 
-            #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+            #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
             #region UnauthorizedAccessException #1
 
@@ -998,7 +757,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpExists(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("File-Exists-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -1028,7 +787,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpGetAccessControl(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          string tempPath = Path.Combine(Path.GetTempPath(), "File.GetAccessControl()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
@@ -1036,9 +795,9 @@ namespace AlphaFS.UnitTest
 
          bool foundRules = false;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          FileSecurity gac = File.GetAccessControl(tempPath);
-         string report = Reporter();
+         string report = UnitTestConstants.Reporter();
 
          AuthorizationRuleCollection accessRules = gac.GetAccessRules(true, true, typeof(NTAccount));
          FileSecurity sysIo = System.IO.File.GetAccessControl(tempPath);
@@ -1050,7 +809,7 @@ namespace AlphaFS.UnitTest
 
          foreach (FileSystemAccessRule far in accessRules)
          {
-            Dump(far, 17);
+            UnitTestConstants.Dump(far, 17);
             DumpAccessRules(1, sysIo, gac);
             foundRules = true;
          }
@@ -1069,15 +828,15 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = NotepadExe;
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         string path = UnitTestConstants.NotepadExe;
          if (!isLocal) path = Path.LocalToUnc(path);
 
          Console.WriteLine("\nInput File Path: [{0}]\n", path);
 
          #endregion // Setup
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          #region GetCreationTimeXxx
 
@@ -1130,7 +889,7 @@ namespace AlphaFS.UnitTest
          #endregion // GetChangeTimeXxx
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Console.WriteLine();
 
          #region Trigger GetChangeTimeXxx
@@ -1198,7 +957,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("File-GetSize()-file-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -1210,7 +969,7 @@ namespace AlphaFS.UnitTest
          FileInfo fi = new FileInfo(tempPath);
          using (StreamWriter sw = fi.CreateText())
             for (int i = 0; i < randomLines; i++)
-               sw.WriteLine(TextHelloWorld);
+               sw.WriteLine(UnitTestConstants.TextHelloWorld);
 
 
          long fileGetSize = File.GetSize(tempPath);
@@ -1233,12 +992,12 @@ namespace AlphaFS.UnitTest
 
          bool compressOk = false;
          string report;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          try
          {
             fi.Compress();
-            report = Reporter(true);
+            report = UnitTestConstants.Reporter(true);
             compressOk = true;
 
             fileGetSize = File.GetSize(tempPath);
@@ -1246,7 +1005,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            report = Reporter(true);
+            report = UnitTestConstants.Reporter(true);
             Console.WriteLine("\n\tFile.Compress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
@@ -1277,12 +1036,12 @@ namespace AlphaFS.UnitTest
          #region Decompress
 
          bool decompressOk = false;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          try
          {
             File.Decompress(tempPath);
-            report = Reporter(true);
+            report = UnitTestConstants.Reporter(true);
             decompressOk = true;
 
             fileGetSize = File.GetSize(tempPath);
@@ -1291,7 +1050,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            report = Reporter(true);
+            report = UnitTestConstants.Reporter(true);
             Console.WriteLine("\n\tFile.Decompress(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
@@ -1331,14 +1090,14 @@ namespace AlphaFS.UnitTest
 
       private void DumpEnumerateHardlinks(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string subDir = Directory.CreateDirectory(Path.GetTempPath("Hardlink-" + Path.GetRandomFileName())).FullName;
          string tempPath = Path.Combine(subDir, "File.EnumerateHardlinks()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
 
          // Create original file with text content.
-         File.WriteAllText(tempPath, TextHelloWorld);
+         File.WriteAllText(tempPath, UnitTestConstants.TextHelloWorld);
          Console.WriteLine("\nInput File Path: [{0}]\n\nContents: [{1}]", tempPath, File.ReadAllText(tempPath));
 
 
@@ -1362,13 +1121,13 @@ namespace AlphaFS.UnitTest
          if (isLocal)
          {
             int cnt = 0;
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
 
             foreach (string hardLink in File.EnumerateHardlinks(tempPath))
                Console.WriteLine("\t#{0:000}\tHardlink: [{1}]", ++cnt, hardLink);
 
             Console.WriteLine();
-            Console.WriteLine(Reporter());
+            Console.WriteLine(UnitTestConstants.Reporter());
             Assert.AreEqual(numCreate, cnt);
             Console.WriteLine();
          }
@@ -1378,13 +1137,13 @@ namespace AlphaFS.UnitTest
 
          using (FileStream stream = File.OpenRead(tempPath))
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             ByHandleFileInfo bhfi = File.GetFileInfoByHandle(stream.SafeFileHandle);
-            string report = Reporter();
+            string report = UnitTestConstants.Reporter();
             Assert.AreEqual(numCreate, (int)bhfi.NumberOfLinks);
 
             Console.WriteLine("\n\tByHandleFileInfo for Input Path, see property: NumberOfLinks");
-            Dump(bhfi, -18);
+            UnitTestConstants.Dump(bhfi, -18);
             Console.WriteLine("\n{0}", report);
          }
 
@@ -1402,8 +1161,8 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
          string tempPath = Path.GetTempPath("File-Move-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -1645,7 +1404,7 @@ namespace AlphaFS.UnitTest
             string readOnlySource = null;
             string readOnlyDestination = null;
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             foreach (string file in Directory.EnumerateFiles(tempPath))
             {
                string newFile = Path.Combine(movePath, Path.GetFileName(file, true));
@@ -1662,7 +1421,7 @@ namespace AlphaFS.UnitTest
                Console.WriteLine("\t#{0:000}\tMoved to: [{1}]", ++cnt, newFile);
                Assert.IsTrue(File.Exists(newFile));
             }
-            Console.WriteLine("\n\tTotal Size: [{0}]{1}", Utils.UnitSizeToText(Directory.GetProperties(movePath)["Size"]), Reporter());
+            Console.WriteLine("\n\tTotal Size: [{0}]{1}", Utils.UnitSizeToText(Directory.GetProperties(movePath)["Size"]), UnitTestConstants.Reporter());
             Console.WriteLine();
 
             #endregion // Move
@@ -1696,13 +1455,13 @@ namespace AlphaFS.UnitTest
 
             #endregion Preserve Timestamps
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
 
             // 3rd parameter MoveOptions.ReplaceExisting: overwrite existing.
             // File.Move() automatically preserves Timestamps.
             File.Move(readOnlySource, readOnlyDestination, MoveOptions.ReplaceExisting);
 
-            Console.WriteLine("\tFile moved.{0}", Reporter());
+            Console.WriteLine("\tFile moved.{0}", UnitTestConstants.Reporter());
 
             Assert.IsFalse(File.Exists(readOnlySource));
             Assert.IsTrue(File.Exists(readOnlyDestination));
@@ -1734,10 +1493,10 @@ namespace AlphaFS.UnitTest
 
       private void DumpGetSetAttributes(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
          string tempPath = isLocal ? tmp : Path.LocalToUnc(tmp);
-         string sys32 = isLocal ? SysRoot32 : Path.LocalToUnc(SysRoot32);
+         string sys32 = isLocal ? UnitTestConstants.SysRoot32 : Path.LocalToUnc(UnitTestConstants.SysRoot32);
 
          Console.WriteLine("\nInput Path: [{0}]", sys32);
 
@@ -1754,14 +1513,14 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput Path: [{0}]", tempPath);
 
          // Create some folders and files.
-         CreateDirectoriesAndFiles(tempPath, 10, true);
+         UnitTestConstants.CreateDirectoriesAndFiles(tempPath, 10, true);
 
          FileAttributes apply = FileAttributes.Hidden | FileAttributes.Archive | FileAttributes.System | FileAttributes.ReadOnly;
          Console.WriteLine("\nSetAttributes(): [{0}]", apply);
 
          bool allOk = true;
          int cnt = 0;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (string file in Directory.EnumerateFiles(tempPath))
          {
             try
@@ -1782,7 +1541,7 @@ namespace AlphaFS.UnitTest
             }
          }
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(allOk);
 
 
@@ -1791,7 +1550,7 @@ namespace AlphaFS.UnitTest
 
          allOk = true;
          cnt = 0;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (string file in Directory.EnumerateFiles(tempPath))
          {
             try
@@ -1812,7 +1571,7 @@ namespace AlphaFS.UnitTest
             }
          }
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
 
 
          Directory.Delete(tempPath, true);
@@ -1829,7 +1588,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.GetTempPath("File.SetCreationTime()-" + Path.GetRandomFileName());
          if (!isLocal) path = Path.LocalToUnc(path);
 
@@ -1839,7 +1598,7 @@ namespace AlphaFS.UnitTest
 
          #endregion // Setup
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          #region SetCreationTimeXxx
 
@@ -1927,7 +1686,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpSetTimestamps(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "File.SetTimestamps()-" + Path.GetRandomFileName());
          if (!isLocal) path = Path.LocalToUnc(path);
 
@@ -2012,7 +1771,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpTransferTimestamps(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "File.TransferTimestamps()-" + Path.GetRandomFileName());
          string path2 = Path.Combine(Path.GetTempPath(), "File.TransferTimestamps()-" + Path.GetRandomFileName());
 
@@ -2083,7 +1842,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpReadAllLines(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
          string tempPath = isLocal ? tmp : Path.LocalToUnc(tmp);
 
@@ -2118,7 +1877,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpReadWriteAllBytes(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("File.ReadWriteAllBytes()-" + Path.GetRandomFileName());
          if (!isLocal) { tempPath = Path.LocalToUnc(tempPath); }
 
@@ -2175,7 +1934,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpFileTrailingDotSpace(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          const string characterDot = ".";
          const string characterSpace = " ";
          string random = Path.GetRandomFileName();
@@ -2238,7 +1997,7 @@ namespace AlphaFS.UnitTest
 
          #region File() Class
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          #region TrailingDot
 
@@ -2254,7 +2013,7 @@ namespace AlphaFS.UnitTest
          Assert.IsFalse(File.Exists(tempPathDot, PathFormat.FullPath), "File should be invisible to AlphaFS.");
 
          using (StreamWriter sw = System.IO.File.AppendText(tempPathDot))
-            sw.WriteLine(TextHelloWorld);
+            sw.WriteLine(UnitTestConstants.TextHelloWorld);
 
          string lineSysIo;
          using (StreamReader sr = System.IO.File.OpenText(tempPathDot))
@@ -2272,7 +2031,7 @@ namespace AlphaFS.UnitTest
          Assert.IsFalse(System.IO.File.Exists(tempPathDot), "File should be invisible to System.IO.");
 
          using (StreamWriter sw = File.AppendText(tempPathDot, PathFormat.FullPath))
-            sw.WriteLine(TextHelloWorld);
+            sw.WriteLine(UnitTestConstants.TextHelloWorld);
 
          string lineAlphaFs;
          using (StreamReader sr = File.OpenText(tempPathDot, PathFormat.FullPath))
@@ -2301,7 +2060,7 @@ namespace AlphaFS.UnitTest
          Assert.IsFalse(File.Exists(tempPathSpace, PathFormat.FullPath), "File should be invisible to AlphaFS.");
 
          using (StreamWriter sw = System.IO.File.AppendText(tempPathSpace))
-            sw.WriteLine(TextHelloWorld);
+            sw.WriteLine(UnitTestConstants.TextHelloWorld);
 
          using (StreamReader sr = System.IO.File.OpenText(tempPathSpace))
             lineSysIo = sr.ReadToEnd();
@@ -2318,7 +2077,7 @@ namespace AlphaFS.UnitTest
          Assert.IsFalse(System.IO.File.Exists(tempPathSpace), "File should be invisible to System.IO.");
 
          using (StreamWriter sw = File.AppendText(tempPathSpace, PathFormat.FullPath))
-            sw.WriteLine(TextHelloWorld);
+            sw.WriteLine(UnitTestConstants.TextHelloWorld);
 
          using (StreamReader sr = File.OpenText(tempPathSpace, PathFormat.FullPath))
             lineAlphaFs = sr.ReadToEnd();
@@ -2332,13 +2091,13 @@ namespace AlphaFS.UnitTest
 
          #endregion // TrailingSpace
 
-         Console.WriteLine("\tClass File(){0}", Reporter());
+         Console.WriteLine("\tClass File(){0}", UnitTestConstants.Reporter());
 
          #endregion // File() Class
 
          #region FileInfo() Class
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          #region TrailingDot
 
@@ -2361,7 +2120,7 @@ namespace AlphaFS.UnitTest
          }
 
          using (StreamWriter sw = sysIoFi.AppendText())
-            sw.WriteLine(TextHelloWorld);
+            sw.WriteLine(UnitTestConstants.TextHelloWorld);
 
          using (StreamReader sr = System.IO.File.OpenText(tempPathDot))
             lineSysIo = sr.ReadToEnd();
@@ -2386,7 +2145,7 @@ namespace AlphaFS.UnitTest
          }
 
          using (StreamWriter sw = alphaFsFi.AppendText())
-            sw.WriteLine(TextHelloWorld);
+            sw.WriteLine(UnitTestConstants.TextHelloWorld);
 
          using (StreamReader sr = File.OpenText(tempPathDot, PathFormat.FullPath))
             lineAlphaFs = sr.ReadToEnd();
@@ -2422,7 +2181,7 @@ namespace AlphaFS.UnitTest
          }
 
          using (StreamWriter sw = sysIoFi.AppendText())
-            sw.WriteLine(TextHelloWorld);
+            sw.WriteLine(UnitTestConstants.TextHelloWorld);
 
          using (StreamReader sr = System.IO.File.OpenText(tempPathSpace))
             lineSysIo = sr.ReadToEnd();
@@ -2447,7 +2206,7 @@ namespace AlphaFS.UnitTest
          }
 
          using (StreamWriter sw = alphaFsFi.AppendText())
-            sw.WriteLine(TextHelloWorld);
+            sw.WriteLine(UnitTestConstants.TextHelloWorld);
 
          using (StreamReader sr = File.OpenText(tempPathSpace, PathFormat.FullPath))
             lineAlphaFs = sr.ReadToEnd();
@@ -2462,7 +2221,7 @@ namespace AlphaFS.UnitTest
 
          #endregion // TrailingSpace
 
-         Console.WriteLine("\tClass FileInfo(){0}", Reporter());
+         Console.WriteLine("\tClass FileInfo(){0}", UnitTestConstants.Reporter());
 
          #endregion // FileInfo() Class
 
@@ -2473,8 +2232,6 @@ namespace AlphaFS.UnitTest
 
 
       #endregion // Unit Tests
-
-      #region Unit Test Callers
 
       #region .NET
 
@@ -2502,7 +2259,7 @@ namespace AlphaFS.UnitTest
          // Create file and append text.
          string tempFile = Path.GetTempFileName();
 
-         string allLines = TextHelloWorld;
+         string allLines = UnitTestConstants.TextHelloWorld;
 
          // Create real UTF-8 file.
          File.AppendAllText(tempFile, allLines, NativeMethods.DefaultFileEncoding);
@@ -2563,7 +2320,7 @@ namespace AlphaFS.UnitTest
          // Create filestream and append text as UTF-8, default.
          using (streamWrite = File.CreateText(tempFile))
          {
-            streamWrite.Write(TextHelloWorld);
+            streamWrite.Write(UnitTestConstants.TextHelloWorld);
          }
 
          // Read filestream contents.
@@ -2571,11 +2328,11 @@ namespace AlphaFS.UnitTest
          {
             while ((line = streamRead.ReadLine()) != null)
             {
-               Console.WriteLine("\n CreateText(): [{0}] filestream: [{1}]\n  Appended: [{2}]\n  Content : [{3}]", streamRead.CurrentEncoding.EncodingName, tempFile, TextHelloWorld, line);
+               Console.WriteLine("\n CreateText(): [{0}] filestream: [{1}]\n  Appended: [{2}]\n  Content : [{3}]", streamRead.CurrentEncoding.EncodingName, tempFile, UnitTestConstants.TextHelloWorld, line);
                matchLine = line; // Catch the last line.
             }
          }
-         Assert.IsTrue(matchLine.Equals(TextHelloWorld, StringComparison.OrdinalIgnoreCase));
+         Assert.IsTrue(matchLine.Equals(UnitTestConstants.TextHelloWorld, StringComparison.OrdinalIgnoreCase));
 
          #endregion // Create Filestream, CreateText()
 
@@ -2584,7 +2341,7 @@ namespace AlphaFS.UnitTest
          // Append text as UTF-8, default.
          using (streamWrite = File.AppendText(tempFile))
          {
-            streamWrite.Write(TextAppend);
+            streamWrite.Write(UnitTestConstants.TextAppend);
          }
 
          // Read filestream contents.
@@ -2592,14 +2349,14 @@ namespace AlphaFS.UnitTest
          {
             while ((line = streamRead.ReadLine()) != null)
             {
-               Console.WriteLine("\n AppendText() as [{0}]\n  Appended: [{1}]\n  Content : [{2}]", utf8, TextAppend, line);
+               Console.WriteLine("\n AppendText() as [{0}]\n  Appended: [{1}]\n  Content : [{2}]", utf8, UnitTestConstants.TextAppend, line);
             }
          }
 
          // Append text as UTF-8, default.
          using (streamWrite = File.AppendText(tempFile))
          {
-            streamWrite.WriteLine(TextUnicode);
+            streamWrite.WriteLine(UnitTestConstants.TextUnicode);
          }
 
          // Read filestream contents.
@@ -2608,12 +2365,12 @@ namespace AlphaFS.UnitTest
          {
             while ((line = streamRead.ReadLine()) != null)
             {
-               Console.WriteLine("\n AppendText() as [{0}]\n  Appended: [{1}]\n  Content : [{2}]", utf8, TextAppend, line);
+               Console.WriteLine("\n AppendText() as [{0}]\n  Appended: [{1}]\n  Content : [{2}]", utf8, UnitTestConstants.TextAppend, line);
                matchLine = line; // Catch the last line.
             }
          }
 
-         Assert.IsTrue(matchLine.Equals(TextHelloWorld + TextAppend + TextUnicode, StringComparison.OrdinalIgnoreCase));
+         Assert.IsTrue(matchLine.Equals(UnitTestConstants.TextHelloWorld + UnitTestConstants.TextAppend + UnitTestConstants.TextUnicode, StringComparison.OrdinalIgnoreCase));
 
          File.Delete(tempFile, true);
          Assert.IsFalse(File.Exists(tempFile), "Cleanup failed: File should have been removed.");
@@ -2728,7 +2485,7 @@ namespace AlphaFS.UnitTest
          string tempFile = Path.GetTempFileName();
 
          // Append text as UTF-8, default.
-         File.AppendAllText(tempFile, TextHelloWorld);
+         File.AppendAllText(tempFile, UnitTestConstants.TextHelloWorld);
 
          string utf8 = NativeMethods.DefaultFileEncoding.BodyName.ToUpperInvariant();
          string readText8 = File.ReadAllText(tempFile);
@@ -3062,10 +2819,10 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("File.SetAccessControl()");
 
-         if (!IsAdmin())
+         if (!UnitTestConstants.IsAdmin())
             Assert.Fail();
 
-         string path = SysDrive + @"\AlphaFile-" + Path.GetRandomFileName();
+         string path = UnitTestConstants.SysDrive + @"\AlphaFile-" + Path.GetRandomFileName();
          string pathAlpha = path;
 
          Console.WriteLine("\n\tFile: [{0}]", path);
@@ -3234,7 +2991,7 @@ namespace AlphaFS.UnitTest
          // Create file and append text.
          string tempFile = Path.GetTempFileName();
 
-         string[] allLines = new[] { TenNumbers, TextHelloWorld, TextAppend, TextUnicode };
+         string[] allLines = new[] { UnitTestConstants.TenNumbers, UnitTestConstants.TextHelloWorld, UnitTestConstants.TextAppend, UnitTestConstants.TextUnicode };
 
          // Create real UTF-8 file.
          File.WriteAllLines(tempFile, allLines, NativeMethods.DefaultFileEncoding);
@@ -3267,7 +3024,7 @@ namespace AlphaFS.UnitTest
          // Create file and append text.
          string tempFile = Path.GetTempFileName();
 
-         string allLines = TextHelloWorld;
+         string allLines = UnitTestConstants.TextHelloWorld;
 
          // Create real UTF-8 file.
          File.WriteAllText(tempFile, allLines, NativeMethods.DefaultFileEncoding);
@@ -3512,7 +3269,5 @@ namespace AlphaFS.UnitTest
       #endregion // AlphaFS___FileTrailingDotSpace
 
       #endregion // AlphaFS
-
-      #endregion // Unit Test Callers
    }
 }

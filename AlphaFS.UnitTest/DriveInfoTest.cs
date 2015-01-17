@@ -28,10 +28,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class DriveInfoTest
    {
-      #region DriveInfoTest Helpers
-
-      #endregion // DriveInfoTest Helpers
-      
       #region .NET
 
       #region GetDrives
@@ -66,7 +62,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_GetFreeDriveLetter()
       {
          Console.WriteLine("DriveInfo.GetFreeDriveLetter()");
-         Console.WriteLine("\nPlease see unit test: Network.Host.ConnectDrive()");
+         Console.WriteLine("\nPlease see unit test: UnitTestConstants.Network.Host.ConnectDrive()");
          Console.WriteLine("\nPlease see unit test: Volume.DefineDosDevice()");
          Console.WriteLine("\nPlease see unit test: DirectoryInfo()");
          
