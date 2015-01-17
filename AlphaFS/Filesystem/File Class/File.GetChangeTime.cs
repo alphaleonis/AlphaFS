@@ -171,33 +171,27 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         var buffer = IntPtr.Zero;
-
          try
          {
             NativeMethods.IsValidHandle(safeHandle);
             
-            // TODO: Change this to use safe handles for the memory buffer!
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(IntPtr.Size + Marshal.SizeOf(typeof(NativeMethods.FileBasicInfo))))
+            {
+               NativeMethods.FileBasicInfo fbi;
 
-            // Allocate the memory.
-            var bufferSize = IntPtr.Size + Marshal.SizeOf(typeof(NativeMethods.FileBasicInfo));
-            buffer = Marshal.AllocHGlobal(bufferSize);
+               if (!NativeMethods.GetFileInformationByHandleEx_FileBasicInfo(safeHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, out fbi, (uint)safeBuffer.Capacity))
+                  NativeError.ThrowException(Marshal.GetLastWin32Error());
 
-            if (!NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, buffer, (uint) bufferSize))
-               NativeError.ThrowException(Marshal.GetLastWin32Error());
+               safeBuffer.StructureToPtr(fbi, true);
+               NativeMethods.FileTime changeTime = safeBuffer.PtrToStructure<NativeMethods.FileBasicInfo>().ChangeTime;
 
-
-            var changeTime = ((NativeMethods.FileBasicInfo)Marshal.PtrToStructure(buffer, typeof(NativeMethods.FileBasicInfo))).ChangeTime;
-
-            return getUtc
-               ? DateTime.FromFileTimeUtc(changeTime)
-               : DateTime.FromFileTime(changeTime);
+               return getUtc
+                  ? DateTime.FromFileTimeUtc(changeTime)
+                  : DateTime.FromFileTime(changeTime);
+            }
          }
          finally
          {
-            if (buffer != IntPtr.Zero)
-               Marshal.FreeHGlobal(buffer);
-
             // Handle is ours, dispose.
             if (!callerHandle && safeHandle != null)
                safeHandle.Close();
