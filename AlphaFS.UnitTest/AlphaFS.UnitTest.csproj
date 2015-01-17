@@ -133,6 +133,7 @@
     <Compile Include="PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AlphaFS_VolumeTest.cs" />
+    <Compile Include="Utils\UnitTestConstants.cs" />
     <Compile Include="Utils\TemporaryDirectory.cs" />
   </ItemGroup>
   <ItemGroup>

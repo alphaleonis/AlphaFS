@@ -24,11 +24,8 @@ using Alphaleonis.Win32.Filesystem;
 using Alphaleonis.Win32.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using NativeMethods = Alphaleonis.Win32.Network.NativeMethods;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
@@ -38,87 +35,12 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class AlphaFS_HostTest
    {
-      #region HostTest Helpers
-
-      private readonly string LocalHost = Environment.MachineName;
-      private readonly string LocalHostShare = Environment.SystemDirectory;
-      private static Stopwatch _stopWatcher;
-      private static string StopWatcher(bool start = false)
-      {
-         if (_stopWatcher == null)
-            _stopWatcher = new Stopwatch();
-
-         if (start)
-         {
-            _stopWatcher.Restart();
-            return null;
-         }
-
-         if (_stopWatcher.IsRunning)
-            _stopWatcher.Stop();
-
-         long ms = _stopWatcher.ElapsedMilliseconds;
-         TimeSpan elapsed = _stopWatcher.Elapsed;
-
-         return string.Format(CultureInfo.CurrentCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
-      }
-
-      private static string Reporter(bool condensed = false, bool onlyTime = false)
-      {
-         var lastError = new Win32Exception();
-
-         StopWatcher();
-
-         return onlyTime
-            ? string.Format(CultureInfo.CurrentCulture, condensed
-               ? "{0} [{1}: {2}]"
-               : "\t\t{0}", StopWatcher())
-            : string.Format(CultureInfo.CurrentCulture, condensed
-               ? "{0} [{1}: {2}]"
-               : "\t\t{0}\t*Win32 Result: [{1, 4}]\t*Win32 Message: [{2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
-      }
-
-      /// <summary>Shows the Object's available Properties and Values.</summary>
-      private static void Dump(object obj, int width = -35, bool indent = false)
-      {
-         int cnt = 0;
-         const string nulll = "\t\tnull";
-         string template = "\t{0}#{1:000}\t{2, " + width + "} == \t[{3}]";
-
-         if (obj == null)
-         {
-            Console.WriteLine(nulll);
-            return;
-         }
-
-         Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
-
-         foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
-         {
-            string propValue;
-            try
-            {
-               object value = descriptor.GetValue(obj);
-               propValue = (value == null) ? "null" : value.ToString();
-            }
-            catch (Exception ex)
-            {
-               // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, "  ");
-            }
-
-            Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
-         }
-      }
-
-      #region Dumpers
-
       #region DumpEnumerateDrives
 
       private void DumpEnumerateDrives(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
-         string host = LocalHost;
+         string host = UnitTestConstants.LocalHost;
 
 
          if (isLocal)
@@ -126,7 +48,7 @@ namespace AlphaFS.UnitTest
             string nonX = Path.GetRandomFileName();
             bool caughtException = false;
             Console.WriteLine("\nEnumerating drives from (non-existing) host: [{0}]\n", nonX);
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             try
             {
                Host.EnumerateDrives(nonX, false).Any();
@@ -136,7 +58,7 @@ namespace AlphaFS.UnitTest
                caughtException = true;
                Console.Write("Caught Exception (As expected): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\n\t{0}\n", Reporter(true));
+            Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
             Assert.IsTrue(caughtException, "No Exception was caught.");
 
             Console.Write("\n");
@@ -145,23 +67,20 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("Enumerating drives from host: [{0}]\n", host);
          int cnt = 0;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          foreach (string drive in Host.EnumerateDrives(host, true))
          {
             Console.WriteLine("\t#{0:000}\tDrive: [{1}]", ++cnt, drive);
          }
 
-         Console.WriteLine("\n\t{0}\n", Reporter(true));
+         Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
          if (isLocal)
             Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
       }
 
       #endregion // DumpEnumerateDrives
 
-      #endregion Dumpers
-
-      #endregion // FileTest Helpers
 
       #region ConnectDrive
 
@@ -173,14 +92,14 @@ namespace AlphaFS.UnitTest
          #region Connect drive to share
 
          string drive = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}", DriveInfo.GetFreeDriveLetter(), Path.VolumeSeparatorChar, Path.DirectorySeparatorChar);
-         string share = Path.LocalToUnc(LocalHostShare);
+         string share = Path.LocalToUnc(UnitTestConstants.LocalHostShare);
          bool connectOk;
          Console.WriteLine("\nConnect using a designated drive: [{0}]", drive);
          try
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             Host.ConnectDrive(drive, share);
-            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]\n\n\t{2}\n", drive, share, Reporter(true));
+            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]\n\n\t{2}\n", drive, share, UnitTestConstants.Reporter(true));
 
             connectOk = true;
 
@@ -205,9 +124,9 @@ namespace AlphaFS.UnitTest
          {
             try
             {
-               StopWatcher(true);
+               UnitTestConstants.StopWatcher(true);
                Host.DisconnectDrive(drive);
-               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n\t{2}\n", drive, share, Reporter(true));
+               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n\t{2}\n", drive, share, UnitTestConstants.Reporter(true));
 
                disconnectOk = true;
 
@@ -231,9 +150,9 @@ namespace AlphaFS.UnitTest
          drive = null;
          try
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             drive = Host.ConnectDrive(null, share);
-            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]\n\n\t{2}\n", drive, share, Reporter(true));
+            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]\n\n\t{2}\n", drive, share, UnitTestConstants.Reporter(true));
 
             connectOk = true;
 
@@ -258,9 +177,9 @@ namespace AlphaFS.UnitTest
          {
             try
             {
-               StopWatcher(true);
+               UnitTestConstants.StopWatcher(true);
                Host.DisconnectDrive(drive);
-               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n\t{2}\n", drive, share, Reporter(true));
+               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n\t{2}\n", drive, share, UnitTestConstants.Reporter(true));
 
                disconnectOk = true;
 
@@ -293,9 +212,9 @@ namespace AlphaFS.UnitTest
          string share = Host.GetUncName();
          try
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             Host.ConnectTo(share);
-            Console.WriteLine("\nConnectTo(): [{0}]\n\n\t{1}\n", share, Reporter(true));
+            Console.WriteLine("\nConnectTo(): [{0}]\n\n\t{1}\n", share, UnitTestConstants.Reporter(true));
 
             connectOk = true;
 
@@ -320,9 +239,9 @@ namespace AlphaFS.UnitTest
          {
             try
             {
-               StopWatcher(true);
+               UnitTestConstants.StopWatcher(true);
                Host.DisconnectFrom(share);
-               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n\t{1}\n", share, Reporter(true));
+               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n\t{1}\n", share, UnitTestConstants.Reporter(true));
 
                disconnectOk = true;
 
@@ -342,12 +261,12 @@ namespace AlphaFS.UnitTest
 
          #region Connect to share
 
-         share = Path.LocalToUnc(LocalHostShare);
+         share = Path.LocalToUnc(UnitTestConstants.LocalHostShare);
          try
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             Host.ConnectTo(share);
-            Console.WriteLine("\nConnectTo(): [{0}]\n\n\t{1}\n", share, Reporter(true));
+            Console.WriteLine("\nConnectTo(): [{0}]\n\n\t{1}\n", share, UnitTestConstants.Reporter(true));
 
             connectOk = true;
 
@@ -372,9 +291,9 @@ namespace AlphaFS.UnitTest
          {
             try
             {
-               StopWatcher(true);
+               UnitTestConstants.StopWatcher(true);
                Host.DisconnectFrom(share);
-               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n\t{1}\n", share, Reporter(true));
+               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n\t{1}\n", share, UnitTestConstants.Reporter(true));
 
                disconnectOk = true;
 
@@ -426,7 +345,7 @@ namespace AlphaFS.UnitTest
 
          int cnt = 0;
          bool noDomainConnection = true;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          try
          {
             foreach (string dfsNamespace in Host.EnumerateDomainDfsRoot())
@@ -462,7 +381,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tException (2): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         Console.WriteLine("\n\n\t{0}", Reporter(true));
+         Console.WriteLine("\n\n\t{0}", UnitTestConstants.Reporter(true));
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
@@ -483,7 +402,7 @@ namespace AlphaFS.UnitTest
 
          int cnt = 0;
          bool noDomainConnection = true;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          // Drill down to get servers from the first namespace retrieved.
 
@@ -518,7 +437,7 @@ namespace AlphaFS.UnitTest
                }
             }
 
-            Console.Write("\n\t{0}", Reporter(true));
+            Console.Write("\n\t{0}", UnitTestConstants.Reporter(true));
             Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          }
          catch (NetworkInformationException ex)
@@ -530,7 +449,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tException (2): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         Console.WriteLine("\n\n\t{0}", Reporter(true));
+         Console.WriteLine("\n\n\t{0}", UnitTestConstants.Reporter(true));
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
@@ -552,7 +471,7 @@ namespace AlphaFS.UnitTest
          Console.Write("\nEnumerating DFS Root from user domain: [{0}]\n", NativeMethods.ComputerDomain);
          int cnt = 0;
          bool noDomainConnection = true;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          try
          {
             foreach (string dfsNamespace in Host.EnumerateDomainDfsRoot())
@@ -570,7 +489,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tException: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         Console.WriteLine("\n\n\t{0}", Reporter(true));
+         Console.WriteLine("\n\n\t{0}", UnitTestConstants.Reporter(true));
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
@@ -685,15 +604,15 @@ namespace AlphaFS.UnitTest
 
          #region Using last available drive to share
 
-         string share = Path.LocalToUnc(LocalHostShare);
+         string share = Path.LocalToUnc(UnitTestConstants.LocalHostShare);
          bool connectOk;
          Console.WriteLine("\nUsing IDisposable class.");
          try
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             using (var connection = new DriveConnection(share))
             {
-               Console.WriteLine("\nUsing DriveConnection(): [{0}] to: [{1}]\n\n\t{2}\n", connection.LocalName, share, Reporter(true));
+               Console.WriteLine("\nUsing DriveConnection(): [{0}] to: [{1}]\n\n\t{2}\n", connection.LocalName, share, UnitTestConstants.Reporter(true));
                connectOk = true;
             }
          }

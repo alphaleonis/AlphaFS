@@ -25,13 +25,9 @@ using Alphaleonis.Win32.Network;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
-using System.Security.Principal;
-using System.Text;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
@@ -46,253 +42,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class AlphaFS_ClassesTest
    {
-      #region Unit Test Helpers
-
-      #region Fields
-
-      private readonly string LocalHost = Environment.MachineName;
-      private readonly string LocalHostShare = Environment.SystemDirectory;
-      private const string Local = @"LOCAL";
-      private const string Network = @"NETWORK";
-
-      private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
-      private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
-      private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
-      private static string NotepadExe = Path.Combine(SysRoot32, "notepad.exe");
-
-      private const string TextTrue = "IsTrue";
-      private const string TenNumbers = "0123456789";
-      private const string TextHelloWorld = "Hëllõ Wørld!";
-      private const string TextGoodByeWorld = "GóödByé Wôrld!";
-      private const string TextAppend = "GóödByé Wôrld!";
-      private const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
-
-      #endregion // Fields
-
-      #region CreateDirectoriesAndFiles
-
-      private static void CreateDirectoriesAndFiles(string rootPath, int max, bool recurse)
-      {
-         for (int i = 0; i < max; i++)
-         {
-            string file = Path.Combine(rootPath, Path.GetRandomFileName());
-            string dir = file + "-" + i + "-dir";
-            file = file + "-" + i + "-file";
-
-            Directory.CreateDirectory(dir);
-
-            // Some directories will remain empty.
-            if (i % 2 != 0)
-            {
-               File.WriteAllText(file, TextHelloWorld);
-               File.WriteAllText(Path.Combine(dir, Path.GetFileName(file)), TextGoodByeWorld);
-            }
-         }
-
-         if (recurse)
-         {
-            foreach (string dir in Directory.EnumerateDirectories(rootPath))
-               CreateDirectoriesAndFiles(dir, max, false);
-         }
-      }
-
-      #endregion // CreateDirectoriesAndFiles
-
-      #region StopWatcher
-
-      private static Stopwatch _stopWatcher;
-      private static string StopWatcher(bool start = false)
-      {
-         if (_stopWatcher == null)
-            _stopWatcher = new Stopwatch();
-
-         if (start)
-         {
-            _stopWatcher.Restart();
-            return null;
-         }
-
-         _stopWatcher.Stop();
-         long ms = _stopWatcher.ElapsedMilliseconds;
-         TimeSpan elapsed = _stopWatcher.Elapsed;
-
-         return string.Format(CultureInfo.CurrentCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
-      }
-
-      #endregion // StopWatcher
-
-      #region Reporter
-
-      private static string Reporter(bool onlyTime = false)
-      {
-         var lastError = new Win32Exception();
-
-         StopWatcher();
-
-         return onlyTime
-            ? string.Format(CultureInfo.CurrentCulture, "\t\t{0}", StopWatcher())
-            : string.Format(CultureInfo.CurrentCulture, "\t{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
-      }
-
-      #endregion // Reporter
-
-      #region IsAdmin
-
-      private static bool IsAdmin()
-      {
-         bool isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
-
-         if (!isAdmin)
-            Console.WriteLine("\n\tThis Unit Test must be run as Administrator.");
-
-         return isAdmin;
-      }
-
-      #endregion // IsAdmin
-
-      #region Dump
-
-      /// <summary>Shows the Object's available Properties and Values.</summary>
-      private static bool Dump(object obj, int width = -35, bool indent = false)
-      {
-         int cnt = 0;
-         const string nulll = "\t\tnull";
-         string template = "\t{0}#{1:000}\t{2, " + width + "} == \t[{3}]";
-
-         if (obj == null)
-         {
-            Console.WriteLine(nulll);
-            return false;
-         }
-
-         Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
-
-         bool loopOk = false;
-         try
-         {
-
-            foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
-            {
-               string propValue;
-               try
-               {
-                  object value = descriptor.GetValue(obj);
-                  propValue = (value == null) ? "null" : value.ToString();
-
-                  loopOk = true;
-               }
-               catch (Exception ex)
-               {
-                  // Please do tell, oneliner preferably.
-                  propValue = ex.Message.Replace(Environment.NewLine, "  ");
-               }
-
-               Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
-            }
-         }
-         catch (Exception ex)
-         {
-            loopOk = false;
-            Console.WriteLine("\n\tDump Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         return loopOk;
-      }
-
-      #endregion //Dump
-
-      #region InputPaths
-
-      static readonly string[] InputPaths =
-      {
-         @".",
-         @".zip",
-         
-         Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture),
-         Path.DirectorySeparatorChar + @"Program Files\Microsoft Office",
-         
-         Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
-         Path.VolumePrefix + @"{12345678-aac3-31de-3321-3124565341ed}\Program Files\notepad.exe",
-
-         @"Program Files\Microsoft Office",
-         SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         SysDrive,
-         SysDrive + @"\",
-         SysDrive + @"\a",
-         SysDrive + @"\a\",
-         SysDrive + @"\a\b",
-         SysDrive + @"\a\b\",
-         SysDrive + @"\a\b\c",
-         SysDrive + @"\a\b\c\",
-         SysDrive + @"\a\b\c\f",
-         SysDrive + @"\a\b\c\f.",
-         SysDrive + @"\a\b\c\f.t",
-         SysDrive + @"\a\b\c\f.tx",
-         SysDrive + @"\a\b\c\f.txt",
-
-         Path.LongPathPrefix + @"Program Files\Microsoft Office",
-         Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         Path.LongPathPrefix + SysDrive,
-         Path.LongPathPrefix + SysDrive + @"\",
-         Path.LongPathPrefix + SysDrive + @"\a",
-         Path.LongPathPrefix + SysDrive + @"\a\",
-         Path.LongPathPrefix + SysDrive + @"\a\b",
-         Path.LongPathPrefix + SysDrive + @"\a\b\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
-
-         Path.UncPrefix + @"Server\Share\",
-         Path.UncPrefix + @"Server\Share\d",
-         Path.UncPrefix + @"Server\Share\d1",
-         Path.UncPrefix + @"Server\Share\d1\",
-         Path.UncPrefix + @"Server\Share\d1\d",
-         Path.UncPrefix + @"Server\Share\d1\d2",
-         Path.UncPrefix + @"Server\Share\d1\d2\",
-         Path.UncPrefix + @"Server\Share\d1\d2\f",
-         Path.UncPrefix + @"Server\Share\d1\d2\fi",
-         Path.UncPrefix + @"Server\Share\d1\d2\fil",
-         Path.UncPrefix + @"Server\Share\d1\d2\file",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ext",
-
-         Path.LongPathUncPrefix + @"Server\Share\",
-         Path.LongPathUncPrefix + @"Server\Share\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1",
-         Path.LongPathUncPrefix + @"Server\Share\d1\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\f",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fi",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fil",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ext"
-      };
-
-      #endregion // InputPaths
-
-      #region StringToByteArray
-
-      private static byte[] StringToByteArray(string str, params Encoding[] encoding)
-      {
-         Encoding encode = encoding != null && encoding.Any() ? encoding[0] : new UTF8Encoding(true, true);
-         return encode.GetBytes(str);
-      }
-
-      #endregion // StringToByteArray
-
-      #endregion // Unit Test Helpers
-
       #region Unit Tests
 
       #region Filesystem
@@ -301,17 +50,17 @@ namespace AlphaFS.UnitTest
 
       private void DumpClassBackupFileStream(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("Class.BackupFileStream()-file-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
          Console.WriteLine("\nInput File Path: [{0}]", tempPath);
 
          string report;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          using (BackupFileStream bfs = new BackupFileStream(tempPath, FileMode.Create))
          {
-            report = Reporter();
-            Dump(bfs, -10);
+            report = UnitTestConstants.Reporter();
+            UnitTestConstants.Dump(bfs, -10);
          }
          Console.WriteLine("\n{0}", report);
 
@@ -328,7 +77,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          const int defaultStreamsFile = 1; // The default number of data streams for a file.
 
@@ -346,10 +95,10 @@ namespace AlphaFS.UnitTest
          {
             "(1) The quick brown fox jumps over the lazy dog.",
             "(2) Albert Einstein: \"Science is a wonderful thing if one does not have to earn one's living at it.",
-            "(3) " + TextHelloWorld + " " + TextUnicode
+            "(3) " + UnitTestConstants.TextHelloWorld + " " + UnitTestConstants.TextUnicode
          };
 
-         string stringContent = "(1) Computer: [" + LocalHost + "]" + "\tHello there, " + Environment.UserName;
+         string stringContent = "(1) Computer: [" + UnitTestConstants.LocalHost + "]" + "\tHello there, " + Environment.UserName;
 
          #endregion // Setup
 
@@ -363,7 +112,7 @@ namespace AlphaFS.UnitTest
 
          
          // Create file and add 10 characters to it, file is created in ANSI format.
-         File.WriteAllText(tempPath, TenNumbers);
+         File.WriteAllText(tempPath, UnitTestConstants.TenNumbers);
 
 
          var fi = new FileInfo(tempPath);  // Class FileInfo() instance.
@@ -376,7 +125,7 @@ namespace AlphaFS.UnitTest
 
 
          fileSize = File.GetSize(tempPath);
-         Assert.AreEqual(TenNumbers.Length, fileSize);
+         Assert.AreEqual(UnitTestConstants.TenNumbers.Length, fileSize);
          
          
          // Create alternate data streams.
@@ -385,14 +134,14 @@ namespace AlphaFS.UnitTest
          File.WriteAllLines(tempPath + ":" + myStream, arrayContent, PathFormat.FullPath);
          File.WriteAllText(tempPath + ":" + myStream2, stringContent, PathFormat.FullPath);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          newNumberofStreams = File.EnumerateAlternateDataStreams(tempPath).Count();
-         reporter = Reporter(true);
+         reporter = UnitTestConstants.Reporter(true);
 
          // Enumerate all streams from the file.
          foreach (AlternateDataStreamInfo stream in fi.EnumerateAlternateDataStreams())
          {
-            Assert.IsTrue(Dump(stream, -10));
+            Assert.IsTrue(UnitTestConstants.Dump(stream, -10));
 
             // The default stream, a file as you know it.
             if (stream.StreamName == "")
@@ -415,7 +164,7 @@ namespace AlphaFS.UnitTest
          }
 
          
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          #endregion // Create Stream
 
@@ -430,7 +179,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpClassByHandleFileInfo(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath(" File.GetFileInfoByHandle()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -439,11 +188,11 @@ namespace AlphaFS.UnitTest
          FileStream stream = File.Create(tempPath);
          stream.WriteByte(1);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          ByHandleFileInfo bhfi = File.GetFileInfoByHandle(stream.SafeFileHandle);
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
 
-         Assert.IsTrue(Dump(bhfi, -18));
+         Assert.IsTrue(UnitTestConstants.Dump(bhfi, -18));
 
          Assert.AreEqual(System.IO.File.GetCreationTime(tempPath), bhfi.CreationTime);
          Assert.AreEqual(System.IO.File.GetLastAccessTime(tempPath), bhfi.LastAccessTime);
@@ -471,12 +220,12 @@ namespace AlphaFS.UnitTest
 
             Console.Write("\nEnumerating volumes from host: [{0}]\n", host);
             int cnt = 0;
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             foreach (DeviceInfo device in Device.EnumerateDevices(host, DeviceGuid.Volume))
             {
                Console.WriteLine("\n#{0:000}\tClass: [{1}]", ++cnt, device.Class);
 
-               Dump(device, -24);
+               UnitTestConstants.Dump(device, -24);
 
                try
                {
@@ -491,7 +240,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
-            Console.WriteLine(Reporter());
+            Console.WriteLine(UnitTestConstants.Reporter());
             Console.WriteLine();
 
             #endregion // DeviceGuid.Volume
@@ -500,12 +249,12 @@ namespace AlphaFS.UnitTest
 
             Console.Write("\nEnumerating disks from host: [{0}]\n", host);
             cnt = 0;
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             foreach (DeviceInfo device in Device.EnumerateDevices(host, DeviceGuid.Disk))
             {
                Console.WriteLine("\n#{0:000}\tClass: [{1}]", ++cnt, device.Class);
 
-               Dump(device, -24);
+               UnitTestConstants.Dump(device, -24);
 
                try
                {
@@ -520,7 +269,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\nCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
-            Console.WriteLine(Reporter());
+            Console.WriteLine(UnitTestConstants.Reporter());
 
             #endregion // DeviceGuid.Disk
 
@@ -543,20 +292,20 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.Combine(Path.GetTempPath(), "DirectoryInfo()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          int expectedLastError;
          string expectedException;
 
-         string nonExistingDirectory = SysRoot32 + @"\NonExistingDirectory-" + Path.GetRandomFileName();
+         string nonExistingDirectory = UnitTestConstants.SysRoot32 + @"\NonExistingDirectory-" + Path.GetRandomFileName();
          if (!isLocal) nonExistingDirectory = Path.LocalToUnc(nonExistingDirectory);
 
-         string sysDrive = SysDrive;
+         string sysDrive = UnitTestConstants.SysDrive;
          if (!isLocal) sysDrive = Path.LocalToUnc(sysDrive);
 
-         string sysRoot = SysRoot;
+         string sysRoot = UnitTestConstants.SysRoot;
          if (!isLocal) sysRoot = Path.LocalToUnc(sysRoot);
 
          string letter = DriveInfo.GetFreeDriveLetter() + @":\";
@@ -573,7 +322,7 @@ namespace AlphaFS.UnitTest
          {
             Console.WriteLine("\nCatch: [{0}]: The given path's format is not supported.", expectedException);
 
-            string invalidPath = SysDrive + @"\:a";
+            string invalidPath = UnitTestConstants.SysDrive + @"\:a";
             if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + @":a";
 
             DirectoryInfo di = new DirectoryInfo(invalidPath);
@@ -607,13 +356,13 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput Directory Path (Current directory): [{0}]\n", tempPath);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          System.IO.DirectoryInfo expected = new System.IO.DirectoryInfo(tempPath);
-         Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", Reporter());
+         Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", UnitTestConstants.Reporter());
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          DirectoryInfo actual = new DirectoryInfo(tempPath);
-         Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", Reporter());
+         Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", UnitTestConstants.Reporter());
 
          // Compare values of both instances.
          CompareDirectoryInfos(expected, actual);
@@ -624,13 +373,13 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", nonExistingDirectory);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          expected = new System.IO.DirectoryInfo(tempPath);
-         Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", Reporter());
+         Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", UnitTestConstants.Reporter());
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          actual = new DirectoryInfo(tempPath);
-         Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", Reporter());
+         Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", UnitTestConstants.Reporter());
 
          // Compare values of both instances.
          CompareDirectoryInfos(expected, actual);
@@ -648,13 +397,13 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("\n\nInput Directory Path: [{0}]\n", tempPath);
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             expected = new System.IO.DirectoryInfo(tempPath);
-            Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", Reporter());
+            Console.WriteLine("\tSystem.IO DirectoryInfo(){0}", UnitTestConstants.Reporter());
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             actual = new DirectoryInfo(tempPath);
-            Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", Reporter());
+            Console.WriteLine("\tAlphaFS DirectoryInfo(){0}", UnitTestConstants.Reporter());
 
             // Compare values of both instances.
             CompareDirectoryInfos(expected, actual);
@@ -692,8 +441,8 @@ namespace AlphaFS.UnitTest
          if (expected == null || actual == null)
             Assert.AreEqual(expected, actual, "Mismatch");
 
-         Dump(expected, -17);
-         Dump(actual, -17);
+         UnitTestConstants.Dump(expected, -17);
+         UnitTestConstants.Dump(actual, -17);
          
 
          int errorCnt = 0;
@@ -747,8 +496,8 @@ namespace AlphaFS.UnitTest
 
       private void DumpClassDiskSpaceInfo(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tempPath = SysDrive;
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         string tempPath = UnitTestConstants.SysDrive;
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
          Console.WriteLine("\nInput Path: [{0}]", tempPath);
 
@@ -759,18 +508,18 @@ namespace AlphaFS.UnitTest
           {
               string drive = isLocal ? drv : Path.LocalToUnc(drv);
 
-             StopWatcher(true);
+             UnitTestConstants.StopWatcher(true);
 
               try
               {
                   // null (default) == All information.
                   DiskSpaceInfo dsi = Volume.GetDiskFreeSpace(drive);
-                  string report = Reporter(true);
+                  string report = UnitTestConstants.Reporter(true);
                   Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
                   Assert.IsTrue(dsi.FreeBytesAvailable != 0 && dsi.TotalNumberOfBytes != 0 && dsi.TotalNumberOfFreeBytes != 0);
 
                   Console.WriteLine("\n#{0:000}\tInput Path: [{1}]{2}", ++cnt, drive, report);
-                  Assert.IsTrue(Dump(dsi, -26));
+                  Assert.IsTrue(UnitTestConstants.Dump(dsi, -26));
 
 
                   // false == Size information only.
@@ -799,15 +548,15 @@ namespace AlphaFS.UnitTest
 
       private static void DumpClassDriveInfo(bool isLocal, string drive)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = drive;
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          DriveInfo actual = new DriveInfo(tempPath);
-         Console.WriteLine("\nInput Path: [{0}]{1}", tempPath, Reporter());
+         Console.WriteLine("\nInput Path: [{0}]{1}", tempPath, UnitTestConstants.Reporter());
 
-         #region Local Drive
+         #region UnitTestConstants.Local Drive
          if (isLocal)
          {
             // System.IO.DriveInfo() can not handle UNC paths.
@@ -863,19 +612,19 @@ namespace AlphaFS.UnitTest
 
          #endregion // Class Equality
 
-         #endregion // Local Drive
+         #endregion // UnitTestConstants.Local Drive
 
-         StopWatcher(true);
-         Dump(actual, -21);
+         UnitTestConstants.StopWatcher(true);
+         UnitTestConstants.Dump(actual, -21);
 
-         Dump(actual.DiskSpaceInfo, -26);
+         UnitTestConstants.Dump(actual.DiskSpaceInfo, -26);
 
          //if (expected != null) Dump(expected.RootDirectory, -17);
          //Dump(actual.RootDirectory, -17);
 
-         Dump(actual.VolumeInfo, -26);
+         UnitTestConstants.Dump(actual.VolumeInfo, -26);
 
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Console.WriteLine();
       }
 
@@ -887,20 +636,20 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.Combine(Path.GetTempPath(), "FileInfo()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          int expectedLastError;
          string expectedException;
 
-         string nonExistingFile = SysRoot32 + @"\NonExistingFile-" + Path.GetRandomFileName();
+         string nonExistingFile = UnitTestConstants.SysRoot32 + @"\NonExistingFile-" + Path.GetRandomFileName();
          if (!isLocal) nonExistingFile = Path.LocalToUnc(nonExistingFile);
 
-         string sysDrive = SysDrive;
+         string sysDrive = UnitTestConstants.SysDrive;
          if (!isLocal) sysDrive = Path.LocalToUnc(sysDrive);
 
-         string sysRoot = SysRoot;
+         string sysRoot = UnitTestConstants.SysRoot;
          if (!isLocal) sysRoot = Path.LocalToUnc(sysRoot);
 
          string letter = DriveInfo.GetFreeDriveLetter() + @":\";
@@ -917,7 +666,7 @@ namespace AlphaFS.UnitTest
          {
             Console.WriteLine("\nCatch: [{0}]: The given path's format is not supported.", expectedException);
 
-            string invalidPath = SysDrive + @"\:a";
+            string invalidPath = UnitTestConstants.SysDrive + @"\:a";
             if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + @":a";
 
             FileInfo fi = new FileInfo(invalidPath);
@@ -1047,13 +796,13 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput File Path (Current directory): [{0}]\n", tempPath);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          System.IO.FileInfo expected = new System.IO.FileInfo(tempPath);
-         Console.WriteLine("\tSystem.IO FileInfo(){0}", Reporter());
+         Console.WriteLine("\tSystem.IO FileInfo(){0}", UnitTestConstants.Reporter());
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          FileInfo actual = new FileInfo(tempPath);
-         Console.WriteLine("\tAlphaFS FileInfo(){0}", Reporter());
+         Console.WriteLine("\tAlphaFS FileInfo(){0}", UnitTestConstants.Reporter());
 
          // Compare values of both instances.
          CompareFileInfos(expected, actual);
@@ -1064,13 +813,13 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput File Path: [{0}]\n", nonExistingFile);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          expected = new System.IO.FileInfo(nonExistingFile);
-         Console.WriteLine("\tSystem.IO FileInfo(){0}", Reporter());
+         Console.WriteLine("\tSystem.IO FileInfo(){0}", UnitTestConstants.Reporter());
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          actual = new FileInfo(nonExistingFile);
-         Console.WriteLine("\tAlphaFS FileInfo(){0}", Reporter());
+         Console.WriteLine("\tAlphaFS FileInfo(){0}", UnitTestConstants.Reporter());
 
          // Compare values of both instances.
          CompareFileInfos(expected, actual);
@@ -1088,13 +837,13 @@ namespace AlphaFS.UnitTest
 
             Console.WriteLine("\nInput File Path: [{0}]\n", tempPath);
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             expected = new System.IO.FileInfo(tempPath);
-            Console.WriteLine("\tSystem.IO FileInfo(){0}", Reporter());
+            Console.WriteLine("\tSystem.IO FileInfo(){0}", UnitTestConstants.Reporter());
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             actual = new FileInfo(tempPath);
-            Console.WriteLine("\tAlphaFS FileInfo(){0}", Reporter());
+            Console.WriteLine("\tAlphaFS FileInfo(){0}", UnitTestConstants.Reporter());
 
             // Compare values of both instances.
             CompareFileInfos(expected, actual);
@@ -1132,8 +881,8 @@ namespace AlphaFS.UnitTest
          if (expected == null || actual == null)
             Assert.AreEqual(expected, actual, "Mismatch");
 
-         Dump(expected, -17);
-         Dump(actual, -17);
+         UnitTestConstants.Dump(expected, -17);
+         UnitTestConstants.Dump(actual, -17);
 
 
          int errorCnt = 0;
@@ -1213,14 +962,14 @@ namespace AlphaFS.UnitTest
 
       private void DumpClassFileSystemEntryInfo(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          Console.WriteLine("\nThe return type is based on C# inference. Possible return types are:");
          Console.WriteLine("string (full path), FileSystemInfo (DiskInfo / FileInfo) or FileSystemEntryInfo instance.\n");
 
          #region Directory
 
-         string path = SysRoot;
+         string path = UnitTestConstants.SysRoot;
          if (!isLocal) path = Path.LocalToUnc(path);
 
          Console.WriteLine("\nInput Directory Path: [{0}]", path);
@@ -1228,7 +977,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\nvar fsei = Directory.GetFileSystemEntry<FileSystemEntryInfo>(path);");
          var asFileSystemEntryInfo = File.GetFileSystemEntryInfo(path);
          Assert.IsTrue((asFileSystemEntryInfo.GetType().IsEquivalentTo(typeof(FileSystemEntryInfo))));
-         Assert.IsTrue(Dump(asFileSystemEntryInfo, -17));
+         Assert.IsTrue(UnitTestConstants.Dump(asFileSystemEntryInfo, -17));
 
          Console.WriteLine();
 
@@ -1236,7 +985,7 @@ namespace AlphaFS.UnitTest
 
          #region File
 
-         path = NotepadExe;
+         path = UnitTestConstants.NotepadExe;
          if (!isLocal) path = Path.LocalToUnc(path);
 
          Console.WriteLine("\nInput File Path: [{0}]", path);
@@ -1244,7 +993,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\nvar fsei = File.GetFileSystemEntry<FileSystemEntryInfo>(path);");
          asFileSystemEntryInfo = File.GetFileSystemEntryInfo(path);
          Assert.IsTrue((asFileSystemEntryInfo.GetType().IsEquivalentTo(typeof(FileSystemEntryInfo))));
-         Assert.IsTrue(Dump(asFileSystemEntryInfo, -17));
+         Assert.IsTrue(UnitTestConstants.Dump(asFileSystemEntryInfo, -17));
 
          Console.WriteLine();
 
@@ -1257,7 +1006,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpClassShell32Info(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("Class.Shell32Info()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -1268,9 +1017,9 @@ namespace AlphaFS.UnitTest
 
 
          
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          Shell32Info shell32Info = Shell32.GetShell32Info(tempPath);
-         string report = Reporter();
+         string report = UnitTestConstants.Reporter();
 
          Console.WriteLine("\tMethod: Shell32Info.Refresh()");
          Console.WriteLine("\tMethod: Shell32Info.GetIcon()");
@@ -1279,7 +1028,7 @@ namespace AlphaFS.UnitTest
          string cmd = "print";
          Console.WriteLine("\tMethod: Shell32Info.GetVerbCommand(\"{0}\") == [{1}]", cmd, shell32Info.GetVerbCommand(cmd));
 
-         Assert.IsTrue(Dump(shell32Info, -15));
+         Assert.IsTrue(UnitTestConstants.Dump(shell32Info, -15));
 
          File.Delete(tempPath, true);
          Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
@@ -1294,7 +1043,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpClassVolumeInfo(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          int cnt = 0;
          foreach (string drive in Directory.GetLogicalDrives())
@@ -1302,13 +1051,13 @@ namespace AlphaFS.UnitTest
             string tempPath = drive;
             if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             try
             {
                VolumeInfo volInfo = Volume.GetVolumeInfo(tempPath);
                Console.WriteLine("\n#{0:000}\tLogical Drive: [{1}]", ++cnt, tempPath);
                Assert.AreEqual(tempPath, volInfo.FullPath);
-               Dump(volInfo, -26);
+               UnitTestConstants.Dump(volInfo, -26);
             }
             catch (Exception ex)
             {
@@ -1333,7 +1082,7 @@ namespace AlphaFS.UnitTest
          int cnt = 0;
          bool noDomainConnection = true;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          try
          {
             foreach (string dfsNamespace in Host.EnumerateDomainDfsRoot())
@@ -1350,17 +1099,17 @@ namespace AlphaFS.UnitTest
                      dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Folders),
                      dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Files));
 
-                  Dump(dfsInfo, -21);
+                  UnitTestConstants.Dump(dfsInfo, -21);
 
                   Console.Write("\n\tNumber of Storages: [{0}]\n", dfsInfo.StorageInfoCollection.Count());
 
                   foreach (DfsStorageInfo store in dfsInfo.StorageInfoCollection)
                   {
-                     Dump(store, -10);
+                     UnitTestConstants.Dump(store, -10);
 
                      // DFS shares (non SMB) cannot be retrieved.
                      ShareInfo share = Host.GetShareInfo(ShareInfoLevel.Info1005, store.ServerName, store.ShareName, true);
-                     Dump(share, -18);
+                     UnitTestConstants.Dump(share, -18);
                      Console.Write("\n");
                   }
                }
@@ -1373,7 +1122,7 @@ namespace AlphaFS.UnitTest
                   Console.WriteLine("\n\tException (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
                }
             }
-            Console.Write("\n{0}", Reporter());
+            Console.Write("\n{0}", UnitTestConstants.Reporter());
             Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          }
          catch (NetworkInformationException ex)
@@ -1385,7 +1134,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tException (2): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         Console.WriteLine("\n\n\t{0}", Reporter(true));
+         Console.WriteLine("\n\n\t{0}", UnitTestConstants.Reporter(true));
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
@@ -1404,11 +1153,11 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n=== TEST ===");
          Console.WriteLine("\nNetwork.Host.EnumerateOpenResources() from host: [{0}]", host);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (OpenConnectionInfo connectionInfo in Host.EnumerateOpenConnections(host, "IPC$", false))
-            Dump(connectionInfo, -16);
+            UnitTestConstants.Dump(connectionInfo, -16);
 
-         Console.WriteLine(Reporter(true));
+         Console.WriteLine(UnitTestConstants.Reporter(true));
          Console.WriteLine();
       }
       
@@ -1424,18 +1173,18 @@ namespace AlphaFS.UnitTest
 
          Directory.SetCurrentDirectory(tempPath);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          int cnt = 0;
          foreach (OpenResourceInfo openResource in Host.EnumerateOpenResources(host, null, null, false))
          {
-            if (Dump(openResource, -11))
+            if (UnitTestConstants.Dump(openResource, -11))
             {
                Console.Write("\n");
                cnt++;
             }
          }
 
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
       }
@@ -1450,15 +1199,15 @@ namespace AlphaFS.UnitTest
          Console.Write("\nNetwork.Host.EnumerateShares() from host: [{0}]\n", host);
 
          int cnt = 0;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (ShareInfo share in Host.EnumerateShares(host, true))
          {
             Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, share);
-            Dump(share, -18);
+            UnitTestConstants.Dump(share, -18);
             Console.Write("\n");
          }
 
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
       }
@@ -1521,7 +1270,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nMSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.");
          Console.WriteLine("You cannot access remote machines when running on these versions of Windows.\n");
 
-         DumpClassDeviceInfo(LocalHost);
+         DumpClassDeviceInfo(UnitTestConstants.LocalHost);
       }
 
       #endregion // Filesystem_Class_Shell32Info
@@ -1559,8 +1308,8 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Class Filesystem.DriveInfo()");
 
-         DumpClassDriveInfo(true, SysDrive);
-         DumpClassDriveInfo(false, SysDrive);
+         DumpClassDriveInfo(true, UnitTestConstants.SysDrive);
+         DumpClassDriveInfo(false, UnitTestConstants.SysDrive);
       }
 
       #endregion // Filesystem_Class_DriveInfo
@@ -1619,15 +1368,15 @@ namespace AlphaFS.UnitTest
 
       #endregion Filesystem
 
-      #region Network
+      #region UnitTestConstants.Network
 
       #region Network_Class_DfsXxx
 
       [TestMethod]
       public void Network_Class_DfsXxx()
       {
-         Console.WriteLine("Class Network.DfsInfo()");
-         Console.WriteLine("Class Network.DfsStorageInfo()");
+         Console.WriteLine("Class UnitTestConstants.Network.DfsInfo()");
+         Console.WriteLine("Class UnitTestConstants.Network.DfsStorageInfo()");
 
          DumpClassDfsInfo();
       }
@@ -1639,9 +1388,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Network_Class_OpenConnectionInfo()
       {
-         Console.WriteLine("Class Network.OpenConnectionInfo()");
+         Console.WriteLine("Class UnitTestConstants.Network.OpenConnectionInfo()");
 
-         DumpOpenConnectionInfo(LocalHost);
+         DumpOpenConnectionInfo(UnitTestConstants.LocalHost);
       }
 
       #endregion // Network_Class_OpenConnectionInfo
@@ -1651,9 +1400,9 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Network_Class_OpenResourceInfo()
       {
-         Console.WriteLine("Class Network.OpenResourceInfo()");
+         Console.WriteLine("Class UnitTestConstants.Network.OpenResourceInfo()");
 
-         DumpClassOpenResourceInfo(LocalHost, LocalHostShare);
+         DumpClassOpenResourceInfo(UnitTestConstants.LocalHost, UnitTestConstants.LocalHostShare);
       }
 
       #endregion // Network_Class_OpenResourceInfo
@@ -1663,14 +1412,14 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void Network_Class_ShareInfo()
       {
-         Console.WriteLine("Class Network.ShareInfo()");
+         Console.WriteLine("Class UnitTestConstants.Network.ShareInfo()");
 
-         DumpClassShareInfo(LocalHost);
+         DumpClassShareInfo(UnitTestConstants.LocalHost);
       }
 
       #endregion // Network_Class_ShareInfo
 
-      #endregion // Network
+      #endregion // UnitTestConstants.Network
 
       #region OperatingSystem
 
@@ -1681,7 +1430,7 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Class Win32.OperatingSystem()\n");
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          Console.WriteLine("VersionName          : [{0}]", OperatingSystem.VersionName);
          Console.WriteLine("OsVersion            : [{0}]", OperatingSystem.OSVersion);
@@ -1709,7 +1458,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tOS Later             : [{0}]", OperatingSystem.IsAtLeast(OperatingSystem.EnumOsName.Later));
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
       }
 
       #endregion // Class_OperatingSystem

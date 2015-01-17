@@ -50,245 +50,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class DirectoryTest
    {
-      #region Unit Test Helpers
-
-      #region Fields
-
-      private readonly string LocalHost = Environment.MachineName;
-      private readonly string LocalHostShare = Environment.SystemDirectory;
-      private const string Local = @"LOCAL";
-      private const string Network = @"NETWORK";
-
-      private static readonly string StartupFolder = AppDomain.CurrentDomain.BaseDirectory;
-      private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
-      private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
-      private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
-      private static string NotepadExe = Path.Combine(SysRoot32, "notepad.exe");
-
-      private const string TextTrue = "IsTrue";
-      private const string TenNumbers = "0123456789";
-      private const string TextHelloWorld = "Hëllõ Wørld!";
-      private const string TextGoodByeWorld = "GóödByé Wôrld!";
-      private const string TextAppend = "GóödByé Wôrld!";
-      private const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
-
-      #endregion // Fields
-
-      #region CreateDirectoriesAndFiles
-
-      private static void CreateDirectoriesAndFiles(string rootPath, int max, bool recurse)
-      {
-         for (int i = 0; i < max; i++)
-         {
-            string file = Path.Combine(rootPath, Path.GetRandomFileName());
-            string dir = file + "-" + i + "-dir";
-            file = file + "-" + i + "-file";
-
-            Directory.CreateDirectory(dir);
-
-            // Some directories will remain empty.
-            if (i % 2 != 0)
-            {
-               File.WriteAllText(file, TextHelloWorld);
-               File.WriteAllText(Path.Combine(dir, Path.GetFileName(file)), TextGoodByeWorld);
-            }
-         }
-
-         if (recurse)
-         {
-            foreach (string dir in Directory.EnumerateDirectories(rootPath))
-               CreateDirectoriesAndFiles(dir, max, false);
-         }
-      }
-
-      #endregion // CreateDirectoriesAndFiles
-
-      #region StopWatcher
-
-      private static Stopwatch _stopWatcher;
-      private static string StopWatcher(bool start = false)
-      {
-         if (_stopWatcher == null)
-            _stopWatcher = new Stopwatch();
-
-         if (start)
-         {
-            _stopWatcher.Restart();
-            return null;
-         }
-
-         _stopWatcher.Stop();
-         long ms = _stopWatcher.ElapsedMilliseconds;
-         TimeSpan elapsed = _stopWatcher.Elapsed;
-
-         return string.Format(CultureInfo.CurrentCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
-      }
-
-      #endregion // StopWatcher
-
-      #region Reporter
-
-      private static string Reporter(bool onlyTime = false)
-      {
-         var lastError = new Win32Exception();
-
-         StopWatcher();
-
-         return onlyTime
-            ? string.Format(CultureInfo.CurrentCulture, "\t\t{0}", StopWatcher())
-            : string.Format(CultureInfo.CurrentCulture, "\t{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
-      }
-
-      #endregion // Reporter
-
-      #region IsAdmin
-
-      private static bool IsAdmin()
-      {
-         bool isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
-
-         if (!isAdmin)
-            Console.WriteLine("\n\tThis Unit Test must be run as Administrator.");
-
-         return isAdmin;
-      }
-
-      #endregion // IsAdmin
-
-      #region Dump
-
-      /// <summary>Shows the Object's available Properties and Values.</summary>
-      private static bool Dump(object obj, int width = -35, bool indent = false)
-      {
-         int cnt = 0;
-         const string nulll = "\t\tnull";
-         string template = "\t{0}#{1:000}\t{2, " + width + "} == \t[{3}]";
-
-         if (obj == null)
-         {
-            Console.WriteLine(nulll);
-            return false;
-         }
-
-         Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
-
-         bool loopOk = false;
-         foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
-         {
-            string propValue;
-            try
-            {
-               object value = descriptor.GetValue(obj);
-               propValue = (value == null) ? "null" : value.ToString();
-
-               loopOk = true;
-            }
-            catch (Exception ex)
-            {
-               // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, "  ");
-            }
-
-            Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
-         }
-
-         return loopOk;
-      }
-
-      #endregion //Dump
-
-      #region InputPaths
-
-      static readonly string[] InputPaths =
-      {
-         @".",
-         @".zip",
-         
-         Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture),
-         Path.DirectorySeparatorChar + @"Program Files\Microsoft Office",
-         
-         Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
-         Path.VolumePrefix + @"{12345678-aac3-31de-3321-3124565341ed}\Program Files\notepad.exe",
-
-         @"Program Files\Microsoft Office",
-         SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         SysDrive,
-         SysDrive + @"\",
-         SysDrive + @"\a",
-         SysDrive + @"\a\",
-         SysDrive + @"\a\b",
-         SysDrive + @"\a\b\",
-         SysDrive + @"\a\b\c",
-         SysDrive + @"\a\b\c\",
-         SysDrive + @"\a\b\c\f",
-         SysDrive + @"\a\b\c\f.",
-         SysDrive + @"\a\b\c\f.t",
-         SysDrive + @"\a\b\c\f.tx",
-         SysDrive + @"\a\b\c\f.txt",
-
-         Path.LongPathPrefix + @"Program Files\Microsoft Office",
-         Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         Path.LongPathPrefix + SysDrive,
-         Path.LongPathPrefix + SysDrive + @"\",
-         Path.LongPathPrefix + SysDrive + @"\a",
-         Path.LongPathPrefix + SysDrive + @"\a\",
-         Path.LongPathPrefix + SysDrive + @"\a\b",
-         Path.LongPathPrefix + SysDrive + @"\a\b\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
-
-         Path.UncPrefix + @"Server\Share\",
-         Path.UncPrefix + @"Server\Share\d",
-         Path.UncPrefix + @"Server\Share\d1",
-         Path.UncPrefix + @"Server\Share\d1\",
-         Path.UncPrefix + @"Server\Share\d1\d",
-         Path.UncPrefix + @"Server\Share\d1\d2",
-         Path.UncPrefix + @"Server\Share\d1\d2\",
-         Path.UncPrefix + @"Server\Share\d1\d2\f",
-         Path.UncPrefix + @"Server\Share\d1\d2\fi",
-         Path.UncPrefix + @"Server\Share\d1\d2\fil",
-         Path.UncPrefix + @"Server\Share\d1\d2\file",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ext",
-
-         Path.LongPathUncPrefix + @"Server\Share\",
-         Path.LongPathUncPrefix + @"Server\Share\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1",
-         Path.LongPathUncPrefix + @"Server\Share\d1\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\f",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fi",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fil",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ext"
-      };
-
-      #endregion // InputPaths
-
-      #region StringToByteArray
-
-      private static byte[] StringToByteArray(string str, params Encoding[] encoding)
-      {
-         Encoding encode = encoding != null && encoding.Any() ? encoding[0] : new UTF8Encoding(true, true);
-         return encode.GetBytes(str);
-      }
-
-      #endregion // StringToByteArray
-
-      #endregion // Unit Test Helpers
-
       #region Unit Tests
 
       #region DumpCreateDirectory
@@ -299,15 +60,15 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesProtected: [{0}]", dsAlpha.AreAccessRulesProtected);
          Assert.AreEqual(dsSystem.AreAccessRulesProtected, dsAlpha.AreAccessRulesProtected);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesProtected: [{0}]", dsAlpha.AreAuditRulesProtected);
          Assert.AreEqual(dsSystem.AreAuditRulesProtected, dsAlpha.AreAuditRulesProtected);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesCanonical: [{0}]", dsAlpha.AreAccessRulesCanonical);
          Assert.AreEqual(dsSystem.AreAccessRulesCanonical, dsAlpha.AreAccessRulesCanonical);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesCanonical: [{0}]", dsAlpha.AreAuditRulesCanonical);
          Assert.AreEqual(dsSystem.AreAuditRulesCanonical, dsAlpha.AreAuditRulesCanonical);
       }
@@ -318,7 +79,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpCompressDecompress(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.Combine(Path.GetTempPath(), "Directory.CompressDecompress()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -359,11 +120,11 @@ namespace AlphaFS.UnitTest
          action = false;
          string report = "";
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          try
          {
             Directory.Compress(tempPath, DirectoryEnumerationOptions.Recursive);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
             action = true;
             actual = File.GetAttributes(tempPath);
          }
@@ -391,12 +152,12 @@ namespace AlphaFS.UnitTest
 
          // Decompress directory recursively.
          action = false;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          try
          {
             Directory.Decompress(tempPath, DirectoryEnumerationOptions.Recursive);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
             action = true;
             actual = File.GetAttributes(tempPath);
          }
@@ -435,7 +196,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("Directory.Copy()-") + Path.GetRandomFileName();
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -528,7 +289,7 @@ namespace AlphaFS.UnitTest
 
             #endregion // UnauthorizedAccessException
 
-            #region DirectoryNotFoundException (Local) / IOException (Network)
+            #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
             expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
             expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
@@ -556,7 +317,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
 
-            #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+            #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
             #region IOException
 
@@ -586,7 +347,7 @@ namespace AlphaFS.UnitTest
 
             #region Copy
 
-            CreateDirectoriesAndFiles(tempPathSource, 10, true);
+            UnitTestConstants.CreateDirectoriesAndFiles(tempPathSource, 10, true);
 
             Dictionary<string, long> props = Directory.GetProperties(tempPathSource, DirectoryEnumerationOptions.Recursive);
             long sourceFolder = props["Directory"];
@@ -596,9 +357,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nCopy from Source Path: [{0}]", tempPathSource);
             Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, Utils.UnitSizeToText(sourceSize));
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             Directory.Copy(tempPathSource, tempPathDestination, CopyOptions.FailIfExists);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
 
             props = Directory.GetProperties(tempPathDestination, DirectoryEnumerationOptions.Recursive);
             long destinationFolder = props["Directory"];
@@ -637,9 +398,9 @@ namespace AlphaFS.UnitTest
             #endregion // IOException
 
             // Overwrite.
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             Directory.Copy(tempPathSource, tempPathDestination, CopyOptions.None | CopyOptions.NoBuffering);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
 
             Console.WriteLine("\nCopy again with overwrite enabled.\n{0}", report);
 
@@ -664,7 +425,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          // Directory depth level.
          int level = new Random().Next(1, 1000);
@@ -718,7 +479,7 @@ namespace AlphaFS.UnitTest
 
             #endregion // IOException
 
-            #region DirectoryNotFoundException (Local) / IOException (Network)
+            #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
             expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
             expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
@@ -753,7 +514,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
 
-            #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+            #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
             #region ArgumentException
 
@@ -787,7 +548,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch: [{0}]: Path contains a colon character (:) that is not part of a drive label (C:\\).", expectedException);
 
-               string invalidPath = SysDrive + @"\dev\test\aaa:aaa.txt";
+               string invalidPath = UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt";
                if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + ":aaa.txt";
 
                Directory.CreateDirectory(invalidPath);
@@ -825,7 +586,7 @@ namespace AlphaFS.UnitTest
             Assert.IsFalse(dirInfo.Exists, "AlphaFS Directory should not exist: [{0}]", tempPath);
 
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             dirInfo.Create(true); // Create compressed directory.
 
             // dirInfo.Exists should be false.
@@ -838,9 +599,9 @@ namespace AlphaFS.UnitTest
             for (int i = 0; i < level; i++)
                root = Path.Combine(root, "-" + (i + 1) + "-subdir");
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             dirInfo = Directory.CreateDirectory(root);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
 
             Console.WriteLine("\n\tCreated directory structure (Should be True): [{0}]{1}", dirInfo.Exists, report);
             Console.WriteLine("\n\tSubdirectory depth: [{0}], path length: [{1}] characters.", level, root.Length);
@@ -855,9 +616,9 @@ namespace AlphaFS.UnitTest
          {
             if (Directory.Exists(tempPath, PathFormat.FullPath))
             {
-               StopWatcher(true);
+               UnitTestConstants.StopWatcher(true);
                Directory.Delete(tempPath, true, true);
-               report = Reporter();
+               report = UnitTestConstants.Reporter();
 
                exist = Directory.Exists(tempPath);
                Console.WriteLine("\nDirectory.Delete() (Should be True): [{0}]{1}", !exist, report);
@@ -876,20 +637,20 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempFolder = Path.GetTempPath();
          string tempPath = Path.Combine(tempFolder, "Directory.Delete-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         string notePad = isLocal ? NotepadExe : Path.LocalToUnc(NotepadExe);
+         string notePad = isLocal ? UnitTestConstants.NotepadExe : Path.LocalToUnc(UnitTestConstants.NotepadExe);
 
-         string nonExistingDirectory = SysRoot32 + @"\NonExistingDirectory-" + Path.GetRandomFileName();
+         string nonExistingDirectory = UnitTestConstants.SysRoot32 + @"\NonExistingDirectory-" + Path.GetRandomFileName();
          if (!isLocal) nonExistingDirectory = Path.LocalToUnc(nonExistingDirectory);
 
-         string sysDrive = SysDrive;
+         string sysDrive = UnitTestConstants.SysDrive;
          if (!isLocal) sysDrive = Path.LocalToUnc(sysDrive);
 
-         string sysRoot = SysRoot;
+         string sysRoot = UnitTestConstants.SysRoot;
          if (!isLocal) sysRoot = Path.LocalToUnc(sysRoot);
 
          string letter = DriveInfo.GetFreeDriveLetter() + @":\";
@@ -937,7 +698,7 @@ namespace AlphaFS.UnitTest
             {
                Console.WriteLine("\nCatch #{0}: [{1}]: path is in an invalid format.", ++catchCount, expectedException);
 
-               string invalidPath = SysDrive + @"\dev\test\aaa:aaa.txt";
+               string invalidPath = UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt";
                if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + ":aaa.txt";
 
                Directory.Delete(invalidPath);
@@ -965,7 +726,7 @@ namespace AlphaFS.UnitTest
 
             #region UnauthorizedAccessException
 
-            string cscPath = Path.Combine(SysRoot, "CSC");
+            string cscPath = Path.Combine(UnitTestConstants.SysRoot, "CSC");
             if (!isLocal) cscPath = Path.LocalToUnc(cscPath);
 
             if (Directory.Exists(cscPath))
@@ -1004,7 +765,7 @@ namespace AlphaFS.UnitTest
 
             #endregion // UnauthorizedAccessException
 
-            #region DirectoryNotFoundException #1 (Local) / IOException (Network)
+            #region DirectoryNotFoundException #1 (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
             expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
             expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
@@ -1033,7 +794,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
             Console.WriteLine();
 
-            #endregion // DirectoryNotFoundException #1 (Local) / IOException (Network)
+            #endregion // DirectoryNotFoundException #1 (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
             #region DirectoryNotFoundException #2
 
@@ -1185,7 +946,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpEnableDisableCompression(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.Combine(Path.GetTempPath(), "Directory.EnableDisableCompression()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -1200,11 +961,11 @@ namespace AlphaFS.UnitTest
 
          string report = string.Empty;
          bool action = false;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          try
          {
             Directory.EnableCompression(tempPath);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
             action = true;
             actual = File.GetAttributes(tempPath);
          }
@@ -1223,7 +984,7 @@ namespace AlphaFS.UnitTest
          try
          {
             Directory.DisableCompression(tempPath);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
             action = true;
             actual = File.GetAttributes(tempPath);
          }
@@ -1248,7 +1009,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpEnableDisableEncryption(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.Combine(Path.GetTempPath(), "Directory.EnableDisableEncryption()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -1269,9 +1030,9 @@ namespace AlphaFS.UnitTest
          bool action = false;
          try
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             Directory.EnableEncryption(tempPath);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
             action = true;
          }
          catch (Exception ex)
@@ -1300,9 +1061,9 @@ namespace AlphaFS.UnitTest
          action = false;
          try
          {
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             Directory.DisableEncryption(tempPath);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
             action = true;
          }
          catch (Exception ex)
@@ -1341,7 +1102,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.Combine(Path.GetTempPath(), "Directory.EncryptDecrypt()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -1380,17 +1141,17 @@ namespace AlphaFS.UnitTest
          #region Encrypt
 
          // Encrypt directory recursively.
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          try
          {
             Directory.Encrypt(tempPath, true);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
             action = true;
          }
          catch (Exception ex)
          {
             action = false;
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
             Console.WriteLine("\n\tDirectory.Encrypt(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(action, "Unexpected Exception");
@@ -1418,17 +1179,17 @@ namespace AlphaFS.UnitTest
          #region Decrypt
 
          // Decrypt directory recursively.
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          try
          {
             Directory.Decrypt(tempPath, true);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
             action = true;
          }
          catch (Exception ex)
          {
             action = false;
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
             Console.WriteLine("\n\tDirectory.Decrypt(): Caught unexpected Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(action, "Unexpected Exception");
@@ -1466,7 +1227,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
@@ -1484,7 +1245,7 @@ namespace AlphaFS.UnitTest
 
          #endregion //Setup
 
-         #region DirectoryNotFoundException (Local) / IOException (Network)
+         #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
          expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
@@ -1516,7 +1277,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
 
-         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+         #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          #region IOException
 
@@ -1562,7 +1323,7 @@ namespace AlphaFS.UnitTest
 
          #region UnauthorizedAccessException
 
-         tempPath = Path.Combine(SysRoot, "CSC");
+         tempPath = Path.Combine(UnitTestConstants.SysRoot, "CSC");
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          var di = new DirectoryInfo(tempPath);
@@ -1596,12 +1357,12 @@ namespace AlphaFS.UnitTest
 
          #endregion // UnauthorizedAccessException
 
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate directories, using \"SearchOption.{0}\"\n", searchOption);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (DirectoryInfo dirInfo in new DirectoryInfo(path).EnumerateDirectories(searchPattern, searchOption))
          {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, dirInfo.FullName);
@@ -1613,7 +1374,7 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
 
@@ -1621,7 +1382,7 @@ namespace AlphaFS.UnitTest
          cnt = 0;
          searchPattern = @"*e*e*";
          Console.WriteLine("\tsearchPattern: [{0}]\n", searchPattern);
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (DirectoryInfo dirInfo in new DirectoryInfo(path).EnumerateDirectories(searchPattern, searchOption))
          {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, dirInfo.FullName);
@@ -1633,7 +1394,7 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
       }
@@ -1644,8 +1405,8 @@ namespace AlphaFS.UnitTest
 
       private void DumpEnumerateFileIdBothDirectoryInfo(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string tempPath = SysRoot;
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         string tempPath = UnitTestConstants.SysRoot;
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
@@ -1660,7 +1421,7 @@ namespace AlphaFS.UnitTest
          long numDirectories = 0;
          long numFiles = 0;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (FileIdBothDirectoryInfo fibdi in Directory.EnumerateFileIdBothDirectoryInfo(tempPath))
          {
             if ((fibdi.FileAttributes & FileAttributes.Directory) != 0)
@@ -1668,9 +1429,9 @@ namespace AlphaFS.UnitTest
             else
                numFiles++;
 
-            foundFse = Dump(fibdi, -22);
+            foundFse = UnitTestConstants.Dump(fibdi, -22);
          }
-         string report = Reporter();
+         string report = UnitTestConstants.Reporter();
 
          bool matchAll = directories == numDirectories && files == numFiles;
          Console.WriteLine("\n\tDirectories = [{0}], Files = [{1}]\n{2}", numDirectories, numFiles, report);
@@ -1687,7 +1448,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
@@ -1705,7 +1466,7 @@ namespace AlphaFS.UnitTest
 
          #endregion //Setup
 
-         #region DirectoryNotFoundException (Local) / IOException (Network)
+         #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
          expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
@@ -1738,7 +1499,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
 
-         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+         #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          #region IOException
 
@@ -1782,7 +1543,7 @@ namespace AlphaFS.UnitTest
 
          #region UnauthorizedAccessException
 
-         tempPath = Path.Combine(SysRoot, "CSC");
+         tempPath = Path.Combine(UnitTestConstants.SysRoot, "CSC");
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          var di = new DirectoryInfo(tempPath);
@@ -1816,12 +1577,12 @@ namespace AlphaFS.UnitTest
 
          #endregion // UnauthorizedAccessException
 
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate files, using \"SearchOption.{0}\"\n", searchOption);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (FileInfo fileInfo in new DirectoryInfo(path).EnumerateFiles(searchPattern, searchOption))
          {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, fileInfo.FullName);
@@ -1833,7 +1594,7 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
 
@@ -1841,7 +1602,7 @@ namespace AlphaFS.UnitTest
          cnt = 0;
          searchPattern = @"*e*.exe";
          Console.WriteLine("\tsearchPattern: [{0}]\n", searchPattern);
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (FileInfo fileInfo in new DirectoryInfo(path).EnumerateFiles(searchPattern, searchOption))
          {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, fileInfo.FullName);
@@ -1853,7 +1614,7 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
       }
@@ -1866,7 +1627,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
@@ -1884,7 +1645,7 @@ namespace AlphaFS.UnitTest
 
          #endregion //Setup
 
-         #region DirectoryNotFoundException (Local) / IOException (Network)
+         #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
          expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
@@ -1916,7 +1677,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
 
-         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+         #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          #region IOException
 
@@ -1960,7 +1721,7 @@ namespace AlphaFS.UnitTest
 
          #region UnauthorizedAccessException
 
-         tempPath = Path.Combine(SysRoot, "CSC");
+         tempPath = Path.Combine(UnitTestConstants.SysRoot, "CSC");
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          var di = new DirectoryInfo(tempPath);
@@ -1994,12 +1755,12 @@ namespace AlphaFS.UnitTest
 
          #endregion // UnauthorizedAccessException
 
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tEnumerate file system entries, using \"SearchOption.{0}\"\n", searchOption);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (FileSystemInfo fsi in new DirectoryInfo(path).EnumerateFileSystemInfos(searchPattern, searchOption))
          {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, fsi.FullName);
@@ -2010,7 +1771,7 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
 
@@ -2018,7 +1779,7 @@ namespace AlphaFS.UnitTest
          cnt = 0;
          searchPattern = @"*e*e*";
          Console.WriteLine("\tsearchPattern: [{0}]\n", searchPattern);
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (FileSystemInfo fsi in new DirectoryInfo(path).EnumerateDirectories(searchPattern, searchOption))
          {
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, fsi.FullName);
@@ -2030,7 +1791,7 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
       }
@@ -2041,7 +1802,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpExists(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("Directory-Exists-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -2069,7 +1830,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpGetAccessControl(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          string tempPath = Path.Combine(Path.GetTempPath(), "Directory.GetAccessControl()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
@@ -2077,9 +1838,9 @@ namespace AlphaFS.UnitTest
 
          bool foundRules = false;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          DirectorySecurity gac = Directory.GetAccessControl(tempPath);
-         string report = Reporter();
+         string report = UnitTestConstants.Reporter();
 
          AuthorizationRuleCollection accessRules = gac.GetAccessRules(true, true, typeof(NTAccount));
          DirectorySecurity sysIo = System.IO.Directory.GetAccessControl(tempPath);
@@ -2091,7 +1852,7 @@ namespace AlphaFS.UnitTest
 
          foreach (FileSystemAccessRule far in accessRules)
          {
-            Dump(far, 17);
+            UnitTestConstants.Dump(far, 17);
             DumpAccessRules(1, sysIo, gac);
             foundRules = true;
          }
@@ -2111,7 +1872,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
@@ -2129,7 +1890,7 @@ namespace AlphaFS.UnitTest
 
          #endregion //Setup
 
-         #region DirectoryNotFoundException (Local) / IOException (Network)
+         #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
          expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
@@ -2162,7 +1923,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
 
-         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+         #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          #region IOException
 
@@ -2206,7 +1967,7 @@ namespace AlphaFS.UnitTest
 
          #region UnauthorizedAccessException
 
-         tempPath = Path.Combine(SysRoot, "CSC");
+         tempPath = Path.Combine(UnitTestConstants.SysRoot, "CSC");
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          if (Directory.Exists(tempPath))
@@ -2239,17 +2000,17 @@ namespace AlphaFS.UnitTest
 
          #endregion // UnauthorizedAccessException
 
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet directories, using \"SearchOption.{0}\"\n", searchOption);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (string folder in Directory.GetDirectories(path, searchPattern, searchOption))
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, folder);
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
       }
@@ -2263,7 +2024,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nIf you are missing drives, please see this topic: https://alphafs.codeplex.com/discussions/397693 \n");
 
          int cnt = 0;
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (DriveInfo actual in enumerate ? Directory.EnumerateLogicalDrives(false, false) : DriveInfo.GetDrives())
          {
             Console.WriteLine("#{0:000}\tLogical Drive: [{1}]", ++cnt, actual.Name);
@@ -2283,7 +2044,7 @@ namespace AlphaFS.UnitTest
                              !string.IsNullOrWhiteSpace(actual.DiskSpaceInfo.AvailableFreeSpaceUnitSize));
             }
          }
-         Console.WriteLine("\n{0}", Reporter());
+         Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
       }
 
       #endregion // DumpGetDrives
@@ -2294,7 +2055,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
@@ -2312,7 +2073,7 @@ namespace AlphaFS.UnitTest
 
          #endregion //Setup
 
-         #region DirectoryNotFoundException (Local) / IOException (Network)
+         #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
          expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
@@ -2345,7 +2106,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
 
-         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+         #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          #region IOException
 
@@ -2391,7 +2152,7 @@ namespace AlphaFS.UnitTest
 
          #region UnauthorizedAccessException
 
-         tempPath = Path.Combine(SysRoot, "CSC");
+         tempPath = Path.Combine(UnitTestConstants.SysRoot, "CSC");
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          if (Directory.Exists(tempPath))
@@ -2430,17 +2191,17 @@ namespace AlphaFS.UnitTest
 
          #endregion // UnauthorizedAccessException
 
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet files, using \"SearchOption.{0}\"\n", searchOption);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (string file in Directory.GetFiles(path, searchPattern, searchOption))
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, file);
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
       }
@@ -2453,14 +2214,14 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot32 : Path.LocalToUnc(SysRoot32);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         string path = isLocal ? UnitTestConstants.SysRoot32 : Path.LocalToUnc(UnitTestConstants.SysRoot32);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
 
          #endregion // Setup
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
 
          #region GetCreationTimeXxx
 
@@ -2513,7 +2274,7 @@ namespace AlphaFS.UnitTest
          #endregion GetChangeTimeXxx
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Console.WriteLine();
 
          #region Trigger GetChangeTimeXxx
@@ -2580,7 +2341,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          int cnt = 0;
          string searchPattern = Path.WildcardStarMatchAll;
@@ -2598,7 +2359,7 @@ namespace AlphaFS.UnitTest
 
          #endregion //Setup
 
-         #region DirectoryNotFoundException (Local) / IOException (Network)
+         #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
          expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
@@ -2631,7 +2392,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
          Console.WriteLine();
 
-         #endregion // DirectoryNotFoundException (Local) / IOException (Network)
+         #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
          #region IOException
 
@@ -2675,7 +2436,7 @@ namespace AlphaFS.UnitTest
 
          #region UnauthorizedAccessException
 
-         tempPath = Path.Combine(SysRoot, "CSC");
+         tempPath = Path.Combine(UnitTestConstants.SysRoot, "CSC");
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          if (Directory.Exists(tempPath))
@@ -2708,17 +2469,17 @@ namespace AlphaFS.UnitTest
 
          #endregion // UnauthorizedAccessException
 
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
          Console.WriteLine("\tGet FileSystemEntries, using \"SearchOption.{0}\"\n", searchOption);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          foreach (string folder in Directory.GetFileSystemEntries(path, searchPattern, searchOption))
             Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, folder);
 
          Console.WriteLine();
-         Console.WriteLine(Reporter());
+         Console.WriteLine(UnitTestConstants.Reporter());
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
          Console.WriteLine();
       }
@@ -2729,14 +2490,14 @@ namespace AlphaFS.UnitTest
 
       private void DumpGetProperties(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
-         string path = isLocal ? SysRoot : Path.LocalToUnc(SysRoot);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
 
          Console.WriteLine("\n\tAggregated properties of file system objects from Directory: [{0}]\n", path);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          Dictionary<string, long> props = Directory.GetProperties(path, DirectoryEnumerationOptions.FilesAndFolders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         string report = Reporter();
+         string report = UnitTestConstants.Reporter();
 
          long total = props["Total"];
          long file = props["File"];
@@ -2763,7 +2524,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("Directory.Move()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
@@ -2923,7 +2684,7 @@ namespace AlphaFS.UnitTest
             try
             {
                Console.WriteLine("\nCatch: [{0}]: An attempt was made to move a directory to a different volume. ", expectedException);
-               Directory.Move(SysDrive + @"\" + folderSource, otherDisk);
+               Directory.Move(UnitTestConstants.SysDrive + @"\" + folderSource, otherDisk);
             }
             catch (IOException ex)
             {
@@ -2943,7 +2704,7 @@ namespace AlphaFS.UnitTest
 
             #region Move
 
-            CreateDirectoriesAndFiles(tempPathSource0, 10, true);
+            UnitTestConstants.CreateDirectoriesAndFiles(tempPathSource0, 10, true);
             Directory.Copy(tempPathSource0, otherDisk, CopyOptions.FailIfExists);
 
             Dictionary<string, long> props = Directory.GetProperties(otherDisk, DirectoryEnumerationOptions.Recursive);
@@ -2954,9 +2715,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nMove from Source Path: [{0}]", otherDisk);
             Console.WriteLine("\tTotal Directories: [{0}] Files: [{1}] Size: [{2}]", sourceFolder, sourceFile, Utils.UnitSizeToText(sourceSize));
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             Directory.Move(otherDisk, tempPathSource, MoveOptions.CopyAllowed);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
 
             props = Directory.GetProperties(tempPathSource, DirectoryEnumerationOptions.Recursive);
             long destinationFolder = props["Directory"];
@@ -3000,9 +2761,9 @@ namespace AlphaFS.UnitTest
             #endregion // IOException
 
             // Overwrite.
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
             Directory.Move(otherDisk, tempPathSource, MoveOptions.CopyAllowed | MoveOptions.ReplaceExisting);
-            report = Reporter();
+            report = UnitTestConstants.Reporter();
 
             Console.WriteLine("\nMove again with overwrite enabled and other volume allowed.\n{0}", report);
 
@@ -3027,7 +2788,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpSetTimestamps(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "Directory.SetTimestamps()-directory-" + Path.GetRandomFileName());
          if (!isLocal) path = Path.LocalToUnc(path);
 
@@ -3111,7 +2872,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpSetXxxTime(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "Directory.SetCreationTime()-" + Path.GetRandomFileName());
          if (!isLocal) path = Path.LocalToUnc(path);
 
@@ -3206,7 +2967,7 @@ namespace AlphaFS.UnitTest
 
       private void DumpTransferTimestamps(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "Directory.TransferTimestamps()-" + Path.GetRandomFileName());
          string path2 = Path.Combine(Path.GetTempPath(), "Directory.TransferTimestamps()-" + Path.GetRandomFileName());
 
@@ -3284,7 +3045,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          const string characterDot = ".";
          const string characterSpace = " ";
          string random = Path.GetRandomFileName();
@@ -3351,7 +3112,7 @@ namespace AlphaFS.UnitTest
 
             #region Directory() Class
 
-            StopWatcher(true);
+            UnitTestConstants.StopWatcher(true);
 
             #region TrailingDot
 
@@ -3429,7 +3190,7 @@ namespace AlphaFS.UnitTest
 
             #endregion // TrailingSpace
 
-            Console.WriteLine("\tClass DirectoryInfo()\t{0}", Reporter());
+            Console.WriteLine("\tClass DirectoryInfo()\t{0}", UnitTestConstants.Reporter());
 
             #endregion // Directory() Class
          }
@@ -3451,8 +3212,6 @@ namespace AlphaFS.UnitTest
       #endregion // Create directory with trailing dot/space
 
       #endregion // Unit Tests
-
-      #region Unit Test Callers
 
       #region .NET
 
@@ -3606,8 +3365,8 @@ namespace AlphaFS.UnitTest
          bool allOk = true;
          int errorCnt = 0;
 
-         StopWatcher(true);
-         foreach (string path in InputPaths)
+         UnitTestConstants.StopWatcher(true);
+         foreach (string path in UnitTestConstants.InputPaths)
          {
             string method = null;
 
@@ -3636,7 +3395,7 @@ namespace AlphaFS.UnitTest
 
             }
          }
-         Console.WriteLine("\n\t{0}", Reporter(true));
+         Console.WriteLine("\n\t{0}", UnitTestConstants.Reporter(true));
 
          Assert.IsTrue(pathCnt > 0);
 
@@ -3772,8 +3531,8 @@ namespace AlphaFS.UnitTest
          bool allOk = true;
          int errorCnt = 0;
 
-         StopWatcher(true);
-         foreach (string path in InputPaths)
+         UnitTestConstants.StopWatcher(true);
+         foreach (string path in UnitTestConstants.InputPaths)
          {
             string method = null;
 
@@ -3813,7 +3572,7 @@ namespace AlphaFS.UnitTest
                errorCnt++;
             }
          }
-         Console.WriteLine("\n\t{0}", Reporter(true));
+         Console.WriteLine("\n\t{0}", UnitTestConstants.Reporter(true));
 
          Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
@@ -3840,7 +3599,7 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Directory.SetAccessControl()");
 
-         //string path = SysDrive + @"\AlphaDirectory-" + Path.GetRandomFileName();
+         //string path = UnitTestConstants.SysDrive + @"\AlphaDirectory-" + Path.GetRandomFileName();
          string path = Path.Combine(Path.GetTempPath(), "Directory.GetAccessControl()-" + Path.GetRandomFileName());
          string pathAlpha = path;
          Directory.CreateDirectory(path);
@@ -3852,9 +3611,9 @@ namespace AlphaFS.UnitTest
          DirectorySecurity dsAlpha = Directory.GetAccessControl(pathAlpha, AccessControlSections.Access);
          DirectorySecurity dsSystem = System.IO.Directory.GetAccessControl(path, AccessControlSections.Access);
          AuthorizationRuleCollection accessRulesSystem = dsSystem.GetAccessRules(true, true, typeof(NTAccount));
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          AuthorizationRuleCollection accessRulesAlpha = dsAlpha.GetAccessRules(true, true, typeof(NTAccount));
-         Console.WriteLine("\t\tDirectory.GetAccessControl() rules found: [{0}]\n\t{1}", accessRulesAlpha.Count, Reporter());
+         Console.WriteLine("\t\tDirectory.GetAccessControl() rules found: [{0}]\n\t{1}", accessRulesAlpha.Count, UnitTestConstants.Reporter());
          Assert.AreEqual(accessRulesSystem.Count, accessRulesAlpha.Count);
 
          // Sanity check.
@@ -4040,7 +3799,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nCount Directories");
 
-         string path = SysRoot;
+         string path = UnitTestConstants.SysRoot;
 
          string searchPattern = Path.WildcardStarMatchAll;
 
@@ -4060,7 +3819,7 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", gotException);
          Assert.IsTrue(gotException);
-         Console.WriteLine("\n\tdirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, fsoCount, Reporter());
+         Console.WriteLine("\n\tdirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, fsoCount, UnitTestConstants.Reporter());
 
          #endregion // Exception
 
@@ -4068,18 +3827,18 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n\tsearchPattern: \"{0}\", continue on error. Running as Administrator will count more directories.", searchPattern);
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         Console.WriteLine("\n\tdirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, fsoCount, Reporter());
+         Console.WriteLine("\n\tdirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, fsoCount, UnitTestConstants.Reporter());
          Assert.IsTrue(fsoCount > 0);
 
 
          Console.WriteLine("\n\tsearchPattern: \"{0}\", continue on error. Running as Administrator and using PrivilegeEnabler(Privilege.Backup) will count even more directories.", searchPattern);
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          using (new PrivilegeEnabler(Privilege.Backup))
          {
             fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-            Console.WriteLine("\n\tDirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, fsoCount, Reporter());
+            Console.WriteLine("\n\tDirectory\t = [{0}]\n\tSubdirectories = [{1}]\n{2}\n", path, fsoCount, UnitTestConstants.Reporter());
             Assert.IsTrue(fsoCount > 0);
          }
          Console.WriteLine();
@@ -4092,7 +3851,7 @@ namespace AlphaFS.UnitTest
 
          searchPattern = Path.WildcardStarMatchAll;
 
-         path = SysRoot32;
+         path = UnitTestConstants.SysRoot32;
          fsoCount = 0;
 
          #region Exception
@@ -4109,27 +3868,27 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine("\n\tCaught Exception (Should be True): [{0}]", gotException);
          Assert.IsTrue(gotException);
-         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, Reporter());
+         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, UnitTestConstants.Reporter());
 
          #endregion // Exception
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, Reporter());
+         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, UnitTestConstants.Reporter());
          Assert.IsTrue(fsoCount > 0);
 
          Console.WriteLine("\n\tContinue on error. Running as Administrator will count more files.");
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, Reporter());
+         Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, UnitTestConstants.Reporter());
          Assert.IsTrue(fsoCount > 0);
 
          Console.WriteLine("\n\tContinue on error. Running as Administrator and using PrivilegeEnabler(Privilege.Backup) will count even more files.");
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          using (new PrivilegeEnabler(Privilege.Backup))
          {
             fsoCount = Directory.CountFileSystemObjects(path, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-            Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, Reporter());
+            Console.WriteLine("\n\tDirectory = [{0}]\n\tFiles  = [{1}]\n{2}\n", path, fsoCount, UnitTestConstants.Reporter());
             Assert.IsTrue(fsoCount > 0);
          }
          Console.WriteLine();
@@ -4155,16 +3914,16 @@ namespace AlphaFS.UnitTest
          const int remainingDirectories = totalDirectories - emptyDirectories;   // 60 remaining directories.
 
          Console.WriteLine("\nInput Path: [{0}]", tempPath);
-         CreateDirectoriesAndFiles(tempPath, maxDepth, true);
+         UnitTestConstants.CreateDirectoriesAndFiles(tempPath, maxDepth, true);
 
          string searchPattern = Path.WildcardStarMatchAll;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          dirs0 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
          files0 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         Console.WriteLine("\nCounted Directories: [{0}]\nCounted Files      : [{1}]\n{2}", dirs0, files0, Reporter());
+         Console.WriteLine("\nCounted Directories: [{0}]\nCounted Files      : [{1}]\n{2}", dirs0, files0, UnitTestConstants.Reporter());
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          bool deleteOk = false;
          try
          {
@@ -4179,15 +3938,15 @@ namespace AlphaFS.UnitTest
          // Issue-21123: Method Directory- and DirectoryInfo.DeleteEmptySubdirectories() also deletes the given directories when totally empty.
          Assert.IsTrue(Directory.Exists(tempPath), "Directory should exist.");
 
-         Console.WriteLine("\nDirectory.DeleteEmptySubdirectories() (Should be True): [{0}]\n{1}", deleteOk, Reporter());
+         Console.WriteLine("\nDirectory.DeleteEmptySubdirectories() (Should be True): [{0}]\n{1}", deleteOk, UnitTestConstants.Reporter());
          Assert.IsTrue(deleteOk, "DeleteEmptySubdirectories() failed.");
 
          searchPattern = Path.WildcardStarMatchAll;
 
-         StopWatcher(true);
+         UnitTestConstants.StopWatcher(true);
          dirs1 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
          files1 = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Files | DirectoryEnumerationOptions.Recursive | DirectoryEnumerationOptions.ContinueOnException);
-         Console.WriteLine("\nCounted Directories (Should be 60): [{0}]\nCounted Files (Should be 110)     : [{1}]\n{2}", dirs1, files1, Reporter());
+         Console.WriteLine("\nCounted Directories (Should be 60): [{0}]\nCounted Files (Should be 110)     : [{1}]\n{2}", dirs1, files1, UnitTestConstants.Reporter());
          Assert.IsTrue(dirs1 != dirs0);
          Assert.IsTrue(dirs1 == remainingDirectories);
          Assert.IsTrue(files1 == files0);
@@ -4347,8 +4106,8 @@ namespace AlphaFS.UnitTest
          SearchOption searchOption = SearchOption.TopDirectoryOnly;
 
          int cnt = 0;
-         StopWatcher(true);
-         foreach (string dir in Directory.EnumerateDirectories(SysRoot, searchPattern, searchOption))
+         UnitTestConstants.StopWatcher(true);
+         foreach (string dir in Directory.EnumerateDirectories(UnitTestConstants.SysRoot, searchPattern, searchOption))
          {
             try
             {
@@ -4364,7 +4123,7 @@ namespace AlphaFS.UnitTest
                Console.Write("\t#{0:000}\tCaught Exception for directory: [{1}]\t[{2}]\n", cnt, dir, ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
-         Console.Write("\n{0}", Reporter());
+         Console.Write("\n{0}", UnitTestConstants.Reporter());
       }
 
       #endregion // HasInheritedPermissions
@@ -4414,7 +4173,5 @@ namespace AlphaFS.UnitTest
       #endregion // AlphaFS___DirectoryTrailingDotSpace
 
       #endregion // AlphaFS
-
-      #endregion Unit Test Callers
    }
 }

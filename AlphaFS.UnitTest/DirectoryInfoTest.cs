@@ -37,138 +37,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class DirectoryInfoTest
    {
-      #region Unit Test Helpers
-
-      private static Stopwatch _stopWatcher;
-
-      private static string StopWatcher(bool start = false)
-      {
-         if (_stopWatcher == null)
-            _stopWatcher = new Stopwatch();
-
-         if (start)
-         {
-            _stopWatcher.Restart();
-            return null;
-         }
-
-         _stopWatcher.Stop();
-         long ms = _stopWatcher.ElapsedMilliseconds;
-         TimeSpan elapsed = _stopWatcher.Elapsed;
-
-         return string.Format(CultureInfo.CurrentCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
-      }
-
-      private static string Reporter(bool condensed = false, bool onlyTime = false)
-      {
-         var lastError = new Win32Exception();
-
-         StopWatcher();
-
-         return onlyTime
-            ? string.Format(CultureInfo.CurrentCulture, condensed
-               ? "{0} [{1}: {2}]"
-               : "\t\t{0}", StopWatcher())
-            : string.Format(CultureInfo.CurrentCulture, condensed
-               ? "{0} [{1}: {2}]"
-               : "\t\t{0}\t*Win32 Result: [{1, 4}]\t*Win32 Message: [{2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
-      }
-
-      /// <summary>Shows the Object's available Properties and Values.</summary>
-      private static void Dump(object obj, int width = -35, bool indent = false)
-      {
-         int cnt = 0;
-         const string nulll = "\t\tnull";
-         string template = "\t{0}#{1:000}\t{2, " + width + "} == \t[{3}]";
-
-         if (obj == null)
-         {
-            Console.WriteLine(nulll);
-            return;
-         }
-
-         Console.WriteLine("\n\t{0}Instance: [{1}]\n", indent ? "\t" : "", obj.GetType().FullName);
-
-         foreach (PropertyDescriptor descriptor in TypeDescriptor.GetProperties(obj).Sort().Cast<PropertyDescriptor>().Where(descriptor => descriptor != null))
-         {
-            string propValue;
-            try
-            {
-               object value = descriptor.GetValue(obj);
-               propValue = (value == null) ? "null" : value.ToString();
-            }
-            catch (Exception ex)
-            {
-               // Please do tell, oneliner preferably.
-               propValue = ex.Message.Replace(Environment.NewLine, "  ");
-            }
-
-
-            switch (descriptor.Name)
-            {
-               case "Parent":
-                  if (obj.GetType().Namespace.Equals("Alphaleonis.Win32.Filesystem", StringComparison.OrdinalIgnoreCase))
-                  {
-                     if (obj != null)
-                     {
-                        DirectoryInfo di = (DirectoryInfo) obj;
-                        if (di != null)
-                           propValue = di.Parent == null ? null : di.Parent.ToString();
-                     }
-                  }
-                  break;
-
-               case "Root":
-                  if (obj.GetType().Namespace.Equals("Alphaleonis.Win32.Filesystem", StringComparison.OrdinalIgnoreCase))
-                  {
-                     if (obj != null)
-                     {
-                        DirectoryInfo di = (DirectoryInfo) obj;
-                        if (di != null)
-                           propValue = di.Root.ToString();
-                     }
-                  }
-                  break;
-
-               case "EntryInfo":
-                  if (obj.GetType().Namespace.Equals("Alphaleonis.Win32.Filesystem", StringComparison.OrdinalIgnoreCase))
-                  {
-                     if (obj != null)
-                     {
-                        DirectoryInfo di = (DirectoryInfo) obj;
-                        if (di != null && di.EntryInfo != null)
-                           propValue = di.EntryInfo.FullPath;
-                     }
-                  }
-                  break;
-            }
-
-            Console.WriteLine(template, indent ? "\t" : "", ++cnt, descriptor.Name, propValue);
-         }
-      }
-
-      #region Fields
-
-      private readonly string LocalHost = Environment.MachineName;
-      private readonly string LocalHostShare = Environment.SystemDirectory;
-      private const string Local = @"LOCAL";
-      private const string Network = @"NETWORK";
-
-      private static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
-      private static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
-      private static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
-
-      private const string TextTrue = "IsTrue";
-      private const string TenNumbers = "0123456789";
-      private const string TextHelloWorld = "Hëllõ Wørld!";
-      private const string TextGoodByeWorld = "GóödByé Wôrld!";
-      private const string TextAppend = "GóödByé Wôrld!";
-      private const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
-
-      #endregion // Fields
-
-      #endregion // Unit Test Helpers
-
       #region Unit Tests
 
       #region DumpRefresh
@@ -177,7 +45,7 @@ namespace AlphaFS.UnitTest
       {
          #region Setup
 
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          string tempPathSysIo = Path.GetTempPath("DirectoryInfo.Refresh()-directory-SysIo-" + Path.GetRandomFileName());
          string tempPath = Path.GetTempPath("DirectoryInfo.Refresh()-directory-AlphaFS-" + Path.GetRandomFileName());
