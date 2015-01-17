@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Network
       [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint NetServerDiskEnum([MarshalAs(UnmanagedType.LPWStr)] string serverName,
-         [MarshalAs(UnmanagedType.U4)] uint level, out IntPtr bufPtr,
+         [MarshalAs(UnmanagedType.U4)] uint level, out SafeGlobalMemoryBufferHandle bufPtr,
          [MarshalAs(UnmanagedType.I4)] int prefMaxLen, [MarshalAs(UnmanagedType.U4)] out uint entriesRead,
          [MarshalAs(UnmanagedType.U4)] out uint totalEntries, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
    }

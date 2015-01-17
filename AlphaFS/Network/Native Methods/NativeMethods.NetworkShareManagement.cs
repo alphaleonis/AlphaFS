@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Network
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint NetConnectionEnum([MarshalAs(UnmanagedType.LPWStr)] string serverName,
          [MarshalAs(UnmanagedType.LPWStr)] string qualifier, [MarshalAs(UnmanagedType.U4)] uint level,
-         out IntPtr bufPtr, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
+         out SafeGlobalMemoryBufferHandle bufPtr, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
          [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries,
          [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
 
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Network
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint NetFileEnum([MarshalAs(UnmanagedType.LPWStr)] string serverName,
          [MarshalAs(UnmanagedType.LPWStr)] string basepath, [MarshalAs(UnmanagedType.LPWStr)] string username,
-         [MarshalAs(UnmanagedType.U4)] uint level, out IntPtr buffer,
+         [MarshalAs(UnmanagedType.U4)] uint level, out SafeGlobalMemoryBufferHandle buffer,
          [MarshalAs(UnmanagedType.I4)] int prefmaxlen, [MarshalAs(UnmanagedType.U4)] out uint entriesRead,
          [MarshalAs(UnmanagedType.U4)] out uint totalentries, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
 
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Network
       [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint NetShareEnum([MarshalAs(UnmanagedType.LPWStr)] string serverName,
-         [MarshalAs(UnmanagedType.U4)] uint level, out IntPtr bufPtr,
+         [MarshalAs(UnmanagedType.U4)] uint level, out SafeGlobalMemoryBufferHandle bufPtr,
          [MarshalAs(UnmanagedType.I4)] int prefMaxLen, [MarshalAs(UnmanagedType.U4)] out uint entriesRead,
          [MarshalAs(UnmanagedType.U4)] out uint totalEntries, [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
 

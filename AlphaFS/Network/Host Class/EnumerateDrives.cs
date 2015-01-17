@@ -66,11 +66,11 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static IEnumerable<string> EnumerateDrivesInternal(string host, bool continueOnException)
       {
-         return EnumerateNetworkObjectInternal(new FunctionData { EnumType = 1 }, (string structure, IntPtr buffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData { EnumType = 1 }, (string structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             structure,
 
-            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resume) =>
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resume) =>
             {
                // When host == null, the local computer is used.
                // However, the resulting OpenResourceInfo.Host property will be empty.

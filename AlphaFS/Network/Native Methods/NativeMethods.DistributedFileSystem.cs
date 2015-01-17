@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Network
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint NetDfsEnum([MarshalAs(UnmanagedType.LPWStr)] string dfsName,
          [MarshalAs(UnmanagedType.U4)] uint level, [MarshalAs(UnmanagedType.U4)] int prefMaxLen,
-         out IntPtr buffer, [MarshalAs(UnmanagedType.U4)] out uint entriesRead,
+         out SafeGlobalMemoryBufferHandle buffer, [MarshalAs(UnmanagedType.U4)] out uint entriesRead,
          [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
 
       

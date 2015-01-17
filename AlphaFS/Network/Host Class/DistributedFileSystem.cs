@@ -53,11 +53,11 @@ namespace Alphaleonis.Win32.Network
 
          var fd = new FunctionData();
 
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo4 structure, IntPtr buffer) =>
+         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo4 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new DfsInfo(structure),
 
-            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle1) =>
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle1) =>
             {
                totalEntries = 0;
                return NativeMethods.NetDfsEnum(dfsName, 4, prefMaxLen, out buffer, out entriesRead, out resumeHandle1);
@@ -190,11 +190,11 @@ namespace Alphaleonis.Win32.Network
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo300 structure, IntPtr buffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo300 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new DfsInfo { EntryPath = structure.DfsName },
 
-            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                totalEntries = 0;
 
@@ -224,11 +224,11 @@ namespace Alphaleonis.Win32.Network
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo200 structure, IntPtr buffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo200 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new DfsInfo { EntryPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Path.UncPrefix, NativeMethods.ComputerDomain, Path.DirectorySeparatorChar, structure.FtDfsName) },
 
-            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                totalEntries = 0;
 

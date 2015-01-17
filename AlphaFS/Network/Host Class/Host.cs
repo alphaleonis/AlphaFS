@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateNetworkObjectInternal
 
       private delegate uint EnumerateNetworkObjectDelegate(
-         FunctionData functionData, out IntPtr netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
+         FunctionData functionData, out SafeGlobalMemoryBufferHandle netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
          [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries,
          [MarshalAs(UnmanagedType.U4)] out uint resumeHandle);
 
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       [SecurityCritical]
-      private static IEnumerable<TStruct> EnumerateNetworkObjectInternal<TStruct, TNative>(FunctionData functionData, Func<TNative, IntPtr, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException)
+      private static IEnumerable<TStruct> EnumerateNetworkObjectInternal<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException)
       {
          Type objectType;
          int objectSize;
@@ -106,29 +106,27 @@ namespace Alphaleonis.Win32.Network
          }
 
 
-         var buffer = IntPtr.Zero;
-
-         try
+         uint lastError;
+         do
          {
-            uint lastError;
-            do
-            {
-               uint entriesRead;
-               uint totalEntries;
-               uint resumeHandle;
+            uint entriesRead;
+            uint totalEntries;
+            uint resumeHandle;
+            SafeGlobalMemoryBufferHandle buffer;
 
-               lastError = enumerateNetworkObject(functionData, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
+            lastError = enumerateNetworkObject(functionData, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
+            using (buffer)
                switch (lastError)
                {
                   case Win32Errors.NERR_Success:
                   case Win32Errors.ERROR_MORE_DATA:
                      if (entriesRead > 0)
                      {
-                        for (long i = 0, itemOffset = buffer.ToInt64(); i < entriesRead; i++, itemOffset += objectSize)
+                        for (int i = 0, itemOffset = 0; i < entriesRead; i++, itemOffset += objectSize)
                            yield return (TStruct) (isString
-                              ? Marshal.PtrToStringUni(new IntPtr(itemOffset))
-                              : (object) createTStruct((TNative) Marshal.PtrToStructure(new IntPtr(itemOffset), objectType), buffer));
+                              ? buffer.PtrToStringUni(itemOffset)
+                              : (object) createTStruct(buffer.PtrToStructure<TNative>(itemOffset), buffer));
                      }
                      break;
 
@@ -140,16 +138,11 @@ namespace Alphaleonis.Win32.Network
                      yield break;
                }
 
-            } while (lastError == Win32Errors.ERROR_MORE_DATA);
+         } while (lastError == Win32Errors.ERROR_MORE_DATA);
 
-            if (lastError != Win32Errors.NO_ERROR && !continueOnException)
-               throw new NetworkInformationException((int) lastError);
-         }
-         finally
-         {
-            if (buffer != IntPtr.Zero)
-               NativeMethods.NetApiBufferFree(buffer);
-         }
+         if (lastError != Win32Errors.NO_ERROR && !continueOnException)
+            throw new NetworkInformationException((int) lastError);
+         
       }
 
       #endregion // EnumerateNetworkObjectInternal

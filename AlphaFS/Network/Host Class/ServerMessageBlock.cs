@@ -189,11 +189,11 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(share))
             throw new ArgumentNullException("share");
 
-         return EnumerateNetworkObjectInternal(new FunctionData { ExtraData1 = share }, (NativeMethods.ConnectionInfo1 structure, IntPtr buffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData { ExtraData1 = share }, (NativeMethods.ConnectionInfo1 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
                new OpenConnectionInfo(host, structure),
 
-            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
             {
                // When host == null, the local computer is used.
                // However, the resulting OpenResourceInfo.Host property will be empty.
@@ -232,9 +232,9 @@ namespace Alphaleonis.Win32.Network
          bool hasItems = false;
 
          // Try ShareInfo503 structure.
-         foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo503 structure, IntPtr buffer) =>
+         foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo503 structure, SafeGlobalMemoryBufferHandle buffer) =>
             new ShareInfo(stripUnc, ShareInfoLevel.Info503, structure),
-            (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+            (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
                NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
          {
             yield return si;
@@ -244,9 +244,9 @@ namespace Alphaleonis.Win32.Network
          // ShareInfo503 is requested, but not supported/possible.
          // Try again with ShareInfo2 structure.
          if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo2 structure, IntPtr buffer) =>
+            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo2 structure, SafeGlobalMemoryBufferHandle buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info2, structure),
-               (FunctionData functionData, out IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+               (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
                   NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
             {
                yield return si;
@@ -256,9 +256,9 @@ namespace Alphaleonis.Win32.Network
          // ShareInfo2 is requested, but not supported/possible.
          // Try again with ShareInfo1 structure.
          if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo1 structure, IntPtr buffer) =>
+            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo1 structure, SafeGlobalMemoryBufferHandle buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info1, structure),
-               (FunctionData functionData, out  IntPtr buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
+               (FunctionData functionData, out  SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
                   NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
             {
                yield return si;
