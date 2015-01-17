@@ -44,8 +44,6 @@ namespace AlphaFS.UnitTest
    {
       #region Unit Tests
 
-      #region Filesystem
-
       #region DumpClassBackupFileStream
 
       private void DumpClassBackupFileStream(bool isLocal)
@@ -974,7 +972,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput Directory Path: [{0}]", path);
 
-         Console.WriteLine("\n\nvar fsei = Directory.GetFileSystemEntry<FileSystemEntryInfo>(path);");
+         Console.WriteLine("\n\nvar fsei = Directory.GetFileSystemEntry(path);");
          var asFileSystemEntryInfo = File.GetFileSystemEntryInfo(path);
          Assert.IsTrue((asFileSystemEntryInfo.GetType().IsEquivalentTo(typeof(FileSystemEntryInfo))));
          Assert.IsTrue(UnitTestConstants.Dump(asFileSystemEntryInfo, -17));
@@ -990,7 +988,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\nInput File Path: [{0}]", path);
 
-         Console.WriteLine("\n\nvar fsei = File.GetFileSystemEntry<FileSystemEntryInfo>(path);");
+         Console.WriteLine("\n\nvar fsei = File.GetFileSystemEntry(path);");
          asFileSystemEntryInfo = File.GetFileSystemEntryInfo(path);
          Assert.IsTrue((asFileSystemEntryInfo.GetType().IsEquivalentTo(typeof(FileSystemEntryInfo))));
          Assert.IsTrue(UnitTestConstants.Dump(asFileSystemEntryInfo, -17));
@@ -1071,9 +1069,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpClassVolumeInfo
 
-      #endregion // Filesystem
 
-      #region Network
 
       #region DumpClassDfsInfo
 
@@ -1213,8 +1209,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpClassShareInfo
-
-      #endregion // Network
 
       #endregion // Unit Tests
 
