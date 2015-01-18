@@ -282,7 +282,7 @@ namespace Alphaleonis.Win32
       //public const uint WAIT_TIMEOUT = 258;   
       
       /// <summary>(259) No more data is available.</summary>
-      public const uint ERROR_NO_MORE_ITEMS = 259;
+      //public const uint ERROR_NO_MORE_ITEMS = 259;
 
       //public const uint ERROR_CANNOT_COPY = 266;
       

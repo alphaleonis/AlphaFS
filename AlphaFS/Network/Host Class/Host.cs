@@ -133,7 +133,7 @@ namespace Alphaleonis.Win32.Network
                   case Win32Errors.ERROR_BAD_NETPATH:
                      break;
 
-                  // Observed when ShareInfo503 is requested, but not supported/possible.
+                  // Observed when ShareInfo503 is requested but not supported/possible.
                   case Win32Errors.RPC_X_BAD_STUB_DATA:
                      yield break;
                }

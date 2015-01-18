@@ -113,7 +113,7 @@ namespace AlphaFS.UnitTest
          File.WriteAllText(tempPath, UnitTestConstants.TenNumbers);
 
 
-         var fi = new FileInfo(tempPath);  // Class FileInfo() instance.
+         var fi = new FileInfo(tempPath);
 
          currentNumberofStreams = File.EnumerateAlternateDataStreams(tempPath).Count();            
 
@@ -127,7 +127,8 @@ namespace AlphaFS.UnitTest
          
          
          // Create alternate data streams.
-         // Because of the colon, you must supply a full path and use PathFormat.FullPath or a NotSupportedException is thrown: path is in an invalid format.
+         // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.FullPath
+         // to prevent a NotSupportedException: path is in an invalid format.
 
          File.WriteAllLines(tempPath + ":" + myStream, arrayContent, PathFormat.FullPath);
          File.WriteAllText(tempPath + ":" + myStream2, stringContent, PathFormat.FullPath);
