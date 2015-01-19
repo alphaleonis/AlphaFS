@@ -141,8 +141,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
       /// </exception>
       /// <exception cref="ArgumentNullException"/>
-      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
       [SecurityCritical]
       internal static T GetAccessControlInternal<T>(bool isFolder, string path, AccessControlSections includeSections, PathFormat pathFormat)
       {

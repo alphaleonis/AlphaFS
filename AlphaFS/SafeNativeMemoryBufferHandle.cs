@@ -97,9 +97,7 @@ namespace Alphaleonis.Win32
          Marshal.Copy(source, startIndex, new IntPtr(handle.ToInt64() + offset), length);
       }
 
-      /// <summary>
-      /// Copies data from an unmanaged memory pointer to a managed 8-bit unsigned integer array.
-      /// </summary>
+      /// <summary>Copies data from an unmanaged memory pointer to a managed 8-bit unsigned integer array.</summary>
       /// <param name="destination">The array to copy to.</param>
       /// <param name="destinationOffset">The zero-based index in the destination array where copying should start.</param>
       /// <param name="length">The number of array elements to copy.</param>
@@ -123,6 +121,31 @@ namespace Alphaleonis.Win32
          Marshal.Copy(handle, destination, destinationOffset, length);
       }
 
+      /// <summary>Copies data from an unmanaged memory pointer to a managed 8-bit unsigned integer array.</summary>
+      /// <param name="destination">The array to copy to.</param>
+      /// <param name="sourceOffset"></param>
+      /// <param name="destinationOffset">The zero-based index in the destination array where copying should start.</param>
+      /// <param name="length">The number of array elements to copy.</param>
+      public void CopyFromSourceOffset(byte[] destination, IntPtr sourceOffset, int destinationOffset, int length)
+      {
+         if (destination == null)
+            throw new ArgumentNullException("destination");
+
+         if (destinationOffset < 0)
+            throw new ArgumentOutOfRangeException("destinationOffset", "Destination offset must not be negative");
+
+         if (length < 0)
+            throw new ArgumentOutOfRangeException("length", "Length must not be negative.");
+
+         if (destinationOffset + length > destination.Length)
+            throw new ArgumentException("Destination buffer not large enough for the requested operation.");
+
+         if (length > Capacity)
+            throw new ArgumentOutOfRangeException("length", "Source offset and length outside the bounds of the array");
+
+         Marshal.Copy(new IntPtr(handle.ToInt64() + sourceOffset.ToInt64()), destination, destinationOffset, length);
+      }
+
       public byte[] ToByteArray(int startIndex, int length)
       {
          if (IsInvalid)
@@ -133,6 +156,7 @@ namespace Alphaleonis.Win32
          return arr;
       }
 
+      #region Write
 
       public void WriteInt16(int offset, short value)
       {
@@ -194,6 +218,10 @@ namespace Alphaleonis.Win32
          Marshal.WriteIntPtr(handle, value);
       }
 
+      #endregion // Write
+
+      #region Read
+
       public byte ReadByte()
       {
          return Marshal.ReadByte(handle);
@@ -244,6 +272,8 @@ namespace Alphaleonis.Win32
          return Marshal.ReadIntPtr(handle, offset);
       }
 
+      #endregion // Read
+
       public void StructureToPtr(object structure, bool deleteOld)
       {
          Marshal.StructureToPtr(structure, handle, deleteOld);
@@ -269,6 +299,6 @@ namespace Alphaleonis.Win32
          return Marshal.PtrToStringUni(new IntPtr(handle.ToInt64() + offset), length);
       }
 
-      #endregion
+      #endregion // Public Methods
    }
 }

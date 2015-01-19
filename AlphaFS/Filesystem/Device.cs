@@ -68,9 +68,9 @@ namespace Alphaleonis.Win32.Filesystem
       internal static IEnumerable<DeviceInfo> EnumerateDevicesInternal(SafeHandle safeHandle, string hostName, DeviceGuid deviceInterfaceGuid)
       {
          bool callerHandle = safeHandle != null;
-         Guid deviceGuid = new Guid(Utils.GetEnumDescription(deviceInterfaceGuid));
+         var deviceGuid = new Guid(Utils.GetEnumDescription(deviceInterfaceGuid));
 
-         
+
          // CM_Connect_Machine()
          // MSDN Note: Beginning in Windows 8 and Windows Server 2012 functionality to access remote machines has been removed.
          // You cannot access remote machines when running on these versions of Windows. 
@@ -98,8 +98,8 @@ namespace Alphaleonis.Win32.Filesystem
                safeHandle.Close();
                NativeError.ThrowException(Marshal.GetLastWin32Error(), Resources.HandleInvalid);
             }
-                 
-            
+
+
             try
             {
                uint memberInterfaceIndex = 0;
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   // Create DeviceInfo instance.
                   // Set DevicePath property of DeviceInfo instance.
-                  DeviceInfo deviceInfo = new DeviceInfo(hostName) {DevicePath = deviceInterfaceDetailData.DevicePath};
+                  var deviceInfo = new DeviceInfo(hostName) { DevicePath = deviceInterfaceDetailData.DevicePath };
 
 
                   // Current InstanceId is at the "USBSTOR" level, so we
@@ -224,7 +224,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.Class, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
                         deviceInfo.Class = Marshal.PtrToStringUni(buffer);
-                     
+
                      if (NativeMethods.SetupDiGetDeviceRegistryProperty(safeHandle, ref deviceInfoData, NativeMethods.SetupDiGetDeviceRegistryPropertyEnum.CompatibleIds, out regType, safeBuffer, safeBufferCapacity, IntPtr.Zero))
                         deviceInfo.CompatibleIds = Marshal.PtrToStringUni(buffer);
 
@@ -260,7 +260,7 @@ namespace Alphaleonis.Win32.Filesystem
                   }
 
                   #endregion // Get Registry Properties
-                  
+
                   yield return deviceInfo;
 
                   // Get new structure instance.
@@ -281,27 +281,22 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetLinkTargetInfoInternal
 
       /// <summary>Unified method GetLinkTargetInfoInternal() to get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
-      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Runtime.InteropServices.SafeHandle.DangerousGetHandle", Justification = "DangerousAddRef() and DangerousRelease() are applied.")]
+      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
       [SecurityCritical]
       internal static LinkTargetInfo GetLinkTargetInfoInternal(SafeFileHandle safeHandle)
       {
          // Start with a large buffer to prevent a 2nd call.
-         uint bytesReturned = NativeMethods.MaxPathUnicode;
+         uint bytesReturned = NativeMethods.DefaultFileBufferSize;
 
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int)bytesReturned))
-         { 
-            do
+         {
+            while (true)
             {
-               // Possible PInvoke signature bug: safeBuffer.Capacity and bytesReturned are always the same.
-               // Since a large buffer is used, we are not affected.
-
                // DeviceIoControlMethod.Buffered = 0,
                // DeviceIoControlFileDevice.FileSystem = 9
                // FsctlGetReparsePoint = (DeviceIoControlFileDevice.FileSystem << 16) | (42 << 2) | DeviceIoControlMethod.Buffered | (0 << 14)
 
-               if (!NativeMethods.DeviceIoControl(safeHandle, ((9 << 16) | (42 << 2) | 0 | (0 << 14)), IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero))
+               if (!NativeMethods.DeviceIoControl(safeHandle, ((9 << 16) | (42 << 2) | 0 | (0 << 14)), IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned, IntPtr.Zero))
                {
                   int lastError = Marshal.GetLastWin32Error();
                   switch ((uint)lastError)
@@ -320,66 +315,42 @@ namespace Alphaleonis.Win32.Filesystem
                }
                else
                   break;
-            } while (true);
+            }
 
+
+            IntPtr marshalReparseBuffer = Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), "data");
+
+            var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>();
+
+            var dataPos = new IntPtr(marshalReparseBuffer.ToInt64() + (header.ReparseTag == ReparsePointTag.MountPoint
+                  ? (long) Marshal.OffsetOf(typeof (NativeMethods.MountPointReparseBuffer), "data")
+                  : Marshal.OffsetOf(typeof (NativeMethods.SymbolicLinkReparseBuffer), "data").ToInt64()));
+
+            var dataBuffer = new byte[bytesReturned - dataPos.ToInt64()];
 
             
-            // CA2001:AvoidCallingProblematicMethods
-
-            IntPtr buffer = IntPtr.Zero;
-            bool successRef = false;
-            safeBuffer.DangerousAddRef(ref successRef);
-
-            // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
-            if (successRef)
-               buffer = safeBuffer.DangerousGetHandle();
-
-            safeBuffer.DangerousRelease();
-
-            if (buffer == IntPtr.Zero)
-               NativeError.ThrowException(Resources.HandleDangerousRef);
-
-            // CA2001:AvoidCallingProblematicMethods
- 
-            
-            Type toMountPointReparseBuffer = typeof(NativeMethods.MountPointReparseBuffer);
-            Type toReparseDataBufferHeader = typeof(NativeMethods.ReparseDataBufferHeader);
-            Type toSymbolicLinkReparseBuffer = typeof(NativeMethods.SymbolicLinkReparseBuffer);
-            IntPtr marshalReparseBuffer = Marshal.OffsetOf(toReparseDataBufferHeader, "data");
-
-            NativeMethods.ReparseDataBufferHeader header = Utils.MarshalPtrToStructure<NativeMethods.ReparseDataBufferHeader>(0, buffer);
-               
-            IntPtr dataPos;
-            byte[] dataBuffer;
-
             switch (header.ReparseTag)
             {
                case ReparsePointTag.MountPoint:
-                  NativeMethods.MountPointReparseBuffer mprb = Utils.MarshalPtrToStructure<NativeMethods.MountPointReparseBuffer>(0, new IntPtr(buffer.ToInt64() + marshalReparseBuffer.ToInt64()));
+                  var mountPoint = safeBuffer.PtrToStructure<NativeMethods.MountPointReparseBuffer>((int) marshalReparseBuffer.ToInt64());
 
-                  dataPos = new IntPtr(marshalReparseBuffer.ToInt64() + Marshal.OffsetOf(toMountPointReparseBuffer, "data").ToInt64());
-                  dataBuffer = new byte[bytesReturned - dataPos.ToInt64()];
-
-                  Marshal.Copy(new IntPtr(buffer.ToInt64() + dataPos.ToInt64()), dataBuffer, 0, dataBuffer.Length);
+                  safeBuffer.CopyFromSourceOffset(dataBuffer, dataPos, 0, dataBuffer.Length);
 
                   return new LinkTargetInfo(
-                     Encoding.Unicode.GetString(dataBuffer, mprb.SubstituteNameOffset, mprb.SubstituteNameLength),
-                     Encoding.Unicode.GetString(dataBuffer, mprb.PrintNameOffset, mprb.PrintNameLength));
+                     Encoding.Unicode.GetString(dataBuffer, mountPoint.SubstituteNameOffset, mountPoint.SubstituteNameLength),
+                     Encoding.Unicode.GetString(dataBuffer, mountPoint.PrintNameOffset, mountPoint.PrintNameLength));
 
                
                case ReparsePointTag.SymLink:
-                  NativeMethods.SymbolicLinkReparseBuffer slrb = Utils.MarshalPtrToStructure<NativeMethods.SymbolicLinkReparseBuffer>(0, new IntPtr(buffer.ToInt64() + marshalReparseBuffer.ToInt64()));
+                  var symLink = safeBuffer.PtrToStructure<NativeMethods.SymbolicLinkReparseBuffer>((int) marshalReparseBuffer.ToInt64());
 
-                  dataPos = new IntPtr(marshalReparseBuffer.ToInt64() + Marshal.OffsetOf(toSymbolicLinkReparseBuffer, "data").ToInt64());
-                  dataBuffer = new byte[bytesReturned - dataPos.ToInt64()];
-
-                  Marshal.Copy(new IntPtr(buffer.ToInt64() + dataPos.ToInt64()), dataBuffer, 0, dataBuffer.Length);
+                  safeBuffer.CopyFromSourceOffset(dataBuffer, dataPos, 0, dataBuffer.Length);
 
                   return new SymbolicLinkTargetInfo(
-                     Encoding.Unicode.GetString(dataBuffer, slrb.SubstituteNameOffset, slrb.SubstituteNameLength),
-                     Encoding.Unicode.GetString(dataBuffer, slrb.PrintNameOffset, slrb.PrintNameLength), slrb.Flags);
+                     Encoding.Unicode.GetString(dataBuffer, symLink.SubstituteNameOffset, symLink.SubstituteNameLength),
+                     Encoding.Unicode.GetString(dataBuffer, symLink.PrintNameOffset, symLink.PrintNameLength), symLink.Flags);
 
-               
+
                default:
                   throw new UnrecognizedReparsePointException();
             }
@@ -396,7 +367,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
       /// <param name="compress"><see langword="true"/> = compress, <see langword="false"/> = decompress</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      
+
       [SecurityCritical]
       internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {

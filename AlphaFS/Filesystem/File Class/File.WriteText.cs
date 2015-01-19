@@ -975,7 +975,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="isAppend"><see langword="true"/> for file Append, <see langword="false"/> for file Write.</param>
       /// <param name="addNewLine"><see langword="true"/> to a line terminator, <see langword="false"/> to ommit the line terminator.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")]
+      [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
       [SecurityCritical]
       internal static void WriteAppendAllLinesInternal(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, bool isAppend, bool addNewLine, PathFormat pathFormat)
       {
