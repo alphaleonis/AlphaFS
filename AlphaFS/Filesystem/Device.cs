@@ -322,29 +322,29 @@ namespace Alphaleonis.Win32.Filesystem
 
             var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>();
 
-            var dataPos = new IntPtr(marshalReparseBuffer.ToInt64() + (header.ReparseTag == ReparsePointTag.MountPoint
-                  ? (long) Marshal.OffsetOf(typeof (NativeMethods.MountPointReparseBuffer), "data")
-                  : Marshal.OffsetOf(typeof (NativeMethods.SymbolicLinkReparseBuffer), "data").ToInt64()));
+            var dataPos = (int)(marshalReparseBuffer.ToInt64() + (header.ReparseTag == ReparsePointTag.MountPoint
+                  ? (long)Marshal.OffsetOf(typeof(NativeMethods.MountPointReparseBuffer), "data")
+                  : Marshal.OffsetOf(typeof(NativeMethods.SymbolicLinkReparseBuffer), "data").ToInt64()));
 
-            var dataBuffer = new byte[bytesReturned - dataPos.ToInt64()];
+            var dataBuffer = new byte[bytesReturned - dataPos];
 
-            
+
             switch (header.ReparseTag)
             {
                case ReparsePointTag.MountPoint:
-                  var mountPoint = safeBuffer.PtrToStructure<NativeMethods.MountPointReparseBuffer>((int) marshalReparseBuffer.ToInt64());
+                  var mountPoint = safeBuffer.PtrToStructure<NativeMethods.MountPointReparseBuffer>((int)marshalReparseBuffer.ToInt64());
 
-                  safeBuffer.CopyFromSourceOffset(dataBuffer, dataPos, 0, dataBuffer.Length);
+                  safeBuffer.CopyTo(dataPos, dataBuffer, 0, dataBuffer.Length);
 
                   return new LinkTargetInfo(
                      Encoding.Unicode.GetString(dataBuffer, mountPoint.SubstituteNameOffset, mountPoint.SubstituteNameLength),
                      Encoding.Unicode.GetString(dataBuffer, mountPoint.PrintNameOffset, mountPoint.PrintNameLength));
 
-               
-               case ReparsePointTag.SymLink:
-                  var symLink = safeBuffer.PtrToStructure<NativeMethods.SymbolicLinkReparseBuffer>((int) marshalReparseBuffer.ToInt64());
 
-                  safeBuffer.CopyFromSourceOffset(dataBuffer, dataPos, 0, dataBuffer.Length);
+               case ReparsePointTag.SymLink:
+                  var symLink = safeBuffer.PtrToStructure<NativeMethods.SymbolicLinkReparseBuffer>((int)marshalReparseBuffer.ToInt64());
+
+                  safeBuffer.CopyTo(dataPos, dataBuffer, 0, dataBuffer.Length);
 
                   return new SymbolicLinkTargetInfo(
                      Encoding.Unicode.GetString(dataBuffer, symLink.SubstituteNameOffset, symLink.SubstituteNameLength),

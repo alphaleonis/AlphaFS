@@ -121,12 +121,12 @@ namespace Alphaleonis.Win32
          Marshal.Copy(handle, destination, destinationOffset, length);
       }
 
-      /// <summary>Copies data from an unmanaged memory pointer to a managed 8-bit unsigned integer array.</summary>
+      /// <summary>Copies data from this unmanaged memory pointer to a managed 8-bit unsigned integer array.</summary>
+      /// <param name="sourceOffset">The offset in the buffer to start copying from.</param>
       /// <param name="destination">The array to copy to.</param>
-      /// <param name="sourceOffset"></param>
       /// <param name="destinationOffset">The zero-based index in the destination array where copying should start.</param>
       /// <param name="length">The number of array elements to copy.</param>
-      public void CopyFromSourceOffset(byte[] destination, IntPtr sourceOffset, int destinationOffset, int length)
+      public void CopyTo(int sourceOffset, byte[] destination, int destinationOffset, int length)
       {
          if (destination == null)
             throw new ArgumentNullException("destination");
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32
          if (length > Capacity)
             throw new ArgumentOutOfRangeException("length", "Source offset and length outside the bounds of the array");
 
-         Marshal.Copy(new IntPtr(handle.ToInt64() + sourceOffset.ToInt64()), destination, destinationOffset, length);
+         Marshal.Copy(new IntPtr(handle.ToInt64() + sourceOffset), destination, destinationOffset, length);
       }
 
       public byte[] ToByteArray(int startIndex, int length)
