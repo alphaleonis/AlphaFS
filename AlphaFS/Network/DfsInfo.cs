@@ -41,8 +41,8 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Initializes a new instance of the <see cref="DfsInfo"/> class, which acts as a wrapper for a DFS root or link target.</summary>
-      /// <param name="structure">An initialized <see cref="NativeMethods.DfsInfo4"/> instance.</param>
-      internal DfsInfo(NativeMethods.DfsInfo4 structure)
+      /// <param name="structure">An initialized <see cref="NativeMethods.DFS_INFO_4"/> instance.</param>
+      internal DfsInfo(NativeMethods.DFS_INFO_4 structure)
       {
          Comment = structure.Comment;
          EntryPath = structure.EntryPath;
@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Network
          _storageInfoCollection = new List<DfsStorageInfo>();
 
          for (int i = 0; i < structure.NumberOfStorages; i++)
-            _storageInfoCollection.Add(new DfsStorageInfo(Utils.MarshalPtrToStructure<NativeMethods.DfsStorageInfo>(i, structure.Storage)));
+            _storageInfoCollection.Add(new DfsStorageInfo(Utils.MarshalPtrToStructure<NativeMethods.DFS_STORAGE_INFO>(i, structure.Storage)));
       }
 
       #endregion // Constructor

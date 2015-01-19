@@ -36,8 +36,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region Constructor
 
       /// <summary>Initializes a new instance of the <see cref="FileSystemEntryInfo"/> class.</summary>
-      /// <param name="findData">The NativeMethods.Win32FindData structure.</param>
-      internal FileSystemEntryInfo(NativeMethods.Win32FindData findData)
+      /// <param name="findData">The NativeMethods.WIN32_FIND_DATA structure.</param>
+      internal FileSystemEntryInfo(NativeMethods.WIN32_FIND_DATA findData)
       {
          _win32FindData = findData;
       }
@@ -208,17 +208,17 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // ReparsePointTag
 
-      #region Win32FindData
+      #region WIN32_FIND_DATA
       
-      private readonly NativeMethods.Win32FindData _win32FindData;
+      private readonly NativeMethods.WIN32_FIND_DATA _win32FindData;
 
       /// <summary>Gets internal WIN32 FIND Data</summary>
-      internal NativeMethods.Win32FindData Win32FindData
+      internal NativeMethods.WIN32_FIND_DATA Win32FindData
       {
          get { return _win32FindData; }
       }
 
-      #endregion // Win32FindData
+      #endregion // WIN32_FIND_DATA
 
       #endregion // Properties
 

@@ -19,21 +19,20 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>SHARE_INFO_503
-      /// <para>Contains information about the shared resource, including the server name, name of the resource, type, and permissions,
-      /// the number of connections, and other pertinent information.</para>
+      /// <summary>Contains information about the shared resource, including the name, type, and permissions of the resource, comments associated with the resource,
+      /// the maximum number of concurrent connections, the number of current connections, the local path for the resource, and a password for the current connection.
       /// </summary>
+      /// <remarks>Share information, NT, level 2, requires admin rights to work.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct ShareInfo503
+      internal struct SHARE_INFO_2
       {
          /// <summary>The name of a shared resource.</summary>
          [MarshalAs(UnmanagedType.LPWStr)] public readonly string NetName;
@@ -61,16 +60,6 @@ namespace Alphaleonis.Win32.Network
 
          /// <summary>The share's password (when the server is running with share-level security).</summary>
          [MarshalAs(UnmanagedType.LPWStr)] public readonly string Password;
-
-         /// <summary>The DNS or NetBIOS name of the remote server on which the shared resource resides.</summary>
-         /// <remarks>A value of "*" indicates no configured server name.</remarks>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string ServerName;
-
-         /// <summary>Reserved; must be zero.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint Reserved;
-
-         /// <summary>Specifies the SECURITY_DESCRIPTOR associated with this share.</summary>
-         public IntPtr SecurityDescriptor;
       }
    }
 }

@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FileIdBothDirectoryInfo
 
-      internal FileIdBothDirectoryInfo(NativeMethods.FileIdBothDirInfo fibdi, string fileName)
+      internal FileIdBothDirectoryInfo(NativeMethods.FILE_ID_BOTH_DIR_INFO fibdi, string fileName)
       {
          CreationTime = DateTime.FromFileTimeUtc(fibdi.CreationTime).ToLocalTime();
          LastAccessTime = DateTime.FromFileTimeUtc(fibdi.LastAccessTime).ToLocalTime();

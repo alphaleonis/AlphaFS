@@ -19,28 +19,21 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Runtime.InteropServices;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>SP_DEVICE_INTERFACE_DATA - An SP_DEVICE_INTERFACE_DATA structure defines a device interface in a device information set.</summary>
+      /// <summary>Contains information about the shared resource.</summary>
+      /// <remarks>This structure can be retrieved by calling the NetShareGetInfo function.</remarks>
+      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct SpDeviceInterfaceData
+      internal struct SHARE_INFO_1005
       {
-         /// <summary>The size, in bytes, of the SP_DEVICE_INTERFACE_DATA structure.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint cbSize;
-
-         /// <summary>The GUID for the class to which the device interface belongs.</summary>
-         public readonly Guid InterfaceClassGuid;
-
-         /// <summary>Can be one or more of the following: SPINT_ACTIVE (1), SPINT_DEFAULT (2), SPINT_REMOVED (3).</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint Flags;
-
-         /// <summary>Reserved. Do not use.</summary>
-         private readonly IntPtr Reserved;
+         /// <summary>A bitmask of flags that specify information about the shared resource.</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly ShareResourceTypes ShareResourceType;
       }
    }
 }

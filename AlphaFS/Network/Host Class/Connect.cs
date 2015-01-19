@@ -458,7 +458,7 @@ namespace Alphaleonis.Win32.Network
 
 
          // Initialize structure.
-         var resource = new NativeMethods.NetResource
+         var resource = new NativeMethods.NETRESOURCE
          {
             LocalName = arguments.LocalName,
             RemoteName = arguments.RemoteName,

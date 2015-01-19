@@ -25,15 +25,20 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>DFS_INFO_200 - Contains the name of a domain-based Distributed File System (DFS) namespace.</summary>
-      /// <remarks>This structure is only for use with the NetDfsEnum, NetDfsGetClientInfo, and NetDfsGetInfo functions.</remarks>
+      /// <summary>Contains information about the shared resource, including the name and type of the resource, and a comment associated with the resource.</summary>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DfsInfo200
+      internal struct SHARE_INFO_1
       {
-         /// <summary>The name of a domain-based DFS namespace.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string FtDfsName;
+         /// <summary>The name of a shared resource.</summary>
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string NetName;
+
+         /// <summary>The type of share.</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly ShareType ShareType;
+
+         /// <summary>An optional comment about the shared resource.</summary>
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string Remark;
       }
    }
 }

@@ -1221,7 +1221,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                         else
                         {
-                           var data = new NativeMethods.Win32FileAttributeData();
+                           var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                            FillAttributeInfoInternal(transaction, destFileNameLp, ref data, false, true);
 
                            if (data.FileAttributes != (FileAttributes) (-1))
@@ -1277,7 +1277,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (preserveDates && doCopy && lastError == Win32Errors.ERROR_SUCCESS)
          {
             // Currently preserveDates is only used with files.
-            var data = new NativeMethods.Win32FileAttributeData();
+            var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
             int dataInitialised = FillAttributeInfoInternal(transaction, sourceFileNameLp, ref data, false, true);
 
             if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes) (-1))

@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
          else
          {
             DataInitialised = 0;
-            Win32AttributeData = new NativeMethods.Win32FileAttributeData(_entryInfo.Win32FindData);
+            Win32AttributeData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA(_entryInfo.Win32FindData);
          }
       }
 
@@ -250,7 +250,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (DataInitialised == -1)
             {
-               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
+               Win32AttributeData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                Refresh();
             }
 
@@ -325,7 +325,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (DataInitialised == -1)
             {
-               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
+               Win32AttributeData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                Refresh();
             }
 
@@ -442,7 +442,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (DataInitialised == -1)
             {
-               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
+               Win32AttributeData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                Refresh();
             }
 
@@ -506,7 +506,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (DataInitialised == -1)
             {
-               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
+               Win32AttributeData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                Refresh();
             }
 
@@ -569,7 +569,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (_entryInfo == null)
             {
-               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
+               Win32AttributeData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                RefreshEntryInfo();
             }
 
@@ -587,7 +587,7 @@ namespace Alphaleonis.Win32.Filesystem
             DataInitialised = value == null ? -1 : 0;
 
             if (DataInitialised == 0)
-               Win32AttributeData = new NativeMethods.Win32FileAttributeData(_entryInfo.Win32FindData);
+               Win32AttributeData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA(_entryInfo.Win32FindData);
          }
       }
 
@@ -632,7 +632,7 @@ namespace Alphaleonis.Win32.Filesystem
       [NonSerialized] internal int DataInitialised = -1;
 
       // The pre-cached FileSystemInfo information.
-      [NonSerialized] internal NativeMethods.Win32FileAttributeData Win32AttributeData;
+      [NonSerialized] internal NativeMethods.WIN32_FILE_ATTRIBUTE_DATA Win32AttributeData;
 
       #region .NET
 

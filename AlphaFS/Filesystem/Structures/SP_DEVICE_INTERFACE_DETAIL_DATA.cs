@@ -21,26 +21,19 @@
 
 using System.Runtime.InteropServices;
 
-namespace Alphaleonis.Win32.Network
+namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>SHARE_INFO_1
-      /// <para>Contains information about the shared resource, including the name and type of the resource, and a comment associated with the resource.</para>
-      /// </summary>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <summary>An SP_DEVICE_INTERFACE_DETAIL_DATA structure contains the path for a device interface.</summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct ShareInfo1
+      internal struct SP_DEVICE_INTERFACE_DETAIL_DATA
       {
-         /// <summary>The name of a shared resource.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string NetName;
+         /// <summary>The size, in bytes, of the SP_DEVICE_INTERFACE_DETAIL_DATA structure.</summary>
+         [MarshalAs(UnmanagedType.U4)] public uint cbSize;
 
-         /// <summary>The type of share.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly ShareType ShareType;
-
-         /// <summary>An optional comment about the shared resource.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string Remark;
+         /// <summary>The device interface path. This path can be passed to Win32 functions such as CreateFile.</summary>
+         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] public readonly string DevicePath;
       }
    }
 }

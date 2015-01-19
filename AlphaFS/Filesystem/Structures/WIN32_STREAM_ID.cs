@@ -26,21 +26,26 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>SP_DEVINFO_DATA - An SP_DEVINFO_DATA structure defines a device instance that is a member of a device information set.</summary>
-      [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct SpDeviceInfoData
+      /// <summary>Contains stream data.</summary>
+      [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode)]
+      [SerializableAttribute]
+      internal struct WIN32_STREAM_ID
       {
-         /// <summary>The size, in bytes, of the SP_DEVINFO_DATA structure.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint cbSize;
+         /// <summary>Type of stream data.</summary>
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly BackupStreamType StreamType;
 
-         /// <summary>The GUID of the device's setup class.</summary>
-         public readonly Guid ClassGuid;
+         /// <summary>Attributes of data to facilitate cross-operating system transfer.</summary>
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly StreamAttributes StreamAttributes;
 
-         /// <summary>An opaque handle to the device instance (also known as a handle to the devnode).</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint DevInst;
+         /// <summary>Size of data, in bytes.</summary>
+         [MarshalAs(UnmanagedType.U8)]
+         public readonly ulong StreamSize;
 
-         /// <summary>Reserved. For internal use only.</summary>
-         private readonly IntPtr Reserved;
+         /// <summary>Length of the name of the alternative data stream, in bytes.</summary>
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly uint StreamNameSize;         
       }
    }
 }

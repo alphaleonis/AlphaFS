@@ -19,29 +19,28 @@
  *  THE SOFTWARE. 
  */
 
-using System.Diagnostics.CodeAnalysis;
+using System;
 using System.Runtime.InteropServices;
 
-namespace Alphaleonis.Win32.Network
+namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      ///<summary>REMOTE_NAME_INFO - The RemoteNameInfo structure contains path and name information for a network resource.</summary>
-      [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
+      /// <summary>An SP_DEVICE_INTERFACE_DATA structure defines a device interface in a device information set.</summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct RemoteNameInfo
+      internal struct SP_DEVICE_INTERFACE_DATA
       {
-         /// <summary>Identifies a network resource.</summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-         [MarshalAs(UnmanagedType.LPWStr)] public string UniversalName;
+         /// <summary>The size, in bytes, of the SP_DEVICE_INTERFACE_DATA structure.</summary>
+         [MarshalAs(UnmanagedType.U4)] public uint cbSize;
 
-         /// <summary>The name of a network connection.</summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-         [MarshalAs(UnmanagedType.LPWStr)] public string ConnectionName;
+         /// <summary>The GUID for the class to which the device interface belongs.</summary>
+         public readonly Guid InterfaceClassGuid;
 
-         /// <summary>The remaing path.</summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
-         [MarshalAs(UnmanagedType.LPWStr)] public string RemainingPath;
+         /// <summary>Can be one or more of the following: SPINT_ACTIVE (1), SPINT_DEFAULT (2), SPINT_REMOVED (3).</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly uint Flags;
+
+         /// <summary>Reserved. Do not use.</summary>
+         private readonly IntPtr Reserved;
       }
    }
 }

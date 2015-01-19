@@ -19,21 +19,29 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-namespace Alphaleonis.Win32.Filesystem
+namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>SP_DEVICE_INTERFACE_DETAIL_DATA - An SP_DEVICE_INTERFACE_DETAIL_DATA structure contains the path for a device interface.</summary>
+      ///<summary>Contains path and name information for a network resource.</summary>
+      [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct SpDeviceInterfaceDetailData
+      internal struct REMOTE_NAME_INFO
       {
-         /// <summary>The size, in bytes, of the SP_DEVICE_INTERFACE_DETAIL_DATA structure.</summary>
-         [MarshalAs(UnmanagedType.U4)] public uint cbSize;
+         /// <summary>Identifies a network resource.</summary>
+         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+         [MarshalAs(UnmanagedType.LPWStr)] public string UniversalName;
 
-         /// <summary>The device interface path. This path can be passed to Win32 functions such as CreateFile.</summary>
-         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] public readonly string DevicePath;
+         /// <summary>The name of a network connection.</summary>
+         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+         [MarshalAs(UnmanagedType.LPWStr)] public string ConnectionName;
+
+         /// <summary>The remaing path.</summary>
+         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+         [MarshalAs(UnmanagedType.LPWStr)] public string RemainingPath;
       }
    }
 }

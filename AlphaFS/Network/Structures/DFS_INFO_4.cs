@@ -27,18 +27,17 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>DFS_INFO_4
-      /// <para>Contains information about a Distributed File System (DFS) root or link.</para>
+      /// <summary>Contains information about a Distributed File System (DFS) root or link.
       /// <para>This structure contains the name, status, GUID, time-out, number of targets, and information about each target of the root or link.</para>
       /// </summary>
-      /// <remarks>A DFS_INFO_4 structure contains one or more <see cref="DfsStorageInfo"/> structures, one for each DFS target.</remarks>
+      /// <remarks>A DFS_INFO_4 structure contains one or more <see cref="DFS_STORAGE_INFO"/> structures, one for each DFS target.</remarks>
       /// <remarks>This structure is only for use with the NetDfsEnum, NetDfsGetClientInfo, and NetDfsGetInfo functions.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DfsInfo4
+      internal struct DFS_INFO_4
       {
          /// <summary>The Universal Naming Convention (UNC) path of a DFS root or link.</summary>
          [MarshalAs(UnmanagedType.LPWStr)] public readonly string EntryPath;
@@ -58,7 +57,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>Specifies the number of DFS targets.</summary>
          [MarshalAs(UnmanagedType.U4)] public readonly uint NumberOfStorages;
 
-         /// <summary>An array of <see cref="DfsStorageInfo"/> structures.</summary>
+         /// <summary>An array of <see cref="DFS_STORAGE_INFO"/> structures.</summary>
          public readonly IntPtr Storage;
       }
    }

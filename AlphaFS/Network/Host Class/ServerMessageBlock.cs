@@ -189,7 +189,7 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(share))
             throw new ArgumentNullException("share");
 
-         return EnumerateNetworkObjectInternal(new FunctionData { ExtraData1 = share }, (NativeMethods.ConnectionInfo1 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData { ExtraData1 = share }, (NativeMethods.CONNECTION_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
                new OpenConnectionInfo(host, structure),
 
@@ -231,8 +231,8 @@ namespace Alphaleonis.Win32.Network
          var fd = new FunctionData();
          bool hasItems = false;
 
-         // Try ShareInfo503 structure.
-         foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo503 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         // Try SHARE_INFO_503 structure.
+         foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.SHARE_INFO_503 structure, SafeGlobalMemoryBufferHandle buffer) =>
             new ShareInfo(stripUnc, ShareInfoLevel.Info503, structure),
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
                NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
@@ -241,10 +241,10 @@ namespace Alphaleonis.Win32.Network
             hasItems = true;
          }
 
-         // ShareInfo503 is requested, but not supported/possible.
-         // Try again with ShareInfo2 structure.
+         // SHARE_INFO_503 is requested, but not supported/possible.
+         // Try again with SHARE_INFO_2 structure.
          if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo2 structure, SafeGlobalMemoryBufferHandle buffer) =>
+            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.SHARE_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info2, structure),
                (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
                   NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
@@ -253,10 +253,10 @@ namespace Alphaleonis.Win32.Network
                hasItems = true;
             }
 
-         // ShareInfo2 is requested, but not supported/possible.
-         // Try again with ShareInfo1 structure.
+         // SHARE_INFO_2 is requested, but not supported/possible.
+         // Try again with SHARE_INFO_1 structure.
          if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.ShareInfo1 structure, SafeGlobalMemoryBufferHandle buffer) =>
+            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info1, structure),
                (FunctionData functionData, out  SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
                   NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
@@ -313,25 +313,25 @@ namespace Alphaleonis.Win32.Network
                   switch (shareLevel)
                   {
                      case ShareInfoLevel.Info1005:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo1005>(0, buffer))
+                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.SHARE_INFO_1005>(0, buffer))
                         {
                            NetFullPath = Path.CombineInternal(false, Path.UncPrefix + stripUnc, share)
                         };
 
                      case ShareInfoLevel.Info503:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo503>(0, buffer));
+                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.SHARE_INFO_503>(0, buffer));
 
                      case ShareInfoLevel.Info2:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo2>(0, buffer));
+                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.SHARE_INFO_2>(0, buffer));
 
                      case ShareInfoLevel.Info1:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.ShareInfo1>(0, buffer));
+                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.SHARE_INFO_1>(0, buffer));
                   }
                   break;
 
 
-               // Observed when ShareInfo503 is requested, but not supported/possible.
-               // Fall back on ShareInfo2 structure and try again.
+               // Observed when SHARE_INFO_503 is requested, but not supported/possible.
+               // Fall back on SHARE_INFO_2 structure and try again.
                case Win32Errors.RPC_X_BAD_STUB_DATA:
 
                case Win32Errors.ERROR_ACCESS_DENIED:

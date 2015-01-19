@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>WIN32_FIND_DATA - Contains information about the file that is found by the FindFirstFile, FindFirstFileEx, or FindNextFile function.</summary>
+      /// <summary>Contains information about the file that is found by the FindFirstFile, FindFirstFileEx, or FindNextFile function.</summary>
       /// <remarks>
       /// If a file has a long file name, the complete name appears in the cFileName member, and the 8.3 format truncated version of the name appears
       /// in the cAlternateFileName member. Otherwise, cAlternateFileName is empty. If the FindFirstFileEx function was called with a value of FindExInfoBasic
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       [SerializableAttribute]
-      internal struct Win32FindData
+      internal struct WIN32_FIND_DATA
       {
          #region FileAttributes
 
@@ -54,31 +54,31 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region CreationTime
 
-         /// <summary>A <see cref="NativeMethods.FileTime"/> structure that specifies when a file or directory was created.
+         /// <summary>A <see cref="FILETIME"/> structure that specifies when a file or directory was created.
          /// If the underlying file system does not support creation time, this member is zero.</summary>
-         public FileTime CreationTime;
+         public FILETIME CreationTime;
 
          #endregion // CreationTime
 
          #region LastAccessTime
 
-         /// <summary>A <see cref="NativeMethods.FileTime"/> structure.
+         /// <summary>A <see cref="FILETIME"/> structure.
          /// For a file, the structure specifies when the file was last read from, written to, or for executable files, run.
          /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last access time, this member is zero.
          /// On the FAT file system, the specified date for both files and directories is correct, but the time of day is always set to midnight.
          /// </summary>
-         public FileTime LastAccessTime;
+         public FILETIME LastAccessTime;
 
          #endregion // LastAccessTime
 
          #region LastWriteTime
 
-         /// <summary>A <see cref="NativeMethods.FileTime"/> structure.
+         /// <summary>A <see cref="FILETIME"/> structure.
          /// For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used.
          /// The date and time are not updated when file attributes or security descriptors are changed.
          /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last write time, this member is zero.
          /// </summary>
-         public FileTime LastWriteTime;
+         public FILETIME LastWriteTime;
 
          #endregion // LastWriteTime
 

@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (DataInitialised == -1)
             {
-               Win32AttributeData = new NativeMethods.Win32FileAttributeData();
+               Win32AttributeData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                Refresh();
             }
 

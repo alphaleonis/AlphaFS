@@ -167,7 +167,7 @@ namespace Alphaleonis.Win32.Filesystem
                   break;
 
                case Win32Errors.ERROR_ACCESS_DENIED:
-                  var data = new NativeMethods.Win32FileAttributeData();
+                  var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                   int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
                   if (data.FileAttributes != (FileAttributes)(-1))

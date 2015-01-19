@@ -25,17 +25,23 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>SHARE_INFO_1005
-      /// <para>Contains information about the shared resource.</para>
-      /// </summary>
-      /// <remarks>This structure can be retrieved by calling the NetShareGetInfo function.</remarks>
+      /// <summary>Contains information about a DFS root or link target in a DFS namespace or from the cache maintained by the DFS client.</summary>
+      /// <remarks>The <see cref="DfsInfo"/> structure contains one or more <see cref="DFS_STORAGE_INFO"/> structures, one for each DFS target.
+      /// Only one target can be marked as the active target. It is possible that no targets will be marked active.
+      /// </remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct ShareInfo1005
+      internal struct DFS_STORAGE_INFO
       {
-         /// <summary>A bitmask of flags that specify information about the shared resource.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly ShareResourceTypes ShareResourceType;
+         /// <summary>State of the target.</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly DfsStorageStates State;
+
+         /// <summary>The DFS root target or link target server name.</summary>
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string ServerName;
+
+         /// <summary>The DFS root target or link target share name.</summary>
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string ShareName;
       }
    }
 }

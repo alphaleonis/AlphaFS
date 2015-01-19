@@ -25,12 +25,12 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>CONNECTION_INFO_1 - Contains the identification number of a connection, number of open files, connection time, number of users on the connection, and the type of connection.</summary>
+      /// <summary>Contains the identification number of a connection, number of open files, connection time, number of users on the connection, and the type of connection.</summary>
       /// <remarks>MSDN "CONNECTION_INFO_1 structure": http://msdn.microsoft.com/en-us/library/windows/desktop/bb525373%28v=vs.85%29.aspx </remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct ConnectionInfo1
+      internal struct CONNECTION_INFO_1
       {
          /// <summary>Specifies a connection identification number.</summary>
          [MarshalAs(UnmanagedType.U4)] public readonly uint Id;

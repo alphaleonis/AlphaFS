@@ -208,7 +208,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);
 
-            var data = new NativeMethods.Win32FileAttributeData();
+            var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
             int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
             return (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1) && (isFolder

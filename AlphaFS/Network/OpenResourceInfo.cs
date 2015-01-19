@@ -21,7 +21,6 @@
 
 using System;
 using System.Globalization;
-using FileInfo3 = Alphaleonis.Win32.Network.NativeMethods.FileInfo3;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -34,7 +33,7 @@ namespace Alphaleonis.Win32.Network
       #region OpenResourceInfo
 
       /// <summary>Create a OpenResourceInfo instance.</summary>
-      internal OpenResourceInfo(string host, FileInfo3 fileInfo)
+      internal OpenResourceInfo(string host, NativeMethods.FILE_INFO_3 fileInfo)
       {
          Host = host;
          Id = fileInfo.Id;

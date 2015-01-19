@@ -34,9 +34,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// For more information, see File Times.
       /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct Win32FileAttributeData
+      internal struct WIN32_FILE_ATTRIBUTE_DATA
       {
-         public Win32FileAttributeData(Win32FindData findData)
+         public WIN32_FILE_ATTRIBUTE_DATA(WIN32_FIND_DATA findData)
          {
             FileAttributes = findData.FileAttributes;
             CreationTime = findData.CreationTime;
@@ -56,31 +56,31 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region CreationTime
 
-         /// <summary>A <see cref="NativeMethods.FileTime"/> structure that specifies when a file or directory was created.
+         /// <summary>A <see cref="FILETIME"/> structure that specifies when a file or directory was created.
          /// If the underlying file system does not support creation time, this member is zero.</summary>
-         public readonly FileTime CreationTime;
+         public readonly FILETIME CreationTime;
 
          #endregion // CreationTime
 
          #region LastAccessTime
 
-         /// <summary>A <see cref="NativeMethods.FileTime"/> structure.
+         /// <summary>A <see cref="FILETIME"/> structure.
          /// For a file, the structure specifies when the file was last read from, written to, or for executable files, run.
          /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last access time, this member is zero.
          /// On the FAT file system, the specified date for both files and directories is correct, but the time of day is always set to midnight.
          /// </summary>
-         public readonly FileTime LastAccessTime;
+         public readonly FILETIME LastAccessTime;
 
          #endregion // LastAccessTime
 
          #region LastWriteTime
 
-         /// <summary>A <see cref="NativeMethods.FileTime"/> structure.
+         /// <summary>A <see cref="FILETIME"/> structure.
          /// For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used.
          /// The date and time are not updated when file attributes or security descriptors are changed.
          /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last write time, this member is zero.
          /// </summary>
-         public readonly FileTime LastWriteTime;
+         public readonly FILETIME LastWriteTime;
 
          #endregion // LastWriteTime
 

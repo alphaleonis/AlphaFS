@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Network
 
          var fd = new FunctionData { ExtraData1 = basePath, ExtraData2 = typeName };
 
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.FileInfo3 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectInternal(fd, (NativeMethods.FILE_INFO_3 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new OpenResourceInfo(host, structure),
 

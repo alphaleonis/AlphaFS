@@ -133,7 +133,7 @@ namespace Alphaleonis.Win32.Network
                   case Win32Errors.ERROR_BAD_NETPATH:
                      break;
 
-                  // Observed when ShareInfo503 is requested but not supported/possible.
+                  // Observed when SHARE_INFO_503 is requested but not supported/possible.
                   case Win32Errors.RPC_X_BAD_STUB_DATA:
                      yield break;
                }
@@ -149,8 +149,8 @@ namespace Alphaleonis.Win32.Network
       
       #region GetRemoteNameInfoInternal
 
-      /// <summary>This method uses <see cref="NativeMethods.RemoteNameInfo"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
-      /// <returns>A <see cref="NativeMethods.RemoteNameInfo"/> structure.</returns>
+      /// <summary>This method uses <see cref="NativeMethods.REMOTE_NAME_INFO"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
+      /// <returns>A <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
@@ -159,16 +159,16 @@ namespace Alphaleonis.Win32.Network
       /// <param name="path">The local path with drive name.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      internal static NativeMethods.RemoteNameInfo GetRemoteNameInfoInternal(string path, bool continueOnException)
+      internal static NativeMethods.REMOTE_NAME_INFO GetRemoteNameInfoInternal(string path, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
          path = Path.GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars); 
 
-         // If path already is a network share path, we fill the RemoteNameInfo structure ourselves.
+         // If path already is a network share path, we fill the REMOTE_NAME_INFO structure ourselves.
          if (Path.IsUncPath(path, false))
-            return new NativeMethods.RemoteNameInfo
+            return new NativeMethods.REMOTE_NAME_INFO
             {
                UniversalName = Path.AddTrailingDirectorySeparator(path, false),
                ConnectionName = Path.RemoveTrailingDirectorySeparator(path, false),
@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Network
                switch (lastError)
                {
                   case Win32Errors.NO_ERROR:
-                     return Utils.MarshalPtrToStructure<NativeMethods.RemoteNameInfo>(0, buffer);
+                     return Utils.MarshalPtrToStructure<NativeMethods.REMOTE_NAME_INFO>(0, buffer);
 
                   case Win32Errors.ERROR_MORE_DATA:
                      //bufferSize = Received the required buffer size, retry.
@@ -212,7 +212,7 @@ namespace Alphaleonis.Win32.Network
                throw new NetworkInformationException((int) lastError);
 
             // Return an empty structure (all fields set to null).
-            return new NativeMethods.RemoteNameInfo();
+            return new NativeMethods.REMOTE_NAME_INFO();
          }
          finally
          {

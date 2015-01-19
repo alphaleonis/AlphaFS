@@ -30,14 +30,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       internal enum FindExInfoLevels
       {
-         /// <summary>The FindFirstFileEx function retrieves a standard set of attribute information. The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure.</summary>
+         /// <summary>The FindFirstFileEx function retrieves a standard set of attribute information. The data is returned in a <see cref="WIN32_FIND_DATA"/> structure.</summary>
          Standard = 0,
 
          /// <summary>The FindFirstFileEx function does not query the short file name,
          /// <para>improving overall enumeration speed.</para>
          /// <para>&#160;</para>
          /// <remarks>
-         /// <para>The data is returned in a <see cref="NativeMethods.Win32FindData"/> structure,</para>
+         /// <para>The data is returned in a <see cref="WIN32_FIND_DATA"/> structure,</para>
          /// <para>and cAlternateFileName member is always a NULL string.</para>
          /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
          /// </remarks>

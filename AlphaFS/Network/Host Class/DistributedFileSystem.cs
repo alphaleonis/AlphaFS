@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Network
 
          var fd = new FunctionData();
 
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DfsInfo4 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DFS_INFO_4 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new DfsInfo(structure),
 
@@ -190,7 +190,7 @@ namespace Alphaleonis.Win32.Network
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo300 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DFS_INFO_300 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new DfsInfo { EntryPath = structure.DfsName },
 
@@ -224,7 +224,7 @@ namespace Alphaleonis.Win32.Network
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
 
-         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DfsInfo200 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DFS_INFO_200 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new DfsInfo { EntryPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Path.UncPrefix, NativeMethods.ComputerDomain, Path.DirectorySeparatorChar, structure.FtDfsName) },
 
@@ -288,7 +288,7 @@ namespace Alphaleonis.Win32.Network
                : NativeMethods.NetDfsGetInfo(dfsName, null, null, 4, out buffer);
 
             if (lastError == Win32Errors.NERR_Success)
-               return new DfsInfo(Utils.MarshalPtrToStructure<NativeMethods.DfsInfo4>(0, buffer));
+               return new DfsInfo(Utils.MarshalPtrToStructure<NativeMethods.DFS_INFO_4>(0, buffer));
 
             throw new NetworkInformationException((int) lastError);
          }

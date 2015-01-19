@@ -22,7 +22,6 @@
 using System;
 using System.Globalization;
 using Alphaleonis.Win32.Filesystem;
-using ConnectionInfo1 = Alphaleonis.Win32.Network.NativeMethods.ConnectionInfo1;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -35,7 +34,7 @@ namespace Alphaleonis.Win32.Network
       #region OpenConnectionInfo
 
       /// <summary>Create a OpenConnectionInfo instance.</summary>
-      internal OpenConnectionInfo(string host, ConnectionInfo1 connectionInfo)
+      internal OpenConnectionInfo(string host, NativeMethods.CONNECTION_INFO_1 connectionInfo)
       {
          Host = host;
          Id = connectionInfo.Id;

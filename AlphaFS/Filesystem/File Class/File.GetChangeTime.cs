@@ -175,15 +175,15 @@ namespace Alphaleonis.Win32.Filesystem
          {
             NativeMethods.IsValidHandle(safeHandle);
             
-            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(IntPtr.Size + Marshal.SizeOf(typeof(NativeMethods.FileBasicInfo))))
+            using (var safeBuffer = new SafeGlobalMemoryBufferHandle(IntPtr.Size + Marshal.SizeOf(typeof(NativeMethods.FILE_BASIC_INFO))))
             {
-               NativeMethods.FileBasicInfo fbi;
+               NativeMethods.FILE_BASIC_INFO fbi;
 
                if (!NativeMethods.GetFileInformationByHandleEx_FileBasicInfo(safeHandle, NativeMethods.FileInfoByHandleClass.FileBasicInfo, out fbi, (uint)safeBuffer.Capacity))
                   NativeError.ThrowException(Marshal.GetLastWin32Error());
 
                safeBuffer.StructureToPtr(fbi, true);
-               NativeMethods.FileTime changeTime = safeBuffer.PtrToStructure<NativeMethods.FileBasicInfo>().ChangeTime;
+               NativeMethods.FILETIME changeTime = safeBuffer.PtrToStructure<NativeMethods.FILE_BASIC_INFO>().ChangeTime;
 
                return getUtc
                   ? DateTime.FromFileTimeUtc(changeTime)

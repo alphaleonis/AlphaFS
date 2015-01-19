@@ -190,7 +190,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The SetupDiEnumDeviceInterfaces function enumerates the device interfaces that are contained in a device information set.
       /// </summary>
       /// <remarks>
-      ///   <para>Repeated calls to this function return an <see cref="NativeMethods.SpDeviceInterfaceData"/> structure for a different device
+      ///   <para>Repeated calls to this function return an <see cref="SP_DEVICE_INTERFACE_DATA"/> structure for a different device
       ///   interface.</para>
       ///   <para>This function can be called repeatedly to get information about interfaces in a device information set that are
       ///   associated</para>
@@ -210,7 +210,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool SetupDiEnumDeviceInterfaces(SafeHandle hDevInfo, IntPtr devInfo, ref Guid interfaceClassGuid, [MarshalAs(UnmanagedType.U4)] uint memberIndex, ref SpDeviceInterfaceData deviceInterfaceData);
+      internal static extern bool SetupDiEnumDeviceInterfaces(SafeHandle hDevInfo, IntPtr devInfo, ref Guid interfaceClassGuid, [MarshalAs(UnmanagedType.U4)] uint memberIndex, ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData);
 
       /// <summary>
       ///   The SetupDiGetClassDevsEx function returns a handle to a device information set that contains requested device information elements
@@ -261,7 +261,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool SetupDiGetDeviceInterfaceDetail(SafeHandle hDevInfo, ref SpDeviceInterfaceData deviceInterfaceData, ref SpDeviceInterfaceDetailData deviceInterfaceDetailData, [MarshalAs(UnmanagedType.U4)] uint deviceInterfaceDetailDataSize, IntPtr requiredSize, ref SpDeviceInfoData deviceInfoData);
+      internal static extern bool SetupDiGetDeviceInterfaceDetail(SafeHandle hDevInfo, ref SP_DEVICE_INTERFACE_DATA deviceInterfaceData, ref SP_DEVICE_INTERFACE_DETAIL_DATA deviceInterfaceDetailData, [MarshalAs(UnmanagedType.U4)] uint deviceInterfaceDetailDataSize, IntPtr requiredSize, ref SP_DEVINFO_DATA deviceInfoData);
 
       /// <summary>
       ///   The SetupDiGetDeviceRegistryProperty function retrieves a specified Plug and Play device property.
@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool SetupDiGetDeviceRegistryProperty(SafeHandle deviceInfoSet, ref SpDeviceInfoData deviceInfoData, SetupDiGetDeviceRegistryPropertyEnum property, [MarshalAs(UnmanagedType.U4)] out uint propertyRegDataType, SafeGlobalMemoryBufferHandle propertyBuffer, [MarshalAs(UnmanagedType.U4)] uint propertyBufferSize, IntPtr requiredSize);
+      internal static extern bool SetupDiGetDeviceRegistryProperty(SafeHandle deviceInfoSet, ref SP_DEVINFO_DATA deviceInfoData, SetupDiGetDeviceRegistryPropertyEnum property, [MarshalAs(UnmanagedType.U4)] out uint propertyRegDataType, SafeGlobalMemoryBufferHandle propertyBuffer, [MarshalAs(UnmanagedType.U4)] uint propertyBufferSize, IntPtr requiredSize);
 
       #endregion // SetupDiXxx
    }

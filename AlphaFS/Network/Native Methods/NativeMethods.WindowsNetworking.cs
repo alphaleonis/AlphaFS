@@ -74,11 +74,11 @@ namespace Alphaleonis.Win32.Network
       [DllImport("mpr.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "WNetUseConnectionW")]
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint WNetUseConnection(IntPtr hwndOwner,
-         [MarshalAs(UnmanagedType.Struct)] ref NetResource lpNetResource,
+         [MarshalAs(UnmanagedType.Struct)] ref NETRESOURCE lpNetResource,
          [MarshalAs(UnmanagedType.LPWStr)] string lpPassword, [MarshalAs(UnmanagedType.LPWStr)] string lpUserId,
          [MarshalAs(UnmanagedType.U4)] Connect dwFlags, StringBuilder lpAccessName,
          [MarshalAs(UnmanagedType.U4)] out uint lpBufferSize, [MarshalAs(UnmanagedType.U4)] out uint lpResult);
 
-      // Note: When NetResource is struct: use ref, when NetResource is class: ommit ref.
+      // Note: When NETRESOURCE is struct: use ref, when NETRESOURCE is class: ommit ref.
    }
 }

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+﻿/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a copy 
  *  of this software and associated documentation files (the "Software"), to deal 
@@ -36,19 +36,19 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Creates a <see cref="ShareInfo"/> instance.</summary>
       /// <param name="host">A host to retrieve shares from.</param>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
-      /// <param name="shareInfo">A <see cref="NativeMethods.ShareInfo2"/> or <see cref="NativeMethods.ShareInfo503"/> instance.</param>
+      /// <param name="shareInfo">A <see cref="NativeMethods.SHARE_INFO_2"/> or <see cref="NativeMethods.SHARE_INFO_503"/> instance.</param>
       internal ShareInfo(string host, ShareInfoLevel shareLevel, object shareInfo)
       {
          switch (shareLevel)
          {
             case ShareInfoLevel.Info1005:
-               NativeMethods.ShareInfo1005 s1005 = (NativeMethods.ShareInfo1005) shareInfo;
+               NativeMethods.SHARE_INFO_1005 s1005 = (NativeMethods.SHARE_INFO_1005) shareInfo;
                ServerName = host ?? Environment.MachineName;
                ResourceType = s1005.ShareResourceType;
                break;
 
             case ShareInfoLevel.Info503:
-               NativeMethods.ShareInfo503 s503 = (NativeMethods.ShareInfo503) shareInfo;
+               NativeMethods.SHARE_INFO_503 s503 = (NativeMethods.SHARE_INFO_503) shareInfo;
                CurrentUses = s503.CurrentUses;
                MaxUses = s503.MaxUses;
                NetName = s503.NetName;
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Network
                break;
 
             case ShareInfoLevel.Info2:
-               NativeMethods.ShareInfo2 s2 = (NativeMethods.ShareInfo2)shareInfo;
+               NativeMethods.SHARE_INFO_2 s2 = (NativeMethods.SHARE_INFO_2)shareInfo;
                CurrentUses = s2.CurrentUses;
                MaxUses = s2.MaxUses;
                NetName = s2.NetName;
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Network
                break;
 
             case ShareInfoLevel.Info1:
-               NativeMethods.ShareInfo1 s1 = (NativeMethods.ShareInfo1)shareInfo;
+               NativeMethods.SHARE_INFO_1 s1 = (NativeMethods.SHARE_INFO_1)shareInfo;
                CurrentUses = 0;
                MaxUses = 0;
                NetName = s1.NetName;

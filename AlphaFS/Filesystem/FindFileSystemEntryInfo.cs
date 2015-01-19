@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FindFirstFile
 
-      private SafeFindFileHandle FindFirstFile(string pathLp, out NativeMethods.Win32FindData win32FindData)
+      private SafeFindFileHandle FindFirstFile(string pathLp, out NativeMethods.WIN32_FIND_DATA win32FindData)
       {
          SafeFindFileHandle handle = Transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -141,7 +141,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region NewFileSystemEntryType
 
-      private T NewFileSystemEntryType<T>(NativeMethods.Win32FindData win32FindData, string fullPathLp, bool isFolder)
+      private T NewFileSystemEntryType<T>(NativeMethods.WIN32_FIND_DATA win32FindData, string fullPathLp, bool isFolder)
       {
          // Determine yield.
          if (FileSystemObjectType != null && ((!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder)))
@@ -202,7 +202,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                string path = Path.AddTrailingDirectorySeparator(dirs.Dequeue(), false);
                string pathLp = path + Path.WildcardStarMatchAll;
-               NativeMethods.Win32FindData win32FindData;
+               NativeMethods.WIN32_FIND_DATA win32FindData;
 
                using (SafeFindFileHandle handle = FindFirstFile(pathLp, out win32FindData))
                {
@@ -281,7 +281,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public T Get<T>()
       {
-         NativeMethods.Win32FindData win32FindData;
+         NativeMethods.WIN32_FIND_DATA win32FindData;
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))

@@ -25,14 +25,13 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>The NETRESOURCE struct contains information about a network resource.
-      /// <para>&#160;</para>
+      /// <summary>Contains information about a network resource.
       /// <para>The NETRESOURCE structure is returned during an enumeration of network resources.</para>
       /// <para>The NETRESOURCE structure is also specified when making or querying</para>
       /// <para>a network connection with calls to various Windows Networking functions.</para>
       /// </summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct NetResource
+      internal struct NETRESOURCE
       {
          #region Scope
 

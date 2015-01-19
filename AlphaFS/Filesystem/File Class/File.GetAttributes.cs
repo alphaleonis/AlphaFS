@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Methods
 
       /// <summary>
-      ///   [AlphaFS] Gets the <see cref="FileAttributes"/> or <see cref="Alphaleonis.Win32.Filesystem.NativeMethods.Win32FileAttributeData"/>
+      ///   [AlphaFS] Gets the <see cref="FileAttributes"/> or <see cref="NativeMethods.WIN32_FILE_ATTRIBUTE_DATA"/>
       ///   of the specified file or directory.
       /// </summary>
       /// <typeparam name="T">Generic type parameter.</typeparam>
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
-      ///   Returns the <see cref="FileAttributes"/> or <see cref="Alphaleonis.Win32.Filesystem.NativeMethods.Win32FileAttributeData"/> of the
+      ///   Returns the <see cref="FileAttributes"/> or <see cref="NativeMethods.WIN32_FILE_ATTRIBUTE_DATA"/> of the
       ///   specified file or directory.
       /// </returns>
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
-         var data = new NativeMethods.Win32FileAttributeData();
+         var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
          int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>
-      ///   Calls NativeMethods.GetFileAttributesEx to retrieve Win32FileAttributeData.
+      ///   Calls NativeMethods.GetFileAttributesEx to retrieve WIN32_FILE_ATTRIBUTE_DATA.
       ///   <para>Note that classes should use -1 as the uninitialized state for dataInitialized when relying on this method.</para>
       /// </summary>
       /// <remarks>No path (null, empty string) checking or normalization is performed.</remarks>
@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>Returns 0 on success, otherwise a Win32 error code.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      internal static int FillAttributeInfoInternal(KernelTransaction transaction, string pathLp, ref NativeMethods.Win32FileAttributeData win32AttrData, bool tryagain, bool returnErrorOnNotFound)
+      internal static int FillAttributeInfoInternal(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryagain, bool returnErrorOnNotFound)
       {
          int dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
 
@@ -129,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Someone has a handle to the file open, or other error.
          if (tryagain)
          {
-            NativeMethods.Win32FindData findData;
+            NativeMethods.WIN32_FIND_DATA findData;
 
             // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -186,7 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
             // Copy the attribute information.
-            win32AttrData = new NativeMethods.Win32FileAttributeData(findData);
+            win32AttrData = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA(findData);
          }
 
          #endregion // Try Again

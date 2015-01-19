@@ -26,10 +26,10 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>FILETIME - Represents the number of 100-nanosecond intervals since January 1, 1601. This structure is a 64-bit value.</summary>
+      /// <summary>Represents the number of 100-nanosecond intervals since January 1, 1601. This structure is a 64-bit value.</summary>
       [SerializableAttribute]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct FileTime
+      internal struct FILETIME
       {         
          #region Fields
 
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
          #region Methods
 
          /// <summary>Converts a value to long.</summary>
-         public static implicit operator long(FileTime ft)
+         public static implicit operator long(FILETIME ft)
          {
             return ft.ToLong();
          }
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (obj == null || GetType() != obj.GetType())
                return false;
 
-            FileTime other = obj is FileTime ? (FileTime)obj : new FileTime();
+            FILETIME other = obj is FILETIME ? (FILETIME)obj : new FILETIME();
 
             return (other.HighDateTime.Equals(HighDateTime) &&
                     other.LowDateTime.Equals(LowDateTime));
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <param name="left">A.</param>
          /// <param name="right">B.</param>
          /// <returns>The result of the operator.</returns>
-         public static bool operator ==(FileTime left, FileTime right)
+         public static bool operator ==(FILETIME left, FILETIME right)
          {
             return left.Equals(right);
          }
@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
          /// <param name="left">A.</param>
          /// <param name="right">B.</param>
          /// <returns>The result of the operator.</returns>
-         public static bool operator !=(FileTime left, FileTime right)
+         public static bool operator !=(FILETIME left, FILETIME right)
          {
             return !(left == right);
          }

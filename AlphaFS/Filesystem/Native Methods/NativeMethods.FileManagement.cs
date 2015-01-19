@@ -415,7 +415,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileExW")]
       internal static extern SafeFindFileHandle FindFirstFileEx([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
-         FindExInfoLevels fInfoLevelId, out Win32FindData lpFindFileData, FindExSearchOps fSearchOp,
+         FindExInfoLevels fInfoLevelId, out WIN32_FIND_DATA lpFindFileData, FindExSearchOps fSearchOp,
          IntPtr lpSearchFilter, FindExAdditionalFlags dwAdditionalFlags);
 
       /// <summary>
@@ -434,7 +434,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileTransactedW")]
       internal static extern SafeFindFileHandle FindFirstFileTransacted(
          [MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FindExInfoLevels fInfoLevelId,
-         out Win32FindData lpFindFileData, FindExSearchOps fSearchOp, IntPtr lpSearchFilter,
+         out WIN32_FIND_DATA lpFindFileData, FindExSearchOps fSearchOp, IntPtr lpSearchFilter,
          FindExAdditionalFlags dwAdditionalFlags, SafeHandle hTransaction);
 
       /// <summary>
@@ -485,7 +485,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindNextFileW")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal static extern bool FindNextFile(SafeFindFileHandle hFindFile, out Win32FindData lpFindFileData);
+      internal static extern bool FindNextFile(SafeFindFileHandle hFindFile, out WIN32_FIND_DATA lpFindFileData);
 
       /// <summary>
       ///   Continues enumerating the hard links to a file using the handle returned by a successful call to the FindFirstFileName function.
@@ -572,7 +572,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFileAttributesExW")]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetFileAttributesEx([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
-         [MarshalAs(UnmanagedType.U4)] GetFileExInfoLevels fInfoLevelId, out Win32FileAttributeData lpFileInformation);
+         [MarshalAs(UnmanagedType.U4)] GetFileExInfoLevels fInfoLevelId, out WIN32_FILE_ATTRIBUTE_DATA lpFileInformation);
 
       /// <summary>Retrieves attributes for a specified file or directory.</summary>
       /// <remarks>
@@ -601,7 +601,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetFileAttributesTransactedW")]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetFileAttributesTransacted([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
-         [MarshalAs(UnmanagedType.U4)] GetFileExInfoLevels fInfoLevelId, out Win32FileAttributeData lpFileInformation,
+         [MarshalAs(UnmanagedType.U4)] GetFileExInfoLevels fInfoLevelId, out WIN32_FILE_ATTRIBUTE_DATA lpFileInformation,
          SafeHandle hTransaction);
 
       /// <summary>Retrieves file information for the specified file.</summary>
@@ -665,7 +665,7 @@ namespace Alphaleonis.Win32.Filesystem
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetFileInformationByHandleEx_FileBasicInfo(SafeFileHandle hFile,
          [MarshalAs(UnmanagedType.I4)] FileInfoByHandleClass fileInfoByHandleClass,
-         [MarshalAs(UnmanagedType.Struct)] out FileBasicInfo lpFileInformation,
+         [MarshalAs(UnmanagedType.Struct)] out FILE_BASIC_INFO lpFileInformation,
          [MarshalAs(UnmanagedType.U4)] uint dwBufferSize);
 
       /// <summary>

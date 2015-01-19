@@ -176,7 +176,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DateTime GetLastWriteTimeInternal(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
       {
-         NativeMethods.FileTime lastWriteTime = GetAttributesExInternal<NativeMethods.Win32FileAttributeData>(transaction, path, pathFormat).LastWriteTime;
+         NativeMethods.FILETIME lastWriteTime = GetAttributesExInternal<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, path, pathFormat).LastWriteTime;
 
          return getUtc
             ? DateTime.FromFileTimeUtc(lastWriteTime)

@@ -33,18 +33,18 @@ namespace Alphaleonis.Win32.Filesystem
          /// <summary>The file attributes.</summary>
          public readonly FileAttributes FileAttributes;
 
-         /// <summary>A <see cref="NativeMethods.FileTime"/> structure that specifies when a file or directory is created.</summary>
-         public readonly FileTime CreationTime;
+         /// <summary>A <see cref="FILETIME"/> structure that specifies when a file or directory is created.</summary>
+         public readonly FILETIME CreationTime;
 
-         /// <summary>A <see cref="NativeMethods.FileTime"/> structure. For a file, the structure specifies the last time that a file is read from or written to.
+         /// <summary>A <see cref="FILETIME"/> structure. For a file, the structure specifies the last time that a file is read from or written to.
          /// For a directory, the structure specifies when the directory is created.
          /// For both files and directories, the specified date is correct, but the time of day is always set to midnight.
          /// </summary>
-         public readonly FileTime LastAccessTime;
+         public readonly FILETIME LastAccessTime;
 
-         /// <summary>A <see cref="NativeMethods.FileTime"/> structure. For a file, the structure specifies the last time that a file is written to.
+         /// <summary>A <see cref="FILETIME"/> structure. For a file, the structure specifies the last time that a file is written to.
          /// For a directory, the structure specifies when the directory is created.</summary>
-         public readonly FileTime LastWriteTime;
+         public readonly FILETIME LastWriteTime;
 
          /// <summary>The serial number of the volume that contains a file.</summary>
          [MarshalAs(UnmanagedType.U4)] public readonly uint VolumeSerialNumber;

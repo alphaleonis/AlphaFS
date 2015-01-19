@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
 
-         Network.NativeMethods.RemoteNameInfo unc = Host.GetRemoteNameInfoInternal(drive, true);
+         Network.NativeMethods.REMOTE_NAME_INFO unc = Host.GetRemoteNameInfoInternal(drive, true);
 
          if (!Utils.IsNullOrWhiteSpace(unc.ConnectionName))
             // Only leave trailing backslash if "localPath" also ends with backslash.

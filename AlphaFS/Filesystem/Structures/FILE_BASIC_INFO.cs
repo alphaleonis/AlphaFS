@@ -26,9 +26,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>FILE_BASIC_INFO structure
-      ///   <para>Contains the basic information for a file. Used for file handles.</para>
-      /// </summary>
+      /// <summary>Contains the basic information for a file. Used for file handles.</summary>
       /// <remarks>
       ///   <para>Specifying -1 for <see cref="LastAccessTime"/>, <see cref="ChangeTime"/>, or <see cref="LastWriteTime"/></para>
       ///   <para>indicates that operations on the current handle should not affect the given field.</para>
@@ -36,24 +34,24 @@ namespace Alphaleonis.Win32.Filesystem
       ///   on the current handle.)</para>
       /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct FileBasicInfo
+      internal struct FILE_BASIC_INFO
       {
-         /// <summary>The time the file was created in <see cref="NativeMethods.FileTime"/> format,
+         /// <summary>The time the file was created in <see cref="FILETIME"/> format,
          /// <para>which is a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601 (UTC).</para>
          /// </summary>
-         public FileTime CreationTime;
+         public FILETIME CreationTime;
 
-         /// <summary>The time the file was last accessed in <see cref="NativeMethods.FileTime"/> format.</summary>
-         public FileTime LastAccessTime;
+         /// <summary>The time the file was last accessed in <see cref="FILETIME"/> format.</summary>
+         public FILETIME LastAccessTime;
 
-         /// <summary>The time the file was last written to in <see cref="NativeMethods.FileTime"/> format.</summary>
-         public FileTime LastWriteTime;
+         /// <summary>The time the file was last written to in <see cref="FILETIME"/> format.</summary>
+         public FILETIME LastWriteTime;
 
-         /// <summary>The time the file was changed in <see cref="NativeMethods.FileTime"/> format.</summary>
-         public FileTime ChangeTime;
+         /// <summary>The time the file was changed in <see cref="FILETIME"/> format.</summary>
+         public FILETIME ChangeTime;
 
          /// <summary>The file attributes.</summary>
-         /// <remarks>If this is set to 0 in a <see cref="NativeMethods.FileBasicInfo"/> structure passed to SetFileInformationByHandle then none of the attributes are changed.</remarks>
+         /// <remarks>If this is set to 0 in a <see cref="FILE_BASIC_INFO"/> structure passed to SetFileInformationByHandle then none of the attributes are changed.</remarks>
          public FileAttributes FileAttributes;
       }
    }

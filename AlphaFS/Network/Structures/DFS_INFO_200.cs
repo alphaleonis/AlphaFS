@@ -25,27 +25,15 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>FILE_INFO_3 - Contains the identifier and other pertinent information about files, devices, and pipes.</summary>
-      /// <remarks>This structure is only for use with the NetFileEnum function.</remarks>
+      /// <summary>Contains the name of a domain-based Distributed File System (DFS) namespace.</summary>
+      /// <remarks>This structure is only for use with the NetDfsEnum, NetDfsGetClientInfo, and NetDfsGetInfo functions.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct FileInfo3
+      internal struct DFS_INFO_200
       {
-         /// <summary>The identification number assigned to the resource when it is opened.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint Id;
-
-         /// <summary>The access permissions associated with the opening application. This member can be one or more of the following <see cref="AccessPermissions"/> values.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly AccessPermissions Permissions;
-
-         /// <summary>The number of file locks on the file, device, or pipe.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint TotalLocks;
-
-         /// <summary>The path of the opened resource.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string PathName;
-
-         /// <summary>Specifies which user (on servers that have user-level security) or which computer (on servers that have share-level security) opened the resource.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string UserName;
+         /// <summary>The name of a domain-based DFS namespace.</summary>
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string FtDfsName;
       }
    }
 }

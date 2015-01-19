@@ -26,14 +26,14 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>DFS_INFO_300 - Contains the name and type (domain-based or stand-alone) of a DFS namespace.</summary>
-      /// <remarks>The DFS functions use the <see cref="DfsInfo300"/> structure to enumerate DFS namespaces hosted on a machine.</remarks>
+      /// <summary>Contains the name and type (domain-based or stand-alone) of a DFS namespace.</summary>
+      /// <remarks>The DFS functions use the <see cref="DFS_INFO_300"/> structure to enumerate DFS namespaces hosted on a machine.</remarks>
       /// <remarks>Minimum supported client: Windows XP with SP1 [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DfsInfo300
+      internal struct DFS_INFO_300
       {
          /// <summary>Value that specifies the type of the DFS namespace. This member can be one of the <see cref="DfsNamespaceFlavors"/> values.</summary>
          [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]

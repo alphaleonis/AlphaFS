@@ -27,33 +27,35 @@ namespace Alphaleonis.Win32.Filesystem
 {
    internal static partial class NativeMethods
    {
-      /// <summary>FILE_ID_BOTH_DIR_INFO - Contains information about files in the specified directory. Used for directory handles. Use only when calling GetFileInformationByHandleEx.</summary>
+      /// <summary>Contains information about files in the specified directory. Used for directory handles. Use only when calling GetFileInformationByHandleEx.</summary>
       /// <remarks>
       /// The number of files that are returned for each call to GetFileInformationByHandleEx depends on the size of the buffer that is passed to the function.
       /// Any subsequent calls to GetFileInformationByHandleEx on the same handle will resume the enumeration operation after the last file is returned.
       /// </remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct FileIdBothDirInfo
+      internal struct FILE_ID_BOTH_DIR_INFO
       {
          /// <summary>The offset for the next FILE_ID_BOTH_DIR_INFO structure that is returned. Contains zero (0) if no other entries follow this one.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint NextEntryOffset;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly uint NextEntryOffset;
 
          /// <summary>The byte offset of the file within the parent directory. This member is undefined for file systems, such as NTFS,
          /// in which the position of a file within the parent directory is not fixed and can be changed at any time to maintain sort order.
          /// </summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint FileIndex;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly uint FileIndex;
 
          /// <summary>The time that the file was created.</summary>
-         public FileTime CreationTime;
+         public FILETIME CreationTime;
 
          /// <summary>The time that the file was last accessed.</summary>
-         public FileTime LastAccessTime;
+         public FILETIME LastAccessTime;
 
          /// <summary>The time that the file was last written to.</summary>
-         public FileTime LastWriteTime;
+         public FILETIME LastWriteTime;
 
          /// <summary>The time that the file was last changed.</summary>
-         public FileTime ChangeTime;
+         public FILETIME ChangeTime;
 
          /// <summary>The absolute new end-of-file position as a byte offset from the start of the file to the end of the file.
          /// Because this value is zero-based, it actually refers to the first free byte in the file.
@@ -68,16 +70,20 @@ namespace Alphaleonis.Win32.Filesystem
          public readonly FileAttributes FileAttributes;
 
          /// <summary>The length of the file name.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint FileNameLength;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly uint FileNameLength;
 
          /// <summary>The size of the extended attributes for the file.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint EaSize;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly uint EaSize;
 
          /// <summary>The length of ShortName.</summary>
-         [MarshalAs(UnmanagedType.U1)] public readonly byte ShortNameLength;
+         [MarshalAs(UnmanagedType.U1)]
+         public readonly byte ShortNameLength;
 
          /// <summary>The short 8.3 file naming convention (for example, "FILENAME.TXT") name of the file.</summary>
-         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12, ArraySubType = UnmanagedType.U2)] public readonly char[] ShortName;
+         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 12, ArraySubType = UnmanagedType.U2)]
+         public readonly char[] ShortName;
 
          /// <summary>The file ID.</summary>
          public readonly long FileId;

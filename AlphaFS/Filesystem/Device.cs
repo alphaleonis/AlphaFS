@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
             try
             {
                uint memberInterfaceIndex = 0;
-               NativeMethods.SpDeviceInterfaceData deviceInterfaceData = CreateDeviceInterfaceDataInstance();
+               NativeMethods.SP_DEVICE_INTERFACE_DATA deviceInterfaceData = CreateDeviceInterfaceDataInstance();
 
                // Start enumerating Device Interfaces.
                while (NativeMethods.SetupDiEnumDeviceInterfaces(safeHandle, IntPtr.Zero, ref deviceGuid, memberInterfaceIndex++, ref deviceInterfaceData))
@@ -113,8 +113,8 @@ namespace Alphaleonis.Win32.Filesystem
                      NativeError.ThrowException(lastError, hostName);
 
 
-                  NativeMethods.SpDeviceInfoData deviceInfoData = CreateDeviceInfoDataInstance();
-                  NativeMethods.SpDeviceInterfaceDetailData deviceInterfaceDetailData = GetDeviceInterfaceDetailDataInstance(safeHandle, deviceInterfaceData, deviceInfoData);
+                  NativeMethods.SP_DEVINFO_DATA deviceInfoData = CreateDeviceInfoDataInstance();
+                  NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA deviceInterfaceDetailData = GetDeviceInterfaceDetailDataInstance(safeHandle, deviceInterfaceData, deviceInfoData);
 
                   // Get device interace details.
                   if (!NativeMethods.SetupDiGetDeviceInterfaceDetail(safeHandle, ref deviceInterfaceData, ref deviceInterfaceDetailData, NativeMethods.DefaultFileBufferSize, IntPtr.Zero, ref deviceInfoData))
@@ -419,11 +419,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateDeviceInfoDataInstance
 
       /// <summary>Builds a DeviceInfo Data structure.</summary>
-      /// <returns>An initialized NativeMethods.SpDeviceInfoData instance.</returns>
+      /// <returns>An initialized NativeMethods.SP_DEVINFO_DATA instance.</returns>
       [SecurityCritical]
-      private static NativeMethods.SpDeviceInfoData CreateDeviceInfoDataInstance()
+      private static NativeMethods.SP_DEVINFO_DATA CreateDeviceInfoDataInstance()
       {
-         NativeMethods.SpDeviceInfoData did = new NativeMethods.SpDeviceInfoData();
+         NativeMethods.SP_DEVINFO_DATA did = new NativeMethods.SP_DEVINFO_DATA();
          did.cbSize = (uint) Marshal.SizeOf(did);
 
          return did;
@@ -434,11 +434,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateDeviceInterfaceDataInstance
 
       /// <summary>Builds a Device Interface Data structure.</summary>
-      /// <returns>An initialized NativeMethods.SpDeviceInterfaceData instance.</returns>
+      /// <returns>An initialized NativeMethods.SP_DEVICE_INTERFACE_DATA instance.</returns>
       [SecurityCritical]
-      private static NativeMethods.SpDeviceInterfaceData CreateDeviceInterfaceDataInstance()
+      private static NativeMethods.SP_DEVICE_INTERFACE_DATA CreateDeviceInterfaceDataInstance()
       {
-         NativeMethods.SpDeviceInterfaceData did = new NativeMethods.SpDeviceInterfaceData();
+         NativeMethods.SP_DEVICE_INTERFACE_DATA did = new NativeMethods.SP_DEVICE_INTERFACE_DATA();
          did.cbSize = (uint) Marshal.SizeOf(did);
 
          return did;
@@ -449,12 +449,12 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetDeviceInterfaceDetailDataInstance
 
       /// <summary>Builds a Device Interface Detail Data structure.</summary>
-      /// <returns>An initialized NativeMethods.SpDeviceInterfaceDetailData instance.</returns>
+      /// <returns>An initialized NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA instance.</returns>
       [SecurityCritical]
-      private static NativeMethods.SpDeviceInterfaceDetailData GetDeviceInterfaceDetailDataInstance(SafeHandle safeHandle, NativeMethods.SpDeviceInterfaceData deviceInterfaceData, NativeMethods.SpDeviceInfoData deviceInfoData)
+      private static NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA GetDeviceInterfaceDetailDataInstance(SafeHandle safeHandle, NativeMethods.SP_DEVICE_INTERFACE_DATA deviceInterfaceData, NativeMethods.SP_DEVINFO_DATA deviceInfoData)
       {
          // Build a Device Interface Detail Data structure.
-         NativeMethods.SpDeviceInterfaceDetailData didd = new NativeMethods.SpDeviceInterfaceDetailData
+         NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA didd = new NativeMethods.SP_DEVICE_INTERFACE_DETAIL_DATA
          {
             cbSize = (IntPtr.Size == 4) ? (uint) (Marshal.SystemDefaultCharSize + 4) : 8
          };

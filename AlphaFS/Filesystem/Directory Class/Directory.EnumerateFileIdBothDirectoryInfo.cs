@@ -175,7 +175,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                NativeMethods.IsValidHandle(safeBuffer, Marshal.GetLastWin32Error());
 
-               long fileNameOffset = Marshal.OffsetOf(typeof(NativeMethods.FileIdBothDirInfo), "FileName").ToInt64();
+               long fileNameOffset = Marshal.OffsetOf(typeof(NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName").ToInt64();
 
                while (NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer.DangerousGetHandle(), NativeMethods.DefaultFileBufferSize))
                {
@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   while (buffer != IntPtr.Zero)
                   {
-                     NativeMethods.FileIdBothDirInfo fibdi = Utils.MarshalPtrToStructure<NativeMethods.FileIdBothDirInfo>(0, buffer);
+                     NativeMethods.FILE_ID_BOTH_DIR_INFO fibdi = Utils.MarshalPtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>(0, buffer);
 
                      string fileName = Marshal.PtrToStringUni(new IntPtr(fileNameOffset + buffer.ToInt64()), (int)(fibdi.FileNameLength / 2));
 

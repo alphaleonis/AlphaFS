@@ -25,23 +25,27 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>DFS_STORAGE_INFO - Contains information about a DFS root or link target in a DFS namespace or from the cache maintained by the DFS client.</summary>
-      /// <remarks>The <see cref="DfsInfo"/> structure contains one or more <see cref="DfsStorageInfo"/> structures, one for each DFS target.
-      /// Only one target can be marked as the active target. It is possible that no targets will be marked active.
-      /// </remarks>
+      /// <summary>Contains the identifier and other pertinent information about files, devices, and pipes.</summary>
+      /// <remarks>This structure is only for use with the NetFileEnum function.</remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DfsStorageInfo
+      internal struct FILE_INFO_3
       {
-         /// <summary>State of the target.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly DfsStorageStates State;
+         /// <summary>The identification number assigned to the resource when it is opened.</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly uint Id;
 
-         /// <summary>The DFS root target or link target server name.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string ServerName;
+         /// <summary>The access permissions associated with the opening application. This member can be one or more of the following <see cref="AccessPermissions"/> values.</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly AccessPermissions Permissions;
 
-         /// <summary>The DFS root target or link target share name.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string ShareName;
+         /// <summary>The number of file locks on the file, device, or pipe.</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly uint TotalLocks;
+
+         /// <summary>The path of the opened resource.</summary>
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string PathName;
+
+         /// <summary>Specifies which user (on servers that have user-level security) or which computer (on servers that have share-level security) opened the resource.</summary>
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string UserName;
       }
    }
 }
