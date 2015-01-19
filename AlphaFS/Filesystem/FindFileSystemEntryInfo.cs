@@ -113,6 +113,8 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: DirectoryNotFoundException: Path is invalid, such as referring to an unmapped drive.
                      if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
                         lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+
+                     // 2015-01-19: Issue #41: "After formatting , DirectoryInfo.GetFileSystemInfos throw DirectoryNotFoundException"
                      NativeError.ThrowException(lastError, path);
                      break;
 

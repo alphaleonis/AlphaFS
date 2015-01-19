@@ -115,9 +115,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region DeviceIoControl
 
-      /// <summary>
-      ///   Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.
-      /// </summary>
+      /// <summary>Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.</summary>
+      /// <returns>
+      ///   <para>If the operation completes successfully, the return value is nonzero.</para>
+      ///   <para>If the operation fails or is pending, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
       /// <remarks>
       ///   <para>To retrieve a handle to the device, you must call the <see cref="CreateFile"/> function with either the name of a device or
       ///   the name of the driver associated with a device.</para>
@@ -133,18 +135,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="nOutBufferSize">Size of the out buffer.</param>
       /// <param name="lpBytesReturned">[out] The bytes returned.</param>
       /// <param name="lpOverlapped">The overlapped.</param>
-      /// <returns>
-      ///   <para>If the operation completes successfully, the return value is nonzero.</para>
-      ///   <para>If the operation fails or is pending, the return value is zero. To get extended error information, call GetLastError.</para>
-      /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool DeviceIoControl(SafeFileHandle hDevice, [MarshalAs(UnmanagedType.U4)] uint dwIoControlCode, IntPtr lpInBuffer, [MarshalAs(UnmanagedType.U4)] uint nInBufferSize, SafeGlobalMemoryBufferHandle lpOutBuffer, [MarshalAs(UnmanagedType.U4)] uint nOutBufferSize, [MarshalAs(UnmanagedType.U4)] out uint lpBytesReturned, IntPtr lpOverlapped);
 
-      /// <summary>
-      ///   Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.
-      /// </summary>
+      /// <summary>Sends a control code directly to a specified device driver, causing the corresponding device to perform the corresponding operation.</summary>
+      /// <returns>
+      ///   <para>If the operation completes successfully, the return value is nonzero.</para>
+      ///   <para>If the operation fails or is pending, the return value is zero. To get extended error information, call GetLastError.</para>
+      /// </returns>
       /// <remarks>
       ///   <para>To retrieve a handle to the device, you must call the <see cref="CreateFile"/> function with either the name of a device or
       ///   the name of the driver associated with a device.</para>
@@ -160,10 +160,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="nOutBufferSize">Size of the out buffer.</param>
       /// <param name="lpBytesReturned">[out] The bytes returned.</param>
       /// <param name="lpOverlapped">The overlapped.</param>
-      /// <returns>
-      ///   <para>If the operation completes successfully, the return value is nonzero.</para>
-      ///   <para>If the operation fails or is pending, the return value is zero. To get extended error information, call GetLastError.</para>
-      /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
