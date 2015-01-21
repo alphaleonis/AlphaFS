@@ -22,6 +22,7 @@
 using Microsoft.Win32.SafeHandles;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 
@@ -108,8 +109,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Refreshes the state of the object.</summary>
       public void Refresh()
       {
-         var volumeNameBuffer = new StringBuilder(NativeMethods.MaxPath/32);
-         var fileSystemNameBuffer = new StringBuilder(NativeMethods.MaxPath/32);
+         var volumeNameBuffer = new StringBuilder(NativeMethods.MaxPath + 1);
+         var fileSystemNameBuffer = new StringBuilder(NativeMethods.MaxPath + 1);
          uint maximumComponentLength;
          uint serialNumber;
 
@@ -121,20 +122,46 @@ namespace Alphaleonis.Win32.Filesystem
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-            // A trailing backslash is required.
-            if (!(_volumeHandle != null && NativeMethods.IsAtLeastWindowsVista
+            uint lastError;
 
-               // GetVolumeInformationByHandle() / GetVolumeInformation()
-               // In the ANSI version of this function, the name is limited to 248 characters.
-               // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
-               // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+            do
+            {
+               if (!(_volumeHandle != null && NativeMethods.IsAtLeastWindowsVista
 
-               // A trailing backslash is required.
-               ? NativeMethods.GetVolumeInformationByHandle(_volumeHandle, volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity)
-               : NativeMethods.GetVolumeInformation(Name, volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity))
+                  // GetVolumeInformationByHandle() / GetVolumeInformation()
+                  // In the ANSI version of this function, the name is limited to 248 characters.
+                  // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
+                  // 2013-07-18: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-                && !_continueOnAccessError)
-               NativeError.ThrowException(Name);
+                  ? NativeMethods.GetVolumeInformationByHandle(_volumeHandle, volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity)
+                  : NativeMethods.GetVolumeInformation(Path.AddTrailingDirectorySeparator(Name, false), volumeNameBuffer, (uint) volumeNameBuffer.Capacity, out serialNumber, out maximumComponentLength, out _volumeInfoAttributes, fileSystemNameBuffer, (uint) fileSystemNameBuffer.Capacity))
+                  // A trailing backslash is required.
+                  )
+               {
+                  lastError = (uint) Marshal.GetLastWin32Error();
+                  switch (lastError)
+                  {
+                     case Win32Errors.ERROR_NOT_READY:
+                        if (!_continueOnAccessError)
+                           throw new DeviceNotReadyException();
+                        break;
+
+                     case Win32Errors.ERROR_MORE_DATA:
+                        // With a large enough buffer this code never executes.
+                        volumeNameBuffer.Capacity = volumeNameBuffer.Capacity*2;
+                        fileSystemNameBuffer.Capacity = fileSystemNameBuffer.Capacity*2;
+                        break;
+
+                     default:
+                        if (!_continueOnAccessError)
+                           NativeError.ThrowException(Name);
+                        break;
+                  }
+               }
+               else
+                  break;
+
+            } while (lastError == Win32Errors.ERROR_MORE_DATA);
          }
 
          FullPath = Path.GetRegularPathInternal(Name, GetFullPathOptions.None);
