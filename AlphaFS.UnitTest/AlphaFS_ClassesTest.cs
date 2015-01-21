@@ -1295,6 +1295,7 @@ namespace AlphaFS.UnitTest
       private void DumpClassVolumeInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? Local : Network);
+         Console.WriteLine("\nEnumerating logical drives.\n");
 
          int cnt = 0;
          foreach (string drive in Directory.GetLogicalDrives())
@@ -1307,13 +1308,13 @@ namespace AlphaFS.UnitTest
             {
                VolumeInfo volInfo = Volume.GetVolumeInfo(tempPath);
                Console.WriteLine("\n#{0:000}\tLogical Drive: [{1}]", ++cnt, tempPath);
-               Assert.AreEqual(tempPath, volInfo.FullPath);
                Dump(volInfo, -26);
             }
             catch (Exception ex)
             {
-               Console.WriteLine("#{0:000}\tLogical Drive: [{1}]\n\tCaught Exception: [{2}]\n\n", ++cnt, tempPath, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("#{0:000}\tLogical Drive: [{1}]\n\tCaught: {2}: [{3}]", ++cnt, tempPath, ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Console.WriteLine();
          }
 
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
