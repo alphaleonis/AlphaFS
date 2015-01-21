@@ -4084,17 +4084,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetProperties
 
-      #region GetAlternateDataStreamSize
-
-      [TestMethod]
-      public void AlphaFS_GetAlternateDataStreamSize()
-      {
-         Console.WriteLine("Directory.GetAlternateDataStreamSize()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
-      }
-
-      #endregion // GetAlternateDataStreamSize
-
       #region HasInheritedPermissions
 
       [TestMethod]

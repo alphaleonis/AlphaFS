@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       [SecurityCritical]
-      private static IEnumerable<TStruct> EnumerateNetworkObjectInternal<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException)
+      private static IEnumerable<TStruct> EnumerateNetworkObjectInternal<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException) 
       {
          Type objectType;
          int objectSize;
@@ -125,7 +125,7 @@ namespace Alphaleonis.Win32.Network
                      {
                         for (int i = 0, itemOffset = 0; i < entriesRead; i++, itemOffset += objectSize)
                            yield return (TStruct) (isString
-                              ? buffer.PtrToStringUni(itemOffset)
+                              ? buffer.PtrToStringUni(itemOffset, UnicodeEncoding.CharSize)
                               : (object) createTStruct(buffer.PtrToStructure<TNative>(itemOffset), buffer));
                      }
                      break;
@@ -175,19 +175,16 @@ namespace Alphaleonis.Win32.Network
                RemainingPath = Path.DirectorySeparator
             };
 
+         
+         uint lastError;
 
          // Use large enough buffer to prevent a 2nd call.
          uint bufferSize = 1024;
-         var buffer = new IntPtr(bufferSize);
-
-         try
+         
+         do
          {
-            uint lastError;
-            do
+            using (var buffer = new SafeGlobalMemoryBufferHandle((int) bufferSize))
             {
-               // Allocate the memory.
-               buffer = Marshal.AllocHGlobal((int) bufferSize);
-
                // Structure: UNIVERSAL_NAME_INFO_LEVEL = 1 (not used in AlphaFS).
                // Structure: REMOTE_NAME_INFO_LEVEL    = 2
 
@@ -196,29 +193,21 @@ namespace Alphaleonis.Win32.Network
                switch (lastError)
                {
                   case Win32Errors.NO_ERROR:
-                     return Utils.MarshalPtrToStructure<NativeMethods.REMOTE_NAME_INFO>(0, buffer);
+                     return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>();
 
                   case Win32Errors.ERROR_MORE_DATA:
                      //bufferSize = Received the required buffer size, retry.
-
-                     if (buffer != IntPtr.Zero)
-                        Marshal.FreeHGlobal(buffer);
                      break;
                }
+            }
 
-            } while (lastError == Win32Errors.ERROR_MORE_DATA);
+         } while (lastError == Win32Errors.ERROR_MORE_DATA);
 
-            if (!continueOnException && lastError != Win32Errors.NO_ERROR)
-               throw new NetworkInformationException((int) lastError);
+         if (!continueOnException && lastError != Win32Errors.NO_ERROR)
+            throw new NetworkInformationException((int) lastError);
 
-            // Return an empty structure (all fields set to null).
-            return new NativeMethods.REMOTE_NAME_INFO();
-         }
-         finally
-         {
-            if (buffer != IntPtr.Zero)
-               Marshal.FreeHGlobal(buffer);
-         }
+         // Return an empty structure (all fields set to null).
+         return new NativeMethods.REMOTE_NAME_INFO();
       }
 
       #endregion // GetRemoteNameInfoInternal

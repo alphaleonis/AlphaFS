@@ -3067,17 +3067,6 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
 
-      #region AddAlternateDataStream
-
-      [TestMethod]
-      public void AlphaFS_AddAlternateDataStream()
-      {
-         Console.WriteLine("File.GetAlternateDataStreamSize()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
-      }
-
-      #endregion // AddAlternateDataStream
-
       #region Compress
 
       [TestMethod]
@@ -3213,18 +3202,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetSize
-
-      #region GetAlternateDataStreamSize
-
-      [TestMethod]
-      public void AlphaFS_GetAlternateDataStreamSize()
-      {
-         Console.WriteLine("File.GetAlternateDataStreamSize()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_GetSize()");
-      }
-
-      #endregion // GetAlternateDataStreamSize
-
+      
       #region SetTimestamps
 
       [TestMethod]

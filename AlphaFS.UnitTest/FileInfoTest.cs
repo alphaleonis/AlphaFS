@@ -21,12 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using DirectoryInfo = Alphaleonis.Win32.Filesystem.DirectoryInfo;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
@@ -318,17 +313,6 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
 
-      #region AddAlternateDataStream
-
-      [TestMethod]
-      public void AlphaFS_AddAlternateDataStream()
-      {
-         Console.WriteLine("FileInfo.AddAlternateDataStream()");
-         Console.WriteLine("\nPlease see unit tests from class: File().");
-      }
-
-      #endregion // AddAlternateDataStream
-
       #region Compress
 
       [TestMethod]
@@ -361,17 +345,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // EnumerateAlternateDataStreams
-
-      #region GetAlternateDataStreamSize
-
-      [TestMethod]
-      public void AlphaFS_GetAlternateDataStreamSize()
-      {
-         Console.WriteLine("FileInfo.GetAlternateDataStreamSize()");
-         Console.WriteLine("\nPlease see unit tests from class: File().");
-      }
-
-      #endregion // GetAlternateDataStreamSize
       
       #endregion // AlphaFS
 
