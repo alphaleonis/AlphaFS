@@ -27,7 +27,6 @@ namespace Alphaleonis.Win32.Network
    internal static partial class NativeMethods
    {
       ///<summary>Contains path and name information for a network resource.</summary>
-      [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct REMOTE_NAME_INFO
       {

@@ -31,7 +31,6 @@ namespace Alphaleonis.Win32.Network
       /// <remarks>Minimum supported client: Windows XP with SP1 [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
-      [SuppressMessage("Microsoft.Performance", "CA1815:OverrideEqualsAndOperatorEqualsOnValueTypes")]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct DFS_INFO_300
       {
