@@ -63,7 +63,6 @@ namespace Alphaleonis.Win32.Network
       }
 
       #endregion // GetUncName
-      
 
       #region Internal
 
@@ -125,7 +124,7 @@ namespace Alphaleonis.Win32.Network
                      {
                         for (int i = 0, itemOffset = 0; i < entriesRead; i++, itemOffset += objectSize)
                            yield return (TStruct) (isString
-                              ? buffer.PtrToStringUni(itemOffset, UnicodeEncoding.CharSize)
+                              ? buffer.PtrToStringUni(itemOffset, 2)
                               : (object) createTStruct(buffer.PtrToStructure<TNative>(itemOffset), buffer));
                      }
                      break;
