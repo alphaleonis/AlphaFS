@@ -172,10 +172,6 @@ namespace Alphaleonis.Win32.Filesystem
             var lastError = Win32Errors.NO_ERROR;
             var fileNameOffset = (int) Marshal.OffsetOf(typeof (NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName");
 
-            
-            // Temp: Switch between new and old.
-            bool useNew = !true;
-
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
                do
                {
@@ -183,37 +179,18 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      lastError = (uint) Marshal.GetLastWin32Error();
 
-                     if (useNew)
+                     var fibdi = safeBuffer.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>();
+                     int offset = 0;
+                     while (fibdi.NextEntryOffset != 0)
                      {
-                        var fibdi = safeBuffer.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>();
-
-                        while (fibdi.NextEntryOffset != 0)
-                        {
-                           string fileName = safeBuffer.PtrToStringUni(fileNameOffset, (int)(fibdi.FileNameLength / 2));
+                        string fileName = safeBuffer.PtrToStringUni(offset + fileNameOffset, (int)(fibdi.FileNameLength / 2));
                            
-                           if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
-                               !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
-                              yield return new FileIdBothDirectoryInfo(fibdi, fileName);
-                           
-                           fibdi = safeBuffer.PtrToStructureSizeOf<NativeMethods.FILE_ID_BOTH_DIR_INFO>((int)fibdi.NextEntryOffset);
-                        }
-                     }
+                        if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
+                              !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
+                           yield return new FileIdBothDirectoryInfo(fibdi, fileName);
 
-                     else
-                     {
-                        IntPtr buffer2 = safeBuffer.DangerousGetHandle();
-                        while (buffer2 != IntPtr.Zero)
-                        {
-                           var fibdi2 = Utils.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>(buffer2);
-
-                           string fileName = Utils.PtrToStringUni(buffer2, fileNameOffset, (int)(fibdi2.FileNameLength / 2));
-
-                           if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
-                               !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
-                              yield return new FileIdBothDirectoryInfo(fibdi2, fileName);
-
-                           buffer2 = fibdi2.NextEntryOffset == 0 ? IntPtr.Zero : new IntPtr(buffer2.ToInt64() + fibdi2.NextEntryOffset);
-                        }
+                        offset += fibdi.NextEntryOffset;
+                        fibdi = safeBuffer.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>(offset);
                      }
                   }
 

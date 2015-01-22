@@ -36,18 +36,21 @@ namespace Alphaleonis.Win32
 
       #region Constructors
 
-      protected SafeNativeMemoryBufferHandle(bool ownsHandle) : base(ownsHandle)
+      protected SafeNativeMemoryBufferHandle(bool ownsHandle)
+         : base(ownsHandle)
       {
       }
 
       /// <summary>Initializes a new instance of the <see cref="SafeNativeMemoryBufferHandle"/> specifying the allocated capacity of the memory block.</summary>
       /// <param name="capacity">The capacity.</param>
-      protected SafeNativeMemoryBufferHandle(int capacity) : this(true)
+      protected SafeNativeMemoryBufferHandle(int capacity)
+         : this(true)
       {
          m_capacity = capacity;
       }
 
-      protected SafeNativeMemoryBufferHandle(IntPtr memory, int capacity) : this(capacity)
+      protected SafeNativeMemoryBufferHandle(IntPtr memory, int capacity)
+         : this(capacity)
       {
          SetHandle(memory);
       }
@@ -264,7 +267,7 @@ namespace Alphaleonis.Win32
 
       #endregion // Read
 
-      
+
 
       /// <summary>Marshals data from a managed object to an unmanaged block of memory.</summary>
       public void StructureToPtr(object structure, bool deleteOld)
@@ -272,7 +275,7 @@ namespace Alphaleonis.Win32
          Marshal.StructureToPtr(structure, handle, deleteOld);
       }
 
-      
+
 
       /// <summary>Marshals data from an unmanaged block of memory to a newly allocated managed object of the specified type.</summary>
       /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
@@ -285,18 +288,12 @@ namespace Alphaleonis.Win32
       /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
       public T PtrToStructure<T>(int offset)
       {
-         return (T) Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof (T));
+         return (T)Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof(T));
       }
 
 
 
-      /// <summary>Marshals data from an unmanaged block of memory to a newly allocated managed object of the specified type.</summary>
-      /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
-      internal T PtrToStructureSizeOf<T>(int offset) where T : struct
-      {
-         var structure = new T();
-         return (T) Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
-      }
+      
 
 
 

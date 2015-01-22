@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          /// <summary>The offset for the next FILE_ID_BOTH_DIR_INFO structure that is returned. Contains zero (0) if no other entries follow this one.</summary>
          [MarshalAs(UnmanagedType.U4)]
-         public readonly uint NextEntryOffset;
+         public readonly int NextEntryOffset;
 
          /// <summary>The byte offset of the file within the parent directory. This member is undefined for file systems, such as NTFS,
          /// in which the position of a file within the parent directory is not fixed and can be changed at any time to maintain sort order.
