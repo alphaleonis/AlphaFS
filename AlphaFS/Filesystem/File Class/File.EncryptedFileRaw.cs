@@ -1,4 +1,25 @@
-﻿using System;
+﻿/*  Copyright (C) 2008-2015 Peter Palotas, Jeffrey Jangli, Alexandr Normuradov
+ *  
+ *  Permission is hereby granted, free of charge, to any person obtaining a copy 
+ *  of this software and associated documentation files (the "Software"), to deal 
+ *  in the Software without restriction, including without limitation the rights 
+ *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell 
+ *  copies of the Software, and to permit persons to whom the Software is 
+ *  furnished to do so, subject to the following conditions:
+ *  
+ *  The above copyright notice and this permission notice shall be included in 
+ *  all copies or substantial portions of the Software.
+ *  
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
+ *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
+ *  THE SOFTWARE. 
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -215,16 +236,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ExportEncryptedFileRaw"/>
       public static void ImportEncryptedFileRaw(System.IO.Stream inputStream, string destinationFilePath, bool overwriteHidden, PathFormat pathFormat)
       {
+         ImportEncryptedFileRawCore(inputStream, destinationFilePath, pathFormat, NativeMethods.EncryptedFileRawMode.CreateForImport | (overwriteHidden ? NativeMethods.EncryptedFileRawMode.OverwriteHidden : 0));         
+      }
+
+      internal static void ImportEncryptedFileRawCore(System.IO.Stream inputStream, string destinationFilePath, PathFormat pathFormat, NativeMethods.EncryptedFileRawMode mode)
+      {
          string lpPath = Path.GetExtendedLengthPathInternal(null, destinationFilePath, pathFormat, GetFullPathOptions.FullCheck | GetFullPathOptions.TrimEnd);
          SafeEncryptedFileRawHandle context = null;
-         int errorCode = NativeMethods.OpenEncryptedFileRaw(lpPath, NativeMethods.EncryptedFileRawMode.CreateForImport | (overwriteHidden ? NativeMethods.EncryptedFileRawMode.OverwriteHidden : 0), out context);
+         int errorCode = NativeMethods.OpenEncryptedFileRaw(lpPath, mode, out context);
          try
          {
             if (errorCode != Win32Errors.ERROR_SUCCESS)
                NativeError.ThrowException(errorCode, null, destinationFilePath);
 
             errorCode = NativeMethods.WriteEncryptedFileRaw((IntPtr pbData, IntPtr pvCallbackContext, ref uint ulLength) =>
-            {               
+            {
                try
                {
                   byte[] buffer = new byte[ulLength];
@@ -234,7 +260,7 @@ namespace Alphaleonis.Win32.Filesystem
                      return (int)Win32Errors.ERROR_SUCCESS;
                   }
 
-                  Marshal.Copy(buffer, 0, pbData, (int)ulLength);                  
+                  Marshal.Copy(buffer, 0, pbData, (int)ulLength);
                }
                catch (Exception ex)
                {
