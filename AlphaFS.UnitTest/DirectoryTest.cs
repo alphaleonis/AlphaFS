@@ -1408,14 +1408,13 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = UnitTestConstants.SysRoot;
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-
+         
          string searchPattern = Path.WildcardStarMatchAll;
 
          long directories = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders);
          long files = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Files);
-         Console.WriteLine("\tDirectories: [{0}], Files: [{1}]", directories, files);
+
+         Console.WriteLine("\nInput Directory Path: [{0}]\tCounted: Directories = [{1}] Files = [{2}]", tempPath, directories, files);
 
          bool foundFse = false;
          long numDirectories = 0;
@@ -1434,7 +1433,7 @@ namespace AlphaFS.UnitTest
          string report = UnitTestConstants.Reporter();
 
          bool matchAll = directories == numDirectories && files == numFiles;
-         Console.WriteLine("\n\tDirectories = [{0}], Files = [{1}]\n{2}", numDirectories, numFiles, report);
+         Console.WriteLine("\n\tEnumerated: Directories = [{0}] Files = [{1}]\t{2}", numDirectories, numFiles, report);
          Assert.IsTrue(foundFse, "Nothing was enumerated.");
          Assert.IsTrue(matchAll, "Number of directories and/or files don't match.");
          Console.WriteLine();

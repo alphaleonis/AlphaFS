@@ -313,19 +313,19 @@ namespace Alphaleonis.Win32.Network
                   switch (shareLevel)
                   {
                      case ShareInfoLevel.Info1005:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.SHARE_INFO_1005>(0, buffer))
+                        return new ShareInfo(stripUnc, shareLevel, Utils.PtrToStructure<NativeMethods.SHARE_INFO_1005>(buffer))
                         {
                            NetFullPath = Path.CombineInternal(false, Path.UncPrefix + stripUnc, share)
                         };
 
                      case ShareInfoLevel.Info503:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.SHARE_INFO_503>(0, buffer));
+                        return new ShareInfo(stripUnc, shareLevel, Utils.PtrToStructure<NativeMethods.SHARE_INFO_503>(buffer));
 
                      case ShareInfoLevel.Info2:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.SHARE_INFO_2>(0, buffer));
+                        return new ShareInfo(stripUnc, shareLevel, Utils.PtrToStructure<NativeMethods.SHARE_INFO_2>(buffer));
 
                      case ShareInfoLevel.Info1:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.MarshalPtrToStructure<NativeMethods.SHARE_INFO_1>(0, buffer));
+                        return new ShareInfo(stripUnc, shareLevel, Utils.PtrToStructure<NativeMethods.SHARE_INFO_1>(buffer));
                   }
                   break;
 

@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transactional
 
       #region Internal Methods
-
+      
       /// <summary>Unified method EnumerateFileIdBothDirectoryInfoInternal() to return an enumerable collection of information about files in the directory handle specified.</summary>
       /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
       /// <remarks>Either use <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</remarks>
@@ -169,65 +169,70 @@ namespace Alphaleonis.Win32.Filesystem
             if (!NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error(), !continueOnException))
                yield break;
 
-            // 2014-10-16: Number of returned items depends on the size of the buffer.
-            // That does not seem right, investigate.
+            var lastError = Win32Errors.NO_ERROR;
+            var fileNameOffset = (int) Marshal.OffsetOf(typeof (NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName");
+
+            
+            // Temp: Switch between new and old.
+            bool useNew = !true;
+
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
-            {
-               NativeMethods.IsValidHandle(safeBuffer, Marshal.GetLastWin32Error());
-
-               long fileNameOffset = Marshal.OffsetOf(typeof(NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName").ToInt64();
-
-               while (NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer.DangerousGetHandle(), NativeMethods.DefaultFileBufferSize))
+               do
                {
-                  // CA2001:AvoidCallingProblematicMethods
-
-                  IntPtr buffer = IntPtr.Zero;
-                  bool successRef = false;
-                  safeBuffer.DangerousAddRef(ref successRef);
-
-                  // MSDN: The DangerousGetHandle method poses a security risk because it can return a handle that is not valid.
-                  if (successRef)
-                     buffer = safeBuffer.DangerousGetHandle();
-
-                  safeBuffer.DangerousRelease();
-
-                  if (buffer == IntPtr.Zero)
-                     NativeError.ThrowException(Resources.HandleDangerousRef);
-
-                  // CA2001:AvoidCallingProblematicMethods
-
-
-                  while (buffer != IntPtr.Zero)
+                  while (NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, (uint) safeBuffer.Capacity))
                   {
-                     NativeMethods.FILE_ID_BOTH_DIR_INFO fibdi = Utils.MarshalPtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>(0, buffer);
+                     lastError = (uint) Marshal.GetLastWin32Error();
 
-                     string fileName = Marshal.PtrToStringUni(new IntPtr(fileNameOffset + buffer.ToInt64()), (int)(fibdi.FileNameLength / 2));
+                     if (useNew)
+                     {
+                        var fibdi = safeBuffer.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>();
 
-                     if (!Utils.IsNullOrWhiteSpace(fileName) &&
-                         !fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
-                         !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
-                        yield return new FileIdBothDirectoryInfo(fibdi, fileName);
+                        while (fibdi.NextEntryOffset != 0)
+                        {
+                           string fileName = safeBuffer.PtrToStringUni(fileNameOffset, (int)(fibdi.FileNameLength / 2));
+                           
+                           if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
+                               !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
+                              yield return new FileIdBothDirectoryInfo(fibdi, fileName);
+                           
+                           fibdi = safeBuffer.PtrToStructureSizeOf<NativeMethods.FILE_ID_BOTH_DIR_INFO>((int)fibdi.NextEntryOffset);
+                        }
+                     }
 
+                     else
+                     {
+                        IntPtr buffer2 = safeBuffer.DangerousGetHandle();
+                        while (buffer2 != IntPtr.Zero)
+                        {
+                           var fibdi2 = Utils.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>(buffer2);
 
-                     buffer = fibdi.NextEntryOffset == 0
-                        ? IntPtr.Zero
-                        : new IntPtr(buffer.ToInt64() + fibdi.NextEntryOffset);
+                           string fileName = Utils.PtrToStringUni(buffer2, fileNameOffset, (int)(fibdi2.FileNameLength / 2));
+
+                           if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
+                               !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
+                              yield return new FileIdBothDirectoryInfo(fibdi2, fileName);
+
+                           buffer2 = fibdi2.NextEntryOffset == 0 ? IntPtr.Zero : new IntPtr(buffer2.ToInt64() + fibdi2.NextEntryOffset);
+                        }
+                     }
                   }
-               }
 
-               int lastError = Marshal.GetLastWin32Error();
-               switch ((uint)lastError)
-               {
-                  case Win32Errors.ERROR_SUCCESS:
-                  case Win32Errors.ERROR_NO_MORE_FILES:
-                  case Win32Errors.ERROR_HANDLE_EOF:
-                     yield break;
+                  switch (lastError)
+                  {
+                     case Win32Errors.ERROR_SUCCESS:
+                     case Win32Errors.ERROR_NO_MORE_FILES:
+                     case Win32Errors.ERROR_HANDLE_EOF:
+                        yield break;
 
-                  default:
-                     NativeError.ThrowException(lastError, path);
-                     break;
-               }
-            }
+                     case Win32Errors.ERROR_MORE_DATA:
+                        continue;
+
+                     default:
+                        NativeError.ThrowException(lastError, path);
+                        break;
+                  }
+
+               } while (lastError == Win32Errors.ERROR_MORE_DATA);
          }
          finally
          {
