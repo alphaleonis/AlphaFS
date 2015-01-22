@@ -1,12 +1,23 @@
+Changelog
+=========
+
 Version 2.1
 -----------
+
+### New Features
+
+* Issue #3: Added methods for backing up and restoring encrypted files:
+	* `File.ImportEncryptedFileRaw`
+	* `File.ExportEncryptedFileRaw`
+	* `Directory.ImportEncryptedDirectoryRaw`
+	* `Directory.ExportEncryptedDirectoryRaw`
 
 ### Bugs Fixed
 
 - Fixed Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
 
 Version 2.0.1
------------
+-------------
 
 ### Bugs Fixed
 
