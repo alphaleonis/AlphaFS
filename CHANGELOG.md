@@ -1,9 +1,17 @@
+Version 2.1
+-----------
+
+### Bugs Fixed
+
+- Fixed Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
+
 Version 2.0.1
 -----------
+
 ### Bugs Fixed
-Fixed Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
-Fixed Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)"
-Fixed Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`
+
+- Fixed Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)"
+- Fixed Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`
 
 Version 2.0
 -----------
