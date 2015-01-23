@@ -1,11 +1,12 @@
 Version 2.1
 -----------
-Fixed Issue #104: "VolumeInfo.Refresh() fails with System.IO.IOException: (234)"
-Fixed Issue #108: "Volume.Refresh() should throw DeviceNotReadyException"
+### Bugs Fixed
+Fixed Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
+Fixed Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)"
+Fixed Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`
 
 Version 2.0
 -----------
-
 * New: The public key of AlphaFS.dll has changed, delay-signing is no longer used.
 * New: Unit Tests, also act as code samples.
 * New: Numerous bugfixes, optimizations and (AlphaFS) overloaded methods implementations.
