@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Transactional
 
       #region Internal Methods
-      
+
       /// <summary>Unified method EnumerateFileIdBothDirectoryInfoInternal() to return an enumerable collection of information about files in the directory handle specified.</summary>
       /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
       /// <remarks>
@@ -177,52 +177,47 @@ namespace Alphaleonis.Win32.Filesystem
             if (!NativeMethods.IsValidHandle(safeHandle, Marshal.GetLastWin32Error(), !continueOnException))
                yield break;
 
-            var lastError = Win32Errors.NO_ERROR;
-            var fileNameOffset = (int) Marshal.OffsetOf(typeof (NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName");
+            var fileNameOffset = (int)Marshal.OffsetOf(typeof(NativeMethods.FILE_ID_BOTH_DIR_INFO), "FileName");
 
             using (var safeBuffer = new SafeGlobalMemoryBufferHandle(NativeMethods.DefaultFileBufferSize))
-               do
+            {
+               while (true)
                {
-                  while (NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, (uint) safeBuffer.Capacity))
+                  if (!NativeMethods.GetFileInformationByHandleEx(safeHandle, NativeMethods.FileInfoByHandleClass.FileIdBothDirectoryInfo, safeBuffer, (uint)safeBuffer.Capacity))
                   {
-                     lastError = (uint) Marshal.GetLastWin32Error();
-                     if (lastError == Win32Errors.NO_ERROR)
+                     uint lastError = (uint)Marshal.GetLastWin32Error();
+                     switch (lastError)
                      {
-                        int offset = 0;
-                        var fibdi = safeBuffer.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>();
+                        case Win32Errors.ERROR_SUCCESS:
+                        case Win32Errors.ERROR_NO_MORE_FILES:
+                        case Win32Errors.ERROR_HANDLE_EOF:
+                           yield break;
 
-                        while (fibdi.NextEntryOffset != 0)
-                        {
-                           string fileName = safeBuffer.PtrToStringUni(offset + fileNameOffset, (int) (fibdi.FileNameLength/2));
+                        case Win32Errors.ERROR_MORE_DATA:
+                           continue;
 
-                           if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
-                               !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
-                              yield return new FileIdBothDirectoryInfo(fibdi, fileName);
-
-                           offset += fibdi.NextEntryOffset;
-                           fibdi = safeBuffer.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>(offset);
-                        }
+                        default:
+                           NativeError.ThrowException(lastError, path);
+                           yield break; // we should never get to this yield break.
                      }
-                     else
-                        break;
                   }
-
-                  switch (lastError)
+                  
+                  int offset = 0;
+                  NativeMethods.FILE_ID_BOTH_DIR_INFO fibdi;
+                  do
                   {
-                     case Win32Errors.ERROR_SUCCESS:
-                     case Win32Errors.ERROR_NO_MORE_FILES:
-                     case Win32Errors.ERROR_HANDLE_EOF:
-                        yield break;
+                     fibdi = safeBuffer.PtrToStructure<NativeMethods.FILE_ID_BOTH_DIR_INFO>(offset);
+                     string fileName = safeBuffer.PtrToStringUni(offset + fileNameOffset, (int)(fibdi.FileNameLength / 2));
 
-                     case Win32Errors.ERROR_MORE_DATA:
-                        continue;
+                     if (!fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) &&
+                         !fileName.Equals(Path.ParentDirectoryPrefix, StringComparison.OrdinalIgnoreCase))
+                        yield return new FileIdBothDirectoryInfo(fibdi, fileName);
 
-                     default:
-                        NativeError.ThrowException(lastError, path);
-                        break;
+                     offset += fibdi.NextEntryOffset;
                   }
-
-               } while (lastError == Win32Errors.ERROR_MORE_DATA);
+                  while (fibdi.NextEntryOffset != 0);
+               }                           
+            }
          }
          finally
          {
