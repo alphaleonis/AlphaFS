@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Network
          _storageInfoCollection = new List<DfsStorageInfo>();
 
          for (int i = 0; i < structure.NumberOfStorages; i++)
-            _storageInfoCollection.Add(new DfsStorageInfo(Utils.MarshalPtrToStructure<NativeMethods.DFS_STORAGE_INFO>(i, structure.Storage)));
+            _storageInfoCollection.Add(new DfsStorageInfo(Utils.PtrToStructure<NativeMethods.DFS_STORAGE_INFO>(i, structure.Storage)));
       }
 
       #endregion // Constructor

@@ -93,15 +93,27 @@ namespace Alphaleonis
 
       #endregion // IsNullOrWhiteSpace
 
-      #region MarshalPtrToStructure
+      #region PtrToXxx
 
-      public static T MarshalPtrToStructure<T>(int offset, IntPtr buffer) where T : struct
+      public static T PtrToStructure<T>(IntPtr buffer) where T : struct
+      {
+         return PtrToStructure<T>(0, buffer);
+      }
+
+      public static T PtrToStructure<T>(int offset, IntPtr buffer) where T : struct
       {
          var structure = new T();
          return (T) Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
       }
 
-      #endregion // MarshalPtrToStructure
+
+
+      public static string PtrToStringUni(IntPtr buffer, int offset, int length)
+      {
+         return Marshal.PtrToStringUni(new IntPtr(buffer.ToInt64() + offset), length);
+      }
+
+      #endregion // PtrToXxx
 
       #region UnitSizeToText
 

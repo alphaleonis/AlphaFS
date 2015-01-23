@@ -288,7 +288,7 @@ namespace Alphaleonis.Win32.Network
                : NativeMethods.NetDfsGetInfo(dfsName, null, null, 4, out buffer);
 
             if (lastError == Win32Errors.NERR_Success)
-               return new DfsInfo(Utils.MarshalPtrToStructure<NativeMethods.DFS_INFO_4>(0, buffer));
+               return new DfsInfo(Utils.PtrToStructure<NativeMethods.DFS_INFO_4>(buffer));
 
             throw new NetworkInformationException((int) lastError);
          }
