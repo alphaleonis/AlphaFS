@@ -1432,10 +1432,12 @@ namespace AlphaFS.UnitTest
          }
          string report = UnitTestConstants.Reporter();
 
-         bool matchAll = directories == numDirectories && files == numFiles;
          Console.WriteLine("\n\tEnumerated: Directories = [{0}] Files = [{1}]\t{2}", numDirectories, numFiles, report);
          Assert.IsTrue(foundFse, "Nothing was enumerated.");
+
+         bool matchAll = directories == numDirectories && files == numFiles;
          Assert.IsTrue(matchAll, "Number of directories and/or files don't match.");
+
          Console.WriteLine();
       }
 
