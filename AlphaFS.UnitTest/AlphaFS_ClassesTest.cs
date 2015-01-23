@@ -179,7 +179,7 @@ namespace AlphaFS.UnitTest
       private void DumpClassByHandleFileInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tempPath = Path.GetTempPath(" File.GetFileInfoByHandle()-" + Path.GetRandomFileName());
+         string tempPath = Path.GetTempPath("File.GetFileInfoByHandle()-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
          Console.WriteLine("\nInput File Path: [{0}]", tempPath);

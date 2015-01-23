@@ -1,4 +1,4 @@
-Version 2.1
+Version 2.0.1
 -----------
 ### Bugs Fixed
 Fixed Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
