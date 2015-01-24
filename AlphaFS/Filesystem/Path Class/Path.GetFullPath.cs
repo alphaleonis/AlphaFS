@@ -27,10 +27,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class Path
    {
-      #region Non-Transactional
-
-      #region .NET
-
       /// <summary>Returns the absolute path for the specified path string.</summary>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
       /// <remarks>
@@ -56,12 +52,6 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetFullPathTackleInternal(null, path);
       }
-
-      #endregion // .NET
-
-      #endregion // Non-Transactional
-
-      #region Transactional
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
       /// <returns>The fully qualified location of path, such as "C:\MyFile.txt".</returns>
@@ -90,11 +80,9 @@ namespace Alphaleonis.Win32.Filesystem
          return GetFullPathTackleInternal(transaction, path);
       }
 
-      #endregion // Transactional
-
       #region Internal Methods
-      
-      /// <summary>[AlphaFS] Unified method GetFullPathInternal() to retrieve the absolute path for the specified <paramref name="path"/> string.</summary>
+
+      /// <summary>Unified method GetFullPathInternal() to retrieve the absolute path for the specified <paramref name="path"/> string.</summary>
       /// <returns>Returns the fully qualified location of <paramref name="path"/>, such as "C:\MyFile.txt".</returns>
       /// <remarks>
       /// <para>GetFullPathName merges the name of the current drive and directory with a specified file name to determine the full path and file name of a specified file.</para>
@@ -118,6 +106,11 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static string GetFullPathInternal(KernelTransaction transaction, string path, GetFullPathOptions options)
       {
+         if (path != null)
+            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
+               return path;
+         
          if (options != GetFullPathOptions.None)
          {
             if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
@@ -186,16 +179,25 @@ namespace Alphaleonis.Win32.Filesystem
 
       private static string GetFullPathTackleInternal(KernelTransaction transaction, string path)
       {
-         CheckValidPath(path, true, true);
-
-         // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." which is the current directory.
          if (path != null)
          {
+            if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
+               return path;
+
+            // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." which is the current directory.
+            bool isLongPath = path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase) ||
+                              path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase);
+
+            bool isUnc = !isLongPath && path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase);
+
             string tackle = GetRegularPathInternal(path, GetFullPathOptions.None).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
 
-            if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
+            if (isUnc && (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar))
                throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
          }
+
+         CheckValidPath(path, true, true);
 
          return GetFullPathInternal(transaction, path, GetFullPathOptions.None);
       }

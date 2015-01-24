@@ -36,8 +36,8 @@ namespace AlphaFS.UnitTest
    {
       #region Fields
 
-      public static string Local = @"LOCAL";
-      public static string Network = @"NETWORK";
+      public static readonly string Local = @"LOCAL";
+      public static readonly string Network = @"NETWORK";
 
       public static readonly string LocalHost = Environment.MachineName;
       public static readonly string LocalHostShare = Environment.SystemDirectory;
@@ -47,8 +47,7 @@ namespace AlphaFS.UnitTest
       public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
       public static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");
       public static readonly string AppData = Environment.GetEnvironmentVariable("AppData");
-
-      public static string NotepadExe = Path.Combine(SysRoot32, "notepad.exe");
+      public static readonly string NotepadExe = Path.Combine(SysRoot32, "notepad.exe");
 
       public const string TextTrue = "IsTrue";
       public const string TextFalse = "IsFalse";
@@ -57,6 +56,89 @@ namespace AlphaFS.UnitTest
       public const string TextGoodByeWorld = "GóödByé Wôrld!";
       public const string TextAppend = "GóödByé Wôrld!";
       public const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
+
+      #region InputPaths
+
+      public static readonly string[] InputPaths =
+      {
+         @".",
+         @".zip",
+         
+         SysDrive + @"\\test.txt",
+         SysDrive + @"\/test.txt",
+
+         Path.DirectorySeparator,
+         Path.DirectorySeparator + @"Program Files\Microsoft Office",
+         
+         Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
+         Path.VolumePrefix + @"{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}\Program Files\notepad.exe",
+
+         @"Program Files\Microsoft Office",
+         SysDrive[0].ToString(CultureInfo.InvariantCulture),
+         SysDrive,
+         SysDrive + @"\",
+         SysDrive + @"\a",
+         SysDrive + @"\a\",
+         SysDrive + @"\a\b",
+         SysDrive + @"\a\b\",
+         SysDrive + @"\a\b\c",
+         SysDrive + @"\a\b\c\",
+         SysDrive + @"\a\b\c\f",
+         SysDrive + @"\a\b\c\f.",
+         SysDrive + @"\a\b\c\f.t",
+         SysDrive + @"\a\b\c\f.tx",
+         SysDrive + @"\a\b\c\f.txt",
+
+         Path.LongPathPrefix + @"Program Files\Microsoft Office",
+         Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
+         Path.LongPathPrefix + SysDrive,
+         Path.LongPathPrefix + SysDrive + @"\",
+         Path.LongPathPrefix + SysDrive + @"\a",
+         Path.LongPathPrefix + SysDrive + @"\a\",
+         Path.LongPathPrefix + SysDrive + @"\a\b",
+         Path.LongPathPrefix + SysDrive + @"\a\b\",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
+         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
+
+         Path.UncPrefix + @"Server\Share\",
+         Path.UncPrefix + @"Server\Share\d",
+         Path.UncPrefix + @"Server\Share\d1",
+         Path.UncPrefix + @"Server\Share\d1\",
+         Path.UncPrefix + @"Server\Share\d1\d",
+         Path.UncPrefix + @"Server\Share\d1\d2",
+         Path.UncPrefix + @"Server\Share\d1\d2\",
+         Path.UncPrefix + @"Server\Share\d1\d2\f",
+         Path.UncPrefix + @"Server\Share\d1\d2\fi",
+         Path.UncPrefix + @"Server\Share\d1\d2\fil",
+         Path.UncPrefix + @"Server\Share\d1\d2\file",
+         Path.UncPrefix + @"Server\Share\d1\d2\file.",
+         Path.UncPrefix + @"Server\Share\d1\d2\file.e",
+         Path.UncPrefix + @"Server\Share\d1\d2\file.ex",
+         Path.UncPrefix + @"Server\Share\d1\d2\file.ext",
+
+         Path.LongPathUncPrefix + @"Server\Share\",
+         Path.LongPathUncPrefix + @"Server\Share\d",
+         Path.LongPathUncPrefix + @"Server\Share\d1",
+         Path.LongPathUncPrefix + @"Server\Share\d1\",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d2",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d2\",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d2\f",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fi",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fil",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.e",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ex",
+         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ext"
+      };
+
+      #endregion // InputPaths
 
       #endregion // Fields
 
@@ -185,86 +267,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion //Dump
-
-      #region InputPaths
-
-      public static readonly string[] InputPaths =
-      {
-         @".",
-         @".zip",
-         
-         Path.DirectorySeparatorChar.ToString(CultureInfo.InvariantCulture),
-         Path.DirectorySeparatorChar + @"Program Files\Microsoft Office",
-         
-         Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
-         Path.VolumePrefix + @"{12345678-aac3-31de-3321-3124565341ed}\Program Files\notepad.exe",
-
-         @"Program Files\Microsoft Office",
-         SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         SysDrive,
-         SysDrive + @"\",
-         SysDrive + @"\a",
-         SysDrive + @"\a\",
-         SysDrive + @"\a\b",
-         SysDrive + @"\a\b\",
-         SysDrive + @"\a\b\c",
-         SysDrive + @"\a\b\c\",
-         SysDrive + @"\a\b\c\f",
-         SysDrive + @"\a\b\c\f.",
-         SysDrive + @"\a\b\c\f.t",
-         SysDrive + @"\a\b\c\f.tx",
-         SysDrive + @"\a\b\c\f.txt",
-
-         Path.LongPathPrefix + @"Program Files\Microsoft Office",
-         Path.LongPathPrefix + SysDrive[0].ToString(CultureInfo.InvariantCulture),
-         Path.LongPathPrefix + SysDrive,
-         Path.LongPathPrefix + SysDrive + @"\",
-         Path.LongPathPrefix + SysDrive + @"\a",
-         Path.LongPathPrefix + SysDrive + @"\a\",
-         Path.LongPathPrefix + SysDrive + @"\a\b",
-         Path.LongPathPrefix + SysDrive + @"\a\b\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.t",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
-         Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
-
-         Path.UncPrefix + @"Server\Share\",
-         Path.UncPrefix + @"Server\Share\d",
-         Path.UncPrefix + @"Server\Share\d1",
-         Path.UncPrefix + @"Server\Share\d1\",
-         Path.UncPrefix + @"Server\Share\d1\d",
-         Path.UncPrefix + @"Server\Share\d1\d2",
-         Path.UncPrefix + @"Server\Share\d1\d2\",
-         Path.UncPrefix + @"Server\Share\d1\d2\f",
-         Path.UncPrefix + @"Server\Share\d1\d2\fi",
-         Path.UncPrefix + @"Server\Share\d1\d2\fil",
-         Path.UncPrefix + @"Server\Share\d1\d2\file",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ext",
-
-         Path.LongPathUncPrefix + @"Server\Share\",
-         Path.LongPathUncPrefix + @"Server\Share\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1",
-         Path.LongPathUncPrefix + @"Server\Share\d1\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\f",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fi",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fil",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ext"
-      };
-
-      #endregion // InputPaths
 
       #region StringToByteArray
 
