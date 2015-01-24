@@ -30,7 +30,7 @@ namespace AlphaFS.UnitTest
    {
       private readonly DirectoryInfo _dirInfo;
 
-      public TemporaryDirectory(string prefix)
+      public TemporaryDirectory(string prefix = null)
       {
          if (Utils.IsNullOrWhiteSpace(prefix))
             prefix = "AlphaFS";
