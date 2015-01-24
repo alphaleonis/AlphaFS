@@ -66,5 +66,76 @@ namespace AlphaFS.UnitTest
             FileAssert.IsEncrypted(importedFile);
          }
       }
+
+      [TestMethod]
+      public void File_ExportEncryptedFileRaw_ExportImportRountripOfFileUsingUncPath_FileContentsOfImportedFileMatchesTheOriginalFile()
+      {
+         using (TemporaryDirectory rootDir = new TemporaryDirectory())
+         {            
+            // Create an encrypted file to use for testing
+            string root = PathUtils.AsUncPath(rootDir.Directory.FullName);
+            string inputFile = System.IO.Path.Combine(root, "test.txt");
+            System.IO.File.WriteAllText(inputFile, "Test file #1");
+            File.Encrypt(inputFile);
+
+            // Export the file using the method under test.
+            string exportedFile = System.IO.Path.Combine(root, "export.dat");
+            using (FileStream fs = System.IO.File.Create(exportedFile))
+            {
+               File.ExportEncryptedFileRaw(inputFile, fs);
+            }
+
+            FileAssert.Exists(exportedFile);
+            FileAssert.IsNotEncrypted(exportedFile);
+            FileAssert.AreNotEqual(inputFile, exportedFile);
+
+            // Import the file again
+            string importedFile = System.IO.Path.Combine(root, "import.txt");
+            using (FileStream fs = System.IO.File.OpenRead(exportedFile))
+            {
+               File.ImportEncryptedFileRaw(fs, importedFile);
+            }
+
+            // Verify that the imported file contents are equal to the original ones.
+            FileAssert.Exists(importedFile);
+            FileAssert.AreEqual(inputFile, importedFile);
+            FileAssert.IsEncrypted(importedFile);
+         }
+      }
+
+      [TestMethod]
+      public void Directory_ExportEncryptedDirectoryRaw_ExportImportRountrip_DirectoryCreatedCorrectly()
+      {
+         using (TemporaryDirectory rootDir = new TemporaryDirectory())
+         {
+            // Create an encrypted file to use for testing
+            string inputDir = System.IO.Path.Combine(rootDir.Directory.FullName, "testDir");
+            System.IO.Directory.CreateDirectory(inputDir);
+            File.WriteAllText(Path.Combine(inputDir, "test.txt"), "Test file");
+
+            Directory.Encrypt(inputDir, false);
+
+            // Export the file using the method under test.
+            string exportedFile = System.IO.Path.Combine(rootDir.Directory.FullName, "export.dat");
+            using (FileStream fs = System.IO.File.Create(exportedFile))
+            {
+               Directory.ExportEncryptedDirectoryRaw(inputDir, fs);               
+            }
+
+            FileAssert.Exists(exportedFile);
+            FileAssert.IsNotEncrypted(exportedFile);
+            
+            // Import the directory again
+            string importedDir = System.IO.Path.Combine(rootDir.Directory.FullName, "importDir");
+            using (FileStream fs = System.IO.File.OpenRead(exportedFile))
+            {
+               Directory.ImportEncryptedDirectoryRaw(fs, importedDir);               
+            }
+
+            // Verify that the imported file contents are equal to the original ones.
+            DirectoryAssert.Exists(importedDir);
+            DirectoryAssert.IsEncrypted(importedDir);
+         }
+      }
    }
 }

@@ -125,7 +125,8 @@
     <Compile Include="AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS_ClassesTest.cs" />
     <Compile Include="EncryptedFileRawTests.cs" />
-    <Compile Include="FileAssert.cs" />
+    <Compile Include="Utils\DirectoryAssert.cs" />
+    <Compile Include="Utils\FileAssert.cs" />
     <Compile Include="FileInfoTest.cs" />
     <Compile Include="AlphaFS_Shell32Test.cs" />
     <Compile Include="DirectoryInfoTest.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AlphaFS_VolumeTest.cs" />
+    <Compile Include="Utils\PathUtils.cs" />
     <Compile Include="Utils\UnitTestConstants.cs" />
     <Compile Include="Utils\TemporaryDirectory.cs" />
   </ItemGroup>
