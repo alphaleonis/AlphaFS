@@ -101,7 +101,29 @@
     <Prefer32Bit>false</Prefer32Bit>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
   </PropertyGroup>
-  <PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452|AnyCPU'">
+      <OutputPath>..\bin\Release\Net452\</OutputPath>
+      <DebugType>pdbonly</DebugType>
+      <Optimize>true</Optimize>
+      <DefineConstants>TRACE;NET452</DefineConstants>
+      <ErrorReport>prompt</ErrorReport>
+      <WarningLevel>4</WarningLevel>
+      <Prefer32Bit>false</Prefer32Bit>
+      <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+   </PropertyGroup>
+   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452 Debug|AnyCPU'">
+      <DebugSymbols>true</DebugSymbols>
+      <DebugType>full</DebugType>
+      <Optimize>false</Optimize>
+      <OutputPath>..\bin\Debug\Net452\</OutputPath>
+      <DefineConstants>DEBUG;TRACE;NET452</DefineConstants>
+      <ErrorReport>prompt</ErrorReport>
+      <WarningLevel>4</WarningLevel>
+      <PlatformTarget>AnyCPU</PlatformTarget>
+      <Prefer32Bit>false</Prefer32Bit>
+      <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+   </PropertyGroup>
+   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
