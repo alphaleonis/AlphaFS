@@ -1,5 +1,8 @@
 Version 2.1
 -----------
+### New Features
+
+- Issue #101: The release now also contains a build targetting .NET 4.5.2
 
 ### Bugs Fixed
 
