@@ -933,7 +933,9 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            Directory.Delete(tempPath, true, true);
+             if (Directory.Exists(tempPath))
+                 Directory.Delete(tempPath, true, true);
+
             Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
          }
 

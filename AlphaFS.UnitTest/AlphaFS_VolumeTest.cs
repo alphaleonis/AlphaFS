@@ -185,8 +185,8 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Volume.DefineDosDevice()");
 
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Fail();
+          if (!UnitTestConstants.IsAdmin())
+              Assert.Inconclusive();
 
          #region Regular Drive Mapping
 
@@ -576,8 +576,8 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Volume.EnumerateVolumeMountPoints()");
 
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Fail();
+          if (!UnitTestConstants.IsAdmin())
+              Assert.Inconclusive();
 
          #region Logical Drives
 
@@ -885,7 +885,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Volume.SetVolumeLabel()");
 
          if (!UnitTestConstants.IsAdmin())
-            Assert.Fail();
+             Assert.Inconclusive();
 
          const string newLabel = "ÂĽpĥæƑŞ ŠëtVőlümèĻāßƩl() Ťest";
          const string template = "\nSystem Drive: [{0}]\tCurrent Label: [{1}]";
@@ -973,10 +973,10 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void SetVolumeMountPoint()
       {
-         Console.WriteLine("Volume.SetVolumeMountPoint()\n");
+         Console.WriteLine("Volume.SetVolumeMountPoint()");
 
-         if (!UnitTestConstants.IsAdmin())
-            Assert.Fail();
+          if (!UnitTestConstants.IsAdmin())
+              Assert.Inconclusive();
 
          #region Logical Drives
 

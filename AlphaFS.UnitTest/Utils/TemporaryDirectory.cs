@@ -59,7 +59,8 @@ namespace AlphaFS.UnitTest
       {
          try
          {
-            _dirInfo.Delete(true);
+             if (_dirInfo.Exists)
+                 _dirInfo.Delete(true);
          }
          catch (Exception ex)
          {

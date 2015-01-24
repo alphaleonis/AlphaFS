@@ -75,8 +75,9 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
-         if (isLocal)
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+          if (cnt == 0)
+              Assert.Inconclusive("Nothing was enumerated.");
       }
 
       #endregion // DumpEnumerateDrives

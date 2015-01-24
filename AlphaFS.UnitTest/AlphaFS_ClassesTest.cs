@@ -409,7 +409,9 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            Directory.Delete(tempPath);
+             if (Directory.Exists(tempPath))
+                 Directory.Delete(tempPath);
+
             Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
          
@@ -1150,7 +1152,7 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("\n=== TEST ===");
          Console.WriteLine("\nNetwork.Host.EnumerateOpenResources() from host: [{0}]", host);
-
+          
          UnitTestConstants.StopWatcher(true);
          foreach (OpenConnectionInfo connectionInfo in Host.EnumerateOpenConnections(host, "IPC$", false))
             UnitTestConstants.Dump(connectionInfo, -16);
@@ -1386,6 +1388,9 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Class Network.OpenConnectionInfo()");
 
+         if (!UnitTestConstants.IsAdmin())
+             Assert.Inconclusive();
+
          DumpOpenConnectionInfo(UnitTestConstants.LocalHost);
       }
 
@@ -1397,6 +1402,9 @@ namespace AlphaFS.UnitTest
       public void Network_Class_OpenResourceInfo()
       {
          Console.WriteLine("Class Network.OpenResourceInfo()");
+
+         if (!UnitTestConstants.IsAdmin())
+             Assert.Inconclusive();
 
          DumpClassOpenResourceInfo(UnitTestConstants.LocalHost, UnitTestConstants.LocalHostShare);
       }

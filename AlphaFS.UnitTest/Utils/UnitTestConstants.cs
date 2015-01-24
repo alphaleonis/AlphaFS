@@ -137,7 +137,7 @@ namespace AlphaFS.UnitTest
          bool isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 
          if (!isAdmin)
-            Console.WriteLine("\n\tThis Unit Test must be run as Administrator.");
+            Console.WriteLine("\nThis Unit Test must be run as Administrator.\n");
 
          return isAdmin;
       }

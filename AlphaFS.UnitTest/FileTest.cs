@@ -2409,6 +2409,9 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("File.Create()");
 
+          if (!UnitTestConstants.IsAdmin())
+              Assert.Inconclusive();
+
          string pathExpected = Path.GetTempPath("AlphaFS CreateWithFileSecurityExpected");
          string pathActual = Path.GetTempPath("AlphaFS CreateWithFileSecurityActual");
 
@@ -2820,7 +2823,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("File.SetAccessControl()");
 
          if (!UnitTestConstants.IsAdmin())
-            Assert.Fail();
+             Assert.Inconclusive();
 
          string path = UnitTestConstants.SysDrive + @"\AlphaFile-" + Path.GetRandomFileName();
          string pathAlpha = path;
