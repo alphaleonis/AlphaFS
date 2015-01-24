@@ -1,15 +1,23 @@
+Changelog
+=========
+
 Version 2.1
 -----------
 ### New Features
 
 - Issue #101: The release now also contains a build targetting .NET 4.5.2
+- Issue #3: Added methods for backing up and restoring encrypted files:
+	* `File.ImportEncryptedFileRaw`
+	* `File.ExportEncryptedFileRaw`
+	* `Directory.ImportEncryptedDirectoryRaw`
+	* `Directory.ExportEncryptedDirectoryRaw`
 
 ### Bugs Fixed
 
 - Fixed Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
 
 Version 2.0.1
------------
+-------------
 
 ### Bugs Fixed
 
