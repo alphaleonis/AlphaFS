@@ -1417,11 +1417,11 @@ namespace AlphaFS.UnitTest
 
          #region Decrypt
 
-         // Decrypt directory recursively.
+         // Decrypt directory only.
          StopWatcher(true);
          try
          {
-            Directory.Decrypt(tempPath, true);
+            Directory.Decrypt(tempPath);
             report = Reporter();
             action = true;
          }
@@ -1439,15 +1439,15 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nDirectory Decrypted (Should be True): [{0}]\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
 
 
-         // Verify that everything is decrypted.
+         // Verify that everything is still decrypted.
          cnt = 0;
          foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
          {
             actual = fsei.Attributes;
             action = (actual & FileAttributes.Encrypted) == 0;
 
-            Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tDecrypted (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
-            Assert.IsTrue(action, "File system ojbect should be decrypted.");
+            Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tDecrypted (Should be False): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
+            Assert.IsFalse(action, "File system ojbect should be encrypted.");
          }
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
 

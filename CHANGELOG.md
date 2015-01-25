@@ -4,6 +4,7 @@ Version 2.0.1
 * Fixed Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)
 * Fixed Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`.
 * Fixed Issue #117: Fix `Path.GetFullPath()` issues.
+* Fixed Issue #123: When `Directory.Encrypt/Decrypt()` is non-recursive, only process the folder.
 
 Version 2.0
 -----------
