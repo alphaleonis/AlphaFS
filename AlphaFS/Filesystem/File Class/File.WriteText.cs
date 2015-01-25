@@ -986,7 +986,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("encoding");
 
 
-         using (FileStream stream = OpenInternal(transaction, path, (isAppend ? FileMode.OpenOrCreate : FileMode.Create), FileSystemRights.AppendData, FileAccess.Write, FileShare.ReadWrite, ExtendedFileAttributes.None, pathFormat))
+         using (FileStream stream = OpenInternal(transaction, path, (isAppend ? FileMode.OpenOrCreate : FileMode.Create), FileSystemRights.AppendData, FileShare.ReadWrite, ExtendedFileAttributes.None, null, null, pathFormat))
          {
             if (isAppend)
                stream.Seek(0, SeekOrigin.End);

@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
+         return File.OpenInternal(Transaction, LongFullName, mode, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access.</summary>
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
+         return File.OpenInternal(Transaction, LongFullName, mode, access, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileAccess access, FileShare share)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, 0, access, share, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
+         return File.OpenInternal(Transaction, LongFullName, mode, access, share, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
+         return File.OpenInternal(Transaction, LongFullName, mode, rights, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Opens a file in the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Open(FileMode mode, FileSystemRights rights, FileShare share)
       {
-         return File.OpenInternal(Transaction, LongFullName, mode, rights, 0, share, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
+         return File.OpenInternal(Transaction, LongFullName, mode, rights, share, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
 
       #endregion // AlphaFS

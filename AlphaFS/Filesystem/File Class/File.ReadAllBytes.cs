@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          byte[] buffer;
 
-         using (FileStream fs = OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.None, pathFormat))
+         using (FileStream fs = OpenRead(transaction, path, pathFormat))
          {
             int offset = 0;
             long length = fs.Length;

@@ -178,7 +178,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static StreamWriter AppendTextInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         FileStream fs = OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
+         FileStream fs = OpenInternal(transaction, path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
 
          try
          {

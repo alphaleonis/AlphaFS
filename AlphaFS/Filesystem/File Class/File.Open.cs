@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode)
       {
-         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.RelativePath);
+         return OpenInternal(null, path, mode, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access)
       {
-         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.RelativePath);
+         return OpenInternal(null, path, mode, access, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -66,9 +66,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share)
       {
-         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, PathFormat.RelativePath);
+         return OpenInternal(null, path, mode, access, share, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
 
+     
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">
@@ -80,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
+         return OpenInternal(null, path, mode, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -97,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
+         return OpenInternal(null, path, mode, access, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
 
       /// <summary>
@@ -119,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, mode, 0, access, share, ExtendedFileAttributes.Normal, pathFormat);
+         return OpenInternal(null, path, mode, access, share, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
 
       /// <summary>
@@ -142,11 +143,384 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, mode, 0, access, share, extendedAttributes, pathFormat);
+         return OpenInternal(null, path, mode, access, share, extendedAttributes, null, null, pathFormat);
+      }
+
+      // New below
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The default buffer size is 4096. </param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize)
+      {
+         return OpenInternal(null, path, mode, access, share, ExtendedFileAttributes.Normal, bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="useAsync">Specifies whether to use asynchronous I/O or synchronous I/O. However, note that the
+      /// underlying operating system might not support asynchronous I/O, so when specifying true, the handle might be
+      /// opened synchronously depending on the platform. When opened asynchronously, the BeginRead and BeginWrite methods
+      /// perform better on large reads or writes, but they might be much slower for small reads or writes. If the
+      /// application is designed to take advantage of asynchronous I/O, set the useAsync parameter to true. Using
+      /// asynchronous I/O correctly can speed up applications by as much as a factor of 10, but using it without
+      /// redesigning the application for asynchronous I/O can decrease performance by as much as a factor of 10.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync)
+      {
+         return OpenInternal(null, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : 0), bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, FileOptions options)
+      {
+         return OpenInternal(null, path, mode, access, share, (ExtendedFileAttributes)options, bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">The extended attributes specifying additional options.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>      
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes)
+      {
+         return OpenInternal(null, path, mode, access, share, extendedAttributes, bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options)
+      {
+         return OpenInternal(null, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">Extended attributes specifying additional options.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes)
+      {
+         return OpenInternal(null, path, mode, rights, share, extendedAttributes, bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <param name="security">A value that determines the access control and audit security for the file.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, FileSecurity security)
+      {
+         return OpenInternal(null, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, security, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">Extended attributes specifying additional options.</param>
+      /// <param name="security">A value that determines the access control and audit security for the file.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, FileSecurity security)
+      {
+         return OpenInternal(null, path, mode, rights, share, extendedAttributes, bufferSize, security, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, PathFormat pathFormat)
+      {
+         return OpenInternal(null, path, mode, access, share, ExtendedFileAttributes.Normal, bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="useAsync">Specifies whether to use asynchronous I/O or synchronous I/O. However, note that the
+      /// underlying operating system might not support asynchronous I/O, so when specifying true, the handle might be
+      /// opened synchronously depending on the platform. When opened asynchronously, the BeginRead and BeginWrite methods
+      /// perform better on large reads or writes, but they might be much slower for small reads or writes. If the
+      /// application is designed to take advantage of asynchronous I/O, set the useAsync parameter to true. Using
+      /// asynchronous I/O correctly can speed up applications by as much as a factor of 10, but using it without
+      /// redesigning the application for asynchronous I/O can decrease performance by as much as a factor of 10.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync, PathFormat pathFormat)
+      {
+         return OpenInternal(null, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : 0), bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, FileOptions options, PathFormat pathFormat)
+      {
+         return OpenInternal(null, path, mode, access, share, (ExtendedFileAttributes)options, bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">The extended attributes specifying additional options.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
+      {
+         return OpenInternal(null, path, mode, access, share, extendedAttributes, bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, PathFormat pathFormat)
+      {
+         return OpenInternal(null, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">Extended attributes specifying additional options.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
+      {
+         return OpenInternal(null, path, mode, rights, share, extendedAttributes, bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified  creation mode, access rights and sharing permission, the buffer size, additional file options, access control and audit security.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <param name="security">A value that determines the access control and audit security for the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, FileSecurity security, PathFormat pathFormat)
+      {
+         return OpenInternal(null, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, security, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified  creation mode, access rights and
+      ///   sharing permission, the buffer size, additional file options, access control and audit security.
+      /// </summary>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">Extended attributes specifying additional options.</param>
+      /// <param name="security">A value that determines the access control and audit security for the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, FileSecurity security, PathFormat pathFormat)
+      {
+         return OpenInternal(null, path, mode, rights, share, extendedAttributes, bufferSize, security, pathFormat);
       }
 
       #endregion
-
 
       #region Transactional
 
@@ -161,7 +535,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode)
       {
-         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.RelativePath);
+         return OpenInternal(transaction, path, mode, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -178,7 +552,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access)
       {
-         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.RelativePath);
+         return OpenInternal(transaction, path, mode, access, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -200,7 +574,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share)
       {
-         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, PathFormat.RelativePath);
+         return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] (Transacted) Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
@@ -215,7 +589,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, mode, 0, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
+         return OpenInternal(transaction, path, mode, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
@@ -233,7 +607,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, mode, 0, access, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
+         return OpenInternal(transaction, path, mode, access, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
@@ -247,7 +621,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, mode, 0, access, share, ExtendedFileAttributes.Normal, pathFormat);
+         return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
 
       /// <summary>
@@ -271,7 +645,400 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, mode, 0, access, share, extendedAttributes, pathFormat);
+         return OpenInternal(transaction, path, mode, access, share, extendedAttributes, null, null, pathFormat);
+      }
+
+
+      // New below
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize)
+      {
+         return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal, bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="useAsync">Specifies whether to use asynchronous I/O or synchronous I/O. However, note that the
+      /// underlying operating system might not support asynchronous I/O, so when specifying true, the handle might be
+      /// opened synchronously depending on the platform. When opened asynchronously, the BeginRead and BeginWrite methods
+      /// perform better on large reads or writes, but they might be much slower for small reads or writes. If the
+      /// application is designed to take advantage of asynchronous I/O, set the useAsync parameter to true. Using
+      /// asynchronous I/O correctly can speed up applications by as much as a factor of 10, but using it without
+      /// redesigning the application for asynchronous I/O can decrease performance by as much as a factor of 10.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync)
+      {
+         return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : 0), bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, FileOptions options)
+      {
+         return OpenInternal(transaction, path, mode, access, share, (ExtendedFileAttributes)options, bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">The extended attributes specifying additional options.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes)
+      {
+         return OpenInternal(transaction, path, mode, access, share, extendedAttributes, bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options)
+      {
+         return OpenInternal(transaction, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">Extended attributes specifying additional options.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes)
+      {
+         return OpenInternal(transaction, path, mode, rights, share, extendedAttributes, bufferSize, null, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <param name="security">A value that determines the access control and audit security for the file.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, FileSecurity security)
+      {
+         return OpenInternal(transaction, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, security, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">Extended attributes specifying additional options.</param>
+      /// <param name="security">A value that determines the access control and audit security for the file.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, FileSecurity security)
+      {
+         return OpenInternal(transaction, path, mode, rights, share, extendedAttributes, bufferSize, security, PathFormat.RelativePath);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, PathFormat pathFormat)
+      {
+         return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal, bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="useAsync">Specifies whether to use asynchronous I/O or synchronous I/O. However, note that the
+      /// underlying operating system might not support asynchronous I/O, so when specifying true, the handle might be
+      /// opened synchronously depending on the platform. When opened asynchronously, the BeginRead and BeginWrite methods
+      /// perform better on large reads or writes, but they might be much slower for small reads or writes. If the
+      /// application is designed to take advantage of asynchronous I/O, set the useAsync parameter to true. Using
+      /// asynchronous I/O correctly can speed up applications by as much as a factor of 10, but using it without
+      /// redesigning the application for asynchronous I/O can decrease performance by as much as a factor of 10.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync, PathFormat pathFormat)
+      {
+         return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : 0), bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, FileOptions options, PathFormat pathFormat)
+      {
+         return OpenInternal(transaction, path, mode, access, share, (ExtendedFileAttributes)options, bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">The extended attributes specifying additional options.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
+      {
+         return OpenInternal(transaction, path, mode, access, share, extendedAttributes, bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, PathFormat pathFormat)
+      {
+         return OpenInternal(transaction, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and
+      ///   sharing permission, and buffer size.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">Extended attributes specifying additional options.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
+      {
+         return OpenInternal(transaction, path, mode, rights, share, extendedAttributes, bufferSize, null, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified  creation mode, access rights and
+      ///   sharing permission, the buffer size, additional file options, access control and audit security.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="options">A value that specifies additional file options.</param>
+      /// <param name="security">A value that determines the access control and audit security for the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, FileSecurity security, PathFormat pathFormat)
+      {
+         return OpenInternal(transaction, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, security, pathFormat);
+      }
+
+      /// <summary>
+      ///   Opens a <see cref="FileStream"/> on the specified path using the specified  creation mode, access rights and
+      ///   sharing permission, the buffer size, additional file options, access control and audit security.
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A constant that determines how to open or create the file.</param>
+      /// <param name="rights">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
+      /// <param name="share">A constant that determines how the file will be shared by processes.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// <param name="extendedAttributes">Extended attributes specifying additional options.</param>
+      /// <param name="security">A value that determines the access control and audit security for the file.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter.</param>
+      /// <returns>
+      ///   A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write
+      ///   access and the specified sharing option.
+      /// </returns>
+      [SecurityCritical]
+      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, FileSecurity security, PathFormat pathFormat)
+      {
+         return OpenInternal(transaction, path, mode, rights, share, extendedAttributes, bufferSize, security, pathFormat);
       }
 
       #endregion // Transacted
@@ -291,7 +1058,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(string path)
       {
-         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.RelativePath);
+         return Open(path, FileMode.Open, FileAccess.Read);            
       }
 
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
@@ -305,7 +1072,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(string path, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat);
+         return Open(path, FileMode.Open, FileAccess.Read, pathFormat);
       }
 
       #region Transactional
@@ -321,7 +1088,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.RelativePath);
+         return Open(transaction, path, FileMode.Open, FileAccess.Read);
       }
 
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
@@ -336,7 +1103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenRead(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat);
+         return Open(transaction, path, FileMode.Open, FileAccess.Read, pathFormat);
       }
 
 
@@ -353,7 +1120,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.RelativePath), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenRead(path), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
@@ -364,7 +1131,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenRead(path, pathFormat), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
@@ -376,7 +1143,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), encoding);
+         return new StreamReader(OpenRead(path, pathFormat), encoding);
       }
 
 
@@ -388,7 +1155,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamReader OpenText(string path, Encoding encoding)
       {
-         return new StreamReader(OpenInternal(null, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.RelativePath), encoding);
+         return new StreamReader(OpenRead(path), encoding);
       }
 
       #region Transactional
@@ -400,7 +1167,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.RelativePath), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenRead(transaction, path), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
@@ -411,7 +1178,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenRead(transaction, path, pathFormat), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
@@ -423,7 +1190,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, pathFormat), encoding);
+         return new StreamReader(OpenRead(transaction, path, pathFormat), encoding);
       }
 
       /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
@@ -434,7 +1201,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return new StreamReader(OpenInternal(transaction, path, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.RelativePath), encoding);
+         return new StreamReader(OpenRead(transaction, path), encoding);
       }
 
       #endregion // Transacted
@@ -450,7 +1217,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(string path)
       {
-         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.RelativePath);
+         return Open(path, FileMode.OpenOrCreate, FileAccess.Write);            
       }
 
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
@@ -460,7 +1227,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(string path, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
+         return Open(path, FileMode.OpenOrCreate, FileAccess.Write, pathFormat);
       }
 
       #region Transactional
@@ -472,7 +1239,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.RelativePath);
+         return Open(transaction, path, FileMode.OpenOrCreate, FileAccess.Write);
       }
 
       /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
@@ -483,7 +1250,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenWrite(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, FileMode.OpenOrCreate, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, pathFormat);
+         return Open(transaction, path, FileMode.OpenOrCreate, FileAccess.Write, pathFormat);
       }
 
       #endregion // Transacted
@@ -500,7 +1267,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(string path, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, pathFormat);
+         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
       }
 
 
@@ -513,7 +1280,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(string path)
       {
-         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, PathFormat.RelativePath);
+         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
       }
 
       #region Transactional
@@ -526,7 +1293,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, pathFormat);
+         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.</summary>
@@ -536,7 +1303,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileAccess.Read, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, PathFormat.RelativePath);
+         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
       }
 
       #endregion // Transacted
@@ -546,37 +1313,65 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Methods
 
       /// <summary>
-      ///   [AlphaFS] Unified method OpenInternal() to open a <see cref="FileStream"/> on the specified path, having the specified mode with
+      ///   [AlphaFS] Unified method OpenInternal() to open a <see cref="FileStream"/> on the specified path, having the
+      ///   specified mode with
       ///   <para>read, write, or read/write access, the specified sharing option and additional options specified.</para>
       /// </summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open.</param>
-      /// <param name="mode">
-      ///   A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents
-      ///   of existing files are retained or overwritten.
-      /// </param>
-      /// <param name="rights">
-      ///   A <see cref="FileSystemRights"/> value that specifies whether a file is created if one does not exist, and determines whether the
-      ///   contents of existing files are retained or overwritten along with additional options.
-      /// </param>
-      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the file.</param>
+      /// <param name="mode">A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist,
+      /// and determines whether the contents of existing files are retained or overwritten.</param>
+      /// <param name="access">A <see cref="FileAccess"/> value that specifies the operations that can be performed on the
+      /// file.</param>
       /// <param name="share">A <see cref="FileShare"/> value specifying the type of access other threads have to the file.</param>
       /// <param name="attributes">Advanced <see cref="ExtendedFileAttributes"/> options for this file.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// 
+      /// <param name="security">The security.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>
       ///   <para>A <see cref="FileStream"/> instance on the specified path, having the specified mode with</para>
       ///   <para>read, write, or read/write access and the specified sharing option.</para>
       /// </returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SecurityCritical]
-      internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileAccess access, FileShare share, ExtendedFileAttributes attributes, PathFormat pathFormat)
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, ExtendedFileAttributes attributes, int? bufferSize, FileSecurity security, PathFormat pathFormat)
       {
-         SafeFileHandle safeHandle = CreateFileInternal(transaction, path, attributes, null, mode, rights != 0 ? rights : (FileSystemRights)access, share, true, pathFormat);
-
-         return rights != 0
-            ? new FileStream(safeHandle, FileAccess.Write)
-            : new FileStream(safeHandle, access);
+         FileSystemRights rights = access == FileAccess.Read ? FileSystemRights.Read : (access == FileAccess.Write ? FileSystemRights.Write : FileSystemRights.Read | FileSystemRights.Write);
+         SafeFileHandle safeHandle = CreateFileInternal(transaction, path, attributes, security, mode, rights, share, true, pathFormat);
+         return new FileStream(safeHandle, access, bufferSize ?? NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
       }
+
+      /// <summary>
+      ///   [AlphaFS] Unified method OpenInternal() to open a <see cref="FileStream"/> on the specified path, having the
+      ///   specified mode with
+      ///   <para>read, write, or read/write access, the specified sharing option and additional options specified.</para>
+      /// </summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The file to open.</param>
+      /// <param name="mode">A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist,
+      /// and determines whether the contents of existing files are retained or overwritten.</param>
+      /// <param name="rights">A <see cref="FileSystemRights"/> value that specifies whether a file is created if one does
+      /// not exist, and determines whether the contents of existing files are retained or overwritten along with additional
+      /// options.</param>
+      /// <param name="share">A <see cref="FileShare"/> value specifying the type of access other threads have to the file.</param>
+      /// <param name="attributes">Advanced <see cref="ExtendedFileAttributes"/> options for this file.</param>
+      /// <param name="bufferSize">A positive <see cref="System.Int32"/> value greater than 0 indicating the buffer size. The
+      /// default buffer size is 4096.</param>
+      /// 
+      /// <param name="security">The security.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <returns>
+      ///   <para>A <see cref="FileStream"/> instance on the specified path, having the specified mode with</para>
+      ///   <para>read, write, or read/write access and the specified sharing option.</para>
+      /// </returns>
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, ExtendedFileAttributes attributes, int? bufferSize, FileSecurity security, PathFormat pathFormat)
+      {
+         FileAccess access = ((rights & FileSystemRights.ReadData) != 0 ? FileAccess.Read : 0) | (((rights & FileSystemRights.WriteData) != 0 || (rights & FileSystemRights.AppendData) != 0) ? FileAccess.Write : 0);
+         SafeFileHandle safeHandle = CreateFileInternal(transaction, path, attributes, security, mode, rights, share, true, pathFormat);
+         return new FileStream(safeHandle, access, bufferSize ?? NativeMethods.DefaultFileBufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
+      }      
 
       #endregion // OpenInternal
    }

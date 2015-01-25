@@ -26,17 +26,13 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region .NET
-
       /// <summary>Creates a read-only <see cref="FileStream"/>.</summary>
       /// <returns>A new read-only <see cref="FileStream"/> object.</returns>
       /// <remarks>This method returns a read-only <see cref="FileStream"/> object with the <see cref="FileShare"/> mode set to Read.</remarks>
       [SecurityCritical]
       public FileStream OpenRead()
       {
-         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
+         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
-
-      #endregion // .NET
    }
 }
