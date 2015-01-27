@@ -189,12 +189,13 @@ namespace Alphaleonis.Win32.Filesystem
             bool isLongPath = path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase) ||
                               path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase);
 
-            bool isUnc = !isLongPath && path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase);
+             if (!isLongPath && path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase))
+             {
+                 string tackle = GetRegularPathInternal(path, GetFullPathOptions.None).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
 
-            string tackle = GetRegularPathInternal(path, GetFullPathOptions.None).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
-
-            if (isUnc && (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar))
-               throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
+                 if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
+                     throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
+             }
          }
 
          CheckValidPath(path, true, true);
