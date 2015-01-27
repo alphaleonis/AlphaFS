@@ -5,11 +5,11 @@ author: Yomodo
 ---
 
 <div class="well bg-info">
-<span class="lead">Excited about your latest master-piece, but filled with anger and fear
-when you find out that a .NET path can still be too long for your app.</span>
+<span class="lead">Excited about your latest masterpiece, but filled with anger and fear
+<br />when you find out that a .NET path can still be too long for your app.</span>
 </div>
 
-So, this is exactly how i felt, mostly angry.
+So, this is exactly how I felt, mostly angry.
 
 I had written the best next-gen-file-explorer only to find out that it kinda sucked when I reached that dreaded `PATH TOO LONG` error.
 
@@ -23,9 +23,9 @@ The result of that is presented here today!
 We are proud to present to you **version 2.0 of AlphaFS**.
 
 > "When the Path is too long, one's journey may end.
-Observing the First, as Alpha moves on."
+<br />Observing the First, as Alpha moves on."
 
-*/ Yomodo*
+*Yomodo*
 
 ### Highlights of version 2.0
 - AlphaFS is now distributed primarily at [NuGet](https://www.nuget.org/packages/AlphaFS/).
