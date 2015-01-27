@@ -11,7 +11,8 @@ author: Yomodo
 
 So, this is exactly how I felt, mostly angry.
 
-I had written the best next-gen-file-explorer only to find out that it kinda sucked when I reached that dreaded `PATH TOO LONG` error.
+I had written the best next-gen-file-explorer only to find out that it kinda sucked
+when I reached that dreaded `PATH TOO LONG` error.
 
 Just as you did, I searched the net and searched the net and searched until I came across AlphaFS 1.5.
 <br />Wohoo! I was SO happy to see that people actually had put together this marvelous library
