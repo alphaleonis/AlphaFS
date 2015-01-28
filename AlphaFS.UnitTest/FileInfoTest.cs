@@ -493,17 +493,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // EnumerateAlternateDataStreams
-
-      #region GetAlternateDataStreamSize
-
-      [TestMethod]
-      public void AlphaFS_GetAlternateDataStreamSize()
-      {
-         Console.WriteLine("FileInfo.GetAlternateDataStreamSize()");
-         Console.WriteLine("\nPlease see unit tests from class: File().");
-      }
-
-      #endregion // GetAlternateDataStreamSize
       
       #endregion // AlphaFS
 
