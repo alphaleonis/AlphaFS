@@ -682,7 +682,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\tSystem.IO : [{0}]", expected);
+            Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
 
 
             // AlphaFS
@@ -699,7 +699,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\tAlphaFS   : [{0}]", actual);
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
 
@@ -1059,48 +1059,23 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Path.GetRegularPath()");
 
          int pathCnt = 0;
-         bool allOk = true;
-         int errorCnt = 0;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            string method = null;
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+            
+            string actual = Path.GetRegularPath(path);
 
-            try
-            {
-               method = "AlphaFS";
-               string actual = Path.GetRegularPath(path);
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
 
-               method = "System.IO";
-               string expected = UnitTestConstants.InputPaths[pathCnt];
 
-               if (Path.IsLongPath(expected))
-                  Assert.IsFalse(Path.IsLongPath(actual), "Path should be regular.");
+            if (actual.StartsWith(Path.GlobalRootPrefix) || actual.StartsWith(Path.VolumePrefix))
+               continue;
 
-               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]", ++pathCnt, path, actual);
-
-               if (expected.StartsWith(Path.LongPathUncPrefix, StringComparison.OrdinalIgnoreCase))
-                  expected = expected.Replace(Path.LongPathUncPrefix, Path.UncPrefix);
-
-               expected = expected.Replace(Path.LongPathPrefix, "");
-
-               Assert.AreEqual(expected, actual);
-            }
-            catch (ArgumentException ex)
-            {
-               Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
-               errorCnt++;
-            }
+            Assert.IsFalse(actual.StartsWith(Path.LongPathPrefix));
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
-
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
 
       #endregion // GetRegularPath

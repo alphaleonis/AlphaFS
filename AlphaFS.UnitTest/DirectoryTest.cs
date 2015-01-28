@@ -3363,44 +3363,75 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Directory.GetDirectoryRoot()");
 
          int pathCnt = 0;
-         bool allOk = true;
          int errorCnt = 0;
+         bool gotError = false;
+
+         #region ArgumentException
+
+         string expectedException = "System.ArgumentException";
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nCatch: [{0}]: \\\\.txt", expectedException);
+            Directory.GetDirectoryRoot(@"\\\\.txt");
+         }
+         catch (ArgumentException ex)
+         {
+            exception = true;
+            Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Console.WriteLine();
+
+         #endregion // ArgumentException
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            string method = null;
+            string expected = null;
+            string actual = null;
+            gotError = false;
 
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+
+            // System.IO
             try
             {
-               method = "AlphaFS";
-               string actual = Directory.GetDirectoryRoot(path);
-
-               method = "System.IO";
-               string expected = System.IO.Directory.GetDirectoryRoot(path);
-
-               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, path, actual, expected);
-               Assert.AreEqual(expected, actual);
-
-               ++pathCnt;
-            }
-            catch (ArgumentException ex)
-            {
-               Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
+               expected = System.IO.Directory.GetDirectoryRoot(path);
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
+               gotError = ex is ArgumentException;
+
+               Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
+
+
+            // AlphaFS
+            try
+            {
+               actual = Directory.GetDirectoryRoot(path);
+
+               if (!gotError)
+                  Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
                errorCnt++;
 
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
          }
-         Console.WriteLine("\n\t{0}", UnitTestConstants.Reporter(true));
+         Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
 
-         Assert.IsTrue(pathCnt > 0);
-
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
 
       #endregion // GetDirectoryRoot

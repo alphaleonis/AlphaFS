@@ -185,17 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
                 path.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
                return path;
 
-            // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." which is the current directory.
-            bool isLongPath = path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase) ||
-                              path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase);
-
-             if (!isLongPath && path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase))
-             {
-                 string tackle = GetRegularPathInternal(path, GetFullPathOptions.None).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
-
-                 if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
-                     throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
-             }
+            CheckInvalidUncPath(path);
          }
 
          CheckValidPath(path, true, true);

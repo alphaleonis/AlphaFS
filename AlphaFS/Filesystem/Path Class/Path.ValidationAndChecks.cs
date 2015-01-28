@@ -165,7 +165,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>Checks the validity of the path.</summary>
+      internal static void CheckInvalidUncPath(string path)
+      {
+         // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." which is the current directory.
+         if (!IsLongPath(path) && path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase))
+         {
+            string tackle = GetRegularPathInternal(path, GetFullPathOptions.None).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
+
+            if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
+               throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
+         }
+      }
+
+      /// <summary>Checks that the given path format is supported.</summary>
       /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <param name="path">A path to the file or directory.</param>
       /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
@@ -183,7 +195,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (checkInvalidPathChars && path != null)
             CheckInvalidPathChars(path, checkAdditional);
       }
-
+      
       /// <summary>[AlphaFS] Checks that the path contains only valid path-characters.</summary>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -221,7 +233,7 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
       }
-
+      
       /// <summary>[AlphaFS] Tranlates DosDevicePath, Volume GUID. For example: "\Device\HarddiskVolumeX\path\filename.ext" can translate to: "\path\filename.ext" or: "\\?\Volume{GUID}\path\filename.ext".</summary>
       /// <returns>A translated dos path.</returns>
       /// <param name="dosDevice">A DosDevicePath, for example: \Device\HarddiskVolumeX\path\filename.ext.</param>
@@ -246,22 +258,6 @@ namespace Alphaleonis.Win32.Filesystem
             }
          }
          return string.Empty;
-      }
-
-      /// <summary>[AlphaFS] Check if <paramref name="path"/> ends with a directory- and/or volume-separator character.</summary>
-      /// <returns><see langword="true"/> if <paramref name="path"/> ends with a separator character.</returns>
-      /// <param name="path">The patch to check.</param>
-      /// <param name="checkVolumeSeparatorChar">
-      ///   If <see langword="null"/>, checks for all separator characters: <see cref="DirectorySeparatorChar"/>,
-      ///   <see cref="AltDirectorySeparatorChar"/>
-      ///   and <see cref="VolumeSeparatorChar"/>
-      ///   If <see langword="false"/>, only checks for: <see cref="DirectorySeparatorChar"/> and <see cref="AltDirectorySeparatorChar"/>
-      ///   If <see langword="true"/>, only checks for: <see cref="VolumeSeparatorChar"/>
-      /// </param>
-      [SecurityCritical]
-      internal static bool EndsWithDVsc(string path, bool? checkVolumeSeparatorChar)
-      {
-         return path != null && path.Length >= 1 && IsDVsc(path[path.Length - 1], checkVolumeSeparatorChar);
       }
 
       [SecurityCritical]
