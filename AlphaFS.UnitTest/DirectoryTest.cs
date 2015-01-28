@@ -1024,8 +1024,6 @@ namespace AlphaFS.UnitTest
 
          Directory.CreateDirectory(tempPath);
          FileAttributes actual = File.GetAttributes(tempPath);
-         Console.WriteLine("Attributes: [{0}]", actual);
-         Assert.IsTrue((actual & FileAttributes.Directory) != 0);
 
 
          string report = string.Empty;
@@ -1034,7 +1032,7 @@ namespace AlphaFS.UnitTest
          {
             UnitTestConstants.StopWatcher(true);
             Directory.EnableEncryption(tempPath);
-            report = UnitTestConstants.Reporter();
+            report = UnitTestConstants.Reporter(true);
             action = true;
          }
          catch (Exception ex)
@@ -1055,7 +1053,7 @@ namespace AlphaFS.UnitTest
          }
          action = lineDisable.Equals(disabled);
          Console.WriteLine("\nEnableEncryption() (Should be True): [{0}]", action);
-         Console.WriteLine("File Desktop.ini contents: [{0}]\n\t{1}", lineDisable, report);
+         Console.WriteLine("File Desktop.ini contents: [{0}]\t{1}", lineDisable, report);
          Assert.IsTrue(action, "Encryption should be True");
          Assert.IsTrue(File.Exists(deskTopIni), "Desktop.ini should Exist");
 
@@ -1065,7 +1063,7 @@ namespace AlphaFS.UnitTest
          {
             UnitTestConstants.StopWatcher(true);
             Directory.DisableEncryption(tempPath);
-            report = UnitTestConstants.Reporter();
+            report = UnitTestConstants.Reporter(true);
             action = true;
          }
          catch (Exception ex)
@@ -1086,7 +1084,7 @@ namespace AlphaFS.UnitTest
          }
          action = lineDisable.Equals(enabled);
          Console.WriteLine("\nDisableEncryption() (Should be True): [{0}]", action);
-         Console.WriteLine("File Desktop.ini contents: [{0}]\n\t{1}", lineDisable, report);
+         Console.WriteLine("File Desktop.ini contents: [{0}]\t{1}", lineDisable, report);
          Assert.IsTrue(action, "Encryption should be True");
          Assert.IsTrue(File.Exists(deskTopIni), "Desktop.ini should Exist");
 
@@ -3760,9 +3758,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_DisableCompression()
       {
          Console.WriteLine("Directory.DisableCompression()");
-
-         DumpEnableDisableCompression(true);
-         DumpEnableDisableCompression(false);
+         Console.WriteLine("\nPlease see unit test: AlphaFS_EnableCompression()");
       }
 
       [TestMethod]
@@ -3985,9 +3981,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_DisableEncryption()
       {
          Console.WriteLine("Directory.DisableEncryption()");
-
-         DumpEnableDisableEncryption(true);
-         DumpEnableDisableEncryption(false);
+         Console.WriteLine("\nPlease see unit test: AlphaFS_EnableEncryption()");
       }
 
       [TestMethod]
