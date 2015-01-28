@@ -42,7 +42,6 @@ namespace AlphaFS.UnitTest
       public static readonly string LocalHost = Environment.MachineName;
       public static readonly string LocalHostShare = Environment.SystemDirectory;
 
-      public static readonly string StartupFolder = AppDomain.CurrentDomain.BaseDirectory;
       public static readonly string SysDrive = Environment.GetEnvironmentVariable("SystemDrive");
       public static readonly string SysRoot = Environment.GetEnvironmentVariable("SystemRoot");
       public static readonly string SysRoot32 = Path.Combine(SysRoot, "System32");

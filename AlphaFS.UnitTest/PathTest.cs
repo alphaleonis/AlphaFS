@@ -41,38 +41,103 @@ namespace AlphaFS.UnitTest
    {
       #region Unit Tests
 
-      private static void Dump83Path(string fullPath)
+      private static void Dump83Path(bool isLocal)
       {
-         Console.WriteLine("\nInput Path: [{0}]\n", fullPath);
+         #region Setup
 
-         if (Directory.Exists(fullPath))
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
+
+         string myLongPath = Path.GetTempPath("My Long Data File Or Directory");
+         if (!isLocal) myLongPath = Path.LocalToUnc(myLongPath);
+
+         Console.WriteLine("\nInput Path: [{0}]\n", myLongPath);
+
+         #endregion // Setup
+
+         #region File
+
+         string short83Path;
+
+         try
          {
-            // GetShort83Path()
-            UnitTestConstants.StopWatcher(true);
-            string short83Path = Path.GetShort83Path(fullPath);
-            string reporter = UnitTestConstants.Reporter();
-            bool isShort83Path = !string.IsNullOrWhiteSpace(short83Path) && !short83Path.Equals(fullPath) && Directory.Exists(short83Path);
-            bool hasTilde = !string.IsNullOrWhiteSpace(short83Path) && short83Path.IndexOf('~') >= 0;
+            using (File.Create(myLongPath))
 
-            Console.WriteLine("\t{0} (Should be True): [{1}]: [{2}]\n{3}", "GetShort83Path()", isShort83Path, short83Path, reporter);
-            Assert.IsTrue(isShort83Path);
-            Assert.IsTrue(hasTilde); // A bit tricky if fullPath is already a shortPath.
-
-            // GetLongFrom83ShortPath()
             UnitTestConstants.StopWatcher(true);
+
+            short83Path = Path.GetShort83Path(myLongPath);
+
+            Console.WriteLine("Short 8.3 file path    : [{0}]\t\t\t{1}", short83Path, UnitTestConstants.Reporter(true));
+
+            Assert.IsTrue(!short83Path.Equals(myLongPath));
+
+            Assert.IsTrue(short83Path.EndsWith(@"~1"));
+
+
+
+            UnitTestConstants.StopWatcher(true);
+
             string longFrom83Path = Path.GetLongFrom83ShortPath(short83Path);
-            reporter = UnitTestConstants.Reporter();
-            bool isLongFrom83Path = !string.IsNullOrWhiteSpace(longFrom83Path) && !longFrom83Path.Equals(short83Path) && Directory.Exists(longFrom83Path);
-            bool noTilde = !string.IsNullOrWhiteSpace(longFrom83Path) && longFrom83Path.IndexOf('~') == -1;
 
-            Console.WriteLine("\n\t{0} (Should be True): [{1}]: [{2}]:\n{3}\n", "GetLongFrom83ShortPath()", isLongFrom83Path, longFrom83Path, reporter);
-            Assert.IsTrue(isLongFrom83Path);
-            Assert.IsTrue(noTilde);
+            Console.WriteLine("Long path from 8.3 path: [{0}]{1}", longFrom83Path, UnitTestConstants.Reporter(true));
+
+            Assert.IsTrue(longFrom83Path.Equals(myLongPath));
+
+            Assert.IsFalse(longFrom83Path.EndsWith(@"~1"));
+
          }
-         else
+         catch (Exception ex)
          {
-            Console.WriteLine("\tShare inaccessible: {0}", fullPath);
+            Console.WriteLine("Caught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
+         finally
+         {
+            if (File.Exists(myLongPath))
+               File.Delete(myLongPath);
+         }
+         Console.WriteLine();
+
+         #endregion // File
+
+         #region Directory
+
+         try
+         {
+            Directory.CreateDirectory(myLongPath);
+
+            UnitTestConstants.StopWatcher(true);
+
+            short83Path = Path.GetShort83Path(myLongPath);
+
+            Console.WriteLine("Short 8.3 directory path: [{0}]\t\t\t{1}", short83Path, UnitTestConstants.Reporter(true));
+
+            Assert.IsFalse(short83Path.Equals(myLongPath));
+
+            Assert.IsTrue(short83Path.EndsWith(@"~1"));
+
+
+
+            UnitTestConstants.StopWatcher(true);
+
+            string longFrom83Path = Path.GetLongFrom83ShortPath(short83Path);
+
+            Console.WriteLine("Long path from 8.3 path : [{0}]{1}", longFrom83Path, UnitTestConstants.Reporter(true));
+
+            Assert.IsTrue(longFrom83Path.Equals(myLongPath));
+
+            Assert.IsFalse(longFrom83Path.EndsWith(@"~1"));
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine("Caught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         finally
+         {
+            if (Directory.Exists(myLongPath))
+               Directory.Delete(myLongPath);
+         }
+         Console.WriteLine();
+
+         #endregion // Directory
       }
 
       private static void DumpGetDirectoryNameWithoutRoot(bool isLocal)
@@ -937,8 +1002,8 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Path.GetLongFrom83ShortPath()");
 
-         Dump83Path(UnitTestConstants.StartupFolder);
-         Dump83Path(Path.LocalToUnc(UnitTestConstants.StartupFolder));
+         Dump83Path(true);
+         Dump83Path(false);
       }
 
       #endregion // GetLongFrom83ShortPath
@@ -1046,8 +1111,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_GetShort83Path()
       {
          Console.WriteLine("Path.GetShort83Path()");
-
-         AlphaFS_GetLongFrom83ShortPath();
+         Console.WriteLine("\nPlease see unit test: AlphaFS_GetLongFrom83ShortPath()");
       }
 
       #endregion // GetShort83Path
