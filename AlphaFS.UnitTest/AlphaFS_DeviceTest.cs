@@ -32,9 +32,9 @@ namespace AlphaFS.UnitTest
    {
       #region DumpEnumerateDevices
 
-      private void DumpEnumerateDevices(bool isLocal)
+      private static void DumpEnumerateDevices(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = UnitTestConstants.LocalHost;
          Console.Write("\nEnumerating devices from host: [{0}]\n", tempPath);
 
@@ -57,7 +57,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
 
 

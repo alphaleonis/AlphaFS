@@ -22,9 +22,6 @@
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Security.Principal;
@@ -41,7 +38,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpRefresh
 
-      private void DumpRefresh(bool isLocal)
+      private static void DumpRefresh(bool isLocal)
       {
          #region Setup
 

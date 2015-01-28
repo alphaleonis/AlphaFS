@@ -36,7 +36,7 @@ namespace AlphaFS.UnitTest
 
       private static void DumpGetAssociation(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
