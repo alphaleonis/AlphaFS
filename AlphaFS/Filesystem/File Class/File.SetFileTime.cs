@@ -608,7 +608,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          // Because we already check here, use false for CreateFileInternal() to prevent another check.
          if (pathFormat == PathFormat.RelativePath)
-            Path.CheckValidPath(path, false, false);
+            Path.CheckSupportedPathFormat(path, false, false);
 
          using (SafeGlobalMemoryBufferHandle creationTime = SafeGlobalMemoryBufferHandle.FromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
          using (SafeGlobalMemoryBufferHandle lastAccessTime = SafeGlobalMemoryBufferHandle.FromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))

@@ -732,12 +732,12 @@ namespace Alphaleonis.Win32.Filesystem
             if (templatePath != null && templatePath[0] == Path.VolumeSeparatorChar)
                throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, templatePath));
 
-            Path.CheckValidPath(path, true, true);
-            Path.CheckValidPath(templatePath, true, true);
+            Path.CheckSupportedPathFormat(path, true, true);
+            Path.CheckSupportedPathFormat(templatePath, true, true);
          }
          else
             // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-            Path.CheckValidPath(path, false, false);
+            Path.CheckSupportedPathFormat(path, false, false);
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 

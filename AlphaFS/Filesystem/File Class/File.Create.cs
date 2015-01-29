@@ -365,7 +365,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static SafeFileHandle CreateFileInternal(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode fileMode, FileSystemRights fileSystemRights, FileShare fileShare, bool checkPath, PathFormat pathFormat)
       {
          if (checkPath && pathFormat == PathFormat.RelativePath)
-            Path.CheckValidPath(path, true, true);
+            Path.CheckSupportedPathFormat(path, true, true);
 
          // When isFile == null, we're working with a device.
          // When opening a VOLUME or removable media drive (for example, a floppy disk drive or flash memory thumb drive),

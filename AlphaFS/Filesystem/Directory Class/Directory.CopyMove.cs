@@ -780,8 +780,8 @@ namespace Alphaleonis.Win32.Filesystem
          bool fullCheck = pathFormat == PathFormat.RelativePath;
 
          // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-         Path.CheckValidPath(sourcePath, fullCheck, fullCheck);
-         Path.CheckValidPath(destinationPath, fullCheck, fullCheck);
+         Path.CheckSupportedPathFormat(sourcePath, fullCheck, fullCheck);
+         Path.CheckSupportedPathFormat(destinationPath, fullCheck, fullCheck);
 
 
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.

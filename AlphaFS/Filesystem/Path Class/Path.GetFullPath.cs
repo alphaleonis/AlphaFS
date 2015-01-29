@@ -188,7 +188,7 @@ namespace Alphaleonis.Win32.Filesystem
             CheckInvalidUncPath(path);
          }
 
-         CheckValidPath(path, true, true);
+         CheckSupportedPathFormat(path, true, true);
 
          return GetFullPathInternal(transaction, path, GetFullPathOptions.None);
       }

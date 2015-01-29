@@ -182,7 +182,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to the file or directory.</param>
       /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
       /// <param name="checkAdditional">.</param>
-      internal static void CheckValidPath(string path, bool checkInvalidPathChars, bool checkAdditional)
+      internal static void CheckSupportedPathFormat(string path, bool checkInvalidPathChars, bool checkAdditional)
       {
          if (!Utils.IsNullOrWhiteSpace(path) && path.Length >= 2)
          {

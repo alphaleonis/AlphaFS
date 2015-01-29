@@ -1074,8 +1074,8 @@ namespace Alphaleonis.Win32.Filesystem
          bool fullCheck = pathFormat == PathFormat.RelativePath;
 
          // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-         Path.CheckValidPath(sourceFileName, fullCheck, fullCheck);
-         Path.CheckValidPath(destinationFileName, fullCheck, fullCheck);
+         Path.CheckSupportedPathFormat(sourceFileName, fullCheck, fullCheck);
+         Path.CheckSupportedPathFormat(destinationFileName, fullCheck, fullCheck);
 
          string sourceFileNameLp = Path.GetExtendedLengthPathInternal(transaction, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
          string destFileNameLp = Path.GetExtendedLengthPathInternal(transaction, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);

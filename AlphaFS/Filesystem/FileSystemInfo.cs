@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (pathFormat == PathFormat.RelativePath)
-            Path.CheckValidPath(path, true, true);
+            Path.CheckSupportedPathFormat(path, true, true);
 
          LongFullName = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | (isFolder ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.ContinueOnNonExist);
 

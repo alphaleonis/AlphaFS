@@ -174,7 +174,7 @@ namespace Alphaleonis.Win32.Filesystem
          #region Setup
 
          if (pathFormat == PathFormat.RelativePath)
-            Path.CheckValidPath(path, true, true);
+            Path.CheckSupportedPathFormat(path, true, true);
 
          if (fileSystemEntryInfo == null)
          {

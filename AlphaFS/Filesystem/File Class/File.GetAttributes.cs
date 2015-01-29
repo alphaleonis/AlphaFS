@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static T GetAttributesExInternal<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (pathFormat == PathFormat.RelativePath)
-            Path.CheckValidPath(path, true, true);
+            Path.CheckSupportedPathFormat(path, true, true);
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 

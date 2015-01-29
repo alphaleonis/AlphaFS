@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
          if (pathFormat == PathFormat.RelativePath)
-            Path.CheckValidPath(path, true, true);
+            Path.CheckSupportedPathFormat(path, true, true);
 
          if (objectSecurity == null)
             throw new ArgumentNullException("objectSecurity");
