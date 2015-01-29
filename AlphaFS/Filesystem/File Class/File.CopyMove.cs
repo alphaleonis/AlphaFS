@@ -1048,12 +1048,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into
       ///   that directory, you get an IOException.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException">
+      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
+      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
+      /// </exception>
       /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
       /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
       /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
-      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="isFolder">Specifies that <paramref name="sourceFileName"/> and <paramref name="destinationFileName"/> are a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
@@ -1073,7 +1076,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          bool fullCheck = pathFormat == PathFormat.RelativePath;
 
-         // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
          Path.CheckSupportedPathFormat(sourceFileName, fullCheck, fullCheck);
          Path.CheckSupportedPathFormat(destinationFileName, fullCheck, fullCheck);
 

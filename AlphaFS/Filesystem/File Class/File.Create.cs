@@ -333,31 +333,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Unified method CreateFileInternal() to create or open a file, directory or I/O device.</summary>
       /// <returns>Returns a <see cref="SafeFileHandle"/> that provides read/write access to the file or directory specified by <paramref name="path"/>.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException"></exception>
       /// <remarks>
-      ///   <para>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of
-      ///   dwFlagsAndAttributes.</para>
-      ///   <para>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape
-      ///   drive,</para>
-      ///   <para>communications resource, mailslot, and pipe.</para>
+      ///   <para>To obtain a directory handle using CreateFile, specify the FILE_FLAG_BACKUP_SEMANTICS flag as part of dwFlagsAndAttributes.</para>
+      ///   <para>The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe.</para>
       /// </remarks>
+      /// <exception cref="ArgumentException">
+      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
+      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
+      /// </exception>
+      /// <exception cref="ArgumentNullException"></exception>
+      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path and name of the file or directory to create.</param>
-      /// <param name="attributes">
-      ///   One of the <see cref="ExtendedFileAttributes"/> values that describes how to create or overwrite the file or directory.
-      /// </param>
-      /// <param name="fileSecurity">
-      ///   A <see cref="FileSecurity"/> instance that determines the access control and audit security for the file or directory.
-      /// </param>
+      /// <param name="attributes">One of the <see cref="ExtendedFileAttributes"/> values that describes how to create or overwrite the file or directory.</param>
+      /// <param name="fileSecurity">A <see cref="FileSecurity"/> instance that determines the access control and audit security for the file or directory.</param>
       /// <param name="fileMode">A <see cref="FileMode"/> constant that determines how to open or create the file or directory.</param>
-      /// <param name="fileSystemRights">
-      ///   A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the
-      ///   file or directory.
-      /// </param>
-      /// <param name="fileShare">
-      ///   A <see cref="FileShare"/> constant that determines how the file or directory will be shared by processes.
-      /// </param>
+      /// <param name="fileSystemRights">A <see cref="FileSystemRights"/> constant that determines the access rights to use when creating access and audit rules for the file or directory.</param>
+      /// <param name="fileShare">A <see cref="FileShare"/> constant that determines how the file or directory will be shared by processes.</param>
       /// <param name="checkPath">.</param>
       /// <param name="pathFormat">Indicates the format of the <paramref name="path"/> parameter.</param>      
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Object needs to be disposed by caller.")]

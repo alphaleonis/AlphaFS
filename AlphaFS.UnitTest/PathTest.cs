@@ -1128,9 +1128,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
 
          // Hand counted 28 True's.
-         Assert.AreEqual(28, isLocalPath, "Numbers of matching local paths do not match.", errorCnt);
+         Assert.AreEqual(28, isLocalPath, "Numbers of matching local paths do not match.");
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(true, allOk, "Encountered paths where AlphaFS != System.IO");
       }
 
       #endregion // IsLocalPath

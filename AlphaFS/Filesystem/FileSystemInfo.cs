@@ -191,7 +191,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region InitializeInternal
 
-      /// <summary>[AlphaFS] Initializes the specified file name.</summary>
+      /// <summary>Initializes the specified file name.</summary>
+      /// <exception cref="ArgumentException">
+      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
+      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
+      /// </exception>
+      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The full path and name of the file.</param>

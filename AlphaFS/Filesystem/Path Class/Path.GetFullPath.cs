@@ -43,9 +43,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
       /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException">path contains a colon (":") that is not part of a volume identifier (for example, "c:\").</exception>
+      /// <exception cref="ArgumentException">
+      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
+      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
+      /// </exception>
+      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       [SecurityCritical]
       public static string GetFullPath(string path)
