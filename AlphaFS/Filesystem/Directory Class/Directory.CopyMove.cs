@@ -746,7 +746,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
+      /// <summary>Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
       ///   <para><see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,</para>
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
@@ -777,25 +777,20 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (pathFormat == PathFormat.RelativePath)
-         {
-            Path.CheckValidPath(sourcePath, true, true);
-            Path.CheckValidPath(destinationPath, true, true);
-         }
-         else
-         {
-            // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-            Path.CheckValidPath(sourcePath, false, false);
-            Path.CheckValidPath(destinationPath, false, false);
-         }
+         bool fullCheck = pathFormat == PathFormat.RelativePath;
+
+         // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
+         Path.CheckValidPath(sourcePath, fullCheck, fullCheck);
+         Path.CheckValidPath(destinationPath, fullCheck, fullCheck);
+
 
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
          // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
 
-         var options = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
+         var fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
 
-         string sourcePathLp = Path.GetExtendedLengthPathInternal(transaction, sourcePath, pathFormat, options);
-         string destinationPathLp = Path.GetExtendedLengthPathInternal(transaction, destinationPath, pathFormat, options);
+         string sourcePathLp = Path.GetExtendedLengthPathInternal(transaction, sourcePath, pathFormat, fullPathOptions);
+         string destinationPathLp = Path.GetExtendedLengthPathInternal(transaction, destinationPath, pathFormat, fullPathOptions);
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
          if (sourcePathLp.Equals(destinationPathLp, StringComparison.OrdinalIgnoreCase))

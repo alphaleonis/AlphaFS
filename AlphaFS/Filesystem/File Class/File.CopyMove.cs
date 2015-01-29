@@ -1035,7 +1035,7 @@ namespace Alphaleonis.Win32.Filesystem
       
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
+      /// <summary>Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
       ///   <para><see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified, and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
       /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>      
@@ -1071,17 +1071,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (pathFormat == PathFormat.RelativePath)
-         {
-            Path.CheckValidPath(sourceFileName, true, true);
-            Path.CheckValidPath(destinationFileName, true, true);
-         }
-         else
-         {
-            // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-            Path.CheckValidPath(sourceFileName, false, false);
-            Path.CheckValidPath(destinationFileName, false, false);
-         }
+         bool fullCheck = pathFormat == PathFormat.RelativePath;
+
+         // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
+         Path.CheckValidPath(sourceFileName, fullCheck, fullCheck);
+         Path.CheckValidPath(destinationFileName, fullCheck, fullCheck);
 
          string sourceFileNameLp = Path.GetExtendedLengthPathInternal(transaction, sourceFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
          string destFileNameLp = Path.GetExtendedLengthPathInternal(transaction, destinationFileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator);
