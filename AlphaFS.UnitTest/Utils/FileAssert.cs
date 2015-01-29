@@ -18,14 +18,9 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN 
  *  THE SOFTWARE. 
  */
+
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FileStream = System.IO.FileStream;
-using Stream = System.IO.Stream;
 
 namespace AlphaFS.UnitTest
 {
@@ -34,26 +29,23 @@ namespace AlphaFS.UnitTest
       public static void Exists(string filePath)
       {
          if (!File.Exists(filePath))
-            throw new AssertFailedException(String.Format("The file \"{0}\" does not exist, but was expected to.", filePath));
+            throw new AssertFailedException(string.Format("The file: [{0}] does not exist, but was expected to.", filePath));
       }
 
       public static void AreEqual(string expectedFilePath, string actualFilePath)
       {
          int position = 0;
-         using (System.IO.FileStream s1 = File.OpenRead(expectedFilePath))
-         using (System.IO.FileStream s2 = File.OpenRead(actualFilePath))
+         using (var s1 = System.IO.File.OpenRead(expectedFilePath))
+         using (var s2 = System.IO.File.OpenRead(actualFilePath))
          {
             if (s1.Length != s2.Length)
-            {
-               throw new AssertFailedException(String.Format("The files \"{0}\" and \"{1}\" are not equal but was expected to be. Their size differs.", expectedFilePath, actualFilePath));
-            }
+               throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are not equal but were expected to be. Their size differs.", expectedFilePath, actualFilePath));
+            
             int a = s1.ReadByte();
             int b = s2.ReadByte();
+            
             if (a != b)
-                  {
-                  throw new AssertFailedException(String.Format("The files \"{0}\" and \"{1}\" are not equal but was expected to be. The first difference was at position {2}",
-                     expectedFilePath, actualFilePath, position));
-                  }
+               throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are not equal but were expected to be. The first difference was at position: [{2}]", expectedFilePath, actualFilePath, position));
 
             position++;
          }
@@ -62,37 +54,34 @@ namespace AlphaFS.UnitTest
       public static void AreNotEqual(string expectedFilePath, string actualFilePath)
       {
          int position = 0;
-         using (System.IO.FileStream s1 = File.OpenRead(expectedFilePath))
-         using (System.IO.FileStream s2 = File.OpenRead(actualFilePath))
+         using (var s1 = System.IO.File.OpenRead(expectedFilePath))
+         using (var s2 = System.IO.File.OpenRead(actualFilePath))
          {
             if (s1.Length != s2.Length)
-            {
                return;
-            }
 
             int a = s1.ReadByte();
             int b = s2.ReadByte();
+            
             if (a != b)
-            {
                return;
-            }
 
             position++;
          }
 
-         throw new AssertFailedException(String.Format("The files \"{0}\" and \"{1}\" are equal but was not expected to be.", expectedFilePath, actualFilePath));
+         throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are equal but were not expected to be.", expectedFilePath, actualFilePath));
       }
 
       public static void IsEncrypted(string filePath)
       {
          if ((File.GetAttributes(filePath) & System.IO.FileAttributes.Encrypted) == 0)
-            throw new AssertFailedException(String.Format("The file \"{0}\" was not encrypted, but was expected to be.", filePath));
+            throw new AssertFailedException(string.Format("The file: [{0}] was not encrypted, but was expected to be.", filePath));
       }
 
       public static void IsNotEncrypted(string filePath)
       {
          if ((File.GetAttributes(filePath) & System.IO.FileAttributes.Encrypted) != 0)
-            throw new AssertFailedException(String.Format("The file \"{0}\" is encrypted, but was expected not to be.", filePath));
+            throw new AssertFailedException(string.Format("The file: [{0}] is encrypted, but was expected not to be.", filePath));
       }
    }
 }

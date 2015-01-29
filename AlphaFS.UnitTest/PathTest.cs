@@ -1174,8 +1174,8 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
 
-         // Hand counted 32 True's.
-         Assert.AreEqual(32, isLongPath, "Numbers of matching local paths do not match.", errorCnt);
+         // Hand counted 33 True's.
+         Assert.AreEqual(33, isLongPath, "Numbers of matching local paths do not match.", errorCnt);
 
          Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
@@ -1221,8 +1221,8 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
 
-         // Hand counted 30 True's.
-         Assert.AreEqual(30, isUncPath, "Numbers of matching UNC paths do not match.", errorCnt);
+         // Hand counted 32 True's.
+         Assert.AreEqual(32, isUncPath, "Numbers of matching UNC paths do not match.", errorCnt);
          Assert.AreEqual(38, isNotUncPath, "Numbers of matching UNC paths do not match.", errorCnt);
 
          Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
@@ -1244,7 +1244,7 @@ namespace AlphaFS.UnitTest
          foreach (string path2 in Directory.EnumerateFileSystemEntries(UnitTestConstants.SysRoot))
          {
             string uncPath = Path.LocalToUnc(path2);
-            Console.WriteLine("\t#{0:000}\tPath: [{1}]\t\t\tLocalToUnc(): [{2}]", ++cnt, path2, uncPath);
+            Console.WriteLine("\t#{0:000}\tLocal: [{1}]\t\t\tUNC: [{2}]", ++cnt, path2, uncPath);
 
             Assert.IsTrue(Path.IsUncPath(uncPath));
 

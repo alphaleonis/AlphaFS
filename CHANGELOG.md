@@ -5,16 +5,18 @@ Version 2.1
 -----------
 ### New Features
 
-- Issue #101: The release now also contains a build targetting .NET 4.5.2
 - Issue #3: Added methods for backing up and restoring encrypted files:
 	* `File.ImportEncryptedFileRaw`
 	* `File.ExportEncryptedFileRaw`
 	* `Directory.ImportEncryptedDirectoryRaw`
 	* `Directory.ExportEncryptedDirectoryRaw`
 
+- Issue #101: The release now also contains a build targetting .NET 4.5.2
+
 ### Bugs Fixed
 
 - Fixed Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
+- Fixed Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 
 Version 2.0.1
 -------------

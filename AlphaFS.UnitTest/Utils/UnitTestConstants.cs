@@ -32,7 +32,7 @@ using Path = Alphaleonis.Win32.Filesystem.Path;
 namespace AlphaFS.UnitTest
 {
    /// <summary>Containts static variables, used by unit tests.</summary>
-   internal sealed class UnitTestConstants
+   public static class UnitTestConstants
    {
       #region Fields
 
@@ -104,37 +104,39 @@ namespace AlphaFS.UnitTest
          Path.LongPathPrefix + SysDrive + @"\a\b\c\f.tx",
          Path.LongPathPrefix + SysDrive + @"\a\b\c\f.txt",
 
-         Path.UncPrefix + @"Server\Share\",
-         Path.UncPrefix + @"Server\Share\d",
-         Path.UncPrefix + @"Server\Share\d1",
-         Path.UncPrefix + @"Server\Share\d1\",
-         Path.UncPrefix + @"Server\Share\d1\d",
-         Path.UncPrefix + @"Server\Share\d1\d2",
-         Path.UncPrefix + @"Server\Share\d1\d2\",
-         Path.UncPrefix + @"Server\Share\d1\d2\f",
-         Path.UncPrefix + @"Server\Share\d1\d2\fi",
-         Path.UncPrefix + @"Server\Share\d1\d2\fil",
-         Path.UncPrefix + @"Server\Share\d1\d2\file",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.UncPrefix + @"Server\Share\d1\d2\file.ext",
+         Path.UncPrefix + LocalHost + @"\Share",
+         Path.UncPrefix + LocalHost + @"\Share\",
+         Path.UncPrefix + LocalHost + @"\Share\d",
+         Path.UncPrefix + LocalHost + @"\Share\d1",
+         Path.UncPrefix + LocalHost + @"\Share\d1\",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d2",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d2\",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d2\f",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d2\fi",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d2\fil",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d2\file",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.e",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.ex",
+         Path.UncPrefix + LocalHost + @"\Share\d1\d2\file.ext",
 
-         Path.LongPathUncPrefix + @"Server\Share\",
-         Path.LongPathUncPrefix + @"Server\Share\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1",
-         Path.LongPathUncPrefix + @"Server\Share\d1\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\f",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fi",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\fil",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.e",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ex",
-         Path.LongPathUncPrefix + @"Server\Share\d1\d2\file.ext"
+         Path.LongPathUncPrefix + LocalHost + @"\Share",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\f",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\fi",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\fil",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.e",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.ex",
+         Path.LongPathUncPrefix + LocalHost + @"\Share\d1\d2\file.ext"
       };
 
       #endregion // InputPaths
