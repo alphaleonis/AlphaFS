@@ -92,25 +92,25 @@
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
   </PropertyGroup>
-   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452 Debug|AnyCPU'">
-      <DebugSymbols>true</DebugSymbols>
-      <DebugType>full</DebugType>
-      <Optimize>false</Optimize>
-      <OutputPath>..\Bin\Debug\Net452</OutputPath>
-      <DefineConstants>DEBUG;TRACE;NET452</DefineConstants>
-      <ErrorReport>prompt</ErrorReport>
-      <WarningLevel>4</WarningLevel>
-      <RunCodeAnalysis>true</RunCodeAnalysis>
-      <DocumentationFile>..\Bin\Debug\Net452\AlphaFS.XML</DocumentationFile>
-      <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-      <RegisterForComInterop>false</RegisterForComInterop>
-      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-      <PlatformTarget>AnyCPU</PlatformTarget>
-      <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-      <Prefer32Bit>false</Prefer32Bit>
-      <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
-      <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452 Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Bin\Debug\Net452</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET452</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>..\Bin\Debug\Net452\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <Prefer32Bit>false</Prefer32Bit>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Net35|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -172,21 +172,21 @@
     <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
-   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452|AnyCPU'">
-      <DebugType>pdbonly</DebugType>
-      <Optimize>true</Optimize>
-      <OutputPath>..\Bin\Release\Net452</OutputPath>
-      <DefineConstants>TRACE;NET452</DefineConstants>
-      <ErrorReport>prompt</ErrorReport>
-      <WarningLevel>4</WarningLevel>
-      <DocumentationFile>..\Bin\Release\Net452\AlphaFS.XML</DocumentationFile>
-      <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
-      <Prefer32Bit>false</Prefer32Bit>
-      <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-      <RunCodeAnalysis>true</RunCodeAnalysis>
-      <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
-      <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-   </PropertyGroup> 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Bin\Release\Net452</OutputPath>
+    <DefineConstants>TRACE;NET452</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Bin\Release\Net452\AlphaFS.XML</DocumentationFile>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AlphaFS.ruleset</CodeAnalysisRuleSet>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Transactions" />
@@ -407,7 +407,6 @@
     <Compile Include="Network\Native Methods\NativeMethods.DistributedFileSystem.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.cs" />
     <Compile Include="Network\OpenConnectionInfo.cs" />
-    <Compile Include="Network\SafeNetApiBufferHandle.cs" />
     <Compile Include="Network\OpenResourceInfo.cs" />
     <Compile Include="Network\ShareInfo.cs" />
     <Compile Include="Network\Structures\NETRESOURCE.cs" />
@@ -493,7 +492,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
