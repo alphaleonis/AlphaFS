@@ -90,21 +90,30 @@ namespace Alphaleonis.Win32.Network
 
       #region GetHostShareFromPath
 
-      /// <summary>Gets the host and Server Message Block (SMB) share name for the given <paramref name="uncPath"/>.</summary>
+      /// <summary>Gets the host and share path name for the given <paramref name="uncPath"/>.</summary>
       /// <param name="uncPath">The share in the format: \\host\share.</param>
-      /// <returns>string[0] = host, string[1] = share;</returns>
+      /// <returns>The host and share path. For example, if <paramref name="uncPath"/> is: "\\SERVER001\C$\WINDOWS\System32",
+      ///   its is returned as string[0] = "SERVER001" and string[1] = "\C$\WINDOWS\System32".
+      /// <para>If the conversion from local path to UNC path fails, <see langword="null"/> is returned.</para>
+      /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
       public static string[] GetHostShareFromPath(string uncPath)
       {
          if (Utils.IsNullOrWhiteSpace(uncPath))
             return null;
+         
+         Uri uri;
+         if (Uri.TryCreate(Path.GetRegularPathInternal(uncPath, GetFullPathOptions.None), UriKind.Absolute, out uri) && uri.IsUnc)
+         {
+            return new[]
+            {
+               uri.Host,
+               uri.AbsolutePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar)
+            };
+         }
 
-         // Get Host and Share.
-         uncPath = uncPath.Replace(Path.LongPathUncPrefix, string.Empty);
-         uncPath = uncPath.Replace(Path.UncPrefix, string.Empty);
-
-         return uncPath.Split(Path.DirectorySeparatorChar);
+         return null;
       }
 
       #endregion // GetHostShareFromPath

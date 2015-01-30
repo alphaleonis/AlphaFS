@@ -189,38 +189,43 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(localPath))
             return null;
 
-         var options = GetFullPathOptions.CheckInvalidPathChars |
-                       (asLongPath ? GetFullPathOptions.AsLongPath : 0) |
-                       (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) |
-                       (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0);
-
-         localPath = (localPath[0] == CurrentDirectoryPrefixChar) || !IsPathRooted(localPath, false)
-            ? GetFullPathInternal(null, localPath, options)
-            : GetRegularPathInternal(localPath, options);
-
-         if (IsUncPathInternal(localPath, false, false))
-            return localPath;
-
-         string drive = GetPathRoot(localPath, false);
-
-         if (Utils.IsNullOrWhiteSpace(drive))
-            return localPath;
+         localPath = GetRegularPathInternal(localPath, GetFullPathOptions.CheckInvalidPathChars);
 
 
-         Network.NativeMethods.REMOTE_NAME_INFO unc = Host.GetRemoteNameInfoInternal(drive, true);
+         if (!IsUncPathInternal(localPath, true, false))
+         {
+            if (localPath[0] == CurrentDirectoryPrefixChar || !IsPathRooted(localPath, false))
+               localPath = GetFullPathInternal(null, localPath, GetFullPathOptions.None);
 
-         if (!Utils.IsNullOrWhiteSpace(unc.ConnectionName))
-            // Only leave trailing backslash if "localPath" also ends with backslash.
-            return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) ? AddTrailingDirectorySeparator(unc.ConnectionName, false) : RemoveTrailingDirectorySeparator(unc.ConnectionName, false);
+            string drive = GetPathRoot(localPath, false);
 
-         // Split: localDrive[0] = "C", localDrive[1] = "\Windows"
-         string[] localDrive = localPath.Split(VolumeSeparatorChar);
+            if (Utils.IsNullOrWhiteSpace(drive))
+               return localPath;
 
-         // Return: "\\MachineName\C$\Windows"
-         string pathUnc = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}${3}", Host.GetUncName(), DirectorySeparatorChar, localDrive[0], localDrive[1]);
+            Network.NativeMethods.REMOTE_NAME_INFO unc = Host.GetRemoteNameInfoInternal(drive, true);
+
+            if (!Utils.IsNullOrWhiteSpace(unc.ConnectionName))
+               // Only leave trailing backslash if "localPath" also ends with backslash.
+               return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase)
+                  ? AddTrailingDirectorySeparator(unc.ConnectionName, false)
+                  : RemoveTrailingDirectorySeparator(unc.ConnectionName, false);
+
+            // Split: localDrive[0] = "C", localDrive[1] = "\Windows"
+            string[] localDrive = localPath.Split(VolumeSeparatorChar);
+
+            // Return: "\\MachineName\C$\Windows"
+            localPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}${3}", Host.GetUncName(), DirectorySeparatorChar, localDrive[0], localDrive[1]);
+         }
+
 
          // Only leave trailing backslash if "localPath" also ends with backslash.
-         return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) ? AddTrailingDirectorySeparator(pathUnc, false) : RemoveTrailingDirectorySeparator(pathUnc, false);
+         addTrailingDirectorySeparator = addTrailingDirectorySeparator ||
+                                         (localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase) && !removeTrailingDirectorySeparator);
+
+         var options = (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) |
+                       (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0);
+
+         return asLongPath ? GetLongPathInternal(localPath, options) : localPath;
       }
 
       #endregion // Internal Methods

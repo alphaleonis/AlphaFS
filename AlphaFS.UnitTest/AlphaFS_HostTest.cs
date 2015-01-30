@@ -564,6 +564,46 @@ namespace AlphaFS.UnitTest
 
       #endregion // EnumerateShares
 
+      #region GetHostShareFromPath
+
+      [TestMethod]
+      public void GetHostShareFromPath()
+      {
+         Console.WriteLine("Network.Host.GetHostShareFromPath\n");
+
+         string uncPath = UnitTestConstants.SysRoot32;
+         string[] hostAndShare = Host.GetHostShareFromPath(uncPath);
+         Console.WriteLine("Input local path: [{0}]", uncPath);
+         Assert.AreEqual(null, hostAndShare);
+
+         uncPath = Path.GetLongPath(UnitTestConstants.SysRoot32);
+         hostAndShare = Host.GetHostShareFromPath(uncPath);
+         Console.WriteLine("Input local path: [{0}]", uncPath);
+         Assert.AreEqual(null, hostAndShare);
+         
+         Console.WriteLine();
+
+         uncPath = Path.LocalToUnc(UnitTestConstants.SysRoot32);
+         hostAndShare = Host.GetHostShareFromPath(uncPath);
+         Console.WriteLine("Input UNC path: [{0}]", uncPath);
+         Console.WriteLine("\tHost : [{0}]", hostAndShare[0]);
+         Console.WriteLine("\tShare: [{0}]", hostAndShare[1]);
+
+         Assert.AreEqual(Environment.MachineName, hostAndShare[0].ToUpperInvariant());
+
+         Console.WriteLine();
+         
+         uncPath = Path.LocalToUnc(UnitTestConstants.SysRoot32, true);
+         hostAndShare = Host.GetHostShareFromPath(uncPath);
+         Console.WriteLine("Input UNC path: [{0}]", uncPath);
+         Console.WriteLine("\tHost : [{0}]", hostAndShare[0]);
+         Console.WriteLine("\tShare: [{0}]", hostAndShare[1]);
+
+         Assert.AreEqual(Environment.MachineName, hostAndShare[0].ToUpperInvariant());
+      }
+
+      #endregion // GetHostShareFromPath
+
       #region GetDfsClientInfo
 
       [TestMethod]
