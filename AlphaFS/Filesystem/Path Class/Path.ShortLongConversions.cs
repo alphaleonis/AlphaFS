@@ -161,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
             return path;
 
          // ".", "C:"
-         return path.Length > 2 && (IsLocalPath(path, false) || IsUncPath(path, false))
+         return path.Length > 2 && (IsLocalPath(path, false) || IsUncPathInternal(path, false, false))
             ? path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase)
                ? LongPathUncPrefix + path.Substring(UncPrefix.Length)
                : LongPathPrefix + path

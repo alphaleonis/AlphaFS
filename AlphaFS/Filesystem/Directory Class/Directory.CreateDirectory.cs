@@ -750,7 +750,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region Construct Full Path
 
-         string longPathPrefix = Path.IsUncPath(path, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
+         string longPathPrefix = Path.IsUncPathInternal(path, false, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
          path = Path.GetRegularPathInternal(pathLp, GetFullPathOptions.None);
 
          int length = path.Length;

@@ -71,18 +71,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsUncPath(string path)
       {
-         return IsUncPath(path, true);
+         return IsUncPathInternal(path, false, true);
       }
 
-      /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path.</summary>
+      /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path, optionally skip invalid path character check.</summary>
       /// <returns>Returns <see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
       /// <param name="path">The path to check.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static bool IsUncPath(string path, bool checkInvalidPathChars)
       {
-         Uri uri;
-         return Uri.TryCreate(GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0), UriKind.Absolute, out uri) && uri.IsUnc;
+         return IsUncPathInternal(path, false, checkInvalidPathChars);
       }
 
       #endregion // IsUncPath
@@ -151,6 +150,24 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
+      /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path, optionally skip invalid path character check.</summary>
+      /// <returns>Returns <see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
+      /// <param name="path">The path to check.</param>
+      /// <param name="isRegularPath">When <see langword="true"/> indicates that <paramref name="path"/> is already in regular path format.</param>
+      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
+      [SecurityCritical]
+      internal static bool IsUncPathInternal(string path, bool isRegularPath, bool checkInvalidPathChars)
+      {
+         if (!isRegularPath)
+            path = GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0);
+
+         else if (checkInvalidPathChars)
+            CheckInvalidPathChars(path, false);
+
+         Uri uri;
+         return Uri.TryCreate(path, UriKind.Absolute, out uri) && uri.IsUnc;
+      }
+
       /// <summary>Unified method to convert a local path to a network share path.  
       ///   <para>A Local path, e.g.: "C:\Windows" will be returned as: "\\MachineName\C$\Windows".</para>
       ///   <para>If a logical drive points to a network share path, the share path will be returned instead.</para>
@@ -181,7 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? GetFullPathInternal(null, localPath, options)
             : GetRegularPathInternal(localPath, options);
 
-         if (IsUncPath(localPath, false))
+         if (IsUncPathInternal(localPath, false, false))
             return localPath;
 
          string drive = GetPathRoot(localPath, false);

@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Network
          path = Path.GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars); 
 
          // If path already is a network share path, we fill the REMOTE_NAME_INFO structure ourselves.
-         if (Path.IsUncPath(path, false))
+         if (Path.IsUncPathInternal(path, true, false))
             return new NativeMethods.REMOTE_NAME_INFO
             {
                UniversalName = Path.AddTrailingDirectorySeparator(path, false),
