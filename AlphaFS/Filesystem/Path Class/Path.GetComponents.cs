@@ -312,9 +312,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the root directory information of the specified path.</summary>
       /// <returns>
-      ///   <para>Returns the root directory of <paramref name="path"/>, such as "C:\", or <see langword="null"/> if <paramref name="path"/> is
-      ///   <see langword="null"/>, </para>
-      ///   <para>or an empty string if <paramref name="path"/> does not contain root directory information.</para>
+      ///   Returns the root directory of <paramref name="path"/>, such as "C:\",
+      ///   or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/>,
+      ///   or an empty string if <paramref name="path"/> does not contain root directory information.
       /// </returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <param name="path">The path from which to obtain root directory information.</param>
@@ -326,13 +326,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
-      #region AlphaFS
-
       /// <summary>[AlphaFS] Gets the root directory information of the specified path.</summary>
       /// <returns>
-      ///   <para>Returns the root directory of <paramref name="path"/>, such as "C:\", or <see langword="null"/> if <paramref name="path"/> is
-      ///   <see langword="null"/>, </para>
-      ///   <para>or an empty string if <paramref name="path"/> does not contain root directory information.</para>
+      ///   Returns the root directory of <paramref name="path"/>, such as "C:\",
+      ///   or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/>,
+      ///   or an empty string if <paramref name="path"/> does not contain root directory information.
       /// </returns>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
       /// <param name="path">The path from which to obtain root directory information.</param>
@@ -346,10 +344,21 @@ namespace Alphaleonis.Win32.Filesystem
          if (path.Trim().Length == 0)
             throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
 
-         return path.Substring(0, GetRootLength(path, checkInvalidPathChars));
-      }
+         string pathRp = GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None);
 
-      #endregion // AlphaFS
+         var rootLengthPath = GetRootLength(path, false);
+         var rootLengthPathRp = GetRootLength(pathRp, false);
+
+         // Check if pathRp is an empty string.
+         if (rootLengthPathRp == 0)
+            if (path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase))
+               return GetLongPathInternal(path.Substring(0, rootLengthPath), GetFullPathOptions.None);
+
+         if (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase))
+            return GetLongPathInternal(pathRp.Substring(0, rootLengthPathRp), GetFullPathOptions.None);
+
+         return path.Substring(0, rootLengthPath);
+      }
 
       #endregion // GetPathRoot
    }
