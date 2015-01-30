@@ -45,16 +45,22 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(volumeName))
             throw new ArgumentNullException("volumeName");
 
-         if (volumeName.Length == 1)
-            Name += Path.VolumeSeparatorChar;
+         if (!volumeName.StartsWith(Path.LongPathPrefix, StringComparison.OrdinalIgnoreCase))
+            volumeName = Path.IsUncPathInternal(volumeName, false, false)
+               ? Path.GetLongPathInternal(volumeName, GetFullPathOptions.None)
+               : Path.LongPathPrefix + volumeName;
          else
-            Name = Path.GetPathRoot(volumeName, false);
+         {
+            if (volumeName.Length == 1)
+               volumeName += Path.VolumeSeparatorChar;
+            else
+               volumeName = Path.GetPathRoot(volumeName, false);
+         }
 
-         if (Utils.IsNullOrWhiteSpace(Name))
+         if (Utils.IsNullOrWhiteSpace(volumeName))
             throw new ArgumentException("Argument must be a drive letter (\"C\"), RootDir (\"C:\\\") or UNC path (\"\\\\server\\share\")");
 
-         // If an exception is thrown, the original drivePath is used.
-         Name = Path.AddTrailingDirectorySeparator(Name, false);
+         Name = Path.AddTrailingDirectorySeparator(volumeName, false);
 
          _volumeHandle = null;
       }

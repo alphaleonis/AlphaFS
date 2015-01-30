@@ -47,7 +47,7 @@ namespace AlphaFS.UnitTest
          int cnt = 0;
 
          // Get Logical Drives from Environment.
-         foreach (string drv in Directory.GetLogicalDrives())
+         foreach (string drv in Directory.GetLogicalDrives(false, true))
          {
             UnitTestConstants.StopWatcher(true);
 
@@ -326,45 +326,23 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Volume.QueryAllDosDevices()");
 
-         #region QueryAllDosDevices: Sorted
-
          UnitTestConstants.StopWatcher(true);
 
          IEnumerable<string> query = Volume.QueryAllDosDevices("sort").ToArray();
+         string report = UnitTestConstants.Reporter(true);
 
-         Console.WriteLine("\nRetrieved Sorted list: [{0}]\nList .Count(): [{1}]\n{2}\n", query.Any(), query.Count(), UnitTestConstants.Reporter());
+         Console.WriteLine("\nRetrieved: [{0}] items.{1}\n", query.Count(), report);
 
          int cnt = 0;
          foreach (string dosDev in query)
          {
-            Console.WriteLine("\t#{0:000}\t{1}", ++cnt, dosDev);
+            Console.WriteLine("#{0:000}\t{1}", ++cnt, dosDev);
          }
 
-         Assert.IsTrue(query.Any());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-
-         #endregion // QueryAllDosDevices: Sorted
-
-         #region QueryAllDosDevices: UnSorted
-
-         Console.Write("\n");
-
-         UnitTestConstants.StopWatcher(true);
-
-         query = Volume.QueryAllDosDevices().ToArray();
-
-         Console.WriteLine("\nRetrieved UnSorted list: [{0}]\nList .Count(): [{1}]\n{2}\n", query.Any(), query.Count(), UnitTestConstants.Reporter());
-
-         cnt = 0;
-         foreach (string dosDev in query)
-         {
-            Console.WriteLine("\t#{0:000}\t{1}", ++cnt, dosDev);
-         }
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          Assert.IsTrue(query.Any());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-
-         #endregion // QueryAllDosDevices: UnSorted
       }
 
       #endregion // QueryAllDosDevices
@@ -648,16 +626,16 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("#{0:000}\tVolume: [{1}]\n", ++cnt, volume);
             Console.WriteLine("\tVolume() class methods that accept a volume guid as input argument:\n");
 
-            Console.WriteLine("\t\tIsReady()             : [{0}]", Volume.IsReady(volume));
-            Console.WriteLine("\t\tIsVolume()            : [{0}]", Volume.IsVolume(volume));
-            Console.WriteLine("\t\tGetDiskFreeSpace()    : [{0}]", Volume.GetDiskFreeSpace(volume).AvailableFreeSpaceUnitSize);
+            Console.WriteLine("\t\tIsReady()                 : [{0}]", Volume.IsReady(volume));
+            Console.WriteLine("\t\tIsVolume()                : [{0}]", Volume.IsVolume(volume));
+            Console.WriteLine("\t\tGetDiskFreeSpace()        : [{0}]", Volume.GetDiskFreeSpace(volume).AvailableFreeSpaceUnitSize);
 
             string result = Volume.GetDriveFormat(volume);
-            Console.WriteLine("\t\tGetDriveFormat()      : [{0}]", result ?? "null");
+            Console.WriteLine("\t\tGetDriveFormat()          : [{0}]", result ?? "null");
 
-            Console.WriteLine("\t\tGetDriveType()        : [{0}]", Volume.GetDriveType(volume));
-            Console.WriteLine("\t\tGetVolumeLabel()      : [{0}]", Volume.GetVolumeLabel(volume));
-            Console.WriteLine("\t\tGetVolumeDisplayName(): [{0}]", Volume.GetVolumeDisplayName(volume));
+            Console.WriteLine("\t\tGetDriveType()            : [{0}]", Volume.GetDriveType(volume));
+            Console.WriteLine("\t\tGetVolumeLabel()          : [{0}]", Volume.GetVolumeLabel(volume));
+            Console.WriteLine("\t\tGetVolumeDisplayName()    : [{0}]", Volume.GetVolumeDisplayName(volume));
             
 
             foreach (string displayName in Volume.EnumerateVolumePathNames(volume))
@@ -781,12 +759,9 @@ namespace AlphaFS.UnitTest
          UnitTestConstants.StopWatcher(true);
          foreach (string volume in Volume.EnumerateVolumes())
          {
-            if (!string.IsNullOrWhiteSpace(volume))
-            {
-               label = Volume.GetVolumeLabel(volume);
-               Console.WriteLine("\t#{0:000}\tVolume: [{1}]\t\tLabel: [{2}]", ++cnt, volume, label);
-               looped = true;
-            }
+            label = Volume.GetVolumeLabel(volume);
+            Console.WriteLine("\t#{0:000}\tVolume: [{1}]\t\tLabel: [{2}]", ++cnt, volume, label);
+            looped = true;
          }
          Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
          Assert.IsTrue(looped && cnt > 0);
@@ -808,8 +783,7 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.StopWatcher(true);
             foreach (string dosDevice in Volume.QueryDosDevice(dd))
             {
-               // Need LongPathPrefix when querying MS-Dos Namespace.
-               label = Volume.GetVolumeLabel(Path.LongPathPrefix + dosDevice);
+               label = Volume.GetVolumeLabel(dosDevice);
                Console.WriteLine("\t#{0:000}\tDosDevice: [{1}]\t\tLabel: [{2}]", ++cnt, dosDevice, label);
 
                looped = true;

@@ -10,9 +10,12 @@ Version 2.1
 	* `File.ExportEncryptedFileRaw`
 	* `Directory.ImportEncryptedDirectoryRaw`
 	* `Directory.ExportEncryptedDirectoryRaw`
+
 - Issue #101: The release now also contains a build targetting .NET 4.5.2
+
 - Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
+- Issue #132: Modify method `VolumeInfo()` constructor to better handle input paths.
 
 ### Bugs Fixed
 

@@ -502,44 +502,71 @@ namespace AlphaFS.UnitTest
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
          Console.WriteLine("\nInput Path: [{0}]", tempPath);
 
-          int cnt = 0;
+         int cnt = 0;
+         int errorCount = 0;
 
           // Get only .IsReady drives.
-          foreach (string drv in Directory.EnumerateLogicalDrives(false, true).Select(drive => drive.Name))
-          {
-              string drive = isLocal ? drv : Path.LocalToUnc(drv);
+         foreach (var drv in Directory.EnumerateLogicalDrives(false, true))
+         {
+            if (drv.DriveType == DriveType.NoRootDirectory)
+               continue;
 
-             UnitTestConstants.StopWatcher(true);
+            string drive = isLocal ? drv.Name : Path.LocalToUnc(drv.Name);
 
-              try
-              {
-                  // null (default) == All information.
-                  DiskSpaceInfo dsi = Volume.GetDiskFreeSpace(drive);
-                  string report = UnitTestConstants.Reporter(true);
-                  Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
-                  Assert.IsTrue(dsi.FreeBytesAvailable != 0 && dsi.TotalNumberOfBytes != 0 && dsi.TotalNumberOfFreeBytes != 0);
+            UnitTestConstants.StopWatcher(true);
 
-                  Console.WriteLine("\n#{0:000}\tInput Path: [{1}]{2}", ++cnt, drive, report);
-                  Assert.IsTrue(UnitTestConstants.Dump(dsi, -26));
+            try
+            {
+               // null (default) == All information.
+               DiskSpaceInfo dsi = drv.DiskSpaceInfo;
+               string report = UnitTestConstants.Reporter(true);
+
+               Console.WriteLine("\n#{0:000}\tInput Path: [{1}]{2}", ++cnt, drive, report);
+               Assert.IsTrue(UnitTestConstants.Dump(dsi, -26));
+
+               Assert.AreNotEqual((int) 0, (int) dsi.BytesPerSector);
+               Assert.AreNotEqual((int) 0, (int) dsi.SectorsPerCluster);
+               Assert.AreNotEqual((int) 0, (int) dsi.TotalNumberOfClusters);
+               Assert.AreNotEqual((int) 0, (int) dsi.TotalNumberOfBytes);
+
+               if (drv.DriveType == DriveType.CDRom)
+               {
+                  Assert.AreEqual((int) 0, (int) dsi.FreeBytesAvailable);
+                  Assert.AreEqual((int) 0, (int) dsi.NumberOfFreeClusters);
+                  Assert.AreEqual((int) 0, (int) dsi.TotalNumberOfFreeBytes);
+               }
+               else
+               {
+                  Assert.AreNotEqual((int) 0, (int) dsi.FreeBytesAvailable);
+                  Assert.AreNotEqual((int) 0, (int) dsi.NumberOfFreeClusters);
+                  Assert.AreNotEqual((int) 0, (int) dsi.TotalNumberOfFreeBytes);
+               }
+
+               // false == Size information only.
+               dsi = Volume.GetDiskFreeSpace(drive, false);
+               Assert.AreEqual((int)0, (int)dsi.BytesPerSector);
+               Assert.AreEqual((int)0, (int)dsi.NumberOfFreeClusters);
+               Assert.AreEqual((int)0, (int)dsi.SectorsPerCluster);
+               Assert.AreEqual((int)0, (int)dsi.TotalNumberOfClusters);
 
 
-                  // false == Size information only.
-                  dsi = Volume.GetDiskFreeSpace(drive, false);
-                  Assert.IsTrue(dsi.BytesPerSector == 0 && dsi.NumberOfFreeClusters == 0 && dsi.SectorsPerCluster == 0 && dsi.TotalNumberOfClusters == 0);
-                  Assert.IsTrue(dsi.FreeBytesAvailable != 0 && dsi.TotalNumberOfBytes != 0 && dsi.TotalNumberOfFreeBytes != 0);
+               // true == Cluster information only.
+               dsi = Volume.GetDiskFreeSpace(drive, true);
+               Assert.AreEqual((int)0, (int)dsi.FreeBytesAvailable);
+               Assert.AreEqual((int)0, (int)dsi.TotalNumberOfBytes);
+               Assert.AreEqual((int)0, (int)dsi.TotalNumberOfFreeBytes);
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\n\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               errorCount++;
+            }
+         }
 
-                  // true == Cluster information only.
-                  dsi = Volume.GetDiskFreeSpace(drive, true);
-                  Assert.IsTrue(dsi.BytesPerSector != 0 && dsi.NumberOfFreeClusters != 0 && dsi.SectorsPerCluster != 0 && dsi.TotalNumberOfClusters != 0);
-                  Assert.IsTrue(dsi.FreeBytesAvailable == 0 && dsi.TotalNumberOfBytes == 0 && dsi.TotalNumberOfFreeBytes == 0);
-              }
-              catch (Exception ex)
-              {
-                 Console.WriteLine("\n\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-              }
-          }
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
-          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         Assert.AreEqual(0, errorCount, "No errors were expected.");
          Console.WriteLine();
       }
 
