@@ -3,32 +3,32 @@ Changelog
 
 Version 2.1
 -----------
-### New Features
+### New Features/Enhancements
 
 - Issue #3: Added methods for backing up and restoring encrypted files:
 	* `File.ImportEncryptedFileRaw`
 	* `File.ExportEncryptedFileRaw`
 	* `Directory.ImportEncryptedDirectoryRaw`
 	* `Directory.ExportEncryptedDirectoryRaw`
-
 - Issue #101: The release now also contains a build targetting .NET 4.5.2
+- Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
+- Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 
 ### Bugs Fixed
 
-- Fixed Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
-- Fixed Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
+- Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
 
 Version 2.0.1
 -------------
 
 ### Bugs Fixed
 
-- Fixed Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)"
-- Fixed Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`
-- Fixed Issue #110: `Directory.GetDirectoryRoot()` should throw `System.ArgumentException`.
-- Fixed Issue #117: Fix `Path.GetFullPath()` issues. 
-- Fixed Issue #123: When `Directory.Encrypt/Decrypt()` is non-recursive, only process the folder.
-- Fixed Issue #124: Unit tests for long/short path are failing.
+- Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)"
+- Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`
+- Issue #110: `Directory.GetDirectoryRoot()` should throw `System.ArgumentException`.
+- Issue #117: Fix `Path.GetFullPath()` issues. 
+- Issue #123: When `Directory.Encrypt/Decrypt()` is non-recursive, only process the folder.
+- Issue #124: Unit tests for long/short path are failing.
 
 Version 2.0
 -----------
