@@ -17,6 +17,7 @@ Version 2.1
 - Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #131: Modify method `Path.GetPathRoot()` to handle UNC paths in long path format.
 - Issue #132: Modify method `VolumeInfo()` constructor to better handle input paths.
+- Issue #133: Add missing unit test `Host.GetHostShareFromPath()`
 
 ### Bugs Fixed
 
