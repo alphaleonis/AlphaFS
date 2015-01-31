@@ -981,26 +981,47 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_GetLongPath()
       {
          Console.WriteLine("Path.GetLongPath()");
-         Console.WriteLine("\n\tDirectory: [{0}]", UnitTestConstants.SysRoot);
 
-         string folderName = Path.GetFileName(UnitTestConstants.SysRoot, true);
-         string longPath = Path.GetLongPath(UnitTestConstants.SysRoot);
-         Console.WriteLine("\n\tGetLongPath(): [{0}]", longPath);
-         Assert.IsTrue(longPath.StartsWith(Path.LongPathPrefix));
-         Assert.IsTrue(longPath.EndsWith(UnitTestConstants.SysRoot));
-         Assert.IsTrue(Directory.Exists(longPath));
+         int pathCnt = 0;
+         int errorCnt = 0;
 
-         string longPathUnc = Path.LocalToUnc(UnitTestConstants.SysRoot);
-         longPathUnc = Path.GetLongPath(longPathUnc);
-         if (Directory.Exists(longPathUnc))
+         UnitTestConstants.StopWatcher(true);
+         foreach (string path in UnitTestConstants.InputPaths)
          {
-            Console.WriteLine("\n\tGetLongPath() UNC: [{0}]", longPathUnc);
-            Assert.IsTrue(longPathUnc.StartsWith(Path.LongPathUncPrefix));
-            Assert.IsTrue(longPathUnc.EndsWith(folderName));
-            Assert.IsTrue(Directory.Exists(longPathUnc));
+            string actual = null;
+
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+            // AlphaFS
+            try
+            {
+               actual = Path.GetLongPath(path);
+
+               if (Path.IsUncPath(path))
+                  Assert.IsTrue(actual.StartsWith(Path.LongPathUncPrefix), "Path should start with a long unc path prefix.");
+               else
+               {
+                  var c = path[0];
+                  if (!Path.IsPathRooted(path) && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
+                     Assert.IsFalse(actual.StartsWith(Path.LongPathPrefix), "Path should not start with a long path prefix.");
+                  else
+                  {
+                     if (!Path.IsPathRooted(path) && !Utils.IsNullOrWhiteSpace(Path.GetDirectoryName(path)))
+                        Assert.IsTrue(actual.StartsWith(Path.LongPathUncPrefix), "Path should start with a long path prefix.");
+                  }
+               }
+            }
+            catch (Exception ex)
+            {
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               
+               errorCnt++;
+            }
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
          }
-         else
-            Assert.Inconclusive("Share inaccessible: {0}", longPathUnc);
+         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
+
+         Assert.AreEqual(0, errorCnt, "No errors were expected.");
       }
 
       #endregion // GetLongPath

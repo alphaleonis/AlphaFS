@@ -30,9 +30,12 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region GetLongPath
 
-      /// <summary>[AlphaFS] Makes a Unicode path (LongPath) of the specified <paramref name="path"/> by prefixing <see cref="LongPathPrefix"/>.</summary>
-      /// <returns>Returns the <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>.</returns>
-      /// <param name="path">The local or UNC path to the file or directory.</param>
+      /// <summary>Makes an extended long path from the specified <paramref name="path"/> by prefixing <see cref="LongPathPrefix"/>.</summary>
+      /// <returns>Returns the <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>, the minimum required full path is: "C:\".</returns>
+      /// <remarks>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</remarks>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <param name="path">The path to the file or directory, this can also be an UNC path.</param>
       [SecurityCritical]
       public static string GetLongPath(string path)
       {
@@ -121,15 +124,12 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internals Methods
 
-      /// <summary>[AlphaFS] Unified method GetLongPathInternal() to get a long path (Unicode path) of the specified <paramref name="path"/>.</summary>
-      /// <returns>Returns the <paramref name="path"/> as a long path, such as "\\?\C:\MyFile.txt".</returns>
-      /// <remarks>
-      ///   <para>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</para>
-      ///   MSDN: String.TrimEnd Method notes to Callers: http://msdn.microsoft.com/en-us/library/system.string.trimend%28v=vs.110%29.aspx
-      /// </remarks>
+      /// <summary>Makes an extended long path from the specified <paramref name="path"/> by prefixing <see cref="LongPathPrefix"/>.</summary>
+      /// <returns>Returns the <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>, the minimum required full path is: "C:\".</returns>
+      /// <remarks>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</remarks>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <param name="path">The path to the file or directory, this may also be an UNC path.</param>
+      /// <param name="path">The path to the file or directory, this can also be an UNC path.</param>
       /// <param name="options">Options for controlling the operation.</param>
       [SecurityCritical]
       internal static string GetLongPathInternal(string path, GetFullPathOptions options)
@@ -157,8 +157,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          // ".", "C:"
          if (path.Length <= 2 ||
-            // 2015-01-11 Issue #50: Path.GetLongPath() does not prefix on "C:", should it?
-
              path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) ||
              path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
             return path;
@@ -174,7 +172,7 @@ namespace Alphaleonis.Win32.Filesystem
             : path;
       }
 
-      /// <summary>[AlphaFS] Unified method GetLongShort83PathInternal() to retrieve the short path form, or the regular long form of the specified <paramref name="path"/>.</summary>
+      /// <summary>Unified method GetLongShort83PathInternal() to retrieve the short path form, or the regular long form of the specified <paramref name="path"/>.</summary>
       /// <returns>If <paramref name="getShort"/> is <see langword="true"/>, a path of the 8.3 form otherwise the regular long form.</returns>
       /// <remarks>
       ///   <para>Will fail on NTFS volumes with disabled 8.3 name generation.</para>

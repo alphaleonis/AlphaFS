@@ -21,7 +21,8 @@ Version 2.1
 
 ### Bugs Fixed
 
-- Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
+- Issue #50: `Path.GetLongPath()` does not prefix on "C:\", should it?
+- Issue #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
 
 ### Breaking Changes
 
