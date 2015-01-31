@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (bytes == null)
             throw new ArgumentNullException("bytes");
 
-         using (FileStream fs = OpenInternal(transaction, path, FileMode.Create, 0, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.None, pathFormat))
+         using (FileStream fs = OpenInternal(transaction, path, FileMode.Create, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.None, null, null, pathFormat))
             fs.Write(bytes, 0, bytes.Length);
       }
 

@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream OpenWrite()
       {
-         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, 0, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, PathFormat.LongFullPath);
+         return File.OpenInternal(Transaction, LongFullName, FileMode.Open, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
