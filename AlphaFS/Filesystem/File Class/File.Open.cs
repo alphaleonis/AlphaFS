@@ -32,8 +32,6 @@ namespace Alphaleonis.Win32.Filesystem
 {
    public static partial class File
    {
-      #region Open
-
       #region Non-Transactional
 
       /// <summary>Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
@@ -70,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
      
-      /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
+      /// <summary>Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">
       ///   A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents
@@ -84,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenInternal(null, path, mode, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
+      /// <summary>Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">
       ///   A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents
@@ -102,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>
-      ///   [AlphaFS] Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access
+      ///   Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access
       ///   and the specified sharing option.
       /// </summary>
       /// <param name="path">The file to open.</param>
@@ -124,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>
-      ///   [AlphaFS] Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access
+      ///   Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access
       ///   and the specified sharing option.
       /// </summary>
       /// <param name="path">The file to open.</param>
@@ -524,7 +522,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Transactional
 
-      /// <summary>[AlphaFS] (Transacted) Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
+      /// <summary>(Transacted) Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">
@@ -538,7 +536,7 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenInternal(transaction, path, mode, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
 
-      /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
+      /// <summary>Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">
@@ -556,7 +554,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>
-      ///   [AlphaFS] Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access
+      ///   Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access
       ///   and the specified sharing option.
       /// </summary>
       /// <param name="transaction">The transaction.</param>
@@ -577,7 +575,7 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
 
-      /// <summary>[AlphaFS] (Transacted) Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
+      /// <summary>(Transacted) Opens a <see cref="FileStream"/> on the specified path with read/write access.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">
@@ -592,7 +590,7 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenInternal(transaction, path, mode, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
+      /// <summary>Opens a <see cref="FileStream"/> on the specified path, with the specified mode and access.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">
@@ -610,7 +608,7 @@ namespace Alphaleonis.Win32.Filesystem
          return OpenInternal(transaction, path, mode, access, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
+      /// <summary>Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open.</param>
       /// <param name="mode">A <see cref="FileMode"/> value that specifies whether a file is created if one does not exist, and determines whether the contents of existing files are retained or overwritten.</param>
@@ -625,7 +623,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>
-      ///   [AlphaFS] Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access
+      ///   Opens a <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access
       ///   and the specified sharing option.
       /// </summary>
       /// <param name="transaction">The transaction.</param>
@@ -1043,277 +1041,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Transacted
 
-
-      #endregion // Open
-
-      #region OpenRead
-
-      /// <summary>Opens an existing file for reading.</summary>
-      /// <remarks>
-      ///   This method is equivalent to the FileStream(string, FileMode, FileAccess, FileShare) constructor overload with a
-      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
-      /// </remarks>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
-      [SecurityCritical]
-      public static FileStream OpenRead(string path)
-      {
-         return Open(path, FileMode.Open, FileAccess.Read);            
-      }
-
-      /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
-      /// <remarks>
-      ///   This method is equivalent to the FileStream(string, FileMode, FileAccess, FileShare) constructor overload with a
-      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
-      /// </remarks>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
-      [SecurityCritical]
-      public static FileStream OpenRead(string path, PathFormat pathFormat)
-      {
-         return Open(path, FileMode.Open, FileAccess.Read, pathFormat);
-      }
-
-      #region Transactional
-
-      /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
-      /// <remarks>
-      ///   This method is equivalent to the FileStream(string, FileMode, FileAccess, FileShare) constructor overload with a
-      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
-      /// </remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
-      [SecurityCritical]
-      public static FileStream OpenRead(KernelTransaction transaction, string path)
-      {
-         return Open(transaction, path, FileMode.Open, FileAccess.Read);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
-      /// <remarks>
-      ///   This method is equivalent to the FileStream(string, FileMode, FileAccess, FileShare) constructor overload with a
-      ///   <see cref="FileMode"/> value of Open, a <see cref="FileAccess"/> value of Read and a <see cref="FileShare"/> value of Read.
-      /// </remarks>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
-      [SecurityCritical]
-      public static FileStream OpenRead(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return Open(transaction, path, FileMode.Open, FileAccess.Read, pathFormat);
-      }
-
-
-      #endregion // Transacted
-
-      #endregion // OpenRead
-
-      #region OpenText
-
-      /// <summary>Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SecurityCritical]
-      public static StreamReader OpenText(string path)
-      {
-         return new StreamReader(OpenRead(path), NativeMethods.DefaultFileEncoding);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SecurityCritical]
-      public static StreamReader OpenText(string path, PathFormat pathFormat)
-      {
-         return new StreamReader(OpenRead(path, pathFormat), NativeMethods.DefaultFileEncoding);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SecurityCritical]
-      public static StreamReader OpenText(string path, Encoding encoding, PathFormat pathFormat)
-      {
-         return new StreamReader(OpenRead(path, pathFormat), encoding);
-      }
-
-
-      /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      [SecurityCritical]
-      public static StreamReader OpenText(string path, Encoding encoding)
-      {
-         return new StreamReader(OpenRead(path), encoding);
-      }
-
-      #region Transactional
-
-      /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path)
-      {
-         return new StreamReader(OpenRead(transaction, path), NativeMethods.DefaultFileEncoding);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return new StreamReader(OpenRead(transaction, path, pathFormat), NativeMethods.DefaultFileEncoding);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
-      {
-         return new StreamReader(OpenRead(transaction, path, pathFormat), encoding);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for reading.</param>
-      /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
-      /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
-      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding)
-      {
-         return new StreamReader(OpenRead(transaction, path), encoding);
-      }
-
-      #endregion // Transacted
-
-
-      #endregion // OpenText
-
-      #region OpenWrite
-
-      /// <summary>Opens an existing file or creates a new file for writing.</summary>
-      /// <param name="path">The file to be opened for writing.</param>
-      /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
-      [SecurityCritical]
-      public static FileStream OpenWrite(string path)
-      {
-         return Open(path, FileMode.OpenOrCreate, FileAccess.Write);            
-      }
-
-      /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
-      /// <param name="path">The file to be opened for writing.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
-      [SecurityCritical]
-      public static FileStream OpenWrite(string path, PathFormat pathFormat)
-      {
-         return Open(path, FileMode.OpenOrCreate, FileAccess.Write, pathFormat);
-      }
-
-      #region Transactional
-
-      /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for writing.</param>
-      /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
-      [SecurityCritical]
-      public static FileStream OpenWrite(KernelTransaction transaction, string path)
-      {
-         return Open(transaction, path, FileMode.OpenOrCreate, FileAccess.Write);
-      }
-
-      /// <summary>[AlphaFS] Opens an existing file or creates a new file for writing.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file to be opened for writing.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
-      [SecurityCritical]
-      public static FileStream OpenWrite(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return Open(transaction, path, FileMode.OpenOrCreate, FileAccess.Write, pathFormat);
-      }
-
-      #endregion // Transacted
-
-
-      #endregion // OpenWrite
-
-      #region OpenBackupRead
-
-      /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.</summary>
-      /// <param name="path">The file path to open.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
-      [SecurityCritical]
-      public static FileStream OpenBackupRead(string path, PathFormat pathFormat)
-      {
-         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
-      }
-
-
-      /// <summary>
-      ///   [AlphaFS] Opens the specified file for reading purposes bypassing security attributes.
-      ///   This method is simpler to use then BackupFileStream to read only file's data stream.
-      /// </summary>
-      /// <param name="path">The file path to open.</param>
-      /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>      
-      [SecurityCritical]
-      public static FileStream OpenBackupRead(string path)
-      {
-         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
-      }
-
-      #region Transactional
-
-      /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file path to open.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
-      [SecurityCritical]
-      public static FileStream OpenBackupRead(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
-      }
-
-      /// <summary>[AlphaFS] Opens the specified file for reading purposes bypassing security attributes.</summary>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The file path to open.</param>
-      /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
-      [SecurityCritical]
-      public static FileStream OpenBackupRead(KernelTransaction transaction, string path)
-      {
-         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
-      }
-
-      #endregion // Transacted
-
-      #endregion // OpenBackupRead
-
       #region Internal Methods
 
       /// <summary>
-      ///   [AlphaFS] Unified method OpenInternal() to open a <see cref="FileStream"/> on the specified path, having the
+      ///   Unified method OpenInternal() to open a <see cref="FileStream"/> on the specified path, having the
       ///   specified mode with
       ///   <para>read, write, or read/write access, the specified sharing option and additional options specified.</para>
       /// </summary>
@@ -1343,7 +1074,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>
-      ///   [AlphaFS] Unified method OpenInternal() to open a <see cref="FileStream"/> on the specified path, having the
+      ///   Unified method OpenInternal() to open a <see cref="FileStream"/> on the specified path, having the
       ///   specified mode with
       ///   <para>read, write, or read/write access, the specified sharing option and additional options specified.</para>
       /// </summary>
