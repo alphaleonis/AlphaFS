@@ -12,7 +12,7 @@ Version 2.1
 	* `Directory.ExportEncryptedDirectoryRaw`
 
 - Issue #101: The release now also contains a build targetting .NET 4.5.2
-
+- Issue #119: Fix `Path.IsLocalPath()` issues.
 - Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #131: Modify method `Path.GetPathRoot()` to handle UNC paths in long path format.
@@ -22,6 +22,10 @@ Version 2.1
 ### Bugs Fixed
 
 - Issue  #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
+
+### Breaking Changes
+
+- Issue #128: Remove `Path.IsLocalPath()` in favour of `Path.IsUncPath()`
 
 Version 2.0.1
 -------------
@@ -152,4 +156,3 @@ Version 0.3.1
 Version 0.3.0
 -------------
   * Initial release
-  

@@ -31,7 +31,7 @@ namespace AlphaFS.UnitTest
       {
          localPath = Path.GetFullPath(localPath);
 
-         if (!Path.IsLocalPath(localPath))
+         if (Path.IsUncPath(localPath))
             throw new ArgumentException("Path is not a local path.");
 
          return "\\\\" + Environment.MachineName + "\\" + localPath.First() + "$\\" + localPath.Substring(Path.GetPathRoot(localPath).Length);

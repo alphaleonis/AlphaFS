@@ -649,7 +649,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #endregion // GlobalRoot
 
-         bool doQueryDos = false;
+         bool doQueryDos;
 
          #region Volume
 
@@ -665,8 +665,13 @@ namespace Alphaleonis.Win32.Filesystem
          #region Logical Drive
 
          // Check for Logical Drives: C:, D:, ...
-         else if (Path.IsLocalPath(volumeName, true))
-            doQueryDos = true;
+         else
+         {
+            // Don't use char.IsLetter() here as that can be misleading.
+            // The only valid drive letters are: a-z and A-Z.
+            var c = volumeName[0];
+            doQueryDos = (volumeName[1] == Path.VolumeSeparatorChar && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')));
+         }
 
          #endregion // Logical Drive
 

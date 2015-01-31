@@ -155,18 +155,23 @@ namespace Alphaleonis.Win32.Filesystem
                CheckInvalidPathChars(path, false);
          }
 
-         
-         if (path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) ||
+         // ".", "C:"
+         if (path.Length <= 2 ||
+            // 2015-01-11 Issue #50: Path.GetLongPath() does not prefix on "C:", should it?
+
+             path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase) ||
              path.StartsWith(LogicalDrivePrefix, StringComparison.OrdinalIgnoreCase))
             return path;
 
-         // ".", "C:"
-         return path.Length > 2 && (IsLocalPath(path, false) || IsUncPathInternal(path, false, false))
-            ? path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase)
-               ? LongPathUncPrefix + path.Substring(UncPrefix.Length)
-               : LongPathPrefix + path
+         if (path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase))
+            return LongPathUncPrefix + path.Substring(UncPrefix.Length);
+
+         // Don't use char.IsLetter() here as that can be misleading.
+         // The only valid drive letters are: a-z and A-Z.
+         char c = path[0];
+         return IsPathRooted(path, false) && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+            ? LongPathPrefix + path
             : path;
-         // 2015-01-11 Issue #50: Path.GetLongPath() does not prefix on "C:", should it?
       }
 
       /// <summary>[AlphaFS] Unified method GetLongShort83PathInternal() to retrieve the short path form, or the regular long form of the specified <paramref name="path"/>.</summary>
@@ -214,7 +219,7 @@ namespace Alphaleonis.Win32.Filesystem
          return GetRegularPathInternal(buffer.ToString(), GetFullPathOptions.None);
       }
 
-      /// <summary>[AlphaFS] Unified method GetRegularPathInternal() to get the regular path from a long path.</summary>
+      /// <summary>Unified method GetRegularPathInternal() to get the regular path from a long path.</summary>
       /// <returns>
       ///   <para>Returns the regular form of a long <paramref name="path"/>.</para>
       ///   <para>For example: "\\?\C:\Temp\file.txt" to: "C:\Temp\file.txt", or: "\\?\UNC\Server\share\file.txt" to: "\\Server\share\file.txt".</para>
@@ -250,13 +255,11 @@ namespace Alphaleonis.Win32.Filesystem
                CheckInvalidPathChars(path, false);
          }
 
-         
-         if (!path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase))
-            return path;
-
-         return path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase)
-            ? UncPrefix + path.Substring(LongPathUncPrefix.Length)
-            : path.Substring(LongPathPrefix.Length);
+         return !path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase)
+            ? path
+            : (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase)
+               ? UncPrefix + path.Substring(LongPathUncPrefix.Length)
+               : path.Substring(LongPathPrefix.Length));
       }
 
       /// <summary>Gets the path as a long full path.</summary>

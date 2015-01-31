@@ -2045,7 +2045,7 @@ namespace AlphaFS.UnitTest
                              !string.IsNullOrWhiteSpace(actual.DiskSpaceInfo.AvailableFreeSpaceUnitSize));
             }
          }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
+         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
       }
 
       #endregion // DumpGetDrives
@@ -3429,7 +3429,7 @@ namespace AlphaFS.UnitTest
             }
             Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
          }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
+         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
@@ -3560,53 +3560,53 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Directory.GetParent()");
 
          int pathCnt = 0;
-         bool allOk = true;
          int errorCnt = 0;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            string method = null;
+            string expected = null;
+            string actual = null;
+            bool gotError = false;
 
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+
+            // System.IO
             try
             {
-               method = "AlphaFS";
-               DirectoryInfo diActual = Directory.GetParent(path);
-
-               method = "System.IO";
-               System.IO.DirectoryInfo diExpected = System.IO.Directory.GetParent(path);
-
-               if (diActual == null || diExpected == null)
-               {
-                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, path, diActual, diExpected);
-                  Assert.AreEqual(diActual, diExpected);
-               }
-               else
-               {
-                  method = "AlphaFS";
-                  string actual = diActual.FullName;
-
-                  method = "System.IO";
-                  string expected = diExpected.FullName;
-
-                  Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, path, diActual.FullName, diExpected.FullName);
-                  Assert.AreEqual(expected, actual);
-               }
-            }
-            catch (ArgumentException ex)
-            {
-               Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
+               var result = System.IO.Directory.GetParent(path);
+               expected = result == null ? null : result.FullName;
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
-               errorCnt++;
-            }
-         }
-         Console.WriteLine("\n\t{0}", UnitTestConstants.Reporter(true));
+               gotError = ex is ArgumentException;
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+               Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
+
+
+            // AlphaFS
+            try
+            {
+               var result = Directory.GetParent(path);
+               actual = result == null ? null : result.FullName;
+
+               if (!gotError)
+                  Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+               errorCnt++;
+
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
+         }
+         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
+
+         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
 
       #endregion // GetParent

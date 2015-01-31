@@ -50,10 +50,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets a value indicating whether the specified path string contains absolute or relative path information.</summary>
       /// <returns><see langword="true"/> if <paramref name="path"/> contains a root; otherwise, <see langword="false"/>.</returns>
       /// <remarks>
-      ///   The IsPathRooted method returns true if the first character is a directory separator character such as
-      ///   <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>). For
-      ///   example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir". It returns <see langword="false"/> for
-      ///   path strings such as "MyDir".
+      ///   The IsPathRooted method returns <see langword="true"/> if the first character is a directory separator character such as
+      ///   <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>).
+      ///   For example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir".
+      ///   It returns <see langword="false"/> for path strings such as "MyDir".
       /// </remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -71,9 +71,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns><see langword="true"/> if <paramref name="path"/> contains a root; otherwise, <see langword="false"/>.</returns>
       /// <remarks>
       ///   The IsPathRooted method returns true if the first character is a directory separator character such as
-      ///   <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>). For
-      ///   example, it returns true for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir". It returns <see langword="false"/> for
-      ///   path strings such as "MyDir".
+      ///   <see cref="DirectorySeparatorChar"/>, or if the path starts with a drive letter and colon (<see cref="VolumeSeparatorChar"/>).
+      ///   For example, it returns <see langword="true"/> for path strings such as "\\MyDir\\MyFile.txt", "C:\\MyDir", or "C:MyDir".
+      ///   It returns <see langword="false"/> for path strings such as "MyDir".
       /// </remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
       /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
@@ -99,41 +99,6 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsPathRooted
-
-      #region IsLocalPath
-
-      /// <summary>[AlphaFS] Determines whether the specified path is a local path.</summary>
-      /// <returns><see langword="true"/> if the specified path is a local path, <see langword="false"/> otherwise.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path to check.</param>
-      [SecurityCritical]
-      public static bool IsLocalPath(string path)
-      {
-         return IsLocalPath(path, true);
-      }
-
-      /// <summary>[AlphaFS] Determines whether the specified path is a local path.</summary>
-      /// <returns><see langword="true"/> if the specified path is a local path, <see langword="false"/> otherwise.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">The path to check.</param>
-      /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
-      [SecurityCritical]
-      public static bool IsLocalPath(string path, bool checkInvalidPathChars)
-      {
-         if (Utils.IsNullOrWhiteSpace(path))
-            return false;
-
-         path = GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0);
-
-         // Don't use char.IsLetter() here as that can be misleading.
-         // The only valid drive letters are: a-z and A-Z.
-         char c = path[0];
-         return IsPathRooted(path, false) && ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) && path[1] == VolumeSeparatorChar;
-      }
-
-      #endregion // IsLocalPath
 
       #region IsValidName
 
