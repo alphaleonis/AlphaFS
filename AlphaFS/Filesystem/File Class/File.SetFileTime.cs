@@ -583,37 +583,31 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method SetFsoDateTimeInternal() to set the date and time, in coordinated universal time (UTC), that the file or
-      ///   directory was created and/or last accessed and/or written to.
-      /// </summary>
+      /// <summary>Unified method SetFsoDateTimeInternal() to set the date and time, in coordinated universal time (UTC),
+      /// that the file or directory was created and/or last accessed and/or written to.</summary>
+      /// <exception cref="ArgumentException">
+      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
+      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
+      /// </exception>
+      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to set the date and time information.</param>
-      /// <param name="creationTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value
-      ///   is expressed in UTC time.
-      /// </param>
-      /// <param name="lastAccessTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This
-      ///   value is expressed in UTC time.
-      /// </param>
-      /// <param name="lastWriteTimeUtc">
-      ///   A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value
-      ///   is expressed in UTC time.
-      /// </param>
+      /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
+      /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
+      /// <param name="lastWriteTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last write date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
       internal static void SetFsoDateTimeInternal(bool isFolder, KernelTransaction transaction, string path, DateTime? creationTimeUtc, DateTime? lastAccessTimeUtc, DateTime? lastWriteTimeUtc, PathFormat pathFormat)
       {
          // Because we already check here, use false for CreateFileInternal() to prevent another check.
          if (pathFormat == PathFormat.RelativePath)
-            Path.CheckValidPath(path, false, false);
+            Path.CheckSupportedPathFormat(path, false, false);
 
-         using (SafeGlobalMemoryBufferHandle creationTime = SafeGlobalMemoryBufferHandle.FromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
-         using (SafeGlobalMemoryBufferHandle lastAccessTime = SafeGlobalMemoryBufferHandle.FromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))
-         using (SafeGlobalMemoryBufferHandle lastWriteTime = SafeGlobalMemoryBufferHandle.FromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?)null))
-         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, pathFormat))
+         using (var creationTime = SafeGlobalMemoryBufferHandle.FromLong(creationTimeUtc.HasValue ? creationTimeUtc.Value.ToFileTimeUtc() : (long?)null))
+         using (var lastAccessTime = SafeGlobalMemoryBufferHandle.FromLong(lastAccessTimeUtc.HasValue ? lastAccessTimeUtc.Value.ToFileTimeUtc() : (long?)null))
+         using (var lastWriteTime = SafeGlobalMemoryBufferHandle.FromLong(lastWriteTimeUtc.HasValue ? lastWriteTimeUtc.Value.ToFileTimeUtc() : (long?)null))
+         using (var safeHandle = CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.WriteAttributes, FileShare.Delete | FileShare.Write, false, pathFormat))
             if (!NativeMethods.SetFileTime(safeHandle, creationTime, lastAccessTime, lastWriteTime))
                NativeError.ThrowException(path);
       }

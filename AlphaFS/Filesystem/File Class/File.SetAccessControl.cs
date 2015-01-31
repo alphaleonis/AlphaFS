@@ -106,37 +106,26 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method SetAccessControlInternal() applies access control list (ACL) entries described by a
-      ///   <see cref="FileSecurity"/> FileSecurity object to the specified file.
-      /// </summary>
+      /// <summary>Unified method SetAccessControlInternal() applies access control list (ACL) entries
+      /// described by a <see cref="FileSecurity"/> FileSecurity object to the specified file.</summary>
       /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
       /// <exception cref="ArgumentNullException"/>
-      /// <param name="path">
-      ///   A file to add or remove access control list (ACL) entries from. This parameter This parameter may be <see langword="null"/>.
-      /// </param>
-      /// <param name="handle">
-      ///   A handle to add or remove access control list (ACL) entries from. This parameter This parameter may be <see langword="null"/>.
-      /// </param>
-      /// <param name="objectSecurity">
-      ///   A <see cref="DirectorySecurity"/> or <see cref="FileSecurity"/> object that describes an ACL entry to apply to the file described
-      ///   by the <paramref name="path"/> parameter.
-      /// </param>
-      /// <param name="includeSections">
-      ///   One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to
-      ///   set.
-      /// </param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      ///
       /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
+      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
+      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
       /// </exception>
+      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <param name="path">A file to add or remove access control list (ACL) entries from. This parameter This parameter may be <see langword="null"/>.</param>
+      /// <param name="handle">A handle to add or remove access control list (ACL) entries from. This parameter This parameter may be <see langword="null"/>.</param>
+      /// <param name="objectSecurity">A <see cref="DirectorySecurity"/> or <see cref="FileSecurity"/> object that describes an ACL entry to apply to the file described by the <paramref name="path"/> parameter.</param>
+      /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
       internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
          if (pathFormat == PathFormat.RelativePath)
-            Path.CheckValidPath(path, true, true);
+            Path.CheckSupportedPathFormat(path, true, true);
 
          if (objectSecurity == null)
             throw new ArgumentNullException("objectSecurity");

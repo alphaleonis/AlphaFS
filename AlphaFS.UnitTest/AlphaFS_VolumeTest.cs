@@ -23,11 +23,8 @@ using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Security.Principal;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
@@ -43,7 +40,7 @@ namespace AlphaFS.UnitTest
 
       private static readonly string TempFolder = Path.GetTempPath();
 
-      private void DumpGetDriveFormat(bool isLocal)
+      private static void DumpGetDriveFormat(bool isLocal)
       {
          Console.WriteLine("=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
 
@@ -62,7 +59,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
 
             string drive = isLocal ? drv : Path.LocalToUnc(drv);
@@ -83,7 +80,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
       }
       
-      private void DumpGetVolumePathName(bool isLocal)
+      private static void DumpGetVolumePathName(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
          string tempPath = UnitTestConstants.LocalHostShare;
@@ -101,7 +98,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(volumePathName.EndsWith(Path.DirectorySeparator));
       }
 
-      private void DumpGetDriveNameForNtDeviceName(bool isLocal)
+      private static void DumpGetDriveNameForNtDeviceName(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
          int cnt = 0;
@@ -128,7 +125,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
       }
 
-      private void DumpGetUniqueVolumeNameForPath(bool isLocal)
+      private static void DumpGetUniqueVolumeNameForPath(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
 
@@ -602,7 +599,7 @@ namespace AlphaFS.UnitTest
                      try { guid = Volume.GetVolumeGuid(Path.Combine(drive, mountPoint)); }
                      catch (Exception ex)
                      {
-                        Console.Write("\n\tCaught Exception (0): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+                        Console.WriteLine("\n\tCaught (unexpected #1) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
                      }
 
                      Console.WriteLine("\t#{0:000}\tLogical Drive: [{1}]\tGUID: [{2}]\n\t\tDestination  : [{3}]\n\t{4}", ++cnt, drive, guid ?? "null", mountPoint, UnitTestConstants.Reporter(true));
@@ -611,7 +608,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.Write("\n\tCaught Exception (1): [{0}]", ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\n\tCaught (unexpected #2) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
 
@@ -915,7 +912,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(isLabelSet);
 
@@ -937,7 +934,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(isLabelRemoved);
 
@@ -959,7 +956,7 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          Assert.IsTrue(isLabelSet);
 
@@ -1015,7 +1012,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
 
             Console.WriteLine("\n\nVolume.DeleteVolumeMountPoint() (Should be True): [{0}]\tFolder: [{1}]\n{2}\n",
@@ -1028,8 +1025,9 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\nCaught Exception: [{0}]\n", ex.Message.Replace(Environment.NewLine, "  "));
             cnt = 0;
+
+            Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          finally
          {

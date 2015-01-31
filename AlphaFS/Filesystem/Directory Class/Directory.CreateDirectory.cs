@@ -698,7 +698,7 @@ namespace Alphaleonis.Win32.Filesystem
       
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method CreateDirectoryInternal() to create a new directory with the attributes of a specified template directory (if one is specified). 
+      /// <summary>Unified method CreateDirectoryInternal() to create a new directory with the attributes of a specified template directory (if one is specified). 
       /// If the underlying file system supports security on files and directories, the function
       /// applies the specified security descriptor to the new directory. The new directory retains
       /// the other attributes of the specified template directory.
@@ -708,11 +708,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>This object is returned regardless of whether a directory at the specified path already exists.</para>
       /// </returns>
       /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> and <paramref name="templatePath"/> parameters before creating the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException">
+      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
+      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
+      /// </exception>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
@@ -724,21 +727,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DirectoryInfo CreateDirectoryInternal(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
-         if (pathFormat == PathFormat.RelativePath)
-         {
-            if (path != null && path[0] == Path.VolumeSeparatorChar)
-               throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
+         bool fullCheck = pathFormat == PathFormat.RelativePath;
 
-            if (templatePath != null && templatePath[0] == Path.VolumeSeparatorChar)
-               throw new ArgumentException(String.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, templatePath));
+         Path.CheckSupportedPathFormat(path, fullCheck, fullCheck);
+         Path.CheckSupportedPathFormat(templatePath, fullCheck, fullCheck);
 
-            Path.CheckValidPath(path, true, true);
-            Path.CheckValidPath(templatePath, true, true);
-         }
-         else
-            // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-            Path.CheckValidPath(path, false, false);
-
+         
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          // Return DirectoryInfo instance if the directory specified by path already exists.

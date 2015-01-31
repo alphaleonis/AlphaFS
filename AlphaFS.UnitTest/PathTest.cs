@@ -41,43 +41,108 @@ namespace AlphaFS.UnitTest
    {
       #region Unit Tests
 
-      private static void Dump83Path(string fullPath)
+      private static void Dump83Path(bool isLocal)
       {
-         Console.WriteLine("\nInput Path: [{0}]\n", fullPath);
+         #region Setup
 
-         if (Directory.Exists(fullPath))
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+
+         string myLongPath = Path.GetTempPath("My Long Data File Or Directory");
+         if (!isLocal) myLongPath = Path.LocalToUnc(myLongPath);
+
+         Console.WriteLine("\nInput Path: [{0}]\n", myLongPath);
+
+         #endregion // Setup
+
+         #region File
+
+         string short83Path;
+
+         try
          {
-            // GetShort83Path()
-            UnitTestConstants.StopWatcher(true);
-            string short83Path = Path.GetShort83Path(fullPath);
-            string reporter = UnitTestConstants.Reporter();
-            bool isShort83Path = !string.IsNullOrWhiteSpace(short83Path) && !short83Path.Equals(fullPath) && Directory.Exists(short83Path);
-            bool hasTilde = !string.IsNullOrWhiteSpace(short83Path) && short83Path.IndexOf('~') >= 0;
+            using (File.Create(myLongPath))
 
-            Console.WriteLine("\t{0} (Should be True): [{1}]: [{2}]\n{3}", "GetShort83Path()", isShort83Path, short83Path, reporter);
-            Assert.IsTrue(isShort83Path);
-            Assert.IsTrue(hasTilde); // A bit tricky if fullPath is already a shortPath.
-
-            // GetLongFrom83ShortPath()
             UnitTestConstants.StopWatcher(true);
+
+            short83Path = Path.GetShort83Path(myLongPath);
+
+            Console.WriteLine("Short 8.3 file path    : [{0}]\t\t\t{1}", short83Path, UnitTestConstants.Reporter(true));
+
+            Assert.IsTrue(!short83Path.Equals(myLongPath));
+
+            Assert.IsTrue(short83Path.EndsWith(@"~1"));
+
+
+
+            UnitTestConstants.StopWatcher(true);
+
             string longFrom83Path = Path.GetLongFrom83ShortPath(short83Path);
-            reporter = UnitTestConstants.Reporter();
-            bool isLongFrom83Path = !string.IsNullOrWhiteSpace(longFrom83Path) && !longFrom83Path.Equals(short83Path) && Directory.Exists(longFrom83Path);
-            bool noTilde = !string.IsNullOrWhiteSpace(longFrom83Path) && longFrom83Path.IndexOf('~') == -1;
 
-            Console.WriteLine("\n\t{0} (Should be True): [{1}]: [{2}]:\n{3}\n", "GetLongFrom83ShortPath()", isLongFrom83Path, longFrom83Path, reporter);
-            Assert.IsTrue(isLongFrom83Path);
-            Assert.IsTrue(noTilde);
+            Console.WriteLine("Long path from 8.3 path: [{0}]{1}", longFrom83Path, UnitTestConstants.Reporter(true));
+
+            Assert.IsTrue(longFrom83Path.Equals(myLongPath));
+
+            Assert.IsFalse(longFrom83Path.EndsWith(@"~1"));
+
          }
-         else
+         catch (Exception ex)
          {
-            Console.WriteLine("\tShare inaccessible: {0}", fullPath);
+            Console.WriteLine("Caught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
+         finally
+         {
+            if (File.Exists(myLongPath))
+               File.Delete(myLongPath);
+         }
+         Console.WriteLine();
+
+         #endregion // File
+
+         #region Directory
+
+         try
+         {
+            Directory.CreateDirectory(myLongPath);
+
+            UnitTestConstants.StopWatcher(true);
+
+            short83Path = Path.GetShort83Path(myLongPath);
+
+            Console.WriteLine("Short 8.3 directory path: [{0}]\t\t\t{1}", short83Path, UnitTestConstants.Reporter(true));
+
+            Assert.IsFalse(short83Path.Equals(myLongPath));
+
+            Assert.IsTrue(short83Path.EndsWith(@"~1"));
+
+
+
+            UnitTestConstants.StopWatcher(true);
+
+            string longFrom83Path = Path.GetLongFrom83ShortPath(short83Path);
+
+            Console.WriteLine("Long path from 8.3 path : [{0}]{1}", longFrom83Path, UnitTestConstants.Reporter(true));
+
+            Assert.IsTrue(longFrom83Path.Equals(myLongPath));
+
+            Assert.IsFalse(longFrom83Path.EndsWith(@"~1"));
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine("Caught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         finally
+         {
+            if (Directory.Exists(myLongPath))
+               Directory.Delete(myLongPath);
+         }
+         Console.WriteLine();
+
+         #endregion // Directory
       }
 
       private static void DumpGetDirectoryNameWithoutRoot(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          const string neDir = "Non-Existing Directory";
          const string sys32 = "system32";
@@ -113,9 +178,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
-      private void DumpGetFinalPathNameByHandle(bool isLocal)
+      private static void DumpGetFinalPathNameByHandle(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          string tempFile = Path.GetTempFileName();
          if (!isLocal) tempFile = Path.LocalToUnc(tempFile);
@@ -189,7 +254,7 @@ namespace AlphaFS.UnitTest
 
       private static void DumpGetSuffixedDirectoryName(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          string neDir = "Non-Existing Directory";
          string sys32 = Environment.SystemDirectory + Path.DirectorySeparator;
@@ -243,9 +308,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
-      private void DumpGetSuffixedDirectoryNameWithoutRoot(bool isLocal)
+      private static void DumpGetSuffixedDirectoryNameWithoutRoot(bool isLocal)
       {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? "LOCAL" : "NETWORK");
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
          string neDir = "Non-Existing Directory";
          string sys32 = (UnitTestConstants.SysRoot + Path.DirectorySeparator + "system32" + Path.DirectorySeparator).Replace(UnitTestConstants.SysDrive + Path.DirectorySeparator, "");
@@ -346,7 +411,7 @@ namespace AlphaFS.UnitTest
                   }
                   catch (Exception ex)
                   {
-                     Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+                     Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
                      allOk = false;
                      errorCnt++;
                   }
@@ -354,7 +419,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\n\t\t(Outer) Caught Exception: [{0}] Path: [{1}]", ex.Message.Replace(Environment.NewLine, "  "), path);
+               Console.WriteLine("\n\t\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
@@ -397,7 +462,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
                allOk = false;
                errorCnt++;
             }
@@ -442,7 +507,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
                allOk = false;
                errorCnt++;
             }
@@ -487,7 +552,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
                allOk = false;
                errorCnt++;
             }
@@ -532,7 +597,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
                allOk = false;
                errorCnt++;
             }
@@ -617,7 +682,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\tSystem.IO : [{0}]", expected);
+            Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
 
 
             // AlphaFS
@@ -634,7 +699,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\tAlphaFS   : [{0}]", actual);
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
 
@@ -725,7 +790,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
                allOk = false;
                errorCnt++;
             }
@@ -937,8 +1002,8 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Path.GetLongFrom83ShortPath()");
 
-         Dump83Path(UnitTestConstants.StartupFolder);
-         Dump83Path(Path.LocalToUnc(UnitTestConstants.StartupFolder));
+         Dump83Path(true);
+         Dump83Path(false);
       }
 
       #endregion // GetLongFrom83ShortPath
@@ -994,48 +1059,23 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Path.GetRegularPath()");
 
          int pathCnt = 0;
-         bool allOk = true;
-         int errorCnt = 0;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            string method = null;
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+            
+            string actual = Path.GetRegularPath(path);
 
-            try
-            {
-               method = "AlphaFS";
-               string actual = Path.GetRegularPath(path);
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
 
-               method = "System.IO";
-               string expected = UnitTestConstants.InputPaths[pathCnt];
 
-               if (Path.IsLongPath(expected))
-                  Assert.IsFalse(Path.IsLongPath(actual), "Path should be regular.");
+            if (actual.StartsWith(Path.GlobalRootPrefix) || actual.StartsWith(Path.VolumePrefix))
+               continue;
 
-               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]", ++pathCnt, path, actual);
-
-               if (expected.StartsWith(Path.LongPathUncPrefix, StringComparison.OrdinalIgnoreCase))
-                  expected = expected.Replace(Path.LongPathUncPrefix, Path.UncPrefix);
-
-               expected = expected.Replace(Path.LongPathPrefix, "");
-
-               Assert.AreEqual(expected, actual);
-            }
-            catch (ArgumentException ex)
-            {
-               Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
-               errorCnt++;
-            }
+            Assert.IsFalse(actual.StartsWith(Path.LongPathPrefix));
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
-
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
 
       #endregion // GetRegularPath
@@ -1046,8 +1086,7 @@ namespace AlphaFS.UnitTest
       public void AlphaFS_GetShort83Path()
       {
          Console.WriteLine("Path.GetShort83Path()");
-
-         AlphaFS_GetLongFrom83ShortPath();
+         Console.WriteLine("\nPlease see unit test: AlphaFS_GetLongFrom83ShortPath()");
       }
 
       #endregion // GetShort83Path
@@ -1081,7 +1120,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
                allOk = false;
                errorCnt++;
             }
@@ -1089,9 +1128,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
 
          // Hand counted 28 True's.
-         Assert.AreEqual(28, isLocalPath, "Numbers of matching local paths do not match.", errorCnt);
+         Assert.AreEqual(28, isLocalPath, "Numbers of matching local paths do not match.");
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(true, allOk, "Encountered paths where AlphaFS != System.IO");
       }
 
       #endregion // IsLocalPath
@@ -1128,15 +1167,15 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
                allOk = false;
                errorCnt++;
             }
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
 
-         // Hand counted 32 True's.
-         Assert.AreEqual(32, isLongPath, "Numbers of matching local paths do not match.", errorCnt);
+         // Hand counted 33 True's.
+         Assert.AreEqual(33, isLongPath, "Numbers of matching local paths do not match.", errorCnt);
 
          Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
       }
@@ -1175,15 +1214,15 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught Exception: Method: [{0}] [{1}]", method, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
                allOk = false;
                errorCnt++;
             }
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter());
 
-         // Hand counted 30 True's.
-         Assert.AreEqual(30, isUncPath, "Numbers of matching UNC paths do not match.", errorCnt);
+         // Hand counted 32 True's.
+         Assert.AreEqual(32, isUncPath, "Numbers of matching UNC paths do not match.", errorCnt);
          Assert.AreEqual(38, isNotUncPath, "Numbers of matching UNC paths do not match.", errorCnt);
 
          Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
@@ -1205,7 +1244,7 @@ namespace AlphaFS.UnitTest
          foreach (string path2 in Directory.EnumerateFileSystemEntries(UnitTestConstants.SysRoot))
          {
             string uncPath = Path.LocalToUnc(path2);
-            Console.WriteLine("\t#{0:000}\tPath: [{1}]\t\t\tLocalToUnc(): [{2}]", ++cnt, path2, uncPath);
+            Console.WriteLine("\t#{0:000}\tLocal: [{1}]\t\t\tUNC: [{2}]", ++cnt, path2, uncPath);
 
             Assert.IsTrue(Path.IsUncPath(uncPath));
 

@@ -116,8 +116,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method DeleteFileInternal() to delete a Non-/Transacted file.</summary>
+      /// <summary>Unified method DeleteFileInternal() to delete a Non-/Transacted file.</summary>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
+      /// <exception cref="ArgumentException">
+      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
+      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
+      /// </exception>
+      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <exception cref="UnauthorizedAccessException">Thrown when an Unauthorized Access error condition occurs.</exception>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the file to be deleted.</param>
@@ -129,7 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
          #region Setup
 
          if (pathFormat == PathFormat.RelativePath)
-            Path.CheckValidPath(path, true, true);
+            Path.CheckSupportedPathFormat(path, true, true);
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 

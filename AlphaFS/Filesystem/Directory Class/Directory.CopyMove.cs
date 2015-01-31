@@ -746,7 +746,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
+      /// <summary>Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
       ///   <para><see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,</para>
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
@@ -757,11 +757,14 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException">
+      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
+      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
+      /// </exception>
       /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
       /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
       /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
-      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
@@ -777,25 +780,19 @@ namespace Alphaleonis.Win32.Filesystem
       {
          #region Setup
 
-         if (pathFormat == PathFormat.RelativePath)
-         {
-            Path.CheckValidPath(sourcePath, true, true);
-            Path.CheckValidPath(destinationPath, true, true);
-         }
-         else
-         {
-            // MSDN:. NET 3.5+: NotSupportedException: Path contains a colon character (:) that is not part of a drive label ("C:\").
-            Path.CheckValidPath(sourcePath, false, false);
-            Path.CheckValidPath(destinationPath, false, false);
-         }
+         bool fullCheck = pathFormat == PathFormat.RelativePath;
+
+         Path.CheckSupportedPathFormat(sourcePath, fullCheck, fullCheck);
+         Path.CheckSupportedPathFormat(destinationPath, fullCheck, fullCheck);
+
 
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
          // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
 
-         var options = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
+         var fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
 
-         string sourcePathLp = Path.GetExtendedLengthPathInternal(transaction, sourcePath, pathFormat, options);
-         string destinationPathLp = Path.GetExtendedLengthPathInternal(transaction, destinationPath, pathFormat, options);
+         string sourcePathLp = Path.GetExtendedLengthPathInternal(transaction, sourcePath, pathFormat, fullPathOptions);
+         string destinationPathLp = Path.GetExtendedLengthPathInternal(transaction, destinationPath, pathFormat, fullPathOptions);
 
          // MSDN: .NET3.5+: IOException: The sourceDirName and destDirName parameters refer to the same file or directory.
          if (sourcePathLp.Equals(destinationPathLp, StringComparison.OrdinalIgnoreCase))

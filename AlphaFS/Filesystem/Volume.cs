@@ -171,28 +171,27 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> QueryDosDevice(string deviceName, params string[] options)
       {
-         // The device name cannot have a trailing backslash.
+         // deviceName is allowed to be null.
+         // The deviceName cannot have a trailing backslash.
          deviceName = Path.RemoveTrailingDirectorySeparator(deviceName, false);
-         bool searchFilter = false;
+
+         bool searchFilter = (deviceName != null);
 
          // Only process options if a device is supplied.
-         if (deviceName != null)
+         if (searchFilter)
          {
             // Check that at least one "options[]" has something to say. If so, rebuild them.
             options = options != null && options.Any() ? new[] { deviceName, options[0] } : new[] { deviceName, string.Empty };
 
-            searchFilter = !Path.IsLocalPath(deviceName, true);
-
-            if (searchFilter)
-               deviceName = null;
+            deviceName = null;
          }
-
+         
          // Choose sorted output.
          bool doSort = options != null &&
                        options.Any(s => s != null && s.Equals("sort", StringComparison.OrdinalIgnoreCase));
 
          // Start with a larger buffer when using a searchFilter.
-         uint bufferSize = (uint)(searchFilter || doSort || (deviceName == null && options == null) ? 32768 : 256);
+         uint bufferSize = (uint) (searchFilter || doSort || (options == null) ? 8*NativeMethods.DefaultFileBufferSize : 256);
          uint bufferResult = 0;
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
@@ -238,7 +237,7 @@ namespace Alphaleonis.Win32.Filesystem
                }
 
                // Choose the yield back query; filtered or list.
-               IEnumerable<string> selectQuery = (searchFilter)
+               IEnumerable<string> selectQuery = searchFilter
                   ? dosDev.Where(dev => options != null && dev.StartsWith(options[0], StringComparison.OrdinalIgnoreCase))
                   : dosDev;
 

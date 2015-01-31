@@ -21,10 +21,6 @@
 
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using FileStream = System.IO.FileStream;
 
 namespace AlphaFS.UnitTest

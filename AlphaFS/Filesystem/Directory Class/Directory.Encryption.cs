@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a directory to decrypt.</param>
-      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void Decrypt(string path, bool recursive, PathFormat pathFormat)
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
       /// <param name="path">A path that describes a directory to decrypt.</param>
-      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt the directory.</param>
       [SecurityCritical]
       public static void Decrypt(string path, bool recursive)
       {
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
-      /// <param name="recursive"><see langword="true"/> to encrypt the directory recursively. <see langword="false"/> only encrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="recursive"><see langword="true"/> to encrypt the directory recursively. <see langword="false"/> only encrypt the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static void Encrypt(string path, bool recursive, PathFormat pathFormat)
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Encrypts a directory so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
-      /// <param name="recursive"><see langword="true"/> to encrypt the directory recursively. <see langword="false"/> only encrypt files and directories in the root of <paramref name="path"/>.</param>
+      /// <param name="recursive"><see langword="true"/> to encrypt the directory recursively. <see langword="false"/> only encrypt the directory.</param>
       [SecurityCritical]
       public static void Encrypt(string path, bool recursive)
       {
@@ -107,21 +107,26 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Encrypt
 
+
       #region DisableEncryption
 
-      /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
+      /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it.
+      /// <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and disables encryption by writing: "Disable=1"</para>
+      /// <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
+      /// </summary>
       /// <param name="path">The name of the directory for which to disable encryption.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0"</remarks>
       [SecurityCritical]
       public static void DisableEncryption(string path, PathFormat pathFormat)
       {
          EnableDisableEncryptionInternal(path, false, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
+      /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it.
+      /// <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and disables encryption by writing: "Disable=1"</para>
+      /// <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
+      /// </summary>
       /// <param name="path">The name of the directory for which to disable encryption.</param>
-      /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0"</remarks>
       [SecurityCritical]
       public static void DisableEncryption(string path)
       {
@@ -132,19 +137,23 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region EnableEncryption
 
-      /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
+      /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it.
+      /// <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and enables encryption by writing: "Disable=0"</para>
+      /// <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
+      /// </summary>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=1"</remarks>
       [SecurityCritical]
       public static void EnableEncryption(string path, PathFormat pathFormat)
       {
          EnableDisableEncryptionInternal(path, true, pathFormat);
       }
 
-      /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
+      /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it.
+      /// <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and enables encryption by writing: "Disable=0"</para>
+      /// <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
+      /// </summary>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
-      /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=1"</remarks>
       [SecurityCritical]
       public static void EnableEncryption(string path)
       {
@@ -153,13 +162,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // EnableEncryption
 
+
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it. It does not affect encryption of subdirectories below the indicated directory.</summary>
+      /// <summary>Unified method to enable/disable encryption of the specified directory and the files in it.
+      /// <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and  enables/disables encryption by writing: "Disable=0" or "Disable=1".</para>
+      /// <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
+      /// </summary>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       /// <param name="enable"><see langword="true"/> enabled encryption, <see langword="false"/> disables encryption.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <remarks>This method will create/change the file "Desktop.ini" and wil set Encryption value: "Disable=0 | 1"</remarks>
       [SecurityCritical]
       internal static void EnableDisableEncryptionInternal(string path, bool enable, PathFormat pathFormat)
       {
