@@ -382,49 +382,49 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Path.Combine()");
 
          int pathCnt = 0;
-         bool allOk = true;
          int errorCnt = 0;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            try
+            foreach (string path2 in UnitTestConstants.InputPaths)
             {
-               foreach (string path2 in UnitTestConstants.InputPaths)
+               string expected = null;
+               string actual = null;
+
+               Console.WriteLine("\n#{0:000}\tInput Path: [{1}]\tCombine with: [{2}]", ++pathCnt, path, path2);
+
+               // System.IO
+               try
                {
-                  string method = null;
-
-                  try
-                  {
-                     method = "AlphaFS";
-                     string actual = Path.Combine(path, path2);
-
-                     method = "System.IO";
-                     string expected = System.IO.Path.Combine(path, path2);
-
-                     Console.WriteLine("\n\t#{0:000}\tPath 1   : [{1}]\t\tPath 2: [{2}]\n\t\tAlphaFS  : [{3}]\n\t\tSystem.IO: [{4}]", ++pathCnt, path, path2, actual, expected);
-                     Assert.AreEqual(expected, actual);
-                  }
-                  catch (ArgumentException ex)
-                  {
-                     Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
-                  }
-                  catch (Exception ex)
-                  {
-                     Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
-                     allOk = false;
-                     errorCnt++;
-                  }
+                  expected = System.IO.Path.Combine(path, path2);
                }
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\n\t\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               catch (Exception ex)
+               {
+                  Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
+
+
+               // AlphaFS
+               try
+               {
+                  actual = Path.Combine(path, path2);
+
+                  Assert.AreEqual(expected, actual);
+               }
+               catch (Exception ex)
+               {
+                  errorCnt++;
+
+                  Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               }
+               Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
             }
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
 
       #endregion // Combine
@@ -437,39 +437,50 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Path.GetDirectoryName()");
 
          int pathCnt = 0;
-         bool allOk = true;
          int errorCnt = 0;
+         bool skipAssert = false;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            string method = null;
+            string expected = null;
+            string actual = null;
 
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+            // System.IO
             try
             {
-               method = "AlphaFS";
-               string actual = Path.GetDirectoryName(path);
-
-               method = "System.IO";
-               string expected = System.IO.Path.GetDirectoryName(path);
-
-               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, path, actual, expected);
-               Assert.AreEqual(expected, actual);
-            }
-            catch (ArgumentException ex)
-            {
-               Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
+               expected = System.IO.Path.GetDirectoryName(path);
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
-               errorCnt++;
+               skipAssert = ex is ArgumentException;
+
+               Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
+
+
+            // AlphaFS
+            try
+            {
+               actual = Path.GetDirectoryName(path);
+
+               if (!skipAssert)
+                  Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+               errorCnt++;
+
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
 
       #endregion // GetDirectoryName
@@ -482,39 +493,50 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Path.GetExtension()");
 
          int pathCnt = 0;
-         bool allOk = true;
          int errorCnt = 0;
+         bool skipAssert = false;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            string method = null;
+            string expected = null;
+            string actual = null;
 
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+            // System.IO
             try
             {
-               method = "AlphaFS";
-               string actual = Path.GetExtension(path);
-
-               method = "System.IO";
-               string expected = System.IO.Path.GetExtension(path);
-
-               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, path, actual, expected);
-               Assert.AreEqual(expected, actual);
-            }
-            catch (ArgumentException ex)
-            {
-               Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
+               expected = System.IO.Path.GetExtension(path);
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
-               errorCnt++;
+               skipAssert = ex is ArgumentException;
+
+               Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
+
+
+            // AlphaFS
+            try
+            {
+               actual = Path.GetExtension(path);
+
+               if (!skipAssert)
+                  Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+               errorCnt++;
+
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
 
       #endregion // GetExtension
@@ -527,39 +549,50 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Path.GetFileName()");
 
          int pathCnt = 0;
-         bool allOk = true;
          int errorCnt = 0;
+         bool skipAssert = false;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            string method = null;
+            string expected = null;
+            string actual = null;
 
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+            // System.IO
             try
             {
-               method = "AlphaFS";
-               string actual = Path.GetFileName(path);
-
-               method = "System.IO";
-               string expected = System.IO.Path.GetFileName(path);
-
-               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, path, actual, expected);
-               Assert.AreEqual(expected, actual);
-            }
-            catch (ArgumentException ex)
-            {
-               Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
+               expected = System.IO.Path.GetFileName(path);
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
-               errorCnt++;
+               skipAssert = ex is ArgumentException;
+
+               Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
+
+
+            // AlphaFS
+            try
+            {
+               actual = Path.GetFileName(path);
+
+               if (!skipAssert)
+                  Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+               errorCnt++;
+
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
 
       #endregion // GetFileName
@@ -572,39 +605,50 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Path.GetFileNameWithoutExtension()");
 
          int pathCnt = 0;
-         bool allOk = true;
          int errorCnt = 0;
+         bool skipAssert = false;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            string method = null;
+            string expected = null;
+            string actual = null;
 
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+            // System.IO
             try
             {
-               method = "AlphaFS";
-               string actual = Path.GetFileNameWithoutExtension(path);
-
-               method = "System.IO";
-               string expected = System.IO.Path.GetFileNameWithoutExtension(path);
-
-               Console.WriteLine("\n\t#{0:000}\tInput Path: [{1}]\n\t\tAlphaFS   : [{2}]\n\t\tSystem.IO : [{3}]", ++pathCnt, path, actual, expected);
-               Assert.AreEqual(expected, actual);
-            }
-            catch (ArgumentException ex)
-            {
-               Console.WriteLine("\n\tCaught ArgumentException: Method: [{0}]: [{1}]: [{2}", method, ex.Message.Replace(Environment.NewLine, "  "), path);
+               expected = System.IO.Path.GetFileNameWithoutExtension(path);
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
-               errorCnt++;
+               skipAssert = ex is ArgumentException;
+
+               Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
+
+
+            // AlphaFS
+            try
+            {
+               actual = Path.GetFileNameWithoutExtension(path);
+
+               if (!skipAssert)
+                  Assert.AreEqual(expected, actual);
+            }
+            catch (Exception ex)
+            {
+               errorCnt++;
+
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
 
       #endregion // GetFileNameWithoutExtension
@@ -618,7 +662,7 @@ namespace AlphaFS.UnitTest
 
          int pathCnt = 0;
          int errorCnt = 0;
-         bool gotError = false;
+         bool skipAssert = false;
 
          #region Exceptions
 
@@ -631,33 +675,33 @@ namespace AlphaFS.UnitTest
          }
          catch (ArgumentException)
          {
-            gotError = true;
+            skipAssert = true;
          }
-         Assert.IsTrue(gotError, "ArgumentException should have been caught.");
+         Assert.IsTrue(skipAssert, "ArgumentException should have been caught.");
 
 
-         gotError = false;
+         skipAssert = false;
          try
          {
             Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt");
          }
          catch (NotSupportedException)
          {
-            gotError = true;
+            skipAssert = true;
          }
-         Assert.IsTrue(gotError, "NotSupportedException should have been caught.");
+         Assert.IsTrue(skipAssert, "NotSupportedException should have been caught.");
 
 
-         gotError = false;
+         skipAssert = false;
          try
          {
             Path.GetFullPath(@"\\\\.txt");
          }
          catch (ArgumentException)
          {
-            gotError = true;
+            skipAssert = true;
          }
-         Assert.IsTrue(gotError, "ArgumentException should have been caught.");
+         Assert.IsTrue(skipAssert, "ArgumentException should have been caught.");
 
          #endregion // Exceptions
 
@@ -666,10 +710,9 @@ namespace AlphaFS.UnitTest
          {
             string expected = null;
             string actual = null;
-            gotError = false;
+            skipAssert = false;
 
             Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
-
 
             // System.IO
             try
@@ -678,7 +721,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               gotError = ex is ArgumentException;
+               skipAssert = ex is ArgumentException;
 
                Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
@@ -690,7 +733,7 @@ namespace AlphaFS.UnitTest
             {
                actual = Path.GetFullPath(path);
 
-               if (!gotError)
+               if (!skipAssert)
                   Assert.AreEqual(expected, actual);
             }
             catch (Exception ex)
@@ -1090,19 +1133,33 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Path.GetRegularPath()");
 
          int pathCnt = 0;
+         int errorCnt = 0;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
+            string actual = null;
+
             Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
-            
-            string actual = Path.GetRegularPath(path);
 
+            // AlphaFS
+            try
+            {
+               actual = Path.GetRegularPath(path);
+
+               Assert.IsFalse(actual.StartsWith(Path.LongPathPrefix, StringComparison.OrdinalIgnoreCase));
+            }
+            catch (Exception ex)
+            {
+               errorCnt++;
+
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            }
             Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
-
-            Assert.IsFalse(actual.StartsWith(Path.LongPathPrefix));
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
+
+         Assert.AreEqual(0, errorCnt, "No errors were expected.");
       }
 
       #endregion // GetRegularPath
@@ -1123,44 +1180,44 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_IsLongPath()
       {
-         Console.WriteLine("Path.IsLongPath()\n");
+         Console.WriteLine("Path.IsLongPath()");
 
-         int isLongPath = 0;
-         bool allOk = true;
+         int pathCnt = 0;
          int errorCnt = 0;
-         int cnt = 0;
+         int longPathCnt = 0;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            string method = null;
+            bool actual = false;
 
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+            // AlphaFS
             try
             {
-               method = "AlphaFS";
-               bool actual = Path.IsLongPath(path);
-
                bool expected = path.StartsWith(Path.LongPathPrefix, StringComparison.OrdinalIgnoreCase);
+               actual = Path.IsLongPath(path);
 
-               Console.WriteLine("\t#{0:000}\t[{1}]\t\tInput Path: [{2}]", ++cnt, actual, path);
                Assert.AreEqual(expected, actual);
 
                if (actual)
-                  isLongPath++;
+                  longPathCnt++;
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
                errorCnt++;
+
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual);
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
          // Hand counted 33 True's.
-         Assert.AreEqual(33, isLongPath, "Numbers of matching local paths do not match.", errorCnt);
+         Assert.AreEqual(33, longPathCnt, "Number of local paths do not match.", errorCnt);
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(0, errorCnt, "No errors were expected.");
       }
 
       #endregion // IsLongPath
@@ -1170,45 +1227,47 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void AlphaFS_IsUncPath()
       {
-         Console.WriteLine("Path.IsUncPath()\n");
+         Console.WriteLine("Path.IsUncPath()");
 
-         int isUncPath = 0;
-         int isNotUncPath = 0;
-         bool allOk = true;
+         int pathCnt = 0;
          int errorCnt = 0;
-         int cnt = 0;
+         int uncPathCnt = 0;
 
          UnitTestConstants.StopWatcher(true);
          foreach (string path in UnitTestConstants.InputPaths)
          {
-            string method = null;
+            bool actual = false;
 
+            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
+
+            // AlphaFS
             try
             {
-               method = "AlphaFS";
-               bool actual = Path.IsUncPath(path);
+               bool expected = path.StartsWith(Path.UncPrefix, StringComparison.OrdinalIgnoreCase);
 
-               Console.WriteLine("\t#{0:000}\t[{1}]\t\tInput Path: [{2}]", ++cnt, actual, path);
+               actual = Path.IsUncPath(path);
+
+               if (!(!path.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
+                     !path.StartsWith(Path.VolumePrefix, StringComparison.OrdinalIgnoreCase)))
+                  Assert.AreEqual(expected, actual);
 
                if (actual)
-                  isUncPath++;
-               else
-                  isNotUncPath++;
+                  uncPathCnt++;
             }
             catch (Exception ex)
             {
-               Console.WriteLine("\tCaught (unexpected) {0}: Method: [{1}] [{2}]", ex.GetType().FullName, method, ex.Message.Replace(Environment.NewLine, "  "));
-               allOk = false;
                errorCnt++;
+
+               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
+            Console.WriteLine("\tAlphaFS   : [{0}]", actual);
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
          // Hand counted 32 True's.
-         Assert.AreEqual(32, isUncPath, "Numbers of matching UNC paths do not match.", errorCnt);
-         Assert.AreEqual(38, isNotUncPath, "Numbers of matching UNC paths do not match.", errorCnt);
+         Assert.AreEqual(32, uncPathCnt, "Number of UNC paths do not match.", errorCnt);
 
-         Assert.AreEqual(true, allOk, "Encountered: [{0}] paths where AlphaFS != System.IO", errorCnt);
+         Assert.AreEqual(0, errorCnt, "No errors were expected.");
       }
 
       #endregion // IsUncPath

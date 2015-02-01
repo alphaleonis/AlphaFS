@@ -3364,7 +3364,6 @@ namespace AlphaFS.UnitTest
 
          int pathCnt = 0;
          int errorCnt = 0;
-         bool gotError = false;
 
          #region ArgumentException
 
@@ -3394,10 +3393,9 @@ namespace AlphaFS.UnitTest
          {
             string expected = null;
             string actual = null;
-            gotError = false;
+            bool skipAssert = false;
 
             Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
-
 
             // System.IO
             try
@@ -3406,7 +3404,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               gotError = ex is ArgumentException;
+               skipAssert = ex is ArgumentException;
 
                Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
@@ -3418,7 +3416,7 @@ namespace AlphaFS.UnitTest
             {
                actual = Directory.GetDirectoryRoot(path);
 
-               if (!gotError)
+               if (!skipAssert)
                   Assert.AreEqual(expected, actual);
             }
             catch (Exception ex)
@@ -3567,10 +3565,9 @@ namespace AlphaFS.UnitTest
          {
             string expected = null;
             string actual = null;
-            bool gotError = false;
+            bool skipAssert = false;
 
             Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
-
 
             // System.IO
             try
@@ -3580,7 +3577,7 @@ namespace AlphaFS.UnitTest
             }
             catch (Exception ex)
             {
-               gotError = ex is ArgumentException;
+               skipAssert = ex is ArgumentException;
 
                Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
@@ -3593,7 +3590,7 @@ namespace AlphaFS.UnitTest
                var result = Directory.GetParent(path);
                actual = result == null ? null : result.FullName;
 
-               if (!gotError)
+               if (!skipAssert)
                   Assert.AreEqual(expected, actual);
             }
             catch (Exception ex)
