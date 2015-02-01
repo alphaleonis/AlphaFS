@@ -77,7 +77,9 @@ namespace AlphaFS.UnitTest
                Assert.AreEqual(new System.IO.DriveInfo(drive).IsReady, driveInfo.IsReady, "IsReady AlphaFS != System.IO");
          }
          Console.WriteLine("{0}\n\n", UnitTestConstants.Reporter(true));
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
       }
       
       private static void DumpGetVolumePathName(bool isLocal)
@@ -121,8 +123,9 @@ namespace AlphaFS.UnitTest
             }
          }
          Console.WriteLine("\t{0}\n", UnitTestConstants.Reporter(true));
-         if (isLocal)
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (isLocal && cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
       }
 
       private static void DumpGetUniqueVolumeNameForPath(bool isLocal)
@@ -164,7 +167,9 @@ namespace AlphaFS.UnitTest
 
          if (isLocal)
          {
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+            if (cnt == 0)
+               Assert.Inconclusive("Nothing was enumerated.");
+
             Assert.IsTrue(testedSystemDrive);
          }
       }
@@ -646,7 +651,8 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine("\t{0}\n", UnitTestConstants.Reporter(true));
 
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
       }
 
       #endregion // EnumerateVolumes
@@ -1011,7 +1017,8 @@ namespace AlphaFS.UnitTest
             catch { }
          }
 
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          #endregion // Logical Drives
       }

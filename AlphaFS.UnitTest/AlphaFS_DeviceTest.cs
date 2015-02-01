@@ -62,8 +62,9 @@ namespace AlphaFS.UnitTest
 
 
          Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
-         if (isLocal)
-            Assert.IsTrue(classCnt > 0, "Nothing was enumerated.");
+
+         if (isLocal && classCnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
       }
 
       #endregion //DumpEnumerateDevices

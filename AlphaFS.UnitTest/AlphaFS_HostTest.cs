@@ -76,8 +76,8 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n\t{0}", UnitTestConstants.Reporter(true));
 
-          if (cnt == 0)
-              Assert.Inconclusive("Nothing was enumerated.");
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -403,8 +403,8 @@ namespace AlphaFS.UnitTest
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
-         else
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         else if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -456,7 +456,9 @@ namespace AlphaFS.UnitTest
             }
 
             Console.Write("\n\t{0}", UnitTestConstants.Reporter(true));
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+            if (cnt == 0)
+               Assert.Inconclusive("Nothing was enumerated.");
          }
          catch (NetworkInformationException ex)
          {
@@ -471,8 +473,8 @@ namespace AlphaFS.UnitTest
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
-         else
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         else if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -511,8 +513,8 @@ namespace AlphaFS.UnitTest
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
-         else
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         else if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          Console.WriteLine();
       }

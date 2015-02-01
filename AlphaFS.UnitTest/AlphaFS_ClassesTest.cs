@@ -1094,7 +1094,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine();
          }
 
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
       }
 
@@ -1150,7 +1152,9 @@ namespace AlphaFS.UnitTest
                }
             }
             Console.Write("\n{0}", UnitTestConstants.Reporter());
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+            if (cnt == 0)
+               Assert.Inconclusive("Nothing was enumerated.");
          }
          catch (NetworkInformationException ex)
          {
@@ -1165,8 +1169,9 @@ namespace AlphaFS.UnitTest
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
-         else
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -1212,32 +1217,16 @@ namespace AlphaFS.UnitTest
          }
 
          Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
       }
       
       #endregion // DumpClassOpenResourceInfo
 
       #region DumpClassShareInfo
-
-      private static void DumpClassShareInfo(string host)
-      {
-         Console.WriteLine("\n=== TEST ===");
-         Console.Write("\nNetwork.Host.EnumerateShares() from host: [{0}]\n", host);
-
-         int cnt = 0;
-         UnitTestConstants.StopWatcher(true);
-         foreach (ShareInfo share in Host.EnumerateShares(host, true))
-         {
-            Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, share);
-            UnitTestConstants.Dump(share, -18);
-            Console.Write("\n");
-         }
-
-         Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
-         Console.WriteLine();
-      }
 
       #endregion // DumpClassShareInfo
 
@@ -1445,7 +1434,23 @@ namespace AlphaFS.UnitTest
       {
          Console.WriteLine("Class Network.ShareInfo()");
 
-         DumpClassShareInfo(UnitTestConstants.LocalHost);
+         string host = UnitTestConstants.LocalHost;
+
+         Console.WriteLine("\n=== TEST ===");
+         Console.Write("\nNetwork.Host.EnumerateShares() from host: [{0}]\n", host);
+
+         int cnt = 0;
+         UnitTestConstants.StopWatcher(true);
+         foreach (ShareInfo share in Host.EnumerateShares(host, true))
+         {
+            Console.WriteLine("\n\t#{0:000}\tShare: [{1}]", ++cnt, share);
+            UnitTestConstants.Dump(share, -18);
+         }
+
+         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
       }
 
       #endregion // Network_Class_ShareInfo

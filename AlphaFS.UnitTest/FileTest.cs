@@ -1531,7 +1531,10 @@ namespace AlphaFS.UnitTest
                FileAttributes expected = System.IO.File.GetAttributes(file);
 
                Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t\tSystem.IO: [{3}]", ++cnt, file, expected, actual);
-               Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+               if (cnt == 0)
+                  Assert.Inconclusive("Nothing was enumerated.");
+
                Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
             }
             catch (Exception ex)
@@ -1561,7 +1564,10 @@ namespace AlphaFS.UnitTest
                FileAttributes expected = System.IO.File.GetAttributes(file);
 
                Console.WriteLine("\n\t#{0:000}\tFile     : [{1}]\n\t\tAlphaFS  : [{2}]\n\t\tSystem.IO: [{3}]", ++cnt, file, expected, actual);
-               Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+               if (cnt == 0)
+                  Assert.Inconclusive("Nothing was enumerated.");
+
                Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
             }
             catch (Exception ex)

@@ -1107,9 +1107,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
          if (cnt == 0)
-            Assert.Inconclusive("Test ignored because no mapped network drives found.");
-         else
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+            Assert.Inconclusive("Nothing was enumerated.");
       }
 
       #endregion // GetMappedConnectionName
@@ -1293,7 +1291,9 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
       }
 

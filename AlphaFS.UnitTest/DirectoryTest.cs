@@ -108,7 +108,10 @@ namespace AlphaFS.UnitTest
             action = (actual & FileAttributes.Compressed) != 0;
 
             Console.WriteLine("\t#{0:000}\tCompressed (Should be False): [{1}]\tAttributes: [{2}] [{3}]", ++cnt, action, actual, Path.GetFullPath(file));
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+            
+            if (cnt == 0)
+               Assert.Inconclusive("Nothing was enumerated.");
+
             Assert.IsFalse(action, "Compression should be False");
          }
 
@@ -143,7 +146,10 @@ namespace AlphaFS.UnitTest
             action = (actual & FileAttributes.Compressed) != 0;
 
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tCompressed (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+            
+            if (cnt == 0)
+               Assert.Inconclusive("Nothing was enumerated.");
+
             Assert.IsTrue(action, "Compression should be True");
          }
 
@@ -177,7 +183,10 @@ namespace AlphaFS.UnitTest
             action = (actual & FileAttributes.Compressed) == 0;
 
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tDecompressed (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
-            Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+            if (cnt == 0)
+               Assert.Inconclusive("Nothing was enumerated.");
+
             Assert.IsTrue(action, "Decompression should be True");
          }
 
@@ -1171,7 +1180,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tEncrypted (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
             Assert.IsTrue(action, "File system ojbect should be encrypted.");
          }
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          #endregion // Encrypt
 
@@ -1210,7 +1221,9 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tDecrypted (Should be False): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
             Assert.IsFalse(action, "File system ojbect should be encrypted.");
          }
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          #endregion // Decrypt
 
@@ -1375,7 +1388,10 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
 
 
@@ -1395,7 +1411,10 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
       }
 
@@ -1433,7 +1452,9 @@ namespace AlphaFS.UnitTest
          string report = UnitTestConstants.Reporter();
 
          Console.WriteLine("\n\tEnumerated: Directories = [{0}] Files = [{1}]\t{2}", numDirectories, numFiles, report);
-         Assert.IsTrue(foundFse, "Nothing was enumerated.");
+
+         if (!foundFse)
+            Assert.Inconclusive("Nothing was enumerated.");
 
          bool matchAll = directories == numDirectories && files == numFiles;
          Assert.IsTrue(matchAll, "Number of directories and/or files don't match.");
@@ -1596,7 +1617,10 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
 
 
@@ -1616,7 +1640,10 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
       }
 
@@ -1773,7 +1800,10 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
 
 
@@ -1793,7 +1823,10 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
       }
 
@@ -2012,7 +2045,10 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
       }
 
@@ -2203,7 +2239,10 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
       }
 
@@ -2481,7 +2520,10 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Console.WriteLine();
       }
 
@@ -2510,7 +2552,9 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n\t{0}", report);
 
-         Assert.IsTrue(cnt > 0, "Nothing was enumerated.");
+         if (cnt == 0)
+            Assert.Inconclusive("Nothing was enumerated.");
+
          Assert.IsTrue(total > 0, "0 Objects.");
          Assert.IsTrue(file > 0, "0 Files.");
          Assert.IsTrue(size > 0, "0 Size.");
