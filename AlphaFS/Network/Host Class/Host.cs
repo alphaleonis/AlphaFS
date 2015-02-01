@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Network
 
       #endregion // GetUncName
 
-      #region Internal
+      #region Internal Methods
 
       #region EnumerateNetworkObjectInternal
 
@@ -141,7 +141,6 @@ namespace Alphaleonis.Win32.Network
 
          if (lastError != Win32Errors.NO_ERROR && !continueOnException)
             throw new NetworkInformationException((int) lastError);
-         
       }
 
       #endregion // EnumerateNetworkObjectInternal
@@ -247,6 +246,6 @@ namespace Alphaleonis.Win32.Network
          public bool IsDisconnect;
       }
 
-      #endregion // Internal
+      #endregion // Internal Methods
    }
 }

@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Network
    [SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames")]
    [SuppressMessage("Microsoft.Usage", "CA2217:DoNotMarkEnumsWithFlags")]
    [SuppressMessage("Microsoft.Design", "CA1008:EnumsShouldHaveZeroValue")]
-   [Flags]  // Needs Flags attribute to sometimes create combinations of: Ipc, Special.
+   [Flags]  // Needs Flags attribute to combine attributes.
    public enum ShareType
    {
       /// <summary>Disk drive.</summary>
@@ -71,6 +71,9 @@ namespace Alphaleonis.Win32.Network
       Special = -2147483648,
 
       /// <summary>A temporary share that is not persisted for creation each time the file server initializes.</summary>
-      Temporary = 1073741824
+      Temporary = 1073741824,
+
+      /// <summary>Retriev all known <see cref="ShareType"/></summary>
+      All = DiskTree | PrintQueue | Device | Ipc | ClusterFs | ClusterSoFs | ClusterDfs | Special | Temporary
    }
 }

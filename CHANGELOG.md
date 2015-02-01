@@ -12,13 +12,14 @@ Version 2.1
 	* `Directory.ExportEncryptedDirectoryRaw`
 
 - Issue #101: The release now also contains a build targetting .NET 4.5.2
+- Issue #109: Add overloaded methods for `Host.EnumerateShares()`
 - Issue #119: Fix `Path.IsLocalPath()` issues.
 - Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #131: Modify method `Path.GetPathRoot()` to handle UNC paths in long path format.
 - Issue #132: Modify method `VolumeInfo()` constructor to better handle input paths.
 - Issue #133: Add missing unit test `Host.GetHostShareFromPath()`
-
+ 
 ### Bugs Fixed
 
 - Issue #50: `Path.GetLongPath()` does not prefix on "C:\", should it?

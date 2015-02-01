@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 using System.Net.NetworkInformation;
 using System.Security;
 
@@ -65,25 +66,65 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
       /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares()
       {
-         return EnumerateSharesInternal(null, false);
+         return EnumerateSharesInternal(null, ShareType.All, false);
       }
 
-      /// <summary>
-      ///   Enumerates Server Message Block (SMB) shares from the specified host.
-      /// </summary>
-      /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
-      /// <param name="continueOnException">
-      ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
-      ///   <para>such as unavailable resources.</para>
-      /// </param>
+      /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
       /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      [SecurityCritical]
+      public static IEnumerable<ShareInfo> EnumerateShares(bool continueOnException)
+      {
+         return EnumerateSharesInternal(null, ShareType.All, continueOnException);
+      }
+
+      /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
+      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <param name="shareType">The type of the shared resource to retrieve.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      [SecurityCritical]
+      public static IEnumerable<ShareInfo> EnumerateShares(ShareType shareType, bool continueOnException)
+      {
+         return EnumerateSharesInternal(null, shareType, continueOnException);
+      }
+
+      /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
+      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
+      [SecurityCritical]
+      public static IEnumerable<ShareInfo> EnumerateShares(string host)
+      {
+         return EnumerateSharesInternal(host, ShareType.All, false);
+      }
+
+      /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
+      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(string host, bool continueOnException)
       {
-         return EnumerateSharesInternal(host, continueOnException);
+         return EnumerateSharesInternal(host, ShareType.All, continueOnException);
+      }
+
+      /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
+      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
+      /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
+      /// <param name="shareType">The type of the shared resource to retrieve.</param>
+      /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
+      [SecurityCritical]
+      public static IEnumerable<ShareInfo> EnumerateShares(string host, ShareType shareType, bool continueOnException)
+      {
+         return EnumerateSharesInternal(host, shareType, continueOnException);
       }
 
       #endregion // EnumerateShares
@@ -154,7 +195,7 @@ namespace Alphaleonis.Win32.Network
       /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
       /// and <paramref name="continueOnException"/> is <see langword="true"/>.
       /// </returns>
-      /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
+      /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
@@ -179,7 +220,6 @@ namespace Alphaleonis.Win32.Network
       }
 
       #endregion // GetShareInfo
-
 
       #region Internal Methods
 
@@ -220,14 +260,16 @@ namespace Alphaleonis.Win32.Network
 
       #region EnumerateSharesInternal
 
-      /// <summary>Unified method EnumerateSharesInternal() to enumerate (hidden) Server Message Block (SMB) shares from the specified host.</summary>
+      /// <summary>Enumerates Server Message Block (SMB) shares from a local or remote host.</summary>
       /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <remarks>This method also enumerates hidden shares.</remarks>
       /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
       /// <exception cref="NetworkInformationException"></exception>
-      /// <param name="host">The DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
+      /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
+      /// <param name="shareType">The type of the shared resource to retrieve.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      internal static IEnumerable<ShareInfo> EnumerateSharesInternal(string host, bool continueOnException)
+      internal static IEnumerable<ShareInfo> EnumerateSharesInternal(string host, ShareType shareType, bool continueOnException)
       {
          // When host == null, the local computer is used.
          // However, the resulting OpenResourceInfo.Host property will be empty.
@@ -239,12 +281,13 @@ namespace Alphaleonis.Win32.Network
 
          var fd = new FunctionData();
          bool hasItems = false;
+         bool yieldAll = shareType == ShareType.All;
 
          // Try SHARE_INFO_503 structure.
          foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.SHARE_INFO_503 structure, SafeGlobalMemoryBufferHandle buffer) =>
             new ShareInfo(stripUnc, ShareInfoLevel.Info503, structure),
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-               NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
+               NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
          {
             yield return si;
             hasItems = true;
@@ -256,7 +299,7 @@ namespace Alphaleonis.Win32.Network
             foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.SHARE_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info2, structure),
                (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                  NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
+                  NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
             {
                yield return si;
                hasItems = true;
@@ -268,7 +311,7 @@ namespace Alphaleonis.Win32.Network
             foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info1, structure),
                (FunctionData functionData, out  SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
-                  NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException))
+                  NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
             {
                yield return si;
             }
