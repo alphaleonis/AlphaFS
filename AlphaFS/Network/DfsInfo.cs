@@ -145,9 +145,8 @@ namespace Alphaleonis.Win32.Network
       
       #region Timeout
 
-      /// <summary>Specifies the time-out, in seconds, of the DFS root or link.</summary>
-      [CLSCompliant(false)]
-      public ulong Timeout { get; internal set; }
+      /// <summary>Specifies the time-out, in seconds, of the DFS root or link.</summary>      
+      public long Timeout { get; internal set; }
 
       #endregion // Timeout
 

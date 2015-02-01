@@ -47,22 +47,28 @@ namespace Alphaleonis.Win32.Filesystem
          public readonly FILETIME LastWriteTime;
 
          /// <summary>The serial number of the volume that contains a file.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint VolumeSerialNumber;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly int VolumeSerialNumber;
 
          /// <summary>The high-order part of the file size.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint FileSizeHigh;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly uint FileSizeHigh;
 
          /// <summary>The low-order part of the file size.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint FileSizeLow;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly uint FileSizeLow;
 
          /// <summary>The number of links to this file. For the FAT file system this member is always 1. For the NTFS file system, it can be more than 1.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint NumberOfLinks;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly int NumberOfLinks;
 
          /// <summary>The high-order part of a unique identifier that is associated with a file.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint FileIndexHigh;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly uint FileIndexHigh;
 
          /// <summary>The low-order part of a unique identifier that is associated with a file.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint FileIndexLow;
+         [MarshalAs(UnmanagedType.U4)]
+         public readonly uint FileIndexLow;
       }
    }
 }

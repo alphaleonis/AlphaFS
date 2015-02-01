@@ -793,7 +793,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </summary>
       internal delegate CopyMoveProgressResult NativeCopyMoveProgressRoutine(
          long totalFileSize, long totalBytesTransferred, long streamSize, long streamBytesTransferred,
-         [MarshalAs(UnmanagedType.U4)] uint dwStreamNumber, CopyMoveProgressCallbackReason dwCallbackReason,
+         [MarshalAs(UnmanagedType.U4)] int dwStreamNumber, CopyMoveProgressCallbackReason dwCallbackReason,
          IntPtr hSourceFile, IntPtr hDestinationFile, IntPtr lpData);
 
       /// <summary>Determines whether a path to a file system object such as a file or folder is valid.</summary>

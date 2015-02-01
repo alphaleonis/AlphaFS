@@ -360,7 +360,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
@@ -390,7 +389,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
@@ -422,7 +420,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
@@ -453,7 +450,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Copy(string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveInternal(false, null, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
@@ -591,7 +587,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
@@ -622,7 +617,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
@@ -655,7 +649,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
@@ -687,7 +680,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
@@ -890,7 +882,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativePath);
@@ -919,7 +910,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Move(string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveInternal(false, null, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
@@ -1005,7 +995,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativePath);
@@ -1035,7 +1024,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      [CLSCompliant(false)]
       public static CopyMoveResult Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);

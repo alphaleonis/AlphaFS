@@ -86,8 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region EaSize
 
       /// <summary>The size of the extended attributes for the file.</summary>
-      [CLSCompliant(false)]
-      public uint ExtendedAttributesSize { get; set; }
+      public int ExtendedAttributesSize { get; set; }
 
       #endregion // EaSize
 
@@ -120,8 +119,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>The byte offset of the file within the parent directory. This member is undefined for file systems, such as NTFS,
       /// in which the position of a file within the parent directory is not fixed and can be changed at any time to maintain sort order.
       /// </summary>
-      [CLSCompliant(false)]
-      public uint FileIndex { get; set; }
+      public long FileIndex { get; set; }
 
       #endregion // FileIndex
 

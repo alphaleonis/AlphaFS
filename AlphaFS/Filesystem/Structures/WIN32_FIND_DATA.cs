@@ -45,22 +45,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SerializableAttribute]
       internal struct WIN32_FIND_DATA
       {
-         #region FileAttributes
 
          /// <summary>The file attributes of a file.</summary>
          public FileAttributes FileAttributes;
 
-         #endregion // FileAttributes
-
-         #region CreationTime
-
          /// <summary>A <see cref="FILETIME"/> structure that specifies when a file or directory was created.
          /// If the underlying file system does not support creation time, this member is zero.</summary>
          public FILETIME CreationTime;
-
-         #endregion // CreationTime
-
-         #region LastAccessTime
 
          /// <summary>A <see cref="FILETIME"/> structure.
          /// For a file, the structure specifies when the file was last read from, written to, or for executable files, run.
@@ -69,10 +60,6 @@ namespace Alphaleonis.Win32.Filesystem
          /// </summary>
          public FILETIME LastAccessTime;
 
-         #endregion // LastAccessTime
-
-         #region LastWriteTime
-
          /// <summary>A <see cref="FILETIME"/> structure.
          /// For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used.
          /// The date and time are not updated when file attributes or security descriptors are changed.
@@ -80,54 +67,31 @@ namespace Alphaleonis.Win32.Filesystem
          /// </summary>
          public FILETIME LastWriteTime;
 
-         #endregion // LastWriteTime
-
-         #region FileSizeHigh
-
          /// <summary>The high-order DWORD of the file size. This member does not have a meaning for directories.
          /// This value is zero unless the file size is greater than MAXDWORD.
          /// The size of the file is equal to (nFileSizeHigh * (MAXDWORD+1)) + nFileSizeLow.
          /// </summary>
          public uint FileSizeHigh;
 
-         #endregion // FileSizeHigh
-
-         #region FileSizeLow
-
          /// <summary>The low-order DWORD of the file size. This member does not have a meaning for directories.</summary>
          public uint FileSizeLow;
-
-         #endregion // FileSizeLow
-
-         #region Reserved0
 
          /// <summary>If the dwFileAttributes member includes the FILE_ATTRIBUTE_REPARSE_POINT attribute, this member specifies the reparse point tag.
          /// Otherwise, this value is undefined and should not be used.
          /// </summary>
+         [MarshalAs(UnmanagedType.U4)]
          public readonly ReparsePointTag Reserved0;
-
-         #endregion // Reserved0
-
-         #region Reserved1
 
          /// <summary>Reserved for future use.</summary>
          private readonly uint Reserved1;
 
-         #endregion // Reserved1
-
-         #region FileName
-
          /// <summary>The name of the file.</summary>
-         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] public string FileName;
-
-         #endregion // FileName
-
-         #region AlternateFileName
+         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)] 
+         public string FileName;
 
          /// <summary>An alternative name for the file. This name is in the classic 8.3 file name format.</summary>
-         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)] public string AlternateFileName;
-
-         #endregion AlternateFileName
+         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)] 
+         public string AlternateFileName;
       }
    }
 }

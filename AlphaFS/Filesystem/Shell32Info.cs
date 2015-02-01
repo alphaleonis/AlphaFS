@@ -211,7 +211,6 @@ namespace Alphaleonis.Win32.Filesystem
       private Shell32.GetAttributesOf _attributes;
 
       /// <summary>The attributes of the file object.</summary>
-      [CLSCompliant(false)]
       public Shell32.GetAttributesOf Attributes
       {
          get

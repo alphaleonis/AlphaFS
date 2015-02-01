@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var volumeNameBuffer = new StringBuilder(NativeMethods.MaxPath + 1);
          var fileSystemNameBuffer = new StringBuilder(NativeMethods.MaxPath + 1);
-         uint maximumComponentLength;
+         int maximumComponentLength;
          uint serialNumber;
 
          // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
@@ -264,9 +264,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region MaximumComponentLength
 
       /// <summary>Gets the maximum length of a file name component that the file system supports.</summary>
-      /// <value>The maximum length of a file name component that the file system supports.</value>
-      [CLSCompliant(false)]
-      public uint MaximumComponentLength { get; set; }
+      /// <value>The maximum length of a file name component that the file system supports.</value>      
+      public int MaximumComponentLength { get; set; }
 
       #endregion // MaximumComponentLength
 

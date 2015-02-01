@@ -95,7 +95,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      [CLSCompliant(false)]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
          : this(File.CreateFileInternal(null, path, attributes, null, mode, access, share, true, PathFormat.RelativePath), access)
       {
@@ -110,7 +109,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <see langword="null"/>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      [CLSCompliant(false)]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
          : this(File.CreateFileInternal(null, path, attributes, security, mode, access, share, true, PathFormat.RelativePath), access)
       {
@@ -165,7 +163,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="attributes">A <see cref="ExtendedFileAttributes"/> constant that specifies additional file attributes.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      [CLSCompliant(false)]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
          : this(File.CreateFileInternal(transaction, path, attributes, null, mode, access, share, true, PathFormat.RelativePath), access)
       {
@@ -181,7 +178,6 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="security">A <see cref="FileSecurity"/> constant that determines the access control and audit security for the file. This parameter This parameter may be <see langword="null"/>.</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      [CLSCompliant(false)]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
          : this(File.CreateFileInternal(transaction, path, attributes, security, mode, access, share, true, PathFormat.RelativePath), access)
       {

@@ -96,8 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the serial number of the volume that contains a file.</summary>
       /// <value>The serial number of the volume that contains a file.</value>
-      [CLSCompliant(false)]
-      public uint VolumeSerialNumber { get; private set; }
+      public int VolumeSerialNumber { get; private set; }
 
       #endregion // VolumeSerialNumber
 
@@ -113,8 +112,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the number of links to this file. For the FAT file system this member is always 1. For the NTFS file system, it can be more than 1.</summary>
       /// <value>The number of links to this file. </value>
-      [CLSCompliant(false)]
-      public uint NumberOfLinks { get; private set; }
+      public int NumberOfLinks { get; private set; }
 
       #endregion // NumberOfLinks
 

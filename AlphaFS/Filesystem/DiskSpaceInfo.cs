@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (_initGetSpaceInfo)
             {
-               ulong freeBytesAvailable, totalNumberOfBytes, totalNumberOfFreeBytes;
+               long freeBytesAvailable, totalNumberOfBytes, totalNumberOfFreeBytes;
 
                if (!NativeMethods.GetDiskFreeSpaceEx(DriveName, out freeBytesAvailable, out totalNumberOfBytes, out totalNumberOfFreeBytes))
                   lastError = Marshal.GetLastWin32Error();
@@ -135,7 +135,8 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (_initGetClusterInfo)
             {
-               uint sectorsPerCluster, bytesPerSector, numberOfFreeClusters, totalNumberOfClusters;
+               int sectorsPerCluster, bytesPerSector, numberOfFreeClusters;
+               uint totalNumberOfClusters;
 
                if (!NativeMethods.GetDiskFreeSpace(DriveName, out sectorsPerCluster, out bytesPerSector, out numberOfFreeClusters, out totalNumberOfClusters))
                   lastError = Marshal.GetLastWin32Error();
@@ -167,7 +168,10 @@ namespace Alphaleonis.Win32.Filesystem
             FreeBytesAvailable = TotalNumberOfBytes = TotalNumberOfFreeBytes = 0;
 
          if (_initGetClusterInfo)
-            BytesPerSector = NumberOfFreeClusters = SectorsPerCluster = TotalNumberOfClusters = 0;
+         {
+            BytesPerSector = NumberOfFreeClusters = SectorsPerCluster = 0;
+            TotalNumberOfClusters = 0;
+         }
       }
 
       #endregion // Reset
@@ -186,8 +190,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Properties
 
-      #region AvailableFreeSpacePercent
-
       /// <summary>Indicates the amount of available free space on a drive, formatted as percentage.</summary>
       public string AvailableFreeSpacePercent
       {
@@ -197,19 +199,11 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // AvailableFreeSpacePercent
-
-      #region AvailableFreeSpaceUnitSize
-
       /// <summary>Indicates the amount of available free space on a drive, formatted as a unit size.</summary>
       public string AvailableFreeSpaceUnitSize
       {
          get { return Utils.UnitSizeToText(TotalNumberOfFreeBytes); }
       }
-
-      #endregion // AvailableFreeSpaceUnitSize
-
-      #region ClusterSize
 
       /// <summary>Returns the Clusters size.</summary>
       public long ClusterSize
@@ -217,28 +211,16 @@ namespace Alphaleonis.Win32.Filesystem
          get { return SectorsPerCluster * BytesPerSector; }
       }
 
-      #endregion // ClusterSize
-
-      #region DriveName
-
       /// <summary>Gets the name of a drive.</summary>
       /// <returns>The name of the drive.</returns>
       /// <remarks>This property is the name assigned to the drive, such as C:\ or E:\</remarks>
       public string DriveName { get; private set; }
-
-      #endregion // DriveName
-
-      #region TotalSizeUnitSize
 
       /// <summary>The total number of bytes on a disk that are available to the user who is associated with the calling thread, formatted as a unit size.</summary>
       public string TotalSizeUnitSize
       {
          get { return Utils.UnitSizeToText(TotalNumberOfBytes); }
       }
-
-      #endregion // TotalSizeUnitSize
-
-      #region UsedSpacePercent
 
       /// <summary>Indicates the amount of used space on a drive, formatted as percentage.</summary>
       public string UsedSpacePercent
@@ -249,77 +231,35 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // UsedSpacePercent
-
-      #region UsedSpaceUnitSize
-
       /// <summary>Indicates the amount of used space on a drive, formatted as a unit size.</summary>
       public string UsedSpaceUnitSize
       {
          get { return Utils.UnitSizeToText(TotalNumberOfBytes - FreeBytesAvailable); }
       }
 
-      #endregion // UsedSpaceUnitSize
-
-
-      #region FreeBytesAvailable
-
       /// <summary>The total number of free bytes on a disk that are available to the user who is associated with the calling thread.</summary>
-      [CLSCompliant(false)]
-      public ulong FreeBytesAvailable { get; private set; }
-
-      #endregion // FreeBytesAvailable
-
-      #region TotalNumberOfBytes
+      public long FreeBytesAvailable { get; private set; }
 
       /// <summary>The total number of bytes on a disk that are available to the user who is associated with the calling thread.</summary>
-      [CLSCompliant(false)]
-      public ulong TotalNumberOfBytes { get; private set; }
-
-      #endregion // TotalNumberOfBytes
-
-      #region TotalNumberOfFreeBytes
+      public long TotalNumberOfBytes { get; private set; }
 
       /// <summary>The total number of free bytes on a disk.</summary>
-      [CLSCompliant(false)]
-      public ulong TotalNumberOfFreeBytes { get; private set; }
-
-      #endregion // TotalNumberOfFreeBytes
-
-
-      #region BytesPerSector
+      public long TotalNumberOfFreeBytes { get; private set; }
 
       /// <summary>The number of bytes per sector.</summary>
-      [CLSCompliant(false)]
-      public uint BytesPerSector { get; private set; }
-
-      #endregion // BytesPerSector
-
-      #region NumberOfFreeClusters
+      public int BytesPerSector { get; private set; }
 
       /// <summary>The total number of free clusters on the disk that are available to the user who is associated with the calling thread.</summary>
-      [CLSCompliant(false)]
-      public uint NumberOfFreeClusters { get; private set; }
-
-      #endregion // NumberOfFreeClusters
-
-      #region SectorsPerCluster
+      public int NumberOfFreeClusters { get; private set; }
 
       /// <summary>The number of sectors per cluster.</summary>
-      [CLSCompliant(false)]
-      public uint SectorsPerCluster { get; private set; }
-
-      #endregion // SectorsPerCluster
-
-      #region TotalNumberOfClusters
+      public int SectorsPerCluster { get; private set; }
 
       /// <summary>The total number of clusters on the disk that are available to the user who is associated with the calling thread.
       /// If per-user disk quotas are in use, this value may be less than the total number of clusters on the disk.
       /// </summary>
-      [CLSCompliant(false)]
-      public uint TotalNumberOfClusters { get; private set; }
+      public long TotalNumberOfClusters { get; private set; }
 
-      #endregion // TotalNumberOfClusters
 
       #endregion // Properties
    }
