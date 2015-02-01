@@ -27,6 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    /// <summary>Specifies how the operating system should open a file.</summary>
    [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
+   [CLSCompliant(false)]
    [Flags]
    public enum ExtendedFileAttributes : uint
    {

@@ -265,6 +265,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the maximum length of a file name component that the file system supports.</summary>
       /// <value>The maximum length of a file name component that the file system supports.</value>
+      [CLSCompliant(false)]
       public uint MaximumComponentLength { get; set; }
 
       #endregion // MaximumComponentLength

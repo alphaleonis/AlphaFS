@@ -340,6 +340,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>An array of values that indicates the attributes of the file object.</summary>
          [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+         [CLSCompliant(false)]
          public readonly GetAttributesOf Attributes;
 
          /// <summary>The name of the file as it appears in the Windows Shell, or the path and file name of the file that contains the icon representing the file.</summary>
@@ -363,6 +364,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sh")]
       [SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames")]
       [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
+      [CLSCompliant(false)]
       [Flags]
       public enum GetAttributesOf : uint
       {

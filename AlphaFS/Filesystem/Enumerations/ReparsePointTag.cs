@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -29,6 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    ///   <para>Clients should treat associated reparse data as opaque data.</para>
    /// </remarks>
    [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
+   [CLSCompliant(false)]
    public enum ReparsePointTag : uint
    {
       /// <summary>The entry is not a reparse point.</summary>

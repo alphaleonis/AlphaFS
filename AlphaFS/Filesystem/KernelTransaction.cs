@@ -63,6 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="timeout"><para>The time, in milliseconds, when the transaction will be aborted if it has not already reached the prepared state.</para></param>
       /// <param name="description">A user-readable description of the transaction. This parameter may be <see langword="null"/>.</param>
       [SecurityCritical]
+      [CLSCompliant(false)]
       public KernelTransaction(uint timeout, string description)
          : this(null, timeout, description)
       {
@@ -74,6 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Specify 0 to provide an infinite timeout.</para></param>
       /// <param name="description">A user-readable description of the transaction. This parameter may be <see langword="null"/>.</param>
       [SecurityCritical]
+      [CLSCompliant(false)]
       public KernelTransaction(ObjectSecurity securityDescriptor, uint timeout, string description)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
