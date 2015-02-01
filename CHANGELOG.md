@@ -19,7 +19,8 @@ Version 2.1
 - Issue #131: Modify method `Path.GetPathRoot()` to handle UNC paths in long path format.
 - Issue #132: Modify method `VolumeInfo()` constructor to better handle input paths.
 - Issue #133: Add missing unit test `Host.GetHostShareFromPath()`
- 
+- Issue #134: Improved upon `FindFileSystemEntryInfo.FindFirstFile()` when throwing `Directory-/FileNotFoundException()`.
+
 ### Bugs Fixed
 
 - Issue #50: `Path.GetLongPath()` does not prefix on "C:\", should it?

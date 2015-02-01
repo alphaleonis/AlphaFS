@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void RefreshEntryInfo()
       {
-         _entryInfo = File.GetFileSystemEntryInfoInternal(Transaction, LongFullName, true, PathFormat.LongFullPath);
+         _entryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullName, true, PathFormat.LongFullPath);
    
          if (_entryInfo == null)
             DataInitialised = -1;

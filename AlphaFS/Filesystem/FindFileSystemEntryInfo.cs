@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructor
 
-      public FindFileSystemEntryInfo(bool enumerate, KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, Type typeOfT, PathFormat pathFormat)
+      public FindFileSystemEntryInfo(bool isFolder, KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, Type typeOfT, PathFormat pathFormat)
       {
          Transaction = transaction;
 
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
             ? NativeMethods.FindExAdditionalFlags.LargeFetch
             : NativeMethods.FindExAdditionalFlags.None;
 
-         IsDirectory = enumerate;
+         IsDirectory = isFolder;
 
          if (IsDirectory)
          {
@@ -111,15 +111,20 @@ namespace Alphaleonis.Win32.Filesystem
                   case Win32Errors.ERROR_FILE_NOT_FOUND:
                   case Win32Errors.ERROR_PATH_NOT_FOUND:
                      // MSDN: .NET 3.5+: DirectoryNotFoundException: Path is invalid, such as referring to an unmapped drive.
-                     if (lastError == Win32Errors.ERROR_FILE_NOT_FOUND)
-                        lastError = (int) Win32Errors.ERROR_PATH_NOT_FOUND;
+                     // Directory.Delete()
 
-                     // 2015-01-19: Issue #41: "After formatting , DirectoryInfo.GetFileSystemInfos throw DirectoryNotFoundException"
-                     NativeError.ThrowException(lastError, path);
+                     NativeError.ThrowException(IsDirectory ? (int) Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, path);
                      break;
 
                   case Win32Errors.ERROR_DIRECTORY:
                      // MSDN: .NET 3.5+: IOException: path is a file name.
+                     // Directory.EnumerateDirectories()
+                     // Directory.EnumerateFiles()
+                     // Directory.EnumerateFileSystemEntries()
+                     // Directory.GetDirectories()
+                     // Directory.GetFiles()
+                     // Directory.GetFileSystemEntries()
+
                      NativeError.ThrowException(lastError, path);
                      break;
 

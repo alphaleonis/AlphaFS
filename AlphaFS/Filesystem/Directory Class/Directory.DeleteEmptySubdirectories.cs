@@ -184,7 +184,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (!File.ExistsInternal(true, transaction, path, pathFormat))
                NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
 
-            fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(transaction,
+            fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
                Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck)
                , false, pathFormat);
          }
