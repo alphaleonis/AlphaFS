@@ -68,16 +68,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Attributes
 
-      #region Created
+      #region CreationTime
 
       /// <summary>Gets the time this entry was created.</summary>
       /// <value>The time this entry was created.</value>
-      public DateTime Created
+      public DateTime CreationTime
       {
          get { return DateTime.FromFileTimeUtc(_win32FindData.CreationTime).ToLocalTime(); }
       }
 
-      #endregion // Created
+      #endregion // CreationTime
 
       #region FileName
 
@@ -162,27 +162,27 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsSymbolicLink
 
-      #region LastAccessed
+      #region LastAccessTime
 
       /// <summary>Gets the time this entry was last accessed.</summary>
       /// <value>The time this entry was last accessed.</value>
-      public DateTime LastAccessed
+      public DateTime LastAccessTime
       {
          get { return DateTime.FromFileTimeUtc(_win32FindData.LastAccessTime).ToLocalTime(); }
       }
 
-      #endregion // LastAccessed
+      #endregion // LastAccessTime
 
-      #region LastModified
+      #region LastWriteTime
 
       /// <summary>Gets the time this entry was last modified.</summary>
       /// <value>The time this entry was last modified.</value>
-      public DateTime LastModified
+      public DateTime LastWriteTime
       {
          get { return DateTime.FromFileTimeUtc(_win32FindData.LastWriteTime).ToLocalTime(); }
       }
 
-      #endregion // LastModified
+      #endregion // LastWriteTime
 
       #region LongFullPath
 
@@ -228,7 +228,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The <see cref="ReparsePointTag"/> instance as a string.</returns>
       public override string ToString()
       {
-         return String.Format(CultureInfo.InvariantCulture, "{0}", ReparsePointTag);
+         return string.Format(CultureInfo.InvariantCulture, "{0}", ReparsePointTag);
       }
 
       #endregion // Methods

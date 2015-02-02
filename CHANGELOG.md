@@ -28,6 +28,7 @@ Version 2.1
 
 ### Breaking Changes
 
+- Issue #113: Change names of time related properties on `FileSystemEntryInfo` to conform with `FileInfo/DirectoryInfo`.
 - Issue #128: Remove `Path.IsLocalPath()` in favour of `Path.IsUncPath()`
 
 Version 2.0.1
