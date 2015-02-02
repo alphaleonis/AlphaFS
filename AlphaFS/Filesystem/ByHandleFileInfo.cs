@@ -36,9 +36,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal ByHandleFileInfo(NativeMethods.ByHandleFileInfo fibh)
       {
-         CreationTime = DateTime.FromFileTimeUtc(fibh.CreationTime).ToLocalTime();
-         LastAccessTime = DateTime.FromFileTimeUtc(fibh.LastAccessTime).ToLocalTime();
-         LastWriteTime = DateTime.FromFileTimeUtc(fibh.LastWriteTime).ToLocalTime();
+         CreationTimeUtc = DateTime.FromFileTimeUtc(fibh.CreationTime);
+         LastAccessTimeUtc = DateTime.FromFileTimeUtc(fibh.LastAccessTime);
+         LastWriteTimeUtc = DateTime.FromFileTimeUtc(fibh.LastWriteTime);
 
          Attributes = fibh.FileAttributes;
          FileIndex = NativeMethods.ToLong(fibh.FileIndexHigh, fibh.FileIndexLow);
@@ -61,36 +61,78 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CreationTime
 
-      /// <summary>Gets a <see cref="System.DateTime"/> structure that specifies when a file or directory was created.</summary>
-      /// <value>A <see cref="System.DateTime"/> structure that specifies when a file or directory was created.</value>
-      public DateTime CreationTime { get; private set; }
+      /// <summary>Gets the time this entry was created.</summary>
+      /// <value>The time this entry was created.</value>
+      public DateTime CreationTime
+      {
+         get { return CreationTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // CreationTime
 
+      #region CreationTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was created.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
+      public DateTime CreationTimeUtc { get; private set; }
+
+      #endregion // CreationTimeUtc
+
       #region LastAccessTime
 
-      /// <summary>Gets a <see cref="System.DateTime"/> structure. 
+      /// <summary>Gets the time this entry was last accessed.
       /// For a file, the structure specifies the last time that a file is read from or written to. 
       /// For a directory, the structure specifies when the directory is created. 
       /// For both files and directories, the specified date is correct, but the time of day is always set to midnight. 
       /// If the underlying file system does not support the last access time, this member is zero (0).
       /// </summary>
-      /// <value>A <see cref="System.DateTime"/> structure that specifies when a file was last written to or the directory created.</value>
-      public DateTime LastAccessTime{ get; private set; }
+      /// <value>The time this entry was last accessed.</value>
+      public DateTime LastAccessTime
+      {
+         get { return LastAccessTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // LastAccessTime
 
+      #region LastAccessTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last accessed.
+      /// For a file, the structure specifies the last time that a file is read from or written to. 
+      /// For a directory, the structure specifies when the directory is created. 
+      /// For both files and directories, the specified date is correct, but the time of day is always set to midnight. 
+      /// If the underlying file system does not support the last access time, this member is zero (0).
+      /// </summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
+      public DateTime LastAccessTimeUtc { get; private set; }
+
+      #endregion // LastAccessTimeUtc
+
       #region LastWriteTime
 
-      /// <summary>Gets a <see cref="System.DateTime"/> structure. 
+      /// <summary>Gets the time this entry was last modified.
       /// For a file, the structure specifies the last time that a file is written to. 
       /// For a directory, the structure specifies when the directory is created. 
       /// If the underlying file system does not support the last access time, this member is zero (0).
       /// </summary>
-      /// <value>A <see cref="System.DateTime"/> structure that specifies when a file was last written to or the directory created.</value>
-      public DateTime LastWriteTime { get; private set; }
+      /// <value>The time this entry was last modified.</value>
+      public DateTime LastWriteTime
+      {
+         get { return LastWriteTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // LastWriteTime
+
+      #region LastWriteTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last modified.
+      /// For a file, the structure specifies the last time that a file is written to. 
+      /// For a directory, the structure specifies when the directory is created. 
+      /// If the underlying file system does not support the last access time, this member is zero (0).
+      /// </summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
+      public DateTime LastWriteTimeUtc { get; private set; }
+
+      #endregion // LastWriteTimeUtc
 
       #region VolumeSerialNumber
 

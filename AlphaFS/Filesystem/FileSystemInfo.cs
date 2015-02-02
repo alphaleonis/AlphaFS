@@ -303,9 +303,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CreationTimeUtc
 
-      /// <summary>
-      ///   Gets or sets the creation time, in coordinated universal time (UTC), of the current file or directory.
-      /// </summary>
+      /// <summary>Gets or sets the creation time, in coordinated universal time (UTC), of the current file or directory.</summary>
       /// <remarks>
       ///   <para>The value of the CreationTimeUtc property is pre-cached
       ///   To get the latest value, call the Refresh method.</para>
@@ -401,9 +399,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastAccessTime
 
-      /// <summary>
-      ///   Gets or sets the time the current file or directory was last accessed.
-      /// </summary>
+      /// <summary>Gets or sets the time the current file or directory was last accessed.</summary>
       /// <remarks>
       ///   <para>The value of the LastAccessTime property is pre-cached
       ///   To get the latest value, call the Refresh method.</para>
@@ -425,9 +421,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastAccessTimeUtc
 
-      /// <summary>
-      ///   Gets or sets the time, in coordinated universal time (UTC), that the current file or directory was last accessed.
-      /// </summary>
+      /// <summary>Gets or sets the time, in coordinated universal time (UTC), that the current file or directory was last accessed.</summary>
       /// <remarks>
       ///   <para>The value of the LastAccessTimeUtc property is pre-cached.
       ///   To get the latest value, call the Refresh method.</para>
@@ -492,9 +486,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastWriteTimeUtc
 
-      /// <summary>
-      ///   Gets or sets the time, in coordinated universal time (UTC), when the current file or directory was last written to.
-      /// </summary>
+      /// <summary>Gets or sets the time, in coordinated universal time (UTC), when the current file or directory was last written to.</summary>
       /// <remarks>
       ///   <para>The value of the LastWriteTimeUtc property is pre-cached. To get the latest value, call the Refresh method.</para>
       ///   <para>This method may return an inaccurate value, because it uses native functions whose values may not be continuously updated by

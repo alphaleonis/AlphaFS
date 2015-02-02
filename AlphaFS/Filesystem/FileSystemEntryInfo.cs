@@ -74,10 +74,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time this entry was created.</value>
       public DateTime CreationTime
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.CreationTime).ToLocalTime(); }
+         get { return CreationTimeUtc.ToLocalTime(); }
       }
 
       #endregion // CreationTime
+
+      #region CreationTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was created.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
+      public DateTime CreationTimeUtc
+      {
+         get { return DateTime.FromFileTimeUtc(_win32FindData.CreationTime); }
+      }
+
+      #endregion // CreationTimeUtc
 
       #region FileName
 
@@ -168,10 +179,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time this entry was last accessed.</value>
       public DateTime LastAccessTime
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.LastAccessTime).ToLocalTime(); }
+         get { return LastAccessTimeUtc.ToLocalTime(); }
       }
 
       #endregion // LastAccessTime
+
+      #region LastAccessTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last accessed.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
+      public DateTime LastAccessTimeUtc
+      {
+         get { return DateTime.FromFileTimeUtc(_win32FindData.LastAccessTime); }
+      }
+
+      #endregion // LastAccessTimeUtc
 
       #region LastWriteTime
 
@@ -179,10 +201,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time this entry was last modified.</value>
       public DateTime LastWriteTime
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.LastWriteTime).ToLocalTime(); }
+         get { return LastWriteTimeUtc.ToLocalTime(); }
       }
 
       #endregion // LastWriteTime
+      
+      #region LastWriteTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last modified.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
+      public DateTime LastWriteTimeUtc
+      {
+         get { return DateTime.FromFileTimeUtc(_win32FindData.LastWriteTime); }
+      }
+
+      #endregion // LastWriteTimeUtc
 
       #region LongFullPath
 

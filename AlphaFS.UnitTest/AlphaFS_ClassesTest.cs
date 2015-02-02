@@ -193,9 +193,9 @@ namespace AlphaFS.UnitTest
 
          Assert.IsTrue(UnitTestConstants.Dump(bhfi, -18));
 
-         Assert.AreEqual(System.IO.File.GetCreationTime(tempPath), bhfi.CreationTime);
-         Assert.AreEqual(System.IO.File.GetLastAccessTime(tempPath), bhfi.LastAccessTime);
-         Assert.AreEqual(System.IO.File.GetLastWriteTime(tempPath), bhfi.LastWriteTime);
+         Assert.AreEqual(System.IO.File.GetCreationTimeUtc(tempPath), bhfi.CreationTimeUtc);
+         Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(tempPath), bhfi.LastAccessTimeUtc);
+         Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(tempPath), bhfi.LastWriteTimeUtc);
 
          stream.Close();
 

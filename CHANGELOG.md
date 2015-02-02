@@ -13,6 +13,7 @@ Version 2.1
 
 - Issue #101: The release now also contains a build targetting .NET 4.5.2
 - Issue #109: Add overloaded methods for `Host.EnumerateShares()`
+- Issue #112: Add `CreationTimeUtc`, `LastAccessTimeUtc` and `LastWriteTimeUtc` to "Info" classes.
 - Issue #119: Fix `Path.IsLocalPath()` issues.
 - Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
