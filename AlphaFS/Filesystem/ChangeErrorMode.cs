@@ -19,31 +19,36 @@
  *  THE SOFTWARE. 
  */
 
-using System.Security;
-using Microsoft.Win32.SafeHandles;
+using System;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Represents a wrapper class for a handle used by the CM_Connect_Machine/CM_Disconnect_Machine Win32 API functions.</summary>
-   [SecurityCritical]
-   internal sealed class SafeCmConnectMachineHandle : SafeHandleZeroOrMinusOneIsInvalid
+   internal static partial class NativeMethods
    {
-      #region Constructor
-
-      /// <summary>Initializes a new instance of the <see cref="SafeCmConnectMachineHandle"/> class.</summary>
-      public SafeCmConnectMachineHandle() : base(true)
+      /// <summary>Controls whether the system will handle the specified types of serious errors or whether the process will handle them.</summary>
+      /// <remarks>Minimum supported client: Windows 2000 Professional</remarks>
+      /// <remarks>Minimum supported server: Windows 2000 Server</remarks>      
+      public sealed class ChangeErrorMode : IDisposable
       {
+         private readonly ErrorMode _oldMode;
+
+         public ChangeErrorMode(ErrorMode mode)
+         {
+            if (IsAtLeastWindows7)
+               SetThreadErrorMode(mode, out _oldMode);
+            else
+               _oldMode = SetErrorMode(mode);
+         }
+
+         void IDisposable.Dispose()
+         {
+            ErrorMode oldMode;
+
+            if (IsAtLeastWindows7)
+               SetThreadErrorMode(_oldMode, out oldMode);
+            else
+               SetErrorMode(_oldMode);
+         }
       }
-
-      #endregion // Constructor
-
-      #region ReleaseHandle
-
-      protected override bool ReleaseHandle()
-      {
-         return NativeMethods.CM_Disconnect_Machine(handle) == Win32Errors.NO_ERROR;
-      }
-
-      #endregion // ReleaseHandle
    }
 }

@@ -19,36 +19,31 @@
  *  THE SOFTWARE. 
  */
 
-#if NET35
-using System.Security.Permissions;
-#endif
-using Microsoft.Win32.SafeHandles;
 using System.Security;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>
-   /// Provides a concrete implementation of SafeHandle supporting transactions.
-   /// </summary>
-   internal class SafeKernelTransactionHandle : SafeHandleMinusOneIsInvalid
+   /// <summary>Represents a wrapper class for a handle used by the CM_Connect_Machine/CM_Disconnect_Machine Win32 API functions.</summary>
+   [SecurityCritical]
+   internal sealed class SafeCmConnectMachineHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      /// <summary>
-      /// Initializes a new instance of the <see cref="SafeKernelTransactionHandle"/> class.
-      /// </summary>      
-      public SafeKernelTransactionHandle()
-         : base(true)
+      #region Constructor
+
+      /// <summary>Initializes a new instance of the <see cref="SafeCmConnectMachineHandle"/> class.</summary>
+      public SafeCmConnectMachineHandle() : base(true)
       {
       }
 
-      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
-      /// <returns><see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.</returns>
-#if NET35
-      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
-#endif
-      [SecurityCritical]
+      #endregion // Constructor
+
+      #region ReleaseHandle
+
       protected override bool ReleaseHandle()
       {
-         return NativeMethods.CloseHandle(handle);
+         return NativeMethods.CM_Disconnect_Machine(handle) == Win32Errors.NO_ERROR;
       }
+
+      #endregion // ReleaseHandle
    }
 }

@@ -93,11 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="TransactionAlreadyCommittedException">The transaction was already committed.</exception>
       /// <exception cref="TransactionAlreadyAbortedException">The transaction was already aborted.</exception>
       /// <exception cref="Win32Exception">An error occurred</exception>
-#if NET35
-      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
-#else
       [SecurityCritical]
-#endif
       public void Commit()
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
@@ -110,11 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Requests that the specified transaction be rolled back. This function is synchronous.</summary>
       /// <exception cref="TransactionAlreadyCommittedException">The transaction was already committed.</exception>
       /// <exception cref="Win32Exception">An error occurred</exception>
-#if NET35
-      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
-#else
       [SecurityCritical]
-#endif
       public void Rollback()
       {
          if (!NativeMethods.IsAtLeastWindowsVista)

@@ -20,35 +20,33 @@
  */
 
 using System;
+using System.Security;
+using Microsoft.Win32.SafeHandles;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   internal static partial class NativeMethods
+   /// <summary>Represents a wrapper class for a handle used by the FindFirstFile/FindNextFile Win32 API functions.</summary>
+   [SecurityCritical]
+   public sealed class SafeFindFileHandle : SafeHandleZeroOrMinusOneIsInvalid
    {
-      /// <summary>Controls whether the system will handle the specified types of serious errors or whether the process will handle them.</summary>
-      /// <remarks>Minimum supported client: Windows 2000 Professional</remarks>
-      /// <remarks>Minimum supported server: Windows 2000 Server</remarks>      
-      public sealed class ChangeErrorMode : IDisposable
+      /// <summary>Initializes a new instance of the <see cref="SafeFindFileHandle"/> class.</summary>
+      private SafeFindFileHandle() : base(true)
       {
-         private readonly ErrorMode _oldMode;
+      }
 
-         public ChangeErrorMode(ErrorMode mode)
-         {
-            if (IsAtLeastWindows7)
-               SetThreadErrorMode(mode, out _oldMode);
-            else
-               _oldMode = SetErrorMode(mode);
-         }
+      /// <summary>Initializes a new instance of the <see cref="SafeFindFileHandle"/> class.</summary>
+      /// <param name="handle">The handle.</param>
+      /// <param name="callerHandle"><see langword="true"/> [owns handle].</param>
+      public SafeFindFileHandle(IntPtr handle, bool callerHandle) : base(callerHandle)
+      {
+         SetHandle(handle);
+      }
 
-         void IDisposable.Dispose()
-         {
-            ErrorMode oldMode;
-
-            if (IsAtLeastWindows7)
-               SetThreadErrorMode(_oldMode, out oldMode);
-            else
-               SetErrorMode(_oldMode);
-         }
+      /// <summary>When overridden in a derived class, executes the code required to free the handle.</summary>
+      /// <returns><see langword="true"/> if the handle is released successfully; otherwise, in the event of a catastrophic failure, <see langword="false"/>. In this case, it generates a ReleaseHandleFailed Managed Debugging Assistant.</returns>
+      protected override bool ReleaseHandle()
+      {
+         return NativeMethods.FindClose(handle);
       }
    }
 }

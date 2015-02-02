@@ -361,29 +361,29 @@
     <Compile Include="Filesystem\Path Class\Path.UncPaths.cs" />
     <Compile Include="Filesystem\Path Class\Path.ShortLongConversions.cs" />
     <Compile Include="Filesystem\Path Class\Path.Temporary.cs" />
-    <Compile Include="Filesystem\SafeCmConnectMachineHandle.cs" />
-    <Compile Include="Filesystem\SafeEncryptedFileRawHandle.cs" />
-    <Compile Include="Filesystem\SafeSetupDiClassDevsExHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeCmConnectMachineHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeEncryptedFileRawHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeSetupDiClassDevsExHandle.cs" />
     <Compile Include="Filesystem\Shell32Info.cs" />
-    <Compile Include="Filesystem\Structures\CopyMoveResult.cs" />
-    <Compile Include="Filesystem\Structures\FILE_BASIC_INFO.cs" />
-    <Compile Include="Filesystem\Structures\BY_HANDLE_FILE_INFORMATION.cs" />
-    <Compile Include="Filesystem\Structures\ChangeErrorMode.cs" />
-    <Compile Include="Filesystem\Structures\FILE_ID_BOTH_DIR_INFO.cs" />
-    <Compile Include="Filesystem\Structures\FILETIME.cs" />
+    <Compile Include="Filesystem\CopyMoveResult.cs" />
+    <Compile Include="Filesystem\Native Structures\FILE_BASIC_INFO.cs" />
+    <Compile Include="Filesystem\Native Structures\BY_HANDLE_FILE_INFORMATION.cs" />
+    <Compile Include="Filesystem\ChangeErrorMode.cs" />
+    <Compile Include="Filesystem\Native Structures\FILE_ID_BOTH_DIR_INFO.cs" />
+    <Compile Include="Filesystem\Native Structures\FILETIME.cs" />
     <Compile Include="Filesystem\LinkTargetInfo.cs" />
     <Compile Include="Filesystem\Enumerations\MoveOptions.cs" />
     <Compile Include="Filesystem\Exceptions\NotAReparsePointException.cs" />
     <Compile Include="Filesystem\Shell32.cs" />
-    <Compile Include="Filesystem\Structures\MountPointReparseBuffer.cs" />
-    <Compile Include="Filesystem\Structures\ReparseDataBufferHeader.cs" />
-    <Compile Include="Filesystem\Structures\SP_DEVINFO_DATA.cs" />
-    <Compile Include="Filesystem\Structures\SP_DEVICE_INTERFACE_DATA.cs" />
-    <Compile Include="Filesystem\Structures\SP_DEVICE_INTERFACE_DETAIL_DATA.cs" />
-    <Compile Include="Filesystem\Structures\SymbolicLinkReparseBuffer.cs" />
-    <Compile Include="Filesystem\Structures\WIN32_FILE_ATTRIBUTE_DATA.cs" />
-    <Compile Include="Filesystem\Structures\WIN32_FIND_DATA.cs" />
-    <Compile Include="Filesystem\Structures\WIN32_STREAM_ID.cs" />
+    <Compile Include="Filesystem\MountPointReparseBuffer.cs" />
+    <Compile Include="Filesystem\ReparseDataBufferHeader.cs" />
+    <Compile Include="Filesystem\Native Structures\SP_DEVINFO_DATA.cs" />
+    <Compile Include="Filesystem\Native Structures\SP_DEVICE_INTERFACE_DATA.cs" />
+    <Compile Include="Filesystem\Native Structures\SP_DEVICE_INTERFACE_DETAIL_DATA.cs" />
+    <Compile Include="Filesystem\SymbolicLinkReparseBuffer.cs" />
+    <Compile Include="Filesystem\Native Structures\WIN32_FILE_ATTRIBUTE_DATA.cs" />
+    <Compile Include="Filesystem\Native Structures\WIN32_FIND_DATA.cs" />
+    <Compile Include="Filesystem\Native Structures\WIN32_STREAM_ID.cs" />
     <Compile Include="Network\DfsInfo.cs" />
     <Compile Include="Network\DfsStorageInfo.cs" />
     <Compile Include="Network\Enumerations\ShareInfoLevel.cs" />
@@ -439,7 +439,7 @@
     <Compile Include="Security\Enumerations\ObjectType.cs" />
     <Compile Include="Security\Enumerations\SecurityDescriptorControl.cs" />
     <Compile Include="Security\Enumerations\SecurityInformation.cs" />
-    <Compile Include="Filesystem\SafeLocalMemoryBufferHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeLocalMemoryBufferHandle.cs" />
     <Compile Include="Filesystem\Enumerations\SymbolicLinkTarget.cs" />
     <Compile Include="Filesystem\SymbolicLinkTargetInfo.cs" />
     <Compile Include="Filesystem\Enumerations\SymbolicLinkType.cs" />
@@ -456,10 +456,10 @@
     <Compile Include="Filesystem\Exceptions\InvalidTransactionException.cs" />
     <Compile Include="Filesystem\KernelTransaction.cs" />
     <Compile Include="NativeError.cs" />
-    <Compile Include="Filesystem\SafeFindFileHandle.cs" />
-    <Compile Include="Filesystem\SafeFindVolumeMountPointHandle.cs" />
-    <Compile Include="Filesystem\SafeFindVolumeHandle.cs" />
-    <Compile Include="Filesystem\SafeKernelTransactionHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeFindFileHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeFindVolumeMountPointHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeFindVolumeHandle.cs" />
+    <Compile Include="Filesystem\Safe Handles\SafeKernelTransactionHandle.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyAbortedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionAlreadyCommittedException.cs" />
     <Compile Include="Filesystem\Exceptions\TransactionException.cs" />
@@ -496,7 +496,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
