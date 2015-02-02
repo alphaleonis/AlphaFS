@@ -619,7 +619,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetFileInformationByHandle(SafeFileHandle hFile,
-         [MarshalAs(UnmanagedType.Struct)] out ByHandleFileInfo lpByHandleFileInformation);
+         [MarshalAs(UnmanagedType.Struct)] out BY_HANDLE_FILE_INFORMATION lpByHandleFileInformation);
 
       /// <summary>
       ///   Retrieves file information for the specified file.

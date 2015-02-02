@@ -367,7 +367,7 @@
     <Compile Include="Filesystem\Shell32Info.cs" />
     <Compile Include="Filesystem\Structures\CopyMoveResult.cs" />
     <Compile Include="Filesystem\Structures\FILE_BASIC_INFO.cs" />
-    <Compile Include="Filesystem\Structures\ByHandleFileInfo.cs" />
+    <Compile Include="Filesystem\Structures\BY_HANDLE_FILE_INFORMATION.cs" />
     <Compile Include="Filesystem\Structures\ChangeErrorMode.cs" />
     <Compile Include="Filesystem\Structures\FILE_ID_BOTH_DIR_INFO.cs" />
     <Compile Include="Filesystem\Structures\FILETIME.cs" />
@@ -496,7 +496,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

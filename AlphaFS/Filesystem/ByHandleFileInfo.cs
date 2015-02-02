@@ -34,17 +34,17 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructor
 
-      internal ByHandleFileInfo(NativeMethods.ByHandleFileInfo fibh)
+      internal ByHandleFileInfo(NativeMethods.BY_HANDLE_FILE_INFORMATION fibh)
       {
-         CreationTimeUtc = DateTime.FromFileTimeUtc(fibh.CreationTime);
-         LastAccessTimeUtc = DateTime.FromFileTimeUtc(fibh.LastAccessTime);
-         LastWriteTimeUtc = DateTime.FromFileTimeUtc(fibh.LastWriteTime);
+         CreationTimeUtc = DateTime.FromFileTimeUtc(fibh.ftCreationTime);
+         LastAccessTimeUtc = DateTime.FromFileTimeUtc(fibh.ftLastAccessTime);
+         LastWriteTimeUtc = DateTime.FromFileTimeUtc(fibh.ftLastWriteTime);
 
-         Attributes = fibh.FileAttributes;
-         FileIndex = NativeMethods.ToLong(fibh.FileIndexHigh, fibh.FileIndexLow);
-         FileSize = NativeMethods.ToLong(fibh.FileSizeHigh, fibh.FileSizeLow);
-         NumberOfLinks = fibh.NumberOfLinks;
-         VolumeSerialNumber = fibh.VolumeSerialNumber;
+         Attributes = fibh.dwFileAttributes;
+         FileIndex = NativeMethods.ToLong(fibh.nFileIndexHigh, fibh.nFileIndexLow);
+         FileSize = NativeMethods.ToLong(fibh.nFileSizeHigh, fibh.nFileSizeLow);
+         NumberOfLinks = fibh.nNumberOfLinks;
+         VolumeSerialNumber = fibh.dwVolumeSerialNumber;
       }
 
       #endregion // Constructor
