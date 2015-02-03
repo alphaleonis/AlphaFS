@@ -21,6 +21,8 @@ Version 2.1
 - Issue #132: Modify method `VolumeInfo()` constructor to better handle input paths.
 - Issue #133: Add missing unit test `Host.GetHostShareFromPath()`
 - Issue #134: Improved upon `FindFileSystemEntryInfo.FindFirstFile()` when throwing `Directory-/FileNotFoundException()`.
+- Issue #138: Modify `GetShareInfo()` to use `SafeGlobalMemoryBufferHandle` instead of `IntPtr`.
+- Issue #139: Modify `GetDfsInfoInternal()` to use `SafeGlobalMemoryBufferHandle` instead of `IntPtr`.
 
 ### Bugs Fixed
 
