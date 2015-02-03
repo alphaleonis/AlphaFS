@@ -35,31 +35,31 @@ namespace Alphaleonis.Win32.Network
       internal struct SHARE_INFO_2
       {
          /// <summary>The name of a shared resource.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string NetName;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string shi2_netname;
 
          /// <summary>The type of share.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly ShareType ShareType;
+         [MarshalAs(UnmanagedType.U4)] public readonly ShareType shi2_type;
 
          /// <summary>An optional comment about the shared resource.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string Remark;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string shi2_remark;
 
          /// <summary>The shared resource's permissions for servers running with share-level security.</summary>
          /// <remarks>Note that Windows does not support share-level security. This member is ignored on a server running user-level security.</remarks>
-         [MarshalAs(UnmanagedType.U4)] public readonly AccessPermissions Permissions;
+         [MarshalAs(UnmanagedType.U4)] public readonly AccessPermissions shi2_permissions;
 
          /// <summary>The maximum number of concurrent connections that the shared resource can accommodate.</summary>
          /// <remarks>The number of connections is unlimited if the value specified in this member is –1.</remarks>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint MaxUses;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint shi2_max_uses;
 
          /// <summary>The number of current connections to the resource.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint CurrentUses;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint shi2_current_uses;
 
          /// <summary>The local path for the shared resource.</summary>
          /// <remarks>For disks, this member is the path being shared. For print queues, this member is the name of the print queue being shared.</remarks>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string Path;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string shi2_path;
 
          /// <summary>The share's password (when the server is running with share-level security).</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string Password;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string shi2_passwd;
       }
    }
 }

@@ -19,21 +19,25 @@
  *  THE SOFTWARE. 
  */
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Contains information about the shared resource.</summary>
-      /// <remarks>This structure can be retrieved by calling the NetShareGetInfo function.</remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      ///<summary>Contains path and name information for a network resource.</summary>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct SHARE_INFO_1005
+      internal struct REMOTE_NAME_INFO
       {
-         /// <summary>A bitmask of flags that specify information about the shared resource.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly ShareResourceTypes ShareResourceType;
+         /// <summary>Identifies a network resource.</summary>
+         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")] [MarshalAs(UnmanagedType.LPWStr)] public string lpUniversalName;
+
+         /// <summary>The name of a network connection.</summary>
+         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")] [MarshalAs(UnmanagedType.LPWStr)] public string lpConnectionName;
+
+         /// <summary>The remaing path.</summary>
+         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")] [MarshalAs(UnmanagedType.LPWStr)] public string lpRemainingPath;
       }
    }
 }

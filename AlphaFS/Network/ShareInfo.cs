@@ -44,47 +44,47 @@ namespace Alphaleonis.Win32.Network
             case ShareInfoLevel.Info1005:
                NativeMethods.SHARE_INFO_1005 s1005 = (NativeMethods.SHARE_INFO_1005) shareInfo;
                ServerName = host ?? Environment.MachineName;
-               ResourceType = s1005.ShareResourceType;
+               ResourceType = s1005.shi1005_flags;
                break;
 
             case ShareInfoLevel.Info503:
                NativeMethods.SHARE_INFO_503 s503 = (NativeMethods.SHARE_INFO_503) shareInfo;
-               CurrentUses = s503.CurrentUses;
-               MaxUses = s503.MaxUses;
-               NetName = s503.NetName;
-               Password = s503.Password;
-               Path = Utils.IsNullOrWhiteSpace(s503.Path) ? null : s503.Path;
-               Permissions = s503.Permissions;
-               Remark = s503.Remark;
-               ServerName = s503.ServerName == "*" ? host ?? Environment.MachineName : s503.ServerName;
-               ShareType = s503.ShareType;
-               SecurityDescriptor = s503.SecurityDescriptor;
+               CurrentUses = s503.shi503_current_uses;
+               MaxUses = s503.shi503_max_uses;
+               NetName = s503.shi503_netname;
+               Password = s503.shi503_passwd;
+               Path = Utils.IsNullOrWhiteSpace(s503.shi503_path) ? null : s503.shi503_path;
+               Permissions = s503.shi503_permissions;
+               Remark = s503.shi503_remark;
+               ServerName = s503.shi503_servername == "*" ? host ?? Environment.MachineName : s503.shi503_servername;
+               ShareType = s503.shi503_type;
+               SecurityDescriptor = s503.shi503_security_descriptor;
                break;
 
             case ShareInfoLevel.Info2:
                NativeMethods.SHARE_INFO_2 s2 = (NativeMethods.SHARE_INFO_2)shareInfo;
-               CurrentUses = s2.CurrentUses;
-               MaxUses = s2.MaxUses;
-               NetName = s2.NetName;
-               Password = s2.Password;
-               Path = Utils.IsNullOrWhiteSpace(s2.Path) ? null : s2.Path;
-               Permissions = s2.Permissions;
-               Remark = s2.Remark;
+               CurrentUses = s2.shi2_current_uses;
+               MaxUses = s2.shi2_max_uses;
+               NetName = s2.shi2_netname;
+               Password = s2.shi2_passwd;
+               Path = Utils.IsNullOrWhiteSpace(s2.shi2_path) ? null : s2.shi2_path;
+               Permissions = s2.shi2_permissions;
+               Remark = s2.shi2_remark;
                ServerName = host ?? Environment.MachineName;
-               ShareType = s2.ShareType;
+               ShareType = s2.shi2_type;
                break;
 
             case ShareInfoLevel.Info1:
                NativeMethods.SHARE_INFO_1 s1 = (NativeMethods.SHARE_INFO_1)shareInfo;
                CurrentUses = 0;
                MaxUses = 0;
-               NetName = s1.NetName;
+               NetName = s1.shi1_netname;
                Password = null;
                Path = null;
                Permissions = AccessPermissions.None;
-               Remark = s1.Remark;
+               Remark = s1.shi1_remark;
                ServerName = host ?? Environment.MachineName;
-               ShareType = s1.ShareType;
+               ShareType = s1.shi1_type;
                break;
          }
 

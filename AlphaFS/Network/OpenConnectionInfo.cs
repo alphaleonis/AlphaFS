@@ -31,28 +31,22 @@ namespace Alphaleonis.Win32.Network
    {
       #region Constructor
 
-      #region OpenConnectionInfo
-
       /// <summary>Create a OpenConnectionInfo instance.</summary>
       internal OpenConnectionInfo(string host, NativeMethods.CONNECTION_INFO_1 connectionInfo)
       {
          Host = host;
-         Id = connectionInfo.Id;
-         ShareType = connectionInfo.ShareType;
-         TotalOpenFiles = connectionInfo.TotalOpenFiles;
-         TotalUsers = connectionInfo.TotalUsers;
-         ConnectedSeconds = connectionInfo.ConnectedSeconds;
-         UserName = connectionInfo.UserName;
-         NetName = connectionInfo.NetName.Replace(Path.LongPathUncPrefix, string.Empty).Replace(Path.UncPrefix, string.Empty);
+         Id = connectionInfo.coni1_id;
+         ShareType = connectionInfo.coni1_type;
+         TotalOpenFiles = connectionInfo.coni1_num_opens;
+         TotalUsers = connectionInfo.coni1_num_users;
+         ConnectedSeconds = connectionInfo.coni1_time;
+         UserName = connectionInfo.coni1_username;
+         NetName = connectionInfo.oni1_netname.Replace(Path.LongPathUncPrefix, string.Empty).Replace(Path.UncPrefix, string.Empty);
       }
-
-      #endregion // OpenConnectionInfo
 
       #endregion // Constructor
 
       #region Methods
-
-      #region ToString
 
       /// <summary>Returns the full path to the share.</summary>
       /// <returns>A string that represents this instance.</returns>
@@ -61,67 +55,33 @@ namespace Alphaleonis.Win32.Network
          return Id.ToString(CultureInfo.InvariantCulture);
       }
 
-      #endregion // ToString
-
       #endregion // Methods
 
       #region Properties
 
-      #region Host
-
       /// <summary>The local or remote Host.</summary>
       public string Host { get; private set; }
-
-      #endregion // Host
-
-      #region Id
 
       /// <summary>Specifies a connection identification number.</summary>
       public long Id { get; private set; }
 
-      #endregion // Id
-
-      #region ShareType
-
       /// <summary>The type of share.</summary>
       public ShareType ShareType { get; private set; }
-
-      #endregion // ShareType
-
-      #region TotalOpenFiles
 
       /// <summary>Specifies the number of files currently open as a result of the connection.</summary>
       public long TotalOpenFiles { get; private set; }
 
-      #endregion // TotalOpenFiles
-
-      #region TotalUsers
-
       /// <summary>Specifies the number of users on the connection.</summary>
       public long TotalUsers { get; private set; }
-
-      #endregion // TotalUsers
-
-      #region ConnectedSeconds
 
       /// <summary>Specifies the number of seconds that the connection has been established.</summary>
       public long ConnectedSeconds { get; private set; }
 
-      #endregion // ConnectedSeconds
-
-      #region UserName
-
       /// <summary>If the server sharing the resource is running with user-level security, the UserName member describes which user made the connection. If the server is running with share-level security, coni1_username describes which computer (computername) made the connection.</summary>
       public string UserName { get; private set; }
 
-      #endregion // UserName
-
-      #region NetName
-
       /// <summary>String that specifies either the share name of the server's shared resource or the computername of the client. The value of this member depends on which name was specified as the qualifier parameter to the NetConnectionEnum function.</summary>
       public string NetName { get; private set; }
-
-      #endregion // NetName
 
       #endregion // Properties
    }

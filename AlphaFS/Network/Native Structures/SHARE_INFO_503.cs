@@ -35,41 +35,41 @@ namespace Alphaleonis.Win32.Network
       internal struct SHARE_INFO_503
       {
          /// <summary>The name of a shared resource.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string NetName;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string shi503_netname;
 
          /// <summary>The type of share.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly ShareType ShareType;
+         [MarshalAs(UnmanagedType.U4)] public readonly ShareType shi503_type;
 
          /// <summary>An optional comment about the shared resource.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string Remark;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string shi503_remark;
 
          /// <summary>The shared resource's permissions for servers running with share-level security.</summary>
          /// <remarks>Note that Windows does not support share-level security. This member is ignored on a server running user-level security.</remarks>
-         [MarshalAs(UnmanagedType.U4)] public readonly AccessPermissions Permissions;
+         [MarshalAs(UnmanagedType.U4)] public readonly AccessPermissions shi503_permissions;
 
          /// <summary>The maximum number of concurrent connections that the shared resource can accommodate.</summary>
          /// <remarks>The number of connections is unlimited if the value specified in this member is –1.</remarks>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint MaxUses;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint shi503_max_uses;
 
          /// <summary>The number of current connections to the resource.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint CurrentUses;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint shi503_current_uses;
 
          /// <summary>The local path for the shared resource.</summary>
          /// <remarks>For disks, this member is the path being shared. For print queues, this member is the name of the print queue being shared.</remarks>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string Path;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string shi503_path;
 
          /// <summary>The share's password (when the server is running with share-level security).</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string Password;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string shi503_passwd;
 
          /// <summary>The DNS or NetBIOS name of the remote server on which the shared resource resides.</summary>
          /// <remarks>A value of "*" indicates no configured server name.</remarks>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string ServerName;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string shi503_servername;
 
          /// <summary>Reserved; must be zero.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint Reserved;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint shi503_reserved;
 
          /// <summary>Specifies the SECURITY_DESCRIPTOR associated with this share.</summary>
-         public IntPtr SecurityDescriptor;
+         public IntPtr shi503_security_descriptor;
       }
    }
 }

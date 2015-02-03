@@ -460,9 +460,9 @@ namespace Alphaleonis.Win32.Network
          // Initialize structure.
          var resource = new NativeMethods.NETRESOURCE
          {
-            LocalName = arguments.LocalName,
-            RemoteName = arguments.RemoteName,
-            Type = NativeMethods.ResourceType.Disk
+            lpLocalName = arguments.LocalName,
+            lpRemoteName = arguments.RemoteName,
+            dwType = NativeMethods.ResourceType.Disk
          };
 
          // Three characters for: "X:\0" (Drive X: with null terminator)

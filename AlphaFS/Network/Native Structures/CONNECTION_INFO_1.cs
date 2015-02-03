@@ -26,33 +26,32 @@ namespace Alphaleonis.Win32.Network
    internal static partial class NativeMethods
    {
       /// <summary>Contains the identification number of a connection, number of open files, connection time, number of users on the connection, and the type of connection.</summary>
-      /// <remarks>MSDN "CONNECTION_INFO_1 structure": http://msdn.microsoft.com/en-us/library/windows/desktop/bb525373%28v=vs.85%29.aspx </remarks>
       /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
       /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
       internal struct CONNECTION_INFO_1
       {
          /// <summary>Specifies a connection identification number.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint Id;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint coni1_id;
 
          /// <summary>A combination of values that specify the type of connection made from the local device name to the shared resource.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly ShareType ShareType;
+         [MarshalAs(UnmanagedType.U4)] public readonly ShareType coni1_type;
 
          /// <summary>Specifies the number of files currently open as a result of the connection.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint TotalOpenFiles;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint coni1_num_opens;
 
          /// <summary>Specifies the number of users on the connection.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint TotalUsers;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint coni1_num_users;
 
          /// <summary>Specifies the number of seconds that the connection has been established.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly uint ConnectedSeconds;
+         [MarshalAs(UnmanagedType.U4)] public readonly uint coni1_time;
 
          /// <summary>If the server sharing the resource is running with user-level security, the UserName member describes which user made the connection. If the server is running with share-level security, coni1_username describes which computer (computername) made the connection.</summary>
          /// <remarks>Note that Windows does not support share-level security.</remarks>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string UserName;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string coni1_username;
 
          /// <summary>String that specifies either the share name of the server's shared resource or the computername of the client. The value of this member depends on which name was specified as the qualifier parameter to the NetConnectionEnum function.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string NetName;
+         [MarshalAs(UnmanagedType.LPWStr)] public readonly string oni1_netname;
       }
    }
 }

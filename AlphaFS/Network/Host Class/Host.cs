@@ -168,9 +168,9 @@ namespace Alphaleonis.Win32.Network
          if (Path.IsUncPathInternal(path, true, false))
             return new NativeMethods.REMOTE_NAME_INFO
             {
-               UniversalName = Path.AddTrailingDirectorySeparator(path, false),
-               ConnectionName = Path.RemoveTrailingDirectorySeparator(path, false),
-               RemainingPath = Path.DirectorySeparator
+               lpUniversalName = Path.AddTrailingDirectorySeparator(path, false),
+               lpConnectionName = Path.RemoveTrailingDirectorySeparator(path, false),
+               lpRemainingPath = Path.DirectorySeparator
             };
 
          

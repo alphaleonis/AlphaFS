@@ -35,7 +35,6 @@ namespace Alphaleonis.Win32.Network
       internal struct DFS_INFO_300
       {
          /// <summary>Value that specifies the type of the DFS namespace. This member can be one of the <see cref="DfsNamespaceFlavors"/> values.</summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
          [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags")]
          [MarshalAs(UnmanagedType.U4)] public readonly DfsNamespaceFlavors Flags;
 
@@ -47,7 +46,6 @@ namespace Alphaleonis.Win32.Network
          /// \DomainName\DomDfsName
          /// where DomainName is the name of the domain that hosts the domain-based DFS namespace and DomDfsname is the name of the DFS namespace.
          /// </summary>
-         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
          [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
          [MarshalAs(UnmanagedType.LPWStr)] public readonly string DfsName;
       }

@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetMappedConnectionName(string path)
       {
-         return Host.GetRemoteNameInfoInternal(path, true).ConnectionName;
+         return Host.GetRemoteNameInfoInternal(path, true).lpConnectionName;
       }
 
       #endregion // GetMappedConnectionName
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetMappedUncName(string path)
       {
-         return Host.GetRemoteNameInfoInternal(path, true).UniversalName;
+         return Host.GetRemoteNameInfoInternal(path, true).lpUniversalName;
       }
 
       #endregion // GetMappedUncName
@@ -204,11 +204,11 @@ namespace Alphaleonis.Win32.Filesystem
 
             Network.NativeMethods.REMOTE_NAME_INFO unc = Host.GetRemoteNameInfoInternal(drive, true);
 
-            if (!Utils.IsNullOrWhiteSpace(unc.ConnectionName))
+            if (!Utils.IsNullOrWhiteSpace(unc.lpConnectionName))
                // Only leave trailing backslash if "localPath" also ends with backslash.
                return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase)
-                  ? AddTrailingDirectorySeparator(unc.ConnectionName, false)
-                  : RemoveTrailingDirectorySeparator(unc.ConnectionName, false);
+                  ? AddTrailingDirectorySeparator(unc.lpConnectionName, false)
+                  : RemoveTrailingDirectorySeparator(unc.lpConnectionName, false);
 
             // Split: localDrive[0] = "C", localDrive[1] = "\Windows"
             string[] localDrive = localPath.Split(VolumeSeparatorChar);

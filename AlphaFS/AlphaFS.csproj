@@ -413,18 +413,18 @@
     <Compile Include="Network\OpenConnectionInfo.cs" />
     <Compile Include="Network\OpenResourceInfo.cs" />
     <Compile Include="Network\ShareInfo.cs" />
-    <Compile Include="Network\Structures\NETRESOURCE.cs" />
-    <Compile Include="Network\Structures\FILE_INFO_3.cs" />
-    <Compile Include="Network\Structures\DFS_INFO_200.cs" />
-    <Compile Include="Network\Structures\DFS_INFO_300.cs" />
-    <Compile Include="Network\Structures\DFS_INFO_4.cs" />
-    <Compile Include="Network\Structures\DFS_STORAGE_INFO.cs" />
-    <Compile Include="Network\Structures\REMOTE_NAME_INFO.cs" />
-    <Compile Include="Network\Structures\CONNECTION_INFO_1.cs" />
-    <Compile Include="Network\Structures\SHARE_INFO_1005.cs" />
-    <Compile Include="Network\Structures\SHARE_INFO_1.cs" />
-    <Compile Include="Network\Structures\SHARE_INFO_2.cs" />
-    <Compile Include="Network\Structures\SHARE_INFO_503.cs" />
+    <Compile Include="Network\Native Structures\NETRESOURCE.cs" />
+    <Compile Include="Network\Native Structures\FILE_INFO_3.cs" />
+    <Compile Include="Network\Native Structures\DFS_INFO_200.cs" />
+    <Compile Include="Network\Native Structures\DFS_INFO_300.cs" />
+    <Compile Include="Network\Native Structures\DFS_INFO_4.cs" />
+    <Compile Include="Network\Native Structures\DFS_STORAGE_INFO.cs" />
+    <Compile Include="Network\Native Structures\REMOTE_NAME_INFO.cs" />
+    <Compile Include="Network\Native Structures\CONNECTION_INFO_1.cs" />
+    <Compile Include="Network\Native Structures\SHARE_INFO_1005.cs" />
+    <Compile Include="Network\Native Structures\SHARE_INFO_1.cs" />
+    <Compile Include="Network\Native Structures\SHARE_INFO_2.cs" />
+    <Compile Include="Network\Native Structures\SHARE_INFO_503.cs" />
     <Compile Include="OperatingSystem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -496,7 +496,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
