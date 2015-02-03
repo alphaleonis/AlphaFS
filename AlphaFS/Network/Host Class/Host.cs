@@ -66,8 +66,6 @@ namespace Alphaleonis.Win32.Network
 
       #region Internal Methods
 
-      #region EnumerateNetworkObjectInternal
-
       private delegate uint EnumerateNetworkObjectDelegate(
          FunctionData functionData, out SafeGlobalMemoryBufferHandle netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
          [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries,
@@ -142,11 +140,7 @@ namespace Alphaleonis.Win32.Network
          if (lastError != Win32Errors.NO_ERROR && !continueOnException)
             throw new NetworkInformationException((int) lastError);
       }
-
-      #endregion // EnumerateNetworkObjectInternal
       
-      #region GetRemoteNameInfoInternal
-
       /// <summary>This method uses <see cref="NativeMethods.REMOTE_NAME_INFO"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
       /// <returns>A <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid.</remarks>
@@ -207,8 +201,6 @@ namespace Alphaleonis.Win32.Network
          // Return an empty structure (all fields set to null).
          return new NativeMethods.REMOTE_NAME_INFO();
       }
-
-      #endregion // GetRemoteNameInfoInternal
 
       internal struct ConnectDisconnectArguments
       {

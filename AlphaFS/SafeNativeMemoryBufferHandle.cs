@@ -275,8 +275,6 @@ namespace Alphaleonis.Win32
          Marshal.StructureToPtr(structure, handle, deleteOld);
       }
 
-
-
       /// <summary>Marshals data from an unmanaged block of memory to a newly allocated managed object of the specified type.</summary>
       /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
       public T PtrToStructure<T>()
@@ -288,14 +286,8 @@ namespace Alphaleonis.Win32
       /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
       public T PtrToStructure<T>(int offset)
       {
-         return (T)Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof(T));
+         return (T) Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof (T));
       }
-
-
-
-      
-
-
 
       /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged Unicode string into it.</summary>
       /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>

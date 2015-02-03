@@ -106,13 +106,6 @@ namespace Alphaleonis
          return (T) Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
       }
 
-
-
-      public static string PtrToStringUni(IntPtr buffer, int offset, int length)
-      {
-         return Marshal.PtrToStringUni(new IntPtr(buffer.ToInt64() + offset), length);
-      }
-
       #endregion // PtrToXxx
 
       #region UnitSizeToText

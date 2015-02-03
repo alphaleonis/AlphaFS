@@ -162,10 +162,7 @@ namespace Alphaleonis.Win32.Network
       #region GetShareInfo
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>
-      /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
-      /// and <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
       /// <param name="uncPath">The share in the format: \\host\share.</param>
       /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
@@ -176,10 +173,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>
-      /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
-      /// and <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="uncPath">The share in the format: \\host\share.</param>
       /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
@@ -191,10 +185,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>
-      /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
-      /// and <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
       /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
@@ -205,10 +196,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
-      /// <returns>
-      /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
-      /// and <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
@@ -322,16 +310,12 @@ namespace Alphaleonis.Win32.Network
       #region GetShareInfoInternal
 
       /// <summary>Unified method GetShareInfoInternal() to get the <see cref="ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
-      /// <returns>
-      /// A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available,
-      /// and <paramref name="continueOnException"/> is <see langword="true"/>.
-      /// </returns>
+      /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
       /// <exception cref="NetworkInformationException"></exception>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
-      [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Network.NativeMethods.NetApiBufferFree(System.IntPtr)")]
       [SecurityCritical]
       internal static ShareInfo GetShareInfoInternal(ShareInfoLevel shareLevel, string host, string share, bool continueOnException)
       {
@@ -349,35 +333,34 @@ namespace Alphaleonis.Win32.Network
          bool fallback = false;
 
 
-      startNetShareGetInfo:
+         startNetShareGetInfo:
 
-         var buffer = IntPtr.Zero;
+         SafeGlobalMemoryBufferHandle safeBuffer;
 
-         try
+         uint structureLevel = Convert.ToUInt16(shareLevel, CultureInfo.InvariantCulture);
+         uint lastError = NativeMethods.NetShareGetInfo(stripUnc, share, structureLevel, out safeBuffer);
+
+         using (safeBuffer)
          {
-            uint structureLevel = Convert.ToUInt16(shareLevel, CultureInfo.InvariantCulture);
-
-            uint lastError = NativeMethods.NetShareGetInfo(stripUnc, share, structureLevel, out buffer);
-
             switch (lastError)
             {
                case Win32Errors.NERR_Success:
                   switch (shareLevel)
                   {
                      case ShareInfoLevel.Info1005:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.PtrToStructure<NativeMethods.SHARE_INFO_1005>(buffer))
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_1005>(0))
                         {
                            NetFullPath = Path.CombineInternal(false, Path.UncPrefix + stripUnc, share)
                         };
 
                      case ShareInfoLevel.Info503:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.PtrToStructure<NativeMethods.SHARE_INFO_503>(buffer));
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_503>(0));
 
                      case ShareInfoLevel.Info2:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.PtrToStructure<NativeMethods.SHARE_INFO_2>(buffer));
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_2>(0));
 
                      case ShareInfoLevel.Info1:
-                        return new ShareInfo(stripUnc, shareLevel, Utils.PtrToStructure<NativeMethods.SHARE_INFO_1>(buffer));
+                        return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_1>(0));
                   }
                   break;
 
@@ -389,27 +372,19 @@ namespace Alphaleonis.Win32.Network
                case Win32Errors.ERROR_ACCESS_DENIED:
                   if (!fallback && shareLevel != ShareInfoLevel.Info2)
                   {
-                     NativeMethods.NetApiBufferFree(buffer);
-
                      shareLevel = ShareInfoLevel.Info2;
                      fallback = true;
                      goto startNetShareGetInfo;
                   }
                   break;
 
-
                default:
                   if (!continueOnException)
-                     throw new NetworkInformationException((int)lastError);
+                     throw new NetworkInformationException((int) lastError);
                   break;
             }
 
             return null;
-         }
-         finally
-         {
-            if (buffer != IntPtr.Zero)
-               NativeMethods.NetApiBufferFree(buffer);
          }
       }
 

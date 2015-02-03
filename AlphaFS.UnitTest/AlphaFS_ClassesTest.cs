@@ -58,7 +58,7 @@ namespace AlphaFS.UnitTest
          using (BackupFileStream bfs = new BackupFileStream(tempPath, FileMode.Create))
          {
             report = UnitTestConstants.Reporter();
-            UnitTestConstants.Dump(bfs, -10);
+            UnitTestConstants.Dump(bfs, -14);
          }
          Console.WriteLine("\n{0}", report);
 
