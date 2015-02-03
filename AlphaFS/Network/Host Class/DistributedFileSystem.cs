@@ -263,7 +263,6 @@ namespace Alphaleonis.Win32.Network
       ///   The name of the share corresponding to the DFS root target or link target. If <paramref name="getFromClient"/> is
       ///   <see langword="false"/>, this parameter is always <see langword="null"/>.
       /// </param>
-      [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Network.NativeMethods.NetApiBufferFree(System.IntPtr)", Justification = "Result is not needed.")]
       [SecurityCritical]
       private static DfsInfo GetDfsInfoInternal(bool getFromClient, string dfsName, string serverName, string shareName)
       {
@@ -276,27 +275,18 @@ namespace Alphaleonis.Win32.Network
          serverName = Utils.IsNullOrWhiteSpace(serverName) ? null : serverName;
          shareName = Utils.IsNullOrWhiteSpace(shareName) ? null : shareName;
 
-         // MSDN: This buffer is allocated by the system (the API).
-         var buffer = IntPtr.Zero;
+         SafeGlobalMemoryBufferHandle safeBuffer;
 
-         try
-         {
-            // Level 4 = DFS_INFO_4
+         // Level 4 = DFS_INFO_4
 
-            uint lastError = getFromClient
-               ? NativeMethods.NetDfsGetClientInfo(dfsName, serverName, shareName, 4, out buffer)
-               : NativeMethods.NetDfsGetInfo(dfsName, null, null, 4, out buffer);
+         uint lastError = getFromClient
+            ? NativeMethods.NetDfsGetClientInfo(dfsName, serverName, shareName, 4, out safeBuffer)
+            : NativeMethods.NetDfsGetInfo(dfsName, null, null, 4, out safeBuffer);
 
-            if (lastError == Win32Errors.NERR_Success)
-               return new DfsInfo(Utils.PtrToStructure<NativeMethods.DFS_INFO_4>(buffer));
+         if (lastError == Win32Errors.NERR_Success)
+            return new DfsInfo(safeBuffer.PtrToStructure<NativeMethods.DFS_INFO_4>(0));
 
-            throw new NetworkInformationException((int) lastError);
-         }
-         finally
-         {
-            if (buffer != IntPtr.Zero)
-               NativeMethods.NetApiBufferFree(buffer);
-         }
+         throw new NetworkInformationException((int) lastError);
       }
 
       #endregion // Internal Methods
