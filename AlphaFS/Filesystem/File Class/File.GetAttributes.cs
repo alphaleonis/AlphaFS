@@ -101,9 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
             NativeError.ThrowException(dataInitialised, pathLp);
 
-         return (typeof(T) == typeof(FileAttributes)
-            ? (T)(object)data.FileAttributes
-            : (T)(object)data);
+         return (T) (typeof (T) == typeof (FileAttributes) ? (object) data.dwFileAttributes : data);
       }
 
       /// <summary>
@@ -161,7 +159,7 @@ namespace Alphaleonis.Win32.Filesystem
                         {
                            // Return default value for backward compatibility
                            dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
-                           win32AttrData.FileAttributes = (FileAttributes)(-1);
+                           win32AttrData.dwFileAttributes = (FileAttributes)(-1);
                         }
                      }
 
@@ -218,7 +216,7 @@ namespace Alphaleonis.Win32.Filesystem
                   {
                      // Return default value for backward compbatibility.
                      dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
-                     win32AttrData.FileAttributes = (FileAttributes)(-1);
+                     win32AttrData.dwFileAttributes = (FileAttributes)(-1);
                   }
                }
             }
@@ -226,7 +224,6 @@ namespace Alphaleonis.Win32.Filesystem
 
          return dataInitialised;
       }
-
 
       #endregion // GetAttributesExInternal
    }

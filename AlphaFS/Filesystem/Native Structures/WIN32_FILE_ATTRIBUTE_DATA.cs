@@ -38,78 +38,49 @@ namespace Alphaleonis.Win32.Filesystem
       {
          public WIN32_FILE_ATTRIBUTE_DATA(WIN32_FIND_DATA findData)
          {
-            FileAttributes = findData.FileAttributes;
-            CreationTime = findData.CreationTime;
-            LastAccessTime = findData.LastAccessTime;
-            LastWriteTime = findData.LastWriteTime;
-            FileSizeHigh = findData.FileSizeHigh;
-            FileSizeLow = findData.FileSizeLow;
+            dwFileAttributes = findData.dwFileAttributes;
+            ftCreationTime = findData.ftCreationTime;
+            ftLastAccessTime = findData.ftLastAccessTime;
+            ftLastWriteTime = findData.ftLastWriteTime;
+            nFileSizeHigh = findData.nFileSizeHigh;
+            nFileSizeLow = findData.nFileSizeLow;
          }
-         
-         #region FileAttributes
 
          /// <summary>The file attributes of a file.</summary>
-         [MarshalAs(UnmanagedType.I4)]
-         public FileAttributes FileAttributes;
-
-         #endregion // FileAttributes
-
-         #region CreationTime
+         [MarshalAs(UnmanagedType.I4)] public FileAttributes dwFileAttributes;
 
          /// <summary>A <see cref="FILETIME"/> structure that specifies when a file or directory was created.
          /// If the underlying file system does not support creation time, this member is zero.</summary>
-         public readonly FILETIME CreationTime;
-
-         #endregion // CreationTime
-
-         #region LastAccessTime
+         public readonly FILETIME ftCreationTime;
 
          /// <summary>A <see cref="FILETIME"/> structure.
          /// For a file, the structure specifies when the file was last read from, written to, or for executable files, run.
          /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last access time, this member is zero.
          /// On the FAT file system, the specified date for both files and directories is correct, but the time of day is always set to midnight.
          /// </summary>
-         public readonly FILETIME LastAccessTime;
-
-         #endregion // LastAccessTime
-
-         #region LastWriteTime
+         public readonly FILETIME ftLastAccessTime;
 
          /// <summary>A <see cref="FILETIME"/> structure.
          /// For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used.
          /// The date and time are not updated when file attributes or security descriptors are changed.
          /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last write time, this member is zero.
          /// </summary>
-         public readonly FILETIME LastWriteTime;
-
-         #endregion // LastWriteTime
-
-         #region FileSizeHigh
+         public readonly FILETIME ftLastWriteTime;
 
          /// <summary>The high-order DWORD of the file size. This member does not have a meaning for directories.
          /// This value is zero unless the file size is greater than MAXDWORD.
          /// The size of the file is equal to (nFileSizeHigh * (MAXDWORD+1)) + nFileSizeLow.
          /// </summary>
-         public readonly uint FileSizeHigh;
-
-         #endregion // FileSizeHigh
-
-         #region FileSizeLow
+         public readonly uint nFileSizeHigh;
 
          /// <summary>The low-order DWORD of the file size. This member does not have a meaning for directories.</summary>
-         public readonly uint FileSizeLow;
-
-         #endregion // FileSizeLow
-
-         #region FileSize
+         public readonly uint nFileSizeLow;
 
          /// <summary>The file size.</summary>
          public long FileSize
          {
-            get { return ToLong(FileSizeHigh, FileSizeLow); }
+            get { return ToLong(nFileSizeHigh, nFileSizeLow); }
          }
-
-         #endregion // FileSize
       }
    }
 }

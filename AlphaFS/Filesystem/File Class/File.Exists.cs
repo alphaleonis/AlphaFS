@@ -211,9 +211,11 @@ namespace Alphaleonis.Win32.Filesystem
             var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
             int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
-            return (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1) && (isFolder
-               ? (data.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory
-               : (data.FileAttributes & FileAttributes.Directory) != FileAttributes.Directory));
+            return (dataInitialised == Win32Errors.ERROR_SUCCESS &&
+                    data.dwFileAttributes != (FileAttributes) (-1) &&
+                    (isFolder
+                       ? (data.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory
+                       : (data.dwFileAttributes & FileAttributes.Directory) != FileAttributes.Directory));
          }
          catch
          {

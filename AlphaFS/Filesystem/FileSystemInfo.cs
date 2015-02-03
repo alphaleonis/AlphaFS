@@ -263,7 +263,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
-            return Win32AttributeData.FileAttributes;
+            return Win32AttributeData.dwFileAttributes;
          }
 
          [SecurityCritical]
@@ -336,7 +336,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
-            return DateTime.FromFileTimeUtc(Win32AttributeData.CreationTime);
+            return DateTime.FromFileTimeUtc(Win32AttributeData.ftCreationTime);
          }
 
          [SecurityCritical]
@@ -449,7 +449,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
-            return DateTime.FromFileTimeUtc(Win32AttributeData.LastAccessTime);
+            return DateTime.FromFileTimeUtc(Win32AttributeData.ftLastAccessTime);
          }
 
          [SecurityCritical]
@@ -511,7 +511,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
-            return DateTime.FromFileTimeUtc(Win32AttributeData.LastWriteTime);
+            return DateTime.FromFileTimeUtc(Win32AttributeData.ftLastWriteTime);
          }
 
          [SecurityCritical]

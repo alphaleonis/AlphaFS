@@ -175,15 +175,15 @@ namespace Alphaleonis.Win32.Filesystem
                   var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                   int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
-                  if (data.FileAttributes != (FileAttributes)(-1))
+                  if (data.dwFileAttributes != (FileAttributes)(-1))
                   {
-                     if ((data.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
+                     if ((data.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: Path is a directory.
                         throw new UnauthorizedAccessException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}",
                            Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, pathLp)));
 
 
-                     if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                     if ((data.dwFileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                      {
                         if (ignoreReadOnly)
                         {

@@ -1220,9 +1220,9 @@ namespace Alphaleonis.Win32.Filesystem
                            var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                            FillAttributeInfoInternal(transaction, destFileNameLp, ref data, false, true);
 
-                           if (data.FileAttributes != (FileAttributes) (-1))
+                           if (data.dwFileAttributes != (FileAttributes) (-1))
                            {
-                              if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                              if ((data.dwFileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                               {
                                  // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
 
@@ -1242,7 +1242,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                               // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                               // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                              if ((data.FileAttributes & FileAttributes.Hidden) == FileAttributes.Hidden)
+                              if ((data.dwFileAttributes & FileAttributes.Hidden) == FileAttributes.Hidden)
                                  NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.FileHidden, destFileNameLp));
                            }
 
@@ -1276,9 +1276,9 @@ namespace Alphaleonis.Win32.Filesystem
             var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
             int dataInitialised = FillAttributeInfoInternal(transaction, sourceFileNameLp, ref data, false, true);
 
-            if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes) (-1))
-               SetFsoDateTimeInternal(false, transaction, destFileNameLp, DateTime.FromFileTimeUtc(data.CreationTime),
-                  DateTime.FromFileTimeUtc(data.LastAccessTime), DateTime.FromFileTimeUtc(data.LastWriteTime), PathFormat.LongFullPath);
+            if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.dwFileAttributes != (FileAttributes) (-1))
+               SetFsoDateTimeInternal(false, transaction, destFileNameLp, DateTime.FromFileTimeUtc(data.ftCreationTime),
+                  DateTime.FromFileTimeUtc(data.ftLastAccessTime), DateTime.FromFileTimeUtc(data.ftLastWriteTime), PathFormat.LongFullPath);
          }
 
          #endregion // Transfer Timestamps

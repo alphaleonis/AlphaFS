@@ -621,7 +621,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             NativeMethods.WIN32_STREAM_ID streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>();
 
-            uint nameLength = (uint)Math.Min(streamID.StreamNameSize, hBuf.Capacity);
+            uint nameLength = (uint) Math.Min(streamID.dwStreamNameSize, hBuf.Capacity);
             if (!NativeMethods.BackupRead(_safeFileHandle, hBuf, nameLength, out numberOfBytesRead, false, mProcessSecurity, ref m_context))
                NativeError.ThrowException();
 

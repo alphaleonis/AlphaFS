@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (DataInitialised == -1)
                   Refresh();
 
-               return DataInitialised == 0 && (Win32AttributeData.FileAttributes & FileAttributes.Directory) == 0;
+               return DataInitialised == 0 && (Win32AttributeData.dwFileAttributes & FileAttributes.Directory) == 0;
             }
             catch
             {
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
-            FileAttributes attrs = Win32AttributeData.FileAttributes;
+            FileAttributes attrs = Win32AttributeData.dwFileAttributes;
 
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
             if (attrs == (FileAttributes) (-1))

@@ -77,14 +77,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method TransferTimestampsInternal() to transfer the date and time stamps for the specified files and directories.
-      /// </summary>
+      /// <summary>Unified method TransferTimestampsInternal() to transfer the date and time stamps for the specified files and directories.</summary>
       /// <remarks>This method does not change last access time for the source file.</remarks>
       /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
-      /// <param name="isFolder">
-      ///   Specifies that <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are a file or directory.
-      /// </param>
+      /// <param name="isFolder">Specifies that <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source path.</param>
       /// <param name="destinationPath">The destination path.</param>
@@ -94,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          NativeMethods.WIN32_FILE_ATTRIBUTE_DATA attrs = GetAttributesExInternal<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, sourcePath, pathFormat);
 
-         SetFsoDateTimeInternal(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.CreationTime), DateTime.FromFileTimeUtc(attrs.LastAccessTime), DateTime.FromFileTimeUtc(attrs.LastWriteTime), pathFormat);
+         SetFsoDateTimeInternal(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.ftCreationTime), DateTime.FromFileTimeUtc(attrs.ftLastAccessTime), DateTime.FromFileTimeUtc(attrs.ftLastWriteTime), pathFormat);
       }
 
       #endregion // TransferTimestampsInternal

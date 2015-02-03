@@ -33,8 +33,8 @@ namespace Alphaleonis.Win32.Filesystem
       {         
          #region Fields
 
-         private readonly uint LowDateTime;
-         private readonly uint HighDateTime;
+         private readonly uint dwLowDateTime;
+         private readonly uint dwHighDateTime;
 
          #endregion // Fields
 
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
          [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "long")]
          public long ToLong()
          {
-            return NativeMethods.ToLong(HighDateTime, LowDateTime);
+            return NativeMethods.ToLong(dwHighDateTime, dwLowDateTime);
          }
 
          #endregion
@@ -69,8 +69,8 @@ namespace Alphaleonis.Win32.Filesystem
 
             FILETIME other = obj is FILETIME ? (FILETIME)obj : new FILETIME();
 
-            return (other.HighDateTime.Equals(HighDateTime) &&
-                    other.LowDateTime.Equals(LowDateTime));
+            return (other.dwHighDateTime.Equals(dwHighDateTime) &&
+                    other.dwLowDateTime.Equals(dwLowDateTime));
          }
 
          #endregion // Equals
@@ -84,8 +84,8 @@ namespace Alphaleonis.Win32.Filesystem
             unchecked
             {
                int hash = 17;
-               hash = hash * 23 + HighDateTime.GetHashCode();
-               hash = hash * 11 + LowDateTime.GetHashCode();
+               hash = hash * 23 + dwHighDateTime.GetHashCode();
+               hash = hash * 11 + dwLowDateTime.GetHashCode();
                return hash;
             }
          }

@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>the 8.3 version of the filename.</value>
       public string AlternateFileName
       {
-         get { return _win32FindData.AlternateFileName; }
+         get { return _win32FindData.cAlternateFileName; }
       }
 
       #endregion // AlternateFileName
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The attributes.</value>
       public FileAttributes Attributes
       {
-         get { return _win32FindData.FileAttributes; }
+         get { return _win32FindData.dwFileAttributes; }
       }
 
       #endregion // Attributes
@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
       public DateTime CreationTimeUtc
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.CreationTime); }
+         get { return DateTime.FromFileTimeUtc(_win32FindData.ftCreationTime); }
       }
 
       #endregion // CreationTimeUtc
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The name of the file.</value>
       public string FileName
       {
-         get { return _win32FindData.FileName; }
+         get { return _win32FindData.cFileName; }
       }
 
       #endregion // FileName
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The size of the file.</value>
       public long FileSize
       {
-         get { return NativeMethods.ToLong(_win32FindData.FileSizeHigh, _win32FindData.FileSizeLow); }
+         get { return NativeMethods.ToLong(_win32FindData.nFileSizeHigh, _win32FindData.nFileSizeLow); }
       }
 
       #endregion // FileSize
@@ -190,7 +190,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
       public DateTime LastAccessTimeUtc
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.LastAccessTime); }
+         get { return DateTime.FromFileTimeUtc(_win32FindData.ftLastAccessTime); }
       }
 
       #endregion // LastAccessTimeUtc
@@ -212,7 +212,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
       public DateTime LastWriteTimeUtc
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.LastWriteTime); }
+         get { return DateTime.FromFileTimeUtc(_win32FindData.ftLastWriteTime); }
       }
 
       #endregion // LastWriteTimeUtc
@@ -236,7 +236,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The reparse point tag of this entry.</value>
       public ReparsePointTag ReparsePointTag
       {
-         get { return IsReparsePoint ? _win32FindData.Reserved0 : ReparsePointTag.None; }
+         get { return IsReparsePoint ? _win32FindData.dwReserved0 : ReparsePointTag.None; }
       }
 
       #endregion // ReparsePointTag

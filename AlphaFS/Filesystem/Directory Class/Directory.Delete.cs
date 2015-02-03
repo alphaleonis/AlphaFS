@@ -350,9 +350,9 @@ namespace Alphaleonis.Win32.Filesystem
                   NativeMethods.WIN32_FILE_ATTRIBUTE_DATA data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                   int dataInitialised = File.FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
-                  if (data.FileAttributes != (FileAttributes)(-1))
+                  if (data.dwFileAttributes != (FileAttributes)(-1))
                   {
-                     if ((data.FileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                     if ((data.dwFileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                      {
                         // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
 

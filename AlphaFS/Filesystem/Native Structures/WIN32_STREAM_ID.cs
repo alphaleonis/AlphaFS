@@ -33,19 +33,19 @@ namespace Alphaleonis.Win32.Filesystem
       {
          /// <summary>Type of stream data.</summary>
          [MarshalAs(UnmanagedType.U4)]
-         public readonly BackupStreamType StreamType;
+         public readonly BackupStreamType dwStreamId;
 
          /// <summary>Attributes of data to facilitate cross-operating system transfer.</summary>
          [MarshalAs(UnmanagedType.U4)]
-         public readonly StreamAttributes StreamAttributes;
+         public readonly StreamAttributes dwStreamAttributes;
 
          /// <summary>Size of data, in bytes.</summary>
          [MarshalAs(UnmanagedType.U8)]
-         public readonly ulong StreamSize;
+         public readonly ulong Size;
 
          /// <summary>Length of the name of the alternative data stream, in bytes.</summary>
          [MarshalAs(UnmanagedType.U4)]
-         public readonly uint StreamNameSize;         
+         public readonly uint dwStreamNameSize;         
       }
    }
 }
