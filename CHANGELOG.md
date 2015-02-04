@@ -33,6 +33,7 @@ Version 2.1
 
 - Issue #113: Change names of time related properties on `FileSystemEntryInfo` to conform with `FileInfo/DirectoryInfo`.
 - Issue #128: Remove `Path.IsLocalPath()` in favour of `Path.IsUncPath()`
+- Issue #140: Replace internal `DFS_INFO_4` structure with `DFS_INFO_9`.
 
 Version 2.0.1
 -------------

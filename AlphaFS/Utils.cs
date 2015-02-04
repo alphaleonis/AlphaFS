@@ -93,21 +93,6 @@ namespace Alphaleonis
 
       #endregion // IsNullOrWhiteSpace
 
-      #region PtrToXxx
-
-      public static T PtrToStructure<T>(IntPtr buffer) where T : struct
-      {
-         return PtrToStructure<T>(0, buffer);
-      }
-
-      public static T PtrToStructure<T>(int offset, IntPtr buffer) where T : struct
-      {
-         var structure = new T();
-         return (T) Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
-      }
-
-      #endregion // PtrToXxx
-
       #region UnitSizeToText
 
       /// <summary>Converts a number of type T to string with UnitSize or Percentage suffixed.</summary>

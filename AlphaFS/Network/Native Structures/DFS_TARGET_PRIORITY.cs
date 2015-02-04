@@ -25,23 +25,20 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Contains information about a DFS root or link target in a DFS namespace or from the cache maintained by the DFS client.</summary>
-      /// <remarks>The <see cref="DfsInfo"/> structure contains one or more <see cref="DFS_STORAGE_INFO"/> structures, one for each DFS target.
-      /// Only one target can be marked as the active target. It is possible that no targets will be marked active.
-      /// </remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <summary>Contains the priority class and rank of a specific DFS target.</summary>
+      /// <remarks>Minimum supported client: Windows Vista</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2008, Windows Server 2003 with SP1</remarks>
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DFS_STORAGE_INFO
+      internal struct DFS_TARGET_PRIORITY
       {
-         /// <summary>State of the target.</summary>
-         [MarshalAs(UnmanagedType.U4)] public readonly DfsStorageStates State;
+         /// <summary>DFS_TARGET_PRIORITY_CLASS enumeration value that specifies the priority class of the target.</summary>
+         [MarshalAs(UnmanagedType.I4)] public readonly DfsTargetPriorityClass TargetPriorityClass;
 
-         /// <summary>The DFS root target or link target server name.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string ServerName;
+         /// <summary>Specifies the priority rank value of the target. The default value is 0, which indicates the highest priority rank within a priority class.</summary>
+         public readonly ushort TargetPriorityRank;
 
-         /// <summary>The DFS root target or link target share name.</summary>
-         [MarshalAs(UnmanagedType.LPWStr)] public readonly string ShareName;
+         /// <summary>This member is reserved and must be zero.</summary>
+         public readonly ushort Reserved;
       }
    }
 }

@@ -1124,23 +1124,15 @@ namespace AlphaFS.UnitTest
 
                   DfsInfo dfsInfo = Host.GetDfsInfo(dfsNamespace);
                   
-                  Console.Write("\nDirectory contents:\tSubdirectories: [{0}]\tFiles: [{1}]\n",
-                     dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Folders),
-                     dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Files));
-
                   UnitTestConstants.Dump(dfsInfo, -21);
+
 
                   Console.Write("\n\tNumber of Storages: [{0}]\n", dfsInfo.StorageInfoCollection.Count());
 
                   foreach (DfsStorageInfo store in dfsInfo.StorageInfoCollection)
-                  {
-                     UnitTestConstants.Dump(store, -10);
+                     UnitTestConstants.Dump(store, -19);
 
-                     // DFS shares (non SMB) cannot be retrieved.
-                     ShareInfo share = Host.GetShareInfo(ShareInfoLevel.Info1005, store.ServerName, store.ShareName, true);
-                     UnitTestConstants.Dump(share, -18);
-                     Console.Write("\n");
-                  }
+                  Console.WriteLine();
                }
                catch (NetworkInformationException ex)
                {

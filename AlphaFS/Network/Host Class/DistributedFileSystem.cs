@@ -53,14 +53,14 @@ namespace Alphaleonis.Win32.Network
 
          var fd = new FunctionData();
 
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DFS_INFO_4 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DFS_INFO_9 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new DfsInfo(structure),
 
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle1) =>
             {
                totalEntries = 0;
-               return NativeMethods.NetDfsEnum(dfsName, 4, prefMaxLen, out buffer, out entriesRead, out resumeHandle1);
+               return NativeMethods.NetDfsEnum(dfsName, 9, prefMaxLen, out buffer, out entriesRead, out resumeHandle1);
 
             }, false);
       }
@@ -277,14 +277,14 @@ namespace Alphaleonis.Win32.Network
 
          SafeGlobalMemoryBufferHandle safeBuffer;
 
-         // Level 4 = DFS_INFO_4
+         // Level 9 = DFS_INFO_9
 
          uint lastError = getFromClient
-            ? NativeMethods.NetDfsGetClientInfo(dfsName, serverName, shareName, 4, out safeBuffer)
-            : NativeMethods.NetDfsGetInfo(dfsName, null, null, 4, out safeBuffer);
+            ? NativeMethods.NetDfsGetClientInfo(dfsName, serverName, shareName, 9, out safeBuffer)
+            : NativeMethods.NetDfsGetInfo(dfsName, null, null, 9, out safeBuffer);
 
          if (lastError == Win32Errors.NERR_Success)
-            return new DfsInfo(safeBuffer.PtrToStructure<NativeMethods.DFS_INFO_4>(0));
+            return new DfsInfo(safeBuffer.PtrToStructure<NativeMethods.DFS_INFO_9>(0));
 
          throw new NetworkInformationException((int) lastError);
       }

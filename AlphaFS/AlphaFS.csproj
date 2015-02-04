@@ -386,6 +386,8 @@
     <Compile Include="Filesystem\Native Structures\WIN32_STREAM_ID.cs" />
     <Compile Include="Network\DfsInfo.cs" />
     <Compile Include="Network\DfsStorageInfo.cs" />
+    <Compile Include="Network\Enumerations\DfsPropertyFlags.cs" />
+    <Compile Include="Network\Enumerations\DfsTargetPriorityClass.cs" />
     <Compile Include="Network\Enumerations\ShareInfoLevel.cs" />
     <Compile Include="Network\Enumerations\ResourceUsage.cs" />
     <Compile Include="Network\Enumerations\ResourceType.cs" />
@@ -410,6 +412,9 @@
     <Compile Include="Network\Native Methods\NativeMethods.NetworkManagement.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.DistributedFileSystem.cs" />
     <Compile Include="Network\Native Methods\NativeMethods.cs" />
+    <Compile Include="Network\Native Structures\DFS_INFO_9.cs" />
+    <Compile Include="Network\Native Structures\DFS_TARGET_PRIORITY.cs" />
+    <Compile Include="Network\Native Structures\DFS_STORAGE_INFO_1.cs" />
     <Compile Include="Network\OpenConnectionInfo.cs" />
     <Compile Include="Network\OpenResourceInfo.cs" />
     <Compile Include="Network\ShareInfo.cs" />
@@ -417,8 +422,6 @@
     <Compile Include="Network\Native Structures\FILE_INFO_3.cs" />
     <Compile Include="Network\Native Structures\DFS_INFO_200.cs" />
     <Compile Include="Network\Native Structures\DFS_INFO_300.cs" />
-    <Compile Include="Network\Native Structures\DFS_INFO_4.cs" />
-    <Compile Include="Network\Native Structures\DFS_STORAGE_INFO.cs" />
     <Compile Include="Network\Native Structures\REMOTE_NAME_INFO.cs" />
     <Compile Include="Network\Native Structures\CONNECTION_INFO_1.cs" />
     <Compile Include="Network\Native Structures\SHARE_INFO_1005.cs" />

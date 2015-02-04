@@ -27,16 +27,12 @@ namespace Alphaleonis.Win32.Network
 {
    internal static partial class NativeMethods
    {
-      /// <summary>Contains information about a Distributed File System (DFS) root or link.
-      /// <para>This structure contains the name, status, GUID, time-out, number of targets, and information about each target of the root or link.</para>
-      /// </summary>
-      /// <remarks>A DFS_INFO_4 structure contains one or more <see cref="DFS_STORAGE_INFO"/> structures, one for each DFS target.</remarks>
-      /// <remarks>This structure is only for use with the NetDfsEnum, NetDfsGetClientInfo, and NetDfsGetInfo functions.</remarks>
-      /// <remarks>Minimum supported client: Windows XP [desktop apps only]</remarks>
-      /// <remarks>Minimum supported server: Windows Server 2003 [desktop apps only]</remarks>
+      /// <summary>Contains the name, status, GUID, time-out, property flags, metadata size, DFS target information, link reparse point security descriptor, and a list of DFS targets for a root or link.</summary>
+      /// <remarks>Minimum supported client: Windows Vista with SP1</remarks>
+      /// <remarks>Minimum supported server: Windows Server 2008</remarks>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-      internal struct DFS_INFO_4
+      internal struct DFS_INFO_9
       {
          /// <summary>The Universal Naming Convention (UNC) path of a DFS root or link.</summary>
          [MarshalAs(UnmanagedType.LPWStr)] public readonly string EntryPath;
@@ -53,10 +49,28 @@ namespace Alphaleonis.Win32.Network
          /// <summary>Specifies the GUID of the DFS root or link.</summary>
          public readonly Guid Guid;
 
+         /// <summary>Specifies a set of flags that describe specific properties of a DFS namespace, root, or link.</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly DfsPropertyFlags PropertyFlags;
+
+         /// <summary>For domain-based DFS namespaces, this member specifies the size of the corresponding Active Directory data blob, in bytes.
+         /// For stand-alone DFS namespaces, this field specifies the size of the metadata stored in the registry,
+         /// including the key names and value names, in addition to the specific data items associated with them.
+         /// This field is valid for DFS roots only.
+         /// </summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly uint MetadataSize;
+
+         /// <summary>This member is reserved for system use.</summary>
+         [MarshalAs(UnmanagedType.U4)] public readonly uint SdLengthReserved;
+
+         /// <summary>Pointer to a SECURITY_DESCRIPTOR structure that specifies a self-relative security descriptor to be associated with the DFS link's reparse point.
+         /// This field is valid for DFS links only.
+         /// </summary>
+         public IntPtr pSecurityDescriptor;
+         
          /// <summary>Specifies the number of DFS targets.</summary>
          [MarshalAs(UnmanagedType.U4)] public readonly uint NumberOfStorages;
 
-         /// <summary>An array of <see cref="DFS_STORAGE_INFO"/> structures.</summary>
+         /// <summary>An array of <see cref="DFS_STORAGE_INFO_1"/> structures.</summary>
          public readonly IntPtr Storage;
       }
    }

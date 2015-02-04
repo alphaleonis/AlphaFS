@@ -58,7 +58,7 @@ namespace AlphaFS.UnitTest
                caughtException = true;
                Console.Write("Caught (expected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\n\t{0}\n", UnitTestConstants.Reporter(true));
+            Console.WriteLine("\n{0}\n", UnitTestConstants.Reporter(true));
             Assert.IsTrue(caughtException, "No Exception was caught.");
 
             Console.Write("\n");
@@ -74,7 +74,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\t#{0:000}\tDrive: [{1}]", ++cnt, drive);
          }
 
-         Console.WriteLine("\n\t{0}", UnitTestConstants.Reporter(true));
+         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
          if (cnt == 0)
             Assert.Inconclusive("Nothing was enumerated.");
@@ -102,7 +102,7 @@ namespace AlphaFS.UnitTest
          {
             UnitTestConstants.StopWatcher(true);
             Host.ConnectDrive(drive, share);
-            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]\n\n\t{2}\n", drive, share, UnitTestConstants.Reporter(true));
+            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]\n\n{2}\n", drive, share, UnitTestConstants.Reporter(true));
 
             connectOk = true;
 
@@ -131,7 +131,7 @@ namespace AlphaFS.UnitTest
             {
                UnitTestConstants.StopWatcher(true);
                Host.DisconnectDrive(drive);
-               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n\t{2}\n", drive, share, UnitTestConstants.Reporter(true));
+               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n{2}\n", drive, share, UnitTestConstants.Reporter(true));
 
                disconnectOk = true;
 
@@ -158,7 +158,7 @@ namespace AlphaFS.UnitTest
          {
             UnitTestConstants.StopWatcher(true);
             drive = Host.ConnectDrive(null, share);
-            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]\n\n\t{2}\n", drive, share, UnitTestConstants.Reporter(true));
+            Console.WriteLine("\nConnectDrive(): [{0}] to: [{1}]\n\n{2}\n", drive, share, UnitTestConstants.Reporter(true));
 
             connectOk = true;
 
@@ -187,7 +187,7 @@ namespace AlphaFS.UnitTest
             {
                UnitTestConstants.StopWatcher(true);
                Host.DisconnectDrive(drive);
-               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n\t{2}\n", drive, share, UnitTestConstants.Reporter(true));
+               Console.WriteLine("\nDisconnectDrive(): [{0}] from: [{1}]\n\n{2}\n", drive, share, UnitTestConstants.Reporter(true));
 
                disconnectOk = true;
 
@@ -224,7 +224,7 @@ namespace AlphaFS.UnitTest
          {
             UnitTestConstants.StopWatcher(true);
             Host.ConnectTo(share);
-            Console.WriteLine("\nConnectTo(): [{0}]\n\n\t{1}\n", share, UnitTestConstants.Reporter(true));
+            Console.WriteLine("\nConnectTo(): [{0}]\n\n{1}\n", share, UnitTestConstants.Reporter(true));
 
             connectOk = true;
 
@@ -253,7 +253,7 @@ namespace AlphaFS.UnitTest
             {
                UnitTestConstants.StopWatcher(true);
                Host.DisconnectFrom(share);
-               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n\t{1}\n", share, UnitTestConstants.Reporter(true));
+               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n{1}\n", share, UnitTestConstants.Reporter(true));
 
                disconnectOk = true;
 
@@ -280,7 +280,7 @@ namespace AlphaFS.UnitTest
          {
             UnitTestConstants.StopWatcher(true);
             Host.ConnectTo(share);
-            Console.WriteLine("\nConnectTo(): [{0}]\n\n\t{1}\n", share, UnitTestConstants.Reporter(true));
+            Console.WriteLine("\nConnectTo(): [{0}]\n\n{1}\n", share, UnitTestConstants.Reporter(true));
 
             connectOk = true;
 
@@ -309,7 +309,7 @@ namespace AlphaFS.UnitTest
             {
                UnitTestConstants.StopWatcher(true);
                Host.DisconnectFrom(share);
-               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n\t{1}\n", share, UnitTestConstants.Reporter(true));
+               Console.WriteLine("\nDisconnectFrom(): [{0}]\n\n{1}\n", share, UnitTestConstants.Reporter(true));
 
                disconnectOk = true;
 
@@ -399,7 +399,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tCaught (unexpected #2) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         Console.WriteLine("\n\n\t{0}", UnitTestConstants.Reporter(true));
+         Console.WriteLine("\n\n{0}", UnitTestConstants.Reporter(true));
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
@@ -455,7 +455,7 @@ namespace AlphaFS.UnitTest
                }
             }
 
-            Console.Write("\n\t{0}", UnitTestConstants.Reporter(true));
+            Console.Write("\n{0}", UnitTestConstants.Reporter(true));
 
             if (cnt == 0)
                Assert.Inconclusive("Nothing was enumerated.");
@@ -469,7 +469,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tCaught (unexpected #2) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         Console.WriteLine("\n\n\t{0}", UnitTestConstants.Reporter(true));
+         Console.WriteLine("\n\n{0}", UnitTestConstants.Reporter(true));
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
@@ -509,7 +509,7 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
 
-         Console.WriteLine("\n\n\t{0}", UnitTestConstants.Reporter(true));
+         Console.WriteLine("\n\n{0}", UnitTestConstants.Reporter(true));
 
          if (noDomainConnection)
             Assert.Inconclusive("Test ignored because the computer is probably not connected to a domain.");
@@ -672,7 +672,7 @@ namespace AlphaFS.UnitTest
             UnitTestConstants.StopWatcher(true);
             using (var connection = new DriveConnection(share))
             {
-               Console.WriteLine("\nUsing DriveConnection(): [{0}] to: [{1}]\n\n\t{2}\n", connection.LocalName, share, UnitTestConstants.Reporter(true));
+               Console.WriteLine("\nUsing DriveConnection(): [{0}] to: [{1}]\n\n{2}\n", connection.LocalName, share, UnitTestConstants.Reporter(true));
                connectOk = true;
             }
          }
