@@ -155,7 +155,7 @@ namespace Alphaleonis.Win32.Filesystem
             Path.GetExtendedLengthPathInternal(Transaction, templatePath, PathFormat.RelativePath, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          if (string.Compare(LongFullName, 0, pathLp, 0, LongFullName.Length, StringComparison.OrdinalIgnoreCase) != 0)
-            throw new ArgumentException("Invalid SubPath", pathLp);
+            throw new ArgumentException(Resources.Invalid_Subpath, pathLp);
 
          return Directory.CreateDirectoryInternal(Transaction, pathLp, templatePathLp, directorySecurity, compress, PathFormat.LongFullPath);
       }

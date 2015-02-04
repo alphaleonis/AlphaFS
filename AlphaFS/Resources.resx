@@ -238,4 +238,7 @@
   <data name="Device_Not_Ready" xml:space="preserve">
     <value>The device is not ready.</value>
   </data>
+  <data name="Invalid_Subpath" xml:space="preserve">
+    <value>Invalid Subpath</value>
+  </data>
 </root>

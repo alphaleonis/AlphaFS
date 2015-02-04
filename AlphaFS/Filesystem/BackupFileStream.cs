@@ -195,7 +195,7 @@ namespace Alphaleonis.Win32.Filesystem
       public BackupFileStream(SafeFileHandle handle, FileSystemRights access)
       {
          if (handle == null)
-            throw new ArgumentNullException("handle", "handle is null.");
+            throw new ArgumentNullException("handle", Resources.Handle_Is_Invalid);
 
          if (handle.IsInvalid)
             throw new ArgumentException(Resources.Handle_Is_Invalid);

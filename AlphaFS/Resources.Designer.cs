@@ -188,6 +188,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Subpath.
+        /// </summary>
+        internal static string Invalid_Subpath {
+            get {
+                return ResourceManager.GetString("Invalid_Subpath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid transaction request..
         /// </summary>
         internal static string Invalid_Transaction_Request {
