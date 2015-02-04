@@ -185,7 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
                   NativeError.ThrowException(lastError, pathLp);
 
                if (!NativeMethods.IsValidHandle(pSecurityDescriptor, false))
-                  throw new IOException(Resources.InvalidSecurityDescriptorReturnedFromSystem);
+                  throw new IOException(Resources.Returned_Invalid_Security_Descriptor);
 
 
                uint length = Security.NativeMethods.GetSecurityDescriptorLength(pSecurityDescriptor);

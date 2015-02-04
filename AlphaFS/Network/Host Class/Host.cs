@@ -185,7 +185,7 @@ namespace Alphaleonis.Win32.Network
                switch (lastError)
                {
                   case Win32Errors.NO_ERROR:
-                     return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>();
+                     return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>(0);
 
                   case Win32Errors.ERROR_MORE_DATA:
                      //bufferSize = Received the required buffer size, retry.

@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion
 
-      #region Construction
+      #region Constructor
 
       internal AlternateDataStreamInfo(string filePath, NativeMethods.WIN32_FIND_STREAM_DATA findData)
       {
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
          m_filePath = filePath;
       }
 
-      #endregion
+      #endregion // Constructor
 
       #region Public Properties
 
@@ -55,19 +55,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The name of the stream.</value>
       public string StreamName
       {
-         get
-         {
-            return m_name;
-         }
+         get { return m_name; }
       }
 
       /// <summary>Gets the size of the stream.</summary>      
       public long Size
       {
-         get
-         {
-            return m_size;
-         }
+         get { return m_size; }
       }
 
       /// <summary>Gets the full path to the stream.</summary>
@@ -79,13 +73,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The full path to the stream in long path format.</value>
       public string FullPath
       {
-         get
-         {
-            return m_filePath + ":" + StreamName + ":$DATA";
-         }
+         get { return m_filePath + ":" + StreamName + ":$DATA"; }
       }
 
-      #endregion
+      #endregion // Public Properties
 
       #region Public Methods
 
@@ -105,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (obj is AlternateDataStreamInfo)
          {
-            AlternateDataStreamInfo other = (AlternateDataStreamInfo)obj;
+            AlternateDataStreamInfo other = (AlternateDataStreamInfo) obj;
             return StreamName.Equals(other.StreamName) && Size.Equals(other.Size);
          }
 
@@ -130,19 +121,19 @@ namespace Alphaleonis.Win32.Filesystem
          return !first.Equals(second);
       }
 
-      #endregion
+      #endregion // Public Methods
 
       #region Private Methods
 
       private static string ParseStreamName(string input)
       {
          if (input == null || input.Length < 2)
-            return String.Empty;
+            return string.Empty;
 
          if (input[0] != Path.StreamSeparatorChar)
-            throw new ArgumentException(Resources.InvalidStreamName);
+            throw new ArgumentException(Resources.Invalid_Stream_Name);
 
-         StringBuilder sb = new StringBuilder();
+         var sb = new StringBuilder();
          for (int i = 1; i < input.Length; i++)
          {
             if (input[i] == Path.StreamSeparatorChar)
@@ -154,6 +145,6 @@ namespace Alphaleonis.Win32.Filesystem
          return sb.ToString();
       }
 
-      #endregion
+      #endregion // Private Methods
    }
 }

@@ -804,7 +804,7 @@ namespace Alphaleonis.Win32.Filesystem
          bool doMove = !doCopy && moveOptions != null;
 
          if ((!doCopy && !doMove) || (doCopy && doMove))
-            throw new NotSupportedException(Resources.UndeterminedCopyMoveAction);
+            throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
 
          bool overwrite = doCopy
             ? (((CopyOptions)copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)

@@ -759,7 +759,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          int rootLength = Path.GetRootLength(path, false);
          if (length == 2 && Path.IsDVsc(path[1], false))
-            throw new ArgumentException(Resources.CannotCreateDirectory, path);
+            throw new ArgumentException(Resources.Cannot_Create_Directory, path);
 
 
          // Check if directories are missing.
@@ -822,7 +822,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                      case Win32Errors.ERROR_DIRECTORY:
                         // MSDN: .NET 3.5+: NotSupportedException: path contains a colon character (:) that is not part of a drive label ("C:\").
-                        throw new NotSupportedException(String.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, path));
+                        throw new NotSupportedException(String.Format(CultureInfo.CurrentCulture, Resources.Unsupported_Path_Format, path));
 
                      default:
                         NativeError.ThrowException(lastError, folderLp);

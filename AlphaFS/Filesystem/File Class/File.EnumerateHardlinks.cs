@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static IEnumerable<string> EnumerateHardlinksInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 

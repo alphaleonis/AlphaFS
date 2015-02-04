@@ -51,7 +51,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Construction and Destruction
 
-
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path and creation mode.</summary>
       /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
       /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
@@ -199,7 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("handle", "handle is null.");
 
          if (handle.IsInvalid)
-            throw new ArgumentException(Resources.HandleInvalid);
+            throw new ArgumentException(Resources.Handle_Is_Invalid);
 
          _safeFileHandle = handle;
          _canRead = (access & FileSystemRights.ReadData) != 0;
@@ -249,7 +248,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="System.NotSupportedException">This exception is always thrown if this property is accessed on a <see cref="BackupFileStream"/>.</exception>
       public override long Length
       {
-         get { throw new NotSupportedException(Resources.ThisStreamDoesNotSupportSeeking); }
+         get { throw new NotSupportedException(Resources.No_Stream_Seeking_Support); }
       }
 
       /// <summary>When overridden in a derived class, gets or sets the position within the current stream.</summary>
@@ -257,8 +256,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="System.NotSupportedException">This exception is always thrown if this property is accessed on a <see cref="BackupFileStream"/>.</exception>
       public override long Position
       {
-         get { throw new NotSupportedException(Resources.ThisStreamDoesNotSupportSeeking); }
-         set { throw new NotSupportedException(Resources.ThisStreamDoesNotSupportSeeking); }
+         get { throw new NotSupportedException(Resources.No_Stream_Seeking_Support); }
+         set { throw new NotSupportedException(Resources.No_Stream_Seeking_Support); }
       }
 
       /// <summary>Gets a <see cref="SafeFileHandle"/> object that represents the operating system file handle for the file that the current <see cref="BackupFileStream"/> object encapsulates.</summary>
@@ -366,10 +365,10 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException("The sum of offset and count is larger than the size of the buffer.");
 
          if (offset < 0)
-            throw new ArgumentOutOfRangeException("offset", offset, Resources.OffsetMustNotBeNegative);
+            throw new ArgumentOutOfRangeException("offset", offset, Resources.Negative_Offset);
 
          if (count < 0)
-            throw new ArgumentOutOfRangeException("count", count, Resources.CountMustNotBeNegative);
+            throw new ArgumentOutOfRangeException("count", count, Resources.Negative_Count);
 
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle(count))
          {
@@ -428,13 +427,13 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("buffer");
 
          if (offset < 0)
-            throw new ArgumentOutOfRangeException("offset", offset, Resources.OffsetMustNotBeNegative);
+            throw new ArgumentOutOfRangeException("offset", offset, Resources.Negative_Offset);
 
          if (count < 0)
-            throw new ArgumentOutOfRangeException("count", count, Resources.CountMustNotBeNegative);
+            throw new ArgumentOutOfRangeException("count", count, Resources.Negative_Count);
 
          if (offset + count > buffer.Length)
-            throw new ArgumentException(Resources.BufferIsNotLargeEnoughForTheRequestedOperation);
+            throw new ArgumentException(Resources.Buffer_Not_Large_Enough);
 
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle(count))
          {
@@ -472,7 +471,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="System.NotSupportedException">Always thrown by this class.</exception>
       public override void SetLength(long value)
       {
-         throw new NotSupportedException(Resources.ThisStreamDoesNotSupportSeeking);
+         throw new NotSupportedException(Resources.No_Stream_Seeking_Support);
       }
 
       /// <summary>Skips ahead the specified number of bytes from the current stream.</summary>
@@ -528,7 +527,7 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException((int)lastError);
 
             if (pSecurityDescriptor.IsInvalid)
-               throw new IOException(Resources.InvalidSecurityDescriptorReturnedFromSystem);
+               throw new IOException(Resources.Returned_Invalid_Security_Descriptor);
 
             uint length = SecurityNativeMethods.GetSecurityDescriptorLength(pSecurityDescriptor);
 
@@ -569,10 +568,10 @@ namespace Alphaleonis.Win32.Filesystem
       public virtual void Lock(long position, long length)
       {
          if (position < 0)
-            throw new ArgumentOutOfRangeException("position", position, Resources.BackupFileStream_Unlock_Backup_FileStream_Unlock_Position_must_not_be_negative_);
+            throw new ArgumentOutOfRangeException("position", position, Resources.Unlock_Position_Negative);
 
          if (length < 0)
-            throw new ArgumentOutOfRangeException("length", length, Resources.BackupFileStream_Unlock_Backup_FileStream_Lock_Length_must_not_be_negative_);
+            throw new ArgumentOutOfRangeException("length", length, Resources.Negative_Lock_Length);
 
          if (!NativeMethods.LockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
             NativeError.ThrowException(Marshal.GetLastWin32Error());
@@ -588,10 +587,10 @@ namespace Alphaleonis.Win32.Filesystem
       public virtual void Unlock(long position, long length)
       {
          if (position < 0)
-            throw new ArgumentOutOfRangeException("position", position, Resources.BackupFileStream_Unlock_Backup_FileStream_Unlock_Position_must_not_be_negative_);
+            throw new ArgumentOutOfRangeException("position", position, Resources.Unlock_Position_Negative);
 
          if (length < 0)
-            throw new ArgumentOutOfRangeException("length", length, Resources.BackupFileStream_Unlock_Backup_FileStream_Lock_Length_must_not_be_negative_);
+            throw new ArgumentOutOfRangeException("length", length, Resources.Negative_Lock_Length);
 
          if (!NativeMethods.UnlockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
             NativeError.ThrowException(Marshal.GetLastWin32Error());
@@ -617,15 +616,15 @@ namespace Alphaleonis.Win32.Filesystem
                return null;
 
             if (numberOfBytesRead < Marshal.SizeOf(typeof(NativeMethods.WIN32_STREAM_ID)))
-               throw new IOException(Resources.IncompleteHeaderRead);
+               throw new IOException(Resources.Read_Incomplete_Header);
 
-            NativeMethods.WIN32_STREAM_ID streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>();
+            NativeMethods.WIN32_STREAM_ID streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>(0);
 
             uint nameLength = (uint) Math.Min(streamID.dwStreamNameSize, hBuf.Capacity);
             if (!NativeMethods.BackupRead(_safeFileHandle, hBuf, nameLength, out numberOfBytesRead, false, mProcessSecurity, ref m_context))
                NativeError.ThrowException();
 
-            string name = hBuf.PtrToStringUni((int)nameLength / 2);
+            string name = hBuf.PtrToStringUni(0, (int) nameLength/2);
 
             return new BackupStreamInfo(streamID, name);
 
@@ -633,6 +632,5 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // Methods
-
    }
 }

@@ -336,7 +336,7 @@ namespace Alphaleonis.Win32.Security
       public Privilege(string systemName, Privilege privilege)
       {
          if (Utils.IsNullOrWhiteSpace(systemName))
-            throw new ArgumentException(Resources.Privilege_Privilege_name_cannot_be_empty, "systemName");
+            throw new ArgumentException(Resources.Privilege_Name_Cannot_Be_Empty, "systemName");
 
          _systemName = systemName;
 
@@ -484,7 +484,7 @@ namespace Alphaleonis.Win32.Security
       private Privilege(string name)
       {
          if (Utils.IsNullOrWhiteSpace(name))
-            throw new ArgumentException(Resources.Privilege_Privilege_name_cannot_be_empty, "name");
+            throw new ArgumentException(Resources.Privilege_Name_Cannot_Be_Empty, "name");
 
          _name = name;
       }

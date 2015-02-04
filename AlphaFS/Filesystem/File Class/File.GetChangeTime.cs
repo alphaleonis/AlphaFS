@@ -157,7 +157,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static DateTime GetChangeTimeInternal(bool isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, bool getUtc, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
@@ -183,7 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
                   NativeError.ThrowException(Marshal.GetLastWin32Error());
 
                safeBuffer.StructureToPtr(fbi, true);
-               NativeMethods.FILETIME changeTime = safeBuffer.PtrToStructure<NativeMethods.FILE_BASIC_INFO>().ChangeTime;
+               NativeMethods.FILETIME changeTime = safeBuffer.PtrToStructure<NativeMethods.FILE_BASIC_INFO>(0).ChangeTime;
 
                return getUtc
                   ? DateTime.FromFileTimeUtc(changeTime)

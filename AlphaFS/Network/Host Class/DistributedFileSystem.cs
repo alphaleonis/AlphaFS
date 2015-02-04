@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Network
       public static IEnumerable<DfsInfo> EnumerateDfsLinks(string dfsName)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          if (Utils.IsNullOrWhiteSpace(dfsName))
             throw new ArgumentNullException("dfsName");
@@ -188,7 +188,7 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<string> EnumerateDfsRootInternal(string host, bool continueOnException)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DFS_INFO_300 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32.Network
       private static IEnumerable<string> EnumerateDomainDfsRootInternal(string domain, bool continueOnException)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DFS_INFO_200 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Network
       private static DfsInfo GetDfsInfoInternal(bool getFromClient, string dfsName, string serverName, string shareName)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          if (Utils.IsNullOrWhiteSpace(dfsName))
             throw new ArgumentNullException("dfsName");

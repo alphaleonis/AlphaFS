@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (safeMachineHandle.IsInvalid)
          {
             safeMachineHandle.Close();
-            NativeError.ThrowException(lastError, Resources.HandleInvalid);
+            NativeError.ThrowException(lastError, Resources.Handle_Is_Invalid);
          }
 
          using (safeMachineHandle)
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (safeHandle.IsInvalid)
             {
                safeHandle.Close();
-               NativeError.ThrowException(Marshal.GetLastWin32Error(), Resources.HandleInvalid);
+               NativeError.ThrowException(Marshal.GetLastWin32Error(), Resources.Handle_Is_Invalid);
             }
 
 
@@ -280,7 +280,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             int marshalReparseBuffer = (int) Marshal.OffsetOf(typeof(NativeMethods.ReparseDataBufferHeader), "data");
 
-            var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>();
+            var header = safeBuffer.PtrToStructure<NativeMethods.ReparseDataBufferHeader>(0);
 
             int dataOffset = (int) (marshalReparseBuffer + (header.ReparseTag == ReparsePointTag.MountPoint
                ? Marshal.OffsetOf(typeof (NativeMethods.MountPointReparseBuffer), "data")

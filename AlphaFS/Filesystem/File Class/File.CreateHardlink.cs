@@ -122,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
             switch ((uint)lastError)
             {
                case Win32Errors.ERROR_INVALID_FUNCTION:
-                  throw new NotSupportedException(Resources.HardLinksOnNonNTFSPartitionsIsNotSupported);
+                  throw new NotSupportedException(Resources.HardLinks_Not_Supported);
 
                default:
                   NativeError.ThrowException(lastError, fileNameLp, existingFileName);

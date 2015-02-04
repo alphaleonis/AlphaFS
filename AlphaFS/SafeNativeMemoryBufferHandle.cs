@@ -100,16 +100,16 @@ namespace Alphaleonis.Win32
             throw new ArgumentNullException("destination");
 
          if (destinationOffset < 0)
-            throw new ArgumentOutOfRangeException("destinationOffset", "Destination offset must not be negative");
+            throw new ArgumentOutOfRangeException("destinationOffset", Resources.Negative_Destination_Offset);
 
          if (length < 0)
-            throw new ArgumentOutOfRangeException("length", "Length must not be negative.");
+            throw new ArgumentOutOfRangeException("length", Resources.Negative_Length);
 
          if (destinationOffset + length > destination.Length)
-            throw new ArgumentException("Destination buffer not large enough for the requested operation.");
+            throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough);
 
          if (length > Capacity)
-            throw new ArgumentOutOfRangeException("length", "Source offset and length outside the bounds of the array");
+            throw new ArgumentOutOfRangeException("length", Resources.Source_Offset_And_Length_Outside_Bounds);
 
          Marshal.Copy(handle, destination, destinationOffset, length);
       }
@@ -125,16 +125,16 @@ namespace Alphaleonis.Win32
             throw new ArgumentNullException("destination");
 
          if (destinationOffset < 0)
-            throw new ArgumentOutOfRangeException("destinationOffset", "Destination offset must not be negative");
+            throw new ArgumentOutOfRangeException("destinationOffset", Resources.Negative_Destination_Offset);
 
          if (length < 0)
-            throw new ArgumentOutOfRangeException("length", "Length must not be negative.");
+            throw new ArgumentOutOfRangeException("length", Resources.Negative_Length);
 
          if (destinationOffset + length > destination.Length)
-            throw new ArgumentException("Destination buffer not large enough for the requested operation.");
+            throw new ArgumentException(Resources.Destination_Buffer_Not_Large_Enough);
 
          if (length > Capacity)
-            throw new ArgumentOutOfRangeException("length", "Source offset and length outside the bounds of the array");
+            throw new ArgumentOutOfRangeException("length", Resources.Source_Offset_And_Length_Outside_Bounds);
 
          Marshal.Copy(new IntPtr(handle.ToInt64() + sourceOffset), destination, destinationOffset, length);
       }
@@ -277,23 +277,9 @@ namespace Alphaleonis.Win32
 
       /// <summary>Marshals data from an unmanaged block of memory to a newly allocated managed object of the specified type.</summary>
       /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
-      public T PtrToStructure<T>()
-      {
-         return PtrToStructure<T>(0);
-      }
-
-      /// <summary>Marshals data from an unmanaged block of memory to a newly allocated managed object of the specified type.</summary>
-      /// <returns>A managed object containing the data pointed to by the ptr parameter.</returns>
       public T PtrToStructure<T>(int offset)
       {
          return (T) Marshal.PtrToStructure(new IntPtr(handle.ToInt64() + offset), typeof (T));
-      }
-
-      /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged Unicode string into it.</summary>
-      /// <returns>A managed string that holds a copy of the unmanaged string if the value of the ptr parameter is not null; otherwise, this method returns null.</returns>
-      public string PtrToStringUni(int length)
-      {
-         return PtrToStringUni(0, length);
       }
 
       /// <summary>Allocates a managed System.String and copies a specified number of characters from an unmanaged Unicode string into it.</summary>

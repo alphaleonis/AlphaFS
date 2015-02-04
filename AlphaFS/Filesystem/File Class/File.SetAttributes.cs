@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                // MSDN: .NET 3.5+: ArgumentException: FileSystemInfo().Attributes
                case Win32Errors.ERROR_INVALID_PARAMETER:
-                  throw new ArgumentException(Resources.InvalidFileAttribute);
+                  throw new ArgumentException(Resources.Invalid_File_Attribute);
 
                case Win32Errors.ERROR_FILE_NOT_FOUND:
                   if (isFolder)

@@ -342,7 +342,7 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
          if (path.Trim().Length == 0)
-            throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
          string pathRp = GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None);
 

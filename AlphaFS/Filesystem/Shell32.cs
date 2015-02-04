@@ -694,7 +694,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string PathCreateFromUrlAlloc(string urlPath)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          if (urlPath == null)
             return null;

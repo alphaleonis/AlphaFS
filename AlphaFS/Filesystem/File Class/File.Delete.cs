@@ -20,7 +20,6 @@
  */
 
 using System;
-using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -180,7 +179,7 @@ namespace Alphaleonis.Win32.Filesystem
                      if ((data.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
                         // MSDN: .NET 3.5+: UnauthorizedAccessException: Path is a directory.
                         throw new UnauthorizedAccessException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}",
-                           Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, pathLp)));
+                           Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, pathLp)));
 
 
                      if ((data.dwFileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)

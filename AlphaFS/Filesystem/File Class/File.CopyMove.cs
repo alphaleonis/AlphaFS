@@ -1092,7 +1092,7 @@ namespace Alphaleonis.Win32.Filesystem
          bool doMove = !doCopy && moveOptions != null;
 
          if ((!doCopy && !doMove) || (doCopy && doMove))
-            throw new NotSupportedException(Resources.UndeterminedCopyMoveAction);
+            throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
 
          bool overwrite = doCopy
             ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
@@ -1213,7 +1213,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // MSDN: .NET 3.5+: IOException: An I/O error has occurred.
                         //   Directory exists with the same name as the file.
                         if (!isFolder && ExistsInternal(true, transaction, destFileNameLp, PathFormat.LongFullPath))
-                           NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, destFileNameLp));
+                           NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, destFileNameLp));
 
                         else
                         {
@@ -1243,7 +1243,7 @@ namespace Alphaleonis.Win32.Filesystem
                               // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                               // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
                               if ((data.dwFileAttributes & FileAttributes.Hidden) == FileAttributes.Hidden)
-                                 NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.FileHidden, destFileNameLp));
+                                 NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.File_Is_Hidden, destFileNameLp));
                            }
 
                            // Observation: .NET 3.5+: For files: UnauthorizedAccessException: The caller does not have the required permission.

@@ -26,7 +26,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Security.Policy;
 
 namespace Alphaleonis.Win32
@@ -105,31 +104,31 @@ namespace Alphaleonis.Win32
             #region Transactional
 
             case Win32Errors.ERROR_INVALID_TRANSACTION:
-               throw new InvalidTransactionException(Resources.InvalidTransaction, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new InvalidTransactionException(Resources.Transaction_Invalid, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_ALREADY_COMMITTED:
-               throw new TransactionAlreadyCommittedException(Resources.TransactionAlreadyCommitted, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionAlreadyCommittedException(Resources.Transaction_Already_Committed, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_ALREADY_ABORTED:
-               throw new TransactionAlreadyAbortedException(Resources.TransactionAlreadyAborted, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionAlreadyAbortedException(Resources.Transaction_Already_Aborted, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTIONAL_CONFLICT:
-               throw new TransactionalConflictException(Resources.TransactionalConflict, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionalConflictException(Resources.Transactional_Conflict, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_NOT_ACTIVE:
-               throw new TransactionException(Resources.TransactionNotActive, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionException(Resources.Transaction_Not_Active, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_NOT_REQUESTED:
-               throw new TransactionException(Resources.TransactionNotRequested, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionException(Resources.Transaction_Not_Requested, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTION_REQUEST_NOT_VALID:
-               throw new TransactionException(Resources.InvalidTransactionRequest, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new TransactionException(Resources.Invalid_Transaction_Request, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_TRANSACTIONS_UNSUPPORTED_REMOTE:
-               throw new UnsupportedRemoteTransactionException(Resources.InvalidTransactionRequest, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new UnsupportedRemoteTransactionException(Resources.Invalid_Transaction_Request, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             case Win32Errors.ERROR_NOT_A_REPARSE_POINT:
-               throw new NotAReparsePointException(Resources.NotAReparsePoint, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
+               throw new NotAReparsePointException(Resources.Not_A_Reparse_Point, Marshal.GetExceptionForHR(Win32Errors.GetHrFromWin32Error(errorCode)));
 
             #endregion // Transacted
 
@@ -138,7 +137,7 @@ namespace Alphaleonis.Win32
             case Win32Errors.ERROR_SUCCESS_REBOOT_REQUIRED:
             case Win32Errors.ERROR_SUCCESS_RESTART_REQUIRED:
                // We should really never get here, throwing an exception for a successful operation.
-               throw new NotImplementedException(string.Format(CultureInfo.CurrentCulture, "{0} {1}", Resources.AttemptingToGenerateExceptionFromSuccessfulOperation, errorMessage));
+               throw new NotImplementedException(string.Format(CultureInfo.CurrentCulture, "{0} {1}", Resources.Exception_From_Successful_Operation, errorMessage));
 
             default:
                // We don't have a specific exception to generate for this error.               

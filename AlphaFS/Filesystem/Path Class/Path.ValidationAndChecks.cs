@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
             string tackle = GetRegularPathInternal(path, GetFullPathOptions.None).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
 
             if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
-               throw new ArgumentException(Resources.UNCPathShouldMatchTheFormatServerShare);
+               throw new ArgumentException(Resources.UNC_Path_Should_Match_Format);
          }
       }
 
@@ -152,9 +152,9 @@ namespace Alphaleonis.Win32.Filesystem
          if (throwException)
          {
             if (isArgumentException)
-               throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, regularPath));
+               throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Unsupported_Path_Format, regularPath));
 
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.PathFormatUnsupported, regularPath));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, Resources.Unsupported_Path_Format, regularPath));
          }
 
          if (checkInvalidPathChars)
@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("path");
 
          if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
-            throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
          // Will fail on a Unicode path.
          string pathRp = GetRegularPathInternal(path, GetFullPathOptions.None);
@@ -187,7 +187,7 @@ namespace Alphaleonis.Win32.Filesystem
                case 60:    // <  (less than)
                case 62:    // >  (greater than)
                case 124:   // |  (pipe)
-                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.IllegalCharactersInPath, (char) num), pathRp);
+                  throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, Resources.Illegal_Characters_In_Path, (char) num), pathRp);
 
                default:
                   // 32: space

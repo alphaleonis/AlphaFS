@@ -198,7 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          // Ensure path is a directory.
          if (!fileSystemEntryInfo.IsDirectory)
-            throw new IOException(String.Format(CultureInfo.CurrentCulture, Resources.FileExistsWithSameNameSpecifiedByPath, pathLp));
+            throw new IOException(String.Format(CultureInfo.CurrentCulture, Resources.Target_Directory_Is_A_File, pathLp));
 
          var dirEnumOptions = DirectoryEnumerationOptions.Folders;
          if (recursive)
