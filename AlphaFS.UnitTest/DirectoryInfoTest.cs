@@ -173,7 +173,14 @@ namespace AlphaFS.UnitTest
       public void EnumerateDirectories()
       {
          Console.WriteLine("DirectoryInfo.EnumerateDirectories()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
+
+         // Should only return folders.
+
+         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateDirectories(DirectoryEnumerationOptions.FilesAndFolders))
+            Assert.IsTrue(di.IsDirectory, "Expected a folder, not a file.");
+
+         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateDirectories(DirectoryEnumerationOptions.Files))
+            Assert.IsTrue(di.IsDirectory, "Expected a folder, not a file.");
       }
 
       #endregion // EnumerateDirectories
@@ -184,7 +191,14 @@ namespace AlphaFS.UnitTest
       public void EnumerateFiles()
       {
          Console.WriteLine("DirectoryInfo.EnumerateFiles()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
+
+         // Should only return files.
+
+         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFiles(DirectoryEnumerationOptions.FilesAndFolders))
+            Assert.IsTrue(!di.IsDirectory, "Expected a file, not a folder.");
+
+         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFiles(DirectoryEnumerationOptions.Folders))
+            Assert.IsTrue(!di.IsDirectory, "Expected a file, not a folder.");
       }
 
       #endregion // EnumerateFiles
@@ -195,7 +209,17 @@ namespace AlphaFS.UnitTest
       public void EnumerateFileSystemInfos()
       {
          Console.WriteLine("DirectoryInfo.EnumerateFileSystemInfos()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
+
+         // Should only return folders.
+
+         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFileSystemInfos(DirectoryEnumerationOptions.Folders))
+            Assert.IsTrue(di.IsDirectory, "Expected a folder, not a file.");
+
+
+         // Should only return files.
+
+         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFileSystemInfos(DirectoryEnumerationOptions.Files))
+            Assert.IsTrue(!di.IsDirectory, "Expected a file, not a folder.");
       }
 
       #endregion // EnumerateFileSystemInfos

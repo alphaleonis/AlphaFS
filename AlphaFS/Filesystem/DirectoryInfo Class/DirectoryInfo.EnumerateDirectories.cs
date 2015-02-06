@@ -38,12 +38,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
+      /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/>.</returns>
       /// <param name="searchPattern">
       ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
       ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
       ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
-      /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/>.</returns>
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories(string searchPattern)
       {
@@ -51,6 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern and search subdirectory option.</summary>
+      /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       /// <param name="searchPattern">
       ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
       ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
@@ -60,7 +61,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
       ///   <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
-      /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SecurityCritical]
       public IEnumerable<DirectoryInfo> EnumerateDirectories(string searchPattern, SearchOption searchOption)
       {
@@ -70,5 +70,38 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
+
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of directory information in the current directory.</summary>
+      /// <returns>An enumerable collection of directories in the current directory.</returns>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public IEnumerable<DirectoryInfo> EnumerateDirectories(DirectoryEnumerationOptions options)
+      {
+         // Adhere to the method name.
+         options &= ~DirectoryEnumerationOptions.Files;
+         options |= DirectoryEnumerationOptions.Folders;
+
+         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath);
+      }
+
+      /// <summary>Returns an enumerable collection of directory information that matches a specified search pattern.</summary>
+      /// <returns>An enumerable collection of directories that matches <paramref name="searchPattern"/>.</returns>
+      /// <param name="searchPattern">
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
+      /// </param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public IEnumerable<DirectoryInfo> EnumerateDirectories(string searchPattern, DirectoryEnumerationOptions options)
+      {
+         // Adhere to the method name.
+         options &= ~DirectoryEnumerationOptions.Files;
+         options |= DirectoryEnumerationOptions.Folders;
+
+         return Directory.EnumerateFileSystemEntryInfosInternal<DirectoryInfo>(Transaction, LongFullName, searchPattern, DirectoryEnumerationOptions.Folders | options, PathFormat.LongFullPath);
+      }
    }
 }

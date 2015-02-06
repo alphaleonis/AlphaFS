@@ -40,12 +40,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern.</summary>
+      /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/>.</returns>
       /// <param name="searchPattern">
       ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
       ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
       ///   <para>characters, but does not support regular expressions.</para>
       /// </param>
-      /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern)
@@ -54,6 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Returns an enumerable collection of file system information that matches a specified search pattern and search subdirectory option.</summary>
+      /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       /// <param name="searchPattern">
       ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
       ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
@@ -63,7 +64,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>One of the <see cref="SearchOption"/> enumeration values that specifies whether the <paramref name="searchOption"/></para>
       ///   <para> should include only the current directory or should include all subdirectories.</para>
       /// </param>
-      /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
       [SecurityCritical]
       public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern, SearchOption searchOption)
@@ -74,5 +74,32 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
+
+
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system information in the current directory.</summary>
+      /// <returns>An enumerable collection of file system information in the current directory. </returns>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(DirectoryEnumerationOptions options)
+      {
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath);
+      }
+
+      /// <summary>[AlphaFS] Returns an enumerable collection of file system information that matches a specified search pattern.</summary>
+      /// <returns>An enumerable collection of file system information objects that matches <paramref name="searchPattern"/>.</returns>
+      /// <param name="searchPattern">
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
+      /// </param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Infos")]
+      [SecurityCritical]
+      public IEnumerable<FileSystemInfo> EnumerateFileSystemInfos(string searchPattern, DirectoryEnumerationOptions options)
+      {
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileSystemInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath);
+      }
    }
 }

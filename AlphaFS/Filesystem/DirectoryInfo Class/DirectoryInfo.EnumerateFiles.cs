@@ -70,5 +70,38 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
+
+
+
+      /// <summary>Returns an enumerable collection of file information in the current directory.</summary>
+      /// <returns>An enumerable collection of the files in the current directory.</returns>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public IEnumerable<FileInfo> EnumerateFiles(DirectoryEnumerationOptions options)
+      {
+         // Adhere to the method name.
+         options &= ~DirectoryEnumerationOptions.Folders;
+         options |= DirectoryEnumerationOptions.Files;
+
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, Path.WildcardStarMatchAll, options, PathFormat.LongFullPath);
+      }
+
+      /// <summary>Returns an enumerable collection of file information that matches a search pattern.</summary>
+      /// <param name="searchPattern">
+      ///   <para>The search string to match against the names of directories. This parameter can contain a</para>
+      ///   <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
+      ///   <para>characters, but does not support regular expressions.</para>
+      /// </param>
+      /// <returns>An enumerable collection of files that matches <paramref name="searchPattern"/>.</returns>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public IEnumerable<FileInfo> EnumerateFiles(string searchPattern, DirectoryEnumerationOptions options)
+      {
+         // Adhere to the method name.
+         options &= ~DirectoryEnumerationOptions.Folders;
+         options |= DirectoryEnumerationOptions.Files;
+
+         return Directory.EnumerateFileSystemEntryInfosInternal<FileInfo>(Transaction, LongFullName, searchPattern, options, PathFormat.LongFullPath);
+      }
    }
 }
