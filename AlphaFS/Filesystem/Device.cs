@@ -53,18 +53,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(string hostName, DeviceGuid deviceGuid)
       {
-         return EnumerateDevicesInternal(null, hostName, deviceGuid);
+         return EnumerateDevicesCore(null, hostName, deviceGuid);
       }
 
       #endregion // EnumerateDevices
 
       #region Internal Methods
 
-      #region EnumerateDevicesInternal
+      #region EnumerateDevicesCore
 
       /// <summary>Enumerates all available devices on the local or remote host.</summary>
       [SecurityCritical]
-      internal static IEnumerable<DeviceInfo> EnumerateDevicesInternal(SafeHandle safeHandle, string hostName, DeviceGuid deviceInterfaceGuid)
+      internal static IEnumerable<DeviceInfo> EnumerateDevicesCore(SafeHandle safeHandle, string hostName, DeviceGuid deviceInterfaceGuid)
       {
          bool callerHandle = safeHandle != null;
          var deviceGuid = new Guid(Utils.GetEnumDescription(deviceInterfaceGuid));
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
          // http://msdn.microsoft.com/en-us/library/windows/hardware/ff537948%28v=vs.85%29.aspx
 
          SafeCmConnectMachineHandle safeMachineHandle;
-         int lastError = NativeMethods.CM_Connect_Machine(Path.LocalToUncInternal(Host.GetUncName(hostName), false, false, false), out safeMachineHandle);
+         int lastError = NativeMethods.CM_Connect_Machine(Path.LocalToUncCore(Host.GetUncName(hostName), false, false, false), out safeMachineHandle);
          if (safeMachineHandle.IsInvalid)
          {
             safeMachineHandle.Close();
@@ -236,14 +236,14 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // EnumerateDevicesInternal
+      #endregion // EnumerateDevicesCore
 
-      #region GetLinkTargetInfoInternal
+      #region GetLinkTargetInfoCore
 
-      /// <summary>Unified method GetLinkTargetInfoInternal() to get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
+      /// <summary>Get information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
       [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoInternal(SafeFileHandle safeHandle)
+      internal static LinkTargetInfo GetLinkTargetInfoCore(SafeFileHandle safeHandle)
       {
          // Start with a large buffer to prevent a 2nd call.
          uint bytesReturned = NativeMethods.DefaultFileBufferSize;
@@ -317,11 +317,11 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // GetLinkTargetInfoInternal
+      #endregion // GetLinkTargetInfoCore
 
-      #region ToggleCompressionInternal
+      #region ToggleCompressionCore
 
-      /// <summary>Unified method ToggleCompressionInternal() to set the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
+      /// <summary>Sets the NTFS compression state of a file or directory on a volume whose file system supports per-file and per-directory compression.</summary>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a folder or file to compress or decompress.</param>
@@ -329,9 +329,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
 
       [SecurityCritical]
-      internal static void ToggleCompressionInternal(bool isFolder, KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
+      internal static void ToggleCompressionCore(bool isFolder, KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
-         using (SafeFileHandle handle = File.CreateFileInternal(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, pathFormat))
+         using (SafeFileHandle handle = File.CreateFileCore(transaction, path, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.Modify, FileShare.None, true, pathFormat))
          {
             // DeviceIoControlMethod.Buffered = 0,
             // DeviceIoControlFileDevice.FileSystem = 9
@@ -342,7 +342,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // ToggleCompressionInternal
+      #endregion // ToggleCompressionCore
 
 
       #region Private

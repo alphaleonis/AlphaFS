@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes)
       {
-         SetAttributesInternal(false, null, path, fileAttributes, false, PathFormat.RelativePath);
+         SetAttributesCore(false, null, path, fileAttributes, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the specified <see cref="FileAttributes"/> of the file or directory on the specified path.</summary>
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributes(string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         SetAttributesInternal(false, null, path, fileAttributes, false, pathFormat);
+         SetAttributesCore(false, null, path, fileAttributes, false, pathFormat);
       }
 
 
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributesTransacted(KernelTransaction transaction, string path, FileAttributes fileAttributes)
       {
-         SetAttributesInternal(false, transaction, path, fileAttributes, false, PathFormat.RelativePath);
+         SetAttributesCore(false, transaction, path, fileAttributes, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the specified <see cref="FileAttributes"/> of the file on the specified path.</summary>
@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAttributesTransacted(KernelTransaction transaction, string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
-         SetAttributesInternal(false, transaction, path, fileAttributes, false, pathFormat);
+         SetAttributesCore(false, transaction, path, fileAttributes, false, pathFormat);
       }
 
       #endregion // Transacted
@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method SetAttributesInternal() to set the attributes for a Non-/Transacted file/directory.</summary>
+      /// <summary>Sets the attributes for a Non-/Transacted file/directory.</summary>
       /// <remarks>
       ///   Certain file attributes, such as <see cref="FileAttributes.Hidden"/> and <see cref="FileAttributes.ReadOnly"/>, can be combined.
       ///   Other attributes, such as <see cref="FileAttributes.Normal"/>, must be used alone.
@@ -128,9 +128,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void SetAttributesInternal(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, PathFormat pathFormat)
+      internal static void SetAttributesCore(bool isFolder, KernelTransaction transaction, string path, FileAttributes fileAttributes, bool continueOnNotExist, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -167,6 +167,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // SetAttributesInternal
+      #endregion // Internal Methods
    }
 }

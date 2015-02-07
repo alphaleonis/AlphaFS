@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DefineDosDevice(string deviceName, string targetPath)
       {
-         DefineDosDeviceInternal(true, deviceName, targetPath, DosDeviceAttributes.None, false);
+         DefineDosDeviceCore(true, deviceName, targetPath, DosDeviceAttributes.None, false);
       }
 
       /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DefineDosDevice(string deviceName, string targetPath, DosDeviceAttributes deviceAttributes)
       {
-         DefineDosDeviceInternal(true, deviceName, targetPath, deviceAttributes, false);
+         DefineDosDeviceCore(true, deviceName, targetPath, deviceAttributes, false);
       }
 
       #endregion // DefineDosDevice
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName)
       {
-         DefineDosDeviceInternal(false, deviceName, null, DosDeviceAttributes.RemoveDefinition, false);
+         DefineDosDeviceCore(false, deviceName, null, DosDeviceAttributes.RemoveDefinition, false);
       }
 
       /// <summary>Deletes an MS-DOS device name.</summary>
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath)
       {
-         DefineDosDeviceInternal(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, false);
+         DefineDosDeviceCore(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, false);
       }
 
       /// <summary>Deletes an MS-DOS device name.</summary>
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath, bool exactMatch)
       {
-         DefineDosDeviceInternal(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, exactMatch);
+         DefineDosDeviceCore(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, exactMatch);
       }
 
       /// <summary>Deletes an MS-DOS device name.</summary>
@@ -124,7 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
       {
-         DefineDosDeviceInternal(false, deviceName, targetPath, deviceAttributes, exactMatch);
+         DefineDosDeviceCore(false, deviceName, targetPath, deviceAttributes, exactMatch);
       }
 
       #endregion // DeleteDosDevice
@@ -279,7 +279,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
       public static string GetDriveNameForNtDeviceName(string deviceName)
       {
-         return (from drive in Directory.EnumerateLogicalDrivesInternal(false, false)
+         return (from drive in Directory.EnumerateLogicalDrivesCore(false, false)
             where drive.DosDeviceName.Equals(deviceName, StringComparison.OrdinalIgnoreCase)
             select drive.Name).FirstOrDefault();
       }
@@ -369,7 +369,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsReady(string drivePath)
       {
-         return File.ExistsInternal(true, null, drivePath, PathFormat.FullPath);
+         return File.ExistsCore(true, null, drivePath, PathFormat.FullPath);
       }
 
       #endregion // IsReady
@@ -421,7 +421,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteVolumeMountPoint(string volumeMountPoint)
       {
-         DeleteVolumeMountPointInternal(volumeMountPoint, false);
+         DeleteVolumeMountPointCore(volumeMountPoint, false);
       }
       
       #endregion // DeleteVolumeMountPoint
@@ -741,7 +741,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeMountPoint");
 
          // The string must end with a trailing backslash ('\').
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);            
+         volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);            
 
          var volumeGuid = new StringBuilder(100);
          var uniqueName = new StringBuilder(100);
@@ -801,7 +801,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
       public static string GetVolumeGuidForNtDeviceName(string dosDevice)
       {
-         return (from drive in Directory.EnumerateLogicalDrivesInternal(false, false)
+         return (from drive in Directory.EnumerateLogicalDrivesCore(false, false)
                  where drive.DosDeviceName.Equals(dosDevice, StringComparison.OrdinalIgnoreCase)
                  select drive.VolumeInfo.Guid).FirstOrDefault();
       }
@@ -868,7 +868,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             var volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode / 32);
-            string pathLp = Path.GetFullPathInternal(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
+            string pathLp = Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
             // GetVolumePathName()
             // In the ANSI version of this function, the name is limited to 248 characters.
@@ -879,7 +879,7 @@ namespace Alphaleonis.Win32.Filesystem
             int lastError = Marshal.GetLastWin32Error();
 
             if (getOk)
-               return Path.GetRegularPathInternal(volumeRootPath.ToString(), GetFullPathOptions.None);
+               return Path.GetRegularPathCore(volumeRootPath.ToString(), GetFullPathOptions.None);
 
             switch ((uint) lastError)
             {
@@ -1012,7 +1012,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
             throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // This string must be of the form "\\?\Volume{GUID}\"
          volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
@@ -1043,9 +1043,9 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Volume
 
 
-      #region Unified Internals
+      #region Internal Methods
 
-      /// <summary>Unified method DefineDosDeviceInternal() to define, redefine, or delete MS-DOS device names.</summary>
+      /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="isDefine">
       ///   <see langword="true"/> defines a new MS-DOS device. <see langword="false"/> deletes a previously defined MS-DOS device.
@@ -1068,7 +1068,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///
       /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>      
       [SecurityCritical]
-      internal static void DefineDosDeviceInternal(bool isDefine, string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
+      internal static void DefineDosDeviceCore(bool isDefine, string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
       {
          if (Utils.IsNullOrWhiteSpace(deviceName))
             throw new ArgumentNullException("deviceName");
@@ -1078,7 +1078,7 @@ namespace Alphaleonis.Win32.Filesystem
             // targetPath is allowed to be null.
 
             // In no case is a trailing backslash ("\") allowed.
-            deviceName = Path.GetRegularPathInternal(deviceName, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
+            deviceName = Path.GetRegularPathCore(deviceName, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
             // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -1100,11 +1100,10 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      /// <summary>Unified method DeleteVolumeMountPointInternal() to delete a Drive letter or mounted folder.</summary>
-      /// <remarks>Deleting a mounted folder does not cause the underlying directory to be deleted.</remarks>
+      /// <summary>Deletes a Drive letter or mounted folder.</summary>
       /// <remarks>
-      ///   It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume
-      ///   mount point.
+      ///   <para>It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume mount point.</para>
+      ///   <para>Deleting a mounted folder does not cause the underlying directory to be deleted.</para>
       /// </remarks>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeMountPoint">The Drive letter or mounted folder to be deleted. For example, X:\ or Y:\MountX\.</param>
@@ -1113,7 +1112,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>If completed successfully returns <see cref="Win32Errors.ERROR_SUCCESS"/>, otherwise the last error number.</returns>      
       [SecurityCritical]
-      internal static int DeleteVolumeMountPointInternal(string volumeMountPoint, bool continueOnException)
+      internal static int DeleteVolumeMountPointCore(string volumeMountPoint, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(volumeMountPoint))
             throw new ArgumentNullException("volumeMountPoint");
@@ -1143,6 +1142,6 @@ namespace Alphaleonis.Win32.Filesystem
          return lastError;
       }
 
-      #endregion // Unified Internals
+      #endregion // Internal Methods
    }
 }

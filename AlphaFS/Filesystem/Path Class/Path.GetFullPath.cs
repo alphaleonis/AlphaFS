@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPath(string path)
       {
-         return GetFullPathTackleInternal(null, path);
+         return GetFullPathTackleCore(null, path);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -77,12 +77,12 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFullPathTransacted(KernelTransaction transaction, string path)
       {
-         return GetFullPathTackleInternal(transaction, path);
+         return GetFullPathTackleCore(transaction, path);
       }
 
       #region Internal Methods
 
-      /// <summary>Unified method GetFullPathInternal() to retrieve the absolute path for the specified <paramref name="path"/> string.</summary>
+      /// <summary>Retrieves the absolute path for the specified <paramref name="path"/> string.</summary>
       /// <returns>The fully qualified location of <paramref name="path"/>, such as "C:\MyFile.txt".</returns>
       /// <remarks>
       /// <para>GetFullPathName merges the name of the current drive and directory with a specified file name to determine the full path and file name of a specified file.</para>
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       /// <param name="options">Options for controlling the operation.</param>
       [SecurityCritical]
-      internal static string GetFullPathInternal(KernelTransaction transaction, string path, GetFullPathOptions options)
+      internal static string GetFullPathCore(KernelTransaction transaction, string path, GetFullPathOptions options)
       {
          if (path != null)
             if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
@@ -134,7 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         string pathLp = GetLongPathInternal(path, options);
+         string pathLp = GetLongPathCore(path, options);
 
          uint bufferSize = NativeMethods.MaxPathUnicode;
          
@@ -172,12 +172,12 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
             return (options & GetFullPathOptions.AsLongPath) != 0
-               ? GetLongPathInternal(buffer.ToString(), GetFullPathOptions.None)
-               : GetRegularPathInternal(buffer.ToString(), GetFullPathOptions.None);
+               ? GetLongPathCore(buffer.ToString(), GetFullPathOptions.None)
+               : GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None);
          }
       }
 
-      private static string GetFullPathTackleInternal(KernelTransaction transaction, string path)
+      private static string GetFullPathTackleCore(KernelTransaction transaction, string path)
       {
          if (path != null)
          {
@@ -190,7 +190,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          CheckSupportedPathFormat(path, true, true);
 
-         return GetFullPathInternal(transaction, path, GetFullPathOptions.None);
+         return GetFullPathCore(transaction, path, GetFullPathOptions.None);
       }
 
       #endregion // Internal Methods

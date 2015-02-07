@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity)
       {
-         File.SetAccessControlInternal(path, null, directorySecurity, AccessControlSections.All, PathFormat.RelativePath);
+         File.SetAccessControlCore(path, null, directorySecurity, AccessControlSections.All, PathFormat.RelativePath);
       }
 
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity, AccessControlSections includeSections)
       {
-         File.SetAccessControlInternal(path, null, directorySecurity, includeSections, PathFormat.RelativePath);
+         File.SetAccessControlCore(path, null, directorySecurity, includeSections, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity, PathFormat pathFormat)
       {
-         File.SetAccessControlInternal(path, null, directorySecurity, AccessControlSections.All, pathFormat);
+         File.SetAccessControlCore(path, null, directorySecurity, AccessControlSections.All, pathFormat);
       }
 
       /// <summary>[AlphaFS] Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, DirectorySecurity directorySecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         File.SetAccessControlInternal(path, null, directorySecurity, includeSections, pathFormat);
+         File.SetAccessControlCore(path, null, directorySecurity, includeSections, pathFormat);
       }
    }
 }

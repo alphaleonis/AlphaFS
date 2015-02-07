@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path)
       {
-         return File.GetLastWriteTimeInternal(null, path, false, PathFormat.RelativePath).ToLocalTime();
+         return File.GetLastWriteTimeCore(null, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path)
       {
-         return File.GetLastWriteTimeInternal(null, path, true, PathFormat.RelativePath);
+         return File.GetLastWriteTimeCore(null, path, true, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path, PathFormat pathFormat)
       {
-         return File.GetLastWriteTimeInternal(null, path, false, pathFormat).ToLocalTime();
+         return File.GetLastWriteTimeCore(null, path, false, pathFormat).ToLocalTime();
       }
 
 
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path, PathFormat pathFormat)
       {
-         return File.GetLastWriteTimeInternal(null, path, true, pathFormat);
+         return File.GetLastWriteTimeCore(null, path, true, pathFormat);
       }
 
       #region Transactional
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetLastWriteTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
+         return File.GetLastWriteTimeCore(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last written to.</summary>
@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetLastWriteTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
+         return File.GetLastWriteTimeCore(transaction, path, false, pathFormat).ToLocalTime();
       }
 
 
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetLastWriteTimeInternal(transaction, path, true, PathFormat.RelativePath);
+         return File.GetLastWriteTimeCore(transaction, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC) time, that the specified directory was last written to.</summary>
@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetLastWriteTimeInternal(transaction, path, true, pathFormat);
+         return File.GetLastWriteTimeCore(transaction, path, true, pathFormat);
       }
       
       #endregion // Transactional

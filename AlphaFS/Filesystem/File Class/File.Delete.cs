@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteFileInternal(null, path, false, PathFormat.RelativePath);
+         DeleteFileCore(null, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileInternal(null, path, ignoreReadOnly, pathFormat);
+         DeleteFileCore(null, path, ignoreReadOnly, pathFormat);
       }
 
 
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool ignoreReadOnly)
       {
-         DeleteFileInternal(null, path, ignoreReadOnly, PathFormat.RelativePath);
+         DeleteFileCore(null, path, ignoreReadOnly, PathFormat.RelativePath);
       }
 
       #region Transactional
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path)
       {
-         DeleteFileInternal(transaction, path, false, PathFormat.RelativePath);
+         DeleteFileCore(transaction, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteFileInternal(transaction, path, ignoreReadOnly, pathFormat);
+         DeleteFileCore(transaction, path, ignoreReadOnly, pathFormat);
       }
 
       /// <summary>[AlphaFS] Deletes the specified file.</summary>
@@ -106,7 +106,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
-         DeleteFileInternal(transaction, path, ignoreReadOnly, PathFormat.RelativePath);
+         DeleteFileCore(transaction, path, ignoreReadOnly, PathFormat.RelativePath);
       }
 
       #endregion // Transacted
@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>Unified method DeleteFileInternal() to delete a Non-/Transacted file.</summary>
+      /// <summary>Deletes a Non-/Transacted file.</summary>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="NotSupportedException"/>
@@ -125,14 +125,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void DeleteFileInternal(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
+      internal static void DeleteFileCore(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
          #region Setup
 
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          // If the path points to a symbolic link, the symbolic link is deleted, not the target.
 
@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_ACCESS_DENIED:
                   var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-                  int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
+                  int dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
 
                   if (data.dwFileAttributes != (FileAttributes)(-1))
                   {
@@ -184,7 +184,7 @@ namespace Alphaleonis.Win32.Filesystem
                         if (ignoreReadOnly)
                         {
                            // Reset file attributes.
-                           SetAttributesInternal(false, transaction, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
+                           SetAttributesCore(false, transaction, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
                            goto startDeleteFile;
                         }
 
@@ -208,6 +208,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // DeleteFileInternal
+      #endregion // Internal Methods
    }
 }

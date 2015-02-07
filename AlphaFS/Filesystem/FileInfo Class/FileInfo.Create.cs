@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public FileStream Create()
       {
-         return File.CreateFileStreamInternal(Transaction, LongFullName, ExtendedFileAttributes.Normal, null,
+         return File.CreateFileStreamCore(Transaction, LongFullName, ExtendedFileAttributes.Normal, null,
             FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize,
             PathFormat.LongFullPath);
       }

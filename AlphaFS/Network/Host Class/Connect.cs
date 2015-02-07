@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string ConnectDrive(string localName, string remoteName)
       {
-         return ConnectDisconnectInternal(new ConnectDisconnectArguments
+         return ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             LocalName = localName,
             RemoteName = remoteName,
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string ConnectDrive(string localName, string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         return ConnectDisconnectInternal(new ConnectDisconnectArguments
+         return ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             LocalName = localName,
             RemoteName = remoteName,
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string ConnectDrive(string localName, string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         return ConnectDisconnectInternal(new ConnectDisconnectArguments
+         return ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             LocalName = localName,
             RemoteName = remoteName,
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string ConnectDrive(IntPtr winOwner, string localName, string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         return ConnectDisconnectInternal(new ConnectDisconnectArguments
+         return ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             WinOwner = winOwner,
             LocalName = localName,
@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string ConnectDrive(IntPtr winOwner, string localName, string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         return ConnectDisconnectInternal(new ConnectDisconnectArguments
+         return ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             WinOwner = winOwner,
             LocalName = localName,
@@ -200,7 +200,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void ConnectTo(string remoteName)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments { RemoteName = remoteName });
+         ConnectDisconnectCore(new ConnectDisconnectArguments { RemoteName = remoteName });
       }
 
       /// <summary>Creates a connection to a network resource.</summary>
@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void ConnectTo(string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             RemoteName = remoteName,
             UserName = userName,
@@ -244,7 +244,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void ConnectTo(string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             RemoteName = remoteName,
             Credential = credentials,
@@ -272,7 +272,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void ConnectTo(IntPtr winOwner, string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             WinOwner = winOwner,
             RemoteName = remoteName,
@@ -295,7 +295,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void ConnectTo(IntPtr winOwner, string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             WinOwner = winOwner,
             RemoteName = remoteName,
@@ -316,7 +316,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void DisconnectDrive(string localName)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             LocalName = localName,
             IsDeviceMap = true,
@@ -334,7 +334,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void DisconnectDrive(string localName, bool force, bool updateProfile)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             LocalName = localName,
             Prompt = force,
@@ -353,7 +353,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void DisconnectFrom(string remoteName)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             RemoteName = remoteName,
             IsDisconnect = true
@@ -370,7 +370,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void DisconnectFrom(string remoteName, bool force, bool updateProfile)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             RemoteName = remoteName,
             Prompt = force,
@@ -384,14 +384,14 @@ namespace Alphaleonis.Win32.Network
 
       #region Internal Methods
 
-      /// <summary>Unified method ConnectDisconnectInternal() to connect to/disconnect from a network resource. The function can redirect a local device to a network resource.</summary>
+      /// <summary>Connects to/disconnects from a network resource. The function can redirect a local device to a network resource.</summary>
       /// <returns>If <see cref="ConnectDisconnectArguments.LocalName"/> is <see langword="null"/> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="arguments">The <see cref="ConnectDisconnectArguments"/>.</param>
       [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       [SecurityCritical]
-      internal static string ConnectDisconnectInternal(ConnectDisconnectArguments arguments)
+      internal static string ConnectDisconnectCore(ConnectDisconnectArguments arguments)
       {
          uint lastError;
 

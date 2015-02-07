@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path, PathFormat pathFormat)
       {         
-         return GetSizeInternal(null, null, path, pathFormat);
+         return GetSizeCore(null, null, path, pathFormat);
       }
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(string path)
       {
-         return GetSizeInternal(null, null, path, PathFormat.RelativePath);
+         return GetSizeCore(null, null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSize(SafeFileHandle handle)
       {
-         return GetSizeInternal(null, handle, null, PathFormat.LongFullPath);
+         return GetSizeCore(null, handle, null, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetSizeInternal(transaction, null, path, pathFormat);
+         return GetSizeCore(transaction, null, path, pathFormat);
       }
 
       /// <summary>[AlphaFS] Retrieves the file size, in bytes to store a specified file.</summary>
@@ -77,14 +77,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static long GetSizeTransacted(KernelTransaction transaction, string path)
       {
-         return GetSizeInternal(transaction, null, path, PathFormat.RelativePath);
+         return GetSizeCore(transaction, null, path, PathFormat.RelativePath);
       }
 
       #endregion // GetSize
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method GetSizeInternal() to retrieve the file size, in bytes to store a specified file.</summary>
+      /// <summary>Retrieves the file size, in bytes to store a specified file.</summary>
       /// <remarks>Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeHandle">The <see cref="SafeFileHandle"/> to the file.</param>
@@ -93,14 +93,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static long GetSizeInternal(KernelTransaction transaction, SafeFileHandle safeHandle, string path, PathFormat pathFormat)
+      internal static long GetSizeCore(KernelTransaction transaction, SafeFileHandle safeHandle, string path, PathFormat pathFormat)
       {
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
          {
-            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+            string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
-            safeHandle = CreateFileInternal(transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, PathFormat.LongFullPath);
+            safeHandle = CreateFileCore(transaction, pathLp, ExtendedFileAttributes.None, null, FileMode.Open, FileSystemRights.ReadData, FileShare.Read, true, PathFormat.LongFullPath);
          }
 
 
@@ -120,6 +120,6 @@ namespace Alphaleonis.Win32.Filesystem
          return fileSize;
       }
 
-      #endregion // GetSizeInternal
+      #endregion // Internal Methods
    }
 }

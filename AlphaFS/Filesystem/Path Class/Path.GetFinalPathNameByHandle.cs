@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFinalPathNameByHandle(SafeFileHandle handle)
       {
-         return GetFinalPathNameByHandleInternal(handle, FinalPathFormats.None);
+         return GetFinalPathNameByHandleCore(handle, FinalPathFormats.None);
       }
 
       /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
@@ -57,10 +57,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetFinalPathNameByHandle(SafeFileHandle handle, FinalPathFormats finalPath)
       {
-         return GetFinalPathNameByHandleInternal(handle, finalPath);
+         return GetFinalPathNameByHandleCore(handle, finalPath);
       }
 
-      /// <summary>[AlphaFS] Unified method GetFinalPathNameByHandleInternal() to retrieve the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
+      /// <summary>Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
       /// <returns>The final path as a string.</returns>
       /// <remarks>
       ///   A final path is the path that is returned when a path is fully resolved. For example, for a symbolic link named "C:\tmp\mydir" that
@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.GetMappedFileName(System.IntPtr,Alphaleonis.Win32.SafeGlobalMemoryBufferHandle,System.Text.StringBuilder,System.UInt32)")]
       [SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Alphaleonis.Win32.Filesystem.NativeMethods.GetMappedFileName(System.IntPtr,Alphaleonis.Win32.Security.SafeLocalMemoryBufferHandle,System.Text.StringBuilder,System.UInt32)")]
       [SecurityCritical]
-      internal static string GetFinalPathNameByHandleInternal(SafeFileHandle handle, FinalPathFormats finalPath)
+      internal static string GetFinalPathNameByHandleCore(SafeFileHandle handle, FinalPathFormats finalPath)
       {
          NativeMethods.IsValidHandle(handle);
 
@@ -145,13 +145,13 @@ namespace Alphaleonis.Win32.Filesystem
                string dosPath = DosDeviceToDosPath(dosDevice, null);
                if (!Utils.IsNullOrWhiteSpace(dosPath))
                {
-                  string path = GetSuffixedDirectoryNameWithoutRootInternal(null, dosPath);
+                  string path = GetSuffixedDirectoryNameWithoutRootCore(null, dosPath);
                   string driveLetter = RemoveTrailingDirectorySeparator(GetPathRoot(dosPath, false), false);
                   string file = GetFileName(dosPath, true);
 
                   if (!Utils.IsNullOrWhiteSpace(file))
-                     foreach (string drive in Directory.EnumerateLogicalDrivesInternal(false, false).Select(drv => drv.Name).Where(drv => driveLetter.Equals(RemoveTrailingDirectorySeparator(drv, false), StringComparison.OrdinalIgnoreCase)))
-                        return CombineInternal(false, Volume.GetUniqueVolumeNameForPath(drive), path, file);
+                     foreach (string drive in Directory.EnumerateLogicalDrivesCore(false, false).Select(drv => drv.Name).Where(drv => driveLetter.Equals(RemoveTrailingDirectorySeparator(drv, false), StringComparison.OrdinalIgnoreCase)))
+                        return CombineCore(false, Volume.GetUniqueVolumeNameForPath(drive), path, file);
                }
 
                break;

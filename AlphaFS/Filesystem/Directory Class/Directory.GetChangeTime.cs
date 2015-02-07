@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(string path)
       {
-         return File.GetChangeTimeInternal(true, null, null, path, false, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(true, null, null, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified directory.</summary>
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(string path, PathFormat pathFormat)
       {
-         return File.GetChangeTimeInternal(true, null, null, path, false, pathFormat);
+         return File.GetChangeTimeCore(true, null, null, path, false, pathFormat);
       }
 
 
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path)
       {
-         return File.GetChangeTimeInternal(true, null, null, path, true, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(true, null, null, path, true, PathFormat.RelativePath);
       }
       
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path, PathFormat pathFormat)
       {
-         return File.GetChangeTimeInternal(true, null, null, path, true, pathFormat);
+         return File.GetChangeTimeCore(true, null, null, path, true, pathFormat);
       }
 
 
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(SafeFileHandle safeHandle)
       {
-         return File.GetChangeTimeInternal(true, null, safeHandle, null, false, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(true, null, safeHandle, null, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
       {
-         return File.GetChangeTimeInternal(true, null, safeHandle, null, true, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(true, null, safeHandle, null, true, PathFormat.RelativePath);
       }
       
       #region Transactional
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetChangeTimeInternal(true, transaction, null, path, false, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(true, transaction, null, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified directory.</summary>
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetChangeTimeInternal(true, transaction, null, path, false, pathFormat);
+         return File.GetChangeTimeCore(true, transaction, null, path, false, pathFormat);
       }
 
 
@@ -119,7 +119,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtcTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetChangeTimeInternal(true, transaction, null, path, true, PathFormat.RelativePath);
+         return File.GetChangeTimeCore(true, transaction, null, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified directory.</summary>
@@ -130,7 +130,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetChangeTimeInternal(true, transaction, null, path, true, pathFormat);
+         return File.GetChangeTimeCore(true, transaction, null, path, true, pathFormat);
       }
 
       #endregion // Transactional

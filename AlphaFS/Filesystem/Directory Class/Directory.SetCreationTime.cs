@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime)
       {
-         File.SetFsoDateTimeInternal(true, null, path, creationTime.ToUniversalTime(), null, null, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), null, null, PathFormat.RelativePath);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc)
       {
-         File.SetFsoDateTimeInternal(true, null, path, creationTimeUtc, null, null, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, null, null, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeInternal(true, null, path, creationTime.ToUniversalTime(), null, null, pathFormat);
+         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), null, null, pathFormat);
       }
 
 
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeInternal(true, null, path, creationTimeUtc, null, null, pathFormat);
+         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, null, null, pathFormat);
       }
 
       #region Transactional
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeTransacted(KernelTransaction transaction, string path, DateTime creationTime)
       {
-         File.SetFsoDateTimeInternal(true, transaction, path, creationTime.ToUniversalTime(), null, null, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), null, null, PathFormat.RelativePath);
       }
       
       /// <summary>[AlphaFS] Sets the date and time the directory was created.</summary>
@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeTransacted(KernelTransaction transaction, string path, DateTime creationTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeInternal(true, transaction, path, creationTime.ToUniversalTime(), null, null, pathFormat);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), null, null, pathFormat);
       }
 
 
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtcTransacted(KernelTransaction transaction, string path, DateTime creationTimeUtc)
       {
-         File.SetFsoDateTimeInternal(true, transaction, path, creationTimeUtc, null, null, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the directory was created.</summary>
@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtcTransacted(KernelTransaction transaction, string path, DateTime creationTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeInternal(true, transaction, path, creationTimeUtc, null, null, pathFormat);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, null, null, pathFormat);
       }
 
       #endregion // Transactional

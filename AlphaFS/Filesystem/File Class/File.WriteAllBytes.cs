@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytes(string path, byte[] bytes)
       {
-         WriteAllBytesInternal(null, path, bytes, PathFormat.RelativePath);
+         WriteAllBytesCore(null, path, bytes, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytes(string path, byte[] bytes, PathFormat pathFormat)
       {
-         WriteAllBytesInternal(null, path, bytes, pathFormat);
+         WriteAllBytesCore(null, path, bytes, pathFormat);
       }
 
       #region Transactional
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytesTransacted(KernelTransaction transaction, string path, byte[] bytes)
       {
-         WriteAllBytesInternal(transaction, path, bytes, PathFormat.RelativePath);
+         WriteAllBytesCore(transaction, path, bytes, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void WriteAllBytesTransacted(KernelTransaction transaction, string path, byte[] bytes, PathFormat pathFormat)
       {
-         WriteAllBytesInternal(transaction, path, bytes, pathFormat);
+         WriteAllBytesCore(transaction, path, bytes, pathFormat);
       }
 
       #endregion // Transacted
@@ -95,8 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method WriteAllBytesInternal() to create a new file as part of a transaction, writes the specified byte array to
+      /// <summary>Creates a new file as part of a transaction, writes the specified byte array to
       ///   the file, and then closes the file. If the target file already exists, it is overwritten.
       /// </summary>
       /// <exception cref="ArgumentNullException"/>
@@ -106,15 +105,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "bytes")]
       [SecurityCritical]
-      internal static void WriteAllBytesInternal(KernelTransaction transaction, string path, byte[] bytes, PathFormat pathFormat)
+      internal static void WriteAllBytesCore(KernelTransaction transaction, string path, byte[] bytes, PathFormat pathFormat)
       {
          if (bytes == null)
             throw new ArgumentNullException("bytes");
 
-         using (FileStream fs = OpenInternal(transaction, path, FileMode.Create, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.None, null, null, pathFormat))
+         using (FileStream fs = OpenCore(transaction, path, FileMode.Create, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.None, null, null, pathFormat))
             fs.Write(bytes, 0, bytes.Length);
       }
 
-      #endregion // WriteAllBytesInternal
+      #endregion // Internal Methods
    }
 }

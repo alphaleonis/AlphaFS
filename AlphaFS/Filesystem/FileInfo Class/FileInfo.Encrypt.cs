@@ -31,7 +31,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt()
       {
-         File.EncryptDecryptFileInternal(false, LongFullName, true, PathFormat.LongFullPath);
+         File.EncryptDecryptFileCore(false, LongFullName, true, PathFormat.LongFullPath);
       }
 
       #endregion // .NET

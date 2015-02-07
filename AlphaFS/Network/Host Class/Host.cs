@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       [SecurityCritical]
-      private static IEnumerable<TStruct> EnumerateNetworkObjectInternal<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException) 
+      private static IEnumerable<TStruct> EnumerateNetworkObjectCore<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException) 
       {
          Type objectType;
          int objectSize;
@@ -152,15 +152,15 @@ namespace Alphaleonis.Win32.Network
       /// <param name="path">The local path with drive name.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      internal static NativeMethods.REMOTE_NAME_INFO GetRemoteNameInfoInternal(string path, bool continueOnException)
+      internal static NativeMethods.REMOTE_NAME_INFO GetRemoteNameInfoCore(string path, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         path = Path.GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars); 
+         path = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars); 
 
          // If path already is a network share path, we fill the REMOTE_NAME_INFO structure ourselves.
-         if (Path.IsUncPathInternal(path, true, false))
+         if (Path.IsUncPathCore(path, true, false))
             return new NativeMethods.REMOTE_NAME_INFO
             {
                lpUniversalName = Path.AddTrailingDirectorySeparator(path, false),

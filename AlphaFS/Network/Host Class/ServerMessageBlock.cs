@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<OpenConnectionInfo> EnumerateOpenConnections()
       {
-         return EnumerateOpenConnectionsInternal(null, null, false);
+         return EnumerateOpenConnectionsCore(null, null, false);
       }
 
       /// <summary>Enumerates open connections from the specified host.</summary>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<OpenConnectionInfo> EnumerateOpenConnections(string host, string share, bool continueOnException)
       {
-         return EnumerateOpenConnectionsInternal(host, share, continueOnException);
+         return EnumerateOpenConnectionsCore(host, share, continueOnException);
       }
 
       #endregion // EnumerateOpenConnections
@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares()
       {
-         return EnumerateSharesInternal(null, ShareType.All, false);
+         return EnumerateSharesCore(null, ShareType.All, false);
       }
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(bool continueOnException)
       {
-         return EnumerateSharesInternal(null, ShareType.All, continueOnException);
+         return EnumerateSharesCore(null, ShareType.All, continueOnException);
       }
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(ShareType shareType, bool continueOnException)
       {
-         return EnumerateSharesInternal(null, shareType, continueOnException);
+         return EnumerateSharesCore(null, shareType, continueOnException);
       }
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(string host)
       {
-         return EnumerateSharesInternal(host, ShareType.All, false);
+         return EnumerateSharesCore(host, ShareType.All, false);
       }
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
@@ -112,7 +112,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(string host, bool continueOnException)
       {
-         return EnumerateSharesInternal(host, ShareType.All, continueOnException);
+         return EnumerateSharesCore(host, ShareType.All, continueOnException);
       }
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
@@ -124,7 +124,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares(string host, ShareType shareType, bool continueOnException)
       {
-         return EnumerateSharesInternal(host, shareType, continueOnException);
+         return EnumerateSharesCore(host, shareType, continueOnException);
       }
 
       #endregion // EnumerateShares
@@ -145,7 +145,7 @@ namespace Alphaleonis.Win32.Network
             return null;
          
          Uri uri;
-         if (Uri.TryCreate(Path.GetRegularPathInternal(uncPath, GetFullPathOptions.None), UriKind.Absolute, out uri) && uri.IsUnc)
+         if (Uri.TryCreate(Path.GetRegularPathCore(uncPath, GetFullPathOptions.None), UriKind.Absolute, out uri) && uri.IsUnc)
          {
             return new[]
             {
@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Network
       public static ShareInfo GetShareInfo(string uncPath, bool continueOnException)
       {
          string[] unc = GetHostShareFromPath(uncPath);
-         return GetShareInfoInternal(ShareInfoLevel.Info503, unc[0], unc[1], continueOnException);
+         return GetShareInfoCore(ShareInfoLevel.Info503, unc[0], unc[1], continueOnException);
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
@@ -181,7 +181,7 @@ namespace Alphaleonis.Win32.Network
       public static ShareInfo GetShareInfo(ShareInfoLevel shareLevel, string uncPath, bool continueOnException)
       {
          string[] unc = GetHostShareFromPath(uncPath);
-         return GetShareInfoInternal(shareLevel, unc[0], unc[1], continueOnException);
+         return GetShareInfoCore(shareLevel, unc[0], unc[1], continueOnException);
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
@@ -192,7 +192,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static ShareInfo GetShareInfo(string host, string share, bool continueOnException)
       {
-         return GetShareInfoInternal(ShareInfoLevel.Info503, host, share, continueOnException);
+         return GetShareInfoCore(ShareInfoLevel.Info503, host, share, continueOnException);
       }
 
       /// <summary>Retrieves information about the Server Message Block (SMB) share as defined on the specified host.</summary>
@@ -204,16 +204,16 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static ShareInfo GetShareInfo(ShareInfoLevel shareLevel, string host, string share, bool continueOnException)
       {
-         return GetShareInfoInternal(shareLevel, host, share, continueOnException);
+         return GetShareInfoCore(shareLevel, host, share, continueOnException);
       }
 
       #endregion // GetShareInfo
 
       #region Internal Methods
 
-      #region EnumerateOpenConnectionsInternal
+      #region EnumerateOpenConnectionsCore
 
-      /// <summary>Unified method EnumerateOpenConnectionsInternal() to enumerate open connections from the specified host.</summary>
+      /// <summary>Enumerates open connections from the specified host.</summary>
       /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
@@ -221,12 +221,12 @@ namespace Alphaleonis.Win32.Network
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      private static IEnumerable<OpenConnectionInfo> EnumerateOpenConnectionsInternal(string host, string share, bool continueOnException)
+      private static IEnumerable<OpenConnectionInfo> EnumerateOpenConnectionsCore(string host, string share, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(share))
             throw new ArgumentNullException("share");
 
-         return EnumerateNetworkObjectInternal(new FunctionData { ExtraData1 = share }, (NativeMethods.CONNECTION_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectCore(new FunctionData { ExtraData1 = share }, (NativeMethods.CONNECTION_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
                new OpenConnectionInfo(host, structure),
 
@@ -236,7 +236,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetConnectionEnum(stripUnc, functionData.ExtraData1, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
@@ -244,9 +244,9 @@ namespace Alphaleonis.Win32.Network
             continueOnException);
       }
 
-      #endregion // EnumerateOpenConnectionsInternal
+      #endregion // EnumerateOpenConnectionsCore
 
-      #region EnumerateSharesInternal
+      #region EnumerateSharesCore
 
       /// <summary>Enumerates Server Message Block (SMB) shares from a local or remote host.</summary>
       /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
@@ -257,7 +257,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="shareType">The type of the shared resource to retrieve.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      internal static IEnumerable<ShareInfo> EnumerateSharesInternal(string host, ShareType shareType, bool continueOnException)
+      internal static IEnumerable<ShareInfo> EnumerateSharesCore(string host, ShareType shareType, bool continueOnException)
       {
          // When host == null, the local computer is used.
          // However, the resulting OpenResourceInfo.Host property will be empty.
@@ -265,14 +265,14 @@ namespace Alphaleonis.Win32.Network
          // Furthermore, the UNC prefix: \\ is not required and always removed.
          string stripUnc = Utils.IsNullOrWhiteSpace(host)
             ? Environment.MachineName
-            : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
          var fd = new FunctionData();
          bool hasItems = false;
          bool yieldAll = shareType == ShareType.All;
 
          // Try SHARE_INFO_503 structure.
-         foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.SHARE_INFO_503 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_503 structure, SafeGlobalMemoryBufferHandle buffer) =>
             new ShareInfo(stripUnc, ShareInfoLevel.Info503, structure),
             (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
                NativeMethods.NetShareEnum(stripUnc, 503, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
@@ -284,7 +284,7 @@ namespace Alphaleonis.Win32.Network
          // SHARE_INFO_503 is requested, but not supported/possible.
          // Try again with SHARE_INFO_2 structure.
          if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.SHARE_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) =>
+            foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_2 structure, SafeGlobalMemoryBufferHandle buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info2, structure),
                (FunctionData functionData, out SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
                   NativeMethods.NetShareEnum(stripUnc, 2, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
@@ -296,7 +296,7 @@ namespace Alphaleonis.Win32.Network
          // SHARE_INFO_2 is requested, but not supported/possible.
          // Try again with SHARE_INFO_1 structure.
          if (!hasItems)
-            foreach (var si in EnumerateNetworkObjectInternal(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
+            foreach (var si in EnumerateNetworkObjectCore(fd, (NativeMethods.SHARE_INFO_1 structure, SafeGlobalMemoryBufferHandle buffer) =>
                new ShareInfo(stripUnc, ShareInfoLevel.Info1, structure),
                (FunctionData functionData, out  SafeGlobalMemoryBufferHandle buffer, int prefMaxLen, out uint entriesRead, out uint totalEntries, out uint resumeHandle) =>
                   NativeMethods.NetShareEnum(stripUnc, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle), continueOnException).Where(si => yieldAll || si.ShareType == shareType))
@@ -305,11 +305,11 @@ namespace Alphaleonis.Win32.Network
             }
       }
 
-      #endregion // EnumerateSharesInternal
+      #endregion // EnumerateSharesCore
 
-      #region GetShareInfoInternal
+      #region GetShareInfoCore
 
-      /// <summary>Unified method GetShareInfoInternal() to get the <see cref="ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
+      /// <summary>Gets the <see cref="ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
       /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
       /// <exception cref="NetworkInformationException"/>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
@@ -317,7 +317,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException"><see langword="true"/> to suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      internal static ShareInfo GetShareInfoInternal(ShareInfoLevel shareLevel, string host, string share, bool continueOnException)
+      internal static ShareInfo GetShareInfoCore(ShareInfoLevel shareLevel, string host, string share, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(share))
             return null;
@@ -328,7 +328,7 @@ namespace Alphaleonis.Win32.Network
          // Furthermore, the UNC prefix: \\ is not required and always removed.
          string stripUnc = Utils.IsNullOrWhiteSpace(host)
             ? Environment.MachineName
-            : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
          bool fallback = false;
 
@@ -350,7 +350,7 @@ namespace Alphaleonis.Win32.Network
                      case ShareInfoLevel.Info1005:
                         return new ShareInfo(stripUnc, shareLevel, safeBuffer.PtrToStructure<NativeMethods.SHARE_INFO_1005>(0))
                         {
-                           NetFullPath = Path.CombineInternal(false, Path.UncPrefix + stripUnc, share)
+                           NetFullPath = Path.CombineCore(false, Path.UncPrefix + stripUnc, share)
                         };
 
                      case ShareInfoLevel.Info503:
@@ -388,7 +388,7 @@ namespace Alphaleonis.Win32.Network
          }
       }
 
-      #endregion // GetShareInfoInternal
+      #endregion // GetShareInfoCore
 
       #endregion // Internal Methods
    }

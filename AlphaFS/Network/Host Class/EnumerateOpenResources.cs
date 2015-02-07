@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<OpenResourceInfo> EnumerateOpenResources()
       {
-         return EnumerateOpenResourcesInternal(null, null, null, false);
+         return EnumerateOpenResourcesCore(null, null, null, false);
       }
 
       /// <summary>Enumerates open resources from the specified host.</summary>
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<OpenResourceInfo> EnumerateOpenResources(string host, string basePath, string typeName, bool continueOnException)
       {
-         return EnumerateOpenResourcesInternal(host, basePath, typeName, continueOnException);
+         return EnumerateOpenResourcesCore(host, basePath, typeName, continueOnException);
       }
 
       #endregion // EnumerateOpenResources
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Network
 
       #region Internal Methods
 
-      /// <summary>>Unified method EnumerateOpenResourcesInternal() to enumerate open resources from the specified host.</summary>
+      /// <summary>>Enumerates open resources from the specified host.</summary>
       /// <returns><see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
@@ -83,15 +83,15 @@ namespace Alphaleonis.Win32.Network
       /// </param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      private static IEnumerable<OpenResourceInfo> EnumerateOpenResourcesInternal(string host, string basePath, string typeName, bool continueOnException)
+      private static IEnumerable<OpenResourceInfo> EnumerateOpenResourcesCore(string host, string basePath, string typeName, bool continueOnException)
       {
-         basePath = Utils.IsNullOrWhiteSpace(basePath) ? null : Path.GetRegularPathInternal(basePath, GetFullPathOptions.CheckInvalidPathChars);
+         basePath = Utils.IsNullOrWhiteSpace(basePath) ? null : Path.GetRegularPathCore(basePath, GetFullPathOptions.CheckInvalidPathChars);
          typeName = Utils.IsNullOrWhiteSpace(typeName) ? null : typeName;
 
 
          var fd = new FunctionData { ExtraData1 = basePath, ExtraData2 = typeName };
 
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.FILE_INFO_3 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectCore(fd, (NativeMethods.FILE_INFO_3 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new OpenResourceInfo(host, structure),
 
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetFileEnum(stripUnc, fd.ExtraData1, fd.ExtraData2, 3, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 

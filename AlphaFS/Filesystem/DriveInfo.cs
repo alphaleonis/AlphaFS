@@ -146,7 +146,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public bool IsReady
       {
-         get { return File.ExistsInternal(true, null, Name, PathFormat.LongFullPath); }
+         get { return File.ExistsCore(true, null, Name, PathFormat.LongFullPath); }
       }
 
 
@@ -255,7 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DriveInfo[] GetDrives()
       {
-         return Directory.EnumerateLogicalDrivesInternal(false, false).ToArray();
+         return Directory.EnumerateLogicalDrivesCore(false, false).ToArray();
       }
 
       /// <summary>Returns a drive name as a string.</summary>
@@ -277,7 +277,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<DriveInfo> EnumerateDrives(bool fromEnvironment, bool isReady)
       {
-         return Directory.EnumerateLogicalDrivesInternal(fromEnvironment, isReady);
+         return Directory.EnumerateLogicalDrivesCore(fromEnvironment, isReady);
       }
 
 
@@ -299,7 +299,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
       public static char GetFreeDriveLetter(bool getLastAvailable)
       {
-         IEnumerable<char> freeDriveLetters = "CDEFGHIJKLMNOPQRSTUVWXYZ".Except(Directory.EnumerateLogicalDrivesInternal(false, false).Select(d => d.Name[0]));
+         IEnumerable<char> freeDriveLetters = "CDEFGHIJKLMNOPQRSTUVWXYZ".Except(Directory.EnumerateLogicalDrivesCore(false, false).Select(d => d.Name[0]));
 
          try
          {

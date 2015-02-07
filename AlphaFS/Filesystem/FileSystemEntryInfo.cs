@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
          set
          {
             LongFullPath = value;
-            _fullPath = Path.GetRegularPathInternal(LongFullPath, GetFullPathOptions.None);
+            _fullPath = Path.GetRegularPathCore(LongFullPath, GetFullPathOptions.None);
          }
       }
 
@@ -225,7 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
       public string LongFullPath
       {
          get { return _longFullPath; }
-         private set { _longFullPath = Path.GetLongPathInternal(value, GetFullPathOptions.None); }
+         private set { _longFullPath = Path.GetLongPathCore(value, GetFullPathOptions.None); }
       }
 
       #endregion // LongFullPath

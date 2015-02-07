@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Transaction = transaction;
 
-         InputPath = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         InputPath = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          SearchPattern = searchPattern;
          FileSystemObjectType = null;
@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (AsString)
             // Return object instance FullPath property as string, optionally in Unicode format.
-            return (T) (object) (AsLongPath ? fullPathLp : Path.GetRegularPathInternal(fullPathLp, GetFullPathOptions.None));
+            return (T) (object) (AsLongPath ? fullPathLp : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None));
 
 
          // Make sure the requested file system object type is returned.
@@ -162,7 +162,7 @@ namespace Alphaleonis.Win32.Filesystem
          // true = Return only directories.
          // false = Return only files.
 
-         var fsei = new FileSystemEntryInfo(win32FindData) { FullPath = Path.GetRegularPathInternal(fullPathLp, GetFullPathOptions.None) };
+         var fsei = new FileSystemEntryInfo(win32FindData) { FullPath = Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None) };
 
          return AsFileSystemInfo
             // Return object instance of type FileSystemInfo.

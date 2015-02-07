@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(string sourcePath, string destinationPath)
       {
-         File.TransferTimestampsInternal(true, null, sourcePath, destinationPath, PathFormat.RelativePath);
+         File.TransferTimestampsCore(true, null, sourcePath, destinationPath, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Transfers the date and time stamps for the specified directories.</summary>
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         File.TransferTimestampsInternal(true, null, sourcePath, destinationPath, pathFormat);
+         File.TransferTimestampsCore(true, null, sourcePath, destinationPath, pathFormat);
       }
 
       #region Transactional
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         File.TransferTimestampsInternal(true, transaction, sourcePath, destinationPath, PathFormat.RelativePath);
+         File.TransferTimestampsCore(true, transaction, sourcePath, destinationPath, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Transfers the date and time stamps for the specified directories.</summary>
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         File.TransferTimestampsInternal(true, transaction, sourcePath, destinationPath, pathFormat);
+         File.TransferTimestampsCore(true, transaction, sourcePath, destinationPath, pathFormat);
       }
       
       #endregion // Transactional

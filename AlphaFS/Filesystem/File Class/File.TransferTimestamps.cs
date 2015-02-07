@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         TransferTimestampsInternal(false, null, sourcePath, destinationPath, pathFormat);
+         TransferTimestampsCore(false, null, sourcePath, destinationPath, pathFormat);
       }
 
       /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestamps(string sourcePath, string destinationPath)
       {
-         TransferTimestampsInternal(false, null, sourcePath, destinationPath, PathFormat.RelativePath);
+         TransferTimestampsCore(false, null, sourcePath, destinationPath, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, pathFormat);
+         TransferTimestampsCore(false, transaction, sourcePath, destinationPath, pathFormat);
       }
 
       /// <summary>[AlphaFS] Transfers the date and time stamps for the specified files.</summary>
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void TransferTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
-         TransferTimestampsInternal(false, transaction, sourcePath, destinationPath, PathFormat.RelativePath);
+         TransferTimestampsCore(false, transaction, sourcePath, destinationPath, PathFormat.RelativePath);
       }
 
 
@@ -77,22 +77,24 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>Unified method TransferTimestampsInternal() to transfer the date and time stamps for the specified files and directories.</summary>
-      /// <remarks>This method does not change last access time for the source file.</remarks>
-      /// <remarks>This method uses BackupSemantics flag to get Timestamp changed for directories.</remarks>
+      /// <summary>Transfer the date and time stamps for the specified files and directories.</summary>
+      /// <remarks>
+      ///   <para>This method does not change last access time for the source file.</para>
+      ///   <para>This method uses BackupSemantics flag to get Timestamp changed for directories.</para>
+      /// </remarks>
       /// <param name="isFolder">Specifies that <paramref name="sourcePath"/> and <paramref name="destinationPath"/> are a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source path.</param>
       /// <param name="destinationPath">The destination path.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void TransferTimestampsInternal(bool isFolder, KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
+      internal static void TransferTimestampsCore(bool isFolder, KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         NativeMethods.WIN32_FILE_ATTRIBUTE_DATA attrs = GetAttributesExInternal<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, sourcePath, pathFormat);
+         NativeMethods.WIN32_FILE_ATTRIBUTE_DATA attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, sourcePath, pathFormat);
 
-         SetFsoDateTimeInternal(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.ftCreationTime), DateTime.FromFileTimeUtc(attrs.ftLastAccessTime), DateTime.FromFileTimeUtc(attrs.ftLastWriteTime), pathFormat);
+         SetFsoDateTimeCore(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.ftCreationTime), DateTime.FromFileTimeUtc(attrs.ftLastAccessTime), DateTime.FromFileTimeUtc(attrs.ftLastWriteTime), pathFormat);
       }
 
-      #endregion // TransferTimestampsInternal
+      #endregion // Internal Methods
    }
 }

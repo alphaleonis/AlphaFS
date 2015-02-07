@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetLongPath(string path)
       {
-         return GetLongPathInternal(path, GetFullPathOptions.None);
+         return GetLongPathCore(path, GetFullPathOptions.None);
       }
 
       #endregion // GetLongPath
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetLongFrom83ShortPath(string path)
       {
-         return GetLongShort83PathInternal(null, path, false);
+         return GetLongShort83PathCore(null, path, false);
       }
 
       /// <summary>[AlphaFS] Converts the specified existing path to its regular long form.</summary>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetLongFrom83ShortPathTransacted(KernelTransaction transaction, string path)
       {
-         return GetLongShort83PathInternal(transaction, path, false);
+         return GetLongShort83PathCore(transaction, path, false);
       }
 
       #endregion // GetLongFrom83ShortPath
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetRegularPath(string path)
       {
-         return GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars);
+         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars);
       }
 
       #endregion // GetRegularPath
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetShort83Path(string path)
       {
-         return GetLongShort83PathInternal(null, path, true);
+         return GetLongShort83PathCore(null, path, true);
       }
 
       /// <summary>[AlphaFS] Retrieves the short path form of the specified path.</summary>
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetShort83PathTransacted(KernelTransaction transaction, string path)
       {
-         return GetLongShort83PathInternal(transaction, path, true);
+         return GetLongShort83PathCore(transaction, path, true);
       }
 
       #endregion // GetShort83Path
@@ -132,7 +132,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file or directory, this can also be an UNC path.</param>
       /// <param name="options">Options for controlling the operation.</param>
       [SecurityCritical]
-      internal static string GetLongPathInternal(string path, GetFullPathOptions options)
+      internal static string GetLongPathCore(string path, GetFullPathOptions options)
       {
          if (path == null)
             throw new ArgumentNullException("path");
@@ -172,7 +172,7 @@ namespace Alphaleonis.Win32.Filesystem
             : path;
       }
 
-      /// <summary>Unified method GetLongShort83PathInternal() to retrieve the short path form, or the regular long form of the specified <paramref name="path"/>.</summary>
+      /// <summary>Retrieves the short path form, or the regular long form of the specified <paramref name="path"/>.</summary>
       /// <returns>If <paramref name="getShort"/> is <see langword="true"/>, a path of the 8.3 form otherwise the regular long form.</returns>
       /// <remarks>
       ///   <para>Will fail on NTFS volumes with disabled 8.3 name generation.</para>
@@ -182,9 +182,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">An existing path to a folder or file.</param>
       /// <param name="getShort"><see langword="true"/> to retrieve the short path form, <see langword="false"/> to retrieve the regular long form from the 8.3 <paramref name="path"/>.</param>
       [SecurityCritical]
-      private static string GetLongShort83PathInternal(KernelTransaction transaction, string path, bool getShort)
+      private static string GetLongShort83PathCore(KernelTransaction transaction, string path, bool getShort)
       {
-         string pathLp = GetFullPathInternal(transaction, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
+         string pathLp = GetFullPathCore(transaction, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
          var buffer = new StringBuilder();
          uint actualLength = getShort ? NativeMethods.GetShortPathName(pathLp, null, 0) : (uint) path.Length;
@@ -214,10 +214,10 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException(pathLp);
          }
 
-         return GetRegularPathInternal(buffer.ToString(), GetFullPathOptions.None);
+         return GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None);
       }
 
-      /// <summary>Unified method GetRegularPathInternal() to get the regular path from a long path.</summary>
+      /// <summary>Gets the regular path from a long path.</summary>
       /// <returns>
       ///   <para>Returns the regular form of a long <paramref name="path"/>.</para>
       ///   <para>For example: "\\?\C:\Temp\file.txt" to: "C:\Temp\file.txt", or: "\\?\UNC\Server\share\file.txt" to: "\\Server\share\file.txt".</para>
@@ -230,7 +230,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path.</param>
       /// <param name="options">Options for controlling the operation.</param>
       [SecurityCritical]
-      internal static string GetRegularPathInternal(string path, GetFullPathOptions options)
+      internal static string GetRegularPathCore(string path, GetFullPathOptions options)
       {
          if (path == null)
             throw new ArgumentNullException("path");
@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">Full pathname of the source path to convert.</param>
       /// <param name="pathFormat">The path format to use.</param>
       /// <param name="options">Options for controlling the operation. Note that on .NET 3.5 the TrimEnd option has no effect.</param>
-      internal static string GetExtendedLengthPathInternal(KernelTransaction transaction, string sourcePath, PathFormat pathFormat, GetFullPathOptions options)
+      internal static string GetExtendedLengthPathCore(KernelTransaction transaction, string sourcePath, PathFormat pathFormat, GetFullPathOptions options)
       {
          switch (pathFormat)
          {
@@ -275,14 +275,14 @@ namespace Alphaleonis.Win32.Filesystem
                return sourcePath;
 
             case PathFormat.FullPath:
-               return GetLongPathInternal(sourcePath, GetFullPathOptions.None);
+               return GetLongPathCore(sourcePath, GetFullPathOptions.None);
 
             case PathFormat.RelativePath:
 #if NET35
                // .NET 3.5 the TrimEnd option has no effect.
                options = options & ~GetFullPathOptions.TrimEnd;
 #endif
-               return GetFullPathInternal(transaction, sourcePath, GetFullPathOptions.AsLongPath | options);
+               return GetFullPathCore(transaction, sourcePath, GetFullPathOptions.AsLongPath | options);
 
             default:
                throw new ArgumentException("Invalid value for " + typeof(PathFormat).Name + ": " + pathFormat);

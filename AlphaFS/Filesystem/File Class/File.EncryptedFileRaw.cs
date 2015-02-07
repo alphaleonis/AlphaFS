@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ImportEncryptedFileRaw"/>
       public static void ExportEncryptedFileRaw(string fileName, System.IO.Stream output, PathFormat pathFormat)
       {
-         string lpPath = Path.GetExtendedLengthPathInternal(null, fileName, pathFormat, GetFullPathOptions.FullCheck | GetFullPathOptions.TrimEnd);
+         string lpPath = Path.GetExtendedLengthPathCore(null, fileName, pathFormat, GetFullPathOptions.FullCheck | GetFullPathOptions.TrimEnd);
          SafeEncryptedFileRawHandle context = null;
          int errorCode = NativeMethods.OpenEncryptedFileRaw(lpPath, NativeMethods.EncryptedFileRawMode.CreateForExport, out context);
          try
@@ -241,7 +241,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal static void ImportEncryptedFileRawCore(System.IO.Stream inputStream, string destinationFilePath, PathFormat pathFormat, NativeMethods.EncryptedFileRawMode mode)
       {
-         string lpPath = Path.GetExtendedLengthPathInternal(null, destinationFilePath, pathFormat, GetFullPathOptions.FullCheck | GetFullPathOptions.TrimEnd);
+         string lpPath = Path.GetExtendedLengthPathCore(null, destinationFilePath, pathFormat, GetFullPathOptions.FullCheck | GetFullPathOptions.TrimEnd);
          SafeEncryptedFileRawHandle context = null;
          int errorCode = NativeMethods.OpenEncryptedFileRaw(lpPath, mode, out context);
          try

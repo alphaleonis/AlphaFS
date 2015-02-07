@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTime(string path, DateTime lastWriteTime)
       {
-         File.SetFsoDateTimeInternal(true, null, path, null, null, lastWriteTime.ToUniversalTime(), PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, null, path, null, null, lastWriteTime.ToUniversalTime(), PathFormat.RelativePath);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc)
       {
-         File.SetFsoDateTimeInternal(true, null, path, null, null, lastWriteTimeUtc, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, null, path, null, null, lastWriteTimeUtc, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTime(string path, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeInternal(true, null, path, null, null, lastWriteTime.ToUniversalTime(), pathFormat);
+         File.SetFsoDateTimeCore(true, null, path, null, null, lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified directory was last written to.</summary>
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtc(string path, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeInternal(true, null, path, null, null, lastWriteTimeUtc, pathFormat);
+         File.SetFsoDateTimeCore(true, null, path, null, null, lastWriteTimeUtc, pathFormat);
       }
 
       #region Transactional
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeTransacted(KernelTransaction transaction, string path, DateTime lastWriteTime)
       {
-         File.SetFsoDateTimeInternal(true, transaction, path, null, null, lastWriteTime.ToUniversalTime(), PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, transaction, path, null, null, lastWriteTime.ToUniversalTime(), PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the date and time that the specified directory was last written to.</summary>
@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeTransacted(KernelTransaction transaction, string path, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeInternal(true, transaction, path, null, null, lastWriteTime.ToUniversalTime(), pathFormat);
+         File.SetFsoDateTimeCore(true, transaction, path, null, null, lastWriteTime.ToUniversalTime(), pathFormat);
       }
 
 
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc)
       {
-         File.SetFsoDateTimeInternal(true, transaction, path, null, null, lastWriteTimeUtc, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, transaction, path, null, null, lastWriteTimeUtc, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified directory was last written to.</summary>
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeInternal(true, transaction, path, null, null, lastWriteTimeUtc, pathFormat);
+         File.SetFsoDateTimeCore(true, transaction, path, null, null, lastWriteTimeUtc, pathFormat);
       }
 
       #endregion // Transactional

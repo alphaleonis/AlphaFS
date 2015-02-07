@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamWriter AppendText()
       {
-         return File.AppendTextInternal(Transaction, LongFullName, NativeMethods.DefaultFileEncoding, PathFormat.LongFullPath);
+         return File.AppendTextCore(Transaction, LongFullName, NativeMethods.DefaultFileEncoding, PathFormat.LongFullPath);
       }
 
       /// <summary>Creates a <see cref="StreamWriter"/> that appends text to the file represented by this instance of the <see cref="FileInfo"/>.</summary>
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamWriter AppendText(Encoding encoding)
       {
-         return File.AppendTextInternal(Transaction, LongFullName, encoding, PathFormat.LongFullPath);
+         return File.AppendTextCore(Transaction, LongFullName, encoding, PathFormat.LongFullPath);
       }
 
       #endregion // .NET

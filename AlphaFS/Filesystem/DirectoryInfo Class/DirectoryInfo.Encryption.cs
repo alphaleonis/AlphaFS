@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decrypt()
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, false, false, PathFormat.LongFullPath);
+         Directory.EncryptDecryptDirectoryCore(LongFullName, false, false, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decrypt(bool recursive)
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, false, recursive, PathFormat.LongFullPath);
+         Directory.EncryptDecryptDirectoryCore(LongFullName, false, recursive, PathFormat.LongFullPath);
       }
 
       #endregion // Decrypt
@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DisableEncryption()
       {
-         Directory.EnableDisableEncryptionInternal(LongFullName, false, PathFormat.LongFullPath);
+         Directory.EnableDisableEncryptionCore(LongFullName, false, PathFormat.LongFullPath);
       }
 
       #endregion // DisableEncryption
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void EnableEncryption()
       {
-         Directory.EnableDisableEncryptionInternal(LongFullName, true, PathFormat.LongFullPath);
+         Directory.EnableDisableEncryptionCore(LongFullName, true, PathFormat.LongFullPath);
       }
 
       #endregion // EnableEncryption
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt()
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, true, false, PathFormat.LongFullPath);
+         Directory.EncryptDecryptDirectoryCore(LongFullName, true, false, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Decrypts a directory that was encrypted by the current account using the Encrypt method.</summary>
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Encrypt(bool recursive)
       {
-         Directory.EncryptDecryptDirectoryInternal(LongFullName, true, recursive, PathFormat.LongFullPath);
+         Directory.EncryptDecryptDirectoryCore(LongFullName, true, recursive, PathFormat.LongFullPath);
       }
 
       #endregion // Encrypt

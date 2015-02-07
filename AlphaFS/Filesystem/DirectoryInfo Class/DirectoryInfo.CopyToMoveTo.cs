@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo CopyTo(string destinationPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativePath);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo CopyTo(string destinationPath, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo CopyTo(string destinationPath, CopyOptions copyOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativePath);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -131,7 +131,7 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo CopyTo(string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, copyOptions, null, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, copyOptions, null, null, null, out destinationPathLp, pathFormat);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -165,8 +165,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -199,8 +199,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -232,8 +232,8 @@ namespace Alphaleonis.Win32.Filesystem
       public void MoveTo(string destinationPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, null, MoveOptions.None, null, null, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyToMoveToCore(destinationPath, null, MoveOptions.None, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
       }
 
       #endregion // .NET
@@ -264,7 +264,7 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo MoveTo(string destinationPath, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, null, MoveOptions.None, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, null, MoveOptions.None, null, null, out destinationPathLp, pathFormat);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -294,7 +294,7 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo MoveTo(string destinationPath, MoveOptions moveOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, null, moveOptions, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, null, moveOptions, null, null, out destinationPathLp, PathFormat.RelativePath);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -323,7 +323,7 @@ namespace Alphaleonis.Win32.Filesystem
       public DirectoryInfo MoveTo(string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, null, moveOptions, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, null, moveOptions, null, null, out destinationPathLp, pathFormat);
          return new DirectoryInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -357,8 +357,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -393,8 +393,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -404,7 +404,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
+      /// <summary>Copy/move a Non-/Transacted file or directory including its children to a new location,
       /// <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified, and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
       /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
@@ -429,19 +429,19 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="longFullPath">Returns the retrieved long full path.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      private CopyMoveResult CopyToMoveToInternal(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
+      private CopyMoveResult CopyToMoveToCore(string destinationPath, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {
-         string destinationPathLp = Path.GetExtendedLengthPathInternal(null, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         string destinationPathLp = Path.GetExtendedLengthPathCore(null, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
          longFullPath = destinationPathLp;
 
          // Returns false when CopyMoveProgressResult is PROGRESS_CANCEL or PROGRESS_STOP.
-         return Directory.CopyMoveInternal(Transaction, LongFullName, destinationPathLp, copyOptions, moveOptions, progressHandler, userProgressData, PathFormat.LongFullPath);
+         return Directory.CopyMoveCore(Transaction, LongFullName, destinationPathLp, copyOptions, moveOptions, progressHandler, userProgressData, PathFormat.LongFullPath);
       }
 
-      private void CopyToMoveToInternalRefresh(string destinationPath, string destinationPathLp)
+      private void CopyToMoveToCoreRefresh(string destinationPath, string destinationPathLp)
       {
          LongFullName = destinationPathLp;
-         FullPath = Path.GetRegularPathInternal(destinationPathLp, GetFullPathOptions.None);
+         FullPath = Path.GetRegularPathCore(destinationPathLp, GetFullPathOptions.None);
 
          OriginalPath = destinationPath;
          DisplayPath = OriginalPath;

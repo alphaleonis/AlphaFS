@@ -35,10 +35,10 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string Combine(params string[] paths)
       {
-         return CombineInternal(true, paths);
+         return CombineCore(true, paths);
       }
 
-      /// <summary>Unified method Combine() to combine an array of strings into a path.</summary>
+      /// <summary>Combines an array of strings into a path.</summary>
       /// <returns>The combined paths.</returns>
       /// <remarks>
       ///   <para>The parameters are not parsed if they have white space.</para>
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="checkInvalidPathChars"><see langword="true"/> will not check <paramref name="paths"/> for invalid path characters.</param>
       /// <param name="paths">An array of parts of the path.</param>
       [SecurityCritical]
-      internal static string CombineInternal(bool checkInvalidPathChars, params string[] paths)
+      internal static string CombineCore(bool checkInvalidPathChars, params string[] paths)
       {
          if (paths == null)
             throw new ArgumentNullException("paths");

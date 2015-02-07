@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path == null)
             return null;
 
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.RelativePath);
+         DirectoryInfo di = Directory.GetParentCore(transaction, path, PathFormat.RelativePath);
          return di != null && di.Parent != null ? di.Name : null;
       }
 
@@ -344,7 +344,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path.Trim().Length == 0)
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
-         string pathRp = GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None);
+         string pathRp = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None);
 
          var rootLengthPath = GetRootLength(path, false);
          var rootLengthPathRp = GetRootLength(pathRp, false);
@@ -352,10 +352,10 @@ namespace Alphaleonis.Win32.Filesystem
          // Check if pathRp is an empty string.
          if (rootLengthPathRp == 0)
             if (path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase))
-               return GetLongPathInternal(path.Substring(0, rootLengthPath), GetFullPathOptions.None);
+               return GetLongPathCore(path.Substring(0, rootLengthPath), GetFullPathOptions.None);
 
          if (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase))
-            return GetLongPathInternal(pathRp.Substring(0, rootLengthPathRp), GetFullPathOptions.None);
+            return GetLongPathCore(pathRp.Substring(0, rootLengthPathRp), GetFullPathOptions.None);
 
          return path.Substring(0, rootLengthPath);
       }

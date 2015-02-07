@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(string path)
       {
-         return File.GetLastAccessTimeInternal(null, path, false, PathFormat.RelativePath).ToLocalTime();
+         return File.GetLastAccessTimeCore(null, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       /// <summary>Gets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(string path)
       {
-         return File.GetLastAccessTimeInternal(null, path, true, PathFormat.RelativePath);
+         return File.GetLastAccessTimeCore(null, path, true, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTime(string path, PathFormat pathFormat)
       {
-         return File.GetLastAccessTimeInternal(null, path, false, pathFormat).ToLocalTime();
+         return File.GetLastAccessTimeCore(null, path, false, pathFormat).ToLocalTime();
       }
 
 
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtc(string path, PathFormat pathFormat)
       {
-         return File.GetLastAccessTimeInternal(null, path, true, pathFormat);
+         return File.GetLastAccessTimeCore(null, path, true, pathFormat);
       }
 
       #region Transactional
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetLastAccessTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
+         return File.GetLastAccessTimeCore(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the date and time that the specified directory was last accessed.</summary>
@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetLastAccessTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
+         return File.GetLastAccessTimeCore(transaction, path, false, pathFormat).ToLocalTime();
       }
 
 
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path)
       {
-         return File.GetLastAccessTimeInternal(transaction, path, true, PathFormat.RelativePath);
+         return File.GetLastAccessTimeCore(transaction, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return File.GetLastAccessTimeInternal(transaction, path, true, pathFormat);
+         return File.GetLastAccessTimeCore(transaction, path, true, pathFormat);
       }
       
       #endregion // Transactional

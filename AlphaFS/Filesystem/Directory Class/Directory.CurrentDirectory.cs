@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         string pathRp = Path.GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars);
+         string pathRp = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars);
 
          // System.IO SetCurrentDirectory() does not handle long paths.
          System.IO.Directory.SetCurrentDirectory(path.Length > 255 ? Path.GetShort83Path(pathRp) : pathRp);

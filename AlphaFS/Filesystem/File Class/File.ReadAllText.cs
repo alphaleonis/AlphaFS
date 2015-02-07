@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(string path)
       {
-         return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
+         return ReadAllTextCore(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
 
       /// <summary>Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(string path, Encoding encoding)
       {
-         return ReadAllTextInternal(null, path, encoding, PathFormat.RelativePath);
+         return ReadAllTextCore(null, path, encoding, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(string path, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
+         return ReadAllTextCore(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(null, path, encoding, pathFormat);
+         return ReadAllTextCore(null, path, encoding, pathFormat);
       }
 
       #region Transactional
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllTextTransacted(KernelTransaction transaction, string path)
       {
-         return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
+         return ReadAllTextCore(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllTextTransacted(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return ReadAllTextInternal(transaction, path, encoding, PathFormat.RelativePath);
+         return ReadAllTextCore(transaction, path, encoding, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Opens a text file, reads all lines of the file, and then closes the file.</summary>
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllTextTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
+         return ReadAllTextCore(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a file, reads all lines of the file with the specified encoding, and then closes the file.</summary>
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string ReadAllTextTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadAllTextInternal(transaction, path, encoding, pathFormat);
+         return ReadAllTextCore(transaction, path, encoding, pathFormat);
       }
 
       #endregion // Transacted
@@ -123,10 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method ReadAllTextInternal() to open a file, read all lines of the file with the specified encoding, and then
-      ///   close the file.
-      /// </summary>
+      /// <summary>Open a file, read all lines of the file with the specified encoding, and then close the file.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
@@ -134,13 +131,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>All lines of the file.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static string ReadAllTextInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      internal static string ReadAllTextCore(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, null, null, pathFormat), encoding))
+         using (StreamReader sr = new StreamReader(OpenCore(transaction, path, FileMode.Open, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, null, null, pathFormat), encoding))
             return sr.ReadToEnd();
       }
 
-      #endregion // ReadAllTextInternal
+      #endregion // Internal Methods
 
    }
 }

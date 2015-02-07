@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDrives()
       {
-         return EnumerateDrivesInternal(null, false);
+         return EnumerateDrivesCore(null, false);
       }
 
       /// <summary>Enumerates local drives from the specified host.</summary>
@@ -49,12 +49,12 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDrives(string host, bool continueOnException)
       {
-         return EnumerateDrivesInternal(host, continueOnException);
+         return EnumerateDrivesCore(host, continueOnException);
       }
 
 
 
-      /// <summary>Unified method EnumerateDrivesInternal() to enumerate local drives from the specified host.</summary>
+      /// <summary>Enumerates local drives from the specified host.</summary>
       /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
@@ -64,9 +64,9 @@ namespace Alphaleonis.Win32.Network
       ///   <para>such as unavailable resources.</para>
       /// </param>
       [SecurityCritical]
-      private static IEnumerable<string> EnumerateDrivesInternal(string host, bool continueOnException)
+      private static IEnumerable<string> EnumerateDrivesCore(string host, bool continueOnException)
       {
-         return EnumerateNetworkObjectInternal(new FunctionData { EnumType = 1 }, (string structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectCore(new FunctionData { EnumType = 1 }, (string structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             structure,
 
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Network
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
 
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetServerDiskEnum(stripUnc, 0, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resume);
 

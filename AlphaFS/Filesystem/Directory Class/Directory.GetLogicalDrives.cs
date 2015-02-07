@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetLogicalDrives()
       {
-         return EnumerateLogicalDrivesInternal(false, false).Select(drive => drive.Name).ToArray();
+         return EnumerateLogicalDrivesCore(false, false).Select(drive => drive.Name).ToArray();
       }
 
       #endregion // .NET
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string[] GetLogicalDrives(bool fromEnvironment, bool isReady)
       {
-         return EnumerateLogicalDrivesInternal(fromEnvironment, isReady).Select(drive => drive.Name).ToArray();
+         return EnumerateLogicalDrivesCore(fromEnvironment, isReady).Select(drive => drive.Name).ToArray();
       }
 
 
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<DriveInfo> EnumerateLogicalDrives(bool fromEnvironment, bool isReady)
       {
-         return EnumerateLogicalDrivesInternal(fromEnvironment, isReady);
+         return EnumerateLogicalDrivesCore(fromEnvironment, isReady);
       }
 
       #region Internal Methods
@@ -68,14 +68,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
       [SecurityCritical]
-      internal static IEnumerable<DriveInfo> EnumerateLogicalDrivesInternal(bool fromEnvironment, bool isReady)
+      internal static IEnumerable<DriveInfo> EnumerateLogicalDrivesCore(bool fromEnvironment, bool isReady)
       {
          #region Get from Environment
 
          if (fromEnvironment)
          {
             IEnumerable<string> drivesEnv = isReady
-               ? Environment.GetLogicalDrives().Where(ld => File.ExistsInternal(true, null, ld, PathFormat.FullPath))
+               ? Environment.GetLogicalDrives().Where(ld => File.ExistsCore(true, null, ld, PathFormat.FullPath))
                : Environment.GetLogicalDrives().Select(ld => ld);
 
             foreach (string drive in drivesEnv)
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
                // Optionally check Drive .IsReady.
                if (isReady)
                {
-                  if (File.ExistsInternal(true, null, drive, PathFormat.FullPath))
+                  if (File.ExistsCore(true, null, drive, PathFormat.FullPath))
                      yield return new DriveInfo(drive);
                }
                else
@@ -126,7 +126,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (isReady)
                {
                   // Optionally check Drive .IsReady.
-                  if (File.ExistsInternal(true, null, drive, PathFormat.FullPath))
+                  if (File.ExistsCore(true, null, drive, PathFormat.FullPath))
                      yield return new DriveInfo(drive);
                }
                else

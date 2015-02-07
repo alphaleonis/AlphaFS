@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, PathFormat.RelativePath);
+         return GetAttributesExCore<FileAttributes>(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path, PathFormat pathFormat)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, pathFormat);
+         return GetAttributesExCore<FileAttributes>(null, path, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributesTransacted(KernelTransaction transaction, string path)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, PathFormat.RelativePath);
+         return GetAttributesExCore<FileAttributes>(transaction, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, pathFormat);
+         return GetAttributesExCore<FileAttributes>(transaction, path, pathFormat);
       }
 
       #endregion
@@ -85,15 +85,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
       [SecurityCritical]
-      internal static T GetAttributesExInternal<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static T GetAttributesExCore<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
          var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-         int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
+         int dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
 
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
             NativeError.ThrowException(dataInitialised, pathLp);
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>0 on success, otherwise a Win32 error code.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      internal static int FillAttributeInfoInternal(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryagain, bool returnErrorOnNotFound)
+      internal static int FillAttributeInfoCore(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryagain, bool returnErrorOnNotFound)
       {
          int dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
 
@@ -206,7 +206,7 @@ namespace Alphaleonis.Win32.Filesystem
                       dataInitialised != Win32Errors.ERROR_NOT_READY) // Floppy device not ready.
                   {
                      // In case someone latched onto the file. Take the perf hit only for failure.
-                     return FillAttributeInfoInternal(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
+                     return FillAttributeInfoCore(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
                   }
 
                   if (!returnErrorOnNotFound)
@@ -222,6 +222,6 @@ namespace Alphaleonis.Win32.Filesystem
          return dataInitialised;
       }
 
-      #endregion // GetAttributesExInternal
+      #endregion // Internal Methods
    }
 }

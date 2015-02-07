@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {
-         return Device.EnumerateDevicesInternal(null, _hostName, deviceGuid);
+         return Device.EnumerateDevicesCore(null, _hostName, deviceGuid);
       }
       
       #endregion // EnumerateDevices

@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path)
       {
-         DeleteDirectoryInternal(null, null, path, false, false, true, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, null, path, false, false, true, false, PathFormat.RelativePath);
       }
 
       /// <summary>Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive)
       {
-         DeleteDirectoryInternal(null, null, path, recursive, false, !recursive, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, null, path, recursive, false, !recursive, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, PathFormat pathFormat)
       {
-         DeleteDirectoryInternal(null, null, path, false, false, true, false, pathFormat);
+         DeleteDirectoryCore(null, null, path, false, false, true, false, pathFormat);
       }
 
 
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive, PathFormat pathFormat)
       {
-         DeleteDirectoryInternal(null, null, path, recursive, false, !recursive, false, pathFormat);
+         DeleteDirectoryCore(null, null, path, recursive, false, !recursive, false, pathFormat);
       }
 
 
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteDirectoryInternal(null, null, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, null, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Delete(string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteDirectoryInternal(null, null, path, recursive, ignoreReadOnly, !recursive, false, pathFormat);
+         DeleteDirectoryCore(null, null, path, recursive, ignoreReadOnly, !recursive, false, pathFormat);
       }
 
       #region Transactional
@@ -124,7 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path)
       {
-         DeleteDirectoryInternal(null, transaction, path, false, false, true, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, transaction, path, false, false, true, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         DeleteDirectoryInternal(null, transaction, path, false, false, true, false, pathFormat);
+         DeleteDirectoryCore(null, transaction, path, false, false, true, false, pathFormat);
       }
 
 
@@ -152,7 +152,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive)
       {
-         DeleteDirectoryInternal(null, transaction, path, recursive, false, !recursive, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, transaction, path, recursive, false, !recursive, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
       {
-         DeleteDirectoryInternal(null, transaction, path, recursive, false, !recursive, false, pathFormat);
+         DeleteDirectoryCore(null, transaction, path, recursive, false, !recursive, false, pathFormat);
       }
 
 
@@ -182,7 +182,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteDirectoryInternal(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.RelativePath);
+         DeleteDirectoryCore(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
@@ -197,7 +197,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteDirectoryInternal(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, pathFormat);
+         DeleteDirectoryCore(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, pathFormat);
       }
 
       #endregion // Transactional
@@ -220,7 +220,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static void DeleteDirectoryInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool requireEmpty, bool continueOnNotExist, PathFormat pathFormat)
+      internal static void DeleteDirectoryCore(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool requireEmpty, bool continueOnNotExist, PathFormat pathFormat)
       {
          #region Setup
 
@@ -234,8 +234,8 @@ namespace Alphaleonis.Win32.Filesystem
             // Path refers to a file instead of a directory.
             // The specified path is invalid (for example, it is on an unmapped drive). 
 
-            fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
-               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator),
+            fileSystemEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction,
+               Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator),
                   continueOnNotExist, pathFormat);
          }
 
@@ -256,7 +256,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Check to see if this is a mount point, and unmount it.
          if (fileSystemEntryInfo.IsMountPoint)
          {
-            int lastError = Volume.DeleteVolumeMountPointInternal(pathLp, true);
+            int lastError = Volume.DeleteVolumeMountPointCore(pathLp, true);
 
             if (lastError != Win32Errors.ERROR_SUCCESS && lastError != Win32Errors.ERROR_PATH_NOT_FOUND)
                NativeError.ThrowException(lastError, pathLp);
@@ -268,12 +268,12 @@ namespace Alphaleonis.Win32.Filesystem
          if (recursive)
          {
             // Enumerate all file system objects.
-            foreach (var fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
+            foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
             {
                if (fsei.IsDirectory)
-                  DeleteDirectoryInternal(fsei, transaction, null, true, ignoreReadOnly, requireEmpty, true, PathFormat.LongFullPath);
+                  DeleteDirectoryCore(fsei, transaction, null, true, ignoreReadOnly, requireEmpty, true, PathFormat.LongFullPath);
                else
-                  File.DeleteFileInternal(transaction, fsei.LongFullPath, ignoreReadOnly, PathFormat.LongFullPath);
+                  File.DeleteFileCore(transaction, fsei.LongFullPath, ignoreReadOnly, PathFormat.LongFullPath);
             }
          }
 
@@ -306,7 +306,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_DIRECTORY:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: Path refers to a file instead of a directory.
-                  if (File.ExistsInternal(false, transaction, pathLp, PathFormat.LongFullPath))
+                  if (File.ExistsCore(false, transaction, pathLp, PathFormat.LongFullPath))
                      throw new DirectoryNotFoundException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}", Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.CurrentCulture, Resources.Target_Directory_Is_A_File, pathLp)));
                   break;
 
@@ -323,7 +323,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                case Win32Errors.ERROR_ACCESS_DENIED:
                   var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-                  int dataInitialised = File.FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
+                  int dataInitialised = File.FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
 
                   if (data.dwFileAttributes != (FileAttributes) (-1))
                   {
@@ -334,7 +334,7 @@ namespace Alphaleonis.Win32.Filesystem
                         if (ignoreReadOnly)
                         {
                            // Reset directory attributes.
-                           File.SetAttributesInternal(true, transaction, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
+                           File.SetAttributesCore(true, transaction, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
                            goto startRemoveDirectory;
                         }
 

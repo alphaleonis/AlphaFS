@@ -46,8 +46,8 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeName");
 
          if (!volumeName.StartsWith(Path.LongPathPrefix, StringComparison.OrdinalIgnoreCase))
-            volumeName = Path.IsUncPathInternal(volumeName, false, false)
-               ? Path.GetLongPathInternal(volumeName, GetFullPathOptions.None)
+            volumeName = Path.IsUncPathCore(volumeName, false, false)
+               ? Path.GetLongPathCore(volumeName, GetFullPathOptions.None)
                : Path.LongPathPrefix + volumeName;
          else
          {
@@ -170,7 +170,7 @@ namespace Alphaleonis.Win32.Filesystem
             } while (lastError == Win32Errors.ERROR_MORE_DATA);
          }
 
-         FullPath = Path.GetRegularPathInternal(Name, GetFullPathOptions.None);
+         FullPath = Path.GetRegularPathCore(Name, GetFullPathOptions.None);
          Name = volumeNameBuffer.ToString();
 
          FileSystemName = fileSystemNameBuffer.ToString();

@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path)
       {
-         return CreateDirectoryInternal(null, path, null, null, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(null, path, null, null, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(null, path, null, null, false, pathFormat);
+         return CreateDirectoryCore(null, path, null, null, false, pathFormat);
       }
 
 
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, bool compress)
       {
-         return CreateDirectoryInternal(null, path, null, null, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(null, path, null, null, compress, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(null, path, null, null, compress, pathFormat);
+         return CreateDirectoryCore(null, path, null, null, compress, pathFormat);
       }
 
 
@@ -121,7 +121,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity)
       {
-         return CreateDirectoryInternal(null, path, null, directorySecurity, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(null, path, null, directorySecurity, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
@@ -139,7 +139,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(null, path, null, directorySecurity, false, pathFormat);
+         return CreateDirectoryCore(null, path, null, directorySecurity, false, pathFormat);
       }
 
 
@@ -159,7 +159,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity, bool compress)
       {
-         return CreateDirectoryInternal(null, path, null, directorySecurity, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(null, path, null, directorySecurity, compress, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
@@ -178,7 +178,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(null, path, null, directorySecurity, compress, pathFormat);
+         return CreateDirectoryCore(null, path, null, directorySecurity, compress, pathFormat);
       }
 
 
@@ -197,7 +197,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath)
       {
-         return CreateDirectoryInternal(null, path, templatePath, null, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(null, path, templatePath, null, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
@@ -215,7 +215,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(null, path, templatePath, null, false, pathFormat);
+         return CreateDirectoryCore(null, path, templatePath, null, false, pathFormat);
       }
 
 
@@ -235,7 +235,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, bool compress)
       {
-         return CreateDirectoryInternal(null, path, templatePath, null, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(null, path, templatePath, null, compress, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
@@ -254,7 +254,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(null, path, templatePath, null, compress, pathFormat);
+         return CreateDirectoryCore(null, path, templatePath, null, compress, pathFormat);
       }
 
 
@@ -274,7 +274,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity)
       {
-         return CreateDirectoryInternal(null, path, templatePath, directorySecurity, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(null, path, templatePath, directorySecurity, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
@@ -293,7 +293,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(null, path, templatePath, directorySecurity, false, pathFormat);
+         return CreateDirectoryCore(null, path, templatePath, directorySecurity, false, pathFormat);
       }
 
 
@@ -314,7 +314,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
-         return CreateDirectoryInternal(null, path, templatePath, directorySecurity, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(null, path, templatePath, directorySecurity, compress, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
@@ -334,7 +334,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(null, path, templatePath, directorySecurity, compress, pathFormat);
+         return CreateDirectoryCore(null, path, templatePath, directorySecurity, compress, pathFormat);
       }
 
       #region Transactional
@@ -352,7 +352,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path)
       {
-         return CreateDirectoryInternal(transaction, path, null, null, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(transaction, path, null, null, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
@@ -370,7 +370,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(transaction, path, null, null, false, pathFormat);
+         return CreateDirectoryCore(transaction, path, null, null, false, pathFormat);
       }
 
 
@@ -390,7 +390,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, bool compress)
       {
-         return CreateDirectoryInternal(transaction, path, null, null, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(transaction, path, null, null, compress, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
@@ -409,7 +409,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(transaction, path, null, null, compress, pathFormat);
+         return CreateDirectoryCore(transaction, path, null, null, compress, pathFormat);
       }
 
 
@@ -429,7 +429,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity)
       {
-         return CreateDirectoryInternal(transaction, path, null, directorySecurity, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(transaction, path, null, directorySecurity, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
@@ -448,7 +448,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(transaction, path, null, directorySecurity, false, pathFormat);
+         return CreateDirectoryCore(transaction, path, null, directorySecurity, false, pathFormat);
       }
 
 
@@ -469,7 +469,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress)
       {
-         return CreateDirectoryInternal(transaction, path, null, directorySecurity, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(transaction, path, null, directorySecurity, compress, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path, applying the specified Windows security.</summary>
@@ -489,7 +489,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(transaction, path, null, directorySecurity, compress, pathFormat);
+         return CreateDirectoryCore(transaction, path, null, directorySecurity, compress, pathFormat);
       }
 
 
@@ -509,7 +509,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath)
       {
-         return CreateDirectoryInternal(transaction, path, templatePath, null, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(transaction, path, templatePath, null, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
@@ -528,7 +528,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(transaction, path, templatePath, null, false, pathFormat);
+         return CreateDirectoryCore(transaction, path, templatePath, null, false, pathFormat);
       }
 
 
@@ -549,7 +549,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, bool compress)
       {
-         return CreateDirectoryInternal(transaction, path, templatePath, null, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(transaction, path, templatePath, null, compress, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates a new directory, with the attributes of a specified template directory.</summary>
@@ -569,7 +569,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(transaction, path, templatePath, null, compress, pathFormat);
+         return CreateDirectoryCore(transaction, path, templatePath, null, compress, pathFormat);
       }
 
 
@@ -590,7 +590,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity)
       {
-         return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, false, PathFormat.RelativePath);
+         return CreateDirectoryCore(transaction, path, templatePath, directorySecurity, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
@@ -610,7 +610,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, false, pathFormat);
+         return CreateDirectoryCore(transaction, path, templatePath, directorySecurity, false, pathFormat);
       }
 
 
@@ -632,7 +632,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
-         return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, compress, PathFormat.RelativePath);
+         return CreateDirectoryCore(transaction, path, templatePath, directorySecurity, compress, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Creates all the directories in the specified path of a specified template directory and applies the specified Windows security.</summary>
@@ -653,7 +653,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
-         return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, compress, pathFormat);
+         return CreateDirectoryCore(transaction, path, templatePath, directorySecurity, compress, pathFormat);
       }
 
       #endregion // Transactional
@@ -682,7 +682,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static DirectoryInfo CreateDirectoryInternal(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, PathFormat pathFormat)
+      internal static DirectoryInfo CreateDirectoryCore(KernelTransaction transaction, string path, string templatePath, ObjectSecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
          bool fullCheck = pathFormat == PathFormat.RelativePath;
 
@@ -690,26 +690,26 @@ namespace Alphaleonis.Win32.Filesystem
          Path.CheckSupportedPathFormat(templatePath, fullCheck, fullCheck);
 
          
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          // Return DirectoryInfo instance if the directory specified by path already exists.
-         if (File.ExistsInternal(true, transaction, pathLp, PathFormat.LongFullPath))
+         if (File.ExistsCore(true, transaction, pathLp, PathFormat.LongFullPath))
             return new DirectoryInfo(transaction, pathLp, PathFormat.LongFullPath);
 
          // MSDN: .NET 3.5+: IOException: The directory specified by path is a file or the network name was not found.
-         if (File.ExistsInternal(false, transaction, pathLp, PathFormat.LongFullPath))
+         if (File.ExistsCore(false, transaction, pathLp, PathFormat.LongFullPath))
             NativeError.ThrowException(Win32Errors.ERROR_ALREADY_EXISTS, pathLp);
 
 
          string templatePathLp = Utils.IsNullOrWhiteSpace(templatePath)
             ? null
-            : Path.GetExtendedLengthPathInternal(transaction, templatePath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+            : Path.GetExtendedLengthPathCore(transaction, templatePath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          
          #region Construct Full Path
 
-         string longPathPrefix = Path.IsUncPathInternal(path, false, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
-         path = Path.GetRegularPathInternal(pathLp, GetFullPathOptions.None);
+         string longPathPrefix = Path.IsUncPathCore(path, false, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
+         path = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None);
 
          int length = path.Length;
          if (length >= 2 && Path.IsDVsc(path[length - 1], false))
@@ -730,7 +730,7 @@ namespace Alphaleonis.Win32.Filesystem
                string path1 = path.Substring(0, index + 1);
                string path2 = longPathPrefix + path1.TrimStart('\\');
 
-               if (!File.ExistsInternal(true, transaction, path2, PathFormat.LongFullPath))
+               if (!File.ExistsCore(true, transaction, path2, PathFormat.LongFullPath))
                   list.Push(path2);
 
                while (index > rootLength && !Path.IsDVsc(path[index], false))
@@ -768,10 +768,10 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: If the directory already exists, this method does nothing.
                      // MSDN: .NET 3.5+: IOException: The directory specified by path is a file.
                      case Win32Errors.ERROR_ALREADY_EXISTS:
-                        if (File.ExistsInternal(false, transaction, pathLp, PathFormat.LongFullPath))
+                        if (File.ExistsCore(false, transaction, pathLp, PathFormat.LongFullPath))
                            NativeError.ThrowException(lastError, pathLp);
 
-                        if (File.ExistsInternal(false, transaction, folderLp, PathFormat.LongFullPath))
+                        if (File.ExistsCore(false, transaction, folderLp, PathFormat.LongFullPath))
                            NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, folderLp);
                         break;
 
@@ -789,7 +789,7 @@ namespace Alphaleonis.Win32.Filesystem
                   }
                }
                else if (compress)
-                  Device.ToggleCompressionInternal(true, transaction, folderLp, true, PathFormat.LongFullPath);
+                  Device.ToggleCompressionCore(true, transaction, folderLp, true, PathFormat.LongFullPath);
             }
          }
 

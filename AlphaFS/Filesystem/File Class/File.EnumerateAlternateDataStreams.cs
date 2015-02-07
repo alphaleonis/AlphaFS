@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path)
       {
-         return EnumerateAlternateDataStreamsInternal(null, path, PathFormat.RelativePath);
+         return EnumerateAlternateDataStreamsCore(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>Enumerates the streams of type :$DATA in the specified file or directory.</summary>
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(string path, PathFormat pathFormat)
       {
-         return EnumerateAlternateDataStreamsInternal(null, path, pathFormat);
+         return EnumerateAlternateDataStreamsCore(null, path, pathFormat);
       }
 
       /// <summary>Enumerates the streams of type :$DATA in the specified file or directory.</summary>
@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path)
       {
-         return EnumerateAlternateDataStreamsInternal(transaction, path, PathFormat.RelativePath);
+         return EnumerateAlternateDataStreamsCore(transaction, path, PathFormat.RelativePath);
       }
 
       /// <summary>Enumerates the streams of type :$DATA in the specified file or directory.</summary>
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return EnumerateAlternateDataStreamsInternal(transaction, path, pathFormat);
+         return EnumerateAlternateDataStreamsCore(transaction, path, pathFormat);
       }
 
       #endregion
@@ -74,11 +74,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      internal static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
          {
-            path = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
+            path = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
             using (var handle = transaction == null 
                ? NativeMethods.FindFirstStreamW(path, NativeMethods.StreamInfoLevels.FindStreamInfoStandard, buffer, 0) 
                : NativeMethods.FindFirstStreamTransactedW(path, NativeMethods.StreamInfoLevels.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
@@ -109,6 +109,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion
+      #endregion // Internal Methods
    }
 }

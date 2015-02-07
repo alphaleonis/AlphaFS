@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoInternal(null, path, pathFormat);
+         return GetLinkTargetInfoCore(null, path, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfo(string path)
       {
-         return GetLinkTargetInfoInternal(null, path, PathFormat.RelativePath);
+         return GetLinkTargetInfoCore(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLinkTargetInfoInternal(transaction, path, pathFormat);
+         return GetLinkTargetInfoCore(transaction, path, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
@@ -78,17 +78,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path)
       {
-         return GetLinkTargetInfoInternal(transaction, path, PathFormat.RelativePath);
+         return GetLinkTargetInfoCore(transaction, path, PathFormat.RelativePath);
       }
 
       #endregion // GetLinkTargetInfo
 
-      #region GetLinkTargetInfoInternal
+      #region GetLinkTargetInfoCore
 
-      /// <summary>
-      ///   [AlphaFS] Unified method GetLinkTargetInfoInternal() to get information about the target of a mount point or symbolic link on an
-      ///   NTFS file system.
-      /// </summary>
+      /// <summary>Gets information about the target of a mount point or symbolic link on an NTFS file system.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the reparse point.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -97,12 +94,12 @@ namespace Alphaleonis.Win32.Filesystem
       ///   or mount point pointed to by <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      internal static LinkTargetInfo GetLinkTargetInfoInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static LinkTargetInfo GetLinkTargetInfoCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         using (SafeFileHandle safeHandle = CreateFileInternal(transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, true, pathFormat))
-            return Device.GetLinkTargetInfoInternal(safeHandle);
+         using (SafeFileHandle safeHandle = CreateFileCore(transaction, path, ExtendedFileAttributes.OpenReparsePoint | ExtendedFileAttributes.BackupSemantics, null, FileMode.Open, 0, FileShare.ReadWrite, true, pathFormat))
+            return Device.GetLinkTargetInfoCore(safeHandle);
       }
 
-      #endregion // GetLinkTargetInfoInternal
+      #endregion // GetLinkTargetInfoCore
    }
 }

@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryRoot(string path)
       {
-         return GetDirectoryRootInternal(null, path, PathFormat.RelativePath);
+         return GetDirectoryRootCore(null, path, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryRoot(string path, PathFormat pathFormat)
       {
-         return GetDirectoryRootInternal(null, path, pathFormat);
+         return GetDirectoryRootCore(null, path, pathFormat);
       }
 
       #region Transactional
@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryRootTransacted(KernelTransaction transaction, string path)
       {
-         return GetDirectoryRootInternal(transaction, path, PathFormat.RelativePath);
+         return GetDirectoryRootCore(transaction, path, PathFormat.RelativePath);
       }
 
       /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryRootTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetDirectoryRootInternal(transaction, path, pathFormat);
+         return GetDirectoryRootCore(transaction, path, pathFormat);
       }
       
       #endregion // Transactional
@@ -97,13 +97,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path of a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static string GetDirectoryRootInternal(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static string GetDirectoryRootCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          Path.CheckInvalidUncPath(path);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
 
-         pathLp = Path.GetRegularPathInternal(pathLp, GetFullPathOptions.None);
+         pathLp = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None);
 
          string rootPath = Path.GetPathRoot(pathLp, false);
 

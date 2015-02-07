@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Network
 
          var fd = new FunctionData();
 
-         return EnumerateNetworkObjectInternal(fd, (NativeMethods.DFS_INFO_9 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectCore(fd, (NativeMethods.DFS_INFO_9 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new DfsInfo(structure),
 
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDfsRoot()
       {
-         return EnumerateDfsRootInternal(null, false);
+         return EnumerateDfsRootCore(null, false);
       }
 
       /// <summary>Enumerates the DFS namespaces from a host.</summary>
@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDfsRoot(string host, bool continueOnException)
       {
-         return EnumerateDfsRootInternal(host, continueOnException);
+         return EnumerateDfsRootCore(host, continueOnException);
       }
 
       #endregion // EnumerateDfsRoot
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDomainDfsRoot()
       {
-         return EnumerateDomainDfsRootInternal(null, false);
+         return EnumerateDomainDfsRootCore(null, false);
       }
 
       /// <summary>Enumerates the DFS namespaces from a domain.</summary>
@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDomainDfsRoot(string domain, bool continueOnException)
       {
-         return EnumerateDomainDfsRootInternal(domain, continueOnException);
+         return EnumerateDomainDfsRootCore(domain, continueOnException);
       }
 
       #endregion // EnumerateDomainDfsRoot
@@ -136,7 +136,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static DfsInfo GetDfsClientInfo(string dfsName)
       {
-         return GetDfsInfoInternal(true, dfsName, null, null);
+         return GetDfsInfoCore(true, dfsName, null, null);
       }
 
       /// <summary>Gets information about a DFS root or link from the cache maintained by the DFS client.</summary>
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static DfsInfo GetDfsClientInfo(string dfsName, string serverName, string shareName)
       {
-         return GetDfsInfoInternal(true, dfsName, serverName, shareName);
+         return GetDfsInfoCore(true, dfsName, serverName, shareName);
       }
 
       #endregion // GetDfsClientInfo
@@ -168,7 +168,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static DfsInfo GetDfsInfo(string dfsName)
       {
-         return GetDfsInfoInternal(false, dfsName, null, null);
+         return GetDfsInfoCore(false, dfsName, null, null);
       }
 
       #endregion // GetDfsInfo
@@ -176,7 +176,7 @@ namespace Alphaleonis.Win32.Network
 
       #region Internal Methods
 
-      /// <summary>Unified method EnumerateDfsRootInternal() to enumerate the DFS namespaces from a host.</summary>
+      /// <summary>Enumerates the DFS namespaces from a host.</summary>
       /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from a host.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
@@ -185,12 +185,12 @@ namespace Alphaleonis.Win32.Network
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
-      private static IEnumerable<string> EnumerateDfsRootInternal(string host, bool continueOnException)
+      private static IEnumerable<string> EnumerateDfsRootCore(string host, bool continueOnException)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
-         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DFS_INFO_300 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectCore(new FunctionData(), (NativeMethods.DFS_INFO_300 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new DfsInfo { EntryPath = structure.DfsName },
 
@@ -202,7 +202,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetDfsEnum(stripUnc, 300, prefMaxLen, out buffer, out entriesRead, out resumeHandle);
 
@@ -210,7 +210,7 @@ namespace Alphaleonis.Win32.Network
       }
 
 
-      /// <summary>Unified method EnumerateDomainDfsRootInternal() to enumerate the DFS namespaces from a domain.</summary>
+      /// <summary>Enumerates the DFS namespaces from a domain.</summary>
       /// <returns><see cref="IEnumerable{String}"/> of DFS Root namespaces from a domain.</returns>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="NetworkInformationException"/>
@@ -219,12 +219,12 @@ namespace Alphaleonis.Win32.Network
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dfs")]
       [SecurityCritical]
-      private static IEnumerable<string> EnumerateDomainDfsRootInternal(string domain, bool continueOnException)
+      private static IEnumerable<string> EnumerateDomainDfsRootCore(string domain, bool continueOnException)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
-         return EnumerateNetworkObjectInternal(new FunctionData(), (NativeMethods.DFS_INFO_200 structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectCore(new FunctionData(), (NativeMethods.DFS_INFO_200 structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             new DfsInfo { EntryPath = string.Format(CultureInfo.CurrentCulture, "{0}{1}{2}{3}", Path.UncPrefix, NativeMethods.ComputerDomain, Path.DirectorySeparatorChar, structure.FtDfsName) },
 
@@ -236,7 +236,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathInternal(domain, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(domain) ? NativeMethods.ComputerDomain : Path.GetRegularPathCore(domain, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetDfsEnum(stripUnc, 200, prefMaxLen, out buffer, out entriesRead, out resumeHandle);
 
@@ -264,7 +264,7 @@ namespace Alphaleonis.Win32.Network
       ///   <see langword="false"/>, this parameter is always <see langword="null"/>.
       /// </param>
       [SecurityCritical]
-      private static DfsInfo GetDfsInfoInternal(bool getFromClient, string dfsName, string serverName, string shareName)
+      private static DfsInfo GetDfsInfoCore(bool getFromClient, string dfsName, string serverName, string shareName)
       {
          if (!Filesystem.NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);

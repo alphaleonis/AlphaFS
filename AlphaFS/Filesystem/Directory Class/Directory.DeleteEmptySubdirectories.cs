@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectories(string path, bool recursive)
       {
-         DeleteEmptySubdirectoriesInternal(null, null, path, recursive, false, true, PathFormat.RelativePath);
+         DeleteEmptySubdirectoriesCore(null, null, path, recursive, false, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectories(string path, bool recursive, PathFormat pathFormat)
       {
-         DeleteEmptySubdirectoriesInternal(null, null, path, recursive, false, true, pathFormat);
+         DeleteEmptySubdirectoriesCore(null, null, path, recursive, false, true, pathFormat);
       }
 
 
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectories(string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteEmptySubdirectoriesInternal(null, null, path, recursive, ignoreReadOnly, true, PathFormat.RelativePath);
+         DeleteEmptySubdirectoriesCore(null, null, path, recursive, ignoreReadOnly, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectories(string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteEmptySubdirectoriesInternal(null, null, path, recursive, ignoreReadOnly, true, pathFormat);
+         DeleteEmptySubdirectoriesCore(null, null, path, recursive, ignoreReadOnly, true, pathFormat);
       }
 
       #region Transactional
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectoriesTransacted(KernelTransaction transaction, string path, bool recursive)
       {
-         DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, false, true, PathFormat.RelativePath);
+         DeleteEmptySubdirectoriesCore(null, transaction, path, recursive, false, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectoriesTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
       {
-         DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, false, true, pathFormat);
+         DeleteEmptySubdirectoriesCore(null, transaction, path, recursive, false, true, pathFormat);
       }
 
 
@@ -125,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectoriesTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
-         DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, ignoreReadOnly, true, PathFormat.RelativePath);
+         DeleteEmptySubdirectoriesCore(null, transaction, path, recursive, ignoreReadOnly, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Deletes empty subdirectories from the specified directory.</summary>
@@ -140,7 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteEmptySubdirectoriesTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
-         DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, ignoreReadOnly, true, pathFormat);
+         DeleteEmptySubdirectoriesCore(null, transaction, path, recursive, ignoreReadOnly, true, pathFormat);
       }
 
       #endregion // Transactional
@@ -160,7 +160,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="initialize">When <see langword="true"/> indicates the method is called externally.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static void DeleteEmptySubdirectoriesInternal(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool initialize, PathFormat pathFormat)
+      internal static void DeleteEmptySubdirectoriesCore(FileSystemEntryInfo fileSystemEntryInfo, KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, bool initialize, PathFormat pathFormat)
       {
          #region Setup
 
@@ -169,10 +169,10 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (fileSystemEntryInfo == null)
          {
-            if (!File.ExistsInternal(true, transaction, path, pathFormat))
+            if (!File.ExistsCore(true, transaction, path, pathFormat))
                NativeError.ThrowException(Win32Errors.ERROR_PATH_NOT_FOUND, path);
 
-            fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction, Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck) , false, pathFormat);
+            fileSystemEntryInfo = File.GetFileSystemEntryInfoCore(true, transaction, Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck) , false, pathFormat);
          }
 
          if (fileSystemEntryInfo == null)
@@ -192,15 +192,15 @@ namespace Alphaleonis.Win32.Filesystem
          if (recursive)
             dirEnumOptions |= DirectoryEnumerationOptions.Recursive;
 
-         foreach (var fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, dirEnumOptions, PathFormat.LongFullPath))
-            DeleteEmptySubdirectoriesInternal(fsei, transaction, null, recursive, ignoreReadOnly, false, PathFormat.LongFullPath);
+         foreach (var fsei in EnumerateFileSystemEntryInfosCore<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, dirEnumOptions, PathFormat.LongFullPath))
+            DeleteEmptySubdirectoriesCore(fsei, transaction, null, recursive, ignoreReadOnly, false, PathFormat.LongFullPath);
 
 
-         if (!EnumerateFileSystemEntryInfosInternal<string>(transaction, pathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath).Any())
+         if (!EnumerateFileSystemEntryInfosCore<string>(transaction, pathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath).Any())
          {
             // Prevent deleting path itself.
             if (!initialize)
-               DeleteDirectoryInternal(fileSystemEntryInfo, transaction, null, false, ignoreReadOnly, true, true, PathFormat.LongFullPath);
+               DeleteDirectoryCore(fileSystemEntryInfo, transaction, null, false, ignoreReadOnly, true, true, PathFormat.LongFullPath);
          }
       }
 
