@@ -26,7 +26,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 
 namespace Alphaleonis
 {
@@ -71,7 +70,7 @@ namespace Alphaleonis
       #region IsNullOrWhiteSpace
 
       /// <summary>Indicates whether a specified string is null, empty, or consists only of white-space characters.</summary>
-      /// <returns><see langword="true"/> if the <paramref name="value"/> parameter is null or <see cref="String.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
+      /// <returns><see langword="true"/> if the <paramref name="value"/> parameter is null or <see cref="string.Empty"/>, or if <paramref name="value"/> consists exclusively of white-space characters.</returns>
       /// <param name="value">The string to test.</param>
       public static bool IsNullOrWhiteSpace(string value)
       {
@@ -92,28 +91,6 @@ namespace Alphaleonis
       }
 
       #endregion // IsNullOrWhiteSpace
-
-      #region PtrToXxx
-
-      public static T PtrToStructure<T>(IntPtr buffer) where T : struct
-      {
-         return PtrToStructure<T>(0, buffer);
-      }
-
-      public static T PtrToStructure<T>(int offset, IntPtr buffer) where T : struct
-      {
-         var structure = new T();
-         return (T) Marshal.PtrToStructure(new IntPtr(buffer.ToInt64() + offset*Marshal.SizeOf(structure)), typeof (T));
-      }
-
-
-
-      public static string PtrToStringUni(IntPtr buffer, int offset, int length)
-      {
-         return Marshal.PtrToStringUni(new IntPtr(buffer.ToInt64() + offset), length);
-      }
-
-      #endregion // PtrToXxx
 
       #region UnitSizeToText
 

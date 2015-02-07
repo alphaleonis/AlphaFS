@@ -30,10 +30,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Permanently deletes a file.</summary>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
       ///
-      /// <exception cref="IOException">.</exception>
+      /// <exception cref="IOException"/>
       public override void Delete()
       {
-         File.DeleteFileInternal(Transaction, LongFullName, false, PathFormat.LongFullPath);
+         File.DeleteFileCore(Transaction, LongFullName, false, PathFormat.LongFullPath);
       }
 
       #endregion // .NET
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>      
       public void Delete(bool ignoreReadOnly)
       {
-         File.DeleteFileInternal(Transaction, LongFullName, ignoreReadOnly, PathFormat.LongFullPath);
+         File.DeleteFileCore(Transaction, LongFullName, ignoreReadOnly, PathFormat.LongFullPath);
       }
 
       #endregion // AlphaFS

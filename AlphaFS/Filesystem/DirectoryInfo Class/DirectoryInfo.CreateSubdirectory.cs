@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path)
       {
-         return CreateSubdirectoryInternal(path, null, null, false);
+         return CreateSubdirectoryCore(path, null, null, false);
       }
 
       /// <summary>Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="DirectoryInfo"/> class.</summary>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity)
       {
-         return CreateSubdirectoryInternal(path, null, directorySecurity, false);
+         return CreateSubdirectoryCore(path, null, directorySecurity, false);
       }
 
       #endregion // .NET
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, bool compress)
       {
-         return CreateSubdirectoryInternal(path, null, null, compress);
+         return CreateSubdirectoryCore(path, null, null, compress);
       }
 
       /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="DirectoryInfo"/> class.</summary>
@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, string templatePath, bool compress)
       {
-         return CreateSubdirectoryInternal(path, templatePath, null, compress);
+         return CreateSubdirectoryCore(path, templatePath, null, compress);
       }
 
 
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, DirectorySecurity directorySecurity, bool compress)
       {
-         return CreateSubdirectoryInternal(path, null, directorySecurity, compress);
+         return CreateSubdirectoryCore(path, null, directorySecurity, compress);
       }
 
       /// <summary>[AlphaFS] Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the <see cref="DirectoryInfo"/> class.</summary>
@@ -129,14 +129,14 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public DirectoryInfo CreateSubdirectory(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
-         return CreateSubdirectoryInternal(path, templatePath, directorySecurity, compress);
+         return CreateSubdirectoryCore(path, templatePath, directorySecurity, compress);
       }
 
       #endregion // AlphaFS
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method CreateSubdirectory() to create a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the DirectoryInfo class.</summary>
+      /// <summary>Creates a subdirectory or subdirectories on the specified path. The specified path can be relative to this instance of the DirectoryInfo class.</summary>
       /// <returns>The last directory specified in path as an <see cref="DirectoryInfo"/> object.</returns>
       /// <remarks>
       /// Any and all directories specified in path are created, unless some part of path is invalid.
@@ -148,16 +148,16 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The <see cref="DirectorySecurity"/> security to apply.</param>
       /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       [SecurityCritical]
-      private DirectoryInfo CreateSubdirectoryInternal(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
+      private DirectoryInfo CreateSubdirectoryCore(string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
-         string pathLp = Path.CombineInternal(false, LongFullName, path);
+         string pathLp = Path.CombineCore(false, LongFullName, path);
          string templatePathLp = templatePath == null ? null :
-            Path.GetExtendedLengthPathInternal(Transaction, templatePath, PathFormat.RelativePath, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
+            Path.GetExtendedLengthPathCore(Transaction, templatePath, PathFormat.RelativePath, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator);
 
          if (string.Compare(LongFullName, 0, pathLp, 0, LongFullName.Length, StringComparison.OrdinalIgnoreCase) != 0)
-            throw new ArgumentException("Invalid SubPath", pathLp);
+            throw new ArgumentException(Resources.Invalid_Subpath, pathLp);
 
-         return Directory.CreateDirectoryInternal(Transaction, pathLp, templatePathLp, directorySecurity, compress, PathFormat.LongFullPath);
+         return Directory.CreateDirectoryCore(Transaction, pathLp, templatePathLp, directorySecurity, compress, PathFormat.LongFullPath);
       }
 
       #endregion // Internal Methods

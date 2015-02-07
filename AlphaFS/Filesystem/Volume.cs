@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DefineDosDevice(string deviceName, string targetPath)
       {
-         DefineDosDeviceInternal(true, deviceName, targetPath, DosDeviceAttributes.None, false);
+         DefineDosDeviceCore(true, deviceName, targetPath, DosDeviceAttributes.None, false);
       }
 
       /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DefineDosDevice(string deviceName, string targetPath, DosDeviceAttributes deviceAttributes)
       {
-         DefineDosDeviceInternal(true, deviceName, targetPath, deviceAttributes, false);
+         DefineDosDeviceCore(true, deviceName, targetPath, deviceAttributes, false);
       }
 
       #endregion // DefineDosDevice
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName)
       {
-         DefineDosDeviceInternal(false, deviceName, null, DosDeviceAttributes.RemoveDefinition, false);
+         DefineDosDeviceCore(false, deviceName, null, DosDeviceAttributes.RemoveDefinition, false);
       }
 
       /// <summary>Deletes an MS-DOS device name.</summary>
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath)
       {
-         DefineDosDeviceInternal(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, false);
+         DefineDosDeviceCore(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, false);
       }
 
       /// <summary>Deletes an MS-DOS device name.</summary>
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath, bool exactMatch)
       {
-         DefineDosDeviceInternal(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, exactMatch);
+         DefineDosDeviceCore(false, deviceName, targetPath, DosDeviceAttributes.RemoveDefinition, exactMatch);
       }
 
       /// <summary>Deletes an MS-DOS device name.</summary>
@@ -124,7 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteDosDevice(string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
       {
-         DefineDosDeviceInternal(false, deviceName, targetPath, deviceAttributes, exactMatch);
+         DefineDosDeviceCore(false, deviceName, targetPath, deviceAttributes, exactMatch);
       }
 
       #endregion // DeleteDosDevice
@@ -279,7 +279,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
       public static string GetDriveNameForNtDeviceName(string deviceName)
       {
-         return (from drive in Directory.EnumerateLogicalDrivesInternal(false, false)
+         return (from drive in Directory.EnumerateLogicalDrivesCore(false, false)
             where drive.DosDeviceName.Equals(deviceName, StringComparison.OrdinalIgnoreCase)
             select drive.Name).FirstOrDefault();
       }
@@ -369,7 +369,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool IsReady(string drivePath)
       {
-         return File.ExistsInternal(true, null, drivePath, PathFormat.FullPath);
+         return File.ExistsCore(true, null, drivePath, PathFormat.FullPath);
       }
 
       #endregion // IsReady
@@ -392,7 +392,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region DeleteVolumeLabel
 
       /// <summary>Deletes the label of a file system volume.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="rootPathName">The root directory of a file system volume. This is the volume the function will remove the label.</param>
       [SecurityCritical]
       public static void DeleteVolumeLabel(string rootPathName)
@@ -421,7 +421,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void DeleteVolumeMountPoint(string volumeMountPoint)
       {
-         DeleteVolumeMountPointInternal(volumeMountPoint, false);
+         DeleteVolumeMountPointCore(volumeMountPoint, false);
       }
       
       #endregion // DeleteVolumeMountPoint
@@ -431,8 +431,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   Returns an enumerable collection of <see cref="String"/> of all mounted folders (volume mount points) on the specified volume.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeGuid">A <see cref="string"/> containing the volume <see cref="Guid"/>.</param>
       /// <returns>An enumerable collection of <see cref="String"/> of all volume mount points on the specified volume.</returns>      
       [SecurityCritical]
@@ -442,7 +442,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
          // A trailing backslash is required.
          volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
@@ -502,8 +502,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   Returns an enumerable collection of <see cref="String"/> drive letters and mounted folder paths for the specified volume.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeGuid">A volume <see cref="Guid"/> path: \\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\.</param>
       /// <returns>An enumerable collection of <see cref="String"/> containing the path names for the specified volume.</returns>      
       [SecurityCritical]
@@ -513,7 +513,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
          string volName = Path.AddTrailingDirectorySeparator(volumeGuid, false);
 
@@ -595,7 +595,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   Get the unique volume name for the given path.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumePathName">
       ///   A path string. Both absolute and relative file and directory names, for example "..", is acceptable in this path. If you specify a
       ///   relative file or directory name without a volume qualifier, GetUniqueVolumeNameForPath returns the Drive letter of the current
@@ -627,7 +627,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetVolumeDeviceName
 
       /// <summary>Retrieves the Win32 Device name from the Volume name.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeName">Name of the Volume.</param>
       /// <returns>
       ///   The Win32 Device name from the Volume name (for example: "\Device\HarddiskVolume2"), or <see langword="null"/> on error or if
@@ -728,7 +728,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter,
       ///   volume GUID path, or mounted folder).
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeMountPoint">
       ///   The path of a mounted folder (for example, "Y:\MountX\") or a drive letter (for example, "X:\").
       /// </param>
@@ -741,7 +741,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeMountPoint");
 
          // The string must end with a trailing backslash ('\').
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);            
+         volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);            
 
          var volumeGuid = new StringBuilder(100);
          var uniqueName = new StringBuilder(100);
@@ -801,7 +801,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Nt")]
       public static string GetVolumeGuidForNtDeviceName(string dosDevice)
       {
-         return (from drive in Directory.EnumerateLogicalDrivesInternal(false, false)
+         return (from drive in Directory.EnumerateLogicalDrivesCore(false, false)
                  where drive.DosDeviceName.Equals(dosDevice, StringComparison.OrdinalIgnoreCase)
                  select drive.VolumeInfo.Guid).FirstOrDefault();
       }
@@ -852,7 +852,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetVolumePathName
 
       /// <summary>Retrieves the volume mount point where the specified path is mounted.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to the volume, for example: "C:\Windows".</param>
       /// <returns>
       ///   <para>Returns the nearest volume root path for a given directory.</para>
@@ -868,7 +868,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          {
             var volumeRootPath = new StringBuilder(NativeMethods.MaxPathUnicode / 32);
-            string pathLp = Path.GetFullPathInternal(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
+            string pathLp = Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck);
 
             // GetVolumePathName()
             // In the ANSI version of this function, the name is limited to 248 characters.
@@ -879,7 +879,7 @@ namespace Alphaleonis.Win32.Filesystem
             int lastError = Marshal.GetLastWin32Error();
 
             if (getOk)
-               return Path.GetRegularPathInternal(volumeRootPath.ToString(), GetFullPathOptions.None);
+               return Path.GetRegularPathCore(volumeRootPath.ToString(), GetFullPathOptions.None);
 
             switch ((uint) lastError)
             {
@@ -943,7 +943,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region SetCurrentVolumeLabel
 
       /// <summary>Sets the label of the file system volume that is the root of the current directory.</summary>
-      /// <exception cref="ArgumentNullException"><paramref name="volumeName"/> is a <see langword="null"/> reference.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeName">A name for the volume.</param>
       [SecurityCritical]
       public static void SetCurrentVolumeLabel(string volumeName)
@@ -992,8 +992,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region SetVolumeMountPoint
 
       /// <summary>Associates a volume with a Drive letter or a directory on another volume.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeMountPoint">
       ///   The user-mode path to be associated with the volume. This may be a Drive letter (for example, "X:\")
       ///   or a directory on another volume (for example, "Y:\MountX\").
@@ -1010,9 +1010,9 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeGuid");
 
          if (!volumeGuid.StartsWith(Path.VolumePrefix + "{", StringComparison.OrdinalIgnoreCase))
-            throw new ArgumentException(Resources.Argument_is_not_a_valid_Volume_GUID, volumeGuid);
+            throw new ArgumentException(Resources.Not_A_Valid_Guid, volumeGuid);
 
-         volumeMountPoint = Path.GetFullPathInternal(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         volumeMountPoint = Path.GetFullPathCore(null, volumeMountPoint, GetFullPathOptions.AsLongPath | GetFullPathOptions.AddTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // This string must be of the form "\\?\Volume{GUID}\"
          volumeGuid = Path.AddTrailingDirectorySeparator(volumeGuid, false);
@@ -1043,10 +1043,10 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // Volume
 
 
-      #region Unified Internals
+      #region Internal Methods
 
-      /// <summary>Unified method DefineDosDeviceInternal() to define, redefine, or delete MS-DOS device names.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <summary>Defines, redefines, or deletes MS-DOS device names.</summary>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="isDefine">
       ///   <see langword="true"/> defines a new MS-DOS device. <see langword="false"/> deletes a previously defined MS-DOS device.
       /// </param>
@@ -1068,7 +1068,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///
       /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>      
       [SecurityCritical]
-      internal static void DefineDosDeviceInternal(bool isDefine, string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
+      internal static void DefineDosDeviceCore(bool isDefine, string deviceName, string targetPath, DosDeviceAttributes deviceAttributes, bool exactMatch)
       {
          if (Utils.IsNullOrWhiteSpace(deviceName))
             throw new ArgumentNullException("deviceName");
@@ -1078,7 +1078,7 @@ namespace Alphaleonis.Win32.Filesystem
             // targetPath is allowed to be null.
 
             // In no case is a trailing backslash ("\") allowed.
-            deviceName = Path.GetRegularPathInternal(deviceName, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
+            deviceName = Path.GetRegularPathCore(deviceName, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
             // ChangeErrorMode is for the Win32 SetThreadErrorMode() method, used to suppress possible pop-ups.
             using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
@@ -1100,20 +1100,19 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      /// <summary>Unified method DeleteVolumeMountPointInternal() to delete a Drive letter or mounted folder.</summary>
-      /// <remarks>Deleting a mounted folder does not cause the underlying directory to be deleted.</remarks>
+      /// <summary>Deletes a Drive letter or mounted folder.</summary>
       /// <remarks>
-      ///   It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume
-      ///   mount point.
+      ///   <para>It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume mount point.</para>
+      ///   <para>Deleting a mounted folder does not cause the underlying directory to be deleted.</para>
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeMountPoint">The Drive letter or mounted folder to be deleted. For example, X:\ or Y:\MountX\.</param>
       /// <param name="continueOnException">
       ///   <see langword="true"/> suppress any exception that might be thrown a result from a failure, such as unavailable resources.
       /// </param>
       /// <returns>If completed successfully returns <see cref="Win32Errors.ERROR_SUCCESS"/>, otherwise the last error number.</returns>      
       [SecurityCritical]
-      internal static int DeleteVolumeMountPointInternal(string volumeMountPoint, bool continueOnException)
+      internal static int DeleteVolumeMountPointCore(string volumeMountPoint, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(volumeMountPoint))
             throw new ArgumentNullException("volumeMountPoint");
@@ -1143,6 +1142,6 @@ namespace Alphaleonis.Win32.Filesystem
          return lastError;
       }
 
-      #endregion Unified Internals
+      #endregion // Internal Methods
    }
 }

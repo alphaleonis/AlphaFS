@@ -30,17 +30,17 @@ namespace Alphaleonis.Win32.Network
    partial class Host
    {
       /// <summary>Enumerates drives from the local host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{String}"/> drives from the local host.</returns>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="IEnumerable{String}"/> drives from the local host.</returns>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDrives()
       {
-         return EnumerateDrivesInternal(null, false);
+         return EnumerateDrivesCore(null, false);
       }
 
       /// <summary>Enumerates local drives from the specified host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{String}"/> drives from the specified host.</returns>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
       /// <param name="continueOnException">
       ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
@@ -49,24 +49,24 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDrives(string host, bool continueOnException)
       {
-         return EnumerateDrivesInternal(host, continueOnException);
+         return EnumerateDrivesCore(host, continueOnException);
       }
 
 
 
-      /// <summary>Unified method EnumerateDrivesInternal() to enumerate local drives from the specified host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{String}"/> drives from the specified host.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <summary>Enumerates local drives from the specified host.</summary>
+      /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
       /// <param name="continueOnException">
       ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
       ///   <para>such as unavailable resources.</para>
       /// </param>
       [SecurityCritical]
-      private static IEnumerable<string> EnumerateDrivesInternal(string host, bool continueOnException)
+      private static IEnumerable<string> EnumerateDrivesCore(string host, bool continueOnException)
       {
-         return EnumerateNetworkObjectInternal(new FunctionData { EnumType = 1 }, (string structure, SafeGlobalMemoryBufferHandle buffer) =>
+         return EnumerateNetworkObjectCore(new FunctionData { EnumType = 1 }, (string structure, SafeGlobalMemoryBufferHandle buffer) =>
 
             structure,
 
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Network
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
 
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathInternal(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetServerDiskEnum(stripUnc, 0, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resume);
 

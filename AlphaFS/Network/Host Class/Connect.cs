@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string ConnectDrive(string localName, string remoteName)
       {
-         return ConnectDisconnectInternal(new ConnectDisconnectArguments
+         return ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             LocalName = localName,
             RemoteName = remoteName,
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string ConnectDrive(string localName, string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         return ConnectDisconnectInternal(new ConnectDisconnectArguments
+         return ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             LocalName = localName,
             RemoteName = remoteName,
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string ConnectDrive(string localName, string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         return ConnectDisconnectInternal(new ConnectDisconnectArguments
+         return ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             LocalName = localName,
             RemoteName = remoteName,
@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string ConnectDrive(IntPtr winOwner, string localName, string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         return ConnectDisconnectInternal(new ConnectDisconnectArguments
+         return ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             WinOwner = winOwner,
             LocalName = localName,
@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static string ConnectDrive(IntPtr winOwner, string localName, string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         return ConnectDisconnectInternal(new ConnectDisconnectArguments
+         return ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             WinOwner = winOwner,
             LocalName = localName,
@@ -195,16 +195,16 @@ namespace Alphaleonis.Win32.Network
       #region ConnectTo
 
       /// <summary>Creates a connection to a network resource.</summary>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       [SecurityCritical]
       public static void ConnectTo(string remoteName)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments { RemoteName = remoteName });
+         ConnectDisconnectCore(new ConnectDisconnectArguments { RemoteName = remoteName });
       }
 
       /// <summary>Creates a connection to a network resource.</summary>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       /// <param name="userName">
       ///   The user name for making the connection. If <paramref name="userName"/> is <see langword="null"/>, the function uses the default
@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void ConnectTo(string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             RemoteName = remoteName,
             UserName = userName,
@@ -240,11 +240,11 @@ namespace Alphaleonis.Win32.Network
       /// <param name="updateProfile"><see langword="true"/> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
       ///
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static void ConnectTo(string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             RemoteName = remoteName,
             Credential = credentials,
@@ -255,7 +255,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Creates a connection to a network resource.</summary>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       /// <param name="userName">
@@ -272,7 +272,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void ConnectTo(IntPtr winOwner, string remoteName, string userName, string password, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             WinOwner = winOwner,
             RemoteName = remoteName,
@@ -285,7 +285,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Creates a connection to a network resource.</summary>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
@@ -295,7 +295,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void ConnectTo(IntPtr winOwner, string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             WinOwner = winOwner,
             RemoteName = remoteName,
@@ -316,7 +316,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void DisconnectDrive(string localName)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             LocalName = localName,
             IsDeviceMap = true,
@@ -334,7 +334,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void DisconnectDrive(string localName, bool force, bool updateProfile)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             LocalName = localName,
             Prompt = force,
@@ -353,7 +353,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void DisconnectFrom(string remoteName)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             RemoteName = remoteName,
             IsDisconnect = true
@@ -370,7 +370,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       public static void DisconnectFrom(string remoteName, bool force, bool updateProfile)
       {
-         ConnectDisconnectInternal(new ConnectDisconnectArguments
+         ConnectDisconnectCore(new ConnectDisconnectArguments
          {
             RemoteName = remoteName,
             Prompt = force,
@@ -384,14 +384,14 @@ namespace Alphaleonis.Win32.Network
 
       #region Internal Methods
 
-      /// <summary>Unified method ConnectDisconnectInternal() to connect to/disconnect from a network resource. The function can redirect a local device to a network resource.</summary>
+      /// <summary>Connects to/disconnects from a network resource. The function can redirect a local device to a network resource.</summary>
       /// <returns>If <see cref="ConnectDisconnectArguments.LocalName"/> is <see langword="null"/> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="arguments">The <see cref="ConnectDisconnectArguments"/>.</param>
       [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       [SecurityCritical]
-      internal static string ConnectDisconnectInternal(ConnectDisconnectArguments arguments)
+      internal static string ConnectDisconnectCore(ConnectDisconnectArguments arguments)
       {
          uint lastError;
 
@@ -460,9 +460,9 @@ namespace Alphaleonis.Win32.Network
          // Initialize structure.
          var resource = new NativeMethods.NETRESOURCE
          {
-            LocalName = arguments.LocalName,
-            RemoteName = arguments.RemoteName,
-            Type = NativeMethods.ResourceType.Disk
+            lpLocalName = arguments.LocalName,
+            lpRemoteName = arguments.RemoteName,
+            dwType = NativeMethods.ResourceType.Disk
          };
 
          // Three characters for: "X:\0" (Drive X: with null terminator)

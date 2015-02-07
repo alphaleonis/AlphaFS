@@ -40,7 +40,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, null, null, path, false, pathFormat);
+         return GetChangeTimeCore(false, null, null, path, false, pathFormat);
       }
 
 
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(string path)
       {
-         return GetChangeTimeInternal(false, null, null, path, false, PathFormat.RelativePath);
+         return GetChangeTimeCore(false, null, null, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTime(SafeFileHandle safeHandle)
       {
-         return GetChangeTimeInternal(false, null, safeHandle, null, false, PathFormat.LongFullPath);
+         return GetChangeTimeCore(false, null, safeHandle, null, false, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
@@ -68,9 +68,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file for which to obtain creation date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetChangeTime(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetChangeTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, false, pathFormat);
+         return GetChangeTimeCore(false, transaction, null, path, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time of the specified file.</summary>
@@ -78,9 +78,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain creation date and time information.</param>
       [SecurityCritical]
-      public static DateTime GetChangeTime(KernelTransaction transaction, string path)
+      public static DateTime GetChangeTimeTransacted(KernelTransaction transaction, string path)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, false, PathFormat.RelativePath);
+         return GetChangeTimeCore(false, transaction, null, path, false, PathFormat.RelativePath);
       }
 
       #endregion // GetChangeTime
@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, null, null, path, true, pathFormat);
+         return GetChangeTimeCore(false, null, null, path, true, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(string path)
       {
-         return GetChangeTimeInternal(false, null, null, path, true, PathFormat.RelativePath);
+         return GetChangeTimeCore(false, null, null, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
@@ -112,7 +112,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetChangeTimeUtc(SafeFileHandle safeHandle)
       {
-         return GetChangeTimeInternal(false, null, safeHandle, null, true, PathFormat.LongFullPath);
+         return GetChangeTimeCore(false, null, safeHandle, null, true, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
@@ -121,9 +121,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetChangeTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, true, pathFormat);
+         return GetChangeTimeCore(false, transaction, null, path, true, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets the change date and time, in Coordinated Universal Time (UTC) format, of the specified file.</summary>
@@ -131,21 +131,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       [SecurityCritical]
-      public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path)
+      public static DateTime GetChangeTimeUtcTransacted(KernelTransaction transaction, string path)
       {
-         return GetChangeTimeInternal(false, transaction, null, path, true, PathFormat.RelativePath);
+         return GetChangeTimeCore(false, transaction, null, path, true, PathFormat.RelativePath);
       }
 
       #endregion // GetChangeTimeUtc
 
       #region Internal Methods
 
-      /// <summary>Unified method GetChangeTimeInternal() to get the change date and time of the specified file.</summary>
-      /// <returns>Returns a <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
+      /// <summary>Gets the change date and time of the specified file.</summary>
+      /// <returns>A <see cref="System.DateTime"/> structure set to the change date and time for the specified file. This value is expressed in local time.</returns>
       /// <remarks><para>Use either <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</para></remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException"></exception>
-      /// <exception cref="PlatformNotSupportedException">Thrown when a Platform Not Supported error condition occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeHandle">An open handle to the file or directory from which to retrieve information.</param>
@@ -154,10 +154,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposing is under control.")]
       [SecurityCritical]
-      internal static DateTime GetChangeTimeInternal(bool isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, bool getUtc, PathFormat pathFormat)
+      internal static DateTime GetChangeTimeCore(bool isFolder, KernelTransaction transaction, SafeFileHandle safeHandle, string path, bool getUtc, PathFormat pathFormat)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          bool callerHandle = safeHandle != null;
          if (!callerHandle)
@@ -165,9 +165,9 @@ namespace Alphaleonis.Win32.Filesystem
             if (pathFormat != PathFormat.LongFullPath && Utils.IsNullOrWhiteSpace(path))
                throw new ArgumentNullException("path");
 
-            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
+            string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
-            safeHandle = CreateFileInternal(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, PathFormat.LongFullPath);
+            safeHandle = CreateFileCore(transaction, pathLp, isFolder ? ExtendedFileAttributes.BackupSemantics : ExtendedFileAttributes.Normal, null, FileMode.Open, FileSystemRights.ReadData, FileShare.ReadWrite, true, PathFormat.LongFullPath);
          }
 
 
@@ -183,7 +183,7 @@ namespace Alphaleonis.Win32.Filesystem
                   NativeError.ThrowException(Marshal.GetLastWin32Error());
 
                safeBuffer.StructureToPtr(fbi, true);
-               NativeMethods.FILETIME changeTime = safeBuffer.PtrToStructure<NativeMethods.FILE_BASIC_INFO>().ChangeTime;
+               NativeMethods.FILETIME changeTime = safeBuffer.PtrToStructure<NativeMethods.FILE_BASIC_INFO>(0).ChangeTime;
 
                return getUtc
                   ? DateTime.FromFileTimeUtc(changeTime)
@@ -198,6 +198,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // GetChangeTimeInternal
+      #endregion // Internal Methods
    }
 }

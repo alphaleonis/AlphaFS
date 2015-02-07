@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
          IsDirectory = true;
          Transaction = transaction;
 
-         LongFullName = Path.GetLongPathInternal(fullPath, GetFullPathOptions.None);
+         LongFullName = Path.GetLongPathCore(fullPath, GetFullPathOptions.None);
 
          OriginalPath = Path.GetFileName(fullPath, true);
 
@@ -98,7 +98,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a directory exists. This constructor is a placeholder for a string that is used to access the disk in subsequent operations.</remarks>
       public DirectoryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         InitializeInternal(true, transaction, path, pathFormat);
+         InitializeCore(true, transaction, path, pathFormat);
       }
 
       #endregion // Transactional
@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (DataInitialised == -1)
                   Refresh();
 
-               FileAttributes attrs = Win32AttributeData.FileAttributes;
+               FileAttributes attrs = Win32AttributeData.dwFileAttributes;
                return DataInitialised == 0 && (attrs != (FileAttributes)(-1) && (attrs & FileAttributes.Directory) != 0);
             }
             catch

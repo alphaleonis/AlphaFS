@@ -38,7 +38,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path)
       {
-         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
+         return ReadLinesCore(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
 
       /// <summary>Read the lines of a file that has a specified encoding.</summary>
@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path, Encoding encoding)
       {
-         return ReadLinesInternal(null, path, encoding, PathFormat.RelativePath);
+         return ReadLinesCore(null, path, encoding, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Reads the lines of a file.</summary>
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path, PathFormat pathFormat)
       {
-         return ReadLinesInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
+         return ReadLinesCore(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static IEnumerable<string> ReadLines(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadLinesInternal(null, path, encoding, pathFormat);
+         return ReadLinesCore(null, path, encoding, pathFormat);
       }
 
 
@@ -80,9 +80,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to read.</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path)
+      public static IEnumerable<string> ReadLinesTransacted(KernelTransaction transaction, string path)
       {
-         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
+         return ReadLinesCore(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
@@ -91,9 +91,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding)
+      public static IEnumerable<string> ReadLinesTransacted(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return ReadLinesInternal(transaction, path, encoding, PathFormat.RelativePath);
+         return ReadLinesCore(transaction, path, encoding, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Reads the lines of a file.</summary>
@@ -102,9 +102,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static IEnumerable<string> ReadLinesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
+         return ReadLinesCore(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>[AlphaFS] Read the lines of a file that has a specified encoding.</summary>
@@ -114,9 +114,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      public static IEnumerable<string> ReadLinesTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return ReadLinesInternal(transaction, path, encoding, pathFormat);
+         return ReadLinesCore(transaction, path, encoding, pathFormat);
       }
 
       #endregion // Transacted
@@ -125,7 +125,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method ReadLinesInternal() to read the lines of a file that has a specified encoding.</summary>
+      /// <summary>Reads the lines of a file that has a specified encoding.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to read.</param>
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
@@ -133,9 +133,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static IEnumerable<string> ReadLinesInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      internal static IEnumerable<string> ReadLinesCore(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         using (StreamReader sr = new StreamReader(OpenInternal(transaction, path, FileMode.Open, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, null, null, pathFormat), encoding))
+         using (StreamReader sr = new StreamReader(OpenCore(transaction, path, FileMode.Open, FileAccess.Read, FileShare.Read, ExtendedFileAttributes.SequentialScan, null, null, pathFormat), encoding))
          {
             string line;
             while ((line = sr.ReadLine()) != null)
@@ -143,6 +143,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // ReadLinesInternal
+      #endregion // Internal Methods
    }
 }

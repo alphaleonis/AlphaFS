@@ -32,25 +32,25 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Copies an existing file to a new file, disallowing the overwriting of an existing file.</summary>
-      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
+      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
       ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativePath);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -64,20 +64,20 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">destinationPath contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">destinationPath is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">.</exception>
-      /// <exception cref="FileNotFoundException">.</exception>
-      /// <exception cref="IOException">.</exception>
-      /// <exception cref="NotSupportedException">.</exception>
-      /// <exception cref="UnauthorizedAccessException">.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
       /// <param name="overwrite"><see langword="true"/> to allow an existing file to be overwritten; otherwise, <see langword="false"/>.</param>
       [SecurityCritical]
       public FileInfo CopyTo(string destinationPath, bool overwrite)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, PathFormat.RelativePath);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -86,17 +86,17 @@ namespace Alphaleonis.Win32.Filesystem
       #region AlphaFS
 
       /// <summary>[AlphaFS] Copies an existing file to a new file, disallowing the overwriting of an existing file.</summary>
-      /// <returns>Returns a new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
+      /// <returns>A new <see cref="FileInfo"/> instance with a fully qualified path.</returns>
       /// <remarks>
       ///   <para>Use this method to prevent overwriting of an existing file by default.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, false, CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -121,11 +121,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, bool overwrite, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, out destinationPathLp, pathFormat);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -152,11 +152,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativePath);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -180,11 +180,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
@@ -194,7 +194,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, false, copyOptions, null, null, null, out destinationPathLp, pathFormat);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -211,11 +211,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
@@ -225,7 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, PathFormat.RelativePath);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -240,11 +240,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
@@ -255,7 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, null, null, out destinationPathLp, pathFormat);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -275,11 +275,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
@@ -290,8 +290,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -307,11 +307,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
@@ -323,8 +323,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, false, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -344,11 +344,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
@@ -360,8 +360,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -379,11 +379,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The name of the new file to copy to.</param>
@@ -396,8 +396,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult CopyTo(string destinationPath, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, preserveDates, copyOptions, null, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -417,11 +417,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
@@ -429,8 +429,8 @@ namespace Alphaleonis.Win32.Filesystem
       public void MoveTo(string destinationPath)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyToMoveToCore(destinationPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
       }
 
       #endregion // .NET
@@ -447,11 +447,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
       ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
@@ -460,7 +460,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo MoveTo(string destinationPath, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, false, null, MoveOptions.CopyAllowed, null, null, out destinationPathLp, pathFormat);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -476,11 +476,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
       ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
@@ -489,7 +489,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo MoveTo(string destinationPath, MoveOptions moveOptions)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, null, moveOptions, null, null, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCore(destinationPath, false, null, moveOptions, null, null, out destinationPathLp, PathFormat.RelativePath);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -503,11 +503,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable
       ///   behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
@@ -517,7 +517,7 @@ namespace Alphaleonis.Win32.Filesystem
       public FileInfo MoveTo(string destinationPath, MoveOptions moveOptions, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyToMoveToInternal(destinationPath, false, null, moveOptions, null, null, out destinationPathLp, pathFormat);
+         CopyToMoveToCore(destinationPath, false, null, moveOptions, null, null, out destinationPathLp, pathFormat);
          return new FileInfo(Transaction, destinationPathLp, PathFormat.LongFullPath);
       }
 
@@ -526,7 +526,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified,
       ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
       ///   <para>This method works across disk volumes.</para>
@@ -534,11 +534,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
@@ -549,13 +549,13 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, PathFormat.RelativePath);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
 
       /// <summary>[AlphaFS] Moves a specified file to a new location, providing the option to specify a new file name, <see cref="MoveOptions"/> can be specified.</summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>Use this method to allow or prevent overwriting of an existing file.</para>
       ///   <para>This method works across disk volumes.</para>
@@ -563,11 +563,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two files have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="FileNotFoundException">Passed if the file was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="destinationPath">The path to move the file to, which can specify a different file name.</param>
@@ -579,8 +579,8 @@ namespace Alphaleonis.Win32.Filesystem
       public CopyMoveResult MoveTo(string destinationPath, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          string destinationPathLp;
-         CopyMoveResult cmr = CopyToMoveToInternal(destinationPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
-         CopyToMoveToInternalRefresh(destinationPath, destinationPathLp);
+         CopyMoveResult cmr = CopyToMoveToCore(destinationPath, false, null, moveOptions, progressHandler, userProgressData, out destinationPathLp, pathFormat);
+         CopyToMoveToCoreRefresh(destinationPath, destinationPathLp);
          return cmr;
       }
 
@@ -590,8 +590,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method CopyToMoveToInternal() to copy/move an existing file to a new file, allowing the overwriting of an existing file.</summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
+      /// <summary>Copy/move an existing file to a new file, allowing the overwriting of an existing file.</summary>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
@@ -605,27 +605,27 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData"><para>This parameter can be <see langword="null"/>. The argument to be passed to the callback function.</para></param>
       /// <param name="longFullPath">[out] Returns the retrieved long full path.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
-      private CopyMoveResult CopyToMoveToInternal(string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
+      private CopyMoveResult CopyToMoveToCore(string destinationPath, bool preserveDates, CopyOptions? copyOptions, MoveOptions? moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, out string longFullPath, PathFormat pathFormat)
       {
-         string destinationPathLp = Path.GetExtendedLengthPathInternal(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         string destinationPathLp = Path.GetExtendedLengthPathCore(Transaction, destinationPath, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          longFullPath = destinationPathLp;
 
          // Returns false when CopyMoveProgressResult is PROGRESS_CANCEL or PROGRESS_STOP.
-         return File.CopyMoveInternal(false, Transaction, LongFullName, destinationPathLp, preserveDates, copyOptions, moveOptions, progressHandler, userProgressData, PathFormat.LongFullPath);
+         return File.CopyMoveCore(false, Transaction, LongFullName, destinationPathLp, preserveDates, copyOptions, moveOptions, progressHandler, userProgressData, PathFormat.LongFullPath);
       }
 
-      private void CopyToMoveToInternalRefresh(string destinationPath, string destinationPathLp)
+      private void CopyToMoveToCoreRefresh(string destinationPath, string destinationPathLp)
       {
          LongFullName = destinationPathLp;
-         FullPath = Path.GetRegularPathInternal(destinationPathLp, GetFullPathOptions.None);
+         FullPath = Path.GetRegularPathCore(destinationPathLp, GetFullPathOptions.None);
 
          OriginalPath = destinationPath;
          DisplayPath = OriginalPath;

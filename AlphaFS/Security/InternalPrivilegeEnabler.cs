@@ -24,9 +24,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Security.Principal;
-#if NET35
-
-#endif
 
 namespace Alphaleonis.Win32.Security
 {

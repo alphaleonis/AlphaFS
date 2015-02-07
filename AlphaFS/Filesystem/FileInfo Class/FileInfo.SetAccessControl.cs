@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity)
       {
-         File.SetAccessControlInternal(LongFullName, null, fileSecurity, AccessControlSections.All, PathFormat.LongFullPath);
+         File.SetAccessControlCore(LongFullName, null, fileSecurity, AccessControlSections.All, PathFormat.LongFullPath);
       }
 
       /// <summary>Applies access control list (ACL) entries described by a FileSecurity object to the file described by the current FileInfo object.</summary>
@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         File.SetAccessControlInternal(LongFullName, null, fileSecurity, includeSections, PathFormat.LongFullPath);
+         File.SetAccessControlCore(LongFullName, null, fileSecurity, includeSections, PathFormat.LongFullPath);
       }
 
       #endregion // .NET

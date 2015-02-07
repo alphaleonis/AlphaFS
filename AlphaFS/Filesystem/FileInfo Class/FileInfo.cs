@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <remarks>This constructor does not check if a file exists. This constructor is a placeholder for a string that is used to access the file in subsequent operations.</remarks>
       public FileInfo(KernelTransaction transaction, string fileName, PathFormat pathFormat)
       {
-         InitializeInternal(false, transaction, fileName, pathFormat);
+         InitializeCore(false, transaction, fileName, pathFormat);
 
          _name = Path.GetFileName(Path.RemoveTrailingDirectorySeparator(fileName, false), pathFormat != PathFormat.LongFullPath);
       }
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Gets an instance of the parent directory.</summary>
       /// <value>A <see cref="DirectoryInfo"/> object representing the parent directory of this file.</value>
       /// <remarks>To get the parent directory as a string, use the DirectoryName property.</remarks>
-      /// <exception cref="DirectoryNotFoundException">The specified path is invalid, such as being on an unmapped drive.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
       public DirectoryInfo Directory
       {
          get
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>When first called, FileInfo calls Refresh and caches information about the file.</para>
       ///   <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
       /// </remarks>
-      /// <exception cref="ArgumentNullException">null was passed in for the directory name.</exception>
+      /// <exception cref="ArgumentNullException"/>
       public string DirectoryName
       {
          [SecurityCritical] get { return Path.GetDirectoryName(FullPath, false); }
@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
                if (DataInitialised == -1)
                   Refresh();
 
-               return DataInitialised == 0 && (Win32AttributeData.FileAttributes & FileAttributes.Directory) == 0;
+               return DataInitialised == 0 && (Win32AttributeData.dwFileAttributes & FileAttributes.Directory) == 0;
             }
             catch
             {
@@ -164,8 +164,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>When first called, FileInfo calls Refresh and caches information about the file.</para>
       ///   <para>On subsequent calls, you must call Refresh to get the latest copy of the information.</para>
       /// </remarks>
-      /// <exception cref="FileNotFoundException">The file described by the current FileInfo object could not be found.</exception>
-      /// <exception cref="IOException">An I/O error occurred while opening the file.</exception>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       public bool IsReadOnly
       {
          get { return (Attributes & FileAttributes.ReadOnly) != 0; }
@@ -189,8 +189,8 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>The value of the Length property is pre-cached</para>
       ///   <para>To get the latest value, call the Refresh method.</para>
       /// </remarks>
-      /// <exception cref="System.IO.FileNotFoundException">The file does not exist or the Length property is called for a directory.</exception>
-      /// <exception cref="System.IO.IOException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
       [SuppressMessage("Microsoft.Design", "CA1065:DoNotRaiseExceptionsInUnexpectedLocations")]
       public long Length
       {
@@ -207,7 +207,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
-            FileAttributes attrs = Win32AttributeData.FileAttributes;
+            FileAttributes attrs = Win32AttributeData.dwFileAttributes;
 
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
             if (attrs == (FileAttributes) (-1))
@@ -215,7 +215,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             // MSDN: .NET 3.5+: FileNotFoundException: The file does not exist or the Length property is called for a directory.
             if ((attrs & FileAttributes.Directory) == FileAttributes.Directory)
-               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.CurrentCulture, Resources.DirectoryExistsWithSameNameSpecifiedByPath, LongFullName));
+               NativeError.ThrowException(Win32Errors.ERROR_FILE_NOT_FOUND, string.Format(CultureInfo.CurrentCulture, Resources.Target_File_Is_A_Directory, LongFullName));
 
             return Win32AttributeData.FileSize;
          }

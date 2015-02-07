@@ -30,11 +30,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region Compress
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <remarks>This will only compress the root items (non recursive).</remarks>
       [SecurityCritical]
       public void Compress()
       {
-         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.LongFullPath);
+         Directory.CompressDecompressCore(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
@@ -42,7 +42,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Compress(DirectoryEnumerationOptions options)
       {
-         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, options, true, PathFormat.LongFullPath);
+         Directory.CompressDecompressCore(Transaction, LongFullName, Path.WildcardStarMatchAll, options, true, PathFormat.LongFullPath);
       }
 
       #endregion // Compress
@@ -50,11 +50,11 @@ namespace Alphaleonis.Win32.Filesystem
       #region Decompress
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
       [SecurityCritical]
       public void Decompress()
       {
-         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.LongFullPath);
+         Directory.CompressDecompressCore(Transaction, LongFullName, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.LongFullPath);
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void Decompress(DirectoryEnumerationOptions options)
       {
-         Directory.CompressDecompressInternal(Transaction, LongFullName, Path.WildcardStarMatchAll, options, false, PathFormat.LongFullPath);
+         Directory.CompressDecompressCore(Transaction, LongFullName, Path.WildcardStarMatchAll, options, false, PathFormat.LongFullPath);
       }
 
       #endregion // Decompress
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void DisableCompression()
       {
-         Device.ToggleCompressionInternal(true, Transaction, LongFullName, false, PathFormat.LongFullPath);
+         Device.ToggleCompressionCore(true, Transaction, LongFullName, false, PathFormat.LongFullPath);
       }
 
       #endregion // DisableCompression
@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void EnableCompression()
       {
-         Device.ToggleCompressionInternal(true, Transaction, LongFullName, true, PathFormat.LongFullPath);
+         Device.ToggleCompressionCore(true, Transaction, LongFullName, true, PathFormat.LongFullPath);
       }
 
       #endregion // EnableCompression

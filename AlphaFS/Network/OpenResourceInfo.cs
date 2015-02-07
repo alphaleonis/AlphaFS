@@ -30,26 +30,20 @@ namespace Alphaleonis.Win32.Network
    {
       #region Constructor
 
-      #region OpenResourceInfo
-
       /// <summary>Create a OpenResourceInfo instance.</summary>
       internal OpenResourceInfo(string host, NativeMethods.FILE_INFO_3 fileInfo)
       {
          Host = host;
-         Id = fileInfo.Id;
-         Permissions = fileInfo.Permissions;
-         TotalLocks = fileInfo.TotalLocks;
-         PathName = fileInfo.PathName.Replace(@"\\", @"\");
-         UserName = fileInfo.UserName;
+         Id = fileInfo.fi3_id;
+         Permissions = fileInfo.fi3_permissions;
+         TotalLocks = fileInfo.fi3_num_locks;
+         PathName = fileInfo.fi3_pathname.Replace(@"\\", @"\");
+         UserName = fileInfo.fi3_username;
       }
-
-      #endregion // OpenResourceInfo
 
       #endregion // Constructor
 
       #region Methods
-
-      #region Close
 
       /// <summary>Forces the open resource to close.</summary>
       /// <remarks>You should this method with caution because it does not write data cached on the client system to the file before closing the file.</remarks>
@@ -60,10 +54,6 @@ namespace Alphaleonis.Win32.Network
             NativeError.ThrowException(lastError, Host, PathName);
       }
 
-      #endregion // ToString
-
-      #region ToString
-
       /// <summary>Returns the full path to the share.</summary>
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
@@ -71,53 +61,27 @@ namespace Alphaleonis.Win32.Network
          return Id.ToString(CultureInfo.InvariantCulture);
       }
 
-      #endregion // ToString
-
       #endregion // Methods
 
       #region Properties
 
-      #region Host
-
       /// <summary>The local or remote Host.</summary>
       public string Host { get; private set; }
-
-      #endregion // Host
-
-      #region Id
 
       /// <summary>The identification number assigned to the resource when it is opened.</summary>
       public long Id { get; private set; }
 
-      #endregion // Id
-      
-      #region PathName
-
       /// <summary>The path of the opened resource.</summary>
       public string PathName { get; private set; }
-
-      #endregion // PathName
-
-      #region Permissions
 
       /// <summary>The access permissions associated with the opening application. This member can be one or more of the following <see cref="AccessPermissions"/> values.</summary>
       public AccessPermissions Permissions { get; private set; }
 
-      #endregion // Permissions
-
-      #region TotalLocks
-
       /// <summary>The number of file locks on the file, device, or pipe.</summary>
       public long TotalLocks { get; private set; }
 
-      #endregion // TotalLocks
-
-      #region UserName
-
       /// <summary>Specifies which user (on servers that have user-level security) or which computer (on servers that have share-level security) opened the resource.</summary>
       public string UserName { get; private set; }
-
-      #endregion // UserName
 
       #endregion // Properties
    }

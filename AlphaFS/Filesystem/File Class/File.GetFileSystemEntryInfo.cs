@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path, PathFormat pathFormat)
       {
-         return GetFileSystemEntryInfoInternal(false, null, path, false, pathFormat);
+         return GetFileSystemEntryInfoCore(false, null, path, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSystemEntryInfo GetFileSystemEntryInfo(string path)
       {
-         return GetFileSystemEntryInfoInternal(false, null, path, false, PathFormat.RelativePath);
+         return GetFileSystemEntryInfoCore(false, null, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
@@ -53,9 +53,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetFileSystemEntryInfoInternal(false, transaction, path, false, pathFormat);
+         return GetFileSystemEntryInfoCore(false, transaction, path, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileSystemEntryInfo"/> of the file on the path.</summary>
@@ -63,20 +63,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       [SecurityCritical]
-      public static FileSystemEntryInfo GetFileSystemEntryInfo(KernelTransaction transaction, string path)
+      public static FileSystemEntryInfo GetFileSystemEntryInfoTransacted(KernelTransaction transaction, string path)
       {
-         return GetFileSystemEntryInfoInternal(false, transaction, path, false, PathFormat.RelativePath);
+         return GetFileSystemEntryInfoCore(false, transaction, path, false, PathFormat.RelativePath);
       }
 
       #endregion // GetFileSystemEntry
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method GetFileSystemEntryInfoInternal() to get a FileSystemEntryInfo from a Non-/Transacted directory/file.</summary>
+      /// <summary>Gets a FileSystemEntryInfo from a Non-/Transacted directory/file.</summary>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory, or <c>null</c> on Exception when <paramref name="continueOnException"/> is <c>true</c>.</returns>
       /// <remarks>BasicSearch <see cref="NativeMethods.FindExInfoLevels.Basic"/> and LargeCache <see cref="NativeMethods.FindExAdditionalFlags.LargeFetch"/> are used by default, if possible.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">path is <c>null</c>.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      internal static FileSystemEntryInfo GetFileSystemEntryInfoInternal(bool isFolder, KernelTransaction transaction, string path, bool continueOnException, PathFormat pathFormat)
+      internal static FileSystemEntryInfo GetFileSystemEntryInfoCore(bool isFolder, KernelTransaction transaction, string path, bool continueOnException, PathFormat pathFormat)
       {
          // Enable BasicSearch and LargeCache by default.
          var options = DirectoryEnumerationOptions.BasicSearch | DirectoryEnumerationOptions.LargeCache | (continueOnException ? DirectoryEnumerationOptions.ContinueOnException : 0);
@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
          return (new FindFileSystemEntryInfo(isFolder, transaction, path, Path.WildcardQuestion, options, typeof(FileSystemEntryInfo), pathFormat)).Get<FileSystemEntryInfo>();
       }
 
-      #endregion // GetFileSystemEntryInfoInternal
+      #endregion // Internal Methods
 
    }
 }

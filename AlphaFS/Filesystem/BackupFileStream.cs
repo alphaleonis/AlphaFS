@@ -51,7 +51,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Construction and Destruction
 
-
       /// <summary>Initializes a new instance of the <see cref="BackupFileStream"/> class with the specified path and creation mode.</summary>
       /// <param name="path">A relative or absolute path for the file that the current <see cref="BackupFileStream"/> object will encapsulate.</param>
       /// <param name="mode">A <see cref="FileMode"/> constant that determines how to open or create the file.</param>
@@ -59,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode)
-         : this(File.CreateFileInternal(null, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, PathFormat.RelativePath), FileSystemRights.Read | FileSystemRights.Write)
+         : this(File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, PathFormat.RelativePath), FileSystemRights.Read | FileSystemRights.Write)
       {
       }
 
@@ -71,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access)
-         : this(File.CreateFileInternal(null, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, PathFormat.RelativePath), access)
+         : this(File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, PathFormat.RelativePath), access)
       {
       }
 
@@ -83,7 +82,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share)
-         : this(File.CreateFileInternal(null, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, PathFormat.RelativePath), access)
+         : this(File.CreateFileCore(null, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
 
@@ -96,7 +95,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
-         : this(File.CreateFileInternal(null, path, attributes, null, mode, access, share, true, PathFormat.RelativePath), access)
+         : this(File.CreateFileCore(null, path, attributes, null, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
 
@@ -110,7 +109,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
-         : this(File.CreateFileInternal(null, path, attributes, security, mode, access, share, true, PathFormat.RelativePath), access)
+         : this(File.CreateFileCore(null, path, attributes, security, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
 
@@ -124,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode)
-         : this(File.CreateFileInternal(transaction, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, PathFormat.RelativePath), FileSystemRights.Read | FileSystemRights.Write)
+         : this(File.CreateFileCore(transaction, path, ExtendedFileAttributes.Normal, null, mode, FileSystemRights.Read | FileSystemRights.Write, FileShare.None, true, PathFormat.RelativePath), FileSystemRights.Read | FileSystemRights.Write)
       {
       }
 
@@ -137,7 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access)
-         : this(File.CreateFileInternal(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, PathFormat.RelativePath), access)
+         : this(File.CreateFileCore(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, FileShare.None, true, PathFormat.RelativePath), access)
       {
       }
 
@@ -150,7 +149,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share)
-         : this(File.CreateFileInternal(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, PathFormat.RelativePath), access)
+         : this(File.CreateFileCore(transaction, path, ExtendedFileAttributes.Normal, null, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
 
@@ -164,7 +163,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes)
-         : this(File.CreateFileInternal(transaction, path, attributes, null, mode, access, share, true, PathFormat.RelativePath), access)
+         : this(File.CreateFileCore(transaction, path, attributes, null, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
 
@@ -179,7 +178,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
       public BackupFileStream(KernelTransaction transaction, string path, FileMode mode, FileSystemRights access, FileShare share, ExtendedFileAttributes attributes, FileSecurity security)
-         : this(File.CreateFileInternal(transaction, path, attributes, security, mode, access, share, true, PathFormat.RelativePath), access)
+         : this(File.CreateFileCore(transaction, path, attributes, security, mode, access, share, true, PathFormat.RelativePath), access)
       {
       }
 
@@ -196,10 +195,10 @@ namespace Alphaleonis.Win32.Filesystem
       public BackupFileStream(SafeFileHandle handle, FileSystemRights access)
       {
          if (handle == null)
-            throw new ArgumentNullException("handle", "handle is null.");
+            throw new ArgumentNullException("handle", Resources.Handle_Is_Invalid);
 
          if (handle.IsInvalid)
-            throw new ArgumentException(Resources.HandleInvalid);
+            throw new ArgumentException(Resources.Handle_Is_Invalid);
 
          _safeFileHandle = handle;
          _canRead = (access & FileSystemRights.ReadData) != 0;
@@ -246,19 +245,19 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>When overridden in a derived class, gets the length in bytes of the stream.</summary>
       /// <value>This method always throws an exception.</value>
-      /// <exception cref="System.NotSupportedException">This exception is always thrown if this property is accessed on a <see cref="BackupFileStream"/>.</exception>
+      /// <exception cref="NotSupportedException"/>
       public override long Length
       {
-         get { throw new NotSupportedException(Resources.ThisStreamDoesNotSupportSeeking); }
+         get { throw new NotSupportedException(Resources.No_Stream_Seeking_Support); }
       }
 
       /// <summary>When overridden in a derived class, gets or sets the position within the current stream.</summary>
       /// <value>This method always throws an exception.</value>
-      /// <exception cref="System.NotSupportedException">This exception is always thrown if this property is accessed on a <see cref="BackupFileStream"/>.</exception>
+      /// <exception cref="NotSupportedException"/>
       public override long Position
       {
-         get { throw new NotSupportedException(Resources.ThisStreamDoesNotSupportSeeking); }
-         set { throw new NotSupportedException(Resources.ThisStreamDoesNotSupportSeeking); }
+         get { throw new NotSupportedException(Resources.No_Stream_Seeking_Support); }
+         set { throw new NotSupportedException(Resources.No_Stream_Seeking_Support); }
       }
 
       /// <summary>Gets a <see cref="SafeFileHandle"/> object that represents the operating system file handle for the file that the current <see cref="BackupFileStream"/> object encapsulates.</summary>
@@ -321,15 +320,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   currently available, or zero (0) if the end of the stream has been reached.
       /// </returns>
       ///
-      /// <exception cref="System.ArgumentException">
-      ///   The sum of <paramref name="offset"/> and <paramref name="count"/> is larger than the buffer length.
-      /// </exception>
-      /// <exception cref="System.ArgumentNullException"><paramref name="buffer"/> is <see langword="null"/>.</exception>
-      /// <exception cref="System.ArgumentOutOfRangeException">
-      ///   <paramref name="offset"/> or <paramref name="count"/> is negative.
-      /// </exception>
-      /// <exception cref="System.NotSupportedException">The stream does not support reading.</exception>
-      /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+      /// <exception cref="System.ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="System.ArgumentOutOfRangeException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ObjectDisposedException"/>
       public override int Read(byte[] buffer, int offset, int count)
       {
          return Read(buffer, offset, count, false);
@@ -345,13 +340,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// The total number of bytes read into the buffer. This can be less than the number of bytes requested if that many bytes are not
       /// currently available, or zero (0) if the end of the stream has been reached.
       /// </returns>
-      /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is larger than the buffer length.</exception>
-      /// <exception cref="System.ArgumentNullException">
-      /// 	<paramref name="buffer"/> is <see langword="null"/>.</exception>
-      /// <exception cref="System.ArgumentOutOfRangeException">
-      /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
-      /// <exception cref="System.NotSupportedException">The stream does not support reading.</exception>
-      /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ObjectDisposedException"/>
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
       [SecurityCritical]
       public int Read(byte[] buffer, int offset, int count, bool processSecurity)
@@ -366,10 +359,10 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException("The sum of offset and count is larger than the size of the buffer.");
 
          if (offset < 0)
-            throw new ArgumentOutOfRangeException("offset", offset, Resources.OffsetMustNotBeNegative);
+            throw new ArgumentOutOfRangeException("offset", offset, Resources.Negative_Offset);
 
          if (count < 0)
-            throw new ArgumentOutOfRangeException("count", count, Resources.CountMustNotBeNegative);
+            throw new ArgumentOutOfRangeException("count", count, Resources.Negative_Count);
 
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle(count))
          {
@@ -378,7 +371,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (!NativeMethods.BackupRead(SafeFileHandle, safeBuffer, (uint)safeBuffer.Capacity, out numberOfBytesRead, false, processSecurity, ref m_context))
                NativeError.ThrowException(Marshal.GetLastWin32Error());
 
-            // See File.GetAccessControlInternal(): .CopyTo() does not work there?
+            // See File.GetAccessControlCore(): .CopyTo() does not work there?
             safeBuffer.CopyTo(buffer, offset, count);
 
             return (int)numberOfBytesRead;
@@ -392,13 +385,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from <paramref name="buffer"/> to the current stream.</param>
       /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
       /// <param name="count">The number of bytes to be written to the current stream.</param>
-      /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is greater than the buffer length.</exception>
-      /// <exception cref="System.ArgumentNullException">
-      /// 	<paramref name="buffer"/> is <see langword="null"/>.</exception>
-      /// <exception cref="System.ArgumentOutOfRangeException">
-      /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
-      /// <exception cref="System.NotSupportedException">The stream does not support writing.</exception>
-      /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="System.ArgumentNullException"/>
+      /// <exception cref="System.ArgumentOutOfRangeException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ObjectDisposedException"/>
       /// <remarks>This method will not process the access-control list (ACL) data for the file or directory.</remarks>      
       public override void Write(byte[] buffer, int offset, int count)
       {
@@ -413,13 +404,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// If this is <see langword="true"/> you need to specify <see cref="FileSystemRights.TakeOwnership"/> and <see cref="FileSystemRights.ChangePermissions"/> access when 
       /// opening the file or directory handle. If the handle does not have those access rights, the operating system denies 
       /// access to the ACL data, and ACL data restoration will not occur.</param>
-      /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is greater than the buffer length.</exception>
-      /// <exception cref="System.ArgumentNullException">
-      /// 	<paramref name="buffer"/> is <see langword="null"/>.</exception>
-      /// <exception cref="System.ArgumentOutOfRangeException">
-      /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
-      /// <exception cref="System.NotSupportedException">The stream does not support writing.</exception>
-      /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="System.ArgumentOutOfRangeException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ObjectDisposedException"/>
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
       [SecurityCritical]
       public void Write(byte[] buffer, int offset, int count, bool processSecurity)
@@ -428,13 +417,13 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("buffer");
 
          if (offset < 0)
-            throw new ArgumentOutOfRangeException("offset", offset, Resources.OffsetMustNotBeNegative);
+            throw new ArgumentOutOfRangeException("offset", offset, Resources.Negative_Offset);
 
          if (count < 0)
-            throw new ArgumentOutOfRangeException("count", count, Resources.CountMustNotBeNegative);
+            throw new ArgumentOutOfRangeException("count", count, Resources.Negative_Count);
 
          if (offset + count > buffer.Length)
-            throw new ArgumentException(Resources.BufferIsNotLargeEnoughForTheRequestedOperation);
+            throw new ArgumentException(Resources.Buffer_Not_Large_Enough);
 
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle(count))
          {
@@ -460,7 +449,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="origin">A value of type <see cref="System.IO.SeekOrigin"/> indicating the reference point used to obtain the new position.</param>
       /// <returns>The new position within the current stream.</returns>
       /// <remarks><para><note><para>This stream does not support seeking using this method, and calling this method will always throw <see cref="NotSupportedException"/>. See <see cref="Skip"/> for an alternative way of seeking forward.</para></note></para></remarks>
-      /// <exception cref="System.NotSupportedException">The stream does not support seeking.</exception>
+      /// <exception cref="NotSupportedException"/>
       public override long Seek(long offset, SeekOrigin origin)
       {
          throw new NotSupportedException();
@@ -469,10 +458,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>When overridden in a derived class, sets the length of the current stream.</summary>
       /// <param name="value">The desired length of the current stream in bytes.</param>
       /// <remarks>This method is not supported by the <see cref="BackupFileStream"/> class, and calling it will always generate a <see cref="NotSupportedException"/>.</remarks>
-      /// <exception cref="System.NotSupportedException">Always thrown by this class.</exception>
+      /// <exception cref="NotSupportedException"/>
       public override void SetLength(long value)
       {
-         throw new NotSupportedException(Resources.ThisStreamDoesNotSupportSeeking);
+         throw new NotSupportedException(Resources.No_Stream_Seeking_Support);
       }
 
       /// <summary>Skips ahead the specified number of bytes from the current stream.</summary>
@@ -506,7 +495,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the
       ///   current <see cref="BackupFileStream"/> object.
       /// </summary>
-      /// <exception cref="IOException">Thrown when an IO failure occurred.</exception>
+      /// <exception cref="IOException"/>
       /// <returns>
       ///   A <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current
       ///   <see cref="BackupFileStream"/> object.
@@ -528,13 +517,13 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException((int)lastError);
 
             if (pSecurityDescriptor.IsInvalid)
-               throw new IOException(Resources.InvalidSecurityDescriptorReturnedFromSystem);
+               throw new IOException(Resources.Returned_Invalid_Security_Descriptor);
 
             uint length = SecurityNativeMethods.GetSecurityDescriptorLength(pSecurityDescriptor);
 
             byte[] managedBuffer = new byte[length];
 
-            // See File.GetAccessControlInternal(): .CopyTo() does not work there?
+            // See File.GetAccessControlCore(): .CopyTo() does not work there?
             pSecurityDescriptor.CopyTo(managedBuffer, 0, (int)length);
 
             FileSecurity fs = new FileSecurity();
@@ -557,22 +546,22 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(ObjectSecurity fileSecurity)
       {
-         File.SetAccessControlInternal(null, SafeFileHandle, fileSecurity, AccessControlSections.All, PathFormat.RelativePath);
+         File.SetAccessControlCore(null, SafeFileHandle, fileSecurity, AccessControlSections.All, PathFormat.RelativePath);
       }
 
       /// <summary>Prevents other processes from changing the <see cref="BackupFileStream"/> while permitting read access.</summary>
       /// <param name="position">The beginning of the range to lock. The value of this parameter must be equal to or greater than zero (0).</param>
       /// <param name="length">The range to be locked.</param>
-      /// <exception cref="ArgumentOutOfRangeException"><paramref name="position"/> or <paramref name="length"/> is negative.</exception>
-      /// <exception cref="ObjectDisposedException">The file is closed.</exception>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="ObjectDisposedException"/>
       [SecurityCritical]
       public virtual void Lock(long position, long length)
       {
          if (position < 0)
-            throw new ArgumentOutOfRangeException("position", position, Resources.BackupFileStream_Unlock_Backup_FileStream_Unlock_Position_must_not_be_negative_);
+            throw new ArgumentOutOfRangeException("position", position, Resources.Unlock_Position_Negative);
 
          if (length < 0)
-            throw new ArgumentOutOfRangeException("length", length, Resources.BackupFileStream_Unlock_Backup_FileStream_Lock_Length_must_not_be_negative_);
+            throw new ArgumentOutOfRangeException("length", length, Resources.Negative_Lock_Length);
 
          if (!NativeMethods.LockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
             NativeError.ThrowException(Marshal.GetLastWin32Error());
@@ -581,17 +570,17 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Allows access by other processes to all or part of a file that was previously locked.</summary>
       /// <param name="position">The beginning of the range to unlock.</param>
       /// <param name="length">The range to be unlocked.</param>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"><paramref name="position"/> or <paramref name="length"/> is negative.</exception>
-      /// <exception cref="ObjectDisposedException">The file is closed.</exception>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="ObjectDisposedException"/>
       [SecurityCritical]
       public virtual void Unlock(long position, long length)
       {
          if (position < 0)
-            throw new ArgumentOutOfRangeException("position", position, Resources.BackupFileStream_Unlock_Backup_FileStream_Unlock_Position_must_not_be_negative_);
+            throw new ArgumentOutOfRangeException("position", position, Resources.Unlock_Position_Negative);
 
          if (length < 0)
-            throw new ArgumentOutOfRangeException("length", length, Resources.BackupFileStream_Unlock_Backup_FileStream_Lock_Length_must_not_be_negative_);
+            throw new ArgumentOutOfRangeException("length", length, Resources.Negative_Lock_Length);
 
          if (!NativeMethods.UnlockFile(SafeFileHandle, NativeMethods.GetLowOrderDword(position), NativeMethods.GetHighOrderDword(position), NativeMethods.GetLowOrderDword(length), NativeMethods.GetHighOrderDword(length)))
             NativeError.ThrowException(Marshal.GetLastWin32Error());
@@ -617,15 +606,15 @@ namespace Alphaleonis.Win32.Filesystem
                return null;
 
             if (numberOfBytesRead < Marshal.SizeOf(typeof(NativeMethods.WIN32_STREAM_ID)))
-               throw new IOException(Resources.IncompleteHeaderRead);
+               throw new IOException(Resources.Read_Incomplete_Header);
 
-            NativeMethods.WIN32_STREAM_ID streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>();
+            NativeMethods.WIN32_STREAM_ID streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>(0);
 
-            uint nameLength = (uint)Math.Min(streamID.StreamNameSize, hBuf.Capacity);
+            uint nameLength = (uint) Math.Min(streamID.dwStreamNameSize, hBuf.Capacity);
             if (!NativeMethods.BackupRead(_safeFileHandle, hBuf, nameLength, out numberOfBytesRead, false, mProcessSecurity, ref m_context))
                NativeError.ThrowException();
 
-            string name = hBuf.PtrToStringUni((int)nameLength / 2);
+            string name = hBuf.PtrToStringUni(0, (int) nameLength/2);
 
             return new BackupStreamInfo(streamID, name);
 
@@ -633,6 +622,5 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // Methods
-
    }
 }

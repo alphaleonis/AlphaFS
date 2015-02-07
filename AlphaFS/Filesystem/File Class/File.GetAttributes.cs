@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, PathFormat.RelativePath);
+         return GetAttributesExCore<FileAttributes>(null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path, PathFormat pathFormat)
       {
-         return GetAttributesExInternal<FileAttributes>(null, path, pathFormat);
+         return GetAttributesExCore<FileAttributes>(null, path, pathFormat);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -55,9 +55,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
       [SecurityCritical]
-      public static FileAttributes GetAttributes(KernelTransaction transaction, string path)
+      public static FileAttributes GetAttributesTransacted(KernelTransaction transaction, string path)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, PathFormat.RelativePath);
+         return GetAttributesExCore<FileAttributes>(transaction, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -66,9 +66,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
       [SecurityCritical]
-      public static FileAttributes GetAttributes(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileAttributes GetAttributesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetAttributesExInternal<FileAttributes>(transaction, path, pathFormat);
+         return GetAttributesExCore<FileAttributes>(transaction, path, pathFormat);
       }
 
       #endregion
@@ -76,34 +76,29 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Methods
 
       /// <summary>Gets the <see cref="FileAttributes"/> or <see cref="NativeMethods.WIN32_FILE_ATTRIBUTE_DATA"/> of the specified file or directory.</summary>
-      /// <returns>Returns the <see cref="FileAttributes"/> or <see cref="NativeMethods.WIN32_FILE_ATTRIBUTE_DATA"/> of the specified file or directory.</returns>
-      /// <exception cref="ArgumentException">
-      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
-      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
-      /// </exception>
-      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <returns>The <see cref="FileAttributes"/> or <see cref="NativeMethods.WIN32_FILE_ATTRIBUTE_DATA"/> of the specified file or directory.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <typeparam name="T">Generic type parameter.</typeparam>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
       [SecurityCritical]
-      internal static T GetAttributesExInternal<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static T GetAttributesExCore<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
 
-         string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
+         string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
          var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-         int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
+         int dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
 
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
             NativeError.ThrowException(dataInitialised, pathLp);
 
-         return (typeof(T) == typeof(FileAttributes)
-            ? (T)(object)data.FileAttributes
-            : (T)(object)data);
+         return (T) (typeof (T) == typeof (FileAttributes) ? (object) data.dwFileAttributes : data);
       }
 
       /// <summary>
@@ -116,10 +111,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="win32AttrData">[in,out].</param>
       /// <param name="tryagain">.</param>
       /// <param name="returnErrorOnNotFound">.</param>
-      /// <returns>Returns 0 on success, otherwise a Win32 error code.</returns>
+      /// <returns>0 on success, otherwise a Win32 error code.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      internal static int FillAttributeInfoInternal(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryagain, bool returnErrorOnNotFound)
+      internal static int FillAttributeInfoCore(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryagain, bool returnErrorOnNotFound)
       {
          int dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
 
@@ -161,7 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
                         {
                            // Return default value for backward compatibility
                            dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
-                           win32AttrData.FileAttributes = (FileAttributes)(-1);
+                           win32AttrData.dwFileAttributes = (FileAttributes)(-1);
                         }
                      }
 
@@ -211,14 +206,14 @@ namespace Alphaleonis.Win32.Filesystem
                       dataInitialised != Win32Errors.ERROR_NOT_READY) // Floppy device not ready.
                   {
                      // In case someone latched onto the file. Take the perf hit only for failure.
-                     return FillAttributeInfoInternal(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
+                     return FillAttributeInfoCore(transaction, pathLp, ref win32AttrData, true, returnErrorOnNotFound);
                   }
 
                   if (!returnErrorOnNotFound)
                   {
                      // Return default value for backward compbatibility.
                      dataInitialised = (int)Win32Errors.ERROR_SUCCESS;
-                     win32AttrData.FileAttributes = (FileAttributes)(-1);
+                     win32AttrData.dwFileAttributes = (FileAttributes)(-1);
                   }
                }
             }
@@ -227,7 +222,6 @@ namespace Alphaleonis.Win32.Filesystem
          return dataInitialised;
       }
 
-
-      #endregion // GetAttributesExInternal
+      #endregion // Internal Methods
    }
 }

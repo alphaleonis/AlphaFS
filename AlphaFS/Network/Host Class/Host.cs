@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
@@ -66,8 +67,6 @@ namespace Alphaleonis.Win32.Network
 
       #region Internal Methods
 
-      #region EnumerateNetworkObjectInternal
-
       private delegate uint EnumerateNetworkObjectDelegate(
          FunctionData functionData, out SafeGlobalMemoryBufferHandle netApiBuffer, [MarshalAs(UnmanagedType.I4)] int prefMaxLen,
          [MarshalAs(UnmanagedType.U4)] out uint entriesRead, [MarshalAs(UnmanagedType.U4)] out uint totalEntries,
@@ -82,7 +81,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       [SecurityCritical]
-      private static IEnumerable<TStruct> EnumerateNetworkObjectInternal<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException) 
+      private static IEnumerable<TStruct> EnumerateNetworkObjectCore<TStruct, TNative>(FunctionData functionData, Func<TNative, SafeGlobalMemoryBufferHandle, TStruct> createTStruct, EnumerateNetworkObjectDelegate enumerateNetworkObject, bool continueOnException) 
       {
          Type objectType;
          int objectSize;
@@ -142,35 +141,31 @@ namespace Alphaleonis.Win32.Network
          if (lastError != Win32Errors.NO_ERROR && !continueOnException)
             throw new NetworkInformationException((int) lastError);
       }
-
-      #endregion // EnumerateNetworkObjectInternal
       
-      #region GetRemoteNameInfoInternal
-
       /// <summary>This method uses <see cref="NativeMethods.REMOTE_NAME_INFO"/> level to retieve full REMOTE_NAME_INFO structure.</summary>
       /// <returns>A <see cref="NativeMethods.REMOTE_NAME_INFO"/> structure.</returns>
       /// <remarks>AlphaFS regards network drives created using SUBST.EXE as invalid.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="System.IO.PathTooLongException">When <paramref name="path"/> exceeds maximum path length.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="path">The local path with drive name.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
-      internal static NativeMethods.REMOTE_NAME_INFO GetRemoteNameInfoInternal(string path, bool continueOnException)
+      internal static NativeMethods.REMOTE_NAME_INFO GetRemoteNameInfoCore(string path, bool continueOnException)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         path = Path.GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars); 
+         path = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars); 
 
          // If path already is a network share path, we fill the REMOTE_NAME_INFO structure ourselves.
-         if (Path.IsUncPathInternal(path, true, false))
+         if (Path.IsUncPathCore(path, true, false))
             return new NativeMethods.REMOTE_NAME_INFO
             {
-               UniversalName = Path.AddTrailingDirectorySeparator(path, false),
-               ConnectionName = Path.RemoveTrailingDirectorySeparator(path, false),
-               RemainingPath = Path.DirectorySeparator
+               lpUniversalName = Path.AddTrailingDirectorySeparator(path, false),
+               lpConnectionName = Path.RemoveTrailingDirectorySeparator(path, false),
+               lpRemainingPath = Path.DirectorySeparator
             };
 
          
@@ -191,7 +186,7 @@ namespace Alphaleonis.Win32.Network
                switch (lastError)
                {
                   case Win32Errors.NO_ERROR:
-                     return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>();
+                     return buffer.PtrToStructure<NativeMethods.REMOTE_NAME_INFO>(0);
 
                   case Win32Errors.ERROR_MORE_DATA:
                      //bufferSize = Received the required buffer size, retry.
@@ -207,8 +202,6 @@ namespace Alphaleonis.Win32.Network
          // Return an empty structure (all fields set to null).
          return new NativeMethods.REMOTE_NAME_INFO();
       }
-
-      #endregion // GetRemoteNameInfoInternal
 
       internal struct ConnectDisconnectArguments
       {

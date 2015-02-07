@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path)
       {
-         return GetLastWriteTimeInternal(null, path, false, PathFormat.RelativePath).ToLocalTime();
+         return GetLastWriteTimeCore(null, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTime(string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(null, path, false, pathFormat).ToLocalTime();
+         return GetLastWriteTimeCore(null, path, false, pathFormat).ToLocalTime();
       }
 
 
@@ -64,9 +64,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   expressed in local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path)
+      public static DateTime GetLastWriteTimeTransacted(KernelTransaction transaction, string path)
       {
-         return GetLastWriteTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
+         return GetLastWriteTimeCore(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
 
       /// <summary>[AlphaFS] Gets the date and time that the specified file was last written to.</summary>
@@ -78,9 +78,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   expressed in local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetLastWriteTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
+         return GetLastWriteTimeCore(transaction, path, false, pathFormat).ToLocalTime();
       }
 
 
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path)
       {
-         return GetLastWriteTimeInternal(null, path, true, PathFormat.RelativePath);
+         return GetLastWriteTimeCore(null, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static DateTime GetLastWriteTimeUtc(string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(null, path, true, pathFormat);
+         return GetLastWriteTimeCore(null, path, true, pathFormat);
       }
 
 
@@ -131,9 +131,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   expressed in UTC time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path)
+      public static DateTime GetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path)
       {
-         return GetLastWriteTimeInternal(transaction, path, true, PathFormat.RelativePath);
+         return GetLastWriteTimeCore(transaction, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -147,9 +147,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   expressed in UTC time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetLastWriteTimeInternal(transaction, path, true, pathFormat);
+         return GetLastWriteTimeCore(transaction, path, true, pathFormat);
       }
 
       #endregion // Transacted
@@ -174,15 +174,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Depending on <paramref name="getUtc"/> this value is expressed in UTC- or local time.
       /// </returns>
       [SecurityCritical]
-      internal static DateTime GetLastWriteTimeInternal(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
+      internal static DateTime GetLastWriteTimeCore(KernelTransaction transaction, string path, bool getUtc, PathFormat pathFormat)
       {
-         NativeMethods.FILETIME lastWriteTime = GetAttributesExInternal<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, path, pathFormat).LastWriteTime;
+         NativeMethods.FILETIME lastWriteTime = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, path, pathFormat).ftLastWriteTime;
 
          return getUtc
             ? DateTime.FromFileTimeUtc(lastWriteTime)
             : DateTime.FromFileTime(lastWriteTime);
       }
 
-      #endregion // GetLastWriteTimeUtcInternal
+      #endregion // Internal Methods
    }
 }

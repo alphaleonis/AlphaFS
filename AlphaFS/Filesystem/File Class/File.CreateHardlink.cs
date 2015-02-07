@@ -30,10 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region CreateHardlink
 
-      /// <summary>
-      ///   [AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system,
-      ///   and only for files, not directories.
-      /// </summary>
+      /// <summary>AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -41,20 +38,17 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void CreateHardlink(string fileName, string existingFileName, PathFormat pathFormat)
       {
-         CreateHardlinkInternal(null, fileName, existingFileName, pathFormat);
+         CreateHardlinkCore(null, fileName, existingFileName, pathFormat);
       }
 
-      /// <summary>
-      ///   [AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system,
-      ///   and only for files, not directories.
-      /// </summary>
+      /// <summary>AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
       public static void CreateHardlink(string fileName, string existingFileName)
       {
-         CreateHardlinkInternal(null, fileName, existingFileName, PathFormat.RelativePath);
+         CreateHardlinkCore(null, fileName, existingFileName, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -67,9 +61,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
+      public static void CreateHardlinkTransacted(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
       {
-         CreateHardlinkInternal(transaction, fileName, existingFileName, pathFormat);
+         CreateHardlinkCore(transaction, fileName, existingFileName, pathFormat);
       }
 
       /// <summary>
@@ -81,32 +75,31 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName)
+      public static void CreateHardlinkTransacted(KernelTransaction transaction, string fileName, string existingFileName)
       {
-         CreateHardlinkInternal(transaction, fileName, existingFileName, PathFormat.RelativePath);
+         CreateHardlinkCore(transaction, fileName, existingFileName, PathFormat.RelativePath);
       }
 
       #endregion // CreateHardlink
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method CreateHardlinkInternal() to establish a hard link between an existing file and a new file. This function
+      /// <summary>Establish a hard link between an existing file and a new file. This function
       ///   is only supported on the NTFS file system, and only for files, not directories.
       /// </summary>
-      /// <exception cref="NotSupportedException">Thrown when the requested operation is not supported.</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      internal static void CreateHardlinkInternal(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
+      internal static void CreateHardlinkCore(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
       {
          var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
-         string fileNameLp = Path.GetExtendedLengthPathInternal(transaction, fileName, pathFormat, options);
-         string existingFileNameLp = Path.GetExtendedLengthPathInternal(transaction, existingFileName, pathFormat, options);
+         string fileNameLp = Path.GetExtendedLengthPathCore(transaction, fileName, pathFormat, options);
+         string existingFileNameLp = Path.GetExtendedLengthPathCore(transaction, existingFileName, pathFormat, options);
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -122,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
             switch ((uint)lastError)
             {
                case Win32Errors.ERROR_INVALID_FUNCTION:
-                  throw new NotSupportedException(Resources.HardLinksOnNonNTFSPartitionsIsNotSupported);
+                  throw new NotSupportedException(Resources.HardLinks_Not_Supported);
 
                default:
                   NativeError.ThrowException(lastError, fileNameLp, existingFileName);
@@ -131,6 +124,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // CreateHardlinkInternal
+      #endregion // Internal Methods
    }
 }

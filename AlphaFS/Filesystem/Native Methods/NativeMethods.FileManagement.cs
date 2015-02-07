@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
          //uint Init(Shell32.AssociationAttributes flags, [MarshalAs(UnmanagedType.LPWStr)] string pszAssoc, IntPtr hkProgid, IntPtr hwnd);
 
          /// <summary>Searches for and retrieves a file or protocol association-related string from the registry.</summary>
-         /// <returns>Returns a standard COM error value, including the following: S_OK, E_POINTER, S_FALSE</returns>
+         /// <returns>A standard COM error value, including the following: S_OK, E_POINTER, S_FALSE</returns>
          /// <remarks>Minimum supported client: Windows 2000 Professional, Windows XP [desktop apps only]</remarks>
          /// <remarks>Minimum supported server: Windows 2000 Server [desktop apps only]</remarks>
          void GetString(Shell32.AssociationAttributes flags, Shell32.AssociationString str,
@@ -619,7 +619,7 @@ namespace Alphaleonis.Win32.Filesystem
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.Bool)]
       internal static extern bool GetFileInformationByHandle(SafeFileHandle hFile,
-         [MarshalAs(UnmanagedType.Struct)] out ByHandleFileInfo lpByHandleFileInformation);
+         [MarshalAs(UnmanagedType.Struct)] out BY_HANDLE_FILE_INFORMATION lpByHandleFileInformation);
 
       /// <summary>
       ///   Retrieves file information for the specified file.

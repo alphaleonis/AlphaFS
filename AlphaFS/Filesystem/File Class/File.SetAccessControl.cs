@@ -44,7 +44,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity)
       {
-         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, PathFormat.RelativePath);
+         SetAccessControlCore(path, null, fileSecurity, AccessControlSections.All, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections)
       {
-         SetAccessControlInternal(path, null, fileSecurity, includeSections, PathFormat.RelativePath);
+         SetAccessControlCore(path, null, fileSecurity, includeSections, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, PathFormat pathFormat)
       {
-         SetAccessControlInternal(path, null, fileSecurity, AccessControlSections.All, pathFormat);
+         SetAccessControlCore(path, null, fileSecurity, AccessControlSections.All, pathFormat);
       }
 
       /// <summary>
@@ -99,22 +99,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetAccessControl(string path, FileSecurity fileSecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         SetAccessControlInternal(path, null, fileSecurity, includeSections, pathFormat);
+         SetAccessControlCore(path, null, fileSecurity, includeSections, pathFormat);
       }
 
       #endregion // SetAccessControl
 
       #region Internal Methods
 
-      /// <summary>Unified method SetAccessControlInternal() applies access control list (ACL) entries
-      /// described by a <see cref="FileSecurity"/> FileSecurity object to the specified file.</summary>
+      /// <summary>Applies access control list (ACL) entries described by a <see cref="FileSecurity"/> FileSecurity object to the specified file.</summary>
       /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="ArgumentException">
-      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
-      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
-      /// </exception>
-      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A file to add or remove access control list (ACL) entries from. This parameter This parameter may be <see langword="null"/>.</param>
       /// <param name="handle">A handle to add or remove access control list (ACL) entries from. This parameter This parameter may be <see langword="null"/>.</param>
       /// <param name="objectSecurity">A <see cref="DirectorySecurity"/> or <see cref="FileSecurity"/> object that describes an ACL entry to apply to the file described by the <paramref name="path"/> parameter.</param>
@@ -122,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity")]
       [SecurityCritical]
-      internal static void SetAccessControlInternal(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, PathFormat pathFormat)
+      internal static void SetAccessControlCore(string path, SafeHandle handle, ObjectSecurity objectSecurity, AccessControlSections includeSections, PathFormat pathFormat)
       {
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
@@ -133,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
          byte[] managedDescriptor = objectSecurity.GetSecurityDescriptorBinaryForm();
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle(managedDescriptor.Length))
          {
-            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
+            string pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
             safeBuffer.CopyFrom(managedDescriptor, 0, managedDescriptor.Length);
 
@@ -231,6 +227,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // SetAccessControlInternal
+      #endregion // Internal Methods
    }
 }

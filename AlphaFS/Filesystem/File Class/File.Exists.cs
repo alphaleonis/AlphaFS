@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path)
       {
-         return ExistsInternal(false, null, path, PathFormat.RelativePath);
+         return ExistsCore(false, null, path, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Determines whether the specified file exists.</summary>
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static bool Exists(string path, PathFormat pathFormat)
       {
-         return ExistsInternal(false, null, path, pathFormat);
+         return ExistsCore(false, null, path, pathFormat);
       }
 
       #region Transactional
@@ -116,9 +116,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="false"/></para>
       /// </returns>
       [SecurityCritical]
-      public static bool Exists(KernelTransaction transaction, string path)
+      public static bool ExistsTransacted(KernelTransaction transaction, string path)
       {
-         return ExistsInternal(false, transaction, path, PathFormat.RelativePath);
+         return ExistsCore(false, transaction, path, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -150,9 +150,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="false"/></para>
       /// </returns>
       [SecurityCritical]
-      public static bool Exists(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static bool ExistsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return ExistsInternal(false, transaction, path, pathFormat);
+         return ExistsCore(false, transaction, path, pathFormat);
       }
 
       #endregion // Transacted
@@ -161,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method ExistsInternal() to determine whether the specified file or directory exists.</summary>
+      /// <summary>Determines whether the specified file or directory exists.</summary>
       /// <remarks>
       ///   <para>MSDN: .NET 3.5+: Trailing spaces are removed from the end of the <paramref name="path"/> parameter before checking whether
       ///   the directory exists.</para>
@@ -186,7 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
-      internal static bool ExistsInternal(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static bool ExistsCore(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          // Will be caught later and be thrown as an ArgumentException or ArgumentNullException.
          // Let's take a shorter route, preventing an Exception from being thrown altogether.
@@ -197,8 +197,8 @@ namespace Alphaleonis.Win32.Filesystem
          // DriveInfo.IsReady() will fail.
          //
          //// After normalizing, check whether path ends in directory separator.
-         //// Otherwise, FillAttributeInfoInternal removes it and we may return a false positive.
-         //string pathRp = Path.GetRegularPathInternal(path, true, false, false, false);
+         //// Otherwise, FillAttributeInfoCore removes it and we may return a false positive.
+         //string pathRp = Path.GetRegularPathCore(path, true, false, false, false);
 
          //if (pathRp.Length > 0 && Path.IsDVsc(pathRp[pathRp.Length - 1], false))
          //   return false;
@@ -206,14 +206,16 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            string pathLp = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);
+            string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.ContinueOnNonExist);
 
             var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-            int dataInitialised = FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
+            int dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
 
-            return (dataInitialised == Win32Errors.ERROR_SUCCESS && data.FileAttributes != (FileAttributes)(-1) && (isFolder
-               ? (data.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory
-               : (data.FileAttributes & FileAttributes.Directory) != FileAttributes.Directory));
+            return (dataInitialised == Win32Errors.ERROR_SUCCESS &&
+                    data.dwFileAttributes != (FileAttributes) (-1) &&
+                    (isFolder
+                       ? (data.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory
+                       : (data.dwFileAttributes & FileAttributes.Directory) != FileAttributes.Directory));
          }
          catch
          {
@@ -221,6 +223,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion ExistsInternal
+      #endregion // Internal Methods
    }
 }

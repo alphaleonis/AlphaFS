@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decrypt(string path)
       {
-         EncryptDecryptFileInternal(false, path, false, PathFormat.RelativePath);
+         EncryptDecryptFileCore(false, path, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Decrypts a file that was encrypted by the current account using the Encrypt method.</summary>
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Decrypt(string path, PathFormat pathFormat)
       {
-         EncryptDecryptFileInternal(false, path, false, pathFormat);
+         EncryptDecryptFileCore(false, path, false, pathFormat);
       }
 
       /// <summary>Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Encrypt(string path)
       {
-         EncryptDecryptFileInternal(false, path, true, PathFormat.RelativePath);
+         EncryptDecryptFileCore(false, path, true, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Encrypts a file so that only the account used to encrypt the file can decrypt it.</summary>
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void Encrypt(string path, PathFormat pathFormat)
       {
-         EncryptDecryptFileInternal(false, path, true, pathFormat);
+         EncryptDecryptFileCore(false, path, true, pathFormat);
       }
 
       #endregion
@@ -72,23 +72,20 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method EncryptDecryptFileInternal() to decrypt/encrypt a file or directory so that only the account used to
-      ///   encrypt the file can decrypt it.
-      /// </summary>
-      /// <exception cref="NotSupportedException">Thrown when the requested operation is not supported.</exception>
+      /// <summary>Decrypts/encrypts a file or directory so that only the account used to encrypt the file can decrypt it.</summary>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">A path that describes a file to encrypt.</param>
       /// <param name="encrypt"><see langword="true"/> encrypt, <see langword="false"/> decrypt.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      internal static void EncryptDecryptFileInternal(bool isFolder, string path, bool encrypt, PathFormat pathFormat)
+      internal static void EncryptDecryptFileCore(bool isFolder, string path, bool encrypt, PathFormat pathFormat)
       {
-         string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         string pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          // Reset file/directory attributes.
          // MSDN: If lpFileName specifies a read-only file, the function fails and GetLastError returns ERROR_FILE_READ_ONLY.
-         SetAttributesInternal(isFolder, null, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
+         SetAttributesCore(isFolder, null, pathLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
 
          // EncryptFile() / DecryptFile()
          // In the ANSI version of this function, the name is limited to 248 characters.
@@ -118,6 +115,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // EncryptDecryptFileInternal
+      #endregion // Internal Methods
    }
 }

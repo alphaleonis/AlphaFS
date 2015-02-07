@@ -11,33 +11,42 @@ Version 2.1
 	* `Directory.ImportEncryptedDirectoryRaw`
 	* `Directory.ExportEncryptedDirectoryRaw`
 
-- Issue #101: The release now also contains a build targetting .NET 4.5.2
-- Issue #109: Add overloaded methods for `Host.EnumerateShares()`
+- Issue #101: The release now also contains a build targetting .NET 4.5.2.
+- Issue #109: Add overloaded methods for `Host.EnumerateShares()`.
+- Issue #112: Add `CreationTimeUtc`, `LastAccessTimeUtc` and `LastWriteTimeUtc` to "Info" classes.
 - Issue #119: Fix `Path.IsLocalPath()` issues.
 - Issue #125: AlphaFS is now CLSCompliant.
 - Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #131: Modify method `Path.GetPathRoot()` to handle UNC paths in long path format.
 - Issue #132: Modify method `VolumeInfo()` constructor to better handle input paths.
-- Issue #133: Add missing unit test `Host.GetHostShareFromPath()`
+- Issue #133: Add missing unit test `Host.GetHostShareFromPath()`.
 - Issue #134: Improved upon `FindFileSystemEntryInfo.FindFirstFile()` when throwing `Directory-/FileNotFoundException()`.
+- Issue #138: Modify `GetShareInfo()` to use `SafeGlobalMemoryBufferHandle` instead of `IntPtr`.
+- Issue #139: Modify `GetDfsInfoInternal()` to use `SafeGlobalMemoryBufferHandle` instead of `IntPtr`.
+- Issue #141: Remove obsolete Resources (resx) string messages.
+- Issue #142: Move literal strings to Resources (resx).
+- Issue #144: Add `DirectoryInfo.EnumerateXxx()` methods with support for DirectoryEnumerationOptions enum.
  
 ### Bugs Fixed
 
 - Issue #50: `Path.GetLongPath()` does not prefix on "C:\", should it?
-- Issue #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`
+- Issue #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`.
 
 ### Breaking Changes
 
-- Issue #128: Remove `Path.IsLocalPath()` in favour of `Path.IsUncPath()`
+- Issue #113: Change names of time related properties on `FileSystemEntryInfo` to conform with `FileInfo/DirectoryInfo`.
+- Issue #126: Suffix the name of all methods working with TxF with "Transacted".
+- Issue #128: Remove `Path.IsLocalPath()` in favour of `Path.IsUncPath()`.
+- Issue #140: Replace internal `DFS_INFO_4` structure with `DFS_INFO_9`.
 
 Version 2.0.1
 -------------
 
 ### Bugs Fixed
 
-- Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)"
-- Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`
+- Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)".
+- Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`.
 - Issue #110: `Directory.GetDirectoryRoot()` should throw `System.ArgumentException`.
 - Issue #117: Fix `Path.GetFullPath()` issues. 
 - Issue #123: When `Directory.Encrypt/Decrypt()` is non-recursive, only process the folder.

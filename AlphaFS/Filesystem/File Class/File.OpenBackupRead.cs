@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(string path, PathFormat pathFormat)
       {
-         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
+         return OpenCore(null, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
       }
 
       /// <summary>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenBackupRead(string path)
       {
-         return OpenInternal(null, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
+         return OpenCore(null, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
       }
 
       /// <summary>Opens the specified file for reading purposes bypassing security attributes.</summary>
@@ -56,9 +56,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
       [SecurityCritical]
-      public static FileStream OpenBackupRead(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileStream OpenBackupReadTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
+         return OpenCore(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
       }
 
       /// <summary>Opens the specified file for reading purposes bypassing security attributes.</summary>
@@ -66,9 +66,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file path to open.</param>
       /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
       [SecurityCritical]
-      public static FileStream OpenBackupRead(KernelTransaction transaction, string path)
+      public static FileStream OpenBackupReadTransacted(KernelTransaction transaction, string path)
       {
-         return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
+         return OpenCore(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
       }
    }
 }

@@ -26,9 +26,9 @@ using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>FILE_ID_BOTH_DIR_INFO - Contains information about files in the specified directory. Used for directory handles.
-   /// Use only when calling GetFileInformationByHandleEx.</summary>
-   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir"), Serializable]
+   /// <summary>Contains information about files in the specified directory. Used for directory handles.</summary>
+   [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Dir")]
+   [Serializable]
    [SecurityCritical]
    public sealed class FileIdBothDirectoryInfo
    {
@@ -38,10 +38,10 @@ namespace Alphaleonis.Win32.Filesystem
 
       internal FileIdBothDirectoryInfo(NativeMethods.FILE_ID_BOTH_DIR_INFO fibdi, string fileName)
       {
-         CreationTime = DateTime.FromFileTimeUtc(fibdi.CreationTime).ToLocalTime();
-         LastAccessTime = DateTime.FromFileTimeUtc(fibdi.LastAccessTime).ToLocalTime();
-         LastWriteTime = DateTime.FromFileTimeUtc(fibdi.LastWriteTime).ToLocalTime();
-         ChangeTime = DateTime.FromFileTimeUtc(fibdi.ChangeTime).ToLocalTime();
+         CreationTimeUtc = DateTime.FromFileTimeUtc(fibdi.CreationTime);
+         LastAccessTimeUtc = DateTime.FromFileTimeUtc(fibdi.LastAccessTime);
+         LastWriteTimeUtc = DateTime.FromFileTimeUtc(fibdi.LastWriteTime);
+         ChangeTimeUtc = DateTime.FromFileTimeUtc(fibdi.ChangeTime);
 
          AllocationSize = fibdi.AllocationSize;
          EndOfFile = fibdi.EndOfFile;
@@ -71,17 +71,41 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region ChangeTime
 
-      /// <summary>The time that the file was last changed.</summary>
-      public DateTime ChangeTime { get; set; }
+      /// <summary>Gets the time this entry was changed.</summary>
+      /// <value>The time this entry was changed.</value>
+      public DateTime ChangeTime
+      {
+         get { return ChangeTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // ChangeTime
 
+      #region ChangeTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was changed.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was changed.</value>
+      public DateTime ChangeTimeUtc { get; set; }
+
+      #endregion // ChangeTimeUtc
+
       #region CreationTime
 
-      /// <summary>The time that the file was created.</summary>
-      public DateTime CreationTime { get; set; }
+      /// <summary>Gets the time this entry was created.</summary>
+      /// <value>The time this entry was created.</value>
+      public DateTime CreationTime
+      {
+         get { return CreationTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // CreationTime
+
+      #region CreationTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was created.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
+      public DateTime CreationTimeUtc { get; set; }
+
+      #endregion // CreationTimeUtc
 
       #region EaSize
 
@@ -132,17 +156,41 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastAccessTime
 
-      /// <summary>The time that the file was last accessed.</summary>
-      public DateTime LastAccessTime { get; set; }
+      /// <summary>Gets the time this entry was last accessed.</summary>
+      /// <value>The time this entry was last accessed.</value>
+      public DateTime LastAccessTime
+      {
+         get { return LastAccessTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // LastAccessTime
 
+      #region LastAccessTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last accessed.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
+      public DateTime LastAccessTimeUtc { get; set; }
+
+      #endregion // LastAccessTimeUtc
+
       #region LastWriteTime
 
-      /// <summary>The time that the file was last written to.</summary>
-      public DateTime LastWriteTime { get; set; }
+      /// <summary>Gets the time this entry was last modified.</summary>
+      /// <value>The time this entry was last modified.</value>
+      public DateTime LastWriteTime
+      {
+         get { return LastWriteTimeUtc.ToLocalTime(); }
+      }
 
       #endregion // LastWriteTime
+
+      #region LastWriteTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last modified.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
+      public DateTime LastWriteTimeUtc { get; set; }
+
+      #endregion // LastWriteTimeUtc
 
       #region ShortName
 

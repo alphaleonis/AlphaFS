@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       public KernelTransaction(ObjectSecurity securityDescriptor, int timeout, string description)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(securityDescriptor))
          {
@@ -90,35 +90,27 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Requests that the specified transaction be committed.</summary>
-      /// <exception cref="TransactionAlreadyCommittedException">The transaction was already committed.</exception>
-      /// <exception cref="TransactionAlreadyAbortedException">The transaction was already aborted.</exception>
-      /// <exception cref="Win32Exception">An error occurred</exception>
-#if NET35
-      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
-#else
+      /// <exception cref="TransactionAlreadyCommittedException"/>
+      /// <exception cref="TransactionAlreadyAbortedException"/>
+      /// <exception cref="Win32Exception"/>
       [SecurityCritical]
-#endif
       public void Commit()
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          if (!NativeMethods.CommitTransaction(_hTrans))
             CheckTransaction();
       }
 
       /// <summary>Requests that the specified transaction be rolled back. This function is synchronous.</summary>
-      /// <exception cref="TransactionAlreadyCommittedException">The transaction was already committed.</exception>
-      /// <exception cref="Win32Exception">An error occurred</exception>
-#if NET35
-      [SecurityPermissionAttribute(SecurityAction.LinkDemand, UnmanagedCode = true)]
-#else
+      /// <exception cref="TransactionAlreadyCommittedException"/>
+      /// <exception cref="Win32Exception"/>
       [SecurityCritical]
-#endif
       public void Rollback()
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          if (!NativeMethods.RollbackTransaction(_hTrans))
             CheckTransaction();

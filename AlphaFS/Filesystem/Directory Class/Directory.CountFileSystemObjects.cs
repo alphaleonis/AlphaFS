@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Linq;
 using System.Security;
 
@@ -26,136 +27,128 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class Directory
    {
-      #region AlphaFS
-
-      #region Non-Transactional
-
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
-      /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The directory path.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
       public static long CountFileSystemObjects(string path, DirectoryEnumerationOptions options)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, Path.WildcardStarMatchAll, options, PathFormat.RelativePath).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(null, path, Path.WildcardStarMatchAll, options, PathFormat.RelativePath).Count();
       }
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
-      /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The directory path.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static long CountFileSystemObjects(string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, Path.WildcardStarMatchAll, options, pathFormat).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(null, path, Path.WildcardStarMatchAll, options, pathFormat).Count();
       }
 
 
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
-      /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The directory path.</param>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
       public static long CountFileSystemObjects(string path, string searchPattern, DirectoryEnumerationOptions options)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, options, PathFormat.RelativePath).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, options, PathFormat.RelativePath).Count();
       }
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
-      /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The directory path.</param>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static long CountFileSystemObjects(string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, options, pathFormat).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, options, pathFormat).Count();
       }
-
-      #endregion // Non-Transactional
 
       #region Transactional
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
-      /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public static long CountFileSystemObjects(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
+      public static long CountFileSystemObjectsTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, Path.WildcardStarMatchAll, options, PathFormat.RelativePath).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, Path.WildcardStarMatchAll, options, PathFormat.RelativePath).Count();
       }
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
-      /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static long CountFileSystemObjects(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      public static long CountFileSystemObjectsTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, Path.WildcardStarMatchAll, options, pathFormat).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, Path.WildcardStarMatchAll, options, pathFormat).Count();
       }
 
 
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
-      /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public static long CountFileSystemObjects(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options)
+      public static long CountFileSystemObjectsTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, options, PathFormat.RelativePath).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, options, PathFormat.RelativePath).Count();
       }
 
       /// <summary>[AlphaFS] Counts file system objects: files, folders or both) in a given directory.</summary>
       /// <returns>The counted number of file system objects.</returns>
-      /// <exception cref="System.UnauthorizedAccessException">An exception is thrown case of access errors.</exception>
+      /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory path.</param>
       /// <param name="searchPattern">
-      /// <para>The search string to match against the names of directories in path. This parameter can contain a</para>
-      /// <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      /// <para>characters, but does not support regular expressions.</para>
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static long CountFileSystemObjects(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      public static long CountFileSystemObjectsTransacted(KernelTransaction transaction, string path, string searchPattern, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, options, pathFormat).Count();
+         return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, options, pathFormat).Count();
       }
       
       #endregion // Transactional
-
-      #endregion // AlphaFS
    }
 }

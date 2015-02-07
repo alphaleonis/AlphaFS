@@ -80,10 +80,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
-         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationFileName, pathFormat, options);
-         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationBackupFileName, pathFormat, options);
+         string destinationFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationFileName, pathFormat, options);
+         string destinationBackupFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationBackupFileName, pathFormat, options);
 
-         File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, false, PathFormat.LongFullPath);
+         File.ReplaceCore(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, false, PathFormat.LongFullPath);
 
          return new FileInfo(Transaction, destinationFileNameLp, PathFormat.LongFullPath);
       }
@@ -105,10 +105,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
-         string destinationFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationFileName, pathFormat, options);
-         string destinationBackupFileNameLp = Path.GetExtendedLengthPathInternal(Transaction, destinationBackupFileName, pathFormat, options);
+         string destinationFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationFileName, pathFormat, options);
+         string destinationBackupFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationBackupFileName, pathFormat, options);
 
-         File.ReplaceInternal(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, PathFormat.LongFullPath);
+         File.ReplaceCore(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, PathFormat.LongFullPath);
 
          return new FileInfo(Transaction, destinationFileNameLp, PathFormat.LongFullPath);
       }

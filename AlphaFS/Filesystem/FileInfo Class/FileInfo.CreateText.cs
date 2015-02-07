@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamWriter CreateText()
       {
-         return new StreamWriter(File.CreateFileStreamInternal(Transaction, LongFullName, ExtendedFileAttributes.Normal, null,
+         return new StreamWriter(File.CreateFileStreamCore(Transaction, LongFullName, ExtendedFileAttributes.Normal, null,
             FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, PathFormat.LongFullPath), NativeMethods.DefaultFileEncoding);
       }
 

@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       public static string GetTempPath(string combinePath)
       {
          string tempPath = GetTempPath();
-         return !Utils.IsNullOrWhiteSpace(combinePath) ? CombineInternal(false, tempPath, combinePath) : tempPath;
+         return !Utils.IsNullOrWhiteSpace(combinePath) ? CombineCore(false, tempPath, combinePath) : tempPath;
       }
 
       #endregion // GetTempPath (.NET)

@@ -32,7 +32,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Initializes a new instance of the <see cref="NotAReparsePointException"/> class.</summary>
       public NotAReparsePointException()
-         : base(Resources.ENotAReparsePoint, s_errorCode)
+         : base(Resources.Not_A_Reparse_Point, s_errorCode)
       {
       }
 

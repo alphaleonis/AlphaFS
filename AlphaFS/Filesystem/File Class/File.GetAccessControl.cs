@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.RelativePath);
+         return GetAccessControlCore<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, PathFormat.RelativePath);
+         return GetAccessControlCore<FileSecurity>(false, path, includeSections, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, PathFormat pathFormat)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, pathFormat);
+         return GetAccessControlCore<FileSecurity>(false, path, AccessControlSections.Access | AccessControlSections.Group | AccessControlSections.Owner, pathFormat);
       }
 
       /// <summary>
@@ -109,18 +109,15 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileSecurity GetAccessControl(string path, AccessControlSections includeSections, PathFormat pathFormat)
       {
-         return GetAccessControlInternal<FileSecurity>(false, path, includeSections, pathFormat);
+         return GetAccessControlCore<FileSecurity>(false, path, includeSections, pathFormat);
       }
 
       #endregion
 
       #region Internal Methods
 
-      /// <summary>
-      ///   [AlphaFS] Unified method GetAccessControlInternal() to get an <see cref="ObjectSecurity"/> object for a particular file or
-      ///   directory.
-      /// </summary>
-      /// <exception cref="IOException">Thrown when an IO failure occurred.</exception>
+      /// <summary>Gets an <see cref="ObjectSecurity"/> object for a particular file or directory.</summary>
+      /// <exception cref="IOException"/>
       /// <typeparam name="T">Generic type parameter.</typeparam>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">
@@ -136,14 +133,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   An <see cref="ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the
       ///   <paramref name="path"/> parameter.
       /// </returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
       [SecurityCritical]
-      internal static T GetAccessControlInternal<T>(bool isFolder, string path, AccessControlSections includeSections, PathFormat pathFormat)
+      internal static T GetAccessControlCore<T>(bool isFolder, string path, AccessControlSections includeSections, PathFormat pathFormat)
       {
          SecurityInformation securityInfo = 0;
          PrivilegeEnabler privilegeEnabler = null;
@@ -167,7 +161,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          using (privilegeEnabler)
          {
-            string pathLp = Path.GetExtendedLengthPathInternal(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+            string pathLp = Path.GetExtendedLengthPathCore(null, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
             IntPtr pSidOwner, pSidGroup, pDacl, pSacl;
             SafeGlobalMemoryBufferHandle pSecurityDescriptor;
@@ -185,7 +179,7 @@ namespace Alphaleonis.Win32.Filesystem
                   NativeError.ThrowException(lastError, pathLp);
 
                if (!NativeMethods.IsValidHandle(pSecurityDescriptor, false))
-                  throw new IOException(Resources.InvalidSecurityDescriptorReturnedFromSystem);
+                  throw new IOException(Resources.Returned_Invalid_Security_Descriptor);
 
 
                uint length = Security.NativeMethods.GetSecurityDescriptorLength(pSecurityDescriptor);
@@ -209,6 +203,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // GetAccessControlInternal
+      #endregion // Internal Methods
    }
 }

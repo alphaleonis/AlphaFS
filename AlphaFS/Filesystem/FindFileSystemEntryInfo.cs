@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Transaction = transaction;
 
-         InputPath = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         InputPath = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          SearchPattern = searchPattern;
          FileSystemObjectType = null;
@@ -154,7 +154,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          if (AsString)
             // Return object instance FullPath property as string, optionally in Unicode format.
-            return (T) (object) (AsLongPath ? fullPathLp : Path.GetRegularPathInternal(fullPathLp, GetFullPathOptions.None));
+            return (T) (object) (AsLongPath ? fullPathLp : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None));
 
 
          // Make sure the requested file system object type is returned.
@@ -162,7 +162,7 @@ namespace Alphaleonis.Win32.Filesystem
          // true = Return only directories.
          // false = Return only files.
 
-         var fsei = new FileSystemEntryInfo(win32FindData) { FullPath = Path.GetRegularPathInternal(fullPathLp, GetFullPathOptions.None) };
+         var fsei = new FileSystemEntryInfo(win32FindData) { FullPath = Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None) };
 
          return AsFileSystemInfo
             // Return object instance of type FileSystemInfo.
@@ -216,7 +216,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   do
                   {
-                     string fileName = win32FindData.FileName;
+                     string fileName = win32FindData.cFileName;
 
                      // Skip entries "." and ".."
                      if (fileName.Equals(Path.CurrentDirectoryPrefix, StringComparison.OrdinalIgnoreCase) ||
@@ -224,12 +224,12 @@ namespace Alphaleonis.Win32.Filesystem
                         continue;
 
                      // Skip reparse points here to cleanly separate regular directories from links.
-                     if (SkipReparsePoints && (win32FindData.FileAttributes & FileAttributes.ReparsePoint) == FileAttributes.ReparsePoint)
+                     if (SkipReparsePoints && (win32FindData.dwFileAttributes & FileAttributes.ReparsePoint) == FileAttributes.ReparsePoint)
                         continue;
 
 
                      string fseiFullPathLp = path + fileName;
-                     bool fseiIsFolder = (win32FindData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory;
+                     bool fseiIsFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory;
 
                      // If object is a directory, add it to the queue for later traversal.
                      if (fseiIsFolder && Recursive)
@@ -293,7 +293,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (SafeFindFileHandle handle = FindFirstFile(InputPath, out win32FindData))
          {
             if (!handle.IsInvalid)
-               return NewFileSystemEntryType<T>(win32FindData, InputPath, (win32FindData.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory);
+               return NewFileSystemEntryType<T>(win32FindData, InputPath, (win32FindData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory);
          }
 
          return (T) (object) null;

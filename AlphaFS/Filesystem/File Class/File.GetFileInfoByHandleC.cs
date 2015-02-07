@@ -35,7 +35,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          NativeMethods.IsValidHandle(handle);
 
-         NativeMethods.ByHandleFileInfo info;
+         NativeMethods.BY_HANDLE_FILE_INFORMATION info;
 
          if (!NativeMethods.GetFileInformationByHandle(handle, out info))
             NativeError.ThrowException(Marshal.GetLastWin32Error());

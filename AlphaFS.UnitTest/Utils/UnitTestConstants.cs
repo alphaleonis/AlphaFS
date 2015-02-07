@@ -234,7 +234,7 @@ namespace AlphaFS.UnitTest
       {
          int cnt = 0;
          const string nulll = "\t\tnull";
-         string template = "\t{0}#{1:000}\t{2, " + width + "} == \t[{3}]";
+         string template = "\t{0}#{1:000}\t{2, " + width + "} = [{3}]";
 
          if (obj == null)
          {

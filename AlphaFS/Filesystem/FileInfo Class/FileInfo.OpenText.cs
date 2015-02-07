@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText()
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(File.OpenCore(Transaction, LongFullName, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath), NativeMethods.DefaultFileEncoding);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public StreamReader OpenText(Encoding encoding)
       {
-         return new StreamReader(File.OpenInternal(Transaction, LongFullName, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath), encoding);
+         return new StreamReader(File.OpenCore(Transaction, LongFullName, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.LongFullPath), encoding);
       }
 
    }

@@ -58,7 +58,7 @@ namespace AlphaFS.UnitTest
          using (BackupFileStream bfs = new BackupFileStream(tempPath, FileMode.Create))
          {
             report = UnitTestConstants.Reporter();
-            UnitTestConstants.Dump(bfs, -10);
+            UnitTestConstants.Dump(bfs, -14);
          }
          Console.WriteLine("\n{0}", report);
 
@@ -193,9 +193,9 @@ namespace AlphaFS.UnitTest
 
          Assert.IsTrue(UnitTestConstants.Dump(bhfi, -18));
 
-         Assert.AreEqual(System.IO.File.GetCreationTime(tempPath), bhfi.CreationTime);
-         Assert.AreEqual(System.IO.File.GetLastAccessTime(tempPath), bhfi.LastAccessTime);
-         Assert.AreEqual(System.IO.File.GetLastWriteTime(tempPath), bhfi.LastWriteTime);
+         Assert.AreEqual(System.IO.File.GetCreationTimeUtc(tempPath), bhfi.CreationTimeUtc);
+         Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(tempPath), bhfi.LastAccessTimeUtc);
+         Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(tempPath), bhfi.LastWriteTimeUtc);
 
          stream.Close();
 
@@ -1124,23 +1124,15 @@ namespace AlphaFS.UnitTest
 
                   DfsInfo dfsInfo = Host.GetDfsInfo(dfsNamespace);
                   
-                  Console.Write("\nDirectory contents:\tSubdirectories: [{0}]\tFiles: [{1}]\n",
-                     dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Folders),
-                     dfsInfo.DirectoryInfo.CountFileSystemObjects(DirectoryEnumerationOptions.Files));
-
                   UnitTestConstants.Dump(dfsInfo, -21);
+
 
                   Console.Write("\n\tNumber of Storages: [{0}]\n", dfsInfo.StorageInfoCollection.Count());
 
                   foreach (DfsStorageInfo store in dfsInfo.StorageInfoCollection)
-                  {
-                     UnitTestConstants.Dump(store, -10);
+                     UnitTestConstants.Dump(store, -19);
 
-                     // DFS shares (non SMB) cannot be retrieved.
-                     ShareInfo share = Host.GetShareInfo(ShareInfoLevel.Info1005, store.ServerName, store.ShareName, true);
-                     UnitTestConstants.Dump(share, -18);
-                     Console.Write("\n");
-                  }
+                  Console.WriteLine();
                }
                catch (NetworkInformationException ex)
                {

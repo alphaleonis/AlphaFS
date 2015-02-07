@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    [Flags]
    public enum DirectoryEnumerationOptions
    {
-      /// <summary>None, do not use.</summary>
+      /// <summary>None (do not use).</summary>
       None = 0,
 
       /// <summary>Enumerate files only.</summary>
@@ -45,9 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Skip reparse points during directory enumeration.</summary>
       SkipReparsePoints = 8,
 
-      /// <summary><para>Suppress any Exception that might be thrown a result from a failure,</para>
-      /// <para>such as ACLs protected directories or non-accessible reparse points.</para> 
-      /// </summary>
+      /// <summary>Suppress any Exception that might be thrown a result from a failure, such as ACLs protected directories or non-accessible reparse points.</summary>
       ContinueOnException = 16,
 
       /// <summary>Specifies whether to search the current directory, or the current directory and all subdirectories.</summary>

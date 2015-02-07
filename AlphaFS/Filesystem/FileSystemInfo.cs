@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void Refresh()
       {
-         DataInitialised = File.FillAttributeInfoInternal(Transaction, LongFullName, ref Win32AttributeData, false, false);
+         DataInitialised = File.FillAttributeInfoCore(Transaction, LongFullName, ref Win32AttributeData, false, false);
       }
    
       #endregion // Refresh
@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       protected void RefreshEntryInfo()
       {
-         _entryInfo = File.GetFileSystemEntryInfoInternal(IsDirectory, Transaction, LongFullName, true, PathFormat.LongFullPath);
+         _entryInfo = File.GetFileSystemEntryInfoCore(IsDirectory, Transaction, LongFullName, true, PathFormat.LongFullPath);
    
          if (_entryInfo == null)
             DataInitialised = -1;
@@ -189,28 +189,25 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Reset
 
-      #region InitializeInternal
+      #region InitializeCore
 
       /// <summary>Initializes the specified file name.</summary>
-      /// <exception cref="ArgumentException">
-      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
-      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
-      /// </exception>
-      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The full path and name of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      internal void InitializeInternal(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal void InitializeCore(bool isFolder, KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
 
-         LongFullName = Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | (isFolder ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.ContinueOnNonExist);
+         LongFullName = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | (isFolder ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0) | GetFullPathOptions.ContinueOnNonExist);
 
          // (Not on MSDN): .NET 4+ Trailing spaces are removed from the end of the path parameter before creating the FileSystemInfo instance.
 
-         FullPath = Path.GetRegularPathInternal(LongFullName, GetFullPathOptions.None);
+         FullPath = Path.GetRegularPathCore(LongFullName, GetFullPathOptions.None);
 
          IsDirectory = isFolder;
          Transaction = transaction;
@@ -224,7 +221,7 @@ namespace Alphaleonis.Win32.Filesystem
             : Path.CurrentDirectoryPrefix;
       }
 
-      #endregion // InitializeInternal
+      #endregion // InitializeCore
 
       #endregion // AlphaFS
       
@@ -245,9 +242,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value><see cref="FileAttributes"/> of the current <see cref="FileSystemInfo"/>.</value>
       ///
-      ///  <exception cref="FileNotFoundException">The specified file does not exist.</exception>
-      ///  <exception cref="DirectoryNotFoundException">The specified path is invalid; for example, it is on an unmapped drive.</exception>
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       public FileAttributes Attributes
       {
          [SecurityCritical]
@@ -263,13 +260,13 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
-            return Win32AttributeData.FileAttributes;
+            return Win32AttributeData.dwFileAttributes;
          }
 
          [SecurityCritical]
          set
          {
-            File.SetAttributesInternal(IsDirectory, Transaction, LongFullName, value, false, PathFormat.LongFullPath);
+            File.SetAttributesCore(IsDirectory, Transaction, LongFullName, value, false, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -291,8 +288,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value>The creation date and time of the current <see cref="FileSystemInfo"/> object.</value>
       ///
-      ///  <exception cref="DirectoryNotFoundException">The specified path is invalid; for example, it is on an unmapped drive.</exception>
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       public DateTime CreationTime
       {
          [SecurityCritical] get { return CreationTimeUtc.ToLocalTime(); }
@@ -303,9 +300,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region CreationTimeUtc
 
-      /// <summary>
-      ///   Gets or sets the creation time, in coordinated universal time (UTC), of the current file or directory.
-      /// </summary>
+      /// <summary>Gets or sets the creation time, in coordinated universal time (UTC), of the current file or directory.</summary>
       /// <remarks>
       ///   <para>The value of the CreationTimeUtc property is pre-cached
       ///   To get the latest value, call the Refresh method.</para>
@@ -320,8 +315,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value>The creation date and time in UTC format of the current <see cref="FileSystemInfo"/> object.</value>
       ///
-      ///  <exception cref="DirectoryNotFoundException">The specified path is invalid; for example, it is on an unmapped drive.</exception>
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       [ComVisible(false)]
       public DateTime CreationTimeUtc
       {
@@ -338,13 +333,13 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
-            return DateTime.FromFileTimeUtc(Win32AttributeData.CreationTime);
+            return DateTime.FromFileTimeUtc(Win32AttributeData.ftCreationTime);
          }
 
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, value, null, null, PathFormat.LongFullPath);
+            File.SetFsoDateTimeCore(IsDirectory, Transaction, LongFullName, value, null, null, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -401,9 +396,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastAccessTime
 
-      /// <summary>
-      ///   Gets or sets the time the current file or directory was last accessed.
-      /// </summary>
+      /// <summary>Gets or sets the time the current file or directory was last accessed.</summary>
       /// <remarks>
       ///   <para>The value of the LastAccessTime property is pre-cached
       ///   To get the latest value, call the Refresh method.</para>
@@ -414,7 +407,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value>The time that the current file or directory was last accessed.</value>
       ///
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="IOException"/>
       public DateTime LastAccessTime
       {
          [SecurityCritical] get { return LastAccessTimeUtc.ToLocalTime(); }
@@ -425,9 +418,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastAccessTimeUtc
 
-      /// <summary>
-      ///   Gets or sets the time, in coordinated universal time (UTC), that the current file or directory was last accessed.
-      /// </summary>
+      /// <summary>Gets or sets the time, in coordinated universal time (UTC), that the current file or directory was last accessed.</summary>
       /// <remarks>
       ///   <para>The value of the LastAccessTimeUtc property is pre-cached.
       ///   To get the latest value, call the Refresh method.</para>
@@ -438,7 +429,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value>The UTC time that the current file or directory was last accessed.</value>
       ///
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="IOException"/>
       [ComVisible(false)]
       public DateTime LastAccessTimeUtc
       {
@@ -455,13 +446,13 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
-            return DateTime.FromFileTimeUtc(Win32AttributeData.LastAccessTime);
+            return DateTime.FromFileTimeUtc(Win32AttributeData.ftLastAccessTime);
          }
 
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, value, null, PathFormat.LongFullPath);
+            File.SetFsoDateTimeCore(IsDirectory, Transaction, LongFullName, null, value, null, PathFormat.LongFullPath);
             Reset();
          }
       }
@@ -481,7 +472,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value>The time the current file was last written.</value>
       ///
-      /// ### <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="IOException"/>
       public DateTime LastWriteTime
       {
          get { return LastWriteTimeUtc.ToLocalTime(); }
@@ -492,9 +483,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region LastWriteTimeUtc
 
-      /// <summary>
-      ///   Gets or sets the time, in coordinated universal time (UTC), when the current file or directory was last written to.
-      /// </summary>
+      /// <summary>Gets or sets the time, in coordinated universal time (UTC), when the current file or directory was last written to.</summary>
       /// <remarks>
       ///   <para>The value of the LastWriteTimeUtc property is pre-cached. To get the latest value, call the Refresh method.</para>
       ///   <para>This method may return an inaccurate value, because it uses native functions whose values may not be continuously updated by
@@ -519,13 +508,13 @@ namespace Alphaleonis.Win32.Filesystem
             if (DataInitialised != 0)
                NativeError.ThrowException(DataInitialised, LongFullName);
 
-            return DateTime.FromFileTimeUtc(Win32AttributeData.LastWriteTime);
+            return DateTime.FromFileTimeUtc(Win32AttributeData.ftLastWriteTime);
          }
 
          [SecurityCritical]
          set
          {
-            File.SetFsoDateTimeInternal(IsDirectory, Transaction, LongFullName, null, null, value, PathFormat.LongFullPath);
+            File.SetFsoDateTimeCore(IsDirectory, Transaction, LongFullName, null, null, value, PathFormat.LongFullPath);
             Reset();
          }
       }

@@ -63,9 +63,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to be opened for reading.</param>
       /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
       [SecurityCritical]
-      public static FileStream OpenRead(KernelTransaction transaction, string path)
+      public static FileStream OpenReadTransacted(KernelTransaction transaction, string path)
       {
-         return Open(transaction, path, FileMode.Open, FileAccess.Read);
+         return OpenTransacted(transaction, path, FileMode.Open, FileAccess.Read);
       }
 
       /// <summary>[AlphaFS] Opens an existing file for reading.</summary>
@@ -78,9 +78,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A read-only <see cref="FileStream"/> on the specified path.</returns>
       [SecurityCritical]
-      public static FileStream OpenRead(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileStream OpenReadTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return Open(transaction, path, FileMode.Open, FileAccess.Read, pathFormat);
+         return OpenTransacted(transaction, path, FileMode.Open, FileAccess.Read, pathFormat);
       }
    }
 }

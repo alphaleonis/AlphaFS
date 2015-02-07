@@ -44,16 +44,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
       /// </remarks>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="ArgumentException">
-      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
-      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
-      /// </exception>
-      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       [SecurityCritical]
       public static string GetFullPath(string path)
       {
-         return GetFullPathTackleInternal(null, path);
+         return GetFullPathTackleCore(null, path);
       }
 
       /// <summary>[AlphaFS] Returns the absolute path for the specified path string.</summary>
@@ -72,21 +69,21 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
       /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException">path contains a colon (":") that is not part of a volume identifier (for example, "c:\").</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       [SecurityCritical]
-      public static string GetFullPath(KernelTransaction transaction, string path)
+      public static string GetFullPathTransacted(KernelTransaction transaction, string path)
       {
-         return GetFullPathTackleInternal(transaction, path);
+         return GetFullPathTackleCore(transaction, path);
       }
 
       #region Internal Methods
 
-      /// <summary>Unified method GetFullPathInternal() to retrieve the absolute path for the specified <paramref name="path"/> string.</summary>
-      /// <returns>Returns the fully qualified location of <paramref name="path"/>, such as "C:\MyFile.txt".</returns>
+      /// <summary>Retrieves the absolute path for the specified <paramref name="path"/> string.</summary>
+      /// <returns>The fully qualified location of <paramref name="path"/>, such as "C:\MyFile.txt".</returns>
       /// <remarks>
       /// <para>GetFullPathName merges the name of the current drive and directory with a specified file name to determine the full path and file name of a specified file.</para>
       /// <para>It also calculates the address of the file name portion of the full path and file name.</para>
@@ -101,13 +98,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>for example parsing file names from the command line argument string in the main thread prior to creating any additional threads.</para>
       /// <para>Using relative path names in multithreaded applications or shared library code can yield unpredictable results and is not supported.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       /// <param name="options">Options for controlling the operation.</param>
       [SecurityCritical]
-      internal static string GetFullPathInternal(KernelTransaction transaction, string path, GetFullPathOptions options)
+      internal static string GetFullPathCore(KernelTransaction transaction, string path, GetFullPathOptions options)
       {
          if (path != null)
             if (path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
@@ -137,7 +134,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
 
-         string pathLp = GetLongPathInternal(path, options);
+         string pathLp = GetLongPathCore(path, options);
 
          uint bufferSize = NativeMethods.MaxPathUnicode;
          
@@ -175,12 +172,12 @@ namespace Alphaleonis.Win32.Filesystem
             }
 
             return (options & GetFullPathOptions.AsLongPath) != 0
-               ? GetLongPathInternal(buffer.ToString(), GetFullPathOptions.None)
-               : GetRegularPathInternal(buffer.ToString(), GetFullPathOptions.None);
+               ? GetLongPathCore(buffer.ToString(), GetFullPathOptions.None)
+               : GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None);
          }
       }
 
-      private static string GetFullPathTackleInternal(KernelTransaction transaction, string path)
+      private static string GetFullPathTackleCore(KernelTransaction transaction, string path)
       {
          if (path != null)
          {
@@ -193,7 +190,30 @@ namespace Alphaleonis.Win32.Filesystem
 
          CheckSupportedPathFormat(path, true, true);
 
-         return GetFullPathInternal(transaction, path, GetFullPathOptions.None);
+         return GetFullPathCore(transaction, path, GetFullPathOptions.None);
+      }
+
+      /// <summary>Applies the <seealso cref="GetFullPathOptions"/> to <paramref name="path"/></summary>
+      /// <returns><paramref name="path"/> with applied <paramref name="options"/>.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <param name="path"></param>
+      /// <param name="options"></param>
+      private static string ApplyFullPathOptions(string path, GetFullPathOptions options)
+      {
+         if ((options & GetFullPathOptions.TrimEnd) != 0)
+            path = path.TrimEnd();
+
+         if ((options & GetFullPathOptions.AddTrailingDirectorySeparator) != 0)
+            path = AddTrailingDirectorySeparator(path, false);
+
+         if ((options & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0)
+            path = RemoveTrailingDirectorySeparator(path, false);
+
+         if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
+            CheckInvalidPathChars(path, (options & GetFullPathOptions.CheckAdditional) != 0);
+
+         return path;
       }
 
       #endregion // Internal Methods

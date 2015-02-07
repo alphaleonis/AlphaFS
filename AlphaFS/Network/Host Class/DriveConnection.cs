@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Network
       {
          Share = remoteName;
 
-         LocalName = Host.ConnectDisconnectInternal(new Host.ConnectDisconnectArguments
+         LocalName = Host.ConnectDisconnectCore(new Host.ConnectDisconnectArguments
          {
             RemoteName = Share,
             IsDeviceMap = true
@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Network
       {
          Share = remoteName;
 
-         LocalName = Host.ConnectDisconnectInternal(new Host.ConnectDisconnectArguments
+         LocalName = Host.ConnectDisconnectCore(new Host.ConnectDisconnectArguments
          {
             RemoteName = Share,
             UserName = userName,
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Network
       {
          Share = remoteName;
 
-         LocalName = Host.ConnectDisconnectInternal(new Host.ConnectDisconnectArguments
+         LocalName = Host.ConnectDisconnectCore(new Host.ConnectDisconnectArguments
          {
             RemoteName = Share,
             Credential = credentials,
@@ -109,7 +109,7 @@ namespace Alphaleonis.Win32.Network
       {
          if (!Utils.IsNullOrWhiteSpace(LocalName))
          {
-            Host.ConnectDisconnectInternal(new Host.ConnectDisconnectArguments
+            Host.ConnectDisconnectCore(new Host.ConnectDisconnectArguments
             {
                LocalName = LocalName,
                Prompt = true, // Use value of prompt variable for force value.

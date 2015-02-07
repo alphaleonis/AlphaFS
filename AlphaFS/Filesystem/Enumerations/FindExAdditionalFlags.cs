@@ -40,5 +40,4 @@ namespace Alphaleonis.Win32.Filesystem
          LargeFetch = 2
       }
    }
-
 }

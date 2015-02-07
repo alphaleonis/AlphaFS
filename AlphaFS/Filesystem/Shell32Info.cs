@@ -58,7 +58,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Shell32 is limited to MAX_PATH length.
          // Get a full path of regular format.
 
-         FullPath = Path.GetExtendedLengthPathInternal(null, fileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         FullPath = Path.GetExtendedLengthPathCore(null, fileName, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
          Initialize();
       }
@@ -217,7 +217,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (_attributes == Shell32.GetAttributesOf.None)
             {
-               Shell32.FileInfo fileInfo = Shell32.GetFileInfoInternal(FullPath, FileAttributes.Normal, Shell32.FileAttributes.Attributes, false, true);
+               Shell32.FileInfo fileInfo = Shell32.GetFileInfoCore(FullPath, FileAttributes.Normal, Shell32.FileAttributes.Attributes, false, true);
                _attributes = fileInfo.Attributes;
             }
 

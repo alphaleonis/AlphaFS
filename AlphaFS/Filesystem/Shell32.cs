@@ -496,11 +496,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the file or protocol that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileAssociation(string path)
       {
-         return GetFileAssociationInternal(path, AssociationAttributes.Verify, AssociationString.Executable);
+         return GetFileAssociationCore(path, AssociationAttributes.Verify, AssociationString.Executable);
       }
 
       #endregion // GetFileAssociation
@@ -509,11 +509,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the content-type that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related content-type from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related content-type from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileContentType(string path)
       {
-         return GetFileAssociationInternal(path, AssociationAttributes.Verify, AssociationString.ContentType);
+         return GetFileAssociationCore(path, AssociationAttributes.Verify, AssociationString.ContentType);
       }
 
       #endregion // GetFileContentType
@@ -522,11 +522,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the default icon that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related default icon from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related default icon from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileDefaultIcon(string path)
       {
-         return GetFileAssociationInternal(path, AssociationAttributes.Verify, AssociationString.DefaultIcon);
+         return GetFileAssociationCore(path, AssociationAttributes.Verify, AssociationString.DefaultIcon);
       }
 
       #endregion // GetFileDefaultIcon
@@ -535,11 +535,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the friendly application name that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related friendly application name from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related friendly application name from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileFriendlyAppName(string path)
       {
-         return GetFileAssociationInternal(path, AssociationAttributes.InitByExeName, AssociationString.FriendlyAppName);
+         return GetFileAssociationCore(path, AssociationAttributes.InitByExeName, AssociationString.FriendlyAppName);
       }
 
       #endregion // GetFileFriendlyAppName
@@ -548,11 +548,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the friendly document name that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related friendly document name from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related friendly document name from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileFriendlyDocName(string path)
       {
-         return GetFileAssociationInternal(path, AssociationAttributes.Verify, AssociationString.FriendlyDocName);
+         return GetFileAssociationCore(path, AssociationAttributes.Verify, AssociationString.FriendlyDocName);
       }
 
       #endregion // GetFileFriendlyDocName
@@ -576,7 +576,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(filePath))
             return IntPtr.Zero;
 
-         FileInfo fileInfo = GetFileInfoInternal(filePath, System.IO.FileAttributes.Normal, FileAttributes.Icon | iconAttributes, true, true);
+         FileInfo fileInfo = GetFileInfoCore(filePath, System.IO.FileAttributes.Normal, FileAttributes.Icon | iconAttributes, true, true);
          return fileInfo.IconHandle == IntPtr.Zero ? IntPtr.Zero : fileInfo.IconHandle; 
       }
 
@@ -584,10 +584,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetFileInfo
 
-      /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system,
-      /// </summary>
-      /// <para>such as a file, folder, directory, or drive root.</para>
-      /// <returns>Returns a <see cref="Shell32.FileInfo"/> struct instance.</returns>
+      /// <summary>Retrieves information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
+      /// <returns>A <see cref="Shell32.FileInfo"/> struct instance.</returns>
       /// <remarks>
       /// <para>You should call this function from a background thread.</para>
       /// <para>Failure to do so could cause the UI to stop responding.</para>
@@ -603,7 +601,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileInfo GetFileInfo(string filePath, System.IO.FileAttributes attributes, FileAttributes fileAttributes, bool continueOnException)
       {
-         return GetFileInfoInternal(filePath, attributes, fileAttributes, true, continueOnException);
+         return GetFileInfoCore(filePath, attributes, fileAttributes, true, continueOnException);
       }
 
       #endregion // GetFileInfo
@@ -635,11 +633,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the "Open With" command that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related "Open With" command from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related "Open With" command from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileOpenWithAppName(string path)
       {
-         return GetFileAssociationInternal(path, AssociationAttributes.Verify, AssociationString.FriendlyAppName);
+         return GetFileAssociationCore(path, AssociationAttributes.Verify, AssociationString.FriendlyAppName);
       }
 
       #endregion // GetFileOpenWithAppName
@@ -648,11 +646,11 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the Shell command that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related Shell command from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related Shell command from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileVerbCommand(string path)
       {
-         return GetFileAssociationInternal(path, AssociationAttributes.Verify, AssociationString.Command);
+         return GetFileAssociationCore(path, AssociationAttributes.Verify, AssociationString.Command);
       }
 
       #endregion // GetFileVerbCommand
@@ -694,7 +692,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static string PathCreateFromUrlAlloc(string urlPath)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
-            throw new PlatformNotSupportedException(Resources.RequiresWindowsVistaOrHigher);
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
 
          if (urlPath == null)
             return null;
@@ -725,7 +723,7 @@ namespace Alphaleonis.Win32.Filesystem
          // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
          // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
 
-         return NativeMethods.PathFileExists(Path.GetFullPathInternal(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck | GetFullPathOptions.ContinueOnNonExist));            
+         return NativeMethods.PathFileExists(Path.GetFullPathCore(null, path, GetFullPathOptions.AsLongPath | GetFullPathOptions.FullCheck | GetFullPathOptions.ContinueOnNonExist));            
       }
 
       #endregion // PathFileExists
@@ -763,7 +761,7 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
          // UrlCreateFromPath does not support extended paths.
-         string pathRp = Path.GetRegularPathInternal(path, GetFullPathOptions.CheckInvalidPathChars);
+         string pathRp = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars);
 
          var buffer = new StringBuilder(NativeMethods.MaxPathUnicode);
          var bufferSize = (uint) buffer.Capacity;
@@ -784,7 +782,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Tests a URL to determine if it is a file URL.</summary>
       /// <param name="url">The URL.</param>
-      /// <returns>Returns <see langword="true"/> if the URL is a file URL, or <see langword="false"/> otherwise.</returns>
+      /// <returns><see langword="true"/> if the URL is a file URL, or <see langword="false"/> otherwise.</returns>
       [SecurityCritical]
       internal static bool UrlIsFileUrl(string url)
       {
@@ -797,7 +795,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns whether a URL is a URL that browsers typically do not include in navigation history.</summary>
       /// <param name="url">The URL.</param>
-      /// <returns>Returns <see langword="true"/> if the URL is a URL that is not included in navigation history, or <see langword="false"/> otherwise.</returns>
+      /// <returns><see langword="true"/> if the URL is a URL that is not included in navigation history, or <see langword="false"/> otherwise.</returns>
       [SecurityCritical]
       internal static bool UrlIsNoHistory(string url)
       {
@@ -810,7 +808,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns whether a URL is opaque.</summary>
       /// <param name="url">The URL.</param>
-      /// <returns>Returns <see langword="true"/> if the URL is opaque, or <see langword="false"/> otherwise.</returns>
+      /// <returns><see langword="true"/> if the URL is opaque, or <see langword="false"/> otherwise.</returns>
       [SecurityCritical]
       internal static bool UrlIsOpaque(string url)
       {
@@ -819,19 +817,18 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // UrlIsOpaque
 
+      #region Internal Methods
 
-      #region Unified Internals
+      #region GetFileAssociationCore
 
-      #region GetFileAssociationInternal
-
-      /// <summary>Unified method GetFileAssociationInternal() to search for and retrieves a file or protocol association-related string from the registry.</summary>
+      /// <summary>Searches for and retrieves a file or protocol association-related string from the registry.</summary>
       /// <param name="path">A path to a file.</param>
       /// <param name="attributes">One or more <see cref="AssociationAttributes"/> attributes. Only one "InitXXX" attribute can be used.</param>
       /// <param name="associationType">A <see cref="AssociationString"/> attribute.</param>
-      /// <returns>Returns the associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
-      /// <exception cref="ArgumentNullException"></exception>
+      /// <returns>The associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
-      private static string GetFileAssociationInternal(string path, AssociationAttributes attributes, AssociationString associationType)
+      private static string GetFileAssociationCore(string path, AssociationAttributes attributes, AssociationString associationType)
       {
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
@@ -874,14 +871,12 @@ namespace Alphaleonis.Win32.Filesystem
          return buffer.ToString();
       }
 
-      #endregion // GetFileAssociationInternal
+      #endregion // GetFileAssociationCore
 
-      #region GetFileInfoInternal
+      #region GetFileInfoCore
 
-      /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system,
-      /// </summary>
-      /// <para>such as a file, folder, directory, or drive root.</para>
-      /// <returns>Returns a <see cref="Shell32.FileInfo"/> struct instance.</returns>
+      /// <summary>Retrieve information about an object in the file system, such as a file, folder, directory, or drive root.</summary>
+      /// <returns>A <see cref="Shell32.FileInfo"/> struct instance.</returns>
       /// <remarks>
       /// <para>You should call this function from a background thread.</para>
       /// <para>Failure to do so could cause the UI to stop responding.</para>
@@ -896,7 +891,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>such as ACLs protected directories or non-accessible reparse points.</para>
       /// </param>
       [SecurityCritical]
-      internal static FileInfo GetFileInfoInternal(string path, System.IO.FileAttributes attributes, FileAttributes fileAttributes, bool checkInvalidPathChars, bool continueOnException)
+      internal static FileInfo GetFileInfoCore(string path, System.IO.FileAttributes attributes, FileAttributes fileAttributes, bool checkInvalidPathChars, bool continueOnException)
       {
          // Prevent possible crash.
          FileInfo fileInfo = new FileInfo
@@ -914,7 +909,7 @@ namespace Alphaleonis.Win32.Filesystem
             // 2013-01-13: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
             // However, the function fails when using Unicode format.
 
-            IntPtr shGetFileInfo = NativeMethods.ShGetFileInfo(Path.GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0), attributes, out fileInfo, (uint) Marshal.SizeOf(fileInfo), fileAttributes);
+            IntPtr shGetFileInfo = NativeMethods.ShGetFileInfo(Path.GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0), attributes, out fileInfo, (uint) Marshal.SizeOf(fileInfo), fileAttributes);
 
             if (shGetFileInfo == IntPtr.Zero && !continueOnException)
                NativeError.ThrowException(Marshal.GetLastWin32Error(), path);
@@ -923,9 +918,9 @@ namespace Alphaleonis.Win32.Filesystem
          return fileInfo;
       }
 
-      #endregion // GetFileInfoInternal
+      #endregion // GetFileInfoCore
 
-      #endregion // Unified Internals
+      #endregion // Internal Methods
 
       #endregion // Methods
    }

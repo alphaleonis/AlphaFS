@@ -22,6 +22,7 @@
 using Alphaleonis.Win32.Network;
 using System;
 using System.Globalization;
+using System.IO;
 using System.Net.NetworkInformation;
 using System.Security;
 
@@ -33,15 +34,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the connection name of the locally mapped drive.</summary>
       /// <returns>The server and share as: \\servername\sharename.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="System.IO.PathTooLongException">When <paramref name="path"/> exceeds maximum path length.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="path">The local path with drive name.</param>
       [SecurityCritical]
       public static string GetMappedConnectionName(string path)
       {
-         return Host.GetRemoteNameInfoInternal(path, true).ConnectionName;
+         return Host.GetRemoteNameInfoCore(path, true).lpConnectionName;
       }
 
       #endregion // GetMappedConnectionName
@@ -50,15 +51,15 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Gets the network share name from the locally mapped path.</summary>
       /// <returns>The network share connection name of <paramref name="path"/>.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="System.IO.PathTooLongException">When <paramref name="path"/> exceeds maximum path length.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="path">The local path with drive name.</param>
       [SecurityCritical]
       public static string GetMappedUncName(string path)
       {
-         return Host.GetRemoteNameInfoInternal(path, true).UniversalName;
+         return Host.GetRemoteNameInfoCore(path, true).lpUniversalName;
       }
 
       #endregion // GetMappedUncName
@@ -66,22 +67,22 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsUncPath
 
       /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path.</summary>
-      /// <returns>Returns <see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
+      /// <returns><see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
       /// <param name="path">The path to check.</param>
       [SecurityCritical]
       public static bool IsUncPath(string path)
       {
-         return IsUncPathInternal(path, false, true);
+         return IsUncPathCore(path, false, true);
       }
 
       /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path, optionally skip invalid path character check.</summary>
-      /// <returns>Returns <see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
+      /// <returns><see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
       /// <param name="path">The path to check.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
       public static bool IsUncPath(string path, bool checkInvalidPathChars)
       {
-         return IsUncPathInternal(path, false, checkInvalidPathChars);
+         return IsUncPathCore(path, false, checkInvalidPathChars);
       }
 
       #endregion // IsUncPath
@@ -96,14 +97,14 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
       ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="System.IO.PathTooLongException">When <paramref name="localPath"/> exceeds maximum path length.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
       [SecurityCritical]
       public static string LocalToUnc(string localPath)
       {
-         return LocalToUncInternal(localPath, false, false, false);
+         return LocalToUncCore(localPath, false, false, false);
       }
 
       /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it in a long path format.
@@ -114,15 +115,15 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
       ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="System.IO.PathTooLongException">When <paramref name="localPath"/> exceeds maximum path length.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
       /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
       [SecurityCritical]
       public static string LocalToUnc(string localPath, bool asLongPath)
       {
-         return LocalToUncInternal(localPath, asLongPath, false, false);
+         return LocalToUncCore(localPath, asLongPath, false, false);
       }
 
       /// <summary>[AlphaFS] Converts a local path to a network share path, optionally returning it in a long path format and the ability to add or remove a trailing backslash.
@@ -133,9 +134,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
       ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="System.IO.PathTooLongException">When <paramref name="localPath"/> exceeds maximum path length.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
       /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
       /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="localPath"/>, when absent.</param>
@@ -143,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string LocalToUnc(string localPath, bool asLongPath, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
       {
-         return LocalToUncInternal(localPath, asLongPath, addTrailingDirectorySeparator, removeTrailingDirectorySeparator);
+         return LocalToUncCore(localPath, asLongPath, addTrailingDirectorySeparator, removeTrailingDirectorySeparator);
       }
 
       #endregion // LocalToUnc
@@ -151,15 +152,15 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Methods
 
       /// <summary>[AlphaFS] Determines if a path string is a valid Universal Naming Convention (UNC) path, optionally skip invalid path character check.</summary>
-      /// <returns>Returns <see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
+      /// <returns><see langword="true"/> if the specified path is a Universal Naming Convention (UNC) path, <see langword="false"/> otherwise.</returns>
       /// <param name="path">The path to check.</param>
       /// <param name="isRegularPath">When <see langword="true"/> indicates that <paramref name="path"/> is already in regular path format.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
-      internal static bool IsUncPathInternal(string path, bool isRegularPath, bool checkInvalidPathChars)
+      internal static bool IsUncPathCore(string path, bool isRegularPath, bool checkInvalidPathChars)
       {
          if (!isRegularPath)
-            path = GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0);
+            path = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0);
 
          else if (checkInvalidPathChars)
             CheckInvalidPathChars(path, false);
@@ -168,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
          return Uri.TryCreate(path, UriKind.Absolute, out uri) && uri.IsUnc;
       }
 
-      /// <summary>Unified method to convert a local path to a network share path.  
+      /// <summary>Converts a local path to a network share path.  
       ///   <para>A Local path, e.g.: "C:\Windows" will be returned as: "\\MachineName\C$\Windows".</para>
       ///   <para>If a logical drive points to a network share path, the share path will be returned instead.</para>
       /// </summary>
@@ -176,39 +177,39 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If the conversion fails, <paramref name="localPath"/> is returned.</para>
       ///   <para>If <paramref name="localPath"/> is an empty string or <see langword="null"/>, <see langword="null"/> is returned.</para>
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="System.IO.PathTooLongException">When <paramref name="localPath"/> exceeds maximum path length.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="PathTooLongException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="localPath">A local path, e.g.: "C:\Windows".</param>
       /// <param name="asLongPath"><see langword="true"/> returns the path in long path (Unicode) format, when <see langword="false"/> returns the path as a regular path.</param>
       /// <param name="addTrailingDirectorySeparator"><see langword="true"/> adds a trailing <see cref="DirectorySeparatorChar"/> character to <paramref name="localPath"/>, when absent.</param>
       /// <param name="removeTrailingDirectorySeparator"><see langword="true"/> removes the trailing <see cref="DirectorySeparatorChar"/> character from <paramref name="localPath"/>, when present.</param>
       [SecurityCritical]
-      internal static string LocalToUncInternal(string localPath, bool asLongPath, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
+      internal static string LocalToUncCore(string localPath, bool asLongPath, bool addTrailingDirectorySeparator, bool removeTrailingDirectorySeparator)
       {
          if (Utils.IsNullOrWhiteSpace(localPath))
             return null;
 
-         localPath = GetRegularPathInternal(localPath, GetFullPathOptions.CheckInvalidPathChars);
+         localPath = GetRegularPathCore(localPath, GetFullPathOptions.CheckInvalidPathChars);
 
 
-         if (!IsUncPathInternal(localPath, true, false))
+         if (!IsUncPathCore(localPath, true, false))
          {
             if (localPath[0] == CurrentDirectoryPrefixChar || !IsPathRooted(localPath, false))
-               localPath = GetFullPathInternal(null, localPath, GetFullPathOptions.None);
+               localPath = GetFullPathCore(null, localPath, GetFullPathOptions.None);
 
             string drive = GetPathRoot(localPath, false);
 
             if (Utils.IsNullOrWhiteSpace(drive))
                return localPath;
 
-            Network.NativeMethods.REMOTE_NAME_INFO unc = Host.GetRemoteNameInfoInternal(drive, true);
+            Network.NativeMethods.REMOTE_NAME_INFO unc = Host.GetRemoteNameInfoCore(drive, true);
 
-            if (!Utils.IsNullOrWhiteSpace(unc.ConnectionName))
+            if (!Utils.IsNullOrWhiteSpace(unc.lpConnectionName))
                // Only leave trailing backslash if "localPath" also ends with backslash.
                return localPath.EndsWith(DirectorySeparator, StringComparison.OrdinalIgnoreCase)
-                  ? AddTrailingDirectorySeparator(unc.ConnectionName, false)
-                  : RemoveTrailingDirectorySeparator(unc.ConnectionName, false);
+                  ? AddTrailingDirectorySeparator(unc.lpConnectionName, false)
+                  : RemoveTrailingDirectorySeparator(unc.lpConnectionName, false);
 
             // Split: localDrive[0] = "C", localDrive[1] = "\Windows"
             string[] localDrive = localPath.Split(VolumeSeparatorChar);
@@ -225,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
          var options = (addTrailingDirectorySeparator ? GetFullPathOptions.AddTrailingDirectorySeparator : 0) |
                        (removeTrailingDirectorySeparator ? GetFullPathOptions.RemoveTrailingDirectorySeparator : 0);
 
-         return asLongPath ? GetLongPathInternal(localPath, options) : localPath;
+         return asLongPath ? GetLongPathCore(localPath, options) : localPath;
       }
 
       #endregion // Internal Methods

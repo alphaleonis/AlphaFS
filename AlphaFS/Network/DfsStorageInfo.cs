@@ -20,7 +20,6 @@
  */
 
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 
 namespace Alphaleonis.Win32.Network
 {
@@ -38,53 +37,47 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Initializes a new instance of the <see cref="DfsStorageInfo"/> class, which acts as a wrapper for a DFS root or link target.</summary>
-      /// <param name="structure">An initialized <see cref="NativeMethods.DFS_STORAGE_INFO"/> instance.</param>
-      internal DfsStorageInfo(NativeMethods.DFS_STORAGE_INFO structure)
+      /// <param name="structure">An initialized <see cref="NativeMethods.DFS_STORAGE_INFO_1"/> instance.</param>
+      internal DfsStorageInfo(NativeMethods.DFS_STORAGE_INFO_1 structure)
       {
          ServerName = structure.ServerName;
          ShareName = structure.ShareName;
+
          State = structure.State;
+
+         TargetPriorityClass = structure.TargetPriority.TargetPriorityClass;
+         TargetPriorityRank = structure.TargetPriority.TargetPriorityRank;
       }
 
       #endregion // Constructor
 
       #region Methods
 
-      #region ToString
-
       /// <summary>The share name of the DFS root target or link target.</summary>
       /// <returns>A string that represents this instance.</returns>
       public override string ToString()
       {
-         return string.Format(CultureInfo.CurrentCulture, "{0}", ShareName);
+         return ShareName;
       }
-
-      #endregion // ToString
 
       #endregion // Methods
 
       #region Properties
 
-      #region ServerName
-
       /// <summary>The server name of the DFS root target or link target.</summary>
       public string ServerName { get; private set; }
-
-      #endregion // ServerName
-
-      #region ShareName
 
       /// <summary>The share name of the DFS root target or link target.</summary>
       public string ShareName { get; private set; }
 
-      #endregion // ShareName
-
-      #region State
-
       /// <summary>An <see cref="DfsStorageStates"/> enum of the DFS root target or link target.</summary>
       public DfsStorageStates State { get; private set; }
 
-      #endregion // State
+      /// <summary>Contains a DFS target's priority class and rank.</summary>
+      public DfsTargetPriorityClass TargetPriorityClass { get; private set; }
+
+      /// <summary>Specifies the priority rank value of the target. The default value is 0, which indicates the highest priority rank within a priority class.</summary>
+      public int TargetPriorityRank { get; private set; }
 
       #endregion // Properties
    }

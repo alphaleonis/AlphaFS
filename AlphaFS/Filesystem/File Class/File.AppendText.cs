@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path)
       {
-         return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
+         return AppendTextCore(null, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path, PathFormat pathFormat)
       {
-         return AppendTextInternal(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
+         return AppendTextCore(null, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>
@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path, Encoding encoding, PathFormat pathFormat)
       {
-         return AppendTextInternal(null, path, encoding, pathFormat);
+         return AppendTextCore(null, path, encoding, pathFormat);
       }
 
       /// <summary>
@@ -87,7 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static StreamWriter AppendText(string path, Encoding encoding)
       {
-         return AppendTextInternal(null, path, encoding, PathFormat.RelativePath);
+         return AppendTextCore(null, path, encoding, PathFormat.RelativePath);
       }
 
       #region Transactional
@@ -102,9 +102,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path)
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path)
       {
-         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
+         return AppendTextCore(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
 
       /// <summary>
@@ -118,9 +118,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
+         return AppendTextCore(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
 
       /// <summary>
@@ -135,9 +135,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return AppendTextInternal(transaction, path, encoding, pathFormat);
+         return AppendTextCore(transaction, path, encoding, pathFormat);
       }
 
       /// <summary>
@@ -151,9 +151,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding)
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return AppendTextInternal(transaction, path, encoding, PathFormat.RelativePath);
+         return AppendTextCore(transaction, path, encoding, PathFormat.RelativePath);
       }
 
       #endregion // Transacted
@@ -162,11 +162,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>
-      ///   Unified method AppendTextInternal() to create a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding
-      ///   encoded text to an existing file, or to a new file if the specified file does not exist.
-      /// </summary>
-      /// <exception cref="IOException">Thrown when an IO failure occurred.</exception>
+      /// <summary>Creates a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding encoded text to an existing file, or to a new file if the specified file does not exist.</summary>
+      /// <exception cref="IOException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -176,9 +173,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      internal static StreamWriter AppendTextInternal(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      internal static StreamWriter AppendTextCore(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         FileStream fs = OpenInternal(transaction, path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
+         FileStream fs = OpenCore(transaction, path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
 
          try
          {
@@ -192,6 +189,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion
+      #endregion // Internal Methods
    }
 }

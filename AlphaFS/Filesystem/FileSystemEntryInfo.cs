@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>the 8.3 version of the filename.</value>
       public string AlternateFileName
       {
-         get { return _win32FindData.AlternateFileName; }
+         get { return _win32FindData.cAlternateFileName; }
       }
 
       #endregion // AlternateFileName
@@ -63,21 +63,32 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The attributes.</value>
       public FileAttributes Attributes
       {
-         get { return _win32FindData.FileAttributes; }
+         get { return _win32FindData.dwFileAttributes; }
       }
 
       #endregion // Attributes
 
-      #region Created
+      #region CreationTime
 
       /// <summary>Gets the time this entry was created.</summary>
       /// <value>The time this entry was created.</value>
-      public DateTime Created
+      public DateTime CreationTime
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.CreationTime).ToLocalTime(); }
+         get { return CreationTimeUtc.ToLocalTime(); }
       }
 
-      #endregion // Created
+      #endregion // CreationTime
+
+      #region CreationTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was created.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
+      public DateTime CreationTimeUtc
+      {
+         get { return DateTime.FromFileTimeUtc(_win32FindData.ftCreationTime); }
+      }
+
+      #endregion // CreationTimeUtc
 
       #region FileName
 
@@ -85,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The name of the file.</value>
       public string FileName
       {
-         get { return _win32FindData.FileName; }
+         get { return _win32FindData.cFileName; }
       }
 
       #endregion // FileName
@@ -96,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The size of the file.</value>
       public long FileSize
       {
-         get { return NativeMethods.ToLong(_win32FindData.FileSizeHigh, _win32FindData.FileSizeLow); }
+         get { return NativeMethods.ToLong(_win32FindData.nFileSizeHigh, _win32FindData.nFileSizeLow); }
       }
 
       #endregion // FileSize
@@ -112,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
          set
          {
             LongFullPath = value;
-            _fullPath = Path.GetRegularPathInternal(LongFullPath, GetFullPathOptions.None);
+            _fullPath = Path.GetRegularPathCore(LongFullPath, GetFullPathOptions.None);
          }
       }
 
@@ -162,27 +173,49 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsSymbolicLink
 
-      #region LastAccessed
+      #region LastAccessTime
 
       /// <summary>Gets the time this entry was last accessed.</summary>
       /// <value>The time this entry was last accessed.</value>
-      public DateTime LastAccessed
+      public DateTime LastAccessTime
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.LastAccessTime).ToLocalTime(); }
+         get { return LastAccessTimeUtc.ToLocalTime(); }
       }
 
-      #endregion // LastAccessed
+      #endregion // LastAccessTime
 
-      #region LastModified
+      #region LastAccessTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last accessed.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
+      public DateTime LastAccessTimeUtc
+      {
+         get { return DateTime.FromFileTimeUtc(_win32FindData.ftLastAccessTime); }
+      }
+
+      #endregion // LastAccessTimeUtc
+
+      #region LastWriteTime
 
       /// <summary>Gets the time this entry was last modified.</summary>
       /// <value>The time this entry was last modified.</value>
-      public DateTime LastModified
+      public DateTime LastWriteTime
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.LastWriteTime).ToLocalTime(); }
+         get { return LastWriteTimeUtc.ToLocalTime(); }
       }
 
-      #endregion // LastModified
+      #endregion // LastWriteTime
+      
+      #region LastWriteTimeUtc
+
+      /// <summary>Gets the time, in coordinated universal time (UTC), this entry was last modified.</summary>
+      /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
+      public DateTime LastWriteTimeUtc
+      {
+         get { return DateTime.FromFileTimeUtc(_win32FindData.ftLastWriteTime); }
+      }
+
+      #endregion // LastWriteTimeUtc
 
       #region LongFullPath
 
@@ -192,7 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
       public string LongFullPath
       {
          get { return _longFullPath; }
-         private set { _longFullPath = Path.GetLongPathInternal(value, GetFullPathOptions.None); }
+         private set { _longFullPath = Path.GetLongPathCore(value, GetFullPathOptions.None); }
       }
 
       #endregion // LongFullPath
@@ -203,7 +236,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The reparse point tag of this entry.</value>
       public ReparsePointTag ReparsePointTag
       {
-         get { return IsReparsePoint ? _win32FindData.Reserved0 : ReparsePointTag.None; }
+         get { return IsReparsePoint ? _win32FindData.dwReserved0 : ReparsePointTag.None; }
       }
 
       #endregion // ReparsePointTag
@@ -228,7 +261,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>The <see cref="ReparsePointTag"/> instance as a string.</returns>
       public override string ToString()
       {
-         return String.Format(CultureInfo.InvariantCulture, "{0}", ReparsePointTag);
+         return string.Format(CultureInfo.InvariantCulture, "{0}", ReparsePointTag);
       }
 
       #endregion // Methods

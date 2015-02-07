@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Changes the extension of a path string.</summary>
       /// <returns>The modified path information.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path information to modify. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       /// <param name="extension">The new extension (with or without a leading period). Specify <see langword="null"/> to remove an existing extension from path.</param>
       [SecurityCritical]
@@ -51,7 +51,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="null"/>.</para>
       ///   <para>Returns <see cref="string.Empty"/> if <paramref name="path"/> does not contain directory information.</para>
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path of a file or directory.</param>
       [SecurityCritical]
       public static string GetDirectoryName(string path)
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Directory information for <paramref name="path"/>, or <see langword="null"/> if <paramref name="path"/> denotes a root directory or is
       ///   <see langword="null"/>. Returns <see cref="string.Empty"/> if <paramref name="path"/> does not contain directory information.
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path of a file or directory.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryNameWithoutRoot(string path)
       {
-         return GetDirectoryNameWithoutRoot(null, path);
+         return GetDirectoryNameWithoutRootTransacted(null, path);
       }
 
       /// <summary>[AlphaFS] Returns the directory information for the specified path string without the root information, for example: "C:\Windows\system32" returns: "Windows".</summary>
@@ -113,12 +113,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      public static string GetDirectoryNameWithoutRoot(KernelTransaction transaction, string path)
+      public static string GetDirectoryNameWithoutRootTransacted(KernelTransaction transaction, string path)
       {
          if (path == null)
             return null;
 
-         DirectoryInfo di = Directory.GetParentInternal(transaction, path, PathFormat.RelativePath);
+         DirectoryInfo di = Directory.GetParentCore(transaction, path, PathFormat.RelativePath);
          return di != null && di.Parent != null ? di.Name : null;
       }
 
@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If <paramref name="path"/> does not have extension information,
       ///   this method returns <see cref="string.Empty"/>.</para>
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
@@ -157,7 +157,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>If <paramref name="path"/> does not have extension information,
       ///   this method returns <see cref="string.Empty"/>.</para>
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path string from which to get the extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
@@ -197,7 +197,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The characters after the last directory character in <paramref name="path"/>. If the last character of <paramref name="path"/> is a
       ///   directory or volume separator character, this method returns <c>string.Empty</c>. If path is null, this method returns null.
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path string from which to obtain the file name and extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static string GetFileName(string path)
@@ -214,7 +214,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The characters after the last directory character in <paramref name="path"/>. If the last character of <paramref name="path"/> is a
       ///   directory or volume separator character, this method returns <c>string.Empty</c>. If path is null, this method returns null.
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path string from which to obtain the file name and extension.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
       public static string GetFileName(string path, bool checkInvalidPathChars)
@@ -247,7 +247,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns the file name of the specified path string without the extension.</summary>
       /// <returns>The string returned by GetFileName, minus the last period (.) and all characters following it.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static string GetFileNameWithoutExtension(string path)
@@ -261,7 +261,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Returns the file name of the specified path string without the extension.</summary>
       /// <returns>The string returned by GetFileName, minus the last period (.) and all characters following it.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path of the file. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
@@ -316,7 +316,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/>,
       ///   or an empty string if <paramref name="path"/> does not contain root directory information.
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path from which to obtain root directory information.</param>
       [SecurityCritical]
       public static string GetPathRoot(string path)
@@ -332,7 +332,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   or <see langword="null"/> if <paramref name="path"/> is <see langword="null"/>,
       ///   or an empty string if <paramref name="path"/> does not contain root directory information.
       /// </returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path from which to obtain root directory information.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
       [SecurityCritical]
@@ -342,9 +342,9 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
          if (path.Trim().Length == 0)
-            throw new ArgumentException(Resources.PathIsZeroLengthOrOnlyWhiteSpace, "path");
+            throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
-         string pathRp = GetRegularPathInternal(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None);
+         string pathRp = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None);
 
          var rootLengthPath = GetRootLength(path, false);
          var rootLengthPathRp = GetRootLength(pathRp, false);
@@ -352,10 +352,10 @@ namespace Alphaleonis.Win32.Filesystem
          // Check if pathRp is an empty string.
          if (rootLengthPathRp == 0)
             if (path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase))
-               return GetLongPathInternal(path.Substring(0, rootLengthPath), GetFullPathOptions.None);
+               return GetLongPathCore(path.Substring(0, rootLengthPath), GetFullPathOptions.None);
 
          if (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase))
-            return GetLongPathInternal(pathRp.Substring(0, rootLengthPathRp), GetFullPathOptions.None);
+            return GetLongPathCore(pathRp.Substring(0, rootLengthPathRp), GetFullPathOptions.None);
 
          return path.Substring(0, rootLengthPath);
       }

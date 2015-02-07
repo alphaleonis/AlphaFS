@@ -36,8 +36,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region Constructor
 
       /// <summary>Initializes a VolumeInfo instance.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeName">A valid drive path or drive letter. This can be either uppercase or lowercase, 'a' to 'z' or a network share in the format: \\server\share.</param>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       public VolumeInfo(string volumeName)
@@ -46,8 +46,8 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentNullException("volumeName");
 
          if (!volumeName.StartsWith(Path.LongPathPrefix, StringComparison.OrdinalIgnoreCase))
-            volumeName = Path.IsUncPathInternal(volumeName, false, false)
-               ? Path.GetLongPathInternal(volumeName, GetFullPathOptions.None)
+            volumeName = Path.IsUncPathCore(volumeName, false, false)
+               ? Path.GetLongPathCore(volumeName, GetFullPathOptions.None)
                : Path.LongPathPrefix + volumeName;
          else
          {
@@ -170,7 +170,7 @@ namespace Alphaleonis.Win32.Filesystem
             } while (lastError == Win32Errors.ERROR_MORE_DATA);
          }
 
-         FullPath = Path.GetRegularPathInternal(Name, GetFullPathOptions.None);
+         FullPath = Path.GetRegularPathCore(Name, GetFullPathOptions.None);
          Name = volumeNameBuffer.ToString();
 
          FileSystemName = fileSystemNameBuffer.ToString();

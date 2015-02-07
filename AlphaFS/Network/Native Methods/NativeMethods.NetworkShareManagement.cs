@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
@@ -125,6 +124,6 @@ namespace Alphaleonis.Win32.Network
       [DllImport("netapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
       [return: MarshalAs(UnmanagedType.U4)]
       internal static extern uint NetShareGetInfo([MarshalAs(UnmanagedType.LPWStr)] string serverName,
-         [MarshalAs(UnmanagedType.LPWStr)] string netName, [MarshalAs(UnmanagedType.U4)] uint level, out IntPtr lpBuffer);
+         [MarshalAs(UnmanagedType.LPWStr)] string netName, [MarshalAs(UnmanagedType.U4)] uint level, out SafeGlobalMemoryBufferHandle lpBuffer);
    }
 }

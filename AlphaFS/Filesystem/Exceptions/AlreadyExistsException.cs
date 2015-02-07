@@ -24,16 +24,14 @@ using System.Runtime.Serialization;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>
-   /// The exception that is thrown when an attempt to create a directory or file that already exists was made.
-   /// </summary>
+   /// <summary>The exception that is thrown when an attempt to create a directory or file that already exists was made.</summary>
    [Serializable]
    public class AlreadyExistsException : System.IO.IOException
    {
       private static readonly int s_errorCode = Win32Errors.GetHrFromWin32Error(Win32Errors.ERROR_ALREADY_EXISTS);
 
       /// <summary>Initializes a new instance of the <see cref="AlreadyExistsException"/> class.</summary>
-      public AlreadyExistsException() : base(Resources.EFileOrDirectoryAlreadyExists, s_errorCode)
+      public AlreadyExistsException() : base(Resources.File_Or_Directory_Already_Exists, s_errorCode)
       {
       }
 

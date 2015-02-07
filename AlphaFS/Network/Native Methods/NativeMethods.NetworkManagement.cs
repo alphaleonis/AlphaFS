@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
@@ -27,23 +26,6 @@ namespace Alphaleonis.Win32.Network
 {
    partial class NativeMethods
    {
-      /// <summary>The NetApiBufferFree function frees the memory that the NetApiBufferAllocate function allocates.</summary>
-      /// <returns>
-      /// If the function succeeds, the return value is NERR_Success.
-      /// If the function fails, the return value is a system error code.
-      /// </returns>
-      /// <remarks>
-      /// <para>The NetApiBufferFree function is used to free memory used by network management functions.</para>
-      /// <para>SetLastError is set to <see langword="false"/>.</para>
-      /// <para>Minimum supported client: Windows 2000 Professional [desktop apps only]</para>
-      /// <para>Minimum supported server: Windows 2000 Server [desktop apps only]</para>
-      /// </remarks>
-      [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("netapi32.dll", SetLastError = false, CharSet = CharSet.Unicode)]
-      [return: MarshalAs(UnmanagedType.U4)]
-      internal static extern uint NetApiBufferFree(IntPtr buffer);
-
-
       /// <summary>The NetServerDiskEnum function retrieves a list of disk drives on a server.</summary>
       /// <returns>
       /// If the function succeeds, the return value is NERR_Success.
