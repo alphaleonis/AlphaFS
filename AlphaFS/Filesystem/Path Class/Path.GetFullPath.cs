@@ -193,6 +193,29 @@ namespace Alphaleonis.Win32.Filesystem
          return GetFullPathCore(transaction, path, GetFullPathOptions.None);
       }
 
+      /// <summary>Applies the <seealso cref="GetFullPathOptions"/> to <paramref name="path"/></summary>
+      /// <returns><paramref name="path"/> with applied <paramref name="options"/>.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <param name="path"></param>
+      /// <param name="options"></param>
+      private static string ApplyFullPathOptions(string path, GetFullPathOptions options)
+      {
+         if ((options & GetFullPathOptions.TrimEnd) != 0)
+            path = path.TrimEnd();
+
+         if ((options & GetFullPathOptions.AddTrailingDirectorySeparator) != 0)
+            path = AddTrailingDirectorySeparator(path, false);
+
+         if ((options & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0)
+            path = RemoveTrailingDirectorySeparator(path, false);
+
+         if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
+            CheckInvalidPathChars(path, (options & GetFullPathOptions.CheckAdditional) != 0);
+
+         return path;
+      }
+
       #endregion // Internal Methods
    }
 }

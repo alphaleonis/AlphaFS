@@ -141,19 +141,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
          if (options != GetFullPathOptions.None)
-         {
-            if ((options & GetFullPathOptions.TrimEnd) != 0)
-               path = path.TrimEnd();
-
-            if ((options & GetFullPathOptions.AddTrailingDirectorySeparator) != 0)
-               path = AddTrailingDirectorySeparator(path, false);
-
-            if ((options & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0)
-               path = RemoveTrailingDirectorySeparator(path, false);
-
-            if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
-               CheckInvalidPathChars(path, false);
-         }
+            path = ApplyFullPathOptions(path, options);
 
          // ".", "C:"
          if (path.Length <= 2 ||
@@ -239,19 +227,7 @@ namespace Alphaleonis.Win32.Filesystem
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
          if (options != GetFullPathOptions.None)
-         {
-            if ((options & GetFullPathOptions.TrimEnd) != 0)
-               path = path.TrimEnd();
-
-            if ((options & GetFullPathOptions.AddTrailingDirectorySeparator) != 0)
-               path = AddTrailingDirectorySeparator(path, false);
-
-            if ((options & GetFullPathOptions.RemoveTrailingDirectorySeparator) != 0)
-               path = RemoveTrailingDirectorySeparator(path, false);
-
-            if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
-               CheckInvalidPathChars(path, false);
-         }
+            path = ApplyFullPathOptions(path, options);
 
          return !path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase)
             ? path
@@ -288,7 +264,7 @@ namespace Alphaleonis.Win32.Filesystem
                throw new ArgumentException("Invalid value for " + typeof(PathFormat).Name + ": " + pathFormat);
          }
       }
-
+      
       #endregion // Internals Methods
    }
 }
