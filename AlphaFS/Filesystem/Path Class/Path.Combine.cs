@@ -29,8 +29,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       /// <summary>Combines an array of strings into a path.</summary>
       /// <returns>The combined paths.</returns>
-      /// <exception cref="ArgumentException">One of the strings in the array contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">One of the strings in the array is <see langword="null"/>.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="paths">An array of parts of the path.</param>
       [SecurityCritical]
       public static string Combine(params string[] paths)
@@ -39,14 +39,14 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Unified method Combine() to combine an array of strings into a path.</summary>
-      /// <returns>Returns the combined paths.</returns>
+      /// <returns>The combined paths.</returns>
       /// <remarks>
       ///   <para>The parameters are not parsed if they have white space.</para>
       ///   <para>Therefore, if path2 includes white space (for example, " c:\\ "),</para>
       ///   <para>the Combine method appends path2 to path1 instead of returning only path2.</para>
       /// </remarks>
-      /// <exception cref="ArgumentNullException">One of the strings in the array is <see langword="null"/>.</exception>
-      /// <exception cref="ArgumentException">One of the strings in the array contains one or more of the invalid characters defined in <see cref="GetInvalidPathChars"/>.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will not check <paramref name="paths"/> for invalid path characters.</param>
       /// <param name="paths">An array of parts of the path.</param>
       [SecurityCritical]

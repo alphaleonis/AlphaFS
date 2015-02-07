@@ -38,8 +38,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnumerateDevices
 
       /// <summary>Enumerates all available devices on the local.</summary>
+      /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
-      /// <returns>Returns <see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {
@@ -47,9 +47,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Enumerates all available devices of type <see cref="DeviceGuid"/> on the local or remote host.</summary>
+      /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> for the specified <paramref name="hostName"/>.</returns>
       /// <param name="hostName">The name of the local or remote host on which the device resides. <see langword="null"/> refers to the local host.</param>
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
-      /// <returns>Returns <see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> for the specified <paramref name="hostName"/>.</returns>
       [SecurityCritical]
       public static IEnumerable<DeviceInfo> EnumerateDevices(string hostName, DeviceGuid deviceGuid)
       {

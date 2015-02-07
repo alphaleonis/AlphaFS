@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   [AlphaFS] Unified method EncryptDecryptFileInternal() to decrypt/encrypt a file or directory so that only the account used to
       ///   encrypt the file can decrypt it.
       /// </summary>
-      /// <exception cref="NotSupportedException">Thrown when the requested operation is not supported.</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">A path that describes a file to encrypt.</param>
       /// <param name="encrypt"><see langword="true"/> encrypt, <see langword="false"/> decrypt.</param>

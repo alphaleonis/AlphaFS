@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Unified method AppendTextInternal() to create a <see cref="StreamWriter"/> that appends NativeMethods.DefaultFileEncoding
       ///   encoded text to an existing file, or to a new file if the specified file does not exist.
       /// </summary>
-      /// <exception cref="IOException">Thrown when an IO failure occurred.</exception>
+      /// <exception cref="IOException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file to append to.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>

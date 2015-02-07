@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
    public static partial class Path
    {
       /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
-      /// <returns>Returns the final path as a string.</returns>
+      /// <returns>The final path as a string.</returns>
       /// <remarks>
       ///   A final path is the path that is returned when a path is fully resolved. For example, for a symbolic link named "C:\tmp\mydir" that
       ///   points to "D:\yourdir", the final path would be "D:\yourdir".
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Retrieves the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
-      /// <returns>Returns the final path as a string.</returns>
+      /// <returns>The final path as a string.</returns>
       /// <remarks>
       ///   A final path is the path that is returned when a path is fully resolved. For example, for a symbolic link named "C:\tmp\mydir" that
       ///   points to "D:\yourdir", the final path would be "D:\yourdir".
@@ -61,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Unified method GetFinalPathNameByHandleInternal() to retrieve the final path for the specified file, formatted as <see cref="FinalPathFormats"/>.</summary>
-      /// <returns>Returns the final path as a string.</returns>
+      /// <returns>The final path as a string.</returns>
       /// <remarks>
       ///   A final path is the path that is returned when a path is fully resolved. For example, for a symbolic link named "C:\tmp\mydir" that
       ///   points to "D:\yourdir", the final path would be "D:\yourdir". The string that is returned by this function uses the

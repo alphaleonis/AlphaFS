@@ -32,9 +32,9 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateOpenResources
 
       /// <summary>Enumerates open resources from the local host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{OpenResourceInfo}"/> open resources from the local host.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="IEnumerable{OpenResourceInfo}"/> open resources from the local host.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static IEnumerable<OpenResourceInfo> EnumerateOpenResources()
       {
@@ -42,9 +42,9 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates open resources from the specified host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
       /// <param name="basePath">
       ///   This parameter may be <see langword="null"/>. Enumerates only resources that have the value of the basepath parameter as a prefix.
@@ -68,9 +68,9 @@ namespace Alphaleonis.Win32.Network
       #region Internal Methods
 
       /// <summary>>Unified method EnumerateOpenResourcesInternal() to enumerate open resources from the specified host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="IEnumerable{String}"/> open resources from the specified <paramref name="host"/>.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
       /// <param name="basePath">
       ///   This parameter may be <see langword="null"/>. Enumerates only resources that have the value of the basepath parameter as a prefix.

@@ -30,8 +30,8 @@ namespace Alphaleonis.Win32.Network
    partial class Host
    {
       /// <summary>Enumerates drives from the local host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{String}"/> drives from the local host.</returns>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="IEnumerable{String}"/> drives from the local host.</returns>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static IEnumerable<string> EnumerateDrives()
       {
@@ -39,8 +39,8 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates local drives from the specified host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{String}"/> drives from the specified host.</returns>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
       /// <param name="continueOnException">
       ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>
@@ -55,9 +55,9 @@ namespace Alphaleonis.Win32.Network
 
 
       /// <summary>Unified method EnumerateDrivesInternal() to enumerate local drives from the specified host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{String}"/> drives from the specified host.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="IEnumerable{String}"/> drives from the specified host.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
       /// <param name="continueOnException">
       ///   <para><see langword="true"/> suppress any Exception that might be thrown a result from a failure,</para>

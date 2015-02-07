@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   [AlphaFS] Unified method WriteAllBytesInternal() to create a new file as part of a transaction, writes the specified byte array to
       ///   the file, and then closes the file. If the target file already exists, it is overwritten.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="bytes">The bytes to write to the file.</param>

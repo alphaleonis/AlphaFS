@@ -120,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   [AlphaFS] Unified method GetAccessControlInternal() to get an <see cref="ObjectSecurity"/> object for a particular file or
       ///   directory.
       /// </summary>
-      /// <exception cref="IOException">Thrown when an IO failure occurred.</exception>
+      /// <exception cref="IOException"/>
       /// <typeparam name="T">Generic type parameter.</typeparam>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="path">
@@ -136,10 +136,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   An <see cref="ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the
       ///   <paramref name="path"/> parameter.
       /// </returns>
-      ///
-      /// <exception cref="ArgumentException">
-      ///   The path parameter contains invalid characters, is empty, or contains only white spaces.
-      /// </exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       [SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times", Justification = "Disposing is controlled.")]
       [SecurityCritical]

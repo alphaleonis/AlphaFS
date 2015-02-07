@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Compress
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <remarks>This will only compress the root items (non recursive).</remarks>
       [SecurityCritical]
       public void Compress()
       {
@@ -50,7 +50,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Decompress
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
       [SecurityCritical]
       public void Decompress()
       {

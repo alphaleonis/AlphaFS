@@ -66,8 +66,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region Constructors
 
       /// <summary>Provides access to information on the specified drive.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="driveName">
       ///   A valid drive path or drive letter.
       ///   <para>This can be either uppercase or lowercase,</para>

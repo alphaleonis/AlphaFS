@@ -33,7 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Determines whether a path includes a file name extension.</summary>
       /// <returns><see langword="true"/> if the characters that follow the last directory separator (\\ or /) or volume separator (:) in the path include a period (.) followed by one or more characters; otherwise, <see langword="false"/>.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path to search for an extension. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
       public static bool HasExtension(string path)
@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   It returns <see langword="false"/> for path strings such as "MyDir".
       /// </remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       [SecurityCritical]
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   It returns <see langword="false"/> for path strings such as "MyDir".
       /// </remarks>
       /// <remarks>This method does not verify that the path or file name exists.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to test. The path cannot contain any of the characters defined in <see cref="GetInvalidPathChars"/>.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
@@ -103,9 +103,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsValidName
 
       /// <summary>[AlphaFS] Check if file or folder name has any invalid characters.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="name">File or folder name.</param>
-      /// <returns>Returns <see langword="true"/> if name contains any invalid characters. Otherwise <see langword="false"/></returns>
+      /// <returns><see langword="true"/> if name contains any invalid characters. Otherwise <see langword="false"/></returns>
       public static bool IsValidName(string name)
       {
          if (name == null)
@@ -131,11 +131,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Checks that the given path format is supported.</summary>
-      /// <exception cref="ArgumentException">
-      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
-      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
-      /// </exception>
-      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A path to the file or directory.</param>
       /// <param name="checkInvalidPathChars">Checks that the path contains only valid path-characters.</param>
       /// <param name="checkAdditional">.</param>
@@ -163,7 +160,7 @@ namespace Alphaleonis.Win32.Filesystem
       
       /// <summary>Checks that the path contains only valid path-characters.</summary>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">A path to the file or directory.</param>
       /// <param name="checkAdditional"><see langword="true"/> also checks for ? and * characters.</param>
       [SecurityCritical]

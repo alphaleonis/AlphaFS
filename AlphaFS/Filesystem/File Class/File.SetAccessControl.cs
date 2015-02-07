@@ -110,11 +110,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// described by a <see cref="FileSecurity"/> FileSecurity object to the specified file.</summary>
       /// <remarks>Use either <paramref name="path"/> or <paramref name="handle"/>, not both.</remarks>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="ArgumentException">
-      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
-      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
-      /// </exception>
-      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="path">A file to add or remove access control list (ACL) entries from. This parameter This parameter may be <see langword="null"/>.</param>
       /// <param name="handle">A handle to add or remove access control list (ACL) entries from. This parameter This parameter may be <see langword="null"/>.</param>
       /// <param name="objectSecurity">A <see cref="DirectorySecurity"/> or <see cref="FileSecurity"/> object that describes an ACL entry to apply to the file described by the <paramref name="path"/> parameter.</param>

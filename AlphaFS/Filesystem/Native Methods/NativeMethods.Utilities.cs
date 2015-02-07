@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="handle">The current handle to check.</param>
       /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.Handle_Is_Invalid"/>, <see langword="false"/> will not raise this exception..</param>
       /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
-      /// <exception cref="ArgumentException"></exception>
+      /// <exception cref="ArgumentException"/>
       internal static bool IsValidHandle(SafeHandle handle, bool throwException = true)
       {
          if (handle == null || handle.IsClosed || handle.IsInvalid)
@@ -62,7 +62,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="lastError">The result of Marshal.GetLastWin32Error()</param>
       /// <param name="throwException"><see langword="true"/> will throw an <exception cref="Resources.Handle_Is_Invalid_Win32Error"/>, <see langword="false"/> will not raise this exception..</param>
       /// <returns><see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
-      /// <exception cref="ArgumentException"></exception>
+      /// <exception cref="ArgumentException"/>
       internal static bool IsValidHandle(SafeHandle handle, int lastError, bool throwException = true)
       {
          if (handle == null || handle.IsClosed || handle.IsInvalid)

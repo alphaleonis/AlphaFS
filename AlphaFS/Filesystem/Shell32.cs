@@ -496,7 +496,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the file or protocol that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileAssociation(string path)
       {
@@ -509,7 +509,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the content-type that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related content-type from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related content-type from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileContentType(string path)
       {
@@ -522,7 +522,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the default icon that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related default icon from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related default icon from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileDefaultIcon(string path)
       {
@@ -535,7 +535,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the friendly application name that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related friendly application name from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related friendly application name from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileFriendlyAppName(string path)
       {
@@ -548,7 +548,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the friendly document name that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related friendly document name from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related friendly document name from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileFriendlyDocName(string path)
       {
@@ -587,7 +587,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system,
       /// </summary>
       /// <para>such as a file, folder, directory, or drive root.</para>
-      /// <returns>Returns a <see cref="Shell32.FileInfo"/> struct instance.</returns>
+      /// <returns>A <see cref="Shell32.FileInfo"/> struct instance.</returns>
       /// <remarks>
       /// <para>You should call this function from a background thread.</para>
       /// <para>Failure to do so could cause the UI to stop responding.</para>
@@ -635,7 +635,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the "Open With" command that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related "Open With" command from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related "Open With" command from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileOpenWithAppName(string path)
       {
@@ -648,7 +648,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the Shell command that is associated with <paramref name="path"/> from the registry.</summary>
       /// <param name="path">A path to the file.</param>
-      /// <returns>Returns the associated file- or protocol-related Shell command from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <returns>The associated file- or protocol-related Shell command from the registry or <c>string.Empty</c> if no association can be found.</returns>
       [SecurityCritical]
       public static string GetFileVerbCommand(string path)
       {
@@ -784,7 +784,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Tests a URL to determine if it is a file URL.</summary>
       /// <param name="url">The URL.</param>
-      /// <returns>Returns <see langword="true"/> if the URL is a file URL, or <see langword="false"/> otherwise.</returns>
+      /// <returns><see langword="true"/> if the URL is a file URL, or <see langword="false"/> otherwise.</returns>
       [SecurityCritical]
       internal static bool UrlIsFileUrl(string url)
       {
@@ -797,7 +797,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns whether a URL is a URL that browsers typically do not include in navigation history.</summary>
       /// <param name="url">The URL.</param>
-      /// <returns>Returns <see langword="true"/> if the URL is a URL that is not included in navigation history, or <see langword="false"/> otherwise.</returns>
+      /// <returns><see langword="true"/> if the URL is a URL that is not included in navigation history, or <see langword="false"/> otherwise.</returns>
       [SecurityCritical]
       internal static bool UrlIsNoHistory(string url)
       {
@@ -810,7 +810,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Returns whether a URL is opaque.</summary>
       /// <param name="url">The URL.</param>
-      /// <returns>Returns <see langword="true"/> if the URL is opaque, or <see langword="false"/> otherwise.</returns>
+      /// <returns><see langword="true"/> if the URL is opaque, or <see langword="false"/> otherwise.</returns>
       [SecurityCritical]
       internal static bool UrlIsOpaque(string url)
       {
@@ -828,8 +828,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to a file.</param>
       /// <param name="attributes">One or more <see cref="AssociationAttributes"/> attributes. Only one "InitXXX" attribute can be used.</param>
       /// <param name="associationType">A <see cref="AssociationString"/> attribute.</param>
-      /// <returns>Returns the associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
-      /// <exception cref="ArgumentNullException"></exception>
+      /// <returns>The associated file- or protocol-related string from the registry or <c>string.Empty</c> if no association can be found.</returns>
+      /// <exception cref="ArgumentNullException"/>
       [SecurityCritical]
       private static string GetFileAssociationInternal(string path, AssociationAttributes attributes, AssociationString associationType)
       {
@@ -881,7 +881,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Unified method GetFileInfoInternal() to retrieve information about an object in the file system,
       /// </summary>
       /// <para>such as a file, folder, directory, or drive root.</para>
-      /// <returns>Returns a <see cref="Shell32.FileInfo"/> struct instance.</returns>
+      /// <returns>A <see cref="Shell32.FileInfo"/> struct instance.</returns>
       /// <remarks>
       /// <para>You should call this function from a background thread.</para>
       /// <para>Failure to do so could cause the UI to stop responding.</para>

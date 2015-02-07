@@ -245,7 +245,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>When overridden in a derived class, gets the length in bytes of the stream.</summary>
       /// <value>This method always throws an exception.</value>
-      /// <exception cref="System.NotSupportedException">This exception is always thrown if this property is accessed on a <see cref="BackupFileStream"/>.</exception>
+      /// <exception cref="NotSupportedException"/>
       public override long Length
       {
          get { throw new NotSupportedException(Resources.No_Stream_Seeking_Support); }
@@ -253,7 +253,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>When overridden in a derived class, gets or sets the position within the current stream.</summary>
       /// <value>This method always throws an exception.</value>
-      /// <exception cref="System.NotSupportedException">This exception is always thrown if this property is accessed on a <see cref="BackupFileStream"/>.</exception>
+      /// <exception cref="NotSupportedException"/>
       public override long Position
       {
          get { throw new NotSupportedException(Resources.No_Stream_Seeking_Support); }
@@ -320,15 +320,11 @@ namespace Alphaleonis.Win32.Filesystem
       ///   currently available, or zero (0) if the end of the stream has been reached.
       /// </returns>
       ///
-      /// <exception cref="System.ArgumentException">
-      ///   The sum of <paramref name="offset"/> and <paramref name="count"/> is larger than the buffer length.
-      /// </exception>
-      /// <exception cref="System.ArgumentNullException"><paramref name="buffer"/> is <see langword="null"/>.</exception>
-      /// <exception cref="System.ArgumentOutOfRangeException">
-      ///   <paramref name="offset"/> or <paramref name="count"/> is negative.
-      /// </exception>
-      /// <exception cref="System.NotSupportedException">The stream does not support reading.</exception>
-      /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+      /// <exception cref="System.ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="System.ArgumentOutOfRangeException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ObjectDisposedException"/>
       public override int Read(byte[] buffer, int offset, int count)
       {
          return Read(buffer, offset, count, false);
@@ -344,13 +340,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// The total number of bytes read into the buffer. This can be less than the number of bytes requested if that many bytes are not
       /// currently available, or zero (0) if the end of the stream has been reached.
       /// </returns>
-      /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is larger than the buffer length.</exception>
-      /// <exception cref="System.ArgumentNullException">
-      /// 	<paramref name="buffer"/> is <see langword="null"/>.</exception>
-      /// <exception cref="System.ArgumentOutOfRangeException">
-      /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
-      /// <exception cref="System.NotSupportedException">The stream does not support reading.</exception>
-      /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ObjectDisposedException"/>
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
       [SecurityCritical]
       public int Read(byte[] buffer, int offset, int count, bool processSecurity)
@@ -391,13 +385,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="buffer">An array of bytes. This method copies <paramref name="count"/> bytes from <paramref name="buffer"/> to the current stream.</param>
       /// <param name="offset">The zero-based byte offset in <paramref name="buffer"/> at which to begin copying bytes to the current stream.</param>
       /// <param name="count">The number of bytes to be written to the current stream.</param>
-      /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is greater than the buffer length.</exception>
-      /// <exception cref="System.ArgumentNullException">
-      /// 	<paramref name="buffer"/> is <see langword="null"/>.</exception>
-      /// <exception cref="System.ArgumentOutOfRangeException">
-      /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
-      /// <exception cref="System.NotSupportedException">The stream does not support writing.</exception>
-      /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="System.ArgumentNullException"/>
+      /// <exception cref="System.ArgumentOutOfRangeException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ObjectDisposedException"/>
       /// <remarks>This method will not process the access-control list (ACL) data for the file or directory.</remarks>      
       public override void Write(byte[] buffer, int offset, int count)
       {
@@ -412,13 +404,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// If this is <see langword="true"/> you need to specify <see cref="FileSystemRights.TakeOwnership"/> and <see cref="FileSystemRights.ChangePermissions"/> access when 
       /// opening the file or directory handle. If the handle does not have those access rights, the operating system denies 
       /// access to the ACL data, and ACL data restoration will not occur.</param>
-      /// <exception cref="System.ArgumentException">The sum of <paramref name="offset"/> and <paramref name="count"/> is greater than the buffer length.</exception>
-      /// <exception cref="System.ArgumentNullException">
-      /// 	<paramref name="buffer"/> is <see langword="null"/>.</exception>
-      /// <exception cref="System.ArgumentOutOfRangeException">
-      /// 	<paramref name="offset"/> or <paramref name="count"/> is negative.</exception>
-      /// <exception cref="System.NotSupportedException">The stream does not support writing.</exception>
-      /// <exception cref="System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="System.ArgumentOutOfRangeException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ObjectDisposedException"/>
       [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
       [SecurityCritical]
       public void Write(byte[] buffer, int offset, int count, bool processSecurity)
@@ -459,7 +449,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="origin">A value of type <see cref="System.IO.SeekOrigin"/> indicating the reference point used to obtain the new position.</param>
       /// <returns>The new position within the current stream.</returns>
       /// <remarks><para><note><para>This stream does not support seeking using this method, and calling this method will always throw <see cref="NotSupportedException"/>. See <see cref="Skip"/> for an alternative way of seeking forward.</para></note></para></remarks>
-      /// <exception cref="System.NotSupportedException">The stream does not support seeking.</exception>
+      /// <exception cref="NotSupportedException"/>
       public override long Seek(long offset, SeekOrigin origin)
       {
          throw new NotSupportedException();
@@ -468,7 +458,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>When overridden in a derived class, sets the length of the current stream.</summary>
       /// <param name="value">The desired length of the current stream in bytes.</param>
       /// <remarks>This method is not supported by the <see cref="BackupFileStream"/> class, and calling it will always generate a <see cref="NotSupportedException"/>.</remarks>
-      /// <exception cref="System.NotSupportedException">Always thrown by this class.</exception>
+      /// <exception cref="NotSupportedException"/>
       public override void SetLength(long value)
       {
          throw new NotSupportedException(Resources.No_Stream_Seeking_Support);
@@ -505,7 +495,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Gets a <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the
       ///   current <see cref="BackupFileStream"/> object.
       /// </summary>
-      /// <exception cref="IOException">Thrown when an IO failure occurred.</exception>
+      /// <exception cref="IOException"/>
       /// <returns>
       ///   A <see cref="FileSecurity"/> object that encapsulates the access control list (ACL) entries for the file described by the current
       ///   <see cref="BackupFileStream"/> object.
@@ -562,8 +552,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Prevents other processes from changing the <see cref="BackupFileStream"/> while permitting read access.</summary>
       /// <param name="position">The beginning of the range to lock. The value of this parameter must be equal to or greater than zero (0).</param>
       /// <param name="length">The range to be locked.</param>
-      /// <exception cref="ArgumentOutOfRangeException"><paramref name="position"/> or <paramref name="length"/> is negative.</exception>
-      /// <exception cref="ObjectDisposedException">The file is closed.</exception>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="ObjectDisposedException"/>
       [SecurityCritical]
       public virtual void Lock(long position, long length)
       {
@@ -580,9 +570,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Allows access by other processes to all or part of a file that was previously locked.</summary>
       /// <param name="position">The beginning of the range to unlock.</param>
       /// <param name="length">The range to be unlocked.</param>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"><paramref name="position"/> or <paramref name="length"/> is negative.</exception>
-      /// <exception cref="ObjectDisposedException">The file is closed.</exception>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="ObjectDisposedException"/>
       [SecurityCritical]
       public virtual void Unlock(long position, long length)
       {

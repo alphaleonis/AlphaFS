@@ -76,12 +76,9 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Methods
 
       /// <summary>Gets the <see cref="FileAttributes"/> or <see cref="NativeMethods.WIN32_FILE_ATTRIBUTE_DATA"/> of the specified file or directory.</summary>
-      /// <returns>Returns the <see cref="FileAttributes"/> or <see cref="NativeMethods.WIN32_FILE_ATTRIBUTE_DATA"/> of the specified file or directory.</returns>
-      /// <exception cref="ArgumentException">
-      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
-      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
-      /// </exception>
-      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <returns>The <see cref="FileAttributes"/> or <see cref="NativeMethods.WIN32_FILE_ATTRIBUTE_DATA"/> of the specified file or directory.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <typeparam name="T">Generic type parameter.</typeparam>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
@@ -114,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="win32AttrData">[in,out].</param>
       /// <param name="tryagain">.</param>
       /// <param name="returnErrorOnNotFound">.</param>
-      /// <returns>Returns 0 on success, otherwise a Win32 error code.</returns>
+      /// <returns>0 on success, otherwise a Win32 error code.</returns>
       [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
       [SecurityCritical]
       internal static int FillAttributeInfoInternal(KernelTransaction transaction, string pathLp, ref NativeMethods.WIN32_FILE_ATTRIBUTE_DATA win32AttrData, bool tryagain, bool returnErrorOnNotFound)

@@ -195,7 +195,7 @@ namespace Alphaleonis.Win32.Network
       #region ConnectTo
 
       /// <summary>Creates a connection to a network resource.</summary>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       [SecurityCritical]
       public static void ConnectTo(string remoteName)
@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Creates a connection to a network resource.</summary>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       /// <param name="userName">
       ///   The user name for making the connection. If <paramref name="userName"/> is <see langword="null"/>, the function uses the default
@@ -240,7 +240,7 @@ namespace Alphaleonis.Win32.Network
       /// <param name="updateProfile"><see langword="true"/> successful network resource connections will be saved.</param>
       /// <param name="saveCredentials">When the operating system prompts for a credential, the credential should be saved by the credential manager when true.</param>
       ///
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static void ConnectTo(string remoteName, NetworkCredential credentials, bool prompt, bool updateProfile, bool saveCredentials)
       {
@@ -255,7 +255,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Creates a connection to a network resource.</summary>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       /// <param name="userName">
@@ -285,7 +285,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Creates a connection to a network resource.</summary>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="winOwner">Handle to a window that the provider of network resources can use as an owner window for dialog boxes.</param>
       /// <param name="remoteName">A network resource to connect to, for example: \\server or \\server\share.</param>
       /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
@@ -386,8 +386,8 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Unified method ConnectDisconnectInternal() to connect to/disconnect from a network resource. The function can redirect a local device to a network resource.</summary>
       /// <returns>If <see cref="ConnectDisconnectArguments.LocalName"/> is <see langword="null"/> or <c>string.Empty</c>, returns the last available drive letter, null otherwise.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="arguments">The <see cref="ConnectDisconnectArguments"/>.</param>
       [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
       [SecurityCritical]

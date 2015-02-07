@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Enumerates all available devices on the local host.</summary>
       /// <param name="deviceGuid">One of the <see cref="DeviceGuid"/> devices.</param>
-      /// <returns>Returns <see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
+      /// <returns><see cref="IEnumerable{DeviceInfo}"/> instances of type <see cref="DeviceGuid"/> from the local host.</returns>
       [SecurityCritical]
       public IEnumerable<DeviceInfo> EnumerateDevices(DeviceGuid deviceGuid)
       {

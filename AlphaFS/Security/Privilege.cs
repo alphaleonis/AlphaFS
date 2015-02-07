@@ -424,7 +424,7 @@ namespace Alphaleonis.Win32.Security
       /// <summary>Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>.</summary>
       /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="System.Object"/>.</param>
       /// <returns><see langword="true"/> if the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>; otherwise, <see langword="false"/>.</returns>
-      /// <exception cref="System.NullReferenceException">The <paramref name="obj"/> parameter is <see langword="null"/>.</exception>
+      /// <exception cref="NullReferenceException"/>
       public override bool Equals(object obj)
       {
          Privilege other = obj as Privilege;

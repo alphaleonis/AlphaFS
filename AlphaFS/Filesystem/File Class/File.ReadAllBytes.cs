@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   [AlphaFS] Unified method ReadAllBytesInternal() to open a binary file, reads the contents of the file into a byte array, and then
       ///   closes the file.
       /// </summary>
-      /// <exception cref="IOException">Thrown when an IO failure occurred.</exception>
+      /// <exception cref="IOException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to open for reading.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>

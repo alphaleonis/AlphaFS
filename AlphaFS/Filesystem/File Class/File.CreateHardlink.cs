@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   [AlphaFS] Unified method CreateHardlinkInternal() to establish a hard link between an existing file and a new file. This function
       ///   is only supported on the NTFS file system, and only for files, not directories.
       /// </summary>
-      /// <exception cref="NotSupportedException">Thrown when the requested operation is not supported.</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>

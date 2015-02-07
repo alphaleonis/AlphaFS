@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Permanently deletes a file.</summary>
       /// <remarks>If the file does not exist, this method does nothing.</remarks>
       ///
-      /// <exception cref="IOException">.</exception>
+      /// <exception cref="IOException"/>
       public override void Delete()
       {
          File.DeleteFileInternal(Transaction, LongFullName, false, PathFormat.LongFullPath);

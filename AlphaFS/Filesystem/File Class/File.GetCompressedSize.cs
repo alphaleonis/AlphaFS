@@ -99,7 +99,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   the value obtained is the compressed size of the specified file. If the file is located on a volume that supports sparse files and
       ///   the file is a sparse file, the value obtained is the sparse size of the specified file.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path"><para>The name of the file.</para></param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>

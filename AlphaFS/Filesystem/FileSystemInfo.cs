@@ -192,11 +192,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region InitializeInternal
 
       /// <summary>Initializes the specified file name.</summary>
-      /// <exception cref="ArgumentException">
-      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
-      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
-      /// </exception>
-      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The full path and name of the file.</param>
@@ -245,9 +242,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value><see cref="FileAttributes"/> of the current <see cref="FileSystemInfo"/>.</value>
       ///
-      ///  <exception cref="FileNotFoundException">The specified file does not exist.</exception>
-      ///  <exception cref="DirectoryNotFoundException">The specified path is invalid; for example, it is on an unmapped drive.</exception>
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       public FileAttributes Attributes
       {
          [SecurityCritical]
@@ -291,8 +288,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value>The creation date and time of the current <see cref="FileSystemInfo"/> object.</value>
       ///
-      ///  <exception cref="DirectoryNotFoundException">The specified path is invalid; for example, it is on an unmapped drive.</exception>
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       public DateTime CreationTime
       {
          [SecurityCritical] get { return CreationTimeUtc.ToLocalTime(); }
@@ -318,8 +315,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value>The creation date and time in UTC format of the current <see cref="FileSystemInfo"/> object.</value>
       ///
-      ///  <exception cref="DirectoryNotFoundException">The specified path is invalid; for example, it is on an unmapped drive.</exception>
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       [ComVisible(false)]
       public DateTime CreationTimeUtc
       {
@@ -410,7 +407,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value>The time that the current file or directory was last accessed.</value>
       ///
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="IOException"/>
       public DateTime LastAccessTime
       {
          [SecurityCritical] get { return LastAccessTimeUtc.ToLocalTime(); }
@@ -432,7 +429,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value>The UTC time that the current file or directory was last accessed.</value>
       ///
-      ///  <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="IOException"/>
       [ComVisible(false)]
       public DateTime LastAccessTimeUtc
       {
@@ -475,7 +472,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       /// <value>The time the current file was last written.</value>
       ///
-      /// ### <exception cref="IOException">Refresh cannot initialize the data.</exception>
+      /// <exception cref="IOException"/>
       public DateTime LastWriteTime
       {
          get { return LastWriteTimeUtc.ToLocalTime(); }

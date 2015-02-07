@@ -196,22 +196,35 @@
     <Compile Include="Filesystem\AlternateDataStreamInfo.cs" />
     <Compile Include="Filesystem\BackupStreamInfo.cs" />
     <Compile Include="Filesystem\CopyMoveProgressRoutine.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.CopyMove.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CountFileSystemObjects.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.DeleteEmptySubdirectories.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Delete.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CreateDirectory.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateDirectories.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFiles.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntryInfos.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileSystemEntries.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Exists.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetDirectories.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetFiles.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetCreationTime.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetLastAccessTime.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetLastWriteTime.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.HasInheritedPermissions.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetAccessControl.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.GetTimes.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.GetChangeTime.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.CurrentDirectory.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetFileSystemEntries.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetDirectoryRoot.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetLogicalDrives.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.GetParent.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.SetAccessControl.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.CopyMove.cs" />
-    <Compile Include="Filesystem\Directory Class\Directory.SetTimes.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetCreationTime.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetLastAccessTime.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetTimestamps.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.TransferTimestamps.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.SetLastWriteTime.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Compression.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.Encryption.cs" />
     <Compile Include="Filesystem\Directory Class\Directory.EnumerateFileIdBothDirectoryInfo.cs" />
@@ -486,7 +499,7 @@
       <Link>AlphaFS.snk</Link>
     </None>
     <None Include="app.config" />
-    <Compile Include="Filesystem\Directory Class\Directory.EncryptedFileRaw.cs" />
+    <Compile Include="Filesystem\Directory Class\Directory.EncryptedDirectoryRaw.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -499,7 +512,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
+      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

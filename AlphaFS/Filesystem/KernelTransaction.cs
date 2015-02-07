@@ -90,9 +90,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Requests that the specified transaction be committed.</summary>
-      /// <exception cref="TransactionAlreadyCommittedException">The transaction was already committed.</exception>
-      /// <exception cref="TransactionAlreadyAbortedException">The transaction was already aborted.</exception>
-      /// <exception cref="Win32Exception">An error occurred</exception>
+      /// <exception cref="TransactionAlreadyCommittedException"/>
+      /// <exception cref="TransactionAlreadyAbortedException"/>
+      /// <exception cref="Win32Exception"/>
       [SecurityCritical]
       public void Commit()
       {
@@ -104,8 +104,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Requests that the specified transaction be rolled back. This function is synchronous.</summary>
-      /// <exception cref="TransactionAlreadyCommittedException">The transaction was already committed.</exception>
-      /// <exception cref="Win32Exception">An error occurred</exception>
+      /// <exception cref="TransactionAlreadyCommittedException"/>
+      /// <exception cref="Win32Exception"/>
       [SecurityCritical]
       public void Rollback()
       {

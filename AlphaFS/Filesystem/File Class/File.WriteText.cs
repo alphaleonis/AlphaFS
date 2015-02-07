@@ -42,16 +42,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The method creates the file if it doesn't exist, but it doesn't create new directories. Therefore, the value of the path parameter
       ///   must contain existing directories.
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       [SecurityCritical]
@@ -67,16 +67,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The method creates the file if it doesn't exist, but it doesn't create new directories. Therefore, the value of the path parameter
       ///   must contain existing directories.
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -95,16 +95,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The method creates the file if it doesn't exist, but it doesn't create new directories. Therefore, the value of the path parameter
       ///   must contain existing directories.
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -122,16 +122,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The method creates the file if it doesn't exist, but it doesn't create new directories.
       ///   Therefore, the value of the path parameter must contain existing directories.
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">
       ///   The file to append the lines to. The file is created if it doesn't already exist.
       /// </param>
@@ -155,16 +155,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The method creates the file if it doesn't exist, but it doesn't create new directories. Therefore, the value of the path parameter
       ///   must contain existing directories.
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
@@ -181,16 +181,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The method creates the file if it doesn't exist, but it doesn't create new directories. Therefore, the value of the path parameter
       ///   must contain existing directories.
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
@@ -210,16 +210,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The method creates the file if it doesn't exist, but it doesn't create new directories. Therefore, the value of the path parameter
       ///   must contain existing directories.
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
@@ -237,16 +237,16 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The method creates the file if it doesn't exist, but it doesn't create new directories. Therefore, the value of the path parameter
       ///   must contain existing directories.
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
@@ -267,16 +267,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Appends the specified stringto the file, creating the file if it does not already exist.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       [SecurityCritical]
@@ -286,16 +286,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Appends the specified string to the file, creating the file if it does not already exist.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -308,16 +308,16 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       /// <summary>[AlphaFS] Appends the specified stringto the file, creating the file if it does not already exist.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -328,16 +328,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -353,16 +353,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>[AlphaFS] Appends the specified stringto the file, creating the file if it does not already exist.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
@@ -373,16 +373,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
@@ -396,16 +396,16 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       /// <summary>[AlphaFS] Appends the specified stringto the file, creating the file if it does not already exist.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
@@ -417,16 +417,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Appends the specified string to the file, creating the file if it does not already exist.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
@@ -448,16 +448,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       [SecurityCritical]
@@ -476,16 +476,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
       
       /// <summary>Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -496,16 +496,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -519,16 +519,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -539,16 +539,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -559,16 +559,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -580,16 +580,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
@@ -606,16 +606,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -627,16 +627,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -647,16 +647,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -668,16 +668,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -692,16 +692,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates a new file, writes a collection of strings to the file, and then closes the file.</summary>
       /// <remarks>The default behavior of the method is to write out data by using UTF-8 encoding without a byte order mark (BOM).</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -713,16 +713,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -734,16 +734,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
@@ -756,16 +756,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
@@ -787,16 +787,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Creates a new file, writes the specified string to the file, and then closes the file. If the target file already exists, it is overwritten.</summary>
       /// <remarks>This method uses UTF-8 encoding without a Byte-Order Mark (BOM)</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       [SecurityCritical]
@@ -819,16 +819,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates a new file, writes the specified string to the file, and then closes the file. If the target file already exists, it is overwritten.</summary>
       /// <remarks>This method uses UTF-8 encoding without a Byte-Order Mark (BOM)</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -839,16 +839,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file, writes the specified string to the file using the specified encoding, and then closes the file. If the target file already exists, it is overwritten.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
@@ -865,16 +865,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates a new file as part of a transaction, write the contents to the file, and then closes the file. If the target file already exists, it is overwritten.</summary>
       /// <remarks>This method uses UTF-8 encoding without a Byte-Order Mark (BOM)</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
@@ -885,16 +885,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file as part of a transaction, writes the specified string to the file using the specified encoding, and then closes the file. If the target file already exists, it is overwritten.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
@@ -909,16 +909,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>[AlphaFS] Creates a new file as part of a transaction, write the contents to the file, and then closes the file. If the target file already exists, it is overwritten.</summary>
       /// <remarks>This method uses UTF-8 encoding without a Byte-Order Mark (BOM)</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
@@ -930,16 +930,16 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a new file as part of a transaction, writes the specified string to the file using the specified encoding, and then closes the file. If the target file already exists, it is overwritten.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
@@ -958,16 +958,16 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Method
 
       /// <summary>Unified method WriteAppendAllLinesInternal() to create/append a new file by using the specified encoding, writes a collection of strings to the file, and then closes the file.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException"></exception>
-      /// <exception cref="NotSupportedException"></exception>
-      /// <exception cref="ArgumentOutOfRangeException"></exception>
-      /// <exception cref="FileNotFoundException"></exception>
-      /// <exception cref="IOException"></exception>
-      /// <exception cref="SecurityException"></exception>
-      /// <exception cref="DirectoryNotFoundException"></exception>
-      /// <exception cref="UnauthorizedAccessException"></exception>
-      /// <exception cref="PlatformNotSupportedException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="ArgumentOutOfRangeException"/>
+      /// <exception cref="FileNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="SecurityException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <exception cref="PlatformNotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>

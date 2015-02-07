@@ -35,9 +35,9 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateOpenConnections
 
       /// <summary>Enumerates open connections from the local host.</summary>
-      /// <returns>Returns <see cref="OpenConnectionInfo"/> connection information from the local host.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="OpenConnectionInfo"/> connection information from the local host.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       [SecurityCritical]
       public static IEnumerable<OpenConnectionInfo> EnumerateOpenConnections()
       {
@@ -45,9 +45,9 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates open connections from the specified host.</summary>
-      /// <returns>Returns <see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException">
@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateShares
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       /// <remarks>This method also enumerates hidden shares.</remarks>
       [SecurityCritical]
       public static IEnumerable<ShareInfo> EnumerateShares()
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       /// <remarks>This method also enumerates hidden shares.</remarks>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
       [SecurityCritical]
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the local host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       /// <remarks>This method also enumerates hidden shares.</remarks>
       /// <param name="shareType">The type of the shared resource to retrieve.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
@@ -95,7 +95,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
-      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       /// <remarks>This method also enumerates hidden shares.</remarks>
       /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       [SecurityCritical]
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
-      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       /// <remarks>This method also enumerates hidden shares.</remarks>
       /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Network
       }
 
       /// <summary>Enumerates Server Message Block (SMB) shares from the specified <paramref name="host"/>.</summary>
-      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       /// <remarks>This method also enumerates hidden shares.</remarks>
       /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="shareType">The type of the shared resource to retrieve.</param>
@@ -214,9 +214,9 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateOpenConnectionsInternal
 
       /// <summary>Unified method EnumerateOpenConnectionsInternal() to enumerate open connections from the specified host.</summary>
-      /// <returns>Returns <see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <returns><see cref="OpenConnectionInfo"/> connection information from the specified <paramref name="host"/>.</returns>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the remote server. <see langword="null"/> refers to the local host.</param>
       /// <param name="share">The name of the Server Message Block (SMB) share.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
@@ -249,10 +249,10 @@ namespace Alphaleonis.Win32.Network
       #region EnumerateSharesInternal
 
       /// <summary>Enumerates Server Message Block (SMB) shares from a local or remote host.</summary>
-      /// <returns>Returns <see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
+      /// <returns><see cref="IEnumerable{ShareInfo}"/> shares from the specified host.</returns>
       /// <remarks>This method also enumerates hidden shares.</remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="host">The DNS or NetBIOS name of the specified host.</param>
       /// <param name="shareType">The type of the shared resource to retrieve.</param>
       /// <param name="continueOnException"><see langword="true"/> suppress any Exception that might be thrown a result from a failure, such as unavailable resources.</param>
@@ -311,7 +311,7 @@ namespace Alphaleonis.Win32.Network
 
       /// <summary>Unified method GetShareInfoInternal() to get the <see cref="ShareInfo"/> structure of a Server Message Block (SMB) share.</summary>
       /// <returns>A <see cref="ShareInfo"/> class, or <see langword="null"/> on failure or when not available, and <paramref name="continueOnException"/> is <see langword="true"/>.</returns>
-      /// <exception cref="NetworkInformationException"></exception>
+      /// <exception cref="NetworkInformationException"/>
       /// <param name="shareLevel">One of the <see cref="ShareInfoLevel"/> options.</param>
       /// <param name="host">A string that specifies the DNS or NetBIOS name of the specified <paramref name="host"/>.</param>
       /// <param name="share">A string that specifies the name of the Server Message Block (SMB) share.</param>

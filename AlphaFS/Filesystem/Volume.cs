@@ -392,7 +392,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region DeleteVolumeLabel
 
       /// <summary>Deletes the label of a file system volume.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="rootPathName">The root directory of a file system volume. This is the volume the function will remove the label.</param>
       [SecurityCritical]
       public static void DeleteVolumeLabel(string rootPathName)
@@ -431,8 +431,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   Returns an enumerable collection of <see cref="String"/> of all mounted folders (volume mount points) on the specified volume.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeGuid">A <see cref="string"/> containing the volume <see cref="Guid"/>.</param>
       /// <returns>An enumerable collection of <see cref="String"/> of all volume mount points on the specified volume.</returns>      
       [SecurityCritical]
@@ -502,8 +502,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   Returns an enumerable collection of <see cref="String"/> drive letters and mounted folder paths for the specified volume.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeGuid">A volume <see cref="Guid"/> path: \\?\Volume{xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx}\.</param>
       /// <returns>An enumerable collection of <see cref="String"/> containing the path names for the specified volume.</returns>      
       [SecurityCritical]
@@ -595,7 +595,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>
       ///   Get the unique volume name for the given path.
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumePathName">
       ///   A path string. Both absolute and relative file and directory names, for example "..", is acceptable in this path. If you specify a
       ///   relative file or directory name without a volume qualifier, GetUniqueVolumeNameForPath returns the Drive letter of the current
@@ -627,7 +627,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetVolumeDeviceName
 
       /// <summary>Retrieves the Win32 Device name from the Volume name.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeName">Name of the Volume.</param>
       /// <returns>
       ///   The Win32 Device name from the Volume name (for example: "\Device\HarddiskVolume2"), or <see langword="null"/> on error or if
@@ -728,7 +728,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Retrieves a volume <see cref="Guid"/> path for the volume that is associated with the specified volume mount point (drive letter,
       ///   volume GUID path, or mounted folder).
       /// </summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeMountPoint">
       ///   The path of a mounted folder (for example, "Y:\MountX\") or a drive letter (for example, "X:\").
       /// </param>
@@ -852,7 +852,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetVolumePathName
 
       /// <summary>Retrieves the volume mount point where the specified path is mounted.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="path">The path to the volume, for example: "C:\Windows".</param>
       /// <returns>
       ///   <para>Returns the nearest volume root path for a given directory.</para>
@@ -943,7 +943,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region SetCurrentVolumeLabel
 
       /// <summary>Sets the label of the file system volume that is the root of the current directory.</summary>
-      /// <exception cref="ArgumentNullException"><paramref name="volumeName"/> is a <see langword="null"/> reference.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeName">A name for the volume.</param>
       [SecurityCritical]
       public static void SetCurrentVolumeLabel(string volumeName)
@@ -992,8 +992,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region SetVolumeMountPoint
 
       /// <summary>Associates a volume with a Drive letter or a directory on another volume.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="ArgumentException"/>
       /// <param name="volumeMountPoint">
       ///   The user-mode path to be associated with the volume. This may be a Drive letter (for example, "X:\")
       ///   or a directory on another volume (for example, "Y:\MountX\").
@@ -1046,7 +1046,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region Unified Internals
 
       /// <summary>Unified method DefineDosDeviceInternal() to define, redefine, or delete MS-DOS device names.</summary>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="isDefine">
       ///   <see langword="true"/> defines a new MS-DOS device. <see langword="false"/> deletes a previously defined MS-DOS device.
       /// </param>
@@ -1106,7 +1106,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   It's not an error to attempt to unmount a volume from a volume mount point when there is no volume actually mounted at that volume
       ///   mount point.
       /// </remarks>
-      /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are null.</exception>
+      /// <exception cref="ArgumentNullException"/>
       /// <param name="volumeMountPoint">The Drive letter or mounted folder to be deleted. For example, X:\ or Y:\MountX\.</param>
       /// <param name="continueOnException">
       ///   <see langword="true"/> suppress any exception that might be thrown a result from a failure, such as unavailable resources.

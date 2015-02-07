@@ -31,10 +31,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region GetLongPath
 
       /// <summary>Makes an extended long path from the specified <paramref name="path"/> by prefixing <see cref="LongPathPrefix"/>.</summary>
-      /// <returns>Returns the <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>, the minimum required full path is: "C:\".</returns>
+      /// <returns>The <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>, the minimum required full path is: "C:\".</returns>
       /// <remarks>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</remarks>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path to the file or directory, this can also be an UNC path.</param>
       [SecurityCritical]
       public static string GetLongPath(string path)
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region IsLongPath
 
       /// <summary>[AlphaFS] Determines whether the specified path starts with a <see cref="LongPathPrefix"/> or <see cref="LongPathUncPrefix"/>.</summary>
-      /// <returns>Returns <see langword="true"/> if the specified path has a long path (UNC) prefix, <see langword="false"/> otherwise.</returns>
+      /// <returns><see langword="true"/> if the specified path has a long path (UNC) prefix, <see langword="false"/> otherwise.</returns>
       /// <param name="path">The path to the file or directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       [SecurityCritical]
@@ -125,10 +125,10 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internals Methods
 
       /// <summary>Makes an extended long path from the specified <paramref name="path"/> by prefixing <see cref="LongPathPrefix"/>.</summary>
-      /// <returns>Returns the <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>, the minimum required full path is: "C:\".</returns>
+      /// <returns>The <paramref name="path"/> prefixed with a <see cref="LongPathPrefix"/>, the minimum required full path is: "C:\".</returns>
       /// <remarks>This method does not verify that the resulting path and file name are valid, or that they see an existing file on the associated volume.</remarks>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path to the file or directory, this can also be an UNC path.</param>
       /// <param name="options">Options for controlling the operation.</param>
       [SecurityCritical]
@@ -226,7 +226,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   MSDN: String.TrimEnd Method notes to Callers: http://msdn.microsoft.com/en-us/library/system.string.trimend%28v=vs.110%29.aspx
       /// </remarks>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="path">The path.</param>
       /// <param name="options">Options for controlling the operation.</param>
       [SecurityCritical]
@@ -262,7 +262,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets the path as a long full path.</summary>
       /// <returns>The path as an extended length path.</returns>
-      /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or illegal values.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">Full pathname of the source path to convert.</param>
       /// <param name="pathFormat">The path format to use.</param>
