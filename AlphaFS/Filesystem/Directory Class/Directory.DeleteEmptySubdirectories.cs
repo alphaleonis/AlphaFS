@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove empty subdirectories from.</param>
       /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
       [SecurityCritical]
-      public static void DeleteEmptySubdirectories(KernelTransaction transaction, string path, bool recursive)
+      public static void DeleteEmptySubdirectoriesTransacted(KernelTransaction transaction, string path, bool recursive)
       {
          DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, false, true, PathFormat.RelativePath);
       }
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void DeleteEmptySubdirectories(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
+      public static void DeleteEmptySubdirectoriesTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
       {
          DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, false, true, pathFormat);
       }
@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><see langword="true"/> deletes empty subdirectories from this directory and its subdirectories.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       [SecurityCritical]
-      public static void DeleteEmptySubdirectories(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
+      public static void DeleteEmptySubdirectoriesTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
          DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, ignoreReadOnly, true, PathFormat.RelativePath);
       }
@@ -138,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of empty directories.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void DeleteEmptySubdirectories(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
+      public static void DeleteEmptySubdirectoriesTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
          DeleteEmptySubdirectoriesInternal(null, transaction, path, recursive, ignoreReadOnly, true, pathFormat);
       }

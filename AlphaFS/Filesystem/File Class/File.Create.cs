@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path)
+      public static FileStream CreateTransacted(KernelTransaction transaction, string path)
       {
          return CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, PathFormat.RelativePath);
       }
@@ -189,7 +189,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   to the file specified in <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize)
+      public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize)
       {
          return CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
       }
@@ -204,7 +204,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options">One of the <see cref="FileOptions"/> values that describes how to create or overwrite the file.</param>
       /// <returns>A new file with the specified buffer size.</returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options)
+      public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options)
       {
          return CreateFileStreamInternal(transaction, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
       }
@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
+      public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity)
       {
          return CreateFileStreamInternal(transaction, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, PathFormat.RelativePath);
       }
@@ -236,7 +236,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileStream CreateTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, NativeMethods.DefaultFileBufferSize, pathFormat);
       }
@@ -251,7 +251,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, PathFormat pathFormat)
+      public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, PathFormat pathFormat)
       {
          return CreateFileStreamInternal(transaction, path, ExtendedFileAttributes.None, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
       }
@@ -267,7 +267,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A new file with the specified buffer size.</returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, PathFormat pathFormat)
+      public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options, PathFormat pathFormat)
       {
          return CreateFileStreamInternal(transaction, path, (ExtendedFileAttributes)options, null, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
       }
@@ -286,7 +286,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A new file with the specified buffer size, file options, and file security.</returns>
       [SecurityCritical]
-      public static FileStream Create(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, PathFormat pathFormat)
+      public static FileStream CreateTransacted(KernelTransaction transaction, string path, int bufferSize, FileOptions options, FileSecurity fileSecurity, PathFormat pathFormat)
       {
          return CreateFileStreamInternal(transaction, path, (ExtendedFileAttributes)options, fileSecurity, FileMode.Create, FileAccess.ReadWrite, FileShare.None, bufferSize, pathFormat);
       }

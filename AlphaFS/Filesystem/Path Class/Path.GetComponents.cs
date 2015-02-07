@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetDirectoryNameWithoutRoot(string path)
       {
-         return GetDirectoryNameWithoutRoot(null, path);
+         return GetDirectoryNameWithoutRootTransacted(null, path);
       }
 
       /// <summary>[AlphaFS] Returns the directory information for the specified path string without the root information, for example: "C:\Windows\system32" returns: "Windows".</summary>
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      public static string GetDirectoryNameWithoutRoot(KernelTransaction transaction, string path)
+      public static string GetDirectoryNameWithoutRootTransacted(KernelTransaction transaction, string path)
       {
          if (path == null)
             return null;

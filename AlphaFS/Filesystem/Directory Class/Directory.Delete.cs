@@ -122,7 +122,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path)
+      public static void DeleteTransacted(KernelTransaction transaction, string path)
       {
          DeleteDirectoryInternal(null, transaction, path, false, false, true, false, PathFormat.RelativePath);
       }
@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void DeleteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          DeleteDirectoryInternal(null, transaction, path, false, false, true, false, pathFormat);
       }
@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The name of the directory to remove.</param>
       /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path, bool recursive)
+      public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive)
       {
          DeleteDirectoryInternal(null, transaction, path, recursive, false, !recursive, false, PathFormat.RelativePath);
       }
@@ -164,7 +164,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
+      public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, PathFormat pathFormat)
       {
          DeleteDirectoryInternal(null, transaction, path, recursive, false, !recursive, false, pathFormat);
       }
@@ -180,7 +180,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
+      public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly)
       {
          DeleteDirectoryInternal(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, PathFormat.RelativePath);
       }
@@ -195,7 +195,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides read only <see cref="FileAttributes"/> of files and directories.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
+      public static void DeleteTransacted(KernelTransaction transaction, string path, bool recursive, bool ignoreReadOnly, PathFormat pathFormat)
       {
          DeleteDirectoryInternal(null, transaction, path, recursive, ignoreReadOnly, !recursive, false, pathFormat);
       }

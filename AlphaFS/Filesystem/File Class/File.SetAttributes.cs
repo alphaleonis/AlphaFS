@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <param name="fileAttributes">A bitwise combination of the enumeration values.</param>      
       [SecurityCritical]
-      public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes)
+      public static void SetAttributesTransacted(KernelTransaction transaction, string path, FileAttributes fileAttributes)
       {
          SetAttributesInternal(false, transaction, path, fileAttributes, false, PathFormat.RelativePath);
       }
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="fileAttributes">A bitwise combination of the enumeration values.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SecurityCritical]
-      public static void SetAttributes(KernelTransaction transaction, string path, FileAttributes fileAttributes, PathFormat pathFormat)
+      public static void SetAttributesTransacted(KernelTransaction transaction, string path, FileAttributes fileAttributes, PathFormat pathFormat)
       {
          SetAttributesInternal(false, transaction, path, fileAttributes, false, pathFormat);
       }

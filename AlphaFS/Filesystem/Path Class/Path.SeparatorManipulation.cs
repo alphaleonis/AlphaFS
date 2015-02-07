@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      public static string GetSuffixedDirectoryName(KernelTransaction transaction, string path)
+      public static string GetSuffixedDirectoryNameTransacted(KernelTransaction transaction, string path)
       {
          return GetSuffixedDirectoryNameInternal(transaction, path);
       }
@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path.</param>
       [SecurityCritical]
-      public static string GetSuffixedDirectoryNameWithoutRoot(KernelTransaction transaction, string path)
+      public static string GetSuffixedDirectoryNameWithoutRootTransacted(KernelTransaction transaction, string path)
       {
          return GetSuffixedDirectoryNameWithoutRootInternal(transaction, path);
       }

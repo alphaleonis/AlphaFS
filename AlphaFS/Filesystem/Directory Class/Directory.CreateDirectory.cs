@@ -350,7 +350,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to create.</param>
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path)
       {
          return CreateDirectoryInternal(transaction, path, null, null, false, PathFormat.RelativePath);
       }
@@ -368,7 +368,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return CreateDirectoryInternal(transaction, path, null, null, false, pathFormat);
       }
@@ -388,7 +388,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, bool compress)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, bool compress)
       {
          return CreateDirectoryInternal(transaction, path, null, null, compress, PathFormat.RelativePath);
       }
@@ -407,7 +407,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, bool compress, PathFormat pathFormat)
       {
          return CreateDirectoryInternal(transaction, path, null, null, compress, pathFormat);
       }
@@ -427,7 +427,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, DirectorySecurity directorySecurity)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity)
       {
          return CreateDirectoryInternal(transaction, path, null, directorySecurity, false, PathFormat.RelativePath);
       }
@@ -446,7 +446,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, PathFormat pathFormat)
       {
          return CreateDirectoryInternal(transaction, path, null, directorySecurity, false, pathFormat);
       }
@@ -467,7 +467,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress)
       {
          return CreateDirectoryInternal(transaction, path, null, directorySecurity, compress, PathFormat.RelativePath);
       }
@@ -487,7 +487,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
          return CreateDirectoryInternal(transaction, path, null, directorySecurity, compress, pathFormat);
       }
@@ -507,7 +507,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="templatePath">The path of the directory to use as a template when creating the new directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath)
       {
          return CreateDirectoryInternal(transaction, path, templatePath, null, false, PathFormat.RelativePath);
       }
@@ -526,7 +526,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, PathFormat pathFormat)
       {
          return CreateDirectoryInternal(transaction, path, templatePath, null, false, pathFormat);
       }
@@ -547,7 +547,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, bool compress)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, bool compress)
       {
          return CreateDirectoryInternal(transaction, path, templatePath, null, compress, PathFormat.RelativePath);
       }
@@ -567,7 +567,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, bool compress, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, bool compress, PathFormat pathFormat)
       {
          return CreateDirectoryInternal(transaction, path, templatePath, null, compress, pathFormat);
       }
@@ -588,7 +588,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="directorySecurity">The access control to apply to the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity)
       {
          return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, false, PathFormat.RelativePath);
       }
@@ -608,7 +608,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, PathFormat pathFormat)
       {
          return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, false, pathFormat);
       }
@@ -630,7 +630,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="compress">When <see langword="true"/> compresses the directory.</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, bool compress)
       {
          return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, compress, PathFormat.RelativePath);
       }
@@ -651,7 +651,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
-      public static DirectoryInfo CreateDirectory(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
+      public static DirectoryInfo CreateDirectoryTransacted(KernelTransaction transaction, string path, string templatePath, DirectorySecurity directorySecurity, bool compress, PathFormat pathFormat)
       {
          return CreateDirectoryInternal(transaction, path, templatePath, directorySecurity, compress, pathFormat);
       }

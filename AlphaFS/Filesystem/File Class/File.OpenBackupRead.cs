@@ -56,7 +56,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
       [SecurityCritical]
-      public static FileStream OpenBackupRead(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileStream OpenBackupReadTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, pathFormat);
       }
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file path to open.</param>
       /// <returns>A <see cref="FileStream"/> on the specified path, having the read-only mode and sharing options.</returns>
       [SecurityCritical]
-      public static FileStream OpenBackupRead(KernelTransaction transaction, string path)
+      public static FileStream OpenBackupReadTransacted(KernelTransaction transaction, string path)
       {
          return OpenInternal(transaction, path, FileMode.Open, FileSystemRights.ReadData, FileShare.None, ExtendedFileAttributes.BackupSemantics | ExtendedFileAttributes.SequentialScan | ExtendedFileAttributes.ReadOnly, null, null, PathFormat.RelativePath);
       }

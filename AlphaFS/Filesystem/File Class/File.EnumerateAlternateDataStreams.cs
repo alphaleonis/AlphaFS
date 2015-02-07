@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file or directory to enumerate streams of.</param>
       /// <returns>The streams of type :$DATA in the specified file or directory.</returns>
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(KernelTransaction transaction, string path)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path)
       {
          return EnumerateAlternateDataStreamsInternal(transaction, path, PathFormat.RelativePath);
       }
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The streams of type :$DATA in the specified file or directory.</returns>
       [SecurityCritical]
-      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreams(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static IEnumerable<AlternateDataStreamInfo> EnumerateAlternateDataStreamsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return EnumerateAlternateDataStreamsInternal(transaction, path, pathFormat);
       }

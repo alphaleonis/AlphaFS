@@ -531,7 +531,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </param>
       /// <returns>A <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode)
       {
          return OpenInternal(transaction, path, mode, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
@@ -548,7 +548,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   An unshared <see cref="FileStream"/> that provides access to the specified file, with the specified mode and access.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access)
       {
          return OpenInternal(transaction, path, mode, access, FileShare.None, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
@@ -570,7 +570,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share)
       {
          return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal, null, null, PathFormat.RelativePath);
       }
@@ -585,7 +585,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="FileStream"/> opened in the specified mode and path, with read/write access and not shared.</returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, mode == FileMode.Append ? FileAccess.Write : FileAccess.ReadWrite, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
@@ -603,7 +603,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   An unshared <see cref="FileStream"/> that provides access to the specified file, with the specified mode and access.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, access, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
@@ -617,7 +617,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="FileStream"/> on the specified path, having the specified mode with read, write, or read/write access and the specified sharing option.</returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal, null, null, pathFormat);
       }
@@ -641,7 +641,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, access, share, extendedAttributes, null, null, pathFormat);
       }
@@ -666,7 +666,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize)
       {
          return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal, bufferSize, null, PathFormat.RelativePath);
       }
@@ -695,7 +695,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync)
       {
          return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : 0), bufferSize, null, PathFormat.RelativePath);
       }
@@ -718,7 +718,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, FileOptions options)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, FileOptions options)
       {
          return OpenInternal(transaction, path, mode, access, share, (ExtendedFileAttributes)options, bufferSize, null, PathFormat.RelativePath);
       }
@@ -741,7 +741,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes)
       {
          return OpenInternal(transaction, path, mode, access, share, extendedAttributes, bufferSize, null, PathFormat.RelativePath);
       }
@@ -764,7 +764,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options)
       {
          return OpenInternal(transaction, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, null, PathFormat.RelativePath);
       }
@@ -787,7 +787,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes)
       {
          return OpenInternal(transaction, path, mode, rights, share, extendedAttributes, bufferSize, null, PathFormat.RelativePath);
       }
@@ -811,7 +811,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, FileSecurity security)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, FileSecurity security)
       {
          return OpenInternal(transaction, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, security, PathFormat.RelativePath);
       }
@@ -835,7 +835,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, FileSecurity security)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, FileSecurity security)
       {
          return OpenInternal(transaction, path, mode, rights, share, extendedAttributes, bufferSize, security, PathFormat.RelativePath);
       }
@@ -858,7 +858,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal, bufferSize, null, pathFormat);
       }
@@ -888,7 +888,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : 0), bufferSize, null, pathFormat);
       }
@@ -912,7 +912,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, FileOptions options, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, FileOptions options, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, access, share, (ExtendedFileAttributes)options, bufferSize, null, pathFormat);
       }
@@ -936,7 +936,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, access, share, extendedAttributes, bufferSize, null, pathFormat);
       }
@@ -960,7 +960,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, null, pathFormat);
       }
@@ -984,7 +984,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, rights, share, extendedAttributes, bufferSize, null, pathFormat);
       }
@@ -1009,7 +1009,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, FileSecurity security, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, FileOptions options, FileSecurity security, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, rights, share, (ExtendedFileAttributes)options, bufferSize, security, pathFormat);
       }
@@ -1034,7 +1034,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   access and the specified sharing option.
       /// </returns>
       [SecurityCritical]
-      public static FileStream Open(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, FileSecurity security, PathFormat pathFormat)
+      public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, int bufferSize, ExtendedFileAttributes extendedAttributes, FileSecurity security, PathFormat pathFormat)
       {
          return OpenInternal(transaction, path, mode, rights, share, extendedAttributes, bufferSize, security, pathFormat);
       }
@@ -1065,7 +1065,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>A <see cref="FileStream"/> instance on the specified path, having the specified mode with</para>
       ///   <para>read, write, or read/write access and the specified sharing option.</para>
       /// </returns>
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, ExtendedFileAttributes attributes, int? bufferSize, FileSecurity security, PathFormat pathFormat)
       {
          FileSystemRights rights = access == FileAccess.Read ? FileSystemRights.Read : (access == FileAccess.Write ? FileSystemRights.Write : FileSystemRights.Read | FileSystemRights.Write);
@@ -1096,7 +1096,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>A <see cref="FileStream"/> instance on the specified path, having the specified mode with</para>
       ///   <para>read, write, or read/write access and the specified sharing option.</para>
       /// </returns>
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
+      [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       internal static FileStream OpenInternal(KernelTransaction transaction, string path, FileMode mode, FileSystemRights rights, FileShare share, ExtendedFileAttributes attributes, int? bufferSize, FileSecurity security, PathFormat pathFormat)
       {
          FileAccess access = ((rights & FileSystemRights.ReadData) != 0 ? FileAccess.Read : 0) | (((rights & FileSystemRights.WriteData) != 0 || (rights & FileSystemRights.AppendData) != 0) ? FileAccess.Write : 0);

@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       [SecurityCritical]
-      public static DateTime GetCreationTime(KernelTransaction transaction, string path)
+      public static DateTime GetCreationTimeTransacted(KernelTransaction transaction, string path)
       {
          return File.GetCreationTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetCreationTime(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetCreationTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return File.GetCreationTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.</param>
       [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path)
+      public static DateTime GetCreationTimeUtcTransacted(KernelTransaction transaction, string path)
       {
          return File.GetCreationTimeInternal(transaction, path, true, PathFormat.RelativePath);
       }
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to obtain creation date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetCreationTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return File.GetCreationTimeInternal(transaction, path, true, pathFormat);
       }

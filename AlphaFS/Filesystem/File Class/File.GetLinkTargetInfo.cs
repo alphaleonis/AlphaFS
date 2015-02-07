@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   or mount point pointed to by <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      public static LinkTargetInfo GetLinkTargetInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return GetLinkTargetInfoInternal(transaction, path, pathFormat);
       }
@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   or mount point pointed to by <paramref name="path"/>.
       /// </returns>
       [SecurityCritical]
-      public static LinkTargetInfo GetLinkTargetInfo(KernelTransaction transaction, string path)
+      public static LinkTargetInfo GetLinkTargetInfoTransacted(KernelTransaction transaction, string path)
       {
          return GetLinkTargetInfoInternal(transaction, path, PathFormat.RelativePath);
       }

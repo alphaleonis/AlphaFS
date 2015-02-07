@@ -67,7 +67,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
+      public static void CreateHardlinkTransacted(KernelTransaction transaction, string fileName, string existingFileName, PathFormat pathFormat)
       {
          CreateHardlinkInternal(transaction, fileName, existingFileName, pathFormat);
       }
@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]
       [SecurityCritical]
-      public static void CreateHardlink(KernelTransaction transaction, string fileName, string existingFileName)
+      public static void CreateHardlinkTransacted(KernelTransaction transaction, string fileName, string existingFileName)
       {
          CreateHardlinkInternal(transaction, fileName, existingFileName, PathFormat.RelativePath);
       }

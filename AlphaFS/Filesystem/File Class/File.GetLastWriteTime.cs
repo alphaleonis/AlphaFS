@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   expressed in local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path)
+      public static DateTime GetLastWriteTimeTransacted(KernelTransaction transaction, string path)
       {
          return GetLastWriteTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   expressed in local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetLastWriteTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return GetLastWriteTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
@@ -131,7 +131,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   expressed in UTC time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path)
+      public static DateTime GetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path)
       {
          return GetLastWriteTimeInternal(transaction, path, true, PathFormat.RelativePath);
       }
@@ -147,7 +147,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   expressed in UTC time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return GetLastWriteTimeInternal(transaction, path, true, pathFormat);
       }

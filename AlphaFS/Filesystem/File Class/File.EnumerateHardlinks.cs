@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static IEnumerable<string> EnumerateHardlinksTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return EnumerateHardlinksInternal(transaction, path, pathFormat);
       }
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>An enumerable collection of <see cref="string"/> of all the hard links to the specified <paramref name="path"/></returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlinks")]
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateHardlinks(KernelTransaction transaction, string path)
+      public static IEnumerable<string> EnumerateHardlinksTransacted(KernelTransaction transaction, string path)
       {
          return EnumerateHardlinksInternal(transaction, path, PathFormat.RelativePath);
       }

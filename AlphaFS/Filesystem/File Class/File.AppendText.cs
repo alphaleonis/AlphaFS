@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path)
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path)
       {
          return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
@@ -118,7 +118,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return AppendTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
          return AppendTextInternal(transaction, path, encoding, pathFormat);
       }
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   A stream writer that appends NativeMethods.DefaultFileEncoding encoded text to the specified file or to a new file.
       /// </returns>
       [SecurityCritical]
-      public static StreamWriter AppendText(KernelTransaction transaction, string path, Encoding encoding)
+      public static StreamWriter AppendTextTransacted(KernelTransaction transaction, string path, Encoding encoding)
       {
          return AppendTextInternal(transaction, path, encoding, PathFormat.RelativePath);
       }

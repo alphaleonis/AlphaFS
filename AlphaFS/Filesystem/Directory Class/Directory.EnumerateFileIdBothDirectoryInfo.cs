@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       [SecurityCritical]
-      public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path)
+      public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoTransacted(KernelTransaction transaction, string path)
       {
          return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, FileShare.ReadWrite, false, PathFormat.RelativePath);
       }
@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, FileShare.ReadWrite, false, pathFormat);
       }
@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to a directory from which to retrieve information.</param>
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       [SecurityCritical]
-      public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path, FileShare shareMode)
+      public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoTransacted(KernelTransaction transaction, string path, FileShare shareMode)
       {
          return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, shareMode, false, PathFormat.RelativePath);
       }
@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="shareMode">The <see cref="FileShare"/> mode with which to open a handle to the directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfo(KernelTransaction transaction, string path, FileShare shareMode, PathFormat pathFormat)
+      public static IEnumerable<FileIdBothDirectoryInfo> EnumerateFileIdBothDirectoryInfoTransacted(KernelTransaction transaction, string path, FileShare shareMode, PathFormat pathFormat)
       {
          return EnumerateFileIdBothDirectoryInfoInternal(transaction, null, path, shareMode, false, pathFormat);
       }

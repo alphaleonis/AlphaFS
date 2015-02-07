@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourceFileName">The file to copy.</param>
       /// <param name="destinationFileName">The name of the destination file. This cannot be a directory or an existing file.</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName)
+      public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, PathFormat pathFormat)
+      public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, PathFormat pathFormat)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
@@ -198,7 +198,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="overwrite"><see langword="true"/> if the destination file should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, bool overwrite)
+      public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, bool overwrite)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, PathFormat.RelativePath);
       }
@@ -222,7 +222,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="overwrite"><see langword="true"/> if the destination file should ignoring the read-only and hidden attributes and overwrite; otherwise, <see langword="false"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, bool overwrite, PathFormat pathFormat)
+      public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, bool overwrite, PathFormat pathFormat)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
@@ -478,7 +478,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationFileName">The name of the destination file. This cannot be a directory.</param>
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions)
+      public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, PathFormat.RelativePath);
       }
@@ -503,7 +503,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, PathFormat pathFormat)
+      public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, PathFormat pathFormat)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, null, null, pathFormat);
       }
@@ -530,7 +530,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="copyOptions"><see cref="CopyOptions"/> that specify how the file is to be copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
+      public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, PathFormat.RelativePath);
       }
@@ -556,7 +556,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="preserveDates"><see langword="true"/> if original Timestamps must be preserved, <see langword="false"/> otherwise.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
+      public static void CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, PathFormat pathFormat)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, null, null, pathFormat);
       }
@@ -587,7 +587,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
@@ -617,7 +617,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
@@ -649,7 +649,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been copied. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, PathFormat.RelativePath);
       }
@@ -680,7 +680,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
-      public static CopyMoveResult Copy(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      public static CopyMoveResult CopyTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, CopyOptions copyOptions, bool preserveDates, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, preserveDates, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
@@ -769,7 +769,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourceFileName">The name of the file to move.</param>
       /// <param name="destinationFileName">The new path for the file.</param>
       [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName)
+      public static void MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, PathFormat.RelativePath);
       }
@@ -794,7 +794,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationFileName">The new path for the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, PathFormat pathFormat)
+      public static void MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, PathFormat pathFormat)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, MoveOptions.CopyAllowed, null, null, pathFormat);
       }
@@ -939,7 +939,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationFileName">The new path for the file.</param>
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions)
+      public static void MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, PathFormat.RelativePath);
       }
@@ -965,7 +965,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="moveOptions"><see cref="MoveOptions"/> that specify how the file is to be moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, PathFormat pathFormat)
+      public static void MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, PathFormat pathFormat)
       {
          CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, null, null, pathFormat);
       }
@@ -995,7 +995,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="progressHandler">A callback function that is called each time another portion of the file has been moved. This parameter can be <see langword="null"/>.</param>
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       [SecurityCritical]
-      public static CopyMoveResult Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
+      public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, PathFormat.RelativePath);
       }
@@ -1024,7 +1024,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="userProgressData">The argument to be passed to the callback function. This parameter can be <see langword="null"/>.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static CopyMoveResult Move(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
+      public static CopyMoveResult MoveTransacted(KernelTransaction transaction, string sourceFileName, string destinationFileName, MoveOptions moveOptions, CopyMoveProgressRoutine progressHandler, object userProgressData, PathFormat pathFormat)
       {
          return CopyMoveInternal(false, transaction, sourceFileName, destinationFileName, false, null, moveOptions, progressHandler, userProgressData, pathFormat);
       }

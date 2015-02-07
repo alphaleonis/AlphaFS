@@ -51,9 +51,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to be opened for writing.</param>
       /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
       [SecurityCritical]
-      public static FileStream OpenWrite(KernelTransaction transaction, string path)
+      public static FileStream OpenWriteTransacted(KernelTransaction transaction, string path)
       {
-         return Open(transaction, path, FileMode.OpenOrCreate, FileAccess.Write);
+         return OpenTransacted(transaction, path, FileMode.OpenOrCreate, FileAccess.Write);
       }
 
       /// <summary>Opens an existing file or creates a new file for writing.</summary>
@@ -62,9 +62,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>An unshared <see cref="FileStream"/> object on the specified path with <see cref="FileAccess.Write"/> access.</returns>
       [SecurityCritical]
-      public static FileStream OpenWrite(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileStream OpenWriteTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return Open(transaction, path, FileMode.OpenOrCreate, FileAccess.Write, pathFormat);
+         return OpenTransacted(transaction, path, FileMode.OpenOrCreate, FileAccess.Write, pathFormat);
       }
    }
 }

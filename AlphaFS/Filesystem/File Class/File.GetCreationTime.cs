@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTime(KernelTransaction transaction, string path)
+      public static DateTime GetCreationTimeTransacted(KernelTransaction transaction, string path)
       {
          return GetCreationTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   local time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTime(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetCreationTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return GetCreationTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
@@ -129,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path)
+      public static DateTime GetCreationTimeUtcTransacted(KernelTransaction transaction, string path)
       {
          return GetCreationTimeInternal(transaction, path, true, PathFormat.RelativePath);
       }
@@ -145,7 +145,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   time.
       /// </returns>
       [SecurityCritical]
-      public static DateTime GetCreationTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetCreationTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return GetCreationTimeInternal(transaction, path, true, pathFormat);
       }

@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to open for reading.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(KernelTransaction transaction, string path)
+      public static string[] ReadAllLinesTransacted(KernelTransaction transaction, string path)
       {
          return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath).ToArray();
       }
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(KernelTransaction transaction, string path, Encoding encoding)
+      public static string[] ReadAllLinesTransacted(KernelTransaction transaction, string path, Encoding encoding)
       {
          return ReadAllLinesInternal(transaction, path, encoding, PathFormat.RelativePath).ToArray();
       }
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static string[] ReadAllLinesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return ReadAllLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat).ToArray();
       }
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string[] ReadAllLines(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      public static string[] ReadAllLinesTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
          return ReadAllLinesInternal(transaction, path, encoding, pathFormat).ToArray();
       }

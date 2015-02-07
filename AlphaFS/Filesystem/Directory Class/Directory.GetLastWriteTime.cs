@@ -79,7 +79,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       [SecurityCritical]
-      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path)
+      public static DateTime GetLastWriteTimeTransacted(KernelTransaction transaction, string path)
       {
          return File.GetLastWriteTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetLastWriteTime(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetLastWriteTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return File.GetLastWriteTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path)
+      public static DateTime GetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path)
       {
          return File.GetLastWriteTimeInternal(transaction, path, true, PathFormat.RelativePath);
       }
@@ -113,7 +113,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to obtain write date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetLastWriteTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetLastWriteTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return File.GetLastWriteTimeInternal(transaction, path, true, pathFormat);
       }

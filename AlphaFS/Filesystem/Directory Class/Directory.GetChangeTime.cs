@@ -94,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       [SecurityCritical]
-      public static DateTime GetChangeTime(KernelTransaction transaction, string path)
+      public static DateTime GetChangeTimeTransacted(KernelTransaction transaction, string path)
       {
          return File.GetChangeTimeInternal(true, transaction, null, path, false, PathFormat.RelativePath);
       }
@@ -105,7 +105,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to obtain creation date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetChangeTime(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetChangeTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return File.GetChangeTimeInternal(true, transaction, null, path, false, pathFormat);
       }
@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       [SecurityCritical]
-      public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path)
+      public static DateTime GetChangeTimeUtcTransacted(KernelTransaction transaction, string path)
       {
          return File.GetChangeTimeInternal(true, transaction, null, path, true, PathFormat.RelativePath);
       }
@@ -128,7 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file for which to obtain change date and time information, in Coordinated Universal Time (UTC) format.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetChangeTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetChangeTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return File.GetChangeTimeInternal(true, transaction, null, path, true, pathFormat);
       }

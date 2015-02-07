@@ -55,7 +55,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
       [SecurityCritical]
-      public static FileAttributes GetAttributes(KernelTransaction transaction, string path)
+      public static FileAttributes GetAttributesTransacted(KernelTransaction transaction, string path)
       {
          return GetAttributesExInternal<FileAttributes>(transaction, path, PathFormat.RelativePath);
       }
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The <see cref="FileAttributes"/> of the file on the path.</returns>
       [SecurityCritical]
-      public static FileAttributes GetAttributes(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static FileAttributes GetAttributesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return GetAttributesExInternal<FileAttributes>(transaction, path, pathFormat);
       }

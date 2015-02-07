@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path)
+      public static void CompressTransacted(KernelTransaction transaction, string path)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, PathFormat.RelativePath);
       }
@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void CompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, true, pathFormat);
       }
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
+      public static void CompressTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, options, true, PathFormat.RelativePath);
       }
@@ -108,7 +108,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Compress(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      public static void CompressTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, options, true, pathFormat);
       }
@@ -166,7 +166,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path)
+      public static void DecompressTransacted(KernelTransaction transaction, string path)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, PathFormat.RelativePath);
       }
@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void DecompressTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, false, pathFormat);
       }
@@ -189,7 +189,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
+      public static void DecompressTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, options, false, PathFormat.RelativePath);
       }
@@ -200,7 +200,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void Decompress(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      public static void DecompressTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
          CompressDecompressInternal(transaction, path, Path.WildcardStarMatchAll, options, false, pathFormat);
       }
@@ -237,7 +237,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory to decompress.</param>
       [SecurityCritical]
-      public static void DisableCompression(KernelTransaction transaction, string path)
+      public static void DisableCompressionTransacted(KernelTransaction transaction, string path)
       {
          Device.ToggleCompressionInternal(true, transaction, path, false, PathFormat.RelativePath);
       }
@@ -248,7 +248,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <param name="path">A path to a directory to decompress.</param>
       [SecurityCritical]
-      public static void DisableCompression(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void DisableCompressionTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          Device.ToggleCompressionInternal(true, transaction, path, false, pathFormat);
       }
@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path to a directory to compress.</param>
       [SecurityCritical]
-      public static void EnableCompression(KernelTransaction transaction, string path)
+      public static void EnableCompressionTransacted(KernelTransaction transaction, string path)
       {
          Device.ToggleCompressionInternal(true, transaction, path, true, PathFormat.RelativePath);
       }
@@ -294,7 +294,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">A path to a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void EnableCompression(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static void EnableCompressionTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          Device.ToggleCompressionInternal(true, transaction, path, true, pathFormat);
       }

@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">An existing path to a folder or file.</param>
       /// <returns>The regular full path.</returns>
       [SecurityCritical]
-      public static string GetLongFrom83ShortPath(KernelTransaction transaction, string path)
+      public static string GetLongFrom83ShortPathTransacted(KernelTransaction transaction, string path)
       {
          return GetLongShort83PathInternal(transaction, path, false);
       }
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">An existing path to a folder or file.</param>
       [SecurityCritical]
-      public static string GetShort83Path(KernelTransaction transaction, string path)
+      public static string GetShort83PathTransacted(KernelTransaction transaction, string path)
       {
          return GetLongShort83PathInternal(transaction, path, true);
       }

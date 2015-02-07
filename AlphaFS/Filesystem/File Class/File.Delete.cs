@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   The name of the file to be deleted. Wildcard characters are not supported.
       /// </param>      
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path)
+      public static void DeleteTransacted(KernelTransaction transaction, string path)
       {
          DeleteFileInternal(transaction, path, false, PathFormat.RelativePath);
       }
@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
+      public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly, PathFormat pathFormat)
       {
          DeleteFileInternal(transaction, path, ignoreReadOnly, pathFormat);
       }
@@ -104,7 +104,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="ignoreReadOnly"><see langword="true"/> overrides the read only <see cref="FileAttributes"/> of the file.</param>
       /// <remarks>If the file to be deleted does not exist, no exception is thrown.</remarks>      
       [SecurityCritical]
-      public static void Delete(KernelTransaction transaction, string path, bool ignoreReadOnly)
+      public static void DeleteTransacted(KernelTransaction transaction, string path, bool ignoreReadOnly)
       {
          DeleteFileInternal(transaction, path, ignoreReadOnly, PathFormat.RelativePath);
       }

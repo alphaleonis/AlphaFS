@@ -70,7 +70,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(KernelTransaction transaction, string path)
+      public static StreamWriter CreateTextTransacted(KernelTransaction transaction, string path)
       {
          return CreateTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
@@ -83,7 +83,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A StreamWriter that writes to the specified file using UTF-8 encoding.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
       [SecurityCritical]
-      public static StreamWriter CreateText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      public static StreamWriter CreateTextTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
          return CreateTextInternal(transaction, path, encoding, pathFormat);
       }

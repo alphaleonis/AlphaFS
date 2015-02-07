@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to test.</param>
       [SecurityCritical]
-      public static bool Exists(KernelTransaction transaction, string path)
+      public static bool ExistsTransacted(KernelTransaction transaction, string path)
       {
          return File.ExistsInternal(true, transaction, path, PathFormat.RelativePath);
       }
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to test.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static bool Exists(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static bool ExistsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return File.ExistsInternal(true, transaction, path, pathFormat);
       }

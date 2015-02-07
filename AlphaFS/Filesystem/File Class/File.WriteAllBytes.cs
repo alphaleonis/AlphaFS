@@ -69,7 +69,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="bytes">The bytes to write to the file.</param>
       [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "bytes")]
       [SecurityCritical]
-      public static void WriteAllBytes(KernelTransaction transaction, string path, byte[] bytes)
+      public static void WriteAllBytesTransacted(KernelTransaction transaction, string path, byte[] bytes)
       {
          WriteAllBytesInternal(transaction, path, bytes, PathFormat.RelativePath);
       }
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", MessageId = "bytes")]
       [SecurityCritical]
-      public static void WriteAllBytes(KernelTransaction transaction, string path, byte[] bytes, PathFormat pathFormat)
+      public static void WriteAllBytesTransacted(KernelTransaction transaction, string path, byte[] bytes, PathFormat pathFormat)
       {
          WriteAllBytesInternal(transaction, path, bytes, pathFormat);
       }

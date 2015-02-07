@@ -65,7 +65,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
-      public static long GetSize(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static long GetSizeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return GetSizeInternal(transaction, null, path, pathFormat);
       }
@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path to the file.</param>
       /// <returns>The number of bytes of disk storage used to store the specified file.</returns>
       [SecurityCritical]
-      public static long GetSize(KernelTransaction transaction, string path)
+      public static long GetSizeTransacted(KernelTransaction transaction, string path)
       {
          return GetSizeInternal(transaction, null, path, PathFormat.RelativePath);
       }

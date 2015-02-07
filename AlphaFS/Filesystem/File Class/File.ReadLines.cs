@@ -80,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to read.</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path)
+      public static IEnumerable<string> ReadLinesTransacted(KernelTransaction transaction, string path)
       {
          return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The encoding that is applied to the contents of the file.</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding)
+      public static IEnumerable<string> ReadLinesTransacted(KernelTransaction transaction, string path, Encoding encoding)
       {
          return ReadLinesInternal(transaction, path, encoding, PathFormat.RelativePath);
       }
@@ -102,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static IEnumerable<string> ReadLinesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return ReadLinesInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
@@ -114,7 +114,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All the lines of the file, or the lines that are the result of a query.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> ReadLines(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      public static IEnumerable<string> ReadLinesTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
          return ReadLinesInternal(transaction, path, encoding, pathFormat);
       }

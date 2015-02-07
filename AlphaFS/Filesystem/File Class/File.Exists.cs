@@ -116,7 +116,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="false"/></para>
       /// </returns>
       [SecurityCritical]
-      public static bool Exists(KernelTransaction transaction, string path)
+      public static bool ExistsTransacted(KernelTransaction transaction, string path)
       {
          return ExistsInternal(false, transaction, path, PathFormat.RelativePath);
       }
@@ -150,7 +150,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <see langword="false"/></para>
       /// </returns>
       [SecurityCritical]
-      public static bool Exists(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static bool ExistsTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return ExistsInternal(false, transaction, path, pathFormat);
       }

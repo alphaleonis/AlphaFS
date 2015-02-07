@@ -77,7 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       [SecurityCritical]
-      public static DateTime GetLastAccessTime(KernelTransaction transaction, string path)
+      public static DateTime GetLastAccessTimeTransacted(KernelTransaction transaction, string path)
       {
          return File.GetLastAccessTimeInternal(transaction, path, false, PathFormat.RelativePath).ToLocalTime();
       }
@@ -88,7 +88,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetLastAccessTime(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetLastAccessTimeTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return File.GetLastAccessTimeInternal(transaction, path, false, pathFormat).ToLocalTime();
       }
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       [SecurityCritical]
-      public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path)
+      public static DateTime GetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path)
       {
          return File.GetLastAccessTimeInternal(transaction, path, true, PathFormat.RelativePath);
       }
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The directory for which to obtain access date and time information.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DateTime GetLastAccessTimeUtc(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DateTime GetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return File.GetLastAccessTimeInternal(transaction, path, true, pathFormat);
       }

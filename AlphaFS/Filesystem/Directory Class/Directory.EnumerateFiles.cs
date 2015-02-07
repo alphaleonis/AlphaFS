@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path)
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path)
       {
          return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.RelativePath);
       }
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern)
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern)
       {
          return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.RelativePath);
       }
@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   should include only the current directory or should include all subdirectories.
       /// </param>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
+      public static IEnumerable<string> EnumerateFilesTransacted(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
          var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 

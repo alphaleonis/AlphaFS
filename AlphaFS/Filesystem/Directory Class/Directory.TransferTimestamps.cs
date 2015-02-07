@@ -54,7 +54,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="sourcePath">The source directory to get the date and time stamps from.</param>
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
       [SecurityCritical]
-      public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath)
+      public static void TransferTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath)
       {
          File.TransferTimestampsInternal(true, transaction, sourcePath, destinationPath, PathFormat.RelativePath);
       }
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The destination directory to set the date and time stamps.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void TransferTimestamps(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
+      public static void TransferTimestampsTransacted(KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
          File.TransferTimestampsInternal(true, transaction, sourcePath, destinationPath, pathFormat);
       }

@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to open for reading.</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      public static byte[] ReadAllBytes(KernelTransaction transaction, string path)
+      public static byte[] ReadAllBytesTransacted(KernelTransaction transaction, string path)
       {
          return ReadAllBytesInternal(transaction, path, PathFormat.RelativePath);
       }
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A byte array containing the contents of the file.</returns>
       [SecurityCritical]
-      public static byte[] ReadAllBytes(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static byte[] ReadAllBytesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return ReadAllBytesInternal(transaction, path, pathFormat);
       }
@@ -93,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          byte[] buffer;
 
-         using (FileStream fs = OpenRead(transaction, path, pathFormat))
+         using (FileStream fs = OpenReadTransacted(transaction, path, pathFormat))
          {
             int offset = 0;
             long length = fs.Length;

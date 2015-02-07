@@ -79,9 +79,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to be opened for reading.</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path)
+      public static StreamReader OpenTextTransacted(KernelTransaction transaction, string path)
       {
-         return new StreamReader(OpenRead(transaction, path), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenReadTransacted(transaction, path), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>Opens an existing NativeMethods.DefaultFileEncoding encoded text file for reading.</summary>
@@ -90,9 +90,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static StreamReader OpenTextTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return new StreamReader(OpenRead(transaction, path, pathFormat), NativeMethods.DefaultFileEncoding);
+         return new StreamReader(OpenReadTransacted(transaction, path, pathFormat), NativeMethods.DefaultFileEncoding);
       }
 
       /// <summary>Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
@@ -102,9 +102,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      public static StreamReader OpenTextTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
-         return new StreamReader(OpenRead(transaction, path, pathFormat), encoding);
+         return new StreamReader(OpenReadTransacted(transaction, path, pathFormat), encoding);
       }
 
       /// <summary>Opens an existing <see cref="Encoding"/> encoded text file for reading.</summary>
@@ -113,9 +113,9 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       /// <returns>A <see cref="StreamReader"/> on the specified path.</returns>
       [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-      public static StreamReader OpenText(KernelTransaction transaction, string path, Encoding encoding)
+      public static StreamReader OpenTextTransacted(KernelTransaction transaction, string path, Encoding encoding)
       {
-         return new StreamReader(OpenRead(transaction, path), encoding);
+         return new StreamReader(OpenReadTransacted(transaction, path), encoding);
       }
    }
 }

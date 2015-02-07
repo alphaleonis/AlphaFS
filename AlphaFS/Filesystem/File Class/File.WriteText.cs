@@ -169,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to append the lines to. The file is created if it doesn't already exist.</param>
       /// <param name="contents">The lines to append to the file.</param>
       [SecurityCritical]
-      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents)
+      public static void AppendAllLinesTransacted(KernelTransaction transaction, string path, IEnumerable<string> contents)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, NativeMethods.DefaultFileEncoding, true, false, PathFormat.RelativePath);
       }
@@ -196,7 +196,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       [SecurityCritical]
-      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding)
+      public static void AppendAllLinesTransacted(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, true, false, PathFormat.RelativePath);
       }
@@ -225,7 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The lines to append to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, PathFormat pathFormat)
+      public static void AppendAllLinesTransacted(KernelTransaction transaction, string path, IEnumerable<string> contents, PathFormat pathFormat)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, NativeMethods.DefaultFileEncoding, true, false, pathFormat);
       }
@@ -253,7 +253,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, PathFormat pathFormat)
+      public static void AppendAllLinesTransacted(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, PathFormat pathFormat)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, true, false, pathFormat);
       }
@@ -367,7 +367,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to append the specified string to.</param>
       /// <param name="contents">The string to append to the file.</param>
       [SecurityCritical]
-      public static void AppendAllText(KernelTransaction transaction, string path, string contents)
+      public static void AppendAllTextTransacted(KernelTransaction transaction, string path, string contents)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, PathFormat.RelativePath);
       }
@@ -388,7 +388,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       [SecurityCritical]
-      public static void AppendAllText(KernelTransaction transaction, string path, string contents, Encoding encoding)
+      public static void AppendAllTextTransacted(KernelTransaction transaction, string path, string contents, Encoding encoding)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, true, false, PathFormat.RelativePath);
       }
@@ -411,7 +411,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The string to append to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllText(KernelTransaction transaction, string path, string contents, PathFormat pathFormat)
+      public static void AppendAllTextTransacted(KernelTransaction transaction, string path, string contents, PathFormat pathFormat)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, NativeMethods.DefaultFileEncoding, true, false, pathFormat);
       }
@@ -433,7 +433,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void AppendAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, PathFormat pathFormat)
+      public static void AppendAllTextTransacted(KernelTransaction transaction, string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, true, false, pathFormat);
       }
@@ -620,7 +620,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The lines to write to the file.</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents)
+      public static void WriteAllLinesTransacted(KernelTransaction transaction, string path, IEnumerable<string> contents)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.RelativePath);
       }
@@ -641,7 +641,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string array to write to the file.</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents)
+      public static void WriteAllLinesTransacted(KernelTransaction transaction, string path, string[] contents)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, PathFormat.RelativePath);
       }
@@ -662,7 +662,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding)
+      public static void WriteAllLinesTransacted(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, PathFormat.RelativePath);
       }
@@ -683,7 +683,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, Encoding encoding)
+      public static void WriteAllLinesTransacted(KernelTransaction transaction, string path, string[] contents, Encoding encoding)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, PathFormat.RelativePath);
       }
@@ -707,7 +707,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The lines to write to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, PathFormat pathFormat)
+      public static void WriteAllLinesTransacted(KernelTransaction transaction, string path, IEnumerable<string> contents, PathFormat pathFormat)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
@@ -728,7 +728,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The string array to write to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, PathFormat pathFormat)
+      public static void WriteAllLinesTransacted(KernelTransaction transaction, string path, string[] contents, PathFormat pathFormat)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, new UTF8Encoding(false, true), false, true, pathFormat);
       }
@@ -750,7 +750,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, PathFormat pathFormat)
+      public static void WriteAllLinesTransacted(KernelTransaction transaction, string path, IEnumerable<string> contents, Encoding encoding, PathFormat pathFormat)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, pathFormat);
       }
@@ -772,7 +772,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The character <see cref="Encoding"/> to use.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllLines(KernelTransaction transaction, string path, string[] contents, Encoding encoding, PathFormat pathFormat)
+      public static void WriteAllLinesTransacted(KernelTransaction transaction, string path, string[] contents, Encoding encoding, PathFormat pathFormat)
       {
          WriteAppendAllLinesInternal(transaction, path, contents, encoding, false, true, pathFormat);
       }
@@ -879,7 +879,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to write to.</param>
       /// <param name="contents">The string to write to the file.</param>
       [SecurityCritical]
-      public static void WriteAllText(KernelTransaction transaction, string path, string contents)
+      public static void WriteAllTextTransacted(KernelTransaction transaction, string path, string contents)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, PathFormat.RelativePath);
       }
@@ -900,7 +900,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The string to write to the file.</param>
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       [SecurityCritical]
-      public static void WriteAllText(KernelTransaction transaction, string path, string contents, Encoding encoding)
+      public static void WriteAllTextTransacted(KernelTransaction transaction, string path, string contents, Encoding encoding)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, PathFormat.RelativePath);
       }
@@ -924,7 +924,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="contents">The string to write to the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllText(KernelTransaction transaction, string path, string contents, PathFormat pathFormat)
+      public static void WriteAllTextTransacted(KernelTransaction transaction, string path, string contents, PathFormat pathFormat)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, new UTF8Encoding(false, true), false, false, pathFormat);
       }
@@ -946,7 +946,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static void WriteAllText(KernelTransaction transaction, string path, string contents, Encoding encoding, PathFormat pathFormat)
+      public static void WriteAllTextTransacted(KernelTransaction transaction, string path, string contents, Encoding encoding, PathFormat pathFormat)
       {
          WriteAppendAllLinesInternal(transaction, path, new[] { contents }, encoding, false, false, pathFormat);
       }

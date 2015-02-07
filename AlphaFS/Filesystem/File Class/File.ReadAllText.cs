@@ -78,7 +78,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The file to open for reading.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(KernelTransaction transaction, string path)
+      public static string ReadAllTextTransacted(KernelTransaction transaction, string path)
       {
          return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, PathFormat.RelativePath);
       }
@@ -89,7 +89,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="encoding">The <see cref="Encoding"/> applied to the contents of the file.</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(KernelTransaction transaction, string path, Encoding encoding)
+      public static string ReadAllTextTransacted(KernelTransaction transaction, string path, Encoding encoding)
       {
          return ReadAllTextInternal(transaction, path, encoding, PathFormat.RelativePath);
       }
@@ -100,7 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static string ReadAllTextTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return ReadAllTextInternal(transaction, path, NativeMethods.DefaultFileEncoding, pathFormat);
       }
@@ -112,7 +112,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       /// <returns>All lines of the file.</returns>
       [SecurityCritical]
-      public static string ReadAllText(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
+      public static string ReadAllTextTransacted(KernelTransaction transaction, string path, Encoding encoding, PathFormat pathFormat)
       {
          return ReadAllTextInternal(transaction, path, encoding, pathFormat);
       }

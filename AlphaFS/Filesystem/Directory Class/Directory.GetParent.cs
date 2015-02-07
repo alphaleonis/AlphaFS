@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       [SecurityCritical]
-      public static DirectoryInfo GetParent(KernelTransaction transaction, string path)
+      public static DirectoryInfo GetParentTransacted(KernelTransaction transaction, string path)
       {
          return GetParentInternal(transaction, path, PathFormat.RelativePath);
       }
@@ -64,7 +64,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
-      public static DirectoryInfo GetParent(KernelTransaction transaction, string path, PathFormat pathFormat)
+      public static DirectoryInfo GetParentTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
          return GetParentInternal(transaction, path, pathFormat);
       }

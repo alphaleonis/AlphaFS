@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The file or directory for which to obtain absolute path information.</param>
       [SecurityCritical]
-      public static string GetFullPath(KernelTransaction transaction, string path)
+      public static string GetFullPathTransacted(KernelTransaction transaction, string path)
       {
          return GetFullPathTackleInternal(transaction, path);
       }
