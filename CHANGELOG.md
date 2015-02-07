@@ -15,7 +15,6 @@ Version 2.1
 - Issue #109: Add overloaded methods for `Host.EnumerateShares()`.
 - Issue #112: Add `CreationTimeUtc`, `LastAccessTimeUtc` and `LastWriteTimeUtc` to "Info" classes.
 - Issue #119: Fix `Path.IsLocalPath()` issues.
-- Issue #126: Suffix the name of all methods working with TxF with "Transacted".
 - Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #131: Modify method `Path.GetPathRoot()` to handle UNC paths in long path format.
@@ -36,6 +35,7 @@ Version 2.1
 ### Breaking Changes
 
 - Issue #113: Change names of time related properties on `FileSystemEntryInfo` to conform with `FileInfo/DirectoryInfo`.
+- Issue #126: Suffix the name of all methods working with TxF with "Transacted".
 - Issue #128: Remove `Path.IsLocalPath()` in favour of `Path.IsUncPath()`.
 - Issue #140: Replace internal `DFS_INFO_4` structure with `DFS_INFO_9`.
 
