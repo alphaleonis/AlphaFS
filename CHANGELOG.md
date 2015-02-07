@@ -4,6 +4,18 @@ toc: true
 permalink: /changelog/
 title: Changelog
 ---
+
+Version 2.0.1
+-----------
+### Bugs Fixed
+* Fixed Issue #104: `VolumeInfo.Refresh()` fails with `System.IO.IOException`: (234)
+* Fixed Issue #108: `Volume.Refresh()` should throw `DeviceNotReadyException`.
+* Fixed Issue #110: `Directory.GetDirectoryRoot()` should throw `System.ArgumentException`.
+* Fixed Issue #117: Fix `Path.GetFullPath()` issues.
+* Fixed Issue #123: When `Directory.Encrypt/Decrypt()` is non-recursive, only process the folder.
+* Fixed Issue #124: Unit tests for long/short path are failing.
+* 
+
 Version 2.0
 -----------
 
