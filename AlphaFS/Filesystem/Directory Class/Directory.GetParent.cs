@@ -25,7 +25,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class Directory
    {
-      #region Non-Transactional
+      #region .NET
 
       /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
@@ -46,10 +46,8 @@ namespace Alphaleonis.Win32.Filesystem
          return GetParentInternal(null, path, pathFormat);
       }
 
-      #endregion // Non-Transactional
-
-      #region Transactional
-
+      #endregion // .NET
+      
       /// <summary>[AlphaFS] Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
       /// <returns>The parent directory, or <see langword="null"/> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
       /// <param name="transaction">The transaction.</param>
@@ -71,12 +69,10 @@ namespace Alphaleonis.Win32.Filesystem
          return GetParentInternal(transaction, path, pathFormat);
       }
 
-      #endregion // Transactional
-
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method GetParent() to retrieve the parent directory of the specified path, including both absolute and relative paths.</summary>
-      /// <returns>Returns the parent directory, or <see langword="null"/> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
+      /// <summary>Retrieves the parent directory of the specified path, including both absolute and relative paths.</summary>
+      /// <returns>The parent directory, or <see langword="null"/> if <paramref name="path"/> is the root directory, including the root of a UNC server or share name.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path for which to retrieve the parent directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>

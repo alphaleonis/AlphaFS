@@ -137,7 +137,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>Unified method EnumerateFileIdBothDirectoryInfoInternal() to return an enumerable collection of information about files in the directory handle specified.</summary>
+      /// <summary>Returns an enumerable collection of information about files in the directory handle specified.</summary>
       /// <returns>An IEnumerable of <see cref="FileIdBothDirectoryInfo"/> records for each file system entry in the specified diretory.</returns>    
       /// <remarks>
       ///   <para>Either use <paramref name="path"/> or <paramref name="safeHandle"/>, not both.</para>
@@ -146,8 +146,6 @@ namespace Alphaleonis.Win32.Filesystem
       ///   Any subsequent calls to GetFileInformationByHandleEx on the same handle will resume the enumeration operation after the last file is returned.
       /// </para>
       /// </remarks>
-      /// 
-      /// 
       /// <param name="transaction">The transaction.</param>
       /// <param name="safeHandle">An open handle to the directory from which to retrieve information.</param>
       /// <param name="path">A path to the directory.</param>
@@ -227,6 +225,6 @@ namespace Alphaleonis.Win32.Filesystem
          }
       }
 
-      #endregion // EnumerateFileIdBothDirectoryInfoInternal
+      #endregion // Internal Methods
    }
 }

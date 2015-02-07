@@ -27,6 +27,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class Directory
    {
+      #region .NET
+
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
       /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity "/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
@@ -50,6 +52,10 @@ namespace Alphaleonis.Win32.Filesystem
       {
          File.SetAccessControlInternal(path, null, directorySecurity, includeSections, PathFormat.RelativePath);
       }
+
+      #endregion // .NET
+
+
 
       /// <summary>[AlphaFS] Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the specified directory.</summary>
       /// <param name="path">A directory to add or remove access control list (ACL) entries from.</param>

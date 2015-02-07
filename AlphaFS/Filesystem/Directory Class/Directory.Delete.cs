@@ -33,8 +33,7 @@ namespace Alphaleonis.Win32.Filesystem
       #region .NET
 
       /// <summary>Deletes an empty directory from a specified path.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
@@ -45,12 +44,11 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <param name="path">The name of the directory to remove.</param>
-      /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
+      /// <param name="path">The name of the directory to remove.</param>
+      /// <param name="recursive"><see langword="true"/> to remove directories, subdirectories, and files in <paramref name="path"/>. <see langword="false"/> otherwise.</param>
       [SecurityCritical]
       public static void Delete(string path, bool recursive)
       {
@@ -58,14 +56,9 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // .NET
-
-      #region AlphaFS
-
-      #region Non-Transactional
-
-      /// <summary>Deletes an empty directory from a specified path.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      
+      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="path">The name of the empty directory to remove. This directory must be writable and empty.</param>
@@ -79,8 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="path">The name of the directory to remove.</param>
@@ -95,8 +87,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="path">The name of the directory to remove.</param>
@@ -109,8 +100,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="path">The name of the directory to remove.</param>
@@ -123,13 +113,10 @@ namespace Alphaleonis.Win32.Filesystem
          DeleteDirectoryInternal(null, null, path, recursive, ignoreReadOnly, !recursive, false, pathFormat);
       }
 
-      #endregion // Non-Transactional
-
       #region Transactional
 
-      /// <summary>Deletes an empty directory from a specified path.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="transaction">The transaction.</param>
@@ -140,9 +127,8 @@ namespace Alphaleonis.Win32.Filesystem
          DeleteDirectoryInternal(null, transaction, path, false, false, true, false, PathFormat.RelativePath);
       }
 
-      /// <summary>Deletes an empty directory from a specified path.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <summary>[AlphaFS] Deletes an empty directory from a specified path.</summary>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="transaction">The transaction.</param>
@@ -157,8 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="transaction">The transaction.</param>
@@ -171,8 +156,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="transaction">The transaction.</param>
@@ -188,8 +172,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="transaction">The transaction.</param>
@@ -203,8 +186,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
-      /// <remarks>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</remarks>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
       /// <param name="transaction">The transaction.</param>
@@ -219,21 +201,15 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // Transactional
-      
+
       #region Internal Methods
 
-      /// <summary>Unified method DeleteDirectoryInternal() to delete a Non-/Transacted directory.</summary>
-      /// <remarks>
-      /// <para>The RemoveDirectory function marks a directory for deletion on close. Therefore, the directory is not removed until the last handle to the directory is closed.</para>
-      /// <para>MSDN: .NET 4+ Trailing spaces are removed from the end of the <paramref name="path"/> parameter before deleting the directory.</para>
-      /// </remarks>
-      /// <exception cref="ArgumentException">
-      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
-      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
-      /// </exception>
+      /// <summary>Deletes the specified directory and, if indicated, any subdirectories in the directory.</summary>
+      /// <remarks>The RemoveDirectory function marks a directory for deletion on close. Therefore, the directory is not removed until the last handle to the directory is closed.</remarks>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="fileSystemEntryInfo">A FileSystemEntryInfo instance. Use either <paramref name="fileSystemEntryInfo"/> or <paramref name="path"/>, not both.</param>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The name of the directory to remove. Use either <paramref name="path"/> or <paramref name="fileSystemEntryInfo"/>, not both.</param>
@@ -259,8 +235,8 @@ namespace Alphaleonis.Win32.Filesystem
             // The specified path is invalid (for example, it is on an unmapped drive). 
 
             fileSystemEntryInfo = File.GetFileSystemEntryInfoInternal(true, transaction,
-               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat,
-                  GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator), continueOnNotExist, pathFormat);
+               Path.GetExtendedLengthPathInternal(transaction, path, pathFormat, GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator),
+                  continueOnNotExist, pathFormat);
          }
 
          if (fileSystemEntryInfo == null)
@@ -292,7 +268,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (recursive)
          {
             // Enumerate all file system objects.
-            foreach (FileSystemEntryInfo fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
+            foreach (var fsei in EnumerateFileSystemEntryInfosInternal<FileSystemEntryInfo>(transaction, pathLp, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.LongFullPath))
             {
                if (fsei.IsDirectory)
                   DeleteDirectoryInternal(fsei, transaction, null, true, ignoreReadOnly, requireEmpty, true, PathFormat.LongFullPath);
@@ -303,7 +279,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          #region Remove
 
-      startRemoveDirectory:
+         startRemoveDirectory:
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -318,7 +294,7 @@ namespace Alphaleonis.Win32.Filesystem
             : NativeMethods.RemoveDirectoryTransacted(pathLp, transaction.SafeHandle)))
          {
             int lastError = Marshal.GetLastWin32Error();
-            switch ((uint)lastError)
+            switch ((uint) lastError)
             {
                case Win32Errors.ERROR_DIR_NOT_EMPTY:
                   if (requireEmpty)
@@ -331,8 +307,7 @@ namespace Alphaleonis.Win32.Filesystem
                case Win32Errors.ERROR_DIRECTORY:
                   // MSDN: .NET 3.5+: DirectoryNotFoundException: Path refers to a file instead of a directory.
                   if (File.ExistsInternal(false, transaction, pathLp, PathFormat.LongFullPath))
-                     throw new DirectoryNotFoundException(String.Format(CultureInfo.CurrentCulture, "({0}) {1}",
-                        Win32Errors.ERROR_INVALID_PARAMETER, String.Format(CultureInfo.CurrentCulture, Resources.Target_Directory_Is_A_File, pathLp)));
+                     throw new DirectoryNotFoundException(string.Format(CultureInfo.CurrentCulture, "({0}) {1}", Win32Errors.ERROR_INVALID_PARAMETER, string.Format(CultureInfo.CurrentCulture, Resources.Target_Directory_Is_A_File, pathLp)));
                   break;
 
 
@@ -347,10 +322,10 @@ namespace Alphaleonis.Win32.Filesystem
                   break;
 
                case Win32Errors.ERROR_ACCESS_DENIED:
-                  NativeMethods.WIN32_FILE_ATTRIBUTE_DATA data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
+                  var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
                   int dataInitialised = File.FillAttributeInfoInternal(transaction, pathLp, ref data, false, true);
 
-                  if (data.dwFileAttributes != (FileAttributes)(-1))
+                  if (data.dwFileAttributes != (FileAttributes) (-1))
                   {
                      if ((data.dwFileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
                      {
@@ -388,8 +363,6 @@ namespace Alphaleonis.Win32.Filesystem
          #endregion // Remove
       }
 
-      #endregion // DeleteDirectoryInternal
-
-      #endregion // AlphaFS
+      #endregion // Internal Methods
    }
 }

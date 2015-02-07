@@ -30,12 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Copy
 
-      // .NET 4.5 and below: Directory class does not contain this method.
-
-      #region AlphaFS
-      
-      #region Non-Transactional
-
+      // .NET 4.5 and below: Directory class does not contain the Copy() method.
       // Mimic .NET File.Copy() methods.
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
@@ -43,10 +38,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -62,10 +57,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -84,10 +79,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -104,10 +99,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -120,8 +115,6 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(null, sourcePath, destinationPath, overwrite ? CopyOptions.None : CopyOptions.FailIfExists, null, null, null, pathFormat);
       }
 
-      #endregion // Non-Transactional
-
       #region Transactional
 
       /// <summary>[AlphaFS] Copies an existing directory to a new directory. Overwriting a directory of the same name is not allowed.</summary>
@@ -129,10 +122,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -149,10 +142,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -172,10 +165,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -193,10 +186,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -212,13 +205,9 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // Transactional
 
-      #endregion // AlphaFS
-
       #endregion // Copy
 
       #region Copy (CopyOptions)
-
-      #region Non-Transactional
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
       /// <remarks>
@@ -226,10 +215,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -247,10 +236,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -266,18 +255,18 @@ namespace Alphaleonis.Win32.Filesystem
       
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      ///   and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -292,18 +281,18 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      ///   and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -318,8 +307,6 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveInternal(null, sourcePath, destinationPath, copyOptions, null, progressHandler, userProgressData, pathFormat);
       }
 
-      #endregion // Non-Transactional
-
       #region Transactional
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified.</summary>
@@ -328,10 +315,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -350,10 +337,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -370,18 +357,18 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      ///   and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -397,18 +384,18 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Copies a directory and its contents to a new location, <see cref="CopyOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      ///   and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -438,10 +425,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -454,20 +441,16 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // .NET
 
-      #region AlphaFS
-      
-      #region Non-Transactional
-      
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
       /// <remarks>
       ///   <para>This method does not work across disk volumes.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -479,8 +462,6 @@ namespace Alphaleonis.Win32.Filesystem
          CopyMoveInternal(null, sourcePath, destinationPath, null, MoveOptions.None, null, null, pathFormat);
       }
       
-      #endregion // Non-Transactional
-
       #region Transactional
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location.</summary>
@@ -489,10 +470,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -510,10 +491,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -528,13 +509,9 @@ namespace Alphaleonis.Win32.Filesystem
       
       #endregion // Transactional
 
-      #endregion // AlphaFS
-
       #endregion // Move
 
       #region Move (MoveOptions)
-
-      #region Non-Transactional
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.</summary>
       /// <remarks>
@@ -542,10 +519,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -563,10 +540,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -582,18 +559,18 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      ///   and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -608,18 +585,18 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      ///   and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="sourcePath">The source directory path.</param>
@@ -634,8 +611,6 @@ namespace Alphaleonis.Win32.Filesystem
          return CopyMoveInternal(null, sourcePath, destinationPath, null, moveOptions, progressHandler, userProgressData, pathFormat);
       }
 
-      #endregion // Non-Transactional
-
       #region Transactional
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified.</summary>
@@ -644,10 +619,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -666,10 +641,10 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -686,18 +661,18 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      ///   and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -713,18 +688,18 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Moves a file or a directory and its contents to a new location, <see cref="MoveOptions"/> can be specified,
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      ///   and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Move action.</returns>
       /// <remarks>
       ///   <para>This method does not work across disk volumes unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.CopyAllowed"/>.</para>
       ///   <para>Whenever possible, avoid using short file names (such as XXXXXX~1.XXX) with this method.</para>
       ///   <para>If two directories have equivalent short file names then this method may fail and raise an exception and/or result in undesirable behavior.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
@@ -746,25 +721,22 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>Unified method CopyMoveInternal() to copy/move a Non-/Transacted file or directory including its children to a new location,
-      ///   <para><see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,</para>
-      ///   <para>and the possibility of notifying the application of its progress through a callback function.</para>
+      /// <summary>Copy/move a Non-/Transacted file or directory including its children to a new location,
+      ///   <see cref="CopyOptions"/> or <see cref="MoveOptions"/> can be specified,
+      ///   and the possibility of notifying the application of its progress through a callback function.
       /// </summary>
-      /// <returns>Returns a <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
+      /// <returns>A <see cref="CopyMoveResult"/> class with the status of the Copy or Move action.</returns>
       /// <remarks>
       ///   <para>Option <see cref="CopyOptions.NoBuffering"/> is recommended for very large file transfers.</para>
       ///   <para>You cannot use the Move method to overwrite an existing file, unless <paramref name="moveOptions"/> contains <see cref="MoveOptions.ReplaceExisting"/>.</para>
       ///   <para>This Move method works across disk volumes, and it does not throw an exception if the source and destination are the same. </para>
       ///   <para>Note that if you attempt to replace a file by moving a file of the same name into that directory, you get an IOException.</para>
       /// </remarks>
-      /// <exception cref="ArgumentException">
-      ///   <para>Passed when the path parameter contains invalid characters, is empty, or contains only white spaces.</para>
-      ///   <para>Path is prefixed with, or contains, only a colon character (:).</para>
-      /// </exception>
-      /// <exception cref="ArgumentNullException">Passed when path is <see langword="null"/>.</exception>
-      /// <exception cref="DirectoryNotFoundException">Passed when the directory was not found.</exception>
-      /// <exception cref="IOException">Passed when an I/O error occurs.</exception>
-      /// <exception cref="NotSupportedException">Path contains a colon character (:) that is not part of a drive label ("C:\").</exception>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="sourcePath">The source directory path.</param>
@@ -789,7 +761,7 @@ namespace Alphaleonis.Win32.Filesystem
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameters before moving the directory.
          // TrimEnd() is also applied for AlphaFS implementation of method Directory.Copy(), .NET does not have this method.
 
-         var fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
+         const GetFullPathOptions fullPathOptions = GetFullPathOptions.TrimEnd | GetFullPathOptions.RemoveTrailingDirectorySeparator;
 
          string sourcePathLp = Path.GetExtendedLengthPathInternal(transaction, sourcePath, pathFormat, fullPathOptions);
          string destinationPathLp = Path.GetExtendedLengthPathInternal(transaction, destinationPath, pathFormat, fullPathOptions);

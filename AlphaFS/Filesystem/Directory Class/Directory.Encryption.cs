@@ -106,13 +106,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // Encrypt
-
-
+      
       #region DisableEncryption
 
       /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it.
-      /// <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and disables encryption by writing: "Disable=1"</para>
-      /// <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
+      ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and disables encryption by writing: "Disable=1"</para>
+      ///   <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
       /// </summary>
       /// <param name="path">The name of the directory for which to disable encryption.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -123,8 +122,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Disables encryption of the specified directory and the files in it.
-      /// <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and disables encryption by writing: "Disable=1"</para>
-      /// <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
+      ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and disables encryption by writing: "Disable=1"</para>
+      ///   <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
       /// </summary>
       /// <param name="path">The name of the directory for which to disable encryption.</param>
       [SecurityCritical]
@@ -138,8 +137,8 @@ namespace Alphaleonis.Win32.Filesystem
       #region EnableEncryption
 
       /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it.
-      /// <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and enables encryption by writing: "Disable=0"</para>
-      /// <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
+      ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and enables encryption by writing: "Disable=0"</para>
+      ///   <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
       /// </summary>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -150,8 +149,8 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Enables encryption of the specified directory and the files in it.
-      /// <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and enables encryption by writing: "Disable=0"</para>
-      /// <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
+      ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and enables encryption by writing: "Disable=0"</para>
+      ///   <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
       /// </summary>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       [SecurityCritical]
@@ -161,13 +160,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // EnableEncryption
-
-
+      
       #region Internal Methods
 
-      /// <summary>Unified method to enable/disable encryption of the specified directory and the files in it.
-      /// <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and  enables/disables encryption by writing: "Disable=0" or "Disable=1".</para>
-      /// <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
+      /// <summary>Enables/disables encryption of the specified directory and the files in it.
+      ///   <para>This method only creates/modifies the file "Desktop.ini" in the root of <paramref name="path"/> and  enables/disables encryption by writing: "Disable=0" or "Disable=1".</para>
+      ///   <para>This method does not affect encryption of files and subdirectories below the indicated directory.</para>
       /// </summary>
       /// <param name="path">The name of the directory for which to enable encryption.</param>
       /// <param name="enable"><see langword="true"/> enabled encryption, <see langword="false"/> disables encryption.</param>
@@ -189,7 +187,7 @@ namespace Alphaleonis.Win32.Filesystem
             NativeError.ThrowException(pathLp);
       }
 
-      /// <summary>[AlphaFS] Unified method EncryptDecryptFileInternal() to decrypt/encrypt a directory recursively so that only the account used to encrypt the directory can decrypt it.</summary>
+      /// <summary>Decrypts/encrypts a directory recursively so that only the account used to encrypt the directory can decrypt it.</summary>
       /// <param name="path">A path that describes a directory to encrypt.</param>
       /// <param name="encrypt"><see langword="true"/> encrypt, <see langword="false"/> decrypt.</param>
       /// <param name="recursive"><see langword="true"/> to decrypt the directory recursively. <see langword="false"/> only decrypt files and directories in the root of <paramref name="path"/>.</param>
@@ -214,6 +212,6 @@ namespace Alphaleonis.Win32.Filesystem
          File.EncryptDecryptFileInternal(true, pathLp, encrypt, PathFormat.LongFullPath);
       }
 
-      #endregion // EncryptDecryptDirectoryInternal
+      #endregion // Internal Methods
    }
 }

@@ -29,17 +29,17 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region .NET
 
-      /// <summary>Returns an enumerable collection of file names and directory names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of file system entries in the directory specified by <paramref name="path"/>.</returns>
+      /// <summary>Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
       /// <param name="path">The directory to search.</param>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateFileSystemEntries(string path)
+      public static IEnumerable<string> EnumerateFiles(string path)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<string>(null, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.RelativePath);
       }
 
-      /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of file system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
+      /// <summary>Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -47,13 +47,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern)
+      public static IEnumerable<string> EnumerateFiles(string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.RelativePath);
       }
 
-      /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
-      /// <returns>An enumerable collection of file system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
+      /// <summary>Returns an enumerable collection of file names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
       ///   The search string to match against the names of directories in <paramref name="path"/>.
@@ -65,9 +65,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   should include only the current directory or should include all subdirectories.
       /// </param>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateFileSystemEntries(string path, string searchPattern, SearchOption searchOption)
+      public static IEnumerable<string> EnumerateFiles(string path, string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.FilesAndFolders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+         var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
          return EnumerateFileSystemEntryInfosInternal<string>(null, path, searchPattern, options, PathFormat.RelativePath);
       }
@@ -75,19 +75,19 @@ namespace Alphaleonis.Win32.Filesystem
       #endregion // .NET
 
       #region Transactional
-
-      /// <summary>Returns an enumerable collection of file names and directory names in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of file system entries in the directory specified by <paramref name="path"/>.</returns>
+      
+      /// <summary>[AlphaFS] Returns an enumerable collection of file names in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/>.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path)
+      public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Files, PathFormat.RelativePath);
       }
 
-      /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
-      /// <returns>An enumerable collection of file system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/>.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the <paramref name="searchPattern"/>.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -96,13 +96,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, string searchPattern)
+      public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern)
       {
-         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
+         return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.RelativePath);
       }
 
-      /// <summary>Returns an enumerable collection of file names and directory names that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
-      /// <returns>An enumerable collection of file system entries in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
+      /// <summary>[AlphaFS] Returns an enumerable collection of file instances instances that match a <paramref name="searchPattern"/> in a specified <paramref name="path"/>, and optionally searches subdirectories.</summary>
+      /// <returns>An enumerable collection of the full names (including paths) for the files in the directory specified by <paramref name="path"/> and that match the specified <paramref name="searchPattern"/> and <paramref name="searchOption"/>.</returns>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The directory to search.</param>
       /// <param name="searchPattern">
@@ -115,9 +115,9 @@ namespace Alphaleonis.Win32.Filesystem
       ///   should include only the current directory or should include all subdirectories.
       /// </param>
       [SecurityCritical]
-      public static IEnumerable<string> EnumerateFileSystemEntries(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
+      public static IEnumerable<string> EnumerateFiles(KernelTransaction transaction, string path, string searchPattern, SearchOption searchOption)
       {
-         var options = DirectoryEnumerationOptions.FilesAndFolders | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
+         var options = DirectoryEnumerationOptions.Files | ((searchOption == SearchOption.AllDirectories) ? DirectoryEnumerationOptions.Recursive : 0);
 
          return EnumerateFileSystemEntryInfosInternal<string>(transaction, path, searchPattern, options, PathFormat.RelativePath);
       }

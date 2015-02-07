@@ -28,7 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class Directory
    {
-      #region GetLogicalDrives
+      #region .NET
 
       /// <summary>Retrieves the names of the logical drives on this computer in the form "&lt;drive letter&gt;:\".</summary>
       /// <returns>An array of type <see cref="String"/> that represents the logical drives on a computer.</returns>
@@ -38,10 +38,12 @@ namespace Alphaleonis.Win32.Filesystem
          return EnumerateLogicalDrivesInternal(false, false).Select(drive => drive.Name).ToArray();
       }
 
+      #endregion // .NET
+      
       /// <summary>[AlphaFS] Retrieves the names of the logical drives on this computer in the form "&lt;drive letter&gt;:\".</summary>
+      /// <returns>An array of type <see cref="String"/> that represents the logical drives on a computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      /// <returns>An array of type <see cref="String"/> that represents the logical drives on a computer.</returns>
       [SecurityCritical]
       public static string[] GetLogicalDrives(bool fromEnvironment, bool isReady)
       {
@@ -49,28 +51,22 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
 
-      #endregion // GetLogicalDrives
-
-      #region EnumerateLogicalDrives
-
       /// <summary>[AlphaFS] Enumerates the drive names of all logical drives on a computer.</summary>
+      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
       [SecurityCritical]
       public static IEnumerable<DriveInfo> EnumerateLogicalDrives(bool fromEnvironment, bool isReady)
       {
          return EnumerateLogicalDrivesInternal(fromEnvironment, isReady);
       }
 
-      #endregion // EnumerateLogicalDrives
-
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method EnumerateLogicalDrivesInternal() to enumerate the drive names of all logical drives on a computer.</summary>
+      /// <summary>Enumerates the drive names of all logical drives on a computer.</summary>
+      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
       /// <param name="fromEnvironment">Retrieve logical drives as known by the Environment.</param>
       /// <param name="isReady">Retrieve only when accessible (IsReady) logical drives.</param>
-      /// <returns>An IEnumerable of type <see cref="Alphaleonis.Win32.Filesystem.DriveInfo"/> that represents the logical drives on a computer.</returns>
       [SecurityCritical]
       internal static IEnumerable<DriveInfo> EnumerateLogicalDrivesInternal(bool fromEnvironment, bool isReady)
       {
@@ -149,7 +145,6 @@ namespace Alphaleonis.Win32.Filesystem
          #endregion // Get through NativeMethod
       }
 
-      #endregion // EnumerateLogicalDrivesInternal
-
+      #endregion // Internal Methods
    }
 }

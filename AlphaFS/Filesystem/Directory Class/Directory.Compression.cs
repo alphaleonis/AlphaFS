@@ -27,10 +27,8 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Compress
 
-      #region Non-Transactional
-
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <remarks>This will only compress the root items (non recursive).</remarks>
       /// <param name="path">A path that describes a directory to compress.</param>
       [SecurityCritical]
       public static void Compress(string path)
@@ -39,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <remarks>This will only compress the root items (non recursive).</remarks>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -69,12 +67,10 @@ namespace Alphaleonis.Win32.Filesystem
          CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, options, true, pathFormat);
       }
       
-      #endregion
-
       #region Transactional
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <remarks>This will only compress the root items (non recursive).</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       [SecurityCritical]
@@ -84,7 +80,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Compresses a directory using NTFS compression.</summary>
-      /// <remarks>This will only compress the root items, non recursive.</remarks>
+      /// <remarks>This will only compress the root items (non recursive).</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -123,10 +119,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Decompress
 
-      #region Non-Transactional
-
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
       /// <param name="path">A path that describes a directory to decompress.</param>
       [SecurityCritical]
       public static void Decompress(string path)
@@ -135,7 +129,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -164,13 +158,11 @@ namespace Alphaleonis.Win32.Filesystem
       {
          CompressDecompressInternal(null, path, Path.WildcardStarMatchAll, options, false, pathFormat);
       }
-      
-      #endregion
 
       #region Transactional
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       [SecurityCritical]
@@ -180,7 +172,7 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Decompresses an NTFS compressed directory.</summary>
-      /// <remarks>This will only decompress the root items, non recursive.</remarks>
+      /// <remarks>This will only decompress the root items (non recursive).</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to decompress.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -311,13 +303,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method CompressDecompressInternal() to compress/decompress Non-/Transacted files/directories.</summary>
+      /// <summary>Compress/decompress Non-/Transacted files/directories.</summary>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">A path that describes a directory to compress.</param>
       /// <param name="searchPattern">
-      ///    <para>The search string to match against the names of directories in <paramref name="path"/>. This parameter can contain a</para>
-      ///    <para>combination of valid literal path and wildcard (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>)</para>
-      ///    <para>characters, but does not support regular expressions.</para>
+      ///   The search string to match against the names of directories in <paramref name="path"/>.
+      ///   This parameter can contain a combination of valid literal path and wildcard
+      ///   (<see cref="Path.WildcardStarMatchAll"/> and <see cref="Path.WildcardQuestion"/>) characters, but does not support regular expressions.
       /// </param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       /// <param name="compress"><see langword="true"/> compress, when <see langword="false"/> decompress.</param>
@@ -335,6 +327,6 @@ namespace Alphaleonis.Win32.Filesystem
          Device.ToggleCompressionInternal(true, transaction, pathLp, compress, PathFormat.LongFullPath);
       }
 
-      #endregion // CompressDecompressInternal
+      #endregion // Internal Methods
    }
 }

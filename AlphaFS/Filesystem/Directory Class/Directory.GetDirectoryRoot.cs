@@ -26,13 +26,13 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class Directory
    {
-      #region GetDirectoryRoot
+      #region .NET
 
       /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
       /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException">path contains a colon (":") that is not part of a volume identifier (for example, "c:\").</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="path">The path of a file or directory.</param>
       [SecurityCritical]
       public static string GetDirectoryRoot(string path)
@@ -40,11 +40,13 @@ namespace Alphaleonis.Win32.Filesystem
          return GetDirectoryRootInternal(null, path, PathFormat.RelativePath);
       }
 
+      #endregion // .NET
+      
       /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
       /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException">path contains a colon (":") that is not part of a volume identifier (for example, "c:\").</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="path">The path of a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
@@ -53,25 +55,13 @@ namespace Alphaleonis.Win32.Filesystem
          return GetDirectoryRootInternal(null, path, pathFormat);
       }
 
-      /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
-      /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException">path contains a colon (":") that is not part of a volume identifier (for example, "c:\").</exception>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The path of a file or directory.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static string GetDirectoryRoot(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return GetDirectoryRootInternal(transaction, path, pathFormat);
-      }
+      #region Transactional
 
       /// <summary>[AlphaFS] Returns the volume information, root information, or both for the specified path.</summary>
       /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException">path contains a colon (":") that is not part of a volume identifier (for example, "c:\").</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path of a file or directory.</param>
       [SecurityCritical]
@@ -80,19 +70,29 @@ namespace Alphaleonis.Win32.Filesystem
          return GetDirectoryRootInternal(transaction, path, PathFormat.RelativePath);
       }
 
-      #endregion // GetDirectoryRoot
+      /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
+      /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The path of a file or directory.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static string GetDirectoryRoot(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         return GetDirectoryRootInternal(transaction, path, pathFormat);
+      }
+      
+      #endregion // Transactional
 
       #region Internal Methods
 
-      /// <summary>[AlphaFS] Unified method GetDirectoryRootInternal() to return the volume information, root information, or both for the specified path.
-      /// <returns>
-      /// <para>Returns the volume information, root information, or both for the specified path,</para>
-      /// <para> or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</para>
-      /// </returns>
-      /// </summary>
-      /// <exception cref="ArgumentException">The path parameter contains invalid characters, is empty, or contains only white spaces.</exception>
+      /// <summary>Returns the volume information, root information, or both for the specified path.</summary>
+      /// <returns>The volume information, root information, or both for the specified path, or <see langword="null"/> if <paramref name="path"/> path does not contain root directory information.</returns>
+      /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="NotSupportedException">path contains a colon (":") that is not part of a volume identifier (for example, "c:\").</exception>
+      /// <exception cref="NotSupportedException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path of a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
@@ -110,6 +110,6 @@ namespace Alphaleonis.Win32.Filesystem
          return Utils.IsNullOrWhiteSpace(rootPath) ? null : rootPath;
       }
 
-      #endregion // GetDirectoryRootInternal
+      #endregion // Internal Methods
    }
 }
