@@ -15,6 +15,7 @@ Version 2.1
 - Issue #109: Add overloaded methods for `Host.EnumerateShares()`.
 - Issue #112: Add `CreationTimeUtc`, `LastAccessTimeUtc` and `LastWriteTimeUtc` to "Info" classes.
 - Issue #119: Fix `Path.IsLocalPath()` issues.
+- Issue #125: AlphaFS is now CLSCompliant.
 - Issue #127: Modify method `Volume.QueryDosDevice()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #130: Modify method `Path.LocalToUnc()` so that is doesn't rely on `Path.IsLocalPath()` anymore.
 - Issue #131: Modify method `Path.GetPathRoot()` to handle UNC paths in long path format.
@@ -26,7 +27,7 @@ Version 2.1
 - Issue #141: Remove obsolete Resources (resx) string messages.
 - Issue #142: Move literal strings to Resources (resx).
 - Issue #144: Add `DirectoryInfo.EnumerateXxx()` methods with support for DirectoryEnumerationOptions enum.
-
+ 
 ### Bugs Fixed
 
 - Issue #50: `Path.GetLongPath()` does not prefix on "C:\", should it?

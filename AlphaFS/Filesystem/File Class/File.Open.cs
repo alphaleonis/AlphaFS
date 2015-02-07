@@ -19,14 +19,13 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using Microsoft.Win32.SafeHandles;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Security;
 using System.Security.AccessControl;
-using System.Text;
 using FileStream = System.IO.FileStream;
-using StreamReader = System.IO.StreamReader;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Alphaleonis.Win32.Filesystem
 {

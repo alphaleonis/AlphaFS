@@ -62,8 +62,8 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Initializes a new instance of the <see cref="KernelTransaction"/> class with a default security descriptor.</summary>
       /// <param name="timeout"><para>The time, in milliseconds, when the transaction will be aborted if it has not already reached the prepared state.</para></param>
       /// <param name="description">A user-readable description of the transaction. This parameter may be <see langword="null"/>.</param>
-      [SecurityCritical]
-      public KernelTransaction(uint timeout, string description)
+      [SecurityCritical]      
+      public KernelTransaction(int timeout, string description)
          : this(null, timeout, description)
       {
       }
@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>Specify 0 to provide an infinite timeout.</para></param>
       /// <param name="description">A user-readable description of the transaction. This parameter may be <see langword="null"/>.</param>
       [SecurityCritical]
-      public KernelTransaction(ObjectSecurity securityDescriptor, uint timeout, string description)
+      public KernelTransaction(ObjectSecurity securityDescriptor, int timeout, string description)
       {
          if (!NativeMethods.IsAtLeastWindowsVista)
             throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);

@@ -75,7 +75,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>The size of the extended attributes for the file.</summary>
          [MarshalAs(UnmanagedType.U4)]
-         public readonly uint EaSize;
+         public readonly int EaSize;
 
          /// <summary>The length of ShortName.</summary>
          [MarshalAs(UnmanagedType.U1)]

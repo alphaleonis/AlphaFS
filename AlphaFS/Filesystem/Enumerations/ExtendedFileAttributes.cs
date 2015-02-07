@@ -25,10 +25,10 @@ using System.IO;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   /// <summary>Specifies how the operating system should open a file.</summary>
-   [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
+   /// <summary>Specifies how the operating system should open a file.</summary>   
+   [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2217:DoNotMarkEnumsWithFlags")]
    [Flags]
-   public enum ExtendedFileAttributes : uint
+   public enum ExtendedFileAttributes 
    {
       /// <summary>None of the file attributes specified.</summary>
       None = 0,
@@ -138,6 +138,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Write operations will not go through any intermediate cache, they will go directly to disk.</summary>
       /// <remarks>Equals .NET <see cref="FileOptions.WriteThrough"/>-2147483648</remarks>
-      WriteThrough = 2147483648
+      WriteThrough = FileOptions.WriteThrough
    }
 }

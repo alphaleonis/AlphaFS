@@ -393,8 +393,8 @@ namespace Alphaleonis.Win32.Security
       /// <summary>Retrieves the locally unique identifier (LUID) used on to represent this privilege (on the system from which it originates).</summary>
       /// <returns>the locally unique identifier (LUID) used on to represent this privilege (on the system from which it originates).</returns>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Luid")]
-      [SecurityCritical]
-      public ulong LookupLuid()
+      [SecurityCritical]      
+      public long LookupLuid()
       {
          Luid luid;
 

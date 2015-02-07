@@ -48,7 +48,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>The serial number of the volume that contains a file.</summary>
          [MarshalAs(UnmanagedType.U4)]
-         public readonly uint dwVolumeSerialNumber;
+         public readonly int dwVolumeSerialNumber;
 
          /// <summary>The high-order part of the file size.</summary>
          [MarshalAs(UnmanagedType.U4)]
@@ -60,7 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>The number of links to this file. For the FAT file system this member is always 1. For the NTFS file system, it can be more than 1.</summary>
          [MarshalAs(UnmanagedType.U4)]
-         public readonly uint nNumberOfLinks;
+         public readonly int nNumberOfLinks;
 
          /// <summary>The high-order part of a unique identifier that is associated with a file.</summary>
          [MarshalAs(UnmanagedType.U4)]

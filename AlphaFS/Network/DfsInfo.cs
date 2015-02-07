@@ -125,7 +125,7 @@ namespace Alphaleonis.Win32.Network
       //State = flavorBits | structure3.State;
 
       /// <summary>Specifies the time-out, in seconds, of the DFS root or link.</summary>
-      public ulong Timeout { get; internal set; }
+      public long Timeout { get; internal set; }
 
       /// <summary>Specifies a set of flags that describe specific properties of a DFS namespace, root, or link.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1726:UsePreferredTerms", MessageId = "Flags")]
@@ -135,7 +135,7 @@ namespace Alphaleonis.Win32.Network
       /// For stand-alone DFS namespaces, this field specifies the size of the metadata stored in the registry,
       /// including the key names and value names, in addition to the specific data items associated with them. This field is valid for DFS roots only.
       /// </summary>
-      public ulong MetadataSize { get; internal set; }
+      public long MetadataSize { get; internal set; }
 
 
       /// <summary>Pointer to a SECURITY_DESCRIPTOR structure that specifies a self-relative security descriptor to be associated with the DFS link's reparse point.

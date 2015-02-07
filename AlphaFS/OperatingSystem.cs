@@ -83,8 +83,8 @@ namespace Alphaleonis.Win32
 
       /// <summary>A set of flags to indicate the current processor architecture for which the operating system is targeted and running.</summary>
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Pa")]
-      [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
-      public enum EnumProcessorArchitecture : ushort
+      [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]      
+      public enum EnumProcessorArchitecture 
       {
          /// <summary>PROCESSOR_ARCHITECTURE_INTEL
          /// <para>The system is running a 32-bit version of Windows.</para>
@@ -198,7 +198,7 @@ namespace Alphaleonis.Win32
 
       /// <summary>Gets the processor architecture for which the operating system is targeted.</summary>
       /// <value>The processor architecture for which the operating system is targeted.</value>
-      /// <remarks>If running under WOW64 this will return a 32-bit processor. Use <see cref="IsWow64Process"/> to determine if this is the case.</remarks>
+      /// <remarks>If running under WOW64 this will return a 32-bit processor. Use <see cref="IsWow64Process"/> to determine if this is the case.</remarks>      
       public static EnumProcessorArchitecture ProcessorArchitecture
       {
          get

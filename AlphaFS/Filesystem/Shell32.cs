@@ -340,6 +340,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>An array of values that indicates the attributes of the file object.</summary>
          [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields")]
+         [MarshalAs(UnmanagedType.U4)]
          public readonly GetAttributesOf Attributes;
 
          /// <summary>The name of the file as it appears in the Windows Shell, or the path and file name of the file that contains the icon representing the file.</summary>
@@ -357,14 +358,13 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region GetAttributesOf
 
-      /// <summary>SFGAO - Attributes that can be retrieved from a file system object.</summary>
-      [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
+      /// <summary>SFGAO - Attributes that can be retrieved from a file system object.</summary>      
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2217:DoNotMarkEnumsWithFlags"), SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
       [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "Sh")]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sh")]
-      [SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames")]
-      [SuppressMessage("Microsoft.Design", "CA1028:EnumStorageShouldBeInt32")]
+      [SuppressMessage("Microsoft.Naming", "CA1714:FlagsEnumsShouldHavePluralNames")]          
       [Flags]
-      public enum GetAttributesOf : uint
+      public enum GetAttributesOf : int
       {
          /// <summary>0x00000000 - None.</summary>
          None = 0,
@@ -453,7 +453,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          /// <summary>0x80000000 - The specified folders have subfolders.</summary>
          [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "SubFolder")]
-         HasSubFolder = 2147483648
+         HasSubFolder = unchecked ((int)0x80000000)
       }
 
       #endregion // GetAttributesOf
