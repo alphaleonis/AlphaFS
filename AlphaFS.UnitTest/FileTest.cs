@@ -1086,6 +1086,67 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpGetSize
 
+      #region DumpIsLocked
+
+      private static void DumpIsLocked(bool isLocal)
+      {
+         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
+         string tempPath = Path.GetTempPath("File-IsLocked()" + Path.GetRandomFileName());
+         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+
+         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
+
+         bool isLocked;
+         FileInfo fi = new FileInfo(tempPath);
+
+         #region FileNotFoundException
+
+         int expectedLastError = (int)Win32Errors.ERROR_FILE_NOT_FOUND;
+         string expectedException = "System.IO.FileNotFoundException";
+         bool exception = false;
+         try
+         {
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
+            File.IsLocked(fi.FullName);
+         }
+         catch (FileNotFoundException ex)
+         {
+            var win32Error = new Win32Exception("", ex);
+            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
+
+            exception = true;
+            Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+         Console.WriteLine();
+
+         #endregion // FileNotFoundException
+
+         using (fi.CreateText())
+         {
+            fi.Attributes |= FileAttributes.ReadOnly;
+
+            isLocked = File.IsLocked(fi.FullName);
+            Console.WriteLine("File is locked (Should be True) : [{0}]", isLocked);
+            Assert.IsTrue(isLocked);
+         }
+         
+         isLocked = File.IsLocked(fi.FullName);
+         Console.WriteLine("File is locked (Should be False): [{0}]", isLocked);
+         Assert.IsFalse(isLocked);
+
+         fi.Attributes &= ~FileAttributes.ReadOnly;
+         fi.Delete();
+         Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+         Console.WriteLine();
+      }
+
+      #endregion // DumpIsLocked
+
       #region DumpEnumerateHardlinks
 
       private static void DumpEnumerateHardlinks(bool isLocal)
@@ -3211,7 +3272,20 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetSize
-      
+
+      #region IsLocked
+
+      [TestMethod]
+      public void AlphaFS_IsLocked()
+      {
+         Console.WriteLine("File.IsLocked()");
+
+         DumpIsLocked(true);
+         DumpIsLocked(false);
+      }
+
+      #endregion // IsLocked
+
       #region SetTimestamps
 
       [TestMethod]

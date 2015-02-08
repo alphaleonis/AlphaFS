@@ -92,11 +92,13 @@ namespace Alphaleonis.Win32
       //public const uint ERROR_WRITE_FAULT = 29;
       //public const uint ERROR_READ_FAULT = 30;
       //public const uint ERROR_GEN_FAILURE = 31;
-      
+
       /// <summary>(32) The process cannot access the file because it is being used by another process.</summary>
       public const uint ERROR_SHARING_VIOLATION = 32;
 
-      //public const uint ERROR_LOCK_VIOLATION = 33;
+      /// <summary>(33) The process cannot access the file because another process has locked a portion of the file.</summary>
+      public const uint ERROR_LOCK_VIOLATION = 33;
+
       //public const uint ERROR_WRONG_DISK = 34;
       //public const uint ERROR_SHARING_BUFFER_EXCEEDED = 36;
 
