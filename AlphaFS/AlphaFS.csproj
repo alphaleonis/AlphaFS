@@ -262,7 +262,7 @@
     <Compile Include="Filesystem\File Class\File.CreateHardlink.cs" />
     <Compile Include="Filesystem\File Class\File.Compress.cs" />
     <Compile Include="Filesystem\File Class\File.Delete.cs" />
-    <Compile Include="Filesystem\File Class\File.EncryptDescrypt.cs" />
+    <Compile Include="Filesystem\File Class\File.EncryptDecrypt.cs" />
     <Compile Include="Filesystem\File Class\File.CreateText.cs" />
     <Compile Include="Filesystem\File Class\File.CopyMove.cs" />
     <Compile Include="Filesystem\File Class\File.WriteText.cs" />
