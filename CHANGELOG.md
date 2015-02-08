@@ -26,8 +26,9 @@ Version 2.1
 - Issue #139: Modify `GetDfsInfoInternal()` to use `SafeGlobalMemoryBufferHandle` instead of `IntPtr`.
 - Issue #141: Remove obsolete Resources (resx) string messages.
 - Issue #142: Move literal strings to Resources (resx).
-- Issue #144: Add `DirectoryInfo.EnumerateXxx()` methods with support for DirectoryEnumerationOptions enum.
- 
+- Issue #144: Add `DirectoryInfo.EnumerateXxx()` methods with support for `DirectoryEnumerationOptions` enum.
+- Issue #151: Add `Directory.EnumerateXxx()` methods with support for `DirectoryEnumerationOptions`- and `PathFormat` enum.
+
 ### Bugs Fixed
 
 - Issue #50: `Path.GetLongPath()` does not prefix on "C:\", should it?

@@ -212,14 +212,14 @@ namespace AlphaFS.UnitTest
 
          // Should only return folders.
 
-         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFileSystemInfos(DirectoryEnumerationOptions.Folders))
-            Assert.IsTrue(di.IsDirectory, "Expected a folder, not a file.");
+         foreach (FileSystemInfo di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFileSystemInfos(DirectoryEnumerationOptions.Folders))
+            Assert.IsTrue(di.IsDirectory, string.Format("Expected a folder, not a file: [{0}]", di.FullName));
 
 
          // Should only return files.
 
-         foreach (var di in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFileSystemInfos(DirectoryEnumerationOptions.Files))
-            Assert.IsTrue(!di.IsDirectory, "Expected a file, not a folder.");
+         foreach (FileSystemInfo fi in new DirectoryInfo(UnitTestConstants.SysRoot).EnumerateFileSystemInfos(DirectoryEnumerationOptions.Files))
+            Assert.IsTrue(!fi.IsDirectory, string.Format("Expected a file, not a folder: [{0}]", fi.FullName));
       }
 
       #endregion // EnumerateFileSystemInfos

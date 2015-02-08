@@ -1415,6 +1415,18 @@ namespace AlphaFS.UnitTest
          if (cnt == 0)
             Assert.Inconclusive("Nothing was enumerated.");
 
+         #region DirectoryEnumerationOptions
+
+         // Should only return folders.
+
+         foreach (string dir in Directory.EnumerateDirectories(UnitTestConstants.SysRoot, DirectoryEnumerationOptions.FilesAndFolders))
+            Assert.IsTrue((File.GetAttributes(dir) & FileAttributes.Directory) != 0, string.Format("Expected a folder, not a file: [{0}]", dir));
+
+         foreach (string dir in Directory.EnumerateDirectories(UnitTestConstants.SysRoot, DirectoryEnumerationOptions.Files))
+            Assert.IsTrue((File.GetAttributes(dir) & FileAttributes.Directory) != 0, string.Format("Expected a folder, not a file: [{0}]", dir));
+
+         #endregion // DirectoryEnumerationOptions
+
          Console.WriteLine();
       }
 
@@ -1644,6 +1656,18 @@ namespace AlphaFS.UnitTest
          if (cnt == 0)
             Assert.Inconclusive("Nothing was enumerated.");
 
+         #region DirectoryEnumerationOptions
+
+         // Should only return files.
+
+         foreach (string file in Directory.EnumerateFiles(UnitTestConstants.SysRoot, DirectoryEnumerationOptions.FilesAndFolders))
+            Assert.IsTrue((File.GetAttributes(file) & FileAttributes.Directory) == 0, string.Format("Expected a file, not a folder: [{0}]", file));
+
+         foreach (string file in Directory.EnumerateFiles(UnitTestConstants.SysRoot, DirectoryEnumerationOptions.Folders))
+            Assert.IsTrue((File.GetAttributes(file) & FileAttributes.Directory) == 0, string.Format("Expected a file, not a folder: [{0}]", file));
+
+         #endregion // DirectoryEnumerationOptions
+
          Console.WriteLine();
       }
 
@@ -1826,6 +1850,21 @@ namespace AlphaFS.UnitTest
 
          if (cnt == 0)
             Assert.Inconclusive("Nothing was enumerated.");
+
+         #region DirectoryEnumerationOptions
+
+         // Should only return folders.
+
+         foreach (string dir in Directory.EnumerateFileSystemEntries(UnitTestConstants.SysRoot, DirectoryEnumerationOptions.Folders))
+            Assert.IsTrue((File.GetAttributes(dir) & FileAttributes.Directory) != 0, string.Format("Expected a folder, not a file: [{0}]", dir));
+
+
+         // Should only return files.
+
+         foreach (string file in Directory.EnumerateFileSystemEntries(UnitTestConstants.SysRoot, DirectoryEnumerationOptions.Files))
+            Assert.IsTrue((File.GetAttributes(file) & FileAttributes.Directory) == 0, string.Format("Expected a file, not a folder: [{0}]", file));
+
+         #endregion // DirectoryEnumerationOptions
 
          Console.WriteLine();
       }

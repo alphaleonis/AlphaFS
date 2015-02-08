@@ -74,7 +74,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       /// <summary>Gets a FileSystemEntryInfo from a Non-/Transacted directory/file.</summary>
       /// <returns>The <see cref="FileSystemEntryInfo"/> instance of the file or directory, or <c>null</c> on Exception when <paramref name="continueOnException"/> is <c>true</c>.</returns>
-      /// <remarks>BasicSearch <see cref="NativeMethods.FindExInfoLevels.Basic"/> and LargeCache <see cref="NativeMethods.FindExAdditionalFlags.LargeFetch"/> are used by default, if possible.</remarks>
+      /// <remarks>BasicSearch <see cref="NativeMethods.FINDEX_INFO_LEVELS.Basic"/> and LargeCache <see cref="NativeMethods.FindExAdditionalFlags.LargeFetch"/> are used by default, if possible.</remarks>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
       /// <param name="isFolder">Specifies that <paramref name="path"/> is a file or directory.</param>

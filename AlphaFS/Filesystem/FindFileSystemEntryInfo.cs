@@ -52,8 +52,8 @@ namespace Alphaleonis.Win32.Filesystem
          AsFileSystemInfo = !AsString && (typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo));
 
          FindExInfoLevel = NativeMethods.IsAtLeastWindows7 && (options & DirectoryEnumerationOptions.BasicSearch) != 0
-            ? NativeMethods.FindExInfoLevels.Basic
-            : NativeMethods.FindExInfoLevels.Standard;
+            ? NativeMethods.FINDEX_INFO_LEVELS.Basic
+            : NativeMethods.FINDEX_INFO_LEVELS.Standard;
 
          LargeCache = NativeMethods.IsAtLeastWindows7 && (options & DirectoryEnumerationOptions.LargeCache) != 0
             ? NativeMethods.FindExAdditionalFlags.LargeFetch
@@ -331,8 +331,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FindExInfoLevel
 
-      /// <summary>Gets the value indicating which <see cref="NativeMethods.FindExInfoLevels"/> to use.</summary>
-      public NativeMethods.FindExInfoLevels FindExInfoLevel { get; internal set; }
+      /// <summary>Gets the value indicating which <see cref="NativeMethods.FINDEX_INFO_LEVELS"/> to use.</summary>
+      public NativeMethods.FINDEX_INFO_LEVELS FindExInfoLevel { get; internal set; }
 
       #endregion // FindExInfoLevel
 
@@ -346,7 +346,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FileSystemObjectType
 
-      private NativeMethods.FindExSearchOps _limitSearchToDirs = NativeMethods.FindExSearchOps.SearchNameMatch;
+      private NativeMethods.FINDEX_SEARCH_OPS _limitSearchToDirs = NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch;
       private bool? _fileSystemObjectType;
 
       /// <summary>Gets the file system object type.</summary>
@@ -364,8 +364,8 @@ namespace Alphaleonis.Win32.Filesystem
             _fileSystemObjectType = value;
 
             _limitSearchToDirs = value != null && (bool)value
-               ? NativeMethods.FindExSearchOps.SearchLimitToDirectories
-               : NativeMethods.FindExSearchOps.SearchNameMatch;
+               ? NativeMethods.FINDEX_SEARCH_OPS.SearchLimitToDirectories
+               : NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch;
          }
       }
 
@@ -381,7 +381,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsDirectory
 
-      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExInfoLevels"/> to use.</summary>
+      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FINDEX_INFO_LEVELS"/> to use.</summary>
       /// <value><see langword="true"/> indicates a folder object, <see langword="false"/> indicates a file object.</value>
       public bool IsDirectory { get; internal set; }
 
