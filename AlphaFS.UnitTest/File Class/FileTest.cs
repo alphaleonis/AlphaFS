@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpAccessRules
 
-      private static void DumpAccessRules(int cntCheck, FileSecurity dsSystem, FileSecurity dsAlpha)
+      private void DumpAccessRules(int cntCheck, FileSecurity dsSystem, FileSecurity dsAlpha)
       {
          Console.WriteLine("\n\tSanity check AlphaFS <> System.IO {0}.", cntCheck);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesProtected: [{0}]", dsAlpha.AreAccessRulesProtected);
@@ -72,7 +72,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpAppendAllLines
 
-      private static void DumpAppendAllLines(bool isLocal)
+      private void DumpAppendAllLines(bool isLocal)
       {
          #region Setup
 
@@ -141,7 +141,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpCopy
 
-      private static void DumpCopy(bool isLocal)
+      private void DumpCopy(bool isLocal)
       {
          #region Setup
 
@@ -447,7 +447,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpCreate
 
-      private static void DumpCreate(bool isLocal)
+      private void DumpCreate(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempFolder = Path.GetTempPath();
@@ -493,7 +493,7 @@ namespace AlphaFS.UnitTest
 
       #region TestDelete
 
-      private static void TestDelete(bool isLocal)
+      private void TestDelete(bool isLocal)
       {
          #region Setup
 
@@ -755,7 +755,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpExists
 
-      private static void DumpExists(bool isLocal)
+      private void DumpExists(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("File-Exists-" + Path.GetRandomFileName());
@@ -785,7 +785,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpGetAccessControl
 
-      private static void DumpGetAccessControl(bool isLocal)
+      private void DumpGetAccessControl(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
@@ -824,7 +824,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpGetXxxTimeXxx
 
-      private static void DumpGetXxxTimeXxx(bool isLocal)
+      private void DumpGetXxxTimeXxx(bool isLocal)
       {
          #region Setup
 
@@ -953,7 +953,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpGetSize
 
-      private static void DumpGetSize(bool isLocal)
+      private void DumpGetSize(bool isLocal)
       {
          #region Setup
 
@@ -1088,7 +1088,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpEnumerateHardlinks
 
-      private static void DumpEnumerateHardlinks(bool isLocal)
+      private void DumpEnumerateHardlinks(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string subDir = Directory.CreateDirectory(Path.GetTempPath("Hardlink-" + Path.GetRandomFileName())).FullName;
@@ -1157,7 +1157,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpMove
 
-      private static void DumpMove(bool isLocal)
+      private void DumpMove(bool isLocal)
       {
          #region Setup
 
@@ -1491,7 +1491,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpGetSetAttributes
 
-      private static void DumpGetSetAttributes(bool isLocal)
+      private void DumpGetSetAttributes(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
@@ -1590,7 +1590,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpSetXxxTimeXxx
 
-      private static void DumpSetXxxTimeXxx(bool isLocal)
+      private void DumpSetXxxTimeXxx(bool isLocal)
       {
          #region Setup
 
@@ -1690,7 +1690,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpSetTimestamps
 
-      private static void DumpSetTimestamps(bool isLocal)
+      private void DumpSetTimestamps(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "File.SetTimestamps()-" + Path.GetRandomFileName());
@@ -1775,7 +1775,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpTransferTimestamps
 
-      private static void DumpTransferTimestamps(bool isLocal)
+      private void DumpTransferTimestamps(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "File.TransferTimestamps()-" + Path.GetRandomFileName());
@@ -1846,7 +1846,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpReadAllLines
 
-      private static void DumpReadAllLines(bool isLocal)
+      private void DumpReadAllLines(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
@@ -1881,7 +1881,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpReadWriteAllBytes
 
-      private static void DumpReadWriteAllBytes(bool isLocal)
+      private void DumpReadWriteAllBytes(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("File.ReadWriteAllBytes()-" + Path.GetRandomFileName());
@@ -1938,7 +1938,7 @@ namespace AlphaFS.UnitTest
 
       #region Create file with trailing dot/space
 
-      private static void DumpFileTrailingDotSpace(bool isLocal)
+      private void DumpFileTrailingDotSpace(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          const string characterDot = ".";
@@ -2459,17 +2459,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // CreateText
 
-      #region Decrypt
-
-      [TestMethod]
-      public void Decrypt()
-      {
-         Console.WriteLine("File.Decrypt()");
-         Console.WriteLine("\nPlease see unit test: Encrypt()");
-      }
-
-      #endregion // Decrypt
-
       #region Delete
 
       [TestMethod]
@@ -2599,61 +2588,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetCreationTime
-
-      #region GetCreationTimeUtc
-
-      [TestMethod]
-      public void GetCreationTimeUtc()
-      {
-         Console.WriteLine("File.GetCreationTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetCreationTimeUtc
-
-      #region GetLastAccessTime
-
-      [TestMethod]
-      public void GetLastAccessTime()
-      {
-         Console.WriteLine("File.GetLastAccessTime()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetLastAccessTime
-
-      #region GetLastAccessTimeUtc
-
-      [TestMethod]
-      public void GetLastAccessTimeUtc()
-      {
-         Console.WriteLine("File.GetLastAccessTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetLastAccessTimeUtc
-
-      #region GetLastWriteTime
-
-      [TestMethod]
-      public void GetLastWriteTime()
-      {
-         Console.WriteLine("File.GetLastWriteTime()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetLastWriteTime
-
-      #region GetLastWriteTimeUtc
-
-      [TestMethod]
-      public void GetLastWriteTimeUtc()
-      {
-         Console.WriteLine("File.GetLastWriteTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetLastWriteTimeUtc
 
       #region Move
 
@@ -2898,17 +2832,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // SetAccessControl
 
-      #region SetAttributes
-
-      [TestMethod]
-      public void SetAttributes()
-      {
-         Console.WriteLine("File.SetAttributes()");
-         Console.WriteLine("\nPlease see unit test: GetAttributes()");
-      }
-
-      #endregion // SetAttributes
-
       #region SetCreationTime
 
       [TestMethod]
@@ -2921,61 +2844,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // SetCreationTime
-
-      #region SetCreationTimeUtc
-
-      [TestMethod]
-      public void SetCreationTimeUtc()
-      {
-         Console.WriteLine("File.SetCreationTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: SetCreationTime()");
-      }
-
-      #endregion // SetCreationTimeUtc
-
-      #region SetLastAccessTime
-
-      [TestMethod]
-      public void SetLastAccessTime()
-      {
-         Console.WriteLine("File.SetLastAccessTime()");
-         Console.WriteLine("\nPlease see unit test: SetCreationTime()");
-      }
-
-      #endregion // SetLastAccessTime
-
-      #region SetLastAccessTimeUtc
-
-      [TestMethod]
-      public void SetLastAccessTimeUtc()
-      {
-         Console.WriteLine("File.SetLastAccessTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: SetCreationTime()");
-      }
-
-      #endregion // SetLastAccessTimeUtc
-
-      #region SetLastWriteTime
-
-      [TestMethod]
-      public void SetLastWriteTime()
-      {
-         Console.WriteLine("File.SetLastWriteTime()");
-         Console.WriteLine("\nPlease see unit test: SetCreationTime()");
-      }
-
-      #endregion // SetLastWriteTime
-
-      #region SetLastWriteTimeUtc
-
-      [TestMethod]
-      public void SetLastWriteTimeUtc()
-      {
-         Console.WriteLine("File.SetLastWriteTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: SetCreationTime()");
-      }
-
-      #endregion // SetLastWriteTimeUtc
 
       #region WriteAllBytes
 
@@ -3076,17 +2944,6 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
 
-      #region Compress
-
-      [TestMethod]
-      public void AlphaFS_Compress()
-      {
-         Console.WriteLine("File.Compress()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_GetSize()");
-      }
-
-      #endregion // Compress
-
       #region CreateHardlink
 
       [TestMethod]
@@ -3099,105 +2956,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // CreateHardlink
-
-      #region Decompress
-
-      [TestMethod]
-      public void AlphaFS_Decompress()
-      {
-         Console.WriteLine("File.Decompress()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_GetSize()");
-      }
-
-      #endregion // Compress/Decompress
-
-      #region EnumerateHardlinks
-
-      [TestMethod]
-      public void AlphaFS_EnumerateHardlinks()
-      {
-         Console.WriteLine("File.EnumerateHardlinks()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_CreateHardlink()");
-      }
-
-      #endregion // EnumerateHardlinks
-
-      #region EnumerateAlternateDataStreams
-
-      [TestMethod]
-      public void AlphaFS_EnumerateAlternateDataStreams()
-      {
-         Console.WriteLine("File.EnumerateAlternateDataStreams()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
-      }
-
-      #endregion // EnumerateAlternateDataStreams
-
-      #region GetChangeTime
-
-      [TestMethod]
-      public void AlphaFS_GetChangeTime()
-      {
-         Console.WriteLine("File.GetChangeTime()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetChangeTime
-
-      #region GetCompressedSize
-
-      [TestMethod]
-      public void AlphaFS_GetCompressedSize()
-      {
-         Console.WriteLine("File.GetCompressedSize()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_Compress()");
-      }
-
-      #endregion // GetCompressedSize
-
-      #region GetEncryptionStatus
-
-      [TestMethod]
-      public void AlphaFS_GetEncryptionStatus()
-      {
-         Console.WriteLine("File.GetEncryptionStatus()");
-         Console.WriteLine("\nPlease see unit test: Encrypt()");
-      }
-
-      #endregion // GetEncryptionStatus
-
-      #region GetFileSystemEntry
-
-      [TestMethod]
-      public void AlphaFS_GetFileSystemEntry()
-      {
-         Console.WriteLine("File.GetFileSystemEntry()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_FileSystemEntryInfo()");
-      }
-
-      #endregion // GetFileSystemEntry
-
-      #region GetFileInfoByHandle
-
-      [TestMethod]
-      public void AlphaFS_GetFileInfoByHandle()
-      {
-         Console.WriteLine("File.GetFileInfoByHandle()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_ByHandleFileInfo()");
-      }
-
-      #endregion // GetFileInfoByHandle
-
-      #region GetLinkTargetInfo
-
-      [TestMethod]
-      public void AlphaFS_GetLinkTargetInfo()
-      {
-         Console.WriteLine("File.GetLinkTargetInfo()");
-         Console.WriteLine("\nPlease see unit test: Volume.SetVolumeMountPoint()");
-      }
-
-      #endregion // GetLinkTargetInfo
 
       #region GetSize
 

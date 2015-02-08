@@ -41,7 +41,7 @@ namespace AlphaFS.UnitTest
    {
       #region Unit Tests
 
-      private static void Dump83Path(bool isLocal)
+      private void Dump83Path(bool isLocal)
       {
          #region Setup
 
@@ -140,7 +140,7 @@ namespace AlphaFS.UnitTest
          #endregion // Directory
       }
 
-      private static void DumpGetDirectoryNameWithoutRoot(bool isLocal)
+      private void DumpGetDirectoryNameWithoutRoot(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
@@ -178,7 +178,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
-      private static void DumpGetFinalPathNameByHandle(bool isLocal)
+      private void DumpGetFinalPathNameByHandle(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
@@ -252,7 +252,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(gotSomething);
       }
 
-      private static void DumpGetSuffixedDirectoryName(bool isLocal)
+      private void DumpGetSuffixedDirectoryName(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
@@ -308,7 +308,7 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
-      private static void DumpGetSuffixedDirectoryNameWithoutRoot(bool isLocal)
+      private void DumpGetSuffixedDirectoryNameWithoutRoot(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
@@ -1112,17 +1112,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetMappedConnectionName
 
-      #region GetMappedUncName
-
-      [TestMethod]
-      public void AlphaFS_GetMappedUncName()
-      {
-         Console.WriteLine("Path.GetMappedUncName()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_GetMappedConnectionName()");
-      }
-
-      #endregion // GetMappedUncName
-
       #region GetRegularPath
 
       [TestMethod]
@@ -1161,17 +1150,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetRegularPath
-
-      #region GetShort83Path
-
-      [TestMethod]
-      public void AlphaFS_GetShort83Path()
-      {
-         Console.WriteLine("Path.GetShort83Path()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_GetLongFrom83ShortPath()");
-      }
-
-      #endregion // GetShort83Path
 
       #region IsLongPath
 

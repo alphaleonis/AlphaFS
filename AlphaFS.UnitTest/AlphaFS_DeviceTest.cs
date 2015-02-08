@@ -32,7 +32,7 @@ namespace AlphaFS.UnitTest
    {
       #region DumpEnumerateDevices
 
-      private static void DumpEnumerateDevices(bool isLocal)
+      private void DumpEnumerateDevices(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = UnitTestConstants.LocalHost;

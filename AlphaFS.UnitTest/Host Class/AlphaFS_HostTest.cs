@@ -37,7 +37,7 @@ namespace AlphaFS.UnitTest
    {
       #region DumpEnumerateDrives
 
-      private static void DumpEnumerateDrives(bool isLocal)
+      private void DumpEnumerateDrives(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string host = UnitTestConstants.LocalHost;
@@ -331,29 +331,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // ConnectTo
 
-      #region DisconnectDrive
-
-      [TestMethod]
-      public void DisconnectDrive()
-      {
-         Console.WriteLine("Network.Host.DisconnectDrive()");
-         Console.WriteLine("\nPlease see unit test: ConnectDrive()");
-      }
-
-      #endregion // DisconnectDrive
-
-      #region DisconnectFrom
-
-      [TestMethod]
-      public void DisconnectFrom()
-      {
-         Console.WriteLine("Network.Host.DisconnectFrom()");
-         Console.WriteLine("\nPlease see unit test: ConnectTo()");
-      }
-
-      #endregion // DisconnectFrom
-
-
       #region EnumerateDfsLinks
 
       [TestMethod]
@@ -532,39 +509,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // EnumerateDrives
-      
-      #region EnumerateOpenConnections
-
-      [TestMethod]
-      public void EnumerateOpenConnections()
-      {
-         Console.WriteLine("Network.Host.EnumerateOpenConnections()");
-         Console.WriteLine("\nPlease see unit test: Network_Class_OpenConnectionInfo");
-      }
-
-      #endregion // EnumerateOpenConnections
-
-      #region EnumerateOpenResources
-
-      [TestMethod]
-      public void EnumerateOpenResources()
-      {
-         Console.WriteLine("Network.Host.EnumerateOpenResources()");
-         Console.WriteLine("\nPlease see unit test: Network_Class_OpenResourceInfo()");
-      }
-
-      #endregion // EnumerateOpenResources
-
-      #region EnumerateShares
-
-      [TestMethod]
-      public void EnumerateShares()
-      {
-         Console.WriteLine("Network.Host.EnumerateShares()");
-         Console.WriteLine("\nPlease see unit test: Network_Class_ShareInfo()");
-      }
-
-      #endregion // EnumerateShares
 
       #region GetHostShareFromPath
 
@@ -605,39 +549,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetHostShareFromPath
-
-      #region GetDfsClientInfo
-
-      [TestMethod]
-      public void GetDfsClientInfo()
-      {
-         Console.WriteLine("Network.Host.GetDfsClientInfo()");
-         Console.WriteLine("\nPlease see unit test: Network_Class_DfsXxx()");
-      }
-
-      #endregion // GetDfsClientInfo
-
-      #region GetDfsInfo
-
-      [TestMethod]
-      public void GetDfsInfo()
-      {
-         Console.WriteLine("Network.Host.GetDfsInfo()");
-         Console.WriteLine("\nPlease see unit test: EnumerateDfsRoot()");
-      }
-
-      #endregion // GetDfsInfo
-
-      #region GetShareInfo
-
-      [TestMethod]
-      public void GetShareInfo()
-      {
-         Console.WriteLine("Network.Host.GetShareInfo()");
-         Console.WriteLine("\nPlease see unit test: Network_Class_ShareInfo()");
-      }
-
-      #endregion // GetShareInfo
 
       #region GetUncName
 

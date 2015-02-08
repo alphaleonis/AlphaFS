@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassBackupFileStream
 
-      private static void DumpClassBackupFileStream(bool isLocal)
+      private void DumpClassBackupFileStream(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("Class.BackupFileStream()-file-" + Path.GetRandomFileName());
@@ -71,7 +71,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassAlternateDataStreamInfo
 
-      private static void DumpClassAlternateDataStreamInfo(bool isLocal)
+      private void DumpClassAlternateDataStreamInfo(bool isLocal)
       {
          #region Setup
 
@@ -176,7 +176,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassByHandleFileInfo
 
-      private static void DumpClassByHandleFileInfo(bool isLocal)
+      private void DumpClassByHandleFileInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("File.GetFileInfoByHandle()-" + Path.GetRandomFileName());
@@ -208,7 +208,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassDeviceInfo
 
-      private static void DumpClassDeviceInfo(string host)
+      private void DumpClassDeviceInfo(string host)
       {
          Console.WriteLine("\n=== TEST ===");
 
@@ -287,7 +287,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassDirectoryInfo
       
-      private static void DumpClassDirectoryInfo(bool isLocal)
+      private void DumpClassDirectoryInfo(bool isLocal)
       {
          #region Setup
 
@@ -437,7 +437,7 @@ namespace AlphaFS.UnitTest
          #endregion Method .ToString()
       }
 
-      private static void CompareDirectoryInfos(System.IO.DirectoryInfo expected, DirectoryInfo actual)
+      private void CompareDirectoryInfos(System.IO.DirectoryInfo expected, DirectoryInfo actual)
       {
          if (expected == null || actual == null)
             Assert.AreEqual(expected, actual, "Mismatch");
@@ -495,7 +495,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassDiskSpaceInfo
 
-      private static void DumpClassDiskSpaceInfo(bool isLocal)
+      private void DumpClassDiskSpaceInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = UnitTestConstants.SysDrive;
@@ -574,7 +574,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassDriveInfo
 
-      private static void DumpClassDriveInfo(bool isLocal, string drive)
+      private void DumpClassDriveInfo(bool isLocal, string drive)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = drive;
@@ -660,7 +660,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassFileInfo
       
-      private static void DumpClassFileInfo(bool isLocal)
+      private void DumpClassFileInfo(bool isLocal)
       {
          #region Setup
 
@@ -904,7 +904,7 @@ namespace AlphaFS.UnitTest
          #endregion Method .ToString()
       }
 
-      private static void CompareFileInfos(System.IO.FileInfo expected, FileInfo actual)
+      private void CompareFileInfos(System.IO.FileInfo expected, FileInfo actual)
       {
          if (expected == null || actual == null)
             Assert.AreEqual(expected, actual, "Mismatch");
@@ -988,7 +988,7 @@ namespace AlphaFS.UnitTest
       
       #region DumpClassFileSystemEntryInfo
 
-      private static void DumpClassFileSystemEntryInfo(bool isLocal)
+      private void DumpClassFileSystemEntryInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
@@ -1032,7 +1032,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassShell32Info
 
-      private static void DumpClassShell32Info(bool isLocal)
+      private void DumpClassShell32Info(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("Class.Shell32Info()-" + Path.GetRandomFileName());
@@ -1069,7 +1069,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassVolumeInfo
 
-      private static void DumpClassVolumeInfo(bool isLocal)
+      private void DumpClassVolumeInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          Console.WriteLine("\nEnumerating logical drives.");
@@ -1106,7 +1106,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassDfsInfo
 
-      private static void DumpClassDfsInfo()
+      private void DumpClassDfsInfo()
       {
          int cnt = 0;
          bool noDomainConnection = true;
@@ -1172,7 +1172,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpOpenConnectionInfo
 
-      private static void DumpOpenConnectionInfo(string host)
+      private void DumpOpenConnectionInfo(string host)
       {
          Console.WriteLine("\n=== TEST ===");
          Console.WriteLine("\nNetwork.Host.EnumerateOpenResources() from host: [{0}]", host);
@@ -1189,7 +1189,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpClassOpenResourceInfo
 
-      private static void DumpClassOpenResourceInfo(string host, string share)
+      private void DumpClassOpenResourceInfo(string host, string share)
       {
          Console.WriteLine("\n=== TEST ===");
          string tempPath = Path.LocalToUnc(share);

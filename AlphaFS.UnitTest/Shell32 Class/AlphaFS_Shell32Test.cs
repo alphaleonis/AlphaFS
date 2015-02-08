@@ -34,7 +34,7 @@ namespace AlphaFS.UnitTest
    {
       #region DumpGetAssociation
 
-      private static void DumpGetAssociation(bool isLocal)
+      private void DumpGetAssociation(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
@@ -78,7 +78,7 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpGetAssociation
 
-      private static void DumpPathFileExists(string path, bool doesExist)
+      private void DumpPathFileExists(string path, bool doesExist)
       {
          Console.WriteLine("\n\tPath: [{0}]\n", path);
 
@@ -107,61 +107,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetFileAssociation
 
-      #region GetFileVerbCommand (Empty)
-
-      [TestMethod]
-      public void GetFileVerbCommand()
-      {
-         Console.WriteLine("Filesystem.Shell32.GetFileVerbCommand()");
-         Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
-      }
-
-      #endregion // GetFileVerbCommand (Empty)
-
-      #region GetFileContentType (Empty)
-
-      [TestMethod]
-      public void GetFileContentType()
-      {
-         Console.WriteLine("Filesystem.Shell32.GetFileContentType()");
-         Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
-      }
-
-      #endregion // GetFileContentType (Empty)
-
-      #region GetFileDefaultIcon (Empty)
-
-      [TestMethod]
-      public void GetFileDefaultIcon()
-      {
-         Console.WriteLine("Filesystem.Shell32.GetFileDefaultIcon()");
-         Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
-      }
-
-      #endregion // GetFileDefaultIcon (Empty)
-
-      #region GetFileFriendlyAppName (Empty)
-
-      [TestMethod]
-      public void GetFileFriendlyAppName()
-      {
-         Console.WriteLine("Filesystem.Shell32.GetFileFriendlyAppName()");
-         Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
-      }
-
-      #endregion // GetFileFriendlyAppName (Empty)
-
-      #region GetFileFriendlyDocName (Empty)
-
-      [TestMethod]
-      public void GetFileFriendlyDocName()
-      {
-         Console.WriteLine("Filesystem.Shell32.GetFileFriendlyDocName()");
-         Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
-      }
-
-      #endregion // GetFileFriendlyDocName (Empty)
-
       #region GetFileIcon
 
       [TestMethod]
@@ -183,28 +128,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetFileIcon
-
-      #region GetFileInfo
-
-      [TestMethod]
-      public void GetFileInfo()
-      {
-         Console.WriteLine("Filesystem.Shell32.GetFileInfo()");
-         Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
-      }
-
-      #endregion // GetFileInfo
-
-      #region GetFileOpenWithAppName (Empty)
-
-      [TestMethod]
-      public void GetFileOpenWithAppName()
-      {
-         Console.WriteLine("Filesystem.Shell32.GetFileOpenWithAppName()");
-         Console.WriteLine("\nPlease see unit test: GetFileAssociation()");
-      }
-
-      #endregion // GetFileOpenWithAppName (Empty)
 
       #region PathCreateFromUrl
 
@@ -324,38 +247,5 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // UrlIs
-
-      #region UrlIsFileUrl (Empty)
-
-      [TestMethod]
-      public void UrlIsFileUrl()
-      {
-         Console.WriteLine("Filesystem.Shell32.UrlIsFileUrl()");
-         Console.WriteLine("\nPlease see unit test: UrlIs()");
-      }
-
-      #endregion // UrlIsFileUrl (Empty)
-
-      #region UrlIsNoHistory (Empty)
-
-      [TestMethod]
-      public void UrlIsNoHistory()
-      {
-         Console.WriteLine("Filesystem.Shell32.UrlIsNoHistory()");
-         Console.WriteLine("\nPlease see unit test: UrlIs()");
-      }
-
-      #endregion // UrlIsNoHistory (Empty)
-
-      #region UrlIsOpaque (Empty)
-
-      [TestMethod]
-      public void UrlIsOpaque()
-      {
-         Console.WriteLine("Filesystem.Shell32.UrlIsOpaque()");
-         Console.WriteLine("\nPlease see unit test: UrlIs()");
-      }
-
-      #endregion // UrlIsOpaque (Empty)
    }
 }

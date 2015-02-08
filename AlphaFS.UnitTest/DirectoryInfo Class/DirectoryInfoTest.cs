@@ -34,11 +34,7 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class DirectoryInfoTest
    {
-      #region Unit Tests
-
-      #region DumpRefresh
-
-      private static void DumpRefresh(bool isLocal)
+      private void DumpRefresh(bool isLocal)
       {
          #region Setup
 
@@ -113,61 +109,7 @@ namespace AlphaFS.UnitTest
          #endregion // Refresh
       }
 
-      #endregion // DumpRefresh
 
-      #endregion // Unit Tests
-
-      #region Unit Test Callers
-
-      // Note: Most of these unit tests are empty and are here to confirm AlphaFS implementation.
-
-      #region .NET
-      
-      #region Create
-
-      [TestMethod]
-      public void Create()
-      {
-         Console.WriteLine("DirectoryInfo.Create()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // Create
-
-      #region CreateSubdirectory
-
-      [TestMethod]
-      public void CreateSubdirectory()
-      {
-         Console.WriteLine("DirectoryInfo.CreateSubdirectory()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // CreateSubdirectory
-
-      #region Delete
-
-      [TestMethod]
-      public void Delete()
-      {
-         Console.WriteLine("DirectoryInfo.Delete()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // Delete
-
-      #region Exists
-
-      [TestMethod]
-      public void Exists()
-      {
-         Console.WriteLine("DirectoryInfo.Exists()");
-         Console.WriteLine("\nPlease see unit test: Refresh().");
-      }
-
-      #endregion // Exists
-
-      #region EnumerateDirectories
 
       [TestMethod]
       public void EnumerateDirectories()
@@ -183,10 +125,8 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(di.IsDirectory, "Expected a folder, not a file.");
       }
 
-      #endregion // EnumerateDirectories
-
-      #region EnumerateFiles
-
+      
+      
       [TestMethod]
       public void EnumerateFiles()
       {
@@ -201,9 +141,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(!di.IsDirectory, "Expected a file, not a folder.");
       }
 
-      #endregion // EnumerateFiles
 
-      #region EnumerateFiles
 
       [TestMethod]
       public void EnumerateFileSystemInfos()
@@ -222,64 +160,7 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue(!fi.IsDirectory, string.Format("Expected a file, not a folder: [{0}]", fi.FullName));
       }
 
-      #endregion // EnumerateFileSystemInfos
 
-      #region GetAccessControl
-
-      [TestMethod]
-      public void GetAccessControl()
-      {
-         Console.WriteLine("DirectoryInfo.GetAccessControl()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // GetAccessControl
-
-      #region GetDirectories
-
-      [TestMethod]
-      public void GetDirectories()
-      {
-         Console.WriteLine("DirectoryInfo.GetDirectories()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // GetDirectories
-
-      #region GetFiles
-
-      [TestMethod]
-      public void GetFiles()
-      {
-         Console.WriteLine("DirectoryInfo.GetFiles()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // GetFiles
-
-      #region GetFileSystemInfos
-
-      [TestMethod]
-      public void GetFileSystemInfos()
-      {
-         Console.WriteLine("DirectoryInfo.GetFileSystemInfos()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // GetFileSystemInfos
-
-      #region MoveTo
-
-      [TestMethod]
-      public void MoveTo()
-      {
-         Console.WriteLine("DirectoryInfo.MoveTo()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // MoveTo
-
-      #region Refresh
 
       [TestMethod]
       public void Refresh()
@@ -289,173 +170,12 @@ namespace AlphaFS.UnitTest
          DumpRefresh(true);
          DumpRefresh(false);
       }
-
-      #endregion // Refresh
-
-      #region SetAccessControl
-
-      [TestMethod]
-      public void SetAccessControl()
-      {
-         Console.WriteLine("DirectoryInfo.SetAccessControl()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // SetAccessControl
-
-      #endregion // .NET
-
-      #region AlphaFS
-
-      #region CopyTo
-
-      [TestMethod]
-      public void AlphaFS_CopyTo()
-      {
-         Console.WriteLine("DirectoryInfo.CopyTo()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // CopyTo
       
-      #region Compress
 
-      [TestMethod]
-      public void AlphaFS_Compress()
-      {
-         Console.WriteLine("DirectoryInfo.Compress()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
 
-      #endregion // Compress
-
-      #region AlphaFS_CountFileSystemObjects
-
-      [TestMethod]
-      public void AlphaFS_CountFileSystemObjects()
-      {
-         Console.WriteLine("DirectoryInfo.CountFileSystemObjects()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // AlphaFS_CountFileSystemObjects
-
-      #region DisableCompression
-
-      [TestMethod]
-      public void AlphaFS_DisableCompression()
-      {
-         Console.WriteLine("DirectoryInfo.DisableCompression()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // DisableCompression
-
-      #region DisableEncryption
-
-      [TestMethod]
-      public void AlphaFS_DisableEncryption()
-      {
-         Console.WriteLine("DirectoryInfo.DisableEncryption()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // DisableEncryption
-
-      #region Decompress
-
-      [TestMethod]
-      public void AlphaFS_Decompress()
-      {
-         Console.WriteLine("DirectoryInfo.Decompress()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // Decompress
-
-      #region Decrypt
-
-      [TestMethod]
-      public void AlphaFS_Decrypt()
-      {
-         Console.WriteLine("DirectoryInfo.Decrypt()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // Decrypt
-
-      #region DeleteEmptySubdirectories
-
-      [TestMethod]
-      public void AlphaFS_DeleteEmptySubdirectories()
-      {
-         Console.WriteLine("DirectoryInfo.DeleteEmptySubdirectories()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // DeleteEmptySubdirectories
-
-      #region EnableCompression
-
-      [TestMethod]
-      public void AlphaFS_EnableCompression()
-      {
-         Console.WriteLine("DirectoryInfo.EnableCompression()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // EnableCompression
-
-      #region EnableEncryption
-
-      [TestMethod]
-      public void AlphaFS_EnableEncryption()
-      {
-         Console.WriteLine("DirectoryInfo.EnableEncryption()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // EnableEncryption
-
-      #region Encrypt
-
-      [TestMethod]
-      public void AlphaFS_Encrypt()
-      {
-         Console.WriteLine("DirectoryInfo.Encrypt()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // Encrypt
-
-      #region EnumerateAlternateDataStreams
-
-      [TestMethod]
-      public void AlphaFS_EnumerateAlternateDataStreams()
-      {
-         Console.WriteLine("DirectoryInfo.EnumerateAlternateDataStreams()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // EnumerateAlternateDataStreams
-      
-      #region AlphaFS_MoveTo
-
-      [TestMethod]
-      public void AlphaFS_MoveTo()
-      {
-         Console.WriteLine("DirectoryInfo.MoveTo()");
-         Console.WriteLine("\nPlease see unit tests from class: Directory().");
-      }
-
-      #endregion // AlphaFS_MoveTo
-
-      #endregion // AlphaFS
-
-      
       #region SetSecurity (Issue-19788)
 
-      private static string GetTempDirectoryName()
+      private string GetTempDirectoryName()
       {
          return Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
       }
@@ -493,7 +213,7 @@ namespace AlphaFS.UnitTest
       }
 
 
-      public static bool HasLocalAces(AuthorizationRuleCollection rules)
+      public bool HasLocalAces(AuthorizationRuleCollection rules)
       {
          bool res = false;
 
@@ -502,7 +222,7 @@ namespace AlphaFS.UnitTest
          return res;
       }
 
-      private static void SetSecurityAlpha(string directory)
+      private void SetSecurityAlpha(string directory)
       {
          //create the test structure
          if (Directory.Exists(directory))
@@ -532,7 +252,7 @@ namespace AlphaFS.UnitTest
          }
       }
 
-      private static void SetSecuritySystem(string directory)
+      private void SetSecuritySystem(string directory)
       {
          //create the test structure
          if (System.IO.Directory.Exists(directory))
@@ -555,7 +275,5 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion
-
-      #endregion // Unit Test Callers
    }
 }
