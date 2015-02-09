@@ -21,6 +21,7 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.ComponentModel;
 using System.IO;
 using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
@@ -35,7 +36,7 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      #region AlreadyExistsException
+      #region AlreadyExistsException: FileExistsWithSameNameAsDirectory
 
       [TestMethod]
       public void Directory_CreateDirectory_FileExistsWithSameNameAsDirectoryLocal_AlreadyExistsException()
@@ -51,7 +52,7 @@ namespace AlphaFS.UnitTest
 
       private void Directory_CreateDirectory_FileExistsWithSameNameAsDirectory_AlreadyExistsException(bool isNetwork)
       {
-         string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + Path.GetRandomFileName());
+         string tempPath = Path.GetTempPath("Directory.CreateDirectory()-FileExistsWithSameNameAsDirectory-" + Path.GetRandomFileName());
 
          if (isNetwork)
             tempPath = Path.LocalToUnc(tempPath);
@@ -71,7 +72,7 @@ namespace AlphaFS.UnitTest
             catch (AlreadyExistsException ex)
             {
                exception = true;
-               Console.WriteLine("\n[{0}]:\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+               Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
             }
@@ -92,9 +93,37 @@ namespace AlphaFS.UnitTest
          }
       }
 
-      #endregion // AlreadyExistsException
+      #endregion // AlreadyExistsException: FileExistsWithSameNameAsDirectory
 
-      #region ArgumentException
+
+      #region ArgumentException: PathContainsInvalidCharacters
+
+      [TestMethod]
+      public void Directory_CreateDirectory_PathContainsInvalidCharacters_ArgumentException()
+      {
+         const string expectedException = "System.ArgumentException";
+         bool exception = false;
+
+         try
+         {
+            Directory.CreateDirectory(UnitTestConstants.SysDrive + @"\<>");
+         }
+         catch (ArgumentException ex)
+         {
+            exception = true;
+            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+         catch (Exception ex)
+         {
+            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+         }
+
+         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
+      }
+
+      #endregion // ArgumentException: PathContainsInvalidCharacters
+
+      #region ArgumentException: PathStartsWithColon
 
       [TestMethod]
       public void Directory_CreateDirectory_PathStartsWithColon_ArgumentException()
@@ -111,7 +140,7 @@ namespace AlphaFS.UnitTest
          catch (ArgumentException ex)
          {
             exception = true;
-            Console.WriteLine("\n[{0}]:\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          catch (Exception ex)
          {
@@ -121,9 +150,10 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
       }
 
-      #endregion // ArgumentException
+      #endregion // ArgumentException: PathStartsWithColon
 
-      #region DirectoryNotFoundException
+
+      #region DirectoryNotFoundException & IOException: NonExistingDriveLetterLocal
 
       // Note: isNetwork ? "System.IO.IOException" : "System.IO.DirectoryNotFoundException";
 
@@ -141,7 +171,7 @@ namespace AlphaFS.UnitTest
 
       private void Directory_CreateDirectory_NonExistingDriveLetter_XxxException(bool isNetwork)
       {
-         string tempPath = DriveInfo.GetFreeDriveLetter() + @":\Non-Existing";
+         string tempPath = DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter";
 
          if (isNetwork)
             tempPath = Path.LocalToUnc(tempPath);
@@ -156,16 +186,19 @@ namespace AlphaFS.UnitTest
          }
          catch (DirectoryNotFoundException ex)
          {
+            var win32Error = new Win32Exception("", ex);
+
             exception = true;
+            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
 
-            Console.WriteLine("\n[{0}]:\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
          }
          catch (IOException ex)
          {
             exception = isNetwork;
-            Console.WriteLine("\n[{0}]:\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
 
             Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
          }
@@ -177,9 +210,10 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
       }
 
-      #endregion // DirectoryNotFoundException
+      #endregion // DirectoryNotFoundException & IOException: NonExistingDriveLetterLocal
 
-      #region NotSupportedException
+
+      #region NotSupportedException: PathContainsColon
 
       [TestMethod]
       public void Directory_CreateDirectory_PathContainsColonLocal_NotSupportedException()
@@ -195,10 +229,11 @@ namespace AlphaFS.UnitTest
 
       private void Directory_CreateDirectory_PathContainsColon_NotSupportedException(bool isNetwork)
       {
-         string tempPath = UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt";
+         string colonText = ":aaa.txt";
+         string tempPath = UnitTestConstants.SysDrive + @"\dev\test\"+ colonText;
 
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath) + ":aaa.txt";
+            tempPath = Path.LocalToUnc(tempPath) + colonText;
 
          const string expectedException = "System.NotSupportedException";
          bool exception = false;
@@ -210,7 +245,7 @@ namespace AlphaFS.UnitTest
          catch (NotSupportedException ex)
          {
             exception = true;
-            Console.WriteLine("\n[{0}]:\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
          }
          catch (Exception ex)
          {
@@ -220,7 +255,8 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
       }
 
-      #endregion // NotSupportedException
+      #endregion // NotSupportedException: PathContainsColon
+
 
       [TestMethod]
       public void Directory_CreateDirectory_Success()
@@ -256,6 +292,8 @@ namespace AlphaFS.UnitTest
                Directory.Delete(tempPath, true);
 
             Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+
+            Console.WriteLine("\nDirectory deleted.");
          }
       }
    }

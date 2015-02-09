@@ -144,6 +144,7 @@
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
     <Compile Include="AlphaFS_DeviceTest.cs" />
+    <Compile Include="Directory Class\Delete.cs" />
     <Compile Include="Host Class\AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS_ClassesTest.cs" />
     <Compile Include="Directory Class\CreateDirectory.cs" />

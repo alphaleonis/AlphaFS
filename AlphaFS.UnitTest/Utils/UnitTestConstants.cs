@@ -23,11 +23,12 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
-using Path = Alphaleonis.Win32.Filesystem.Path;
+using Alphaleonis.Win32.Filesystem;
+using File = System.IO.File;
 
 namespace AlphaFS.UnitTest
 {
@@ -160,7 +161,7 @@ namespace AlphaFS.UnitTest
             // Some directories will remain empty.
             if (i % 2 != 0)
             {
-               File.WriteAllText(file, UnitTestConstants.TextHelloWorld);
+               File.WriteAllText(file, TextHelloWorld);
                File.WriteAllText(Path.Combine(dir, Path.GetFileName(file)), TextGoodByeWorld);
             }
          }
@@ -173,6 +174,50 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // CreateDirectoriesAndFiles
+
+
+      #region FolderWithDenyPermission
+
+      public static void FolderWithDenyPermission(bool create, bool isNetwork, string tempPath)
+      {
+         if (isNetwork)
+            tempPath = Path.LocalToUnc(tempPath);
+
+         string user = (Environment.UserDomainName + @"\" + Environment.UserName).TrimStart('\\');
+
+         DirectoryInfo di = new DirectoryInfo(tempPath);
+         DirectorySecurity dirSecurity;
+
+         // ╔═════════════╦═════════════╦═══════════════════════════════╦════════════════════════╦══════════════════╦═══════════════════════╦═════════════╦═════════════╗
+         // ║             ║ folder only ║ folder, sub-folders and files ║ folder and sub-folders ║ folder and files ║ sub-folders and files ║ sub-folders ║    files    ║
+         // ╠═════════════╬═════════════╬═══════════════════════════════╬════════════════════════╬══════════════════╬═══════════════════════╬═════════════╬═════════════╣
+         // ║ Propagation ║ none        ║ none                          ║ none                   ║ none             ║ InheritOnly           ║ InheritOnly ║ InheritOnly ║
+         // ║ Inheritance ║ none        ║ Container|Object              ║ Container              ║ Object           ║ Container|Object      ║ Container   ║ Object      ║
+         // ╚═════════════╩═════════════╩═══════════════════════════════╩════════════════════════╩══════════════════╩═══════════════════════╩═════════════╩═════════════╝
+
+         var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
+
+         if (create)
+         {
+            di.Create();
+
+            // Set DENY for current user.
+            dirSecurity = di.GetAccessControl();
+            dirSecurity.AddAccessRule(rule);
+            di.SetAccessControl(dirSecurity);
+         }
+         else
+         {
+            // Remove DENY for current user.
+            dirSecurity = di.GetAccessControl();
+            dirSecurity.RemoveAccessRule(rule);
+            di.SetAccessControl(dirSecurity, AccessControlSections.Access);
+
+            Directory.Delete(tempPath, true, true);
+         }
+      }
+
+      #endregion // FolderWithDenyPermission
 
       #region StopWatcher
 
@@ -204,11 +249,11 @@ namespace AlphaFS.UnitTest
       {
          var lastError = new Win32Exception();
 
-         UnitTestConstants.StopWatcher();
+         StopWatcher();
 
          return onlyTime
-            ? string.Format(CultureInfo.CurrentCulture, "\t\t{0}", UnitTestConstants.StopWatcher())
-            : string.Format(CultureInfo.CurrentCulture, "\t{0} [{1}: {2}]", UnitTestConstants.StopWatcher(), lastError.NativeErrorCode, lastError.Message);
+            ? string.Format(CultureInfo.CurrentCulture, "\t\t{0}", StopWatcher())
+            : string.Format(CultureInfo.CurrentCulture, "\t{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
       }
 
       #endregion // Reporter
