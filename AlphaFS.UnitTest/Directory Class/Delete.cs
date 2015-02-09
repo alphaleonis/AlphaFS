@@ -328,7 +328,7 @@ namespace AlphaFS.UnitTest
             if (Directory.Exists(tempPath))
                Directory.Delete(tempPath, true);
 
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
       }
@@ -390,7 +390,7 @@ namespace AlphaFS.UnitTest
             if (Directory.Exists(tempPath))
                Directory.Delete(tempPath, true, true);
 
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
       }
@@ -455,7 +455,7 @@ namespace AlphaFS.UnitTest
             if (Directory.Exists(tempPath))
                Directory.Delete(tempPath, true, true);
 
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
          Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
       }
