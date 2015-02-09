@@ -28,6 +28,7 @@ Version 2.1
 - Issue #142: Move literal strings to Resources (resx).
 - Issue #144: Add `DirectoryInfo.EnumerateXxx()` methods with support for `DirectoryEnumerationOptions` enum.
 - Issue #151: Add `Directory.EnumerateXxx()` methods with support for `DirectoryEnumerationOptions`- and `PathFormat` enum.
+- Issue #154: Modify private method `FindFileSystemEntryInfo.FindFirstFile()` to report the full path on Exception. 
 
 ### Bugs Fixed
 
