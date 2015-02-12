@@ -60,6 +60,17 @@ namespace Alphaleonis.Win32.Filesystem
          File.SetFsoDateTimeCore(true, null, path, null, lastAccessTime.ToUniversalTime(), null, pathFormat);
       }
 
+      /// <summary>[AlphaFS] Sets the date and time that the specified directory was last accessed.</summary>
+      /// <param name="path">The file for which to set the access date and time information.</param>
+      /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
+      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void SetLastAccessTime(string path, DateTime lastAccessTime, bool modifyReparsePoint, PathFormat pathFormat)
+      {
+         File.SetFsoDateTimeCore(true, null, path, null, lastAccessTime.ToUniversalTime(), null, pathFormat, modifyReparsePoint);
+      }
+
 
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
@@ -70,6 +81,17 @@ namespace Alphaleonis.Win32.Filesystem
       public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, PathFormat pathFormat)
       {
          File.SetFsoDateTimeCore(true, null, path, null, lastAccessTimeUtc, null, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
+      /// <param name="path">The directory for which to set the access date and time information.</param>
+      /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
+      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void SetLastAccessTimeUtc(string path, DateTime lastAccessTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
+      {
+         File.SetFsoDateTimeCore(true, null, path, null, lastAccessTimeUtc, null, pathFormat, modifyReparsePoint);
       }
 
       #region Transactional
@@ -95,6 +117,18 @@ namespace Alphaleonis.Win32.Filesystem
          File.SetFsoDateTimeCore(true, transaction, path, null, lastAccessTime.ToUniversalTime(), null, pathFormat);
       }
 
+      /// <summary>[AlphaFS] Sets the date and time that the specified directory was last accessed.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory for which to set the access date and time information.</param>
+      /// <param name="lastAccessTime">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in local time.</param>
+      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void SetLastAccessTimeTransacted(KernelTransaction transaction, string path, DateTime lastAccessTime, bool modifyReparsePoint, PathFormat pathFormat)
+      {
+         File.SetFsoDateTimeCore(true, transaction, path, null, lastAccessTime.ToUniversalTime(), null, pathFormat, modifyReparsePoint);
+      }
+
 
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
@@ -116,6 +150,18 @@ namespace Alphaleonis.Win32.Filesystem
       public static void SetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, PathFormat pathFormat)
       {
          File.SetFsoDateTimeCore(true, transaction, path, null, lastAccessTimeUtc, null, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the specified directory was last accessed.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory for which to set the access date and time information.</param>
+      /// <param name="lastAccessTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the last access date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
+      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void SetLastAccessTimeUtcTransacted(KernelTransaction transaction, string path, DateTime lastAccessTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
+      {
+         File.SetFsoDateTimeCore(true, transaction, path, null, lastAccessTimeUtc, null, pathFormat, modifyReparsePoint);
       }
       
       #endregion // Transactional
