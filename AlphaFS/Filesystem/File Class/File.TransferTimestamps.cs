@@ -92,7 +92,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          NativeMethods.WIN32_FILE_ATTRIBUTE_DATA attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, sourcePath, pathFormat);
 
-         SetFsoDateTimeCore(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.ftCreationTime), DateTime.FromFileTimeUtc(attrs.ftLastAccessTime), DateTime.FromFileTimeUtc(attrs.ftLastWriteTime), pathFormat);
+         SetFsoDateTimeCore(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.ftCreationTime), DateTime.FromFileTimeUtc(attrs.ftLastAccessTime), DateTime.FromFileTimeUtc(attrs.ftLastWriteTime), false, pathFormat);
       }
 
       #endregion // Internal Methods

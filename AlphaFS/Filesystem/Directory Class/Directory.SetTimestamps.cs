@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
       {
-         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets all the date and time stamps for the specified directory, at once.</summary>
@@ -46,7 +46,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), pathFormat);
+         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Sets all the date and time stamps for the specified directory, at once.</summary>
@@ -59,7 +59,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestamps(string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), pathFormat, modifyReparsePoint);
+         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), modifyReparsePoint, pathFormat);
       }
 
 
@@ -72,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
       {
-         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified directory, at once.</summary>
@@ -84,7 +84,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, pathFormat);
+         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified directory, at once.</summary>
@@ -97,7 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtc(string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, pathFormat, modifyReparsePoint);
+         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, modifyReparsePoint, pathFormat);
       }
 
       #region Transactional
@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsTransacted(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets all the date and time stamps for the specified directory, at once.</summary>
@@ -124,7 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsTransacted(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), pathFormat);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Sets all the date and time stamps for the specified directory, at once.</summary>
@@ -138,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsTransacted(KernelTransaction transaction, string path, DateTime creationTime, DateTime lastAccessTime, DateTime lastWriteTime, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), pathFormat, modifyReparsePoint);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), lastAccessTime.ToUniversalTime(), lastWriteTime.ToUniversalTime(), modifyReparsePoint, pathFormat);
       }
 
 
@@ -152,7 +152,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtcTransacted(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified directory, at once.</summary>
@@ -165,7 +165,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtcTransacted(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, pathFormat);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, false, pathFormat);
       }
 
       /// <summary>[AlphaFS] Sets all the date and time stamps, in coordinated universal time (UTC), for the specified directory, at once.</summary>
@@ -179,7 +179,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetTimestampsUtcTransacted(KernelTransaction transaction, string path, DateTime creationTimeUtc, DateTime lastAccessTimeUtc, DateTime lastWriteTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, pathFormat, modifyReparsePoint);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, lastAccessTimeUtc, lastWriteTimeUtc, modifyReparsePoint, pathFormat);
       }
 
       #endregion // Transactional
