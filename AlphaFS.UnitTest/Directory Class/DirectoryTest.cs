@@ -1353,12 +1353,14 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("Directory-Exists-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+         string symlinkPath = tempPath + "-symlink";
 
          Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
 
          bool exists = Directory.Exists(tempPath);
          Console.WriteLine("\tDirectory.Exists() (Should be False): [{0}]", exists);
          Assert.IsFalse(exists, "Directory should not exist.");
+         Assert.IsFalse(Directory.Exists(symlinkPath), "Directory symlink should not exist.");
 
          Directory.CreateDirectory(tempPath);
 
@@ -1366,6 +1368,16 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\tCreated directory.");
          Console.WriteLine("\tDirectory.Exists() (Should be True): [{0}]", exists);
          Assert.IsTrue(exists, "Directory should exist.");
+         Assert.IsFalse(Directory.Exists(symlinkPath), "Directory symlink should not exist.");
+
+         File.CreateSymbolicLink(symlinkPath, tempPath, SymbolicLinkTarget.Directory);
+
+         Assert.IsTrue(Directory.Exists(tempPath), "Directory should exist.");
+         Assert.IsTrue(Directory.Exists(symlinkPath), "Directory symlink should not exist.");
+
+         Directory.Delete(symlinkPath);
+         Assert.IsTrue(Directory.Exists(tempPath), "Deleting a symlink should not delete the underlying directory.");
+         Assert.IsFalse(Directory.Exists(symlinkPath), "Cleanup failed: Directory symlink should have been removed.");
 
          Directory.Delete(tempPath, true);
          Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
@@ -2350,22 +2362,17 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "Directory.SetTimestamps()-directory-" + Path.GetRandomFileName());
          if (!isLocal) path = Path.LocalToUnc(path);
+         string symlinkPath = path + "-symlink";
+         var rnd = new Random();
 
          Console.WriteLine("\nInput Directory Path: [{0}]", path);
 
          Directory.CreateDirectory(path);
+         File.CreateSymbolicLink(symlinkPath, path, SymbolicLinkTarget.Directory);
 
-         Thread.Sleep(new Random().Next(250, 500));
-         int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
+         DateTime creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+         DateTime lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+         DateTime lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
 
          Console.WriteLine("\nSet timestamps to:\n");
          Console.WriteLine("\tCreationTime  : [{0}]", creationTime);
@@ -2390,12 +2397,16 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tGetLastWriteTime()  AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
+         Directory.SetTimestamps(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(System.IO.Directory.GetCreationTime(symlinkPath), Directory.GetCreationTime(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(System.IO.Directory.GetLastAccessTime(symlinkPath), Directory.GetLastAccessTime(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(System.IO.Directory.GetLastWriteTime(symlinkPath), Directory.GetLastWriteTime(symlinkPath), "AlphaFS != System.IO");
 
 
 
-         creationTime = creationTime.ToUniversalTime();
-         lastAccessTime = lastAccessTime.ToUniversalTime();
-         lastWriteTime = lastWriteTime.ToUniversalTime();
+         creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+         lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+         lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
 
          Console.WriteLine("\nSet timestampsUtc to:\n");
          Console.WriteLine("\tCreationTimeUtc  : [{0}]", creationTime);
@@ -2420,6 +2431,14 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\tGetLastWriteTimeUtc()  AlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
+         Directory.SetTimestamps(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(System.IO.Directory.GetCreationTimeUtc(symlinkPath), Directory.GetCreationTimeUtc(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(System.IO.Directory.GetLastAccessTimeUtc(symlinkPath), Directory.GetLastAccessTimeUtc(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(System.IO.Directory.GetLastWriteTimeUtc(symlinkPath), Directory.GetLastWriteTimeUtc(symlinkPath), "AlphaFS != System.IO");
+
+
+         Directory.Delete(symlinkPath);
+         Assert.IsFalse(Directory.Exists(symlinkPath), "Cleanup failed: Directory symlink should have been removed.");
          Directory.Delete(path);
          Assert.IsTrue(!Directory.Exists(path), "Cleanup failed: Directory should have been removed.");
          Console.WriteLine();
@@ -2434,15 +2453,17 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "Directory.SetCreationTime()-" + Path.GetRandomFileName());
          if (!isLocal) path = Path.LocalToUnc(path);
+         string symlinkPath = path + "-symlink";
 
          Console.WriteLine("\nInput Path: [{0}]", path);
 
          Directory.CreateDirectory(path);
+         File.CreateSymbolicLink(symlinkPath, path, SymbolicLinkTarget.Directory);
+
+         var rnd = new Random();
 
          #region SetCreationTime/Utc
-         Thread.Sleep(new Random().Next(250, 500));
-         int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         DateTime creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(1, 59));
          Console.WriteLine("\n\tSetCreationTime() to: [{0} {1}]", creationTime, creationTime.ToLongTimeString());
          Directory.SetCreationTime(path, creationTime);
          DateTime actual = Directory.GetCreationTime(path);
@@ -2450,11 +2471,14 @@ namespace AlphaFS.UnitTest
          DateTime expected = System.IO.Directory.GetCreationTime(path);
          Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         Directory.SetCreationTime(symlinkPath, creationTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, Directory.GetCreationTime(path), "SetCreationTime modify-reparse-point should not have altered the underlying directory's timestamp");
+         expected = System.IO.Directory.GetCreationTime(symlinkPath);
+         Assert.AreEqual(expected, Directory.GetCreationTime(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(creationTime.AddDays(1), expected, "Time set != time read back");
 
 
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(1, 59));
          Console.WriteLine("\n\tSetCreationTimeUtc() to: [{0} {1}]", creationTime, creationTime.ToLongTimeString());
          Directory.SetCreationTimeUtc(path, creationTime);
          actual = Directory.GetCreationTimeUtc(path);
@@ -2462,12 +2486,15 @@ namespace AlphaFS.UnitTest
          expected = System.IO.Directory.GetCreationTimeUtc(path);
          Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         Directory.SetCreationTimeUtc(symlinkPath, creationTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, Directory.GetCreationTimeUtc(path), "SetCreationTimeUtc modify-reparse-point should not have altered the underlying directory's timestamp");
+         expected = System.IO.Directory.GetCreationTimeUtc(symlinkPath);
+         Assert.AreEqual(expected, Directory.GetCreationTimeUtc(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(creationTime.AddDays(1), expected, "Time set != time read back");
          #endregion // SetCreationTime/Utc
 
          #region SetLastAccessTime/Utc
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         DateTime lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(1, 59));
          Console.WriteLine("\n\tSetLastAccessTime() to: [{0} {1}]", lastAccessTime, lastAccessTime.ToLongTimeString());
          Directory.SetLastAccessTime(path, lastAccessTime);
          actual = Directory.GetLastAccessTime(path);
@@ -2475,11 +2502,14 @@ namespace AlphaFS.UnitTest
          expected = System.IO.Directory.GetLastAccessTime(path);
          Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         Directory.SetLastAccessTime(symlinkPath, lastAccessTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, Directory.GetLastAccessTime(path), "SetLastAccessTime modify-reparse-point should not have altered the underlying directory's timestamp");
+         expected = System.IO.Directory.GetLastAccessTime(symlinkPath);
+         Assert.AreEqual(expected, Directory.GetLastAccessTime(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(lastAccessTime.AddDays(1), expected, "Time set != time read back");
 
 
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(1, 59));
          Console.WriteLine("\n\tSetLastAccessTimeUtc() to: [{0} {1}]", lastAccessTime, lastAccessTime.ToLongTimeString());
          Directory.SetLastAccessTimeUtc(path, lastAccessTime);
          actual = Directory.GetLastAccessTimeUtc(path);
@@ -2487,12 +2517,15 @@ namespace AlphaFS.UnitTest
          expected = System.IO.Directory.GetLastAccessTimeUtc(path);
          Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         Directory.SetLastAccessTimeUtc(symlinkPath, lastAccessTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, Directory.GetLastAccessTimeUtc(path), "SetLastAccessTimeUtc modify-reparse-point should not have altered the underlying directory's timestamp");
+         expected = System.IO.Directory.GetLastAccessTimeUtc(symlinkPath);
+         Assert.AreEqual(expected, Directory.GetLastAccessTimeUtc(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(lastAccessTime.AddDays(1), expected, "Time set != time read back");
          #endregion // SetLastAccessTime/Utc
 
          #region SetLastWriteTime/Utc
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         DateTime lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(1, 59));
          Console.WriteLine("\n\tSetLastWriteTime() to: [{0} {1}]", lastWriteTime, lastWriteTime.ToLongTimeString());
          Directory.SetLastWriteTime(path, lastWriteTime);
          actual = Directory.GetLastWriteTime(path);
@@ -2500,11 +2533,14 @@ namespace AlphaFS.UnitTest
          expected = System.IO.Directory.GetLastWriteTime(path);
          Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         Directory.SetLastWriteTime(symlinkPath, lastWriteTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, Directory.GetLastWriteTime(path), "SetLastWriteTime modify-reparse-point should not have altered the underlying directory's timestamp");
+         expected = System.IO.Directory.GetLastWriteTime(symlinkPath);
+         Assert.AreEqual(expected, Directory.GetLastWriteTime(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(lastWriteTime.AddDays(1), expected, "Time set != time read back");
 
 
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(1, 59));
+         lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(1, 59));
          Console.WriteLine("\n\tSetLastWriteTimeUtc() to: [{0} {1}]", lastWriteTime, lastWriteTime.ToLongTimeString());
          Directory.SetLastWriteTimeUtc(path, lastWriteTime);
          actual = Directory.GetLastWriteTimeUtc(path);
@@ -2512,9 +2548,16 @@ namespace AlphaFS.UnitTest
          expected = System.IO.Directory.GetLastWriteTimeUtc(path);
          Console.WriteLine("\t\tAlphaFS  : [{0}]\n\t\tSystem.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         Directory.SetLastWriteTimeUtc(symlinkPath, lastWriteTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, Directory.GetLastWriteTimeUtc(path), "SetLastWriteTimeUtc modify-reparse-point should not have altered the underlying directory's timestamp");
+         expected = System.IO.Directory.GetLastWriteTimeUtc(symlinkPath);
+         Assert.AreEqual(expected, Directory.GetLastWriteTimeUtc(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(lastWriteTime.AddDays(1), expected, "Time set != time read back");
          #endregion // SetLastWriteTime/Utc
 
+         Directory.Delete(symlinkPath);
          Directory.Delete(path);
+         Assert.IsTrue(!Directory.Exists(symlinkPath), "Cleanup failed: Symlink should have been removed.");
          Assert.IsTrue(!Directory.Exists(path));
 
          Console.WriteLine("\n");
