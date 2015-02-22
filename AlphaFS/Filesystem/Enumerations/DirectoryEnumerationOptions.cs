@@ -51,10 +51,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Specifies whether to search the current directory, or the current directory and all subdirectories.</summary>
       Recursive = 32,
 
-      /// <summary>Enumerate directory using the FindExInfoLevels.Basic option.</summary>
+      /// <summary>Enumerates the directory without querying the short file name, improving overall enumeration speed.</summary>
+      /// <remarks>This option is enabled by default if supported. This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
       BasicSearch = 64,
 
-      /// <summary>Enumerate directory using the NativeMethods.FindExAdditionalFlags.LargeFetch option.</summary>
+      /// <summary>Enumerates the directory using a larger buffer for directory queries, which can increase performance of the find operation.</summary>
+      /// <remarks>This option is enabled by default if supported. This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
       LargeCache = 128
    }
 }

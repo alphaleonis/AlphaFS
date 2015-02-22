@@ -415,7 +415,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileExW")]
       internal static extern SafeFindFileHandle FindFirstFileEx([MarshalAs(UnmanagedType.LPWStr)] string lpFileName,
-         FindExInfoLevels fInfoLevelId, out WIN32_FIND_DATA lpFindFileData, FindExSearchOps fSearchOp,
+         FINDEX_INFO_LEVELS fInfoLevelId, out WIN32_FIND_DATA lpFindFileData, FINDEX_SEARCH_OPS fSearchOp,
          IntPtr lpSearchFilter, FindExAdditionalFlags dwAdditionalFlags);
 
       /// <summary>
@@ -433,8 +433,8 @@ namespace Alphaleonis.Win32.Filesystem
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "FindFirstFileTransactedW")]
       internal static extern SafeFindFileHandle FindFirstFileTransacted(
-         [MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FindExInfoLevels fInfoLevelId,
-         out WIN32_FIND_DATA lpFindFileData, FindExSearchOps fSearchOp, IntPtr lpSearchFilter,
+         [MarshalAs(UnmanagedType.LPWStr)] string lpFileName, FINDEX_INFO_LEVELS fInfoLevelId,
+         out WIN32_FIND_DATA lpFindFileData, FINDEX_SEARCH_OPS fSearchOp, IntPtr lpSearchFilter,
          FindExAdditionalFlags dwAdditionalFlags, SafeHandle hTransaction);
 
       /// <summary>

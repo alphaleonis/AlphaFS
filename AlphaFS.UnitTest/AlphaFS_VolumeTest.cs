@@ -38,9 +38,9 @@ namespace AlphaFS.UnitTest
    {
       #region Unit Tests
 
-      private static readonly string TempFolder = Path.GetTempPath();
+      private readonly string TempFolder = Path.GetTempPath();
 
-      private static void DumpGetDriveFormat(bool isLocal)
+      private void DumpGetDriveFormat(bool isLocal)
       {
          Console.WriteLine("=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
 
@@ -82,7 +82,7 @@ namespace AlphaFS.UnitTest
             Assert.Inconclusive("Nothing was enumerated.");
       }
       
-      private static void DumpGetVolumePathName(bool isLocal)
+      private void DumpGetVolumePathName(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
          string tempPath = UnitTestConstants.LocalHostShare;
@@ -100,7 +100,7 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(volumePathName.EndsWith(Path.DirectorySeparator));
       }
 
-      private static void DumpGetDriveNameForNtDeviceName(bool isLocal)
+      private void DumpGetDriveNameForNtDeviceName(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
          int cnt = 0;
@@ -128,7 +128,7 @@ namespace AlphaFS.UnitTest
             Assert.Inconclusive("Nothing was enumerated.");
       }
 
-      private static void DumpGetUniqueVolumeNameForPath(bool isLocal)
+      private void DumpGetUniqueVolumeNameForPath(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? "LOCAL" : "NETWORK");
 
@@ -313,17 +313,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DefineDosDevice
 
-      #region DeleteDosDevice
-
-      [TestMethod]
-      public void DeleteDosDevice()
-      {
-         Console.WriteLine("Volume.DeleteDosDevice()");
-         Console.WriteLine("\nPlease see unit test: DefineDosDevice()");
-      }
-
-      #endregion // DeleteDosDevice
-
       #region QueryAllDosDevices
 
       [TestMethod]
@@ -490,64 +479,9 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetDriveNameForNtDeviceName
 
-      #region GetDriveType
-
-      [TestMethod]
-      public void GetDriveType()
-      {
-         Console.WriteLine("Volume.GetDriveType()");
-         Console.WriteLine("\nPlease see unit test: GetDriveFormat()");
-      }
-
-      #endregion // GetDriveType
-
-      #region GetDiskFreeSpace
-
-      [TestMethod]
-      public void GetDiskFreeSpace()
-      {
-         Console.WriteLine("Volume.GetDiskFreeSpace()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_DiskSpaceInfo()");
-      }
-
-      #endregion // GetDiskFreeSpace
-
-      #region IsReady
-
-      [TestMethod]
-      public void IsReady()
-      {
-         Console.WriteLine("Volume.IsReady()");
-         Console.WriteLine("\nPlease see unit test: GetDriveFormat()");
-      }
-
-      #endregion // IsReady
-
       #endregion // Drive
 
       #region Volume
-
-      #region DeleteVolumeLabel
-
-      [TestMethod]
-      public void DeleteVolumeLabel()
-      {
-         Console.WriteLine("Volume.DeleteVolumeLabel()");
-         Console.WriteLine("\nPlease see unit test: SetVolumeLabel()");
-      }
-
-      #endregion // DeleteVolumeLabel
-
-      #region DeleteVolumeMountPoint
-
-      [TestMethod]
-      public void DeleteVolumeMountPoint()
-      {
-         Console.WriteLine("Volume.DeleteVolumeMountPoint()");
-         Console.WriteLine("\nPlease see unit test: SetVolumeMountPoint()");
-      }
-
-      #endregion // DeleteVolumeMountPoint
       
       #region EnumerateVolumeMountPoints
 
@@ -604,17 +538,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // EnumerateVolumeMountPoints
 
-      #region EnumerateVolumePathNames
-
-      [TestMethod]
-      public void EnumerateVolumePathNames()
-      {
-         Console.WriteLine("Volume.EnumerateVolumePathNames()");
-         Console.WriteLine("\nPlease see unit test: EnumerateVolumes()");
-      }
-
-      #endregion // EnumerateVolumePathNames
-
       #region EnumerateVolumes
 
       [TestMethod]
@@ -669,61 +592,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetUniqueVolumeNameForPath
-
-      #region GetVolumeDeviceName
-
-      [TestMethod]
-      public void GetVolumeDeviceName()
-      {
-         Console.WriteLine("Volume.GetVolumeDeviceName()");
-         Console.WriteLine("\nPlease see unit test: GetUniqueVolumeNameForPath()");
-      }
-
-      #endregion // GetVolumeDeviceName
-
-      #region GetVolumeDisplayName
-
-      [TestMethod]
-      public void GetVolumeDisplayName()
-      {
-         Console.WriteLine("Volume.GetVolumeDisplayName()");
-         Console.WriteLine("\nPlease see unit test: EnumerateVolumes()");
-      }
-
-      #endregion // GetVolumeDisplayName
-
-      #region GetVolumeGuid
-
-      [TestMethod]
-      public void GetVolumeGuid()
-      {
-         Console.WriteLine("Volume.GetVolumeGuid()");
-         Console.WriteLine("\nPlease see unit test: GetUniqueVolumeNameForPath()");
-      }
-
-      #endregion // GetVolumeGuid
-
-      #region GetVolumeGuidForNtDeviceName
-
-      [TestMethod]
-      public void GetVolumeGuidForNtDeviceName()
-      {
-         Console.WriteLine("Volume.GetVolumeGuidForNtDeviceName()");
-         Console.WriteLine("\nPlease see unit test: GetDriveNameForNtDeviceName()");
-      }
-
-      #endregion // GetVolumeGuidForNtDeviceName
-
-      #region GetVolumeInfo
-
-      [TestMethod]
-      public void GetVolumeInfo()
-      {
-         Console.WriteLine("Volume.GetVolumeInfo()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_VolumeInfo()");
-      }
-
-      #endregion // GetVolumeInfo
 
       #region GetVolumeLabel
 
@@ -842,17 +710,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // IsSameVolume
-
-      #region IsVolume
-
-      [TestMethod]
-      public void IsVolume()
-      {
-         Console.WriteLine("Volume.IsVolume()");
-         Console.WriteLine("\nPlease see unit test: GetDriveFormat()");
-      }
-
-      #endregion // IsVolume
 
       #region SetVolumeLabel
 

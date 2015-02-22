@@ -49,7 +49,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpAccessRules
 
-      private static void DumpAccessRules(int cntCheck, FileSecurity dsSystem, FileSecurity dsAlpha)
+      private void DumpAccessRules(int cntCheck, FileSecurity dsSystem, FileSecurity dsAlpha)
       {
          Console.WriteLine("\n\tSanity check AlphaFS <> System.IO {0}.", cntCheck);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesProtected: [{0}]", dsAlpha.AreAccessRulesProtected);
@@ -72,7 +72,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpAppendAllLines
 
-      private static void DumpAppendAllLines(bool isLocal)
+      private void DumpAppendAllLines(bool isLocal)
       {
          #region Setup
 
@@ -141,7 +141,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpCopy
 
-      private static void DumpCopy(bool isLocal)
+      private void DumpCopy(bool isLocal)
       {
          #region Setup
 
@@ -447,7 +447,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpCreate
 
-      private static void DumpCreate(bool isLocal)
+      private void DumpCreate(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempFolder = Path.GetTempPath();
@@ -493,7 +493,7 @@ namespace AlphaFS.UnitTest
 
       #region TestDelete
 
-      private static void TestDelete(bool isLocal)
+      private void TestDelete(bool isLocal)
       {
          #region Setup
 
@@ -755,17 +755,19 @@ namespace AlphaFS.UnitTest
 
       #region DumpExists
 
-      private static void DumpExists(bool isLocal)
+      private void DumpExists(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("File-Exists-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+         string symlinkPath = tempPath + "-symlink";
 
          Console.WriteLine("\nInput File Path: [{0}]\n", tempPath);
 
          bool exists = File.Exists(tempPath);
          Console.WriteLine("\tFile.Exists() (Should be False): [{0}]", exists);
          Assert.IsFalse(exists, "File should not exist.");
+         Assert.IsFalse(File.Exists(symlinkPath), "File symlink should not exist.");
 
          using (File.Create(tempPath)) { }
 
@@ -773,10 +775,19 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n\tCreated file.");
          Console.WriteLine("\tFile.Exists() (Should be True): [{0}]", exists);
          Assert.IsTrue(exists, "File should exist.");
+         Assert.IsFalse(File.Exists(symlinkPath), "Directory symlink should not exist.");
+
+         File.CreateSymbolicLink(symlinkPath, tempPath, SymbolicLinkTarget.File);
+
+         Assert.IsTrue(File.Exists(tempPath), "File should exist.");
+         Assert.IsTrue(File.Exists(symlinkPath), "File symlink should not exist.");
+
+         File.Delete(symlinkPath);
+         Assert.IsTrue(File.Exists(tempPath), "Deleting a symlink should not delete the underlying file.");
+         Assert.IsFalse(File.Exists(symlinkPath), "Cleanup failed: File symlink should have been removed.");
 
          File.Delete(tempPath, true);
-         exists = File.Exists(tempPath);
-         Assert.IsFalse(exists, "File should exist.");
+         Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
 
          Console.WriteLine("\n");
       }
@@ -785,7 +796,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpGetAccessControl
 
-      private static void DumpGetAccessControl(bool isLocal)
+      private void DumpGetAccessControl(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
@@ -824,7 +835,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpGetXxxTimeXxx
 
-      private static void DumpGetXxxTimeXxx(bool isLocal)
+      private void DumpGetXxxTimeXxx(bool isLocal)
       {
          #region Setup
 
@@ -953,7 +964,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpGetSize
 
-      private static void DumpGetSize(bool isLocal)
+      private void DumpGetSize(bool isLocal)
       {
          #region Setup
 
@@ -1149,7 +1160,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpEnumerateHardlinks
 
-      private static void DumpEnumerateHardlinks(bool isLocal)
+      private void DumpEnumerateHardlinks(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string subDir = Directory.CreateDirectory(Path.GetTempPath("Hardlink-" + Path.GetRandomFileName())).FullName;
@@ -1218,7 +1229,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpMove
 
-      private static void DumpMove(bool isLocal)
+      private void DumpMove(bool isLocal)
       {
          #region Setup
 
@@ -1552,7 +1563,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpGetSetAttributes
 
-      private static void DumpGetSetAttributes(bool isLocal)
+      private void DumpGetSetAttributes(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
@@ -1651,17 +1662,21 @@ namespace AlphaFS.UnitTest
 
       #region DumpSetXxxTimeXxx
 
-      private static void DumpSetXxxTimeXxx(bool isLocal)
+      private void DumpSetXxxTimeXxx(bool isLocal)
       {
          #region Setup
 
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.GetTempPath("File.SetCreationTime()-" + Path.GetRandomFileName());
          if (!isLocal) path = Path.LocalToUnc(path);
+         string symlinkPath = path + "-symlink";
 
          Console.WriteLine("\nInput File Path: [{0}]\n", path);
 
          using (File.Create(path)) { }
+         File.CreateSymbolicLink(symlinkPath, path, SymbolicLinkTarget.File);
+
+         var rnd = new Random();
 
          #endregion // Setup
 
@@ -1670,78 +1685,104 @@ namespace AlphaFS.UnitTest
          #region SetCreationTimeXxx
 
          //Thread.Sleep(new Random().Next(250, 500));
-         int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
+         DateTime creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
          File.SetCreationTime(path, creationTime);
          DateTime actual = File.GetCreationTime(path);
          System.IO.File.SetCreationTime(path, creationTime);
          DateTime expected = System.IO.File.GetCreationTime(path);
          Console.WriteLine("\tSetCreationTime()     : [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         File.SetCreationTime(symlinkPath, creationTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, File.GetCreationTime(path), "SetCreationTime modify-reparse-point should not have altered the underlying file's timestamp");
+         expected = System.IO.File.GetCreationTime(symlinkPath);
+         Assert.AreEqual(expected, File.GetCreationTime(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(creationTime.AddDays(1), expected, "Time set != time read back");
 
 
          //Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime creationTimeUtc = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
+         DateTime creationTimeUtc = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59)).ToUniversalTime();
          File.SetCreationTimeUtc(path, creationTimeUtc);
          actual = File.GetCreationTimeUtc(path);
          System.IO.File.SetCreationTimeUtc(path, creationTimeUtc);
          expected = System.IO.File.GetCreationTimeUtc(path);
          Console.WriteLine("\tSetCreationTimeUtc()  : [{0}]    System.IO: [{1}]\n", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         File.SetCreationTimeUtc(symlinkPath, creationTimeUtc.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, File.GetCreationTimeUtc(path), "SetCreationTimeUtc modify-reparse-point should not have altered the underlying file's timestamp");
+         expected = System.IO.File.GetCreationTimeUtc(symlinkPath);
+         Assert.AreEqual(expected, File.GetCreationTimeUtc(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(creationTimeUtc.AddDays(1), expected, "Time set != time read back");
 
          #endregion // SetCreationTimeXxx
 
          #region SetLastAccessTimeXxx
 
          //Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
+         DateTime lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
          File.SetLastAccessTime(path, lastAccessTime);
          actual = File.GetLastAccessTime(path);
          System.IO.File.SetLastAccessTime(path, lastAccessTime);
          expected = System.IO.File.GetLastAccessTime(path);
          Console.WriteLine("\tSetLastAccessTime()   : [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         File.SetLastAccessTime(symlinkPath, lastAccessTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, File.GetLastAccessTime(path), "SetLastAccessTime modify-reparse-point should not have altered the underlying file's timestamp");
+         expected = System.IO.File.GetLastAccessTime(symlinkPath);
+         Assert.AreEqual(expected, File.GetLastAccessTime(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(lastAccessTime.AddDays(1), expected, "Time set != time read back");
 
 
          //Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastAccessTimeUtc = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
+         DateTime lastAccessTimeUtc = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59)).ToUniversalTime();
          File.SetLastAccessTimeUtc(path, lastAccessTimeUtc);
          actual = File.GetLastAccessTimeUtc(path);
          System.IO.File.SetLastAccessTimeUtc(path, lastAccessTimeUtc);
          expected = System.IO.File.GetLastAccessTimeUtc(path);
          Console.WriteLine("\tSetLastAccessTimeUtc(): [{0}]    System.IO: [{1}]\n", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         File.SetLastAccessTimeUtc(symlinkPath, lastAccessTimeUtc.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, File.GetLastAccessTimeUtc(path), "SetLastAccessTimeUtc modify-reparse-point should not have altered the underlying file's timestamp");
+         expected = System.IO.File.GetLastAccessTimeUtc(symlinkPath);
+         Assert.AreEqual(expected, File.GetLastAccessTimeUtc(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(lastAccessTimeUtc.AddDays(1), expected, "Time set != time read back");
 
          #endregion // SetLastAccessTimeXxx
 
          #region SetLastWriteTimeXxx
 
          //Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
+         DateTime lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
          File.SetLastWriteTime(path, lastWriteTime);
          actual = File.GetLastWriteTime(path);
          System.IO.File.SetLastWriteTime(path, lastWriteTime);
          expected = System.IO.File.GetLastWriteTime(path);
          Console.WriteLine("\tSetLastWriteTime()    : [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         File.SetLastWriteTime(symlinkPath, lastWriteTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, File.GetLastWriteTime(path), "SetLastWriteTime modify-reparse-point should not have altered the underlying file's timestamp");
+         expected = System.IO.File.GetLastWriteTime(symlinkPath);
+         Assert.AreEqual(expected, File.GetLastWriteTime(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(lastWriteTime.AddDays(1), expected, "Time set != time read back");
 
 
          //Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastWriteTimeUtc = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59)).ToUniversalTime();
+         DateTime lastWriteTimeUtc = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59)).ToUniversalTime();
          File.SetLastWriteTimeUtc(path, lastWriteTimeUtc);
          actual = File.GetLastWriteTimeUtc(path);
          System.IO.File.SetLastWriteTimeUtc(path, lastWriteTimeUtc);
          expected = System.IO.File.GetLastWriteTimeUtc(path);
          Console.WriteLine("\tSetLastWriteTimeUtc() : [{0}]    System.IO: [{1}]\n", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
+         File.SetLastWriteTimeUtc(symlinkPath, lastWriteTimeUtc.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(expected, File.GetLastWriteTimeUtc(path), "SetLastWriteTimeUtc modify-reparse-point should not have altered the underlying file's timestamp");
+         expected = System.IO.File.GetLastWriteTimeUtc(symlinkPath);
+         Assert.AreEqual(expected, File.GetLastWriteTimeUtc(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(lastWriteTimeUtc.AddDays(1), expected, "Time set != time read back");
 
          #endregion // SetLastWriteTimeXxx
 
+         File.Delete(symlinkPath);
+         Assert.IsFalse(File.Exists(symlinkPath), "Cleanup failed: Symlink should have been removed.");
          File.Delete(path);
          Assert.IsFalse(File.Exists(path), "Cleanup failed: File should have been removed.");
          Console.WriteLine();
@@ -1751,27 +1792,22 @@ namespace AlphaFS.UnitTest
 
       #region DumpSetTimestamps
 
-      private static void DumpSetTimestamps(bool isLocal)
+      private void DumpSetTimestamps(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "File.SetTimestamps()-" + Path.GetRandomFileName());
          if (!isLocal) path = Path.LocalToUnc(path);
+         string symlinkPath = path + "-symlink";
+         var rnd = new Random();
 
          Console.WriteLine("\nInput Path: [{0}]", path);
 
          using (File.Create(path)) { }
+         File.CreateSymbolicLink(symlinkPath, path, SymbolicLinkTarget.File);
 
-         Thread.Sleep(new Random().Next(250, 500));
-         int seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime creationTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-
-         Thread.Sleep(new Random().Next(250, 500));
-         seed = (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastAccessTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
-
-         Thread.Sleep(new Random().Next(250, 500));
-         seed += (int)DateTime.Now.Ticks & 0x0000FFFF;
-         DateTime lastWriteTime = new DateTime(new Random(seed).Next(1971, 2071), new Random(seed).Next(1, 12), new Random(seed).Next(1, 28), new Random(seed).Next(0, 23), new Random(seed).Next(0, 59), new Random(seed).Next(0, 59));
+         DateTime creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+         DateTime lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+         DateTime lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
 
          Console.WriteLine("\n");
          Console.WriteLine("\tCreationTime  : [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
@@ -1796,12 +1832,15 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\t\tAlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
+         File.SetTimestamps(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(System.IO.File.GetCreationTime(symlinkPath), File.GetCreationTime(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(System.IO.File.GetLastAccessTime(symlinkPath), File.GetLastAccessTime(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(System.IO.File.GetLastWriteTime(symlinkPath), File.GetLastWriteTime(symlinkPath), "AlphaFS != System.IO");
 
 
-
-         creationTime = creationTime.ToUniversalTime();
-         lastAccessTime = lastAccessTime.ToUniversalTime();
-         lastWriteTime = lastWriteTime.ToUniversalTime();
+         creationTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+         lastAccessTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
+         lastWriteTime = new DateTime(rnd.Next(1971, 2071), rnd.Next(1, 12), rnd.Next(1, 28), rnd.Next(0, 23), rnd.Next(0, 59), rnd.Next(0, 59));
 
          Console.WriteLine("\n");
          Console.WriteLine("\tCreationTimeUtc  : [{0} {1}]", creationTime.ToLongDateString(), creationTime.ToLongTimeString());
@@ -1826,6 +1865,13 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\t\tAlphaFS: [{0}]    System.IO: [{1}]", actual, expected);
          Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
 
+         File.SetTimestampsUtc(symlinkPath, creationTime.AddDays(1), lastAccessTime.AddDays(1), lastWriteTime.AddDays(1), true, PathFormat.RelativePath);
+         Assert.AreEqual(System.IO.File.GetCreationTimeUtc(symlinkPath), File.GetCreationTimeUtc(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(System.IO.File.GetLastAccessTimeUtc(symlinkPath), File.GetLastAccessTimeUtc(symlinkPath), "AlphaFS != System.IO");
+         Assert.AreEqual(System.IO.File.GetLastWriteTimeUtc(symlinkPath), File.GetLastWriteTimeUtc(symlinkPath), "AlphaFS != System.IO");
+
+         File.Delete(symlinkPath);
+         Assert.IsFalse(File.Exists(symlinkPath));
          File.Delete(path);
          Assert.IsFalse(File.Exists(path));
 
@@ -1836,7 +1882,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpTransferTimestamps
 
-      private static void DumpTransferTimestamps(bool isLocal)
+      private void DumpTransferTimestamps(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string path = Path.Combine(Path.GetTempPath(), "File.TransferTimestamps()-" + Path.GetRandomFileName());
@@ -1907,7 +1953,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpReadAllLines
 
-      private static void DumpReadAllLines(bool isLocal)
+      private void DumpReadAllLines(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tmp = Path.Combine(Path.GetTempPath(), "File.SetAttributes()-" + Path.GetRandomFileName());
@@ -1942,7 +1988,7 @@ namespace AlphaFS.UnitTest
 
       #region DumpReadWriteAllBytes
 
-      private static void DumpReadWriteAllBytes(bool isLocal)
+      private void DumpReadWriteAllBytes(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = Path.GetTempPath("File.ReadWriteAllBytes()-" + Path.GetRandomFileName());
@@ -1999,7 +2045,7 @@ namespace AlphaFS.UnitTest
 
       #region Create file with trailing dot/space
 
-      private static void DumpFileTrailingDotSpace(bool isLocal)
+      private void DumpFileTrailingDotSpace(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===\n", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          const string characterDot = ".";
@@ -2520,17 +2566,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // CreateText
 
-      #region Decrypt
-
-      [TestMethod]
-      public void Decrypt()
-      {
-         Console.WriteLine("File.Decrypt()");
-         Console.WriteLine("\nPlease see unit test: Encrypt()");
-      }
-
-      #endregion // Decrypt
-
       #region Delete
 
       [TestMethod]
@@ -2660,61 +2695,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // GetCreationTime
-
-      #region GetCreationTimeUtc
-
-      [TestMethod]
-      public void GetCreationTimeUtc()
-      {
-         Console.WriteLine("File.GetCreationTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetCreationTimeUtc
-
-      #region GetLastAccessTime
-
-      [TestMethod]
-      public void GetLastAccessTime()
-      {
-         Console.WriteLine("File.GetLastAccessTime()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetLastAccessTime
-
-      #region GetLastAccessTimeUtc
-
-      [TestMethod]
-      public void GetLastAccessTimeUtc()
-      {
-         Console.WriteLine("File.GetLastAccessTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetLastAccessTimeUtc
-
-      #region GetLastWriteTime
-
-      [TestMethod]
-      public void GetLastWriteTime()
-      {
-         Console.WriteLine("File.GetLastWriteTime()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetLastWriteTime
-
-      #region GetLastWriteTimeUtc
-
-      [TestMethod]
-      public void GetLastWriteTimeUtc()
-      {
-         Console.WriteLine("File.GetLastWriteTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetLastWriteTimeUtc
 
       #region Move
 
@@ -2959,17 +2939,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // SetAccessControl
 
-      #region SetAttributes
-
-      [TestMethod]
-      public void SetAttributes()
-      {
-         Console.WriteLine("File.SetAttributes()");
-         Console.WriteLine("\nPlease see unit test: GetAttributes()");
-      }
-
-      #endregion // SetAttributes
-
       #region SetCreationTime
 
       [TestMethod]
@@ -2982,61 +2951,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // SetCreationTime
-
-      #region SetCreationTimeUtc
-
-      [TestMethod]
-      public void SetCreationTimeUtc()
-      {
-         Console.WriteLine("File.SetCreationTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: SetCreationTime()");
-      }
-
-      #endregion // SetCreationTimeUtc
-
-      #region SetLastAccessTime
-
-      [TestMethod]
-      public void SetLastAccessTime()
-      {
-         Console.WriteLine("File.SetLastAccessTime()");
-         Console.WriteLine("\nPlease see unit test: SetCreationTime()");
-      }
-
-      #endregion // SetLastAccessTime
-
-      #region SetLastAccessTimeUtc
-
-      [TestMethod]
-      public void SetLastAccessTimeUtc()
-      {
-         Console.WriteLine("File.SetLastAccessTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: SetCreationTime()");
-      }
-
-      #endregion // SetLastAccessTimeUtc
-
-      #region SetLastWriteTime
-
-      [TestMethod]
-      public void SetLastWriteTime()
-      {
-         Console.WriteLine("File.SetLastWriteTime()");
-         Console.WriteLine("\nPlease see unit test: SetCreationTime()");
-      }
-
-      #endregion // SetLastWriteTime
-
-      #region SetLastWriteTimeUtc
-
-      [TestMethod]
-      public void SetLastWriteTimeUtc()
-      {
-         Console.WriteLine("File.SetLastWriteTimeUtc()");
-         Console.WriteLine("\nPlease see unit test: SetCreationTime()");
-      }
-
-      #endregion // SetLastWriteTimeUtc
 
       #region WriteAllBytes
 
@@ -3137,17 +3051,6 @@ namespace AlphaFS.UnitTest
 
       #region AlphaFS
 
-      #region Compress
-
-      [TestMethod]
-      public void AlphaFS_Compress()
-      {
-         Console.WriteLine("File.Compress()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_GetSize()");
-      }
-
-      #endregion // Compress
-
       #region CreateHardlink
 
       [TestMethod]
@@ -3160,105 +3063,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // CreateHardlink
-
-      #region Decompress
-
-      [TestMethod]
-      public void AlphaFS_Decompress()
-      {
-         Console.WriteLine("File.Decompress()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_GetSize()");
-      }
-
-      #endregion // Compress/Decompress
-
-      #region EnumerateHardlinks
-
-      [TestMethod]
-      public void AlphaFS_EnumerateHardlinks()
-      {
-         Console.WriteLine("File.EnumerateHardlinks()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_CreateHardlink()");
-      }
-
-      #endregion // EnumerateHardlinks
-
-      #region EnumerateAlternateDataStreams
-
-      [TestMethod]
-      public void AlphaFS_EnumerateAlternateDataStreams()
-      {
-         Console.WriteLine("File.EnumerateAlternateDataStreams()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_AlternateDataStreamInfo()");
-      }
-
-      #endregion // EnumerateAlternateDataStreams
-
-      #region GetChangeTime
-
-      [TestMethod]
-      public void AlphaFS_GetChangeTime()
-      {
-         Console.WriteLine("File.GetChangeTime()");
-         Console.WriteLine("\nPlease see unit test: GetCreationTime()");
-      }
-
-      #endregion // GetChangeTime
-
-      #region GetCompressedSize
-
-      [TestMethod]
-      public void AlphaFS_GetCompressedSize()
-      {
-         Console.WriteLine("File.GetCompressedSize()");
-         Console.WriteLine("\nPlease see unit test: AlphaFS_Compress()");
-      }
-
-      #endregion // GetCompressedSize
-
-      #region GetEncryptionStatus
-
-      [TestMethod]
-      public void AlphaFS_GetEncryptionStatus()
-      {
-         Console.WriteLine("File.GetEncryptionStatus()");
-         Console.WriteLine("\nPlease see unit test: Encrypt()");
-      }
-
-      #endregion // GetEncryptionStatus
-
-      #region GetFileSystemEntry
-
-      [TestMethod]
-      public void AlphaFS_GetFileSystemEntry()
-      {
-         Console.WriteLine("File.GetFileSystemEntry()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_FileSystemEntryInfo()");
-      }
-
-      #endregion // GetFileSystemEntry
-
-      #region GetFileInfoByHandle
-
-      [TestMethod]
-      public void AlphaFS_GetFileInfoByHandle()
-      {
-         Console.WriteLine("File.GetFileInfoByHandle()");
-         Console.WriteLine("\nPlease see unit test: Filesystem_Class_ByHandleFileInfo()");
-      }
-
-      #endregion // GetFileInfoByHandle
-
-      #region GetLinkTargetInfo
-
-      [TestMethod]
-      public void AlphaFS_GetLinkTargetInfo()
-      {
-         Console.WriteLine("File.GetLinkTargetInfo()");
-         Console.WriteLine("\nPlease see unit test: Volume.SetVolumeMountPoint()");
-      }
-
-      #endregion // GetLinkTargetInfo
 
       #region GetSize
 

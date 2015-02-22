@@ -19,6 +19,7 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Security;
@@ -38,6 +39,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
       public FileInfo[] GetFiles()
       {
@@ -58,6 +65,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
       public FileInfo[] GetFiles(string searchPattern)
       {
@@ -82,6 +95,12 @@ namespace Alphaleonis.Win32.Filesystem
       /// before the whole collection is returned; when you use GetFiles, you must wait for the whole array of names to be returned before you can access the array.
       /// Therefore, when you are working with many files and directories, EnumerateFiles can be more efficient.
       /// </remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
       [SecurityCritical]
       public FileInfo[] GetFiles(string searchPattern, SearchOption searchOption)
       {

@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
       /// </remarks>
       /// </summary>
-      public static readonly FindExInfoLevels FindExInfoLevel = IsAtLeastWindows7 ? FindExInfoLevels.Basic : FindExInfoLevels.Standard;
+      public static readonly FINDEX_INFO_LEVELS FindexInfoLevels = IsAtLeastWindows7 ? FINDEX_INFO_LEVELS.Basic : FINDEX_INFO_LEVELS.Standard;
 
       /// <summary>Uses a larger buffer for directory queries, which can increase performance of the find operation.</summary>
       /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>

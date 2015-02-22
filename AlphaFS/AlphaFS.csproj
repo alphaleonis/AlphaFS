@@ -262,7 +262,7 @@
     <Compile Include="Filesystem\File Class\File.CreateHardlink.cs" />
     <Compile Include="Filesystem\File Class\File.Compress.cs" />
     <Compile Include="Filesystem\File Class\File.Delete.cs" />
-    <Compile Include="Filesystem\File Class\File.EncryptDescrypt.cs" />
+    <Compile Include="Filesystem\File Class\File.EncryptDecrypt.cs" />
     <Compile Include="Filesystem\File Class\File.CreateText.cs" />
     <Compile Include="Filesystem\File Class\File.CopyMove.cs" />
     <Compile Include="Filesystem\File Class\File.IsLocked.cs" />
@@ -280,7 +280,7 @@
     <Compile Include="Filesystem\Enumerations\FileInfoByHandleClass.cs" />
     <Compile Include="Filesystem\Enumerations\FinalPathFormats.cs" />
     <Compile Include="Filesystem\Enumerations\FindExAdditionalFlags.cs" />
-    <Compile Include="Filesystem\Enumerations\FindExInfoLevels.cs" />
+    <Compile Include="Filesystem\Enumerations\FINDEX_INFO_LEVELS.cs" />
     <Compile Include="Filesystem\Enumerations\FindExSearchOps.cs" />
     <Compile Include="Filesystem\Enumerations\ErrorMode.cs" />
     <Compile Include="Filesystem\Enumerations\ReparsePointTag.cs" />

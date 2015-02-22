@@ -52,8 +52,8 @@ namespace Alphaleonis.Win32.Filesystem
          AsFileSystemInfo = !AsString && (typeOfT == typeof(FileSystemInfo) || typeOfT.BaseType == typeof(FileSystemInfo));
 
          FindExInfoLevel = NativeMethods.IsAtLeastWindows7 && (options & DirectoryEnumerationOptions.BasicSearch) != 0
-            ? NativeMethods.FindExInfoLevels.Basic
-            : NativeMethods.FindExInfoLevels.Standard;
+            ? NativeMethods.FINDEX_INFO_LEVELS.Basic
+            : NativeMethods.FINDEX_INFO_LEVELS.Standard;
 
          LargeCache = NativeMethods.IsAtLeastWindows7 && (options & DirectoryEnumerationOptions.LargeCache) != 0
             ? NativeMethods.FindExAdditionalFlags.LargeFetch
@@ -103,9 +103,6 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (!ContinueOnException)
             {
-               // Use path without any search filter.
-               string path = Path.GetDirectoryName(pathLp, false);
-
                switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_FILE_NOT_FOUND:
@@ -113,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: DirectoryNotFoundException: Path is invalid, such as referring to an unmapped drive.
                      // Directory.Delete()
 
-                     NativeError.ThrowException(IsDirectory ? (int) Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, path);
+                     NativeError.ThrowException(IsDirectory ? (int) Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, InputPath);
                      break;
 
                   case Win32Errors.ERROR_DIRECTORY:
@@ -125,17 +122,17 @@ namespace Alphaleonis.Win32.Filesystem
                      // Directory.GetFiles()
                      // Directory.GetFileSystemEntries()
 
-                     NativeError.ThrowException(lastError, path);
+                     NativeError.ThrowException(lastError, InputPath);
                      break;
 
                   case Win32Errors.ERROR_ACCESS_DENIED:
                      // MSDN: .NET 3.5+: UnauthorizedAccessException: The caller does not have the required permission.
-                     NativeError.ThrowException(lastError, path);
+                     NativeError.ThrowException(lastError, InputPath);
                      break;
                }
 
                // MSDN: .NET 3.5+: IOException
-               NativeError.ThrowException(lastError, path);
+               NativeError.ThrowException(lastError, InputPath);
             }
          }
 
@@ -153,7 +150,7 @@ namespace Alphaleonis.Win32.Filesystem
             return (T) (object) null;
 
          if (AsString)
-            // Return object instance FullPath property as string, optionally in Unicode format.
+            // Return object instance FullPath property as string, optionally in long path format.
             return (T) (object) (AsLongPath ? fullPathLp : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None));
 
 
@@ -315,8 +312,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region AsLongPath
 
-      /// <summary>Gets or sets the ability to return the full path in Unicode format.</summary>
-      /// <value><see langword="true"/> returns the full path in Unicode format, <see langword="false"/> returns the full path in regular path format.</value>
+      /// <summary>Gets or sets the ability to return the full path in long full path format.</summary>
+      /// <value><see langword="true"/> returns the full path in long full path format, <see langword="false"/> returns the full path in regular path format.</value>
       public bool AsLongPath { get; internal set; }
 
       #endregion // AsLongPath
@@ -331,8 +328,8 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FindExInfoLevel
 
-      /// <summary>Gets the value indicating which <see cref="NativeMethods.FindExInfoLevels"/> to use.</summary>
-      public NativeMethods.FindExInfoLevels FindExInfoLevel { get; internal set; }
+      /// <summary>Gets the value indicating which <see cref="NativeMethods.FINDEX_INFO_LEVELS"/> to use.</summary>
+      public NativeMethods.FINDEX_INFO_LEVELS FindExInfoLevel { get; internal set; }
 
       #endregion // FindExInfoLevel
 
@@ -346,7 +343,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region FileSystemObjectType
 
-      private NativeMethods.FindExSearchOps _limitSearchToDirs = NativeMethods.FindExSearchOps.SearchNameMatch;
+      private NativeMethods.FINDEX_SEARCH_OPS _limitSearchToDirs = NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch;
       private bool? _fileSystemObjectType;
 
       /// <summary>Gets the file system object type.</summary>
@@ -364,8 +361,8 @@ namespace Alphaleonis.Win32.Filesystem
             _fileSystemObjectType = value;
 
             _limitSearchToDirs = value != null && (bool)value
-               ? NativeMethods.FindExSearchOps.SearchLimitToDirectories
-               : NativeMethods.FindExSearchOps.SearchNameMatch;
+               ? NativeMethods.FINDEX_SEARCH_OPS.SearchLimitToDirectories
+               : NativeMethods.FINDEX_SEARCH_OPS.SearchNameMatch;
          }
       }
 
@@ -374,14 +371,14 @@ namespace Alphaleonis.Win32.Filesystem
       #region InputPath
 
       /// <summary>Gets or sets the path to the folder.</summary>
-      /// <value>The path to the file or folder in Unicode format.</value>
+      /// <value>The path to the file or folder in long path format.</value>
       public string InputPath { get; internal set; }
 
       #endregion // InputPath
 
       #region IsDirectory
 
-      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FindExInfoLevels"/> to use.</summary>
+      /// <summary>Gets or sets a value indicating which <see cref="NativeMethods.FINDEX_INFO_LEVELS"/> to use.</summary>
       /// <value><see langword="true"/> indicates a folder object, <see langword="false"/> indicates a file object.</value>
       public bool IsDirectory { get; internal set; }
 

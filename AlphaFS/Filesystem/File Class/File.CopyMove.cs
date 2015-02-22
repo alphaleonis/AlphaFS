@@ -1275,7 +1275,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             if (dataInitialised == Win32Errors.ERROR_SUCCESS && data.dwFileAttributes != (FileAttributes) (-1))
                SetFsoDateTimeCore(false, transaction, destFileNameLp, DateTime.FromFileTimeUtc(data.ftCreationTime),
-                  DateTime.FromFileTimeUtc(data.ftLastAccessTime), DateTime.FromFileTimeUtc(data.ftLastWriteTime), PathFormat.LongFullPath);
+                  DateTime.FromFileTimeUtc(data.ftLastAccessTime), DateTime.FromFileTimeUtc(data.ftLastWriteTime), false, PathFormat.LongFullPath);
          }
 
          #endregion // Transfer Timestamps

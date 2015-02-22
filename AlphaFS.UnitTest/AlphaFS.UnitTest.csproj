@@ -101,29 +101,29 @@
     <Prefer32Bit>false</Prefer32Bit>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
   </PropertyGroup>
-   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452|AnyCPU'">
-      <OutputPath>..\bin\Release\Net452\</OutputPath>
-      <DebugType>pdbonly</DebugType>
-      <Optimize>true</Optimize>
-      <DefineConstants>TRACE;NET452</DefineConstants>
-      <ErrorReport>prompt</ErrorReport>
-      <WarningLevel>4</WarningLevel>
-      <Prefer32Bit>false</Prefer32Bit>
-      <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-   </PropertyGroup>
-   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452 Debug|AnyCPU'">
-      <DebugSymbols>true</DebugSymbols>
-      <DebugType>full</DebugType>
-      <Optimize>false</Optimize>
-      <OutputPath>..\bin\Debug\Net452\</OutputPath>
-      <DefineConstants>DEBUG;TRACE;NET452</DefineConstants>
-      <ErrorReport>prompt</ErrorReport>
-      <WarningLevel>4</WarningLevel>
-      <PlatformTarget>AnyCPU</PlatformTarget>
-      <Prefer32Bit>false</Prefer32Bit>
-      <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-   </PropertyGroup>
-   <PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452|AnyCPU'">
+    <OutputPath>..\bin\Release\Net452\</OutputPath>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;NET452</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Net452 Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug\Net452\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NET452</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
@@ -144,18 +144,19 @@
       <Link>AssemblyVersionInfo.cs</Link>
     </Compile>
     <Compile Include="AlphaFS_DeviceTest.cs" />
-    <Compile Include="AlphaFS_HostTest.cs" />
+    <Compile Include="Directory Class\Delete.cs" />
+    <Compile Include="Host Class\AlphaFS_HostTest.cs" />
     <Compile Include="AlphaFS_ClassesTest.cs" />
-    <Compile Include="EncryptedFileRawTests.cs" />
+    <Compile Include="Directory Class\CreateDirectory.cs" />
+    <Compile Include="Directory Class\DirectoryTest.cs" />
+    <Compile Include="File Class\EncryptedFileRawTests.cs" />
     <Compile Include="Utils\DirectoryAssert.cs" />
     <Compile Include="Utils\FileAssert.cs" />
-    <Compile Include="FileInfoTest.cs" />
-    <Compile Include="AlphaFS_Shell32Test.cs" />
-    <Compile Include="DirectoryInfoTest.cs" />
-    <Compile Include="DirectoryTest.cs" />
-    <Compile Include="DriveInfoTest.cs" />
-    <Compile Include="FileTest.cs" />
-    <Compile Include="PathTest.cs" />
+    <Compile Include="FileInfo Class\FileInfoTest.cs" />
+    <Compile Include="Shell32 Class\AlphaFS_Shell32Test.cs" />
+    <Compile Include="DirectoryInfo Class\DirectoryInfoTest.cs" />
+    <Compile Include="File Class\FileTest.cs" />
+    <Compile Include="Path Class\PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AlphaFS_VolumeTest.cs" />
     <Compile Include="Utils\PathUtils.cs" />

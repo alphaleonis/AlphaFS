@@ -28,20 +28,13 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Minimum supported client: Windows XP [desktop apps | Windows Store apps]</para>
       ///   <para>Minimum supported server: Windows Server 2003 [desktop apps | Windows Store apps]</para>
       /// </remarks>
-      internal enum FindExInfoLevels
+      internal enum FINDEX_INFO_LEVELS
       {
-         /// <summary>The FindFirstFileEx function retrieves a standard set of attribute information. The data is returned in a <see cref="WIN32_FIND_DATA"/> structure.</summary>
+         /// <summary>A standard set of attribute is returned in a <see cref="WIN32_FIND_DATA"/> structure.</summary>
          Standard = 0,
 
-         /// <summary>The FindFirstFileEx function does not query the short file name,
-         /// <para>improving overall enumeration speed.</para>
-         /// <para>&#160;</para>
-         /// <remarks>
-         /// <para>The data is returned in a <see cref="WIN32_FIND_DATA"/> structure,</para>
-         /// <para>and cAlternateFileName member is always a NULL string.</para>
-         /// <para>This value is not supported until Windows Server 2008 R2 and Windows 7.</para>
-         /// </remarks>
-         /// </summary>
+         /// <summary>The FindFirstFileEx function does not query the short file name, improving overall enumeration speed.</summary>
+         /// <remarks>This value is not supported until Windows Server 2008 R2 and Windows 7.</remarks>
          Basic = 1
 
          ///// <summary>This value is used for validation. Supported values are less than this value.</summary>

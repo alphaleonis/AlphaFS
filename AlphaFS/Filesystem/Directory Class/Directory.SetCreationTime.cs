@@ -34,7 +34,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime)
       {
-         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), null, null, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), null, null, false, PathFormat.RelativePath);
       }
 
 
@@ -45,7 +45,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc)
       {
-         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, null, null, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, null, null, false, PathFormat.RelativePath);
       }
 
       #endregion // .NET
@@ -57,7 +57,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTime(string path, DateTime creationTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), null, null, pathFormat);
+         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), null, null, false, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Sets the date and time the directory was created.</summary>
+      /// <param name="path">The directory for which to set the creation date and time information.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
+      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
+      [SecurityCritical]
+      public static void SetCreationTime(string path, DateTime creationTime, bool modifyReparsePoint, PathFormat pathFormat)
+      {
+         File.SetFsoDateTimeCore(true, null, path, creationTime.ToUniversalTime(), null, null, modifyReparsePoint, pathFormat);
       }
 
 
@@ -69,7 +80,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, null, null, pathFormat);
+         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, null, null, false, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the directory was created.</summary>
+      /// <param name="path">The directory for which to set the creation date and time information.</param>
+      /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
+      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void SetCreationTimeUtc(string path, DateTime creationTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
+      {
+         File.SetFsoDateTimeCore(true, null, path, creationTimeUtc, null, null, modifyReparsePoint, pathFormat);
       }
 
       #region Transactional
@@ -81,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeTransacted(KernelTransaction transaction, string path, DateTime creationTime)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), null, null, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), null, null, false, PathFormat.RelativePath);
       }
       
       /// <summary>[AlphaFS] Sets the date and time the directory was created.</summary>
@@ -92,7 +114,19 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeTransacted(KernelTransaction transaction, string path, DateTime creationTime, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), null, null, pathFormat);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), null, null, false, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Sets the date and time the directory was created.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory for which to set the creation date and time information.</param>
+      /// <param name="creationTime">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in local time.</param>
+      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void SetCreationTimeTransacted(KernelTransaction transaction, string path, DateTime creationTime, bool modifyReparsePoint, PathFormat pathFormat)
+      {
+         File.SetFsoDateTimeCore(true, transaction, path, creationTime.ToUniversalTime(), null, null, modifyReparsePoint, pathFormat);
       }
 
 
@@ -104,7 +138,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtcTransacted(KernelTransaction transaction, string path, DateTime creationTimeUtc)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, null, null, PathFormat.RelativePath);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, null, null, false, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the directory was created.</summary>
@@ -115,7 +149,19 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void SetCreationTimeUtcTransacted(KernelTransaction transaction, string path, DateTime creationTimeUtc, PathFormat pathFormat)
       {
-         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, null, null, pathFormat);
+         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, null, null, false, pathFormat);
+      }
+
+      /// <summary>[AlphaFS] Sets the date and time, in coordinated universal time (UTC), that the directory was created.</summary>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The directory for which to set the creation date and time information.</param>
+      /// <param name="creationTimeUtc">A <see cref="System.DateTime"/> containing the value to set for the creation date and time of <paramref name="path"/>. This value is expressed in UTC time.</param>
+      /// <param name="modifyReparsePoint">If <see langword="true"/>, the date and time information will apply to the reparse point (symlink or junction) and not the file or directory linked to. No effect if <paramref name="path"/> does not refer to a reparse point.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static void SetCreationTimeUtcTransacted(KernelTransaction transaction, string path, DateTime creationTimeUtc, bool modifyReparsePoint, PathFormat pathFormat)
+      {
+         File.SetFsoDateTimeCore(true, transaction, path, creationTimeUtc, null, null, modifyReparsePoint, pathFormat);
       }
 
       #endregion // Transactional
