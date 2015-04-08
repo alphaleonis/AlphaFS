@@ -2359,6 +2359,23 @@ namespace AlphaFS.UnitTest
          DumpAppendAllLines(false);
       }
 
+      [TestMethod]
+      public void AppendAllLinesThenReadAllLinesShouldReturnSameCollection()
+      {
+         var file = Path.GetTempFileName();
+         var sample = new []{ "line one", "line two" };
+
+         try
+         {
+            File.AppendAllLines(file, sample);
+            CollectionAssert.AreEquivalent(sample, File.ReadAllLines(file).ToArray());
+         }
+         finally
+         {
+            File.Delete(file);
+         }
+      }
+
       #endregion // AppendAllLines
 
       #region AppendAllText
