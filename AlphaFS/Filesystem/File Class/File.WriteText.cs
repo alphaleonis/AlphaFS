@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static void AppendAllLines(string path, IEnumerable<string> contents)
       {
-         WriteAppendAllLinesCore(null, path, contents, NativeMethods.DefaultFileEncoding, true, false, PathFormat.RelativePath);
+         WriteAppendAllLinesCore(null, path, contents, NativeMethods.DefaultFileEncoding, true, true, PathFormat.RelativePath);
       }
 
       /// <summary>Appends lines to a file, and then closes the file. If the specified file does not exist, this method creates a file, writes the
