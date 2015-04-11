@@ -36,6 +36,7 @@ Version 2.1
 
 - Issue #50: `Path.GetLongPath()` does not prefix on "C:\", should it?
 - Issue #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`.
+- Issue #162 AppendAllLines concatenates content into one line. (Thanks pavelhritonenko!)
 
 ### Breaking Changes
 
