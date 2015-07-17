@@ -31,10 +31,13 @@ namespace Alphaleonis.Win32.Filesystem
       #region CreateSymbolicLink
 
       /// <summary>[AlphaFS] Creates a symbolic link.</summary>
+      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception>Several Exceptions possible.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
@@ -43,9 +46,12 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a symbolic link.</summary>
+      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>      
+      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception>Several Exceptions possible.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLink(string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
@@ -54,11 +60,14 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       /// <summary>[AlphaFS] Creates a symbolic link.</summary>
+      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception>Several Exceptions possible.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLinkTransacted(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
@@ -68,10 +77,13 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Creates a symbolic link.</summary>
+      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>      
+      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception>Several Exceptions possible.</exception>
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "symlink")]
       [SecurityCritical]
       public static void CreateSymbolicLinkTransacted(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType)
@@ -84,11 +96,14 @@ namespace Alphaleonis.Win32.Filesystem
       #region Internal Methods
 
       /// <summary>Creates a symbolic link.</summary>
+      /// <remarks>See <see cref="Alphaleonis.Win32.Security.Privilege.CreateSymbolicLink"/> to run this method in an elevated state.</remarks>
       /// <param name="transaction">The transaction.</param>
       /// <param name="symlinkFileName">The name of the target for the symbolic link to be created.</param>
       /// <param name="targetFileName">The symbolic link to be created.</param>
       /// <param name="targetType">Indicates whether the link target, <paramref name="targetFileName"/>, is a file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
+      /// <exception cref="PlatformNotSupportedException"/>
+      /// <exception>Several Exceptions possible.</exception>
       [SecurityCritical]
       internal static void CreateSymbolicLinkCore(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
@@ -105,7 +120,7 @@ namespace Alphaleonis.Win32.Filesystem
          targetFileNameLp = Path.GetRegularPathCore(targetFileNameLp, GetFullPathOptions.None);
 
 
-         if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
+         if (!(transaction == null
 
             // CreateSymbolicLink() / CreateSymbolicLinkTransacted()
             // In the ANSI version of this function, the name is limited to MAX_PATH characters.
@@ -114,7 +129,8 @@ namespace Alphaleonis.Win32.Filesystem
             // 2015-07-17: This function does not support long paths.
 
             ? NativeMethods.CreateSymbolicLink(symlinkFileNameLp, targetFileNameLp, targetType)
-            : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileNameLp, targetFileNameLp, targetType, transaction.SafeHandle)))
+            : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileNameLp, targetFileNameLp, targetType,
+               transaction.SafeHandle)))
          {
             var lastError = Marshal.GetLastWin32Error();
             if (lastError != 0)
