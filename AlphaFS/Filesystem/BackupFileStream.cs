@@ -283,7 +283,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          // If one of the constructors previously threw an exception,
          // than the object hasn't been initialized properly and call from finalize will fail.         
-         if (!SafeFileHandle.IsInvalid)
+         if (SafeFileHandle != null && !SafeFileHandle.IsInvalid)
          {
             if (m_context != IntPtr.Zero)
             {
