@@ -253,13 +253,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Creates a symbolic link.</summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only].</remarks>
+      /// <remarks>
+      /// The unmanaged prototype contains a return directive because the CreateSymbolicLink API function returns BOOLEAN, a one-byte data type.
+      /// The default marshaling for bool is four bytes (to allow seamless integration with BOOL return values).
+      /// If you were to use the default marshaling for BOOLEAN values, it's likely that you will get erroneous results.
+      /// The return directive forces PInvoke to marshal just one byte of the return value.
+      /// Source: http://www.informit.com/guides/content.aspx?g=dotnet&seqNum=762&ns=16196
+      /// </remarks>
       /// <returns>
       ///   If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error
       ///   information, call GetLastError.
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateSymbolicLinkW")]
-      [return: MarshalAs(UnmanagedType.Bool)]
+      [return: MarshalAs(UnmanagedType.I1)]
       internal static extern bool CreateSymbolicLink([MarshalAs(UnmanagedType.LPWStr)] string lpSymlinkFileName,
          [MarshalAs(UnmanagedType.LPWStr)] string lpTargetFileName,
          [MarshalAs(UnmanagedType.U4)] SymbolicLinkTarget dwFlags);
@@ -267,13 +274,20 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Creates a symbolic link as a transacted operation.</summary>
       /// <remarks>Minimum supported client: Windows Vista [desktop apps only].</remarks>
       /// <remarks>Minimum supported server: Windows Server 2008 [desktop apps only].</remarks>
+      /// <remarks>
+      /// The unmanaged prototype contains a return directive because the CreateSymbolicLink API function returns BOOLEAN, a one-byte data type.
+      /// The default marshaling for bool is four bytes (to allow seamless integration with BOOL return values).
+      /// If you were to use the default marshaling for BOOLEAN values, it's likely that you will get erroneous results.
+      /// The return directive forces PInvoke to marshal just one byte of the return value.
+      /// Source: http://www.informit.com/guides/content.aspx?g=dotnet&seqNum=762&ns=16196
+      /// </remarks>
       /// <returns>
       ///   If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error
       ///   information, call GetLastError.
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
       [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateSymbolicLinkTransactedW")]
-      [return: MarshalAs(UnmanagedType.Bool)]
+      [return: MarshalAs(UnmanagedType.I1)]
       internal static extern bool CreateSymbolicLinkTransacted(
          [MarshalAs(UnmanagedType.LPWStr)] string lpSymlinkFileName,
          [MarshalAs(UnmanagedType.LPWStr)] string lpTargetFileName,

@@ -19,12 +19,14 @@
  *  THE SOFTWARE. 
  */
 
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-   public static partial class File
+   partial class File
    {
       #region CreateSymbolicLink
 
@@ -90,10 +92,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void CreateSymbolicLinkCore(KernelTransaction transaction, string symlinkFileName, string targetFileName, SymbolicLinkTarget targetType, PathFormat pathFormat)
       {
+         if (!NativeMethods.IsAtLeastWindowsVista)
+            throw new PlatformNotSupportedException(Resources.Requires_Windows_Vista_Or_Higher);
+
          var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
          string symlinkFileNameLp = Path.GetExtendedLengthPathCore(transaction, symlinkFileName, pathFormat, options);
          string targetFileNameLp = Path.GetExtendedLengthPathCore(transaction, targetFileName, pathFormat, options);
+
+         // Function CreateSymbolicLink does not support long paths.
+         symlinkFileNameLp = Path.GetRegularPathCore(symlinkFileNameLp, GetFullPathOptions.None);
+         targetFileNameLp = Path.GetRegularPathCore(targetFileNameLp, GetFullPathOptions.None);
+
 
          if (!(transaction == null || !NativeMethods.IsAtLeastWindowsVista
 
@@ -101,14 +111,17 @@ namespace Alphaleonis.Win32.Filesystem
             // In the ANSI version of this function, the name is limited to MAX_PATH characters.
             // To extend this limit to 32,767 wide characters, call the Unicode version of the function and prepend "\\?\" to the path.
             // 2014-02-14: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
+            // 2015-07-17: This function does not support long paths.
 
             ? NativeMethods.CreateSymbolicLink(symlinkFileNameLp, targetFileNameLp, targetType)
             : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileNameLp, targetFileNameLp, targetType, transaction.SafeHandle)))
-            NativeError.ThrowException(symlinkFileNameLp, targetFileNameLp);
+         {
+            var lastError = Marshal.GetLastWin32Error();
+            if (lastError != 0)
+               NativeError.ThrowException(lastError, symlinkFileNameLp, targetFileNameLp);
+         }
       }
 
       #endregion // Internal Methods
-
-
    }
 }
