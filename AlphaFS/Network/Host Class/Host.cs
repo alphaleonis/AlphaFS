@@ -223,7 +223,7 @@ namespace Alphaleonis.Win32.Network
          /// <summary>The password to be used for making the network connection. If <see cref="Password"/> is <see langword="null"/>, the function uses the current default password associated with the user specified by <see cref="UserName"/>.</summary>
          public string Password;
 
-         /// <summary><see langword="true"/> always pop-ups an authentication dialog box.</summary>
+         /// <summary><see langword="true"/> always pops-up an authentication dialog box.</summary>
          public bool Prompt;
 
          /// <summary><see langword="true"/> successful network resource connections will be saved.</summary>

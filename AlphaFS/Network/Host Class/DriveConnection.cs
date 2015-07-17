@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Network
       ///   The password to be used for making the network connection. If <paramref name="password"/> is <see langword="null"/>, the function
       ///   uses the current default password associated with the user specified by <paramref name="userName"/>.
       /// </param>
-      /// <param name="prompt"><see langword="true"/> always pop-ups an authentication dialog box.</param>
+      /// <param name="prompt"><see langword="true"/> always pops-up an authentication dialog box.</param>
       public DriveConnection(string remoteName, string userName, string password, bool prompt)
       {
          Share = remoteName;
@@ -71,7 +71,7 @@ namespace Alphaleonis.Win32.Network
       /// <summary>Creates a temporary connection to a network resource. The function can redirect a local device to a network resource, <see cref="NetworkCredential"/> can be supplied.</summary>
       /// <param name="remoteName">The network resource to connect to. The string can be up to MAX_PATH characters in length.</param>
       /// <param name="credentials">An instance of <see cref="NetworkCredential"/> which provides credentials for password-based authentication schemes such as basic, digest, NTLM, and Kerberos authentication.</param>
-      /// <param name="prompt"><see langword="true"/> always pop-ups an authentication dialog box.</param>
+      /// <param name="prompt"><see langword="true"/> always pops-up an authentication dialog box.</param>
       public DriveConnection(string remoteName, NetworkCredential credentials, bool prompt)
       {
          Share = remoteName;
