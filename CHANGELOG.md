@@ -38,9 +38,9 @@ Version 2.1
 - Issue #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`.
 - Issue #162 AppendAllLines concatenates content into one line. (pavelhritonenko)
 - Issue #176 At DirectoryInfo.GetFileSystemInfos, Long path prefix of GLOBALROOT path is missing. (diontools)
+- Isses #179 Path.GetFileName with an empty string throws an exception. (brutaldev)
 - Issue #181 OpenWrite should create file if it doesn't exist. (Thomas Levesque)
 - Issue #183 Add SafeFileHandle null check for BackupFileStream.Dispose. (diontools)
-- Isses #179 Path.GetFileName with an empty string throws an exception. (brutaldev)
 
 ### Breaking Changes
 
