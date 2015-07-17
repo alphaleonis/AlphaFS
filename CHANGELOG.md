@@ -31,17 +31,20 @@ Version 2.1
 - Issue #154: Modify private method `FindFileSystemEntryInfo.FindFirstFile()` to report the full path on Exception. 
 - Issue #147: Add overloaded methods to set Reparse Point Timestamp. (Thanks rstarkov!)
 - Issue #150: Enhancement: File.IsLocked()
+- Issue #184: File.CreateSymbolicLink() should throw PlatformNotSupportedException() if OS < Vista. 
 
 ### Bugs Fixed
 
-- Issue #50: `Path.GetLongPath()` does not prefix on "C:\", should it?
-- Issue #60: Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`.
-- Issue #162 AppendAllLines concatenates content into one line. (pavelhritonenko)
-- Issue #176 At DirectoryInfo.GetFileSystemInfos, Long path prefix of GLOBALROOT path is missing. (diontools)
-- Isses #179 Path.GetFileName with an empty string throws an exception. (brutaldev)
-- Issue #180 Network connects methods hangs in Windows service when credentials fail. (brutaldev)
-- Issue #181 OpenWrite should create file if it doesn't exist. (Thomas Levesque)
-- Issue #183 Add SafeFileHandle null check for BackupFileStream.Dispose. (diontools)
+- Issue #50 : `Path.GetLongPath()` does not prefix on "C:\", should it?
+- Issue #60 : Remove all use of "Problematic" methods such as `DangerousAddRef` and `DangerousGetHandle()`.
+- Issue #160: CreateSymbolicLink creates shortcut with no target. (martin-john-green)
+- Issue #162: AppendAllLines concatenates content into one line. (pavelhritonenko)
+- Issue #176: At DirectoryInfo.GetFileSystemInfos, Long path prefix of GLOBALROOT path is missing. (diontools)
+- Isses #179: Path.GetFileName with an empty string throws an exception. (brutaldev)
+- Issue #180: Network connects methods hangs in Windows service when credentials fail. (brutaldev)
+- Issue #181: OpenWrite should create file if it doesn't exist. (Thomas Levesque)
+- Issue #183: Add SafeFileHandle null check for BackupFileStream.Dispose. (diontools)
+- Issue #185: Correct pinvoke signatures of CreateSymbolicLink and CreateSymbolicLinkTransacted functions.
 
 ### Breaking Changes
 
@@ -49,6 +52,7 @@ Version 2.1
 - Issue #126: Suffix the name of all methods working with TxF with "Transacted".
 - Issue #128: Remove `Path.IsLocalPath()` in favour of `Path.IsUncPath()`.
 - Issue #140: Replace internal `DFS_INFO_4` structure with `DFS_INFO_9`.
+- Issue #184: File.CreateSymbolicLink() should throw PlatformNotSupportedException() if OS < Vista. 
 
 Version 2.0.1
 -------------
