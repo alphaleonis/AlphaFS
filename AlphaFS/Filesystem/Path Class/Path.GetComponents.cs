@@ -20,6 +20,7 @@
  */
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Security;
 
 namespace Alphaleonis.Win32.Filesystem
@@ -217,21 +218,22 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <param name="path">The path string from which to obtain the file name and extension.</param>
       /// <param name="checkInvalidPathChars"><see langword="true"/> will check <paramref name="path"/> for invalid path characters.</param>
+      [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0", Justification = "Utils.IsNullOrWhiteSpace validates arguments.")]
       public static string GetFileName(string path, bool checkInvalidPathChars)
       {
-         if (path != null)
-         {
-            if (checkInvalidPathChars)
-               CheckInvalidPathChars(path, false);
+         if (Utils.IsNullOrWhiteSpace(path))
+            return path;
 
-            int length = path.Length;
-            int index = length;
-            while (--index >= 0)
-            {
-               char ch = path[index];
-               if (IsDVsc(ch, null))
-                  return path.Substring(index + 1, length - index - 1);
-            }
+         if (checkInvalidPathChars)
+            CheckInvalidPathChars(path, false);
+
+         int length = path.Length;
+         int index = length;
+         while (--index >= 0)
+         {
+            char ch = path[index];
+            if (IsDVsc(ch, null))
+               return path.Substring(index + 1, length - index - 1);
          }
 
          return path;
