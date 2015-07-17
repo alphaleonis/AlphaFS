@@ -159,7 +159,7 @@ namespace Alphaleonis.Win32.Filesystem
          // true = Return only directories.
          // false = Return only files.
 
-         var fsei = new FileSystemEntryInfo(win32FindData) { FullPath = Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None) };
+         var fsei = new FileSystemEntryInfo(win32FindData) { FullPath = fullPathLp };
 
          return AsFileSystemInfo
             // Return object instance of type FileSystemInfo.
