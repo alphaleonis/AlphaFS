@@ -211,7 +211,7 @@ namespace Alphaleonis.Win32.Network
       #region ShareType
 
       /// <summary>The type of share.</summary>
-      public ShareType ShareType { get; set; }
+      public ShareType ShareType { get; private set; }
 
       #endregion // ShareType
 
@@ -230,7 +230,7 @@ namespace Alphaleonis.Win32.Network
             return _shareResourceType;
          }
 
-         set { _shareResourceType = value; }
+         private set { _shareResourceType = value; }
       }
 
       #endregion // ResourceType

@@ -32,6 +32,7 @@ Version 2.1
 - Issue #147: Add overloaded methods to set Reparse Point Timestamp. (Thanks rstarkov!)
 - Issue #150: Enhancement: `File.IsLocked()`
 - Issue #184: `File.CreateSymbolicLink()` should throw `PlatformNotSupportedException()` if OS < Vista. 
+- Issue #188: Make ShareInfo class property setters private: ShareType, ResourceType.
 
 ### Bugs Fixed
 
