@@ -97,23 +97,27 @@ namespace Alphaleonis
       /// <summary>Converts a number of type T to string with UnitSize or Percentage suffixed.</summary>
       public static string UnitSizeToText<T>(T numberOfBytes)
       {
-         string template = "{0:0.00}{1}";
-         string sfx = "B";
+         string[] sizeFormats =
+         {
+            "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"
+         };
 
+
+         int i = 0;
          double bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
 
-         if (bytes >= 1152921504606846976) { sfx = "EB"; bytes /= 1152921504606846976; }
-         else if (bytes >= 1125899906842624) { sfx = "PB"; bytes /= 1125899906842624; }
-         else if (bytes >= 1099511627776) { sfx = "TB"; bytes /= 1099511627776; }
-         else if (bytes >= 1073741824) { sfx = "GB"; bytes /= 1073741824; }
-         else if (bytes >= 1048576) { sfx = "MB"; bytes /= 1048576; }
-         else if (bytes >= 1024) { sfx = "KB"; bytes /= 1024; }
+         while (i < sizeFormats.Length && bytes > 1024)
+         {
+            i++;
+            bytes /= 1024;
+         }
 
-         else
+         return string.Format(CultureInfo.CurrentCulture,
+
             // Will return "512 B" instead of "512,00 B".
-            template = "{0:0}{1}";
-
-         return string.Format(CultureInfo.CurrentCulture, template, bytes, " " + sfx);
+            i == 0 ? "{0:0}{1}" : "{0:0.00}{1}",
+            
+            bytes, " " + sizeFormats[i]);
       }
 
       /// <summary>Calculates a percentage value.</summary>
