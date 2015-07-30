@@ -33,6 +33,7 @@ Version 2.1
 - Issue #150: Enhancement: `File.IsLocked()`
 - Issue #184: `File.CreateSymbolicLink()` should throw `PlatformNotSupportedException()` if OS < Vista. 
 - Issue #188: Make ShareInfo class property setters private: ShareType, ResourceType.
+- Issue #189: Improve method: Utils.UnitSizeToText().
 
 ### Bugs Fixed
 
