@@ -57,15 +57,12 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesProtected: [{0}]", dsAlpha.AreAccessRulesProtected);
          Assert.AreEqual(dsSystem.AreAccessRulesProtected, dsAlpha.AreAccessRulesProtected);
 
-         UnitTestConstants.StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesProtected: [{0}]", dsAlpha.AreAuditRulesProtected);
          Assert.AreEqual(dsSystem.AreAuditRulesProtected, dsAlpha.AreAuditRulesProtected);
 
-         UnitTestConstants.StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesCanonical: [{0}]", dsAlpha.AreAccessRulesCanonical);
          Assert.AreEqual(dsSystem.AreAccessRulesCanonical, dsAlpha.AreAccessRulesCanonical);
 
-         UnitTestConstants.StopWatcher(true);
          Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesCanonical: [{0}]", dsAlpha.AreAuditRulesCanonical);
          Assert.AreEqual(dsSystem.AreAuditRulesCanonical, dsAlpha.AreAuditRulesCanonical);
       }
