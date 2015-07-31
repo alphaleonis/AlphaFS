@@ -1409,7 +1409,7 @@ namespace AlphaFS.UnitTest
 
          foreach (FileSystemAccessRule far in accessRules)
          {
-            UnitTestConstants.Dump(far, 17);
+            UnitTestConstants.Dump(far, -17);
             DumpAccessRules(1, sysIo, gac);
             foundRules = true;
          }
