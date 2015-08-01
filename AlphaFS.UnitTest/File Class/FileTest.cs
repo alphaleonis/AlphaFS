@@ -499,8 +499,6 @@ namespace AlphaFS.UnitTest
          string tempPath = Path.Combine(tempFolder, "File.Delete-" + Path.GetRandomFileName());
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
 
-         string notePad = isLocal ? UnitTestConstants.NotepadExe : Path.LocalToUnc(UnitTestConstants.NotepadExe);
-
          string nonExistingFile = UnitTestConstants.SysRoot32 + @"\NonExistingFile-" + Path.GetRandomFileName();
          if (!isLocal) nonExistingFile = Path.LocalToUnc(nonExistingFile);
 

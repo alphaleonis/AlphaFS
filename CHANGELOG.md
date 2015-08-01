@@ -35,6 +35,7 @@ Version 2.1
 - Issue #186: Replace WIN32 API `NativeMethods.GetVersionEx()` with `NativeMethods.RtlGetVersion()`.
 - Issue #188: Make `ShareInfo` class property setters private: `ShareType`, `ResourceType`.
 - Issue #189: Improve method `Utils.UnitSizeToText()`.
+- Issue #191: Make class `BackupFileStream` sealed.
 
 ### Bugs Fixed
 

@@ -36,7 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
    /// <see href="http://msdn.microsoft.com/en-us/library/aa362510(VS.85).aspx">BackupSeek</see> and 
    /// <see href="http://msdn.microsoft.com/en-us/library/aa362511(VS.85).aspx">BackupWrite</see> functions from the Win32 API to provide access to the file or directory.
    /// </remarks>
-   public class BackupFileStream : Stream
+   public sealed class BackupFileStream : Stream
    {
       #region Private Fields
 
@@ -555,7 +555,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="ObjectDisposedException"/>
       [SecurityCritical]
-      public virtual void Lock(long position, long length)
+      public void Lock(long position, long length)
       {
          if (position < 0)
             throw new ArgumentOutOfRangeException("position", position, Resources.Unlock_Position_Negative);
@@ -574,7 +574,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentOutOfRangeException"/>
       /// <exception cref="ObjectDisposedException"/>
       [SecurityCritical]
-      public virtual void Unlock(long position, long length)
+      public void Unlock(long position, long length)
       {
          if (position < 0)
             throw new ArgumentOutOfRangeException("position", position, Resources.Unlock_Position_Negative);
