@@ -143,7 +143,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                try
                {
-                  if (handle.IsInvalid)
+                  if (handle != null && handle.IsInvalid)
                   {
                      error = true;
                      dataInitialised = Marshal.GetLastWin32Error();
@@ -167,8 +167,8 @@ namespace Alphaleonis.Win32.Filesystem
                {
                   try
                   {
-                     // Close the Win32 handle.
-                     handle.Close();
+                     if (handle != null)
+                        handle.Close();
                   }
                   catch
                   {

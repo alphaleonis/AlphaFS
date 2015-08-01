@@ -40,34 +40,9 @@ namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for several AlphaFS instance classes.</summary>
    [TestClass]
-   public class AlphaFS_ClassesTest
+   public partial class AlphaFS_ClassesTest
    {
       #region Unit Tests
-
-      #region DumpClassBackupFileStream
-
-      private void DumpClassBackupFileStream(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tempPath = Path.GetTempPath("Class.BackupFileStream()-file-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
-
-         string report;
-         UnitTestConstants.StopWatcher(true);
-         using (BackupFileStream bfs = new BackupFileStream(tempPath, FileMode.Create))
-         {
-            report = UnitTestConstants.Reporter();
-            UnitTestConstants.Dump(bfs, -14);
-         }
-         Console.WriteLine("\n{0}", report);
-
-         File.Delete(tempPath, true);
-         Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-         Console.WriteLine();
-      }
-
-      #endregion // DumpClassBackupFileStream
 
       #region DumpClassAlternateDataStreamInfo
 
@@ -1240,19 +1215,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Filesystem_Class_AlternateDataStreamInfo
-
-      #region Filesystem_Class_BackupFileStream
-
-      [TestMethod]
-      public void Filesystem_Class_BackupFileStream()
-      {
-         Console.WriteLine("Class Filesystem.BackupFileStream()");
-
-         DumpClassBackupFileStream(true);
-         DumpClassBackupFileStream(false);
-      }
-
-      #endregion // Filesystem_Class_BackupFileStream
 
       #region Filesystem_Class_ByHandleFileInfo
 

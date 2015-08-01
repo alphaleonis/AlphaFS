@@ -48,6 +48,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (handle == null || handle.IsClosed || handle.IsInvalid)
          {
+            if (handle != null)
+               handle.Close();
+
             if (throwException)
                throw new ArgumentException(Resources.Handle_Is_Invalid);
 
@@ -67,6 +70,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          if (handle == null || handle.IsClosed || handle.IsInvalid)
          {
+            if (handle != null)
+               handle.Close();
+
             if (throwException)
                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.Handle_Is_Invalid_Win32Error, lastError));
 

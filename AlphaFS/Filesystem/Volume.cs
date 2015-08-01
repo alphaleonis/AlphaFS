@@ -453,11 +453,13 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          using (SafeFindVolumeMountPointHandle handle = NativeMethods.FindFirstVolumeMountPoint(volumeGuid, buffer, (uint)buffer.Capacity))
          {
-            int lastError;
-            if (handle.IsInvalid)
+            int lastError = Marshal.GetLastWin32Error();
+
+            if (handle != null && handle.IsInvalid)
             {
-               lastError = Marshal.GetLastWin32Error();
-               switch ((uint)lastError)
+               handle.Close();
+
+               switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_NO_MORE_FILES:
                   case Win32Errors.ERROR_PATH_NOT_FOUND: // Observed with USB stick, FAT32 formatted.
@@ -474,9 +476,12 @@ namespace Alphaleonis.Win32.Filesystem
 
             while (NativeMethods.FindNextVolumeMountPoint(handle, buffer, (uint)buffer.Capacity))
             {
-               if (handle.IsInvalid)
+               lastError = Marshal.GetLastWin32Error();
+
+               if (handle != null && handle.IsInvalid)
                {
-                  lastError = Marshal.GetLastWin32Error();
+                  handle.Close();
+
                   switch ((uint) lastError)
                   {
                      case Win32Errors.ERROR_NO_MORE_FILES:
@@ -571,7 +576,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          using (SafeFindVolumeHandle handle = NativeMethods.FindFirstVolume(buffer, (uint)buffer.Capacity))
          {
-            while (!handle.IsInvalid)
+            while (handle != null && !handle.IsInvalid)
             {
                if (NativeMethods.FindNextVolume(handle, buffer, (uint)buffer.Capacity))
                   yield return buffer.ToString();
@@ -579,6 +584,9 @@ namespace Alphaleonis.Win32.Filesystem
                else
                {
                   int lastError = Marshal.GetLastWin32Error();
+
+                  handle.Close();
+
                   if (lastError == Win32Errors.ERROR_NO_MORE_FILES)
                      yield break;
 

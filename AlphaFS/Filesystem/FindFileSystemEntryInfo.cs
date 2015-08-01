@@ -96,9 +96,11 @@ namespace Alphaleonis.Win32.Filesystem
             ? NativeMethods.FindFirstFileEx(Path.RemoveTrailingDirectorySeparator(pathLp, false), FindExInfoLevel, out win32FindData, _limitSearchToDirs, IntPtr.Zero, LargeCache)
             : NativeMethods.FindFirstFileTransacted(Path.RemoveTrailingDirectorySeparator(pathLp, false), FindExInfoLevel, out win32FindData, _limitSearchToDirs, IntPtr.Zero, LargeCache, Transaction.SafeHandle);
 
-         if (handle.IsInvalid)
+         int lastError = Marshal.GetLastWin32Error();
+
+
+         if (handle != null && handle.IsInvalid)
          {
-            int lastError = Marshal.GetLastWin32Error();
             handle.Close();
 
             if (!ContinueOnException)
@@ -208,8 +210,11 @@ namespace Alphaleonis.Win32.Filesystem
 
                using (SafeFindFileHandle handle = FindFirstFile(pathLp, out win32FindData))
                {
-                  if (handle.IsInvalid && ContinueOnException)
+                  if (handle != null && handle.IsInvalid && ContinueOnException)
+                  {
+                     handle.Close();
                      continue;
+                  }
 
                   do
                   {
@@ -289,7 +294,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (new NativeMethods.ChangeErrorMode(NativeMethods.ErrorMode.FailCriticalErrors))
          using (SafeFindFileHandle handle = FindFirstFile(InputPath, out win32FindData))
          {
-            if (!handle.IsInvalid)
+            if (handle != null && !handle.IsInvalid)
                return NewFileSystemEntryType<T>(win32FindData, InputPath, (win32FindData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory);
          }
 

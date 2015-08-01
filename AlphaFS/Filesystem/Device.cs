@@ -77,7 +77,8 @@ namespace Alphaleonis.Win32.Filesystem
 
          SafeCmConnectMachineHandle safeMachineHandle;
          int lastError = NativeMethods.CM_Connect_Machine(Path.LocalToUncCore(Host.GetUncName(hostName), false, false, false), out safeMachineHandle);
-         if (safeMachineHandle.IsInvalid)
+
+         if (safeMachineHandle != null && safeMachineHandle.IsInvalid)
          {
             safeMachineHandle.Close();
             NativeError.ThrowException(lastError, Resources.Handle_Is_Invalid);
@@ -92,7 +93,7 @@ namespace Alphaleonis.Win32.Filesystem
                   NativeMethods.SetupDiGetClassDevsExFlags.DeviceInterface,
                   IntPtr.Zero, hostName, IntPtr.Zero);
 
-            if (safeHandle.IsInvalid)
+            if (safeHandle != null && safeHandle.IsInvalid)
             {
                safeHandle.Close();
                NativeError.ThrowException(Marshal.GetLastWin32Error(), Resources.Handle_Is_Invalid);

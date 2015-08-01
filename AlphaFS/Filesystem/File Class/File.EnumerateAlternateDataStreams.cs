@@ -78,13 +78,18 @@ namespace Alphaleonis.Win32.Filesystem
       {
          using (var buffer = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_FIND_STREAM_DATA))))
          {
-            path = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars | GetFullPathOptions.CheckAdditional);
-            using (var handle = transaction == null 
-               ? NativeMethods.FindFirstStreamW(path, NativeMethods.StreamInfoLevels.FindStreamInfoStandard, buffer, 0) 
-               : NativeMethods.FindFirstStreamTransactedW(path, NativeMethods.StreamInfoLevels.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
+            string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat,
+               GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars |
+               GetFullPathOptions.CheckAdditional);
+
+            using (SafeFindFileHandle handle = transaction == null
+               ? NativeMethods.FindFirstStreamW(pathLp, NativeMethods.StreamInfoLevels.FindStreamInfoStandard, buffer, 0)
+               : NativeMethods.FindFirstStreamTransactedW(pathLp, NativeMethods.StreamInfoLevels.FindStreamInfoStandard, buffer, 0, transaction.SafeHandle))
             {
-               if (handle.IsInvalid)
+               if (handle != null && handle.IsInvalid)
                {
+                  handle.Close();
+
                   int errorCode = Marshal.GetLastWin32Error();
                   if (errorCode == Win32Errors.ERROR_HANDLE_EOF)
                      yield break;
@@ -94,15 +99,15 @@ namespace Alphaleonis.Win32.Filesystem
 
                while (true)
                {
-                  NativeMethods.WIN32_FIND_STREAM_DATA data = buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0);
-                  yield return new AlternateDataStreamInfo(path, data);
+                  yield return new AlternateDataStreamInfo(pathLp, buffer.PtrToStructure<NativeMethods.WIN32_FIND_STREAM_DATA>(0));
+
                   if (!NativeMethods.FindNextStreamW(handle, buffer))
                   {
                      int lastError = Marshal.GetLastWin32Error();
                      if (lastError == Win32Errors.ERROR_HANDLE_EOF)
                         break;
 
-                     NativeError.ThrowException(lastError, path);
+                     NativeError.ThrowException(lastError, pathLp);
                   }
                }
             }

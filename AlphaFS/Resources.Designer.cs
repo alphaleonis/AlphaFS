@@ -134,6 +134,15 @@ namespace Alphaleonis.Win32 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The handle is closed..
+        /// </summary>
+        internal static string Handle_Is_Closed {
+            get {
+                return ResourceManager.GetString("Handle_Is_Closed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The handle is invalid..
         /// </summary>
         internal static string Handle_Is_Invalid {

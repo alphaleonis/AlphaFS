@@ -317,9 +317,11 @@ namespace Alphaleonis.Win32.Filesystem
       internal static FileStream CreateFileStreamCore(KernelTransaction transaction, string path, ExtendedFileAttributes attributes, FileSecurity fileSecurity, FileMode mode, FileAccess access, FileShare share, int bufferSize, PathFormat pathFormat)
       {
          SafeFileHandle safeHandle = null;
+
          try
          {
             safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights)access, share, true, pathFormat);
+
             return new FileStream(safeHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
          catch
@@ -375,7 +377,7 @@ namespace Alphaleonis.Win32.Filesystem
              (fileSystemRights & (FileSystemRights) 0x2000000) != 0)
             privilegeEnabler = new PrivilegeEnabler(Privilege.Security);
 
-            
+
          using (privilegeEnabler)
          using (var securityAttributes = new Security.NativeMethods.SecurityAttributes(fileSecurity))
          {
@@ -390,7 +392,8 @@ namespace Alphaleonis.Win32.Filesystem
                : NativeMethods.CreateFileTransacted(pathLp, fileSystemRights, fileShare, securityAttributes, fileMode, attributes, IntPtr.Zero, transaction.SafeHandle, IntPtr.Zero, IntPtr.Zero);
 
             int lastError = Marshal.GetLastWin32Error();
-            if (handle.IsInvalid)
+
+            if (handle != null && handle.IsInvalid)
             {
                handle.Close();
                NativeError.ThrowException(lastError, pathLp);

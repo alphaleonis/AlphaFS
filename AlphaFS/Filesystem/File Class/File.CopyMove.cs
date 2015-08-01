@@ -1199,7 +1199,7 @@ namespace Alphaleonis.Win32.Filesystem
                      if (!isFolder)
                      {
                         using (SafeFileHandle safeHandle = CreateFileCore(transaction, sourceFileNameLp, ExtendedFileAttributes.None, null, FileMode.Open, 0, FileShare.Read, false, PathFormat.LongFullPath))
-                           if (safeHandle.IsInvalid)
+                           if (safeHandle != null && safeHandle.IsInvalid)
                               fileNameLp = sourceFileNameLp;
                      }
 

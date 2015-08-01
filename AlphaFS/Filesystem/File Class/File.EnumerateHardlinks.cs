@@ -110,14 +110,16 @@ namespace Alphaleonis.Win32.Filesystem
             ? NativeMethods.FindFirstFileName(pathLp, 0, out length, builder)
             : NativeMethods.FindFirstFileNameTransacted(pathLp, 0, out length, builder, transaction.SafeHandle))
          {
-            if (handle.IsInvalid)
+         	int lastError = Marshal.GetLastWin32Error();
+         	
+            if (handle != null && handle.IsInvalid)
             {
-               int lastError = Marshal.GetLastWin32Error();
-               switch ((uint)lastError)
+               handle.Close();
+               
+               switch ((uint) lastError)
                {
                   case Win32Errors.ERROR_MORE_DATA:
-                     builder = new StringBuilder((int)length);
-                     handle.Close();
+                     builder = new StringBuilder((int) length);
                      goto getFindFirstFileName;
 
                   default:
@@ -137,15 +139,16 @@ namespace Alphaleonis.Win32.Filesystem
             {
                while (!NativeMethods.FindNextFileName(handle, out length, builder))
                {
-                  int lastError = Marshal.GetLastWin32Error();
-                  switch ((uint)lastError)
+                  lastError = Marshal.GetLastWin32Error();
+
+                  switch ((uint) lastError)
                   {
                      // We've reached the end of the enumeration.
                      case Win32Errors.ERROR_HANDLE_EOF:
                         yield break;
 
                      case Win32Errors.ERROR_MORE_DATA:
-                        builder = new StringBuilder((int)length);
+                        builder = new StringBuilder((int) length);
                         continue;
 
                      default:
