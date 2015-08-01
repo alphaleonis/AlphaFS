@@ -444,7 +444,7 @@ namespace Alphaleonis.Win32.Filesystem
          FullPath = Path.GetRegularPathCore(destinationPathLp, GetFullPathOptions.None);
 
          OriginalPath = destinationPath;
-         DisplayPath = OriginalPath;
+         DisplayPath = Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None);
 
          // Flush any cached information about the directory.
          Reset();

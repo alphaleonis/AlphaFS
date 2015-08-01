@@ -217,7 +217,7 @@ namespace Alphaleonis.Win32.Filesystem
             : path;
 
          DisplayPath = OriginalPath.Length != 2 || OriginalPath[1] != Path.VolumeSeparatorChar
-            ? OriginalPath
+            ? Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None)
             : Path.CurrentDirectoryPrefix;
       }
 

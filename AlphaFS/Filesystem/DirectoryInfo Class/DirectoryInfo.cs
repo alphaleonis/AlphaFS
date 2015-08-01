@@ -77,8 +77,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          FullPath = fullPath;
 
-         // GetDisplayName()
-         DisplayPath = OriginalPath.Length != 2 || (OriginalPath[1] != Path.VolumeSeparatorChar) ? OriginalPath : Path.CurrentDirectoryPrefix;
+         DisplayPath = OriginalPath.Length != 2 || OriginalPath[1] != Path.VolumeSeparatorChar ? OriginalPath : Path.CurrentDirectoryPrefix;
       }
 
       #region Transactional

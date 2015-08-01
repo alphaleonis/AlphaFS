@@ -23,15 +23,11 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class FileInfo
    {
-      #region .NET
-
       /// <summary>Returns the path as a string.</summary>
       /// <returns>The path.</returns>
       public override string ToString()
       {
          return DisplayPath;
       }
-
-      #endregion // .NET
    }
 }
