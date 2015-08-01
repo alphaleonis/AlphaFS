@@ -28,6 +28,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Text;
 using Alphaleonis.Win32.Filesystem;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using File = System.IO.File;
 
 namespace AlphaFS.UnitTest
@@ -37,8 +38,8 @@ namespace AlphaFS.UnitTest
    {
       #region Fields
 
-      public static readonly string Local = @"LOCAL";
-      public static readonly string Network = @"NETWORK";
+      public const string Local = @"LOCAL";
+      public const string Network = @"NETWORK";
 
       public static readonly string LocalHost = Environment.MachineName;
       public static readonly string LocalHostShare = Environment.SystemDirectory;
@@ -56,6 +57,8 @@ namespace AlphaFS.UnitTest
       public const string TextGoodByeWorld = "GóödByé Wôrld!";
       public const string TextAppend = "GóödByé Wôrld!";
       public const string TextUnicode = "ÛņïÇòdè; ǖŤƑ";
+
+      private static Stopwatch _stopWatcher;
 
       #region InputPaths
 
@@ -146,8 +149,6 @@ namespace AlphaFS.UnitTest
 
       #region Methods
 
-      #region CreateDirectoriesAndFiles
-
       public static void CreateDirectoriesAndFiles(string rootPath, int max, bool recurse)
       {
          for (int i = 0; i < max; i++)
@@ -173,10 +174,6 @@ namespace AlphaFS.UnitTest
          }
       }
 
-      #endregion // CreateDirectoriesAndFiles
-
-
-      #region FolderWithDenyPermission
 
       public static void FolderWithDenyPermission(bool create, bool isNetwork, string tempPath)
       {
@@ -217,11 +214,6 @@ namespace AlphaFS.UnitTest
          }
       }
 
-      #endregion // FolderWithDenyPermission
-
-      #region StopWatcher
-
-      private static Stopwatch _stopWatcher;
 
       public static string StopWatcher(bool start = false)
       {
@@ -241,9 +233,6 @@ namespace AlphaFS.UnitTest
          return string.Format(CultureInfo.CurrentCulture, "*Duration: [{0}] ms. ({1})", ms, elapsed);
       }
 
-      #endregion // StopWatcher
-
-      #region Reporter
 
       public static string Reporter(bool onlyTime = false)
       {
@@ -256,10 +245,7 @@ namespace AlphaFS.UnitTest
             : string.Format(CultureInfo.CurrentCulture, "\t{0} [{1}: {2}]", StopWatcher(), lastError.NativeErrorCode, lastError.Message);
       }
 
-      #endregion // Reporter
-
-      #region IsAdmin
-
+      
       public static bool IsAdmin()
       {
          bool isAdmin = new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
@@ -270,9 +256,6 @@ namespace AlphaFS.UnitTest
          return isAdmin;
       }
 
-      #endregion // IsAdmin
-
-      #region Dump
 
       /// <summary>Shows the Object's available Properties and Values.</summary>
       public static bool Dump(object obj, int width = -35, bool indent = false)
@@ -312,9 +295,6 @@ namespace AlphaFS.UnitTest
          return loopOk;
       }
 
-      #endregion //Dump
-
-      #region StringToByteArray
 
       public static byte[] StringToByteArray(string str, params Encoding[] encoding)
       {
@@ -322,7 +302,61 @@ namespace AlphaFS.UnitTest
          return encode.GetBytes(str);
       }
 
-      #endregion // StringToByteArray
+
+      public static void TestAccessRules(ObjectSecurity sysIO, ObjectSecurity alphaFS)
+      {
+         Console.WriteLine();
+
+
+         Console.WriteLine("\tSystem.IO .AccessRightType: [{0}]", sysIO.AccessRightType);
+         Console.WriteLine("\tAlphaFS   .AccessRightType: [{0}]", alphaFS.AccessRightType);
+         Console.WriteLine();
+         Assert.AreEqual(sysIO.AccessRightType, alphaFS.AccessRightType);
+
+
+         Console.WriteLine("\tSystem.IO .AccessRuleType: [{0}]", sysIO.AccessRuleType);
+         Console.WriteLine("\tAlphaFS   .AccessRuleType: [{0}]", alphaFS.AccessRuleType);
+         Console.WriteLine();
+         Assert.AreEqual(sysIO.AccessRuleType, alphaFS.AccessRuleType);
+
+
+         Console.WriteLine("\tSystem.IO .AuditRuleType: [{0}]", sysIO.AuditRuleType);
+         Console.WriteLine("\tAlphaFS   .AuditRuleType: [{0}]", alphaFS.AuditRuleType);
+         Console.WriteLine();
+         Assert.AreEqual(sysIO.AuditRuleType, alphaFS.AuditRuleType);
+
+
+
+
+         Console.WriteLine("\tSystem.IO .AreAccessRulesProtected: [{0}]", sysIO.AreAccessRulesProtected);
+         Console.WriteLine("\tAlphaFS   .AreAccessRulesProtected: [{0}]", alphaFS.AreAccessRulesProtected);
+         Console.WriteLine();
+         Assert.AreEqual(sysIO.AreAccessRulesProtected, alphaFS.AreAccessRulesProtected);
+
+
+         Console.WriteLine("\tSystem.IO .AreAuditRulesProtected: [{0}]", sysIO.AreAuditRulesProtected);
+         Console.WriteLine("\tAlphaFS   .AreAuditRulesProtected: [{0}]", alphaFS.AreAuditRulesProtected);
+         Console.WriteLine();
+         Assert.AreEqual(sysIO.AreAuditRulesProtected, alphaFS.AreAuditRulesProtected);
+
+
+         Console.WriteLine("\tSystem.IO .AreAccessRulesCanonical: [{0}]", sysIO.AreAccessRulesCanonical);
+         Console.WriteLine("\tAlphaFS   .AreAccessRulesCanonical: [{0}]", alphaFS.AreAccessRulesCanonical);
+         Console.WriteLine();
+         Assert.AreEqual(sysIO.AreAccessRulesCanonical, alphaFS.AreAccessRulesCanonical);
+
+
+         Console.WriteLine("\tSystem.IO .AreAuditRulesCanonical: [{0}]", sysIO.AreAuditRulesCanonical);
+         Console.WriteLine("\tAlphaFS   .AreAuditRulesCanonical: [{0}]", alphaFS.AreAuditRulesCanonical);
+         Console.WriteLine();
+         Assert.AreEqual(sysIO.AreAuditRulesCanonical, alphaFS.AreAuditRulesCanonical);
+      }
+
+
+      public static void PrintUnitTestHeader(bool isNetwork)
+      {
+         Console.WriteLine("\n=== TEST {0} ===", isNetwork ? Network : Local);
+      }
 
       #endregion // Methods
    }

@@ -112,6 +112,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Delete_NonExistingDirectory_DirectoryNotFoundException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string tempPath = Path.GetTempPath("Directory-Delete-NonExistingDirectory-" + Path.GetRandomFileName());
 
          if (isNetwork)
@@ -171,6 +173,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Delete_NonExistingDriveLetter_XxxException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string tempPath = UnitTestConstants.SysRoot32 + @"\NonExistingDriveLetter-" + Path.GetRandomFileName();
          string letter = DriveInfo.GetFreeDriveLetter() + @":\";
 
@@ -234,6 +238,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Delete_PathIsAFileNotADirectory_DirectoryNotFoundException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string tempPath = Path.GetTempPath("Directory-Delete-PathIsAFileNotADirectory-" + Path.GetRandomFileName());
 
          if (isNetwork)
@@ -295,6 +301,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Delete_NonEmptyDirectory_DirectoryNotEmptyException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string tempPath = Path.GetTempPath("Directory-Delete-NonEmptyDirectory-" + Path.GetRandomFileName());
 
          if (isNetwork)
@@ -351,6 +359,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Delete_ReadOnlyDirectory_DirectoryReadOnlyException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string tempPath = Path.GetTempPath("Directory-Delete-DirectoryReadOnlyException-" + Path.GetRandomFileName());
 
          if (isNetwork)
@@ -414,6 +424,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Delete_DirectoryContainsAReadOnlyFile_FileReadOnlyException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string tempPath = Path.GetTempPath("Directory-Delete-FileReadOnlyException-" + Path.GetRandomFileName());
 
          if (isNetwork)
@@ -479,6 +491,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Delete_PathContainsColon_NotSupportedException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string tempPath = UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt";
 
          if (isNetwork)
@@ -523,6 +537,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_Delete_FolderWithDenyPermission_UnauthorizedAccessException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string tempPath = Path.GetTempPath("Directory-Delete-FolderWithDenyPermission-" + Path.GetRandomFileName());
 
          if (isNetwork)
@@ -564,9 +580,15 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_Delete_Success()
+      public void Directory_Delete_Local_Success()
       {
-         Directory_CreateDirectory_Success();
+         Directory_CreateDirectory(false);
+      }
+
+      [TestMethod]
+      public void Directory_Delete_Network_Success()
+      {
+         Directory_CreateDirectory(true);
       }
    }
 }

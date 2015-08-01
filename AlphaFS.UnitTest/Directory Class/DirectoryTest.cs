@@ -1383,46 +1383,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpExists
 
-      #region DumpGetAccessControl
-
-      private void DumpGetAccessControl(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-
-         string tempPath = Path.Combine(Path.GetTempPath(), "Directory.GetAccessControl()-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-         Directory.CreateDirectory(tempPath);
-
-         bool foundRules = false;
-
-         UnitTestConstants.StopWatcher(true);
-         DirectorySecurity gac = Directory.GetAccessControl(tempPath);
-         string report = UnitTestConstants.Reporter();
-
-         AuthorizationRuleCollection accessRules = gac.GetAccessRules(true, true, typeof(NTAccount));
-         DirectorySecurity sysIo = System.IO.Directory.GetAccessControl(tempPath);
-         AuthorizationRuleCollection sysIoaccessRules = sysIo.GetAccessRules(true, true, typeof(NTAccount));
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-         Console.WriteLine("\n\tGetAccessControl() rules found: [{0}]\n    System.IO rules found         : [{1}]\n{2}", accessRules.Count, sysIoaccessRules.Count, report);
-         Assert.AreEqual(sysIoaccessRules.Count, accessRules.Count);
-
-         foreach (FileSystemAccessRule far in accessRules)
-         {
-            UnitTestConstants.Dump(far, -17);
-            DumpAccessRules(1, sysIo, gac);
-            foundRules = true;
-         }
-         Assert.IsTrue(foundRules);
-
-         Directory.Delete(tempPath, true);
-         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-
-         Console.WriteLine("\n");
-      }
-
-      #endregion // DumpGetAccessControl
-
       #region DumpGetDirectories
 
       private void DumpGetDirectories(bool isLocal)
@@ -2866,19 +2826,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // Exists
 
-      #region GetAccessControl
-
-      [TestMethod]
-      public void GetAccessControl()
-      {
-         Console.WriteLine("Directory.GetAccessControl()");
-
-         DumpGetAccessControl(true);
-         DumpGetAccessControl(false);
-      }
-
-      #endregion // GetAccessControl
-
       #region GetCreationTime
 
       [TestMethod]
@@ -3137,66 +3084,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Move
-
-      #region SetAccessControl
-
-      [TestMethod]
-      public void SetAccessControl()
-      {
-         Console.WriteLine("Directory.SetAccessControl()");
-
-         //string path = UnitTestConstants.SysDrive + @"\AlphaDirectory-" + Path.GetRandomFileName();
-         string path = Path.Combine(Path.GetTempPath(), "Directory.GetAccessControl()-" + Path.GetRandomFileName());
-         string pathAlpha = path;
-         Directory.CreateDirectory(path);
-
-         Console.WriteLine("\n\tDirectory: [{0}]", path);
-
-         // Initial read.
-         Console.WriteLine("\n\tInitial read.");
-         DirectorySecurity dsAlpha = Directory.GetAccessControl(pathAlpha, AccessControlSections.Access);
-         DirectorySecurity dsSystem = System.IO.Directory.GetAccessControl(path, AccessControlSections.Access);
-         AuthorizationRuleCollection accessRulesSystem = dsSystem.GetAccessRules(true, true, typeof(NTAccount));
-         UnitTestConstants.StopWatcher(true);
-         AuthorizationRuleCollection accessRulesAlpha = dsAlpha.GetAccessRules(true, true, typeof(NTAccount));
-         Console.WriteLine("\t\tDirectory.GetAccessControl() rules found: [{0}]\n\t{1}", accessRulesAlpha.Count, UnitTestConstants.Reporter());
-         Assert.AreEqual(accessRulesSystem.Count, accessRulesAlpha.Count);
-
-         // Sanity check.
-         DumpAccessRules(1, dsSystem, dsAlpha);
-
-         // Remove inherited properties.
-         // Passing true for first parameter protects the new permission from inheritance, and second parameter removes the existing inherited permissions.
-         Console.WriteLine("\n\tRemove inherited properties and persist it.");
-         dsAlpha.SetAccessRuleProtection(true, false);
-
-         // Re-read, using instance methods.
-         System.IO.DirectoryInfo diSystem = new System.IO.DirectoryInfo(Path.LocalToUnc(path));
-         DirectoryInfo diAlpha = new DirectoryInfo(Path.LocalToUnc(path));
-
-         dsSystem = diSystem.GetAccessControl(AccessControlSections.Access);
-         dsAlpha = diAlpha.GetAccessControl(AccessControlSections.Access);
-
-         // Sanity check.
-         DumpAccessRules(2, dsSystem, dsAlpha);
-
-         // Restore inherited properties.
-         Console.WriteLine("\n\tRestore inherited properties and persist it.");
-         dsAlpha.SetAccessRuleProtection(false, true);
-
-         // Re-read.
-         dsSystem = System.IO.Directory.GetAccessControl(path, AccessControlSections.Access);
-         dsAlpha = Directory.GetAccessControl(pathAlpha, AccessControlSections.Access);
-
-         // Sanity check.
-         DumpAccessRules(3, dsSystem, dsAlpha);
-
-         diAlpha.Delete();
-         diAlpha.Refresh(); // Must Refresh() to get actual state.
-         Assert.IsFalse(diAlpha.Exists);
-      }
-
-      #endregion // SetAccessControl
 
       #region SetCreationTime
 

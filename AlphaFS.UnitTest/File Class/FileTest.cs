@@ -43,30 +43,10 @@ namespace AlphaFS.UnitTest
 {
    /// <summary>This is a test class for File and is intended to contain all File class Unit Tests.</summary>
    [TestClass]
-   public class FileTest
+   public partial class FileTest
    {
       #region Unit Tests
-
-      #region DumpAccessRules
-
-      private void DumpAccessRules(int cntCheck, FileSecurity dsSystem, FileSecurity dsAlpha)
-      {
-         Console.WriteLine("\n\tSanity check AlphaFS <> System.IO {0}.", cntCheck);
-         Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesProtected: [{0}]", dsAlpha.AreAccessRulesProtected);
-         Assert.AreEqual(dsSystem.AreAccessRulesProtected, dsAlpha.AreAccessRulesProtected);
-
-         Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesProtected: [{0}]", dsAlpha.AreAuditRulesProtected);
-         Assert.AreEqual(dsSystem.AreAuditRulesProtected, dsAlpha.AreAuditRulesProtected);
-
-         Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesCanonical: [{0}]", dsAlpha.AreAccessRulesCanonical);
-         Assert.AreEqual(dsSystem.AreAccessRulesCanonical, dsAlpha.AreAccessRulesCanonical);
-
-         Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesCanonical: [{0}]", dsAlpha.AreAuditRulesCanonical);
-         Assert.AreEqual(dsSystem.AreAuditRulesCanonical, dsAlpha.AreAuditRulesCanonical);
-      }
-
-      #endregion // DumpAccessRules
-
+      
       #region DumpAppendAllLines
 
       private void DumpAppendAllLines(bool isLocal)
@@ -788,45 +768,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpExists
-
-      #region DumpGetAccessControl
-
-      private void DumpGetAccessControl(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-
-         string tempPath = Path.Combine(Path.GetTempPath(), "File.GetAccessControl()-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-         using (File.Create(tempPath)) { }
-
-         bool foundRules = false;
-
-         UnitTestConstants.StopWatcher(true);
-         FileSecurity gac = File.GetAccessControl(tempPath);
-         string report = UnitTestConstants.Reporter();
-
-         AuthorizationRuleCollection accessRules = gac.GetAccessRules(true, true, typeof(NTAccount));
-         FileSecurity sysIo = System.IO.File.GetAccessControl(tempPath);
-         AuthorizationRuleCollection sysIoaccessRules = sysIo.GetAccessRules(true, true, typeof(NTAccount));
-
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
-         Console.WriteLine("\n\tGetAccessControl() rules found: [{0}]\n\t\tSystem.IO rules found  : [{1}]\n{2}", accessRules.Count, sysIoaccessRules.Count, report);
-         Assert.AreEqual(sysIoaccessRules.Count, accessRules.Count);
-
-         foreach (FileSystemAccessRule far in accessRules)
-         {
-            UnitTestConstants.Dump(far, -17);
-            DumpAccessRules(1, sysIo, gac);
-            foundRules = true;
-         }
-         Assert.IsTrue(foundRules);
-
-         File.Delete(tempPath, true);
-         Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-         Console.WriteLine("\n");
-      }
-
-      #endregion // DumpGetAccessControl
 
       #region DumpGetXxxTimeXxx
 
@@ -2717,19 +2658,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // Exists
 
-      #region GetAccessControl
-
-      [TestMethod]
-      public void GetAccessControl()
-      {
-         Console.WriteLine("File.GetAccessControl()");
-
-         DumpGetAccessControl(true);
-         DumpGetAccessControl(false);
-      }
-
-      #endregion // GetAccessControl
-
       #region GetAttributes
 
       [TestMethod]
@@ -2943,18 +2871,17 @@ namespace AlphaFS.UnitTest
             {
             }
 
-            // Initial read.
-            Console.WriteLine("\n\tInitial read.");
             FileSecurity dsSystem = System.IO.File.GetAccessControl(path, AccessControlSections.Access);
             FileSecurity dsAlpha = File.GetAccessControl(pathAlpha, AccessControlSections.Access);
             AuthorizationRuleCollection accessRulesSystem = dsSystem.GetAccessRules(true, true, typeof(NTAccount));
             AuthorizationRuleCollection accessRulesAlpha = dsAlpha.GetAccessRules(true, true, typeof(NTAccount));
-            Console.WriteLine("\t    System.IO.File.GetAccessControl() rules found: [{0}]", accessRulesSystem.Count);
-            Console.WriteLine("\t\t\t   File.GetAccessControl() rules found: [{0}]", accessRulesAlpha.Count);
+
+            Console.WriteLine("\t\tSystem.IO rules found: [{0}]", accessRulesSystem.Count);
+            Console.WriteLine("\t\tAlphaFS   rules found: [{0}]", accessRulesAlpha.Count);
             Assert.AreEqual(accessRulesSystem.Count, accessRulesAlpha.Count);
 
             // Sanity check.
-            DumpAccessRules(1, dsSystem, dsAlpha);
+            UnitTestConstants.TestAccessRules(dsSystem, dsAlpha);
 
             // Remove inherited properties.
             // Passing true for first parameter protects the new permission from inheritance, and second parameter removes the existing inherited permissions 
@@ -2970,7 +2897,7 @@ namespace AlphaFS.UnitTest
             dsAlpha = fiAlpha.GetAccessControl(AccessControlSections.Access);
 
             // Sanity check.
-            DumpAccessRules(2, dsSystem, dsAlpha);
+            UnitTestConstants.TestAccessRules(dsSystem, dsAlpha);
 
             // Restore inherited properties.
             Console.WriteLine("\n\tRestore inherited properties and persist it.");
@@ -2982,7 +2909,7 @@ namespace AlphaFS.UnitTest
             dsAlpha = File.GetAccessControl(pathAlpha, AccessControlSections.Access);
 
             // Sanity check.
-            DumpAccessRules(3, dsSystem, dsAlpha);
+            UnitTestConstants.TestAccessRules(dsSystem, dsAlpha);
 
             fiSystem.Delete();
             fiSystem.Refresh(); // Must Refresh() to get actual state.
@@ -2994,6 +2921,7 @@ namespace AlphaFS.UnitTest
          catch (Exception ex)
          {
             Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+            Assert.IsTrue(false);
          }
       }
 

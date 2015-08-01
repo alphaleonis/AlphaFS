@@ -546,7 +546,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public void SetAccessControl(ObjectSecurity fileSecurity)
       {
-         File.SetAccessControlCore(null, SafeFileHandle, fileSecurity, AccessControlSections.All, PathFormat.RelativePath);
+         File.SetAccessControlCore(null, SafeFileHandle, fileSecurity, AccessControlSections.All, PathFormat.LongFullPath);
       }
 
       /// <summary>Prevents other processes from changing the <see cref="BackupFileStream"/> while permitting read access.</summary>

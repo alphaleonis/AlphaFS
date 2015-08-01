@@ -27,11 +27,8 @@ namespace Alphaleonis.Win32.Filesystem
 {
    partial class DirectoryInfo
    {
-      #region .NET
-
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
-
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity)
@@ -42,14 +39,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <summary>Applies access control list (ACL) entries described by a <see cref="DirectorySecurity"/> object to the directory described by the current DirectoryInfo object.</summary>
       /// <param name="directorySecurity">A <see cref="DirectorySecurity"/> object that describes an ACL entry to apply to the directory described by the path parameter.</param>
       /// <param name="includeSections">One or more of the <see cref="AccessControlSections"/> values that specifies the type of access control list (ACL) information to set.</param>
-
       [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
       [SecurityCritical]
       public void SetAccessControl(DirectorySecurity directorySecurity, AccessControlSections includeSections)
       {
          File.SetAccessControlCore(LongFullName, null, directorySecurity, includeSections, PathFormat.LongFullPath);
       }
-
-      #endregion // .NET
    }
 }

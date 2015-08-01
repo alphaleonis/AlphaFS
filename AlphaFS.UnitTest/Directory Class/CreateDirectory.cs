@@ -52,6 +52,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_CreateDirectory_FileExistsWithSameNameAsDirectory_AlreadyExistsException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string tempPath = Path.GetTempPath("Directory.CreateDirectory()-FileExistsWithSameNameAsDirectory-" + Path.GetRandomFileName());
 
          if (isNetwork)
@@ -171,6 +173,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_CreateDirectory_NonExistingDriveLetter_XxxException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string tempPath = DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter";
 
          if (isNetwork)
@@ -229,6 +233,8 @@ namespace AlphaFS.UnitTest
 
       private void Directory_CreateDirectory_PathContainsColon_NotSupportedException(bool isNetwork)
       {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          string colonText = ":aaa.txt";
          string tempPath = UnitTestConstants.SysDrive + @"\dev\test\"+ colonText;
 
@@ -259,8 +265,22 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_Success()
+      public void Directory_CreateDirectory_Local_Success()
       {
+         Directory_CreateDirectory(false);
+      }
+
+      [TestMethod]
+      public void Directory_CreateDirectory_Network_Success()
+      {
+         Directory_CreateDirectory(true);
+      }
+
+
+      private void Directory_CreateDirectory(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
          // Directory depth level.
          int level = new Random().Next(1, 1000);
 
@@ -272,13 +292,16 @@ namespace AlphaFS.UnitTest
          string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + Path.GetRandomFileName());
 #endif
 
+         if (isNetwork)
+            tempPath = Path.LocalToUnc(tempPath);
+
          try
          {
             string root = Path.Combine(tempPath, "MaxPath-Hit-The-Road");
 
             for (int i = 0; i < level; i++)
                root = Path.Combine(root, "-" + (i + 1) + "-subdir");
-            
+
             Directory.CreateDirectory(root);
 
             Console.WriteLine("\nCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level, root.Length);
