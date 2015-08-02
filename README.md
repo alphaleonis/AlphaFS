@@ -13,7 +13,7 @@ The file system support in .NET is pretty good for most uses. However there are 
 * Accessing hidden volumes
 * Enumeration of volumes
 * Transactional file operations
-* Support for NTFS Alternate Data Streams
+* Support for NTFS Alternate Data Streams (files/folders)
 * Accessing network resources (SMB/DFS)
 * ...and much more!
 
