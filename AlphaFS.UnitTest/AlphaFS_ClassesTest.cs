@@ -44,111 +44,6 @@ namespace AlphaFS.UnitTest
    {
       #region Unit Tests
 
-      #region DumpClassAlternateDataStreamInfo
-
-      private void DumpClassAlternateDataStreamInfo(bool isLocal)
-      {
-         #region Setup
-
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-
-         const int defaultStreamsFile = 1; // The default number of data streams for a file.
-
-         string tempPath;
-         int currentNumberofStreams;
-         int newNumberofStreams;
-         string reporter;
-         long fileSize;
-
-         string random = Path.GetRandomFileName();
-         string myStream = "ӍƔŞtrëƛɱ-" + random;
-         string myStream2 = "myStreamTWO-" + random;
-
-         var arrayContent = new[]
-         {
-            "(1) The quick brown fox jumps over the lazy dog.",
-            "(2) Albert Einstein: \"Science is a wonderful thing if one does not have to earn one's living at it.",
-            "(3) " + UnitTestConstants.TextHelloWorld + " " + UnitTestConstants.TextUnicode
-         };
-
-         string stringContent = "(1) Computer: [" + UnitTestConstants.LocalHost + "]" + "\tHello there, " + Environment.UserName;
-
-         #endregion // Setup
-
-         #region Create Stream
-
-         tempPath = Path.GetTempPath("Class.AlternateDataStreamInfo()-file-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput File Path: [{0}]", tempPath);
-         Console.WriteLine("\nA file is created and three streams are added.");
-
-         
-         // Create file and add 10 characters to it, file is created in ANSI format.
-         File.WriteAllText(tempPath, UnitTestConstants.TenNumbers);
-
-
-         var fi = new FileInfo(tempPath);
-
-         currentNumberofStreams = File.EnumerateAlternateDataStreams(tempPath).Count();            
-
-         Assert.AreEqual(defaultStreamsFile, currentNumberofStreams, "Total amount of default streams do not match.");
-         Assert.AreEqual(currentNumberofStreams, File.EnumerateAlternateDataStreams(tempPath).Count(), "Total amount of File.EnumerateAlternateDataStreams() streams do not match.");
-         Assert.AreEqual(currentNumberofStreams, fi.EnumerateAlternateDataStreams().Count(), "Total amount of FileInfo() streams do not match.");
-
-
-         fileSize = File.GetSize(tempPath);
-         Assert.AreEqual(UnitTestConstants.TenNumbers.Length, fileSize);
-         
-         
-         // Create alternate data streams.
-         // Because of the colon, you must supply a full path and use PathFormat.FullPath or PathFormat.FullPath
-         // to prevent a NotSupportedException: path is in an invalid format.
-
-         File.WriteAllLines(tempPath + ":" + myStream, arrayContent, PathFormat.FullPath);
-         File.WriteAllText(tempPath + ":" + myStream2, stringContent, PathFormat.FullPath);
-
-         UnitTestConstants.StopWatcher(true);
-         newNumberofStreams = File.EnumerateAlternateDataStreams(tempPath).Count();
-         reporter = UnitTestConstants.Reporter(true);
-
-         // Enumerate all streams from the file.
-         foreach (AlternateDataStreamInfo stream in fi.EnumerateAlternateDataStreams())
-         {
-            Assert.IsTrue(UnitTestConstants.Dump(stream, -10));
-
-            // The default stream, a file as you know it.
-            if (stream.StreamName == "")
-               Assert.AreEqual(fileSize, stream.Size);
-         }
-
-         Console.WriteLine("\n\n\tCurrent stream Count(): [{0}]    {1}", newNumberofStreams, reporter);
-
-         Assert.AreEqual(newNumberofStreams, File.EnumerateAlternateDataStreams(tempPath).Count(), "Total amount of streams do not match.");
-
-         
-         // Show the contents of our streams.
-         foreach (string streamName in (new[] {myStream, myStream2 }))
-         {
-            Console.WriteLine("\n\tStream name: [{0}]", streamName);
-
-            // Because of the colon, you must supply a full path and use PathFormat.FullPath or a NotSupportedException is thrown: path is in an invalid format.
-            foreach (var line in File.ReadAllLines(tempPath + ":" + streamName, PathFormat.FullPath))
-               Console.WriteLine("\t\t{0}", line);
-         }
-
-         
-         UnitTestConstants.StopWatcher(true);
-
-         #endregion // Create Stream
-
-         File.Delete(tempPath);
-         Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-         Console.WriteLine();
-      }
-
-      #endregion // DumpClassAlternateDataStreamInfo
-
       #region DumpClassByHandleFileInfo
 
       private void DumpClassByHandleFileInfo(bool isLocal)
@@ -1202,19 +1097,6 @@ namespace AlphaFS.UnitTest
       #region Unit Test Callers
 
       #region Filesystem
-
-      #region Filesystem_Class_AlternateDataStreamInfo
-
-      [TestMethod]
-      public void Filesystem_Class_AlternateDataStreamInfo()
-      {
-         Console.WriteLine("Class Filesystem.AlternateDataStreamInfo()");
-
-         DumpClassAlternateDataStreamInfo(true);
-         DumpClassAlternateDataStreamInfo(false);
-      }
-
-      #endregion // Filesystem_Class_AlternateDataStreamInfo
 
       #region Filesystem_Class_ByHandleFileInfo
 

@@ -38,18 +38,18 @@ namespace AlphaFS.UnitTest
       [TestMethod]
       public void BackupFileStream_Initialize_Local_Success()
       {
-         BackupFileStream(false);
+         BackupFileStream_Initialize(false);
       }
 
 
       [TestMethod]
       public void BackupFileStream_Initialize_Network_Success()
       {
-         BackupFileStream(true);
+         BackupFileStream_Initialize(true);
       }
-      
 
-      private void BackupFileStream(bool isNetwork)
+
+      private void BackupFileStream_Initialize(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 

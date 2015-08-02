@@ -60,6 +60,19 @@ namespace AlphaFS.UnitTest
 
       private static Stopwatch _stopWatcher;
 
+      private static readonly string RandomName = Path.GetRandomFileName();
+      public static readonly string MyStream = "ӍƔŞtrëƛɱ-" + RandomName;
+      public static readonly string MyStream2 = "myStreamTWO-" + RandomName;
+      public static readonly string[] AllStreams = {MyStream, MyStream2};
+      public static readonly string StreamStringContent = "(1) Computer: [" + LocalHost + "]" + "\tHello there, " + Environment.UserName;
+      public static readonly string[] StreamArrayContent =
+      {
+         "(1) The quick brown fox jumps over the lazy dog.",
+         "(2) Albert Einstein: \"Science is a wonderful thing if one does not have to earn one's living at it.\"",
+         "(3) " + TextHelloWorld + " " + TextUnicode
+      };
+
+
       #region InputPaths
 
       public static readonly string[] InputPaths =

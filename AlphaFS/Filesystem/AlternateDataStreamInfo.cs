@@ -24,26 +24,17 @@ using System.Text;
 
 namespace Alphaleonis.Win32.Filesystem
 {
-
    /// <summary>Information about an alternate data stream.</summary>  
    /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.EnumerateAlternateDataStreams"/> 
    public struct AlternateDataStreamInfo
    {
-      #region Private Fields
-
-      private readonly string m_name;
-      private readonly long m_size;
-      private readonly string m_filePath;
-
-      #endregion
-
       #region Constructor
 
-      internal AlternateDataStreamInfo(string filePath, NativeMethods.WIN32_FIND_STREAM_DATA findData)
+      internal AlternateDataStreamInfo(string fullPath, NativeMethods.WIN32_FIND_STREAM_DATA findData) : this()
       {
-         m_name = ParseStreamName(findData.cStreamName);
-         m_size = findData.StreamSize;
-         m_filePath = filePath;
+         StreamName = ParseStreamName(findData.cStreamName);
+         Size = findData.StreamSize;
+         _fullPath = fullPath;
       }
 
       #endregion // Constructor
@@ -51,18 +42,15 @@ namespace Alphaleonis.Win32.Filesystem
       #region Public Properties
 
       /// <summary>Gets the name of the alternate data stream.</summary>
-      /// <remarks>This value is an empty string for the default stream (::$DATA), and for any other data stream it contains the name of the stream.</remarks>
+      /// <remarks>This value is an empty string for the default stream (:$DATA), and for any other data stream it contains the name of the stream.</remarks>
       /// <value>The name of the stream.</value>
-      public string StreamName
-      {
-         get { return m_name; }
-      }
+      public string StreamName { get; private set; }
 
       /// <summary>Gets the size of the stream.</summary>      
-      public long Size
-      {
-         get { return m_size; }
-      }
+      public long Size { get; private set; }
+
+
+      private readonly string _fullPath;
 
       /// <summary>Gets the full path to the stream.</summary>
       /// <remarks>
@@ -73,7 +61,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The full path to the stream in long path format.</value>
       public string FullPath
       {
-         get { return m_filePath + ":" + StreamName + ":$DATA"; }
+         get { return _fullPath + Path.StreamSeparator + StreamName + Path.StreamDataLabel; }
       }
 
       #endregion // Public Properties
@@ -84,7 +72,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
       public override int GetHashCode()
       {
-         return m_name.GetHashCode();
+         return StreamName.GetHashCode();
       }
 
       /// <summary>Indicates whether this instance and a specified object are equal.</summary>
@@ -97,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (obj is AlternateDataStreamInfo)
          {
             AlternateDataStreamInfo other = (AlternateDataStreamInfo) obj;
-            return StreamName.Equals(other.StreamName) && Size.Equals(other.Size);
+            return StreamName.Equals(other.StreamName, StringComparison.OrdinalIgnoreCase) && Size.Equals(other.Size);
          }
 
          return false;

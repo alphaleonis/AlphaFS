@@ -145,10 +145,12 @@
     </Compile>
     <Compile Include="AlphaFS_DeviceTest.cs" />
     <Compile Include="Classes\BackupFileStream.cs" />
+    <Compile Include="Directory Class\EnumerateAlternateDataStreams.cs" />
     <Compile Include="Directory Class\Exists.cs" />
     <Compile Include="Directory Class\Delete.cs" />
     <Compile Include="Directory Class\GetAccessControl.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
+    <Compile Include="File Class\EnumerateAlternateDataStreams.cs" />
     <Compile Include="File Class\Exists.cs" />
     <Compile Include="File Class\SetAccessControl.cs" />
     <Compile Include="File Class\GetAccessControl.cs" />
