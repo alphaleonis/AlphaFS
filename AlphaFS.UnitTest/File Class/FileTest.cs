@@ -728,47 +728,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // TestDelete
 
-      #region DumpExists
-
-      private void DumpExists(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tempPath = Path.GetTempPath("File-Exists-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-         string symlinkPath = tempPath + "-symlink";
-
-         Console.WriteLine("\nInput File Path: [{0}]\n", tempPath);
-
-         bool exists = File.Exists(tempPath);
-         Console.WriteLine("\tFile.Exists() (Should be False): [{0}]", exists);
-         Assert.IsFalse(exists, "File should not exist.");
-         Assert.IsFalse(File.Exists(symlinkPath), "File symlink should not exist.");
-
-         using (File.Create(tempPath)) { }
-
-         exists = File.Exists(tempPath);
-         Console.WriteLine("\n\tCreated file.");
-         Console.WriteLine("\tFile.Exists() (Should be True): [{0}]", exists);
-         Assert.IsTrue(exists, "File should exist.");
-         Assert.IsFalse(File.Exists(symlinkPath), "Directory symlink should not exist.");
-
-         File.CreateSymbolicLink(symlinkPath, tempPath, SymbolicLinkTarget.File);
-
-         Assert.IsTrue(File.Exists(tempPath), "File should exist.");
-         Assert.IsTrue(File.Exists(symlinkPath), "File symlink should not exist.");
-
-         File.Delete(symlinkPath);
-         Assert.IsTrue(File.Exists(tempPath), "Deleting a symlink should not delete the underlying file.");
-         Assert.IsFalse(File.Exists(symlinkPath), "Cleanup failed: File symlink should have been removed.");
-
-         File.Delete(tempPath, true);
-         Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-
-         Console.WriteLine("\n");
-      }
-
-      #endregion // DumpExists
-
       #region DumpGetXxxTimeXxx
 
       private void DumpGetXxxTimeXxx(bool isLocal)
@@ -2644,19 +2603,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Encrypt
-
-      #region Exists
-
-      [TestMethod]
-      public void Exists()
-      {
-         Console.WriteLine("File.Exists()");
-
-         DumpExists(true);
-         DumpExists(false);
-      }
-
-      #endregion // Exists
 
       #region GetAttributes
 

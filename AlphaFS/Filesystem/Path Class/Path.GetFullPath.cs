@@ -213,7 +213,9 @@ namespace Alphaleonis.Win32.Filesystem
          if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
             CheckInvalidPathChars(path, (options & GetFullPathOptions.CheckAdditional) != 0);
 
-         return path;
+
+         // Trim leading whitespace.
+         return path.TrimStart();
       }
 
       #endregion // Internal Methods

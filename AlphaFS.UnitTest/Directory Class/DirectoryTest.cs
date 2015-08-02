@@ -1343,46 +1343,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpEnumerateFileSystemEntries
 
-      #region DumpExists
-
-      private void DumpExists(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tempPath = Path.GetTempPath("Directory-Exists-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-         string symlinkPath = tempPath + "-symlink";
-
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", tempPath);
-
-         bool exists = Directory.Exists(tempPath);
-         Console.WriteLine("\tDirectory.Exists() (Should be False): [{0}]", exists);
-         Assert.IsFalse(exists, "Directory should not exist.");
-         Assert.IsFalse(Directory.Exists(symlinkPath), "Directory symlink should not exist.");
-
-         Directory.CreateDirectory(tempPath);
-
-         exists = Directory.Exists(tempPath);
-         Console.WriteLine("\n\tCreated directory.");
-         Console.WriteLine("\tDirectory.Exists() (Should be True): [{0}]", exists);
-         Assert.IsTrue(exists, "Directory should exist.");
-         Assert.IsFalse(Directory.Exists(symlinkPath), "Directory symlink should not exist.");
-
-         File.CreateSymbolicLink(symlinkPath, tempPath, SymbolicLinkTarget.Directory);
-
-         Assert.IsTrue(Directory.Exists(tempPath), "Directory should exist.");
-         Assert.IsTrue(Directory.Exists(symlinkPath), "Directory symlink should not exist.");
-
-         Directory.Delete(symlinkPath);
-         Assert.IsTrue(Directory.Exists(tempPath), "Deleting a symlink should not delete the underlying directory.");
-         Assert.IsFalse(Directory.Exists(symlinkPath), "Cleanup failed: Directory symlink should have been removed.");
-
-         Directory.Delete(tempPath, true);
-         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
-      }
-
-      #endregion // DumpExists
-
       #region DumpGetDirectories
 
       private void DumpGetDirectories(bool isLocal)
@@ -2812,19 +2772,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // EnumerateFileSystemEntries
-
-      #region Exists
-
-      [TestMethod]
-      public void Exists()
-      {
-         Console.WriteLine("Directory.Exists()");
-
-         DumpExists(true);
-         DumpExists(false);
-      }
-
-      #endregion // Exists
 
       #region GetCreationTime
 
