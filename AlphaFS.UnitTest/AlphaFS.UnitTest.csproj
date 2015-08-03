@@ -148,9 +148,11 @@
     <Compile Include="Directory Class\EnumerateAlternateDataStreams.cs" />
     <Compile Include="Directory Class\Exists.cs" />
     <Compile Include="Directory Class\Delete.cs" />
+    <Compile Include="Directory Class\ExportImportEncryptedDirectoryRaw.cs" />
     <Compile Include="Directory Class\GetAccessControl.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
     <Compile Include="File Class\EnumerateAlternateDataStreams.cs" />
+    <Compile Include="File Class\ExportImportEncryptedFileRaw.cs" />
     <Compile Include="File Class\Exists.cs" />
     <Compile Include="File Class\SetAccessControl.cs" />
     <Compile Include="File Class\GetAccessControl.cs" />
@@ -158,7 +160,6 @@
     <Compile Include="AlphaFS_ClassesTest.cs" />
     <Compile Include="Directory Class\CreateDirectory.cs" />
     <Compile Include="Directory Class\DirectoryTest.cs" />
-    <Compile Include="File Class\EncryptedFileRawTests.cs" />
     <Compile Include="Utils\DirectoryAssert.cs" />
     <Compile Include="Utils\FileAssert.cs" />
     <Compile Include="FileInfo Class\FileInfoTest.cs" />

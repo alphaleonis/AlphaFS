@@ -30,15 +30,18 @@ namespace AlphaFS.UnitTest
    {
       private readonly DirectoryInfo _dirInfo;
 
-      public TemporaryDirectory(string prefix = null)
+
+      public TemporaryDirectory(string prefix = null) : this(Path.GetTempPath(), prefix) {}
+      
+      public TemporaryDirectory(string root, string prefix)
       {
          if (Utils.IsNullOrWhiteSpace(prefix))
             prefix = "AlphaFS";
 
-         string root = Path.GetTempPath();
          do
          {
             _dirInfo = new DirectoryInfo(Path.Combine(root, prefix + "-" + Guid.NewGuid().ToString("N").Substring(0, 6)));
+
          } while (_dirInfo.Exists);
 
          _dirInfo.Create();
@@ -51,16 +54,21 @@ namespace AlphaFS.UnitTest
 
       public void Dispose()
       {
-         GC.SuppressFinalize(this);
          Dispose(true);
+         GC.SuppressFinalize(this);
       }
 
       private void Dispose(bool isDisposing)
       {
          try
          {
-             if (_dirInfo.Exists)
-                 _dirInfo.Delete(true);
+            if (isDisposing)
+            {
+               _dirInfo.Refresh();
+
+               if (_dirInfo.Exists)
+                  _dirInfo.Delete(true);
+            }
          }
          catch (Exception ex)
          {

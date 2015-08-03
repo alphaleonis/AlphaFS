@@ -27,7 +27,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Export
 
-      /// <summary>Backs up (export) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
+      /// <summary>[AlphaFS] Backs up (export) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
       ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.
       /// </summary>
       /// <remarks>
@@ -41,13 +41,13 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ImportEncryptedFileRaw"/>
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.Directory.ImportEncryptedDirectoryRaw"/>
       /// <param name="fileName">The name of the file to be backed up.</param>
-      /// <param name="output">The destination stream to which the backup data will be written.</param>
-      public static void ExportEncryptedDirectoryRaw(string fileName, Stream output)
+      /// <param name="outputStream">The destination stream to which the backup data will be written.</param>
+      public static void ExportEncryptedDirectoryRaw(string fileName, Stream outputStream)
       {
-         File.ExportEncryptedFileRaw(fileName, output, PathFormat.RelativePath);
+         File.ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, PathFormat.RelativePath, false);
       }
 
-      /// <summary>Backs up (export) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
+      /// <summary>[AlphaFS] Backs up (export) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
       ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.
       /// </summary>
       /// <remarks>
@@ -61,18 +61,18 @@ namespace Alphaleonis.Win32.Filesystem
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.File.ImportEncryptedFileRaw"/>
       /// <seealso cref="O:Alphaleonis.Win32.Filesystem.Directory.ImportEncryptedDirectoryRaw"/>
       /// <param name="fileName">The name of the file to be backed up.</param>
-      /// <param name="output">The destination stream to which the backup data will be written.</param>
+      /// <param name="outputStream">The destination stream to which the backup data will be written.</param>
       /// <param name="pathFormat">The path format of the <paramref name="fileName"/> parameter.</param>
-      public static void ExportEncryptedDirectoryRaw(string fileName, Stream output, PathFormat pathFormat)
+      public static void ExportEncryptedDirectoryRaw(string fileName, Stream outputStream, PathFormat pathFormat)
       {
-         File.ExportEncryptedFileRaw(fileName, output, pathFormat);
+         File.ImportExportEncryptedFileDirectoryRawCore(true, false, outputStream, fileName, pathFormat, false);
       }
 
       #endregion // Export
 
       #region Import
 
-      /// <summary>Restores (import) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
+      /// <summary>[AlphaFS] Restores (import) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
       ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.
       /// </summary>
       /// <remarks>
@@ -87,10 +87,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="destinationPath">The path of the destination directory to restore to.</param>
       public static void ImportEncryptedDirectoryRaw(Stream inputStream, string destinationPath)
       {
-         ImportEncryptedDirectoryRaw(inputStream, destinationPath, PathFormat.RelativePath);
+         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, PathFormat.RelativePath, false);
       }
 
-      /// <summary>Restores (import) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
+      /// <summary>[AlphaFS] Restores (import) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
       ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.
       /// </summary>
       /// <remarks>
@@ -106,10 +106,11 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">The path format of the <paramref name="destinationPath"/> parameter.</param>
       public static void ImportEncryptedDirectoryRaw(Stream inputStream, string destinationPath, PathFormat pathFormat)
       {
-         ImportEncryptedDirectoryRaw(inputStream, destinationPath, false, pathFormat);
+         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, pathFormat, false);
       }
 
-      /// <summary>Restores (import) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
+
+      /// <summary>[AlphaFS] Restores (import) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
       ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.
       /// </summary>
       /// <remarks>
@@ -125,10 +126,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="overwriteHidden">If set to <see langword="true"/> a hidden directory will be overwritten on import.</param>
       public static void ImportEncryptedDirectoryRaw(Stream inputStream, string destinationPath, bool overwriteHidden)
       {
-         ImportEncryptedDirectoryRaw(inputStream, destinationPath, overwriteHidden, PathFormat.RelativePath);
+         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, PathFormat.RelativePath, overwriteHidden);
       }
 
-      /// <summary>Restores (import) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
+      /// <summary>[AlphaFS] Restores (import) encrypted directories. This is one of a group of Encrypted File System (EFS) functions that is
       ///   intended to implement backup and restore functionality, while maintaining files in their encrypted state.
       /// </summary>
       /// <remarks>
@@ -145,7 +146,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="pathFormat">The path format of the <paramref name="destinationPath"/> parameter.</param>
       public static void ImportEncryptedDirectoryRaw(Stream inputStream, string destinationPath, bool overwriteHidden, PathFormat pathFormat)
       {
-         File.ImportEncryptedFileRawCore(inputStream, destinationPath, pathFormat, NativeMethods.EncryptedFileRawMode.CreateForImport | NativeMethods.EncryptedFileRawMode.CreateForDir | (overwriteHidden ? NativeMethods.EncryptedFileRawMode.OverwriteHidden : 0));
+         File.ImportExportEncryptedFileDirectoryRawCore(false, true, inputStream, destinationPath, pathFormat, overwriteHidden);
       }
 
       #endregion // Import

@@ -94,11 +94,6 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static bool IsLockedCore(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         // When an exception is raised, bit shifting is needed to prevent:
-         // "System.OverflowException: Arithmetic operation resulted in an overflow."
-
-         const int bitShift = ((1 << 16) - 1);
-         
          try
          {
             // Use FileAccess.Read since FileAccess.ReadWrite always fails when file is read-only.
@@ -107,7 +102,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
          catch (IOException ex)
          {
-            int lastError = Marshal.GetHRForException(ex) & bitShift;
+            int lastError = Marshal.GetHRForException(ex) & NativeMethods.OverflowExceptionBitShift;
             if (lastError == Win32Errors.ERROR_SHARING_VIOLATION || lastError == Win32Errors.ERROR_LOCK_VIOLATION)
                return true;
 
@@ -115,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
          }
          catch (Exception ex)
          {
-            NativeError.ThrowException(Marshal.GetHRForException(ex) & bitShift);
+            NativeError.ThrowException(Marshal.GetHRForException(ex) & NativeMethods.OverflowExceptionBitShift);
          }
 
          return false;
