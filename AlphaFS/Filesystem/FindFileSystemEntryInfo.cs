@@ -112,7 +112,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // MSDN: .NET 3.5+: DirectoryNotFoundException: Path is invalid, such as referring to an unmapped drive.
                      // Directory.Delete()
 
-                     NativeError.ThrowException(IsDirectory ? (int) Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, InputPath);
+                     NativeError.ThrowException(IsDirectory ? (int) Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_FILE_NOT_FOUND, pathLp);
                      break;
 
                   case Win32Errors.ERROR_DIRECTORY:
@@ -129,12 +129,12 @@ namespace Alphaleonis.Win32.Filesystem
 
                   case Win32Errors.ERROR_ACCESS_DENIED:
                      // MSDN: .NET 3.5+: UnauthorizedAccessException: The caller does not have the required permission.
-                     NativeError.ThrowException(lastError, InputPath);
+                     NativeError.ThrowException(lastError, pathLp);
                      break;
                }
 
                // MSDN: .NET 3.5+: IOException
-               NativeError.ThrowException(lastError, InputPath);
+               NativeError.ThrowException(lastError, pathLp);
             }
          }
 

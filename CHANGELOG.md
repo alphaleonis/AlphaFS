@@ -42,6 +42,7 @@ Version 2.1
 - Issue #193: Use unicode version of WIN32 API `OpenEncryptedFileRaw()`.
 - Issue #194: Add bitshift for Marshal.GetHRForException(ex) usage. 
 - Issue #195: Add useful FileAttributes as properties to `FileSystemEntryInfo` class.
+- Issue #199: Change `FindFileSystemEntryInfo.FindFirstFile()` to show actual path instead of inputpath on access error.
 
 ### Bugs Fixed
 
