@@ -59,6 +59,7 @@ Version 2.1
 - Issue #183: Add `SafeFileHandle` null check for BackupFileStream.Dispose. (diontools)
 - Issue #185: Correct pinvoke signatures of `CreateSymbolicLink()` and `CreateSymbolicLinkTransacted()` functions.
 - Issue #196: Replace usage of `ExtendedFileAttributes.None` with `ExtendedFileAttributes.Normal`.
+- Issue #197: Fix: Prevent normalization of GlobalRootPrefix paths.
 
 ### Breaking Changes
 
