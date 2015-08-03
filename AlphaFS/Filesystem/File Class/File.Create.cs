@@ -367,8 +367,17 @@ namespace Alphaleonis.Win32.Filesystem
 
          PrivilegeEnabler privilegeEnabler = null;
 
+
+         // CreateFileXxx() does not support FileMode.Append mode.
+         if (fileMode == FileMode.Append)
+         {
+            fileMode = FileMode.OpenOrCreate;
+            fileSystemRights &= FileSystemRights.AppendData; // Add right.
+         }
+
+
          if (fileSecurity != null)
-            fileSystemRights |= (FileSystemRights) 0x1000000;
+            fileSystemRights |= (FileSystemRights) 0x1000000; // Set right.
 
          // AccessSystemSecurity = 0x1000000    AccessSystemAcl access type.
          // MaximumAllowed       = 0x2000000    MaximumAllowed  access type.

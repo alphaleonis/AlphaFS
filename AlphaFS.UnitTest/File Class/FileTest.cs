@@ -422,52 +422,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpCopy
 
-      #region DumpCreate
-
-      private void DumpCreate(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tempFolder = Path.GetTempPath();
-         string tempPath = Path.Combine(tempFolder, "File-Create-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         using (FileStream fs = File.Create(tempPath))
-         {
-            int ten = UnitTestConstants.TenNumbers.Length;
-
-            // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-            fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
-
-            long fileSize = fs.Length;
-            bool isTen = fileSize == ten;
-
-            Console.WriteLine("\nInput File Path: [{0}]", tempPath);
-            Console.WriteLine("\n\tFilestream.Name   == [{0}]", fs.Name);
-            Console.WriteLine("\n\tFilestream.Length == [{0}] (Should be True): [{1}]", Utils.UnitSizeToText(ten), isTen);
-
-            Assert.IsTrue(File.Exists(tempPath), "File should exist.");
-            Assert.IsTrue(isTen, "File should be [{0}] bytes in size.", ten);
-
-            Assert.IsTrue(UnitTestConstants.Dump(fs, -14));
-            Assert.IsTrue(UnitTestConstants.Dump(fs.SafeFileHandle, -9));
-         }
-
-         using (StreamReader stream = File.OpenText(tempPath))
-         {
-            Console.WriteLine("\n\n\tEncoding: [{0}]", stream.CurrentEncoding.EncodingName);
-
-            string line;
-            while (!string.IsNullOrWhiteSpace((line = stream.ReadLine())))
-               Console.WriteLine("\tContent : [{0}]", line);
-         }
-
-         File.Delete(tempPath);
-         Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-         Console.WriteLine();
-      }
-
-      #endregion // DumpCreate
-
       #region TestDelete
 
       private void TestDelete(bool isLocal)
@@ -2466,54 +2420,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // Copy
 
-      #region Create
-
-      [TestMethod]
-      public void Create()
-      {
-         Console.WriteLine("File.Create()");
-
-         DumpCreate(true);
-         DumpCreate(false);
-      }
-
-      [TestMethod]
-      public void AlphaFS___CreateWithFileSecurity()
-      {
-         Console.WriteLine("File.Create()");
-
-          if (!UnitTestConstants.IsAdmin())
-              Assert.Inconclusive();
-
-         string pathExpected = Path.GetTempPath("AlphaFS CreateWithFileSecurityExpected");
-         string pathActual = Path.GetTempPath("AlphaFS CreateWithFileSecurityActual");
-
-         File.Delete(pathExpected);
-         File.Delete(pathActual);
-
-         FileSecurity expectedFileSecurity = new FileSecurity();
-         expectedFileSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, AccessControlType.Allow));
-         expectedFileSecurity.AddAuditRule(new FileSystemAuditRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.Read, AuditFlags.Success));
-
-         using (new Alphaleonis.Win32.Security.PrivilegeEnabler(Alphaleonis.Win32.Security.Privilege.Security))
-         {
-            using (FileStream s1 = System.IO.File.Create(pathExpected, 4096, FileOptions.None, expectedFileSecurity))
-            using (FileStream s2 = File.Create(pathActual, 4096, FileOptions.None, expectedFileSecurity))
-            {
-            }
-         }
-
-         string expectedFileSecuritySddl = System.IO.File.GetAccessControl(pathExpected).GetSecurityDescriptorSddlForm(AccessControlSections.All);
-         string actualFileSecuritySddl = System.IO.File.GetAccessControl(pathActual).GetSecurityDescriptorSddlForm(AccessControlSections.All);
-
-         Assert.AreEqual(expectedFileSecuritySddl, actualFileSecuritySddl);
-
-         File.Delete(pathExpected, true);
-         File.Delete(pathActual, true);
-      }
-
-      #endregion // Create
-
       #region CreateText
 
       [TestMethod]
@@ -2642,57 +2548,6 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Move
-
-      #region Open
-
-      [TestMethod]
-      public void Open()
-      {
-         Console.WriteLine("File.Open()\n");
-         string path = Path.GetTempPath("File.Open()-" + Path.GetRandomFileName());
-
-         using (FileStream fs = File.Create(path))
-         {
-            // Convert 10000 character string to byte array.
-            byte[] text = Encoding.UTF8.GetBytes(new string('X', 10000));
-            fs.Write(text, 0, text.Length);
-         }
-
-         bool fileExists = File.Exists(path);
-
-         // Open the stream and read it back.
-         using (FileStream fs = File.Open(path, FileMode.Open))
-         {
-            byte[] b = new byte[1024];
-            UTF8Encoding temp = new UTF8Encoding(true);
-
-            while (fs.Read(b, 0, b.Length) > 0)
-               Console.WriteLine(temp.GetString(b));
-
-            bool exception = false;
-            try
-            {
-               Console.WriteLine("\n\nOpening the file twice is disallowed.");
-
-               // Try to get another handle to the same file.
-               using (FileStream fs2 = File.Open(path, FileMode.Open)) { }
-            }
-            catch (Exception ex)
-            {
-               exception = true;
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\n\tCaught IOException (Should be True): [{0}]", exception);
-            Assert.IsTrue(exception, "IOException should have been caught.");
-         }
-
-         File.Delete(path, true);
-         Assert.IsFalse(File.Exists(path), "Cleanup failed: File should have been removed.");
-
-         Assert.IsTrue(fileExists);
-      }
-
-      #endregion // Open
 
       #region OpenWrite
 

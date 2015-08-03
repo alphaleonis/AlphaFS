@@ -152,6 +152,8 @@
     <Compile Include="Directory Class\GetAccessControl.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
     <Compile Include="File Class\EnumerateAlternateDataStreams.cs" />
+    <Compile Include="File Class\Create.cs" />
+    <Compile Include="File Class\Open.cs" />
     <Compile Include="File Class\ExportImportEncryptedFileRaw.cs" />
     <Compile Include="File Class\Exists.cs" />
     <Compile Include="File Class\SetAccessControl.cs" />

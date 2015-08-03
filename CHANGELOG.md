@@ -50,6 +50,7 @@ Version 2.1
 - Issue #160: `File.CreateSymbolicLink()` creates shortcut with no target. (martin-john-green)
 - Issue #162: `File.AppendAllLines()` concatenates content into one line. (pavelhritonenko)
 - Issue #166: `File.Exists` & `Directory.Exists` fail when path has leading space(s).
+  Issue #168: Error on `File.Open()` with access-mode Append?
 - Issue #169: `DirectoryInfo .ToString()` returns path with `\\UNC` prefix.
 - Issue #176: At `DirectoryInfo.GetFileSystemInfos()`, Long path prefix of GLOBALROOT path is missing. (diontools)
 - Isses #179: `Path.GetFileName()` with an empty string throws an exception. (brutaldev)
