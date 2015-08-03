@@ -229,7 +229,8 @@ namespace Alphaleonis.Win32.Filesystem
          if (options != GetFullPathOptions.None)
             path = ApplyFullPathOptions(path, options);
 
-         return !path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase)
+         return path.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase)
+            || !path.StartsWith(LongPathPrefix, StringComparison.OrdinalIgnoreCase)
             ? path
             : (path.StartsWith(LongPathUncPrefix, StringComparison.OrdinalIgnoreCase)
                ? UncPrefix + path.Substring(LongPathUncPrefix.Length)
