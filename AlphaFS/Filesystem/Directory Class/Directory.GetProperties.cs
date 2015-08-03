@@ -45,11 +45,57 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="NotSupportedException"/>
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="path">The target directory.</param>
+      [SecurityCritical]
+      public static Dictionary<string, long> GetProperties(string path)
+      {
+         return GetPropertiesCore(null, path, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
+      }
+
+      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
+      ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
+      ///   <para><b>Total:</b> is the total number of enumerated objects.</para>
+      ///   <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="FileAttributes.Directory"/> nor <see cref="FileAttributes.ReparsePoint"/>.</para>
+      ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
+      ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
+      /// </summary>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The target directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
       [SecurityCritical]
       public static Dictionary<string, long> GetProperties(string path, PathFormat pathFormat)
       {
          return GetPropertiesCore(null, path, DirectoryEnumerationOptions.FilesAndFolders, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
+      ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
+      ///   <para><b>Total:</b> is the total number of enumerated objects.</para>
+      ///   <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="FileAttributes.Directory"/> nor <see cref="FileAttributes.ReparsePoint"/>.</para>
+      ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
+      ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
+      /// </summary>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="path">The target directory.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      [SecurityCritical]
+      public static Dictionary<string, long> GetProperties(string path, DirectoryEnumerationOptions options)
+      {
+         return GetPropertiesCore(null, path, options, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
@@ -75,103 +121,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          return GetPropertiesCore(null, path, options, pathFormat);
       }
-
-
-      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
-      ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
-      ///   <para><b>Total:</b> is the total number of enumerated objects.</para>
-      ///   <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="FileAttributes.Directory"/> nor <see cref="FileAttributes.ReparsePoint"/>.</para>
-      ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
-      ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
-      /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
-      /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">The target directory.</param>
-      [SecurityCritical]
-      public static Dictionary<string, long> GetProperties(string path)
-      {
-         return GetPropertiesCore(null, path, DirectoryEnumerationOptions.FilesAndFolders, PathFormat.RelativePath);
-      }
-
-      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
-      ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
-      ///   <para><b>Total:</b> is the total number of enumerated objects.</para>
-      ///   <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="FileAttributes.Directory"/> nor <see cref="FileAttributes.ReparsePoint"/>.</para>
-      ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
-      ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
-      /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
-      /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="path">The target directory.</param>
-      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      [SecurityCritical]
-      public static Dictionary<string, long> GetProperties(string path, DirectoryEnumerationOptions options)
-      {
-         return GetPropertiesCore(null, path, options, PathFormat.RelativePath);
-      }
+      
 
       #region Transactional
-
-      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
-      ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
-      ///   <para><b>Total:</b> is the total number of enumerated objects.</para>
-      ///   <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="FileAttributes.Directory"/> nor <see cref="FileAttributes.ReparsePoint"/>.</para>
-      ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
-      ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
-      /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
-      /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The target directory.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
-      {
-         return GetPropertiesCore(transaction, path, DirectoryEnumerationOptions.FilesAndFolders, pathFormat);
-      }
-
-      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
-      ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
-      ///   <para><b>Total:</b> is the total number of enumerated objects.</para>
-      ///   <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="FileAttributes.Directory"/> nor <see cref="FileAttributes.ReparsePoint"/>.</para>
-      ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
-      ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
-      /// </summary>
-      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
-      /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
-      /// <exception cref="ArgumentException"/>
-      /// <exception cref="ArgumentNullException"/>
-      /// <exception cref="DirectoryNotFoundException"/>
-      /// <exception cref="IOException"/>
-      /// <exception cref="NotSupportedException"/>
-      /// <exception cref="UnauthorizedAccessException"/>
-      /// <param name="transaction">The transaction.</param>
-      /// <param name="path">The target directory.</param>
-      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
-      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
-      [SecurityCritical]
-      public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
-      {
-         return GetPropertiesCore(transaction, path, options, pathFormat);
-      }
 
       /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
       ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
@@ -213,6 +165,31 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="UnauthorizedAccessException"/>
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The target directory.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
+      {
+         return GetPropertiesCore(transaction, path, DirectoryEnumerationOptions.FilesAndFolders, pathFormat);
+      }
+
+
+      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
+      ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
+      ///   <para><b>Total:</b> is the total number of enumerated objects.</para>
+      ///   <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="FileAttributes.Directory"/> nor <see cref="FileAttributes.ReparsePoint"/>.</para>
+      ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
+      ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
+      /// </summary>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The target directory.</param>
       /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
       [SecurityCritical]
       public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options)
@@ -220,6 +197,31 @@ namespace Alphaleonis.Win32.Filesystem
          return GetPropertiesCore(transaction, path, options, PathFormat.RelativePath);
       }
 
+      /// <summary>[AlphaFS] Gets the properties of the particular directory without following any symbolic links or mount points.
+      ///   <para>Properties include aggregated info from <see cref="FileAttributes"/> of each encountered file system object, plus additional ones: Total, File, Size and Error.</para>
+      ///   <para><b>Total:</b> is the total number of enumerated objects.</para>
+      ///   <para><b>File:</b> is the total number of files. File is considered when object is neither <see cref="FileAttributes.Directory"/> nor <see cref="FileAttributes.ReparsePoint"/>.</para>
+      ///   <para><b>Size:</b> is the total size of enumerated objects.</para>
+      ///   <para><b>Error:</b> is the total number of errors encountered during enumeration.</para>
+      /// </summary>
+      /// <returns>A dictionary mapping the keys mentioned above to their respective aggregated values.</returns>
+      /// <remarks><b>Directory:</b> is an object which has <see cref="FileAttributes.Directory"/> attribute without <see cref="FileAttributes.ReparsePoint"/> one.</remarks>
+      /// <exception cref="ArgumentException"/>
+      /// <exception cref="ArgumentNullException"/>
+      /// <exception cref="DirectoryNotFoundException"/>
+      /// <exception cref="IOException"/>
+      /// <exception cref="NotSupportedException"/>
+      /// <exception cref="UnauthorizedAccessException"/>
+      /// <param name="transaction">The transaction.</param>
+      /// <param name="path">The target directory.</param>
+      /// <param name="options"><see cref="DirectoryEnumerationOptions"/> flags that specify how the directory is to be enumerated.</param>
+      /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      [SecurityCritical]
+      public static Dictionary<string, long> GetPropertiesTransacted(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
+      {
+         return GetPropertiesCore(transaction, path, options, pathFormat);
+      }
+      
       #endregion // Transactional
 
       #region Internal Methods
