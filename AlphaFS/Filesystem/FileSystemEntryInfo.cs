@@ -39,7 +39,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="findData">The NativeMethods.WIN32_FIND_DATA structure.</param>
       internal FileSystemEntryInfo(NativeMethods.WIN32_FIND_DATA findData)
       {
-         _win32FindData = findData;
+         Win32FindData = findData;
       }
 
       #endregion // Constructor
@@ -52,7 +52,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>the 8.3 version of the filename.</value>
       public string AlternateFileName
       {
-         get { return _win32FindData.cAlternateFileName; }
+         get { return Win32FindData.cAlternateFileName; }
       }
 
       #endregion // AlternateFileName
@@ -63,7 +63,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The attributes.</value>
       public FileAttributes Attributes
       {
-         get { return _win32FindData.dwFileAttributes; }
+         get { return Win32FindData.dwFileAttributes; }
       }
 
       #endregion // Attributes
@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time, in coordinated universal time (UTC), this entry was created.</value>
       public DateTime CreationTimeUtc
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.ftCreationTime); }
+         get { return DateTime.FromFileTimeUtc(Win32FindData.ftCreationTime); }
       }
 
       #endregion // CreationTimeUtc
@@ -96,7 +96,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The name of the file.</value>
       public string FileName
       {
-         get { return _win32FindData.cFileName; }
+         get { return Win32FindData.cFileName; }
       }
 
       #endregion // FileName
@@ -107,7 +107,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The size of the file.</value>
       public long FileSize
       {
-         get { return NativeMethods.ToLong(_win32FindData.nFileSizeHigh, _win32FindData.nFileSizeLow); }
+         get { return NativeMethods.ToLong(Win32FindData.nFileSizeHigh, Win32FindData.nFileSizeLow); }
       }
 
       #endregion // FileSize
@@ -129,6 +129,33 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // FullPath
 
+
+      #region IsCompressed
+
+      /// <summary>Gets a value indicating whether this instance is compressed.</summary>
+      /// <value><see langword="true"/> if this instance is compressed; otherwise, <see langword="false"/>.</value>
+      /// <remarks>
+      /// It is not possible to change the compression status of a File object by using the SetAttributes method.
+      /// Instead, you must actually compress the file using either a compression tool or one of the classes in the <see cref="System.IO.Compression"/> namespace.
+      /// </remarks>
+      public bool IsCompressed
+      {
+         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Compressed) == FileAttributes.Compressed; }
+      }
+
+      #endregion // IsCompressed
+
+      #region IsHidden
+
+      /// <summary>Gets a value indicating whether this instance is hidden, and thus is not included in an ordinary directory listing.</summary>
+      /// <value><see langword="true"/> if this instance is hidden; otherwise, <see langword="false"/>.</value>
+      public bool IsHidden
+      {
+         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Hidden) == FileAttributes.Hidden; }
+      }
+
+      #endregion // IsHidden
+
       #region IsDirectory
 
       /// <summary>Gets a value indicating whether this instance represents a directory.</summary>
@@ -139,6 +166,21 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // IsDirectory
+
+      #region IsEncrypted
+
+      /// <summary>Gets a value indicating whether this instance is encrypted (EFS).</summary>
+      /// <value><see langword="true"/> if this instance is encrypted (EFS); otherwise, <see langword="false"/>.</value>
+      /// <remarks>
+      /// For a file, this means that all data in the file is encrypted.
+      /// For a directory, this means that encryption is the default for newly created files and directories.
+      /// </remarks>
+      public bool IsEncrypted
+      {
+         get { return Attributes != (FileAttributes) (-1) && (Attributes & FileAttributes.Encrypted) == FileAttributes.Encrypted; }
+      }
+
+      #endregion // IsEncrypted
 
       #region IsMountPoint
 
@@ -151,10 +193,32 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsMountPoint
 
+      #region IsOffline
+
+      /// <summary>Gets a value indicating whether this instance is offline. The data of the file is not immediately available.</summary>
+      /// <value><see langword="true"/> if this instance is offline; otherwise, <see langword="false"/>.</value>
+      public bool IsOffline
+      {
+         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Offline) == FileAttributes.Offline; }
+      }
+
+      #endregion // IsOffline
+
+      #region IsReadOnly
+
+      /// <summary>Gets a value indicating whether this instance is read-only.</summary>
+      /// <value><see langword="true"/> if this instance is read-only; otherwise, <see langword="false"/>.</value>
+      public bool IsReadOnly
+      {
+         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly; }
+      }
+
+      #endregion // IsReadOnly
+
       #region IsReparsePoint
 
-      /// <summary>Gets a value indicating whether this instance is a reparse point.</summary>
-      /// <value><see langword="true"/> if this instance is a reparse point; otherwise, <see langword="false"/>.</value>
+      /// <summary>Gets a value indicating whether this instance contains a reparse point, which is a block of user-defined data associated with a file or a directory.</summary>
+      /// <value><see langword="true"/> if this instance contains a reparse point; otherwise, <see langword="false"/>.</value>
       public bool IsReparsePoint
       {
          get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.ReparsePoint) == FileAttributes.ReparsePoint; }
@@ -173,6 +237,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // IsSymbolicLink
 
+
       #region LastAccessTime
 
       /// <summary>Gets the time this entry was last accessed.</summary>
@@ -190,7 +255,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time, in coordinated universal time (UTC), this entry was last accessed.</value>
       public DateTime LastAccessTimeUtc
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.ftLastAccessTime); }
+         get { return DateTime.FromFileTimeUtc(Win32FindData.ftLastAccessTime); }
       }
 
       #endregion // LastAccessTimeUtc
@@ -212,7 +277,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The time, in coordinated universal time (UTC), this entry was last modified.</value>
       public DateTime LastWriteTimeUtc
       {
-         get { return DateTime.FromFileTimeUtc(_win32FindData.ftLastWriteTime); }
+         get { return DateTime.FromFileTimeUtc(Win32FindData.ftLastWriteTime); }
       }
 
       #endregion // LastWriteTimeUtc
@@ -236,20 +301,15 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value>The reparse point tag of this entry.</value>
       public ReparsePointTag ReparsePointTag
       {
-         get { return IsReparsePoint ? _win32FindData.dwReserved0 : ReparsePointTag.None; }
+         get { return IsReparsePoint ? Win32FindData.dwReserved0 : ReparsePointTag.None; }
       }
 
       #endregion // ReparsePointTag
 
       #region WIN32_FIND_DATA
-      
-      private readonly NativeMethods.WIN32_FIND_DATA _win32FindData;
 
       /// <summary>Gets internal WIN32 FIND Data</summary>
-      internal NativeMethods.WIN32_FIND_DATA Win32FindData
-      {
-         get { return _win32FindData; }
-      }
+      internal NativeMethods.WIN32_FIND_DATA Win32FindData { get; private set; }
 
       #endregion // WIN32_FIND_DATA
 

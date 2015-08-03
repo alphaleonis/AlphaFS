@@ -39,6 +39,7 @@ Version 2.1
 - Issue #190: Add overloaded methods for `File/Directory.Get/SetAccessControl()` that accept `SafeFileHandle`.
 - Issue #191: Make class `BackupFileStream` sealed.
 - Issue #192: Add `null`-checks to `SafeHandle.IsInvalid` usage.
+- Issue #195: Add useful FileAttributes as properties to `FileSystemEntryInfo` class.
 
 ### Bugs Fixed
 

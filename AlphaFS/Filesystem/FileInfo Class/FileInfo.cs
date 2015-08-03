@@ -144,7 +144,8 @@ namespace Alphaleonis.Win32.Filesystem
                if (DataInitialised == -1)
                   Refresh();
 
-               return DataInitialised == 0 && (Win32AttributeData.dwFileAttributes & FileAttributes.Directory) == 0;
+               FileAttributes attrs = Win32AttributeData.dwFileAttributes;
+               return DataInitialised == 0 && attrs != (FileAttributes) (-1) && (attrs & FileAttributes.Directory) == 0;
             }
             catch
             {
@@ -168,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="IOException"/>
       public bool IsReadOnly
       {
-         get { return (Attributes & FileAttributes.ReadOnly) != 0; }
+         get { return EntryInfo == null || EntryInfo.IsReadOnly; }
 
          set
          {

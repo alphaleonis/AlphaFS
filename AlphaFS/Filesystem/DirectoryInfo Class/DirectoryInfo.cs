@@ -32,8 +32,6 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region Constructors
 
-      #region DirectoryInfo
-
       #region .NET
 
       /// <summary>Initializes a new instance of the <see cref="Alphaleonis.Win32.Filesystem.DirectoryInfo"/> class on the specified path.</summary>
@@ -104,8 +102,6 @@ namespace Alphaleonis.Win32.Filesystem
 
       #endregion // AlphaFS
 
-      #endregion // DirectoryInfo
-
       #endregion // Constructors
       
       #region Properties
@@ -114,9 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region Exists
 
-      /// <summary>
-      ///   Gets a value indicating whether the directory exists.
-      /// </summary>
+      /// <summary>Gets a value indicating whether the directory exists.</summary>
       /// <remarks>
       ///   <para>The <see cref="Exists"/> property returns <see langword="false"/> if any error occurs while trying to determine if the
       ///   specified directory exists.</para>
@@ -137,7 +131,7 @@ namespace Alphaleonis.Win32.Filesystem
                   Refresh();
 
                FileAttributes attrs = Win32AttributeData.dwFileAttributes;
-               return DataInitialised == 0 && (attrs != (FileAttributes)(-1) && (attrs & FileAttributes.Directory) != 0);
+               return DataInitialised == 0 && attrs != (FileAttributes) (-1) && (attrs & FileAttributes.Directory) != 0;
             }
             catch
             {
