@@ -58,6 +58,7 @@ Version 2.1
 - Issue #181: `File.OpenWrite()` should create file if it doesn't exist. (Thomas Levesque)
 - Issue #183: Add `SafeFileHandle` null check for BackupFileStream.Dispose. (diontools)
 - Issue #185: Correct pinvoke signatures of `CreateSymbolicLink()` and `CreateSymbolicLinkTransacted()` functions.
+- Issue #196: Replace usage of `ExtendedFileAttributes.None` with `ExtendedFileAttributes.Normal`.
 
 ### Breaking Changes
 

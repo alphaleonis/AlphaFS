@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync)
       {
-         return OpenCore(null, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : ExtendedFileAttributes.None), bufferSize, null, PathFormat.RelativePath);
+         return OpenCore(null, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : ExtendedFileAttributes.Normal), bufferSize, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and sharing permission, and buffer size.</summary>
@@ -260,7 +260,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream Open(string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync, PathFormat pathFormat)
       {
-         return OpenCore(null, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : ExtendedFileAttributes.None), bufferSize, null, pathFormat);
+         return OpenCore(null, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : ExtendedFileAttributes.Normal), bufferSize, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and sharing permission, and buffer size.</summary>
@@ -636,7 +636,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync)
       {
-         return OpenCore(transaction, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : ExtendedFileAttributes.None), bufferSize, null, PathFormat.RelativePath);
+         return OpenCore(transaction, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : ExtendedFileAttributes.Normal), bufferSize, null, PathFormat.RelativePath);
       }
 
       /// <summary>[AlphaFS] (Transacted) Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and sharing permission, and buffer size.</summary>
@@ -723,7 +723,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileStream OpenTransacted(KernelTransaction transaction, string path, FileMode mode, FileAccess access, FileShare share, int bufferSize, bool useAsync, PathFormat pathFormat)
       {
-         return OpenCore(transaction, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : ExtendedFileAttributes.None), bufferSize, null, pathFormat);
+         return OpenCore(transaction, path, mode, access, share, ExtendedFileAttributes.Normal | (useAsync ? ExtendedFileAttributes.Overlapped : ExtendedFileAttributes.Normal), bufferSize, null, pathFormat);
       }
 
       /// <summary>[AlphaFS] (Transacted) Opens a <see cref="FileStream"/> on the specified path using the specified creation mode, read/write and sharing permission, and buffer size.</summary>

@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    [Flags]
    public enum ExtendedFileAttributes 
    {
-      /// <summary>None of the file attributes specified.</summary>
+      /// <summary>If you pass <see cref="ExtendedFileAttributes.None"/>, the set of attributes is unspecified. <see cref="ExtendedFileAttributes.Normal"/> explicitly sets no attributes.</summary>
       None = 0,
 
       #region FILE_ATTRIBUTE - Attributes applying to any file

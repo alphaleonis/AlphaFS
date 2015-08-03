@@ -110,7 +110,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (bytes == null)
             throw new ArgumentNullException("bytes");
 
-         using (FileStream fs = OpenCore(transaction, path, FileMode.Create, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.None, null, null, pathFormat))
+         using (FileStream fs = OpenCore(transaction, path, FileMode.Create, FileAccess.Write, FileShare.Read, ExtendedFileAttributes.Normal, null, null, pathFormat))
             fs.Write(bytes, 0, bytes.Length);
       }
 
