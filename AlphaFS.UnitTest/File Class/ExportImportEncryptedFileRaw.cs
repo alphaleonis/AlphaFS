@@ -31,14 +31,9 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_ExportImportEncryptedFileRaw_RountripOfFile_FileContentsOfImportedFileMatchesTheOriginalFile_Local_Success()
+      public void File_ExportImportEncryptedFileRaw_RountripOfFile_FileContentsOfImportedFileMatchesTheOriginalFile_LocalUNC_Success()
       {
          File_ExportImportEncryptedFileRaw(false);
-      }
-
-      [TestMethod]
-      public void File_ExportImportEncryptedFileRaw_RountripOfFile_FileContentsOfImportedFileMatchesTheOriginalFile_Network_Success()
-      {
          File_ExportImportEncryptedFileRaw(true);
       }
 

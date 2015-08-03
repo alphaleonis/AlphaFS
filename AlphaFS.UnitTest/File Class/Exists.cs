@@ -32,27 +32,17 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Exists_Local_Success()
+      public void File_Exists_LocalAndUNC_Success()
       {
          File_Exists(false, Path.GetTempPath("File-Exists-" + Path.GetRandomFileName()));
-      }
-
-      [TestMethod]
-      public void File_Exists_Network_Success()
-      {
          File_Exists(true, Path.GetTempPath("File-Exists-" + Path.GetRandomFileName()));
       }
 
 
       [TestMethod]
-      public void File_Exists_LeadingTrailingSpaceLocal_Success()
+      public void File_Exists_PathContainsLeadingTrailingSpace_LocalAndUNC_Success()
       {
          File_Exists_LeadingTrailingSpace(false, UnitTestConstants.NotepadExe);
-      }
-
-      [TestMethod]
-      public void File_Exists_LeadingTrailingSpaceNetwork_Success()
-      {
          File_Exists_LeadingTrailingSpace(true, UnitTestConstants.NotepadExe);
       }
 
@@ -109,6 +99,8 @@ namespace AlphaFS.UnitTest
             if (File.Exists(tempPath))
                File.Delete(tempPath, true);
          }
+
+         Console.WriteLine();
       }
 
 
@@ -136,6 +128,8 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nInput File Path: [{0}]\n", path);
 
          Assert.IsTrue(File.Exists(path), "File should exist.");
+
+         Console.WriteLine();
       }
    }
 }

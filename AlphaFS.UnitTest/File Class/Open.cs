@@ -23,7 +23,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
 using System.Text;
-using File = Alphaleonis.Win32.Filesystem.File;
+using SysIOPath = System.IO.Path;
 using SysIOFile = System.IO.File;
 
 namespace AlphaFS.UnitTest
@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Open_Create1Append2And3_Success()
+      public void File_Open_Create1Append2And3_LocalUNC_Success()
       {
          File_Open(false);
          File_Open(true);
@@ -46,7 +46,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = Path.GetTempPath();
+         string tempPath = SysIOPath.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
 

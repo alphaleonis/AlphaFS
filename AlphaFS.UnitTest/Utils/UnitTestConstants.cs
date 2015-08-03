@@ -29,7 +29,9 @@ using System.Security.Principal;
 using System.Text;
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using File = System.IO.File;
+using SysIODirectory = System.IO.Directory;
+using SysIOPath = System.IO.Path;
+using SysIOFile = System.IO.File;
 
 namespace AlphaFS.UnitTest
 {
@@ -83,8 +85,8 @@ namespace AlphaFS.UnitTest
          SysDrive + @"\\test.txt",
          SysDrive + @"\/test.txt",
 
-         Path.DirectorySeparator,
-         Path.DirectorySeparator + @"Program Files\Microsoft Office",
+         SysIOPath.DirectorySeparatorChar.ToString(),
+         SysIOPath.DirectorySeparatorChar + @"Program Files\Microsoft Office",
          
          Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
          Path.VolumePrefix + @"{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}\Program Files\notepad.exe",
@@ -166,23 +168,23 @@ namespace AlphaFS.UnitTest
       {
          for (int i = 0; i < max; i++)
          {
-            string file = Path.Combine(rootPath, Path.GetRandomFileName());
+            string file = SysIOPath.Combine(rootPath, SysIOPath.GetRandomFileName());
             string dir = file + "-" + i + "-dir";
             file = file + "-" + i + "-file";
 
-            Directory.CreateDirectory(dir);
+            SysIODirectory.CreateDirectory(dir);
 
             // Some directories will remain empty.
             if (i % 2 != 0)
             {
-               File.WriteAllText(file, TextHelloWorld);
-               File.WriteAllText(Path.Combine(dir, Path.GetFileName(file)), TextGoodByeWorld);
+               SysIOFile.WriteAllText(file, TextHelloWorld);
+               SysIOFile.WriteAllText(SysIOPath.Combine(dir, SysIOPath.GetFileName(file)), TextGoodByeWorld);
             }
          }
 
          if (recurse)
          {
-            foreach (string dir in Directory.EnumerateDirectories(rootPath))
+            foreach (string dir in SysIODirectory.EnumerateDirectories(rootPath))
                CreateDirectoriesAndFiles(dir, max, false);
          }
       }
@@ -223,7 +225,7 @@ namespace AlphaFS.UnitTest
             dirSecurity.RemoveAccessRule(rule);
             di.SetAccessControl(dirSecurity, AccessControlSections.Access);
 
-            Directory.Delete(tempPath, true, true);
+            SysIODirectory.Delete(tempPath, true);
          }
       }
 

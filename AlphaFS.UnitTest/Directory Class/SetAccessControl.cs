@@ -32,15 +32,9 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_SetAccessControl_Local_Success()
+      public void Directory_SetAccessControl_LocalAndUNC_Success()
       {
          Directory_SetAccessControl(false);
-      }
-
-
-      [TestMethod]
-      public void Directory_SetAccessControl_Network_Success()
-      {
          Directory_SetAccessControl(true);
       }
 
@@ -119,6 +113,8 @@ namespace AlphaFS.UnitTest
             Directory.Delete(tempPath, true);
             Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
+
+         Console.WriteLine();
       }
    }
 }

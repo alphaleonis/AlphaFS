@@ -33,37 +33,28 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_Exists_Local_Success()
+      public void Directory_Exists_LocalAndUNC_Success()
       {
-         Directory_Exists(false, Path.GetTempPath("Directory-Exists-" + Path.GetRandomFileName()));
-      }
-
-      [TestMethod]
-      public void Directory_Exists_Network_Success()
-      {
-         Directory_Exists(true, Path.GetTempPath("Directory-Exists-" + Path.GetRandomFileName()));
+         Directory_Exists(false);
+         Directory_Exists(true);
       }
 
 
       [TestMethod]
-      public void Directory_Exists_LeadingTrailingSpaceLocal_Success()
+      public void Directory_Exists_PathContainsLeadingTrailingSpace_LocalAndUNC_Success()
       {
-         Directory_Exists_LeadingTrailingSpace(false, UnitTestConstants.SysRoot32);
-      }
-
-      [TestMethod]
-      public void Directory_Exists_LeadingTrailingSpaceNetwork_Success()
-      {
-         Directory_Exists_LeadingTrailingSpace(true, UnitTestConstants.SysRoot32);
+         Directory_Exists_PathContainsLeadingTrailingSpace(false);
+         Directory_Exists_PathContainsLeadingTrailingSpace(true);
       }
 
 
 
       
-      private void Directory_Exists(bool isNetwork, string tempPath)
+      private void Directory_Exists(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
+         string tempPath = Path.GetTempPath("Directory-Exists-" + Path.GetRandomFileName());
          if (isNetwork)
             tempPath = Path.LocalToUnc(tempPath);
 
@@ -110,13 +101,16 @@ namespace AlphaFS.UnitTest
             if (Directory.Exists(tempPath))
                Directory.Delete(tempPath, true);
          }
+
+         Console.WriteLine();
       }
 
 
-      private void Directory_Exists_LeadingTrailingSpace(bool isNetwork, string tempPath)
+      private void Directory_Exists_PathContainsLeadingTrailingSpace(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
+         string tempPath = UnitTestConstants.SysRoot32;
          if (isNetwork)
             tempPath = Path.LocalToUnc(tempPath);
 

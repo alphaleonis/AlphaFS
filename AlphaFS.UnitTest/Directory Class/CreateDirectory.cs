@@ -26,9 +26,11 @@ using System.IO;
 using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using File = Alphaleonis.Win32.Filesystem.File;
 using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using Path = Alphaleonis.Win32.Filesystem.Path;
+using SysIOPath = System.IO.Path;
+using SysIOFile = System.IO.File;
+using SysIODirectory = System.IO.Directory;
 
 namespace AlphaFS.UnitTest
 {
@@ -39,16 +41,12 @@ namespace AlphaFS.UnitTest
       #region AlreadyExistsException: FileExistsWithSameNameAsDirectory
 
       [TestMethod]
-      public void Directory_CreateDirectory_FileExistsWithSameNameAsDirectoryLocal_AlreadyExistsException()
+      public void Directory_CreateDirectory_FileExistsWithSameNameAsDirectory_LocalAndUNC_AlreadyExistsException()
       {
          Directory_CreateDirectory_FileExistsWithSameNameAsDirectory_AlreadyExistsException(false);
-      }
-
-      [TestMethod]
-      public void Directory_CreateDirectory_FileExistsWithSameNameAsDirectoryNetwork_AlreadyExistsException()
-      {
          Directory_CreateDirectory_FileExistsWithSameNameAsDirectory_AlreadyExistsException(true);
       }
+
 
       private void Directory_CreateDirectory_FileExistsWithSameNameAsDirectory_AlreadyExistsException(bool isNetwork)
       {
@@ -61,7 +59,7 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            using (File.Create(tempPath)) { }
+            using (SysIOFile.Create(tempPath)) { }
 
             const int expectedLastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
             const string expectedException = "System.IO.IOException";
@@ -87,10 +85,10 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            if (File.Exists(tempPath))
+            if (SysIOFile.Exists(tempPath))
             {
-               File.Delete(tempPath);
-               Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
+               SysIOFile.Delete(tempPath);
+               Assert.IsFalse(SysIOFile.Exists(tempPath), "Cleanup failed: File should have been removed.");
             }
          }
       }
@@ -160,16 +158,12 @@ namespace AlphaFS.UnitTest
       // Note: isNetwork ? "System.IO.IOException" : "System.IO.DirectoryNotFoundException";
 
       [TestMethod]
-      public void Directory_CreateDirectory_NonExistingDriveLetterLocal_DirectoryNotFoundException()
+      public void Directory_CreateDirectory_NonExistingDriveLetter_LocalAndUNC_DirectoryNotFoundException()
       {
          Directory_CreateDirectory_NonExistingDriveLetter_XxxException(false);
-      }
-
-      [TestMethod]
-      public void Directory_CreateDirectory_NonExistingDriveLetterNetwork_IOException()
-      {
          Directory_CreateDirectory_NonExistingDriveLetter_XxxException(true);
       }
+
 
       private void Directory_CreateDirectory_NonExistingDriveLetter_XxxException(bool isNetwork)
       {
@@ -220,16 +214,12 @@ namespace AlphaFS.UnitTest
       #region NotSupportedException: PathContainsColon
 
       [TestMethod]
-      public void Directory_CreateDirectory_PathContainsColonLocal_NotSupportedException()
+      public void Directory_CreateDirectory_PathContainsColon_LocalAndUNC_NotSupportedException()
       {
          Directory_CreateDirectory_PathContainsColon_NotSupportedException(false);
-      }
-
-      [TestMethod]
-      public void Directory_CreateDirectory_PathContainsColonNetwork_NotSupportedException()
-      {
          Directory_CreateDirectory_PathContainsColon_NotSupportedException(true);
       }
+
 
       private void Directory_CreateDirectory_PathContainsColon_NotSupportedException(bool isNetwork)
       {
@@ -265,14 +255,9 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Directory_CreateDirectory_Local_Success()
+      public void Directory_CreateDirectory_LocalAndUNC_Success()
       {
          Directory_CreateDirectory(false);
-      }
-
-      [TestMethod]
-      public void Directory_CreateDirectory_Network_Success()
-      {
          Directory_CreateDirectory(true);
       }
 
@@ -286,7 +271,7 @@ namespace AlphaFS.UnitTest
 
 #if NET35
          string emspace = "\u3000";
-         string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + Path.GetRandomFileName() + emspace);
+         string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + SysIOPath.GetRandomFileName() + emspace);
 #else
          // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
          string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + Path.GetRandomFileName());
@@ -297,10 +282,10 @@ namespace AlphaFS.UnitTest
 
          try
          {
-            string root = Path.Combine(tempPath, "MaxPath-Hit-The-Road");
+            string root = SysIOPath.Combine(tempPath, "MaxPath-Hit-The-Road");
 
             for (int i = 0; i < level; i++)
-               root = Path.Combine(root, "-" + (i + 1) + "-subdir");
+               root = SysIOPath.Combine(root, "-" + (i + 1) + "-subdir");
 
             Directory.CreateDirectory(root);
 
@@ -311,13 +296,16 @@ namespace AlphaFS.UnitTest
          }
          finally
          {
-            if (Directory.Exists(tempPath))
+            if (SysIODirectory.Exists(tempPath))
                Directory.Delete(tempPath, true);
+               //SysIODirectory.Delete(tempPath, true);
 
-            Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            Assert.IsFalse(SysIODirectory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
 
             Console.WriteLine("\nDirectory deleted.");
          }
+
+         Console.WriteLine();
       }
    }
 }

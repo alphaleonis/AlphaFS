@@ -35,24 +35,20 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void Directory_EnumerateAlternateDataStreams_Local_Success()
+      public void Directory_EnumerateAlternateDataStreams_LocalAndUNC_Success()
       {
-         Directory_EnumerateAlternateDataStreams(false, Path.GetTempPath("Directory-EnumerateAlternateDataStreams-" + Path.GetRandomFileName()));
-      }
-
-      [TestMethod]
-      public void Directory_EnumerateAlternateDataStreams_Network_Success()
-      {
-         Directory_EnumerateAlternateDataStreams(true, Path.GetTempPath("Directory-EnumerateAlternateDataStreams-" + Path.GetRandomFileName()));
+         Directory_EnumerateAlternateDataStreams(false);
+         Directory_EnumerateAlternateDataStreams(true);
       }
 
 
 
 
-      private void Directory_EnumerateAlternateDataStreams(bool isNetwork, string tempPath)
+      private void Directory_EnumerateAlternateDataStreams(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
+         string tempPath = Path.GetTempPath("Directory-EnumerateAlternateDataStreams-" + Path.GetRandomFileName());
          if (isNetwork)
             tempPath = Path.LocalToUnc(tempPath);
 
@@ -116,6 +112,8 @@ namespace AlphaFS.UnitTest
             Directory.Delete(tempPath);
             Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          }
+
+         Console.WriteLine();
       }
    }
 }

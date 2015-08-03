@@ -35,7 +35,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Create_10ByteFile_Success()
+      public void File_Create_A10ByteFile_LocalUNC_Success()
       {
          File_Create(false);
          File_Create(true);
@@ -43,7 +43,7 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void File_Create_WithFileSecurity_Success()
+      public void File_Create_WithFileSecurity_LocalUNC_Success()
       {
          File_Create_WithFileSecurity(false);
          File_Create_WithFileSecurity(true);

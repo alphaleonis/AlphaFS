@@ -32,17 +32,13 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_GetAccessControl_Local_Success()
+      public void File_GetAccessControl_LocalAndUNC_Success()
       {
          File_GetAccessControl(false);
-      }
-
-
-      [TestMethod]
-      public void File_GetAccessControl_Network_Success()
-      {
          File_GetAccessControl(true);
       }
+
+
 
 
       private void File_GetAccessControl(bool isNetwork)

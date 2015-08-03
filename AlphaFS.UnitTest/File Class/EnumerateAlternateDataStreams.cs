@@ -34,24 +34,20 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_EnumerateAlternateDataStreams_Local_Success()
+      public void File_EnumerateAlternateDataStreams_LocalAndUNC_Success()
       {
-         File_EnumerateAlternateDataStreams(false, Path.GetTempPath("File-EnumerateAlternateDataStreams-" + Path.GetRandomFileName()));
-      }
-
-      [TestMethod]
-      public void File_EnumerateAlternateDataStreams_Network_Success()
-      {
-         File_EnumerateAlternateDataStreams(true, Path.GetTempPath("File-EnumerateAlternateDataStreams-" + Path.GetRandomFileName()));
+         File_EnumerateAlternateDataStreams(false);
+         File_EnumerateAlternateDataStreams(true);
       }
 
 
 
 
-      private void File_EnumerateAlternateDataStreams(bool isNetwork, string tempPath)
+      private void File_EnumerateAlternateDataStreams(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
+         string tempPath = Path.GetTempPath("File-EnumerateAlternateDataStreams-" + Path.GetRandomFileName());
          if (isNetwork)
             tempPath = Path.LocalToUnc(tempPath);
 
@@ -126,6 +122,8 @@ namespace AlphaFS.UnitTest
             File.Delete(tempPath);
             Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
          }
+
+         Console.WriteLine();
       }
    }
 }
