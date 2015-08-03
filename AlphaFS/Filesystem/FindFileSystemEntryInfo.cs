@@ -124,7 +124,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // Directory.GetFiles()
                      // Directory.GetFileSystemEntries()
 
-                     NativeError.ThrowException(lastError, InputPath);
+                     NativeError.ThrowException(lastError, pathLp);
                      break;
 
                   case Win32Errors.ERROR_ACCESS_DENIED:
@@ -251,7 +251,7 @@ namespace Alphaleonis.Win32.Filesystem
                   } while (NativeMethods.FindNextFile(handle, out win32FindData));
 
 
-                  var lastError = (uint)Marshal.GetLastWin32Error();
+                  var lastError = (uint) Marshal.GetLastWin32Error();
 
                   if (!ContinueOnException)
                   {
@@ -269,7 +269,7 @@ namespace Alphaleonis.Win32.Filesystem
                      }
 
                      if (lastError != Win32Errors.NO_ERROR)
-                        NativeError.ThrowException(lastError, InputPath);
+                        NativeError.ThrowException(lastError, pathLp);
                   }
                }
             }
@@ -295,7 +295,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (SafeFindFileHandle handle = FindFirstFile(InputPath, out win32FindData))
          {
             if (handle != null && !handle.IsInvalid)
-               return NewFileSystemEntryType<T>(win32FindData, InputPath, (win32FindData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory);
+               return NewFileSystemEntryType<T>(win32FindData, InputPath, IsDirectory);
          }
 
          return (T) (object) null;
