@@ -111,7 +111,7 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             GetDeviceInfo(3, 0);
-            return (long)(_dsi == null ? 0 : _dsi.FreeBytesAvailable);
+            return _dsi == null ? 0 : _dsi.FreeBytesAvailable;
          }
       }
 
@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             GetDeviceInfo(3, 0);
-            return (long)(_dsi == null ? 0 : _dsi.TotalNumberOfFreeBytes);
+            return _dsi == null ? 0 : _dsi.TotalNumberOfFreeBytes;
          }
       }
 
@@ -185,7 +185,7 @@ namespace Alphaleonis.Win32.Filesystem
          get
          {
             GetDeviceInfo(3, 0);
-            return (long)(_dsi == null ? 0 : _dsi.TotalNumberOfBytes);
+            return _dsi == null ? 0 : _dsi.TotalNumberOfBytes;
          }
       }
 
@@ -358,6 +358,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // Do not use ?? expression here.
                         if (_dosDeviceName == null)
                            _dosDeviceName = Volume.QueryDosDevice(Name).FirstOrDefault();
+
                         return _dosDeviceName;
                   }
                   break;
@@ -375,6 +376,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // Do not use ?? expression here.
                         if (_driveType == null)
                            _driveType = Volume.GetDriveType(Name);
+
                         return _driveType;
 
                      case 1:
@@ -383,6 +385,7 @@ namespace Alphaleonis.Win32.Filesystem
                         // Do not use ?? expression here.
                         if (_rootDirectory == null)
                            _rootDirectory = new DirectoryInfo(null, Name, PathFormat.RelativePath);
+
                         return _rootDirectory;
                   }
                   break;

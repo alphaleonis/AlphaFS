@@ -19,22 +19,24 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using System;
+using System.Globalization;
 using System.Linq;
+using SysIOPath = System.IO.Path;
 
 namespace AlphaFS.UnitTest
 {
-   static class PathUtils
+   internal static class PathUtils
    {
       public static string AsUncPath(string localPath)
       {
-         localPath = Path.GetFullPath(localPath);
+         localPath = SysIOPath.GetFullPath(localPath);
 
-         if (Path.IsUncPath(localPath))
+         if (Alphaleonis.Win32.Filesystem.Path.IsUncPath(localPath))
             throw new ArgumentException("Path is not a local path.");
 
-         return "\\\\" + Environment.MachineName + "\\" + localPath.First() + "$\\" + localPath.Substring(Path.GetPathRoot(localPath).Length);
+         return string.Format(CultureInfo.InvariantCulture, @"\\{0}\{1}$\{2}", Environment.MachineName,
+            localPath.First(), localPath.Substring(SysIOPath.GetPathRoot(localPath).Length));
       }
    }
 }

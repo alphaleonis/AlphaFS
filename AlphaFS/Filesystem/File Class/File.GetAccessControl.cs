@@ -115,7 +115,7 @@ namespace Alphaleonis.Win32.Filesystem
 
 
       /// <summary>[AlphaFS] Gets an <see cref="ObjectSecurity"/> object for a particular file or directory.</summary>
-      /// <returns>An <see cref="ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the <paramref name="path"/> or <paramref name="handle"/> parameter.</returns>
+      /// <returns>An <see cref="ObjectSecurity"/> object that encapsulates the access control rules for the file or directory described by the <paramref name="path"/> parameter.</returns>
       /// <exception cref="IOException"/>
       /// <exception cref="ArgumentException"/>
       /// <exception cref="ArgumentNullException"/>
@@ -159,7 +159,7 @@ namespace Alphaleonis.Win32.Filesystem
             if (lastError == Win32Errors.ERROR_ACCESS_DENIED)
             {
                using (SafeFileHandle handle = CreateFileCore(null, pathLp, ExtendedFileAttributes.BackupSemantics, null,
-                  FileMode.Open, FileSystemRights.Read, FileShare.Read, true, PathFormat.LongFullPath))
+                  FileMode.Open, FileSystemRights.Read, FileShare.Read, false, PathFormat.LongFullPath))
                {
                   return GetAccessControlHandleCore<T>(true, isFolder, handle, includeSections, securityInfo);
                }

@@ -258,7 +258,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The default marshaling for bool is four bytes (to allow seamless integration with BOOL return values).
       /// If you were to use the default marshaling for BOOLEAN values, it's likely that you will get erroneous results.
       /// The return directive forces PInvoke to marshal just one byte of the return value.
-      /// Source: http://www.informit.com/guides/content.aspx?g=dotnet&seqNum=762&ns=16196
+      /// Source: http://www.informit.com/guides/content.aspx?g=dotnet&amp;seqNum=762&amp;ns=16196
       /// </remarks>
       /// <returns>
       ///   If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error
@@ -279,7 +279,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// The default marshaling for bool is four bytes (to allow seamless integration with BOOL return values).
       /// If you were to use the default marshaling for BOOLEAN values, it's likely that you will get erroneous results.
       /// The return directive forces PInvoke to marshal just one byte of the return value.
-      /// Source: http://www.informit.com/guides/content.aspx?g=dotnet&seqNum=762&ns=16196
+      /// Source: http://www.informit.com/guides/content.aspx?g=dotnet&amp;seqNum=762&amp;ns=16196
       /// </remarks>
       /// <returns>
       ///   If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error

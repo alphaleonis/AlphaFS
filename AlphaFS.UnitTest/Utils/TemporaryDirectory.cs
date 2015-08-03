@@ -21,17 +21,15 @@
 
 using Alphaleonis;
 using System;
-using System.IO;
+using SysIODirectoryInfo = System.IO.DirectoryInfo;
+using SysIOPath = System.IO.Path;
 
 namespace AlphaFS.UnitTest
 {
    /// <summary>Used to create a temporary directory that will be deleted once this instance is disposed.</summary>
    internal sealed class TemporaryDirectory : IDisposable
    {
-      private readonly DirectoryInfo _dirInfo;
-
-
-      public TemporaryDirectory(string prefix = null) : this(Path.GetTempPath(), prefix) {}
+      public TemporaryDirectory(string prefix = null) : this(SysIOPath.GetTempPath(), prefix) { }
       
       public TemporaryDirectory(string root, string prefix)
       {
@@ -40,12 +38,21 @@ namespace AlphaFS.UnitTest
 
          do
          {
-            _dirInfo = new DirectoryInfo(Path.Combine(root, prefix + "-" + Guid.NewGuid().ToString("N").Substring(0, 6)));
+            Directory = new SysIODirectoryInfo(SysIOPath.Combine(root, prefix + "-" + Guid.NewGuid().ToString("N").Substring(0, 6)));
 
-         } while (_dirInfo.Exists);
+         } while (Directory.Exists);
 
-         _dirInfo.Create();
+         Directory.Create();
       }
+
+      public SysIODirectoryInfo Directory { get; private set; }
+
+      public string RandomFileFullPath
+      {
+         get { return SysIOPath.Combine(Directory.FullName, SysIOPath.GetRandomFileName()); }
+      }
+
+      #region Disposable Members
 
       ~TemporaryDirectory()
       {
@@ -64,21 +71,21 @@ namespace AlphaFS.UnitTest
          {
             if (isDisposing)
             {
-               _dirInfo.Refresh();
+               Directory.Refresh();
 
-               if (_dirInfo.Exists)
-                  _dirInfo.Delete(true);
+               if (Directory.Exists)
+                  Directory.Delete(true);
+
+               else
+                  Console.WriteLine("\n\nThe TemporaryDirectory was already removed.");
             }
          }
          catch (Exception ex)
          {
-            Console.WriteLine("Failed to delete directory: [{0}]: [{1}]", _dirInfo, ex.Message);
+            Console.WriteLine("\n\nFailed to delete TemporaryDirectory: [{0}]: [{1}]", Directory, ex.Message);
          }
       }
 
-      public DirectoryInfo Directory
-      {
-         get { return _dirInfo; }
-      }
+      #endregion // Disposable Members
    }
 }

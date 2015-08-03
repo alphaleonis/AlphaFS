@@ -176,8 +176,8 @@ namespace Alphaleonis.Win32.Filesystem
       public static IEnumerable<string> EnumerateFiles(string path, DirectoryEnumerationOptions options)
       {
          // Adhere to the method name.
-         options &= ~DirectoryEnumerationOptions.Folders;
-         options |= DirectoryEnumerationOptions.Files;
+         options &= ~DirectoryEnumerationOptions.Folders;  // Remove enumeration of directories.
+         options |= DirectoryEnumerationOptions.Files;     // Add enumeration of files.
 
          return EnumerateFileSystemEntryInfosCore<string>(null, path, Path.WildcardStarMatchAll, options, PathFormat.RelativePath);
       }

@@ -573,11 +573,13 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public BackupStreamInfo ReadStreamInfo()
       {
-         using (var hBuf = new SafeGlobalMemoryBufferHandle(Marshal.SizeOf(typeof(NativeMethods.WIN32_STREAM_ID))))
+         var sizeOf = Marshal.SizeOf(typeof(NativeMethods.WIN32_STREAM_ID));
+
+         using (var hBuf = new SafeGlobalMemoryBufferHandle(sizeOf))
          {
             uint numberOfBytesRead;
 
-            if (!NativeMethods.BackupRead(SafeFileHandle, hBuf, (uint)Marshal.SizeOf(typeof(NativeMethods.WIN32_STREAM_ID)), out numberOfBytesRead, false, _processSecurity, ref _context))
+            if (!NativeMethods.BackupRead(SafeFileHandle, hBuf, (uint) sizeOf, out numberOfBytesRead, false, _processSecurity, ref _context))
                NativeError.ThrowException();
 
 
@@ -585,18 +587,18 @@ namespace Alphaleonis.Win32.Filesystem
                return null;
 
 
-            if (numberOfBytesRead < Marshal.SizeOf(typeof(NativeMethods.WIN32_STREAM_ID)))
+            if (numberOfBytesRead < sizeOf)
                throw new IOException(Resources.Read_Incomplete_Header);
 
-            NativeMethods.WIN32_STREAM_ID streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>(0);
+            var streamID = hBuf.PtrToStructure<NativeMethods.WIN32_STREAM_ID>(0);
 
-            uint nameLength = (uint)Math.Min(streamID.dwStreamNameSize, hBuf.Capacity);
+            uint nameLength = (uint) Math.Min(streamID.dwStreamNameSize, hBuf.Capacity);
 
 
             if (!NativeMethods.BackupRead(SafeFileHandle, hBuf, nameLength, out numberOfBytesRead, false, _processSecurity, ref _context))
                NativeError.ThrowException();
 
-            string name = hBuf.PtrToStringUni(0, (int)nameLength / 2);
+            string name = hBuf.PtrToStringUni(0, (int) nameLength/2);
 
             return new BackupStreamInfo(streamID, name);
          }
