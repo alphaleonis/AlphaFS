@@ -295,7 +295,7 @@ namespace Alphaleonis.Win32.Filesystem
          using (SafeFindFileHandle handle = FindFirstFile(InputPath, out win32FindData))
          {
             if (handle != null && !handle.IsInvalid)
-               return NewFileSystemEntryType<T>(win32FindData, InputPath, IsDirectory);
+               return NewFileSystemEntryType<T>(win32FindData, InputPath, (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0);
          }
 
          return (T) (object) null;
