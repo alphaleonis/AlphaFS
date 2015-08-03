@@ -1134,6 +1134,10 @@ namespace AlphaFS.UnitTest
             {
                actual = Path.GetRegularPath(path);
 
+               if (actual.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase) ||
+                   actual.StartsWith(Path.VolumePrefix, StringComparison.OrdinalIgnoreCase))
+                  continue;
+
                Assert.IsFalse(actual.StartsWith(Path.LongPathPrefix, StringComparison.OrdinalIgnoreCase));
             }
             catch (Exception ex)

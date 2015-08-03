@@ -175,6 +175,15 @@ namespace Alphaleonis.Win32.Filesystem
          // Will fail on a Unicode path.
          string pathRp = GetRegularPathCore(path, GetFullPathOptions.None);
 
+
+         // Handle "Path.GlobalRootPrefix" and "Path.VolumePrefix".
+         if (pathRp.StartsWith(GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
+            pathRp = pathRp.Replace(GlobalRootPrefix, string.Empty);
+
+         if (pathRp.StartsWith(VolumePrefix, StringComparison.OrdinalIgnoreCase))
+            pathRp = pathRp.Replace(VolumePrefix, string.Empty);
+
+
          for (int index = 0, l = pathRp.Length; index < l; ++index)
          {
             int num = pathRp[index];
