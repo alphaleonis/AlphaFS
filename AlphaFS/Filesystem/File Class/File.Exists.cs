@@ -214,8 +214,8 @@ namespace Alphaleonis.Win32.Filesystem
             return (dataInitialised == Win32Errors.ERROR_SUCCESS &&
                     data.dwFileAttributes != (FileAttributes) (-1) &&
                     (isFolder
-                       ? (data.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory
-                       : (data.dwFileAttributes & FileAttributes.Directory) != FileAttributes.Directory));
+                       ? (data.dwFileAttributes & FileAttributes.Directory) != 0
+                       : (data.dwFileAttributes & FileAttributes.Directory) == 0));
          }
          catch
          {

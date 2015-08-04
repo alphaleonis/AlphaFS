@@ -140,7 +140,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public bool IsCompressed
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Compressed) == FileAttributes.Compressed; }
+         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Compressed) != 0; }
       }
 
       #endregion // IsCompressed
@@ -151,7 +151,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value><see langword="true"/> if this instance is hidden; otherwise, <see langword="false"/>.</value>
       public bool IsHidden
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Hidden) == FileAttributes.Hidden; }
+         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Hidden) != 0; }
       }
 
       #endregion // IsHidden
@@ -162,7 +162,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value><see langword="true"/> if this instance represents a directory; otherwise, <see langword="false"/>.</value>
       public bool IsDirectory
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Directory) == FileAttributes.Directory; }
+         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Directory) != 0; }
       }
 
       #endregion // IsDirectory
@@ -177,7 +177,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// </remarks>
       public bool IsEncrypted
       {
-         get { return Attributes != (FileAttributes) (-1) && (Attributes & FileAttributes.Encrypted) == FileAttributes.Encrypted; }
+         get { return Attributes != (FileAttributes) (-1) && (Attributes & FileAttributes.Encrypted) != 0; }
       }
 
       #endregion // IsEncrypted
@@ -199,7 +199,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value><see langword="true"/> if this instance is offline; otherwise, <see langword="false"/>.</value>
       public bool IsOffline
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Offline) == FileAttributes.Offline; }
+         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.Offline) != 0; }
       }
 
       #endregion // IsOffline
@@ -210,7 +210,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value><see langword="true"/> if this instance is read-only; otherwise, <see langword="false"/>.</value>
       public bool IsReadOnly
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly; }
+         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.ReadOnly) != 0; }
       }
 
       #endregion // IsReadOnly
@@ -221,7 +221,7 @@ namespace Alphaleonis.Win32.Filesystem
       /// <value><see langword="true"/> if this instance contains a reparse point; otherwise, <see langword="false"/>.</value>
       public bool IsReparsePoint
       {
-         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.ReparsePoint) == FileAttributes.ReparsePoint; }
+         get { return Attributes != (FileAttributes)(-1) && (Attributes & FileAttributes.ReparsePoint) != 0; }
       }
 
       #endregion // IsReparsePoint

@@ -1219,7 +1219,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                            if (data.dwFileAttributes != (FileAttributes) (-1))
                            {
-                              if ((data.dwFileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                              if ((data.dwFileAttributes & FileAttributes.ReadOnly) != 0)
                               {
                                  // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
 
@@ -1227,6 +1227,7 @@ namespace Alphaleonis.Win32.Filesystem
                                  {
                                     // Reset file system object attributes.
                                     SetAttributesCore(isFolder, transaction, destFileNameLp, FileAttributes.Normal, true, PathFormat.LongFullPath);
+
                                     goto startCopyMove;
                                  }
 
@@ -1239,7 +1240,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                               // MSDN: Win32 CopyFileXxx: This function fails with ERROR_ACCESS_DENIED if the destination file already exists
                               // and has the FILE_ATTRIBUTE_HIDDEN or FILE_ATTRIBUTE_READONLY attribute set.
-                              if ((data.dwFileAttributes & FileAttributes.Hidden) == FileAttributes.Hidden)
+                              if ((data.dwFileAttributes & FileAttributes.Hidden) != 0)
                                  NativeError.ThrowException(lastError, string.Format(CultureInfo.CurrentCulture, Resources.File_Is_Hidden, destFileNameLp));
                            }
 
@@ -1253,6 +1254,7 @@ namespace Alphaleonis.Win32.Filesystem
                      // File.Copy(): IOException: destinationFileName exists and overwrite is false.
                      // File.Move(): The destination file already exists or sourceFileName was not found.
                      NativeError.ThrowException(lastError, fileNameLp);
+
                      break;
                }
 

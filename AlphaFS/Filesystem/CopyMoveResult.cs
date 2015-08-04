@@ -28,9 +28,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region ErrorCode
 
-      /// <summary>
-      ///   The error code encountered during the Copy or Move action.
-      /// </summary>
+      /// <summary>The error code encountered during the Copy or Move action.</summary>
       /// <value>0 (zero) indicates success.</value>
       public int ErrorCode { get; private set; }
 
@@ -38,9 +36,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region ErrorMessage
 
-      /// <summary>
-      ///   The error message from the <see cref="ErrorCode"/> that was encountered during the Copy or Move action.
-      /// </summary>
+      /// <summary>The error message from the <see cref="ErrorCode"/> that was encountered during the Copy or Move action.</summary>
       /// <value>A message describing the error.</value>
       public string ErrorMessage { get; private set; }
 
@@ -64,9 +60,7 @@ namespace Alphaleonis.Win32.Filesystem
 
       #region IsMove
 
-      /// <summary>
-      ///   Indicates if the action is a Copy or Move action.
-      /// </summary>
+      /// <summary>Indicates if the action is a Copy or Move action.</summary>
       /// <value><see langword="true"/> when action is Move. Otherwise <see langword="false"/>.</value>
       public bool IsMove { get; private set; }
 

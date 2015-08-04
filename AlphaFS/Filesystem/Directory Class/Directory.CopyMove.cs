@@ -779,10 +779,10 @@ namespace Alphaleonis.Win32.Filesystem
             throw new NotSupportedException(Resources.Cannot_Determine_Copy_Or_Move);
 
          bool overwrite = doCopy
-            ? (((CopyOptions)copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
-            : (((MoveOptions)moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
+            ? (((CopyOptions) copyOptions & CopyOptions.FailIfExists) != CopyOptions.FailIfExists)
+            : (((MoveOptions) moveOptions & MoveOptions.ReplaceExisting) == MoveOptions.ReplaceExisting);
 
-         var cmr = new CopyMoveResult(sourcePathLp, destinationPathLp, true, doMove, false, (int)Win32Errors.ERROR_SUCCESS);
+         var cmr = new CopyMoveResult(sourcePathLp, destinationPathLp, true, doMove, false, (int) Win32Errors.ERROR_SUCCESS);
 
          #endregion //Setup
 
@@ -812,7 +812,7 @@ namespace Alphaleonis.Win32.Filesystem
          else
          {
             // MSDN: .NET3.5+: IOException: An attempt was made to move a directory to a different volume.
-            if (((MoveOptions)moveOptions & MoveOptions.CopyAllowed) != MoveOptions.CopyAllowed)
+            if (((MoveOptions) moveOptions & MoveOptions.CopyAllowed) == 0)
                if (!Path.GetPathRoot(sourcePathLp, false).Equals(Path.GetPathRoot(destinationPathLp, false), StringComparison.OrdinalIgnoreCase))
                   NativeError.ThrowException(Win32Errors.ERROR_NOT_SAME_DEVICE, destinationPathLp);
 

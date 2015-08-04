@@ -365,7 +365,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                   if (data.dwFileAttributes != (FileAttributes) (-1))
                   {
-                     if ((data.dwFileAttributes & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                     if ((data.dwFileAttributes & FileAttributes.ReadOnly) != 0)
                      {
                         // MSDN: .NET 3.5+: IOException: The directory specified by path is read-only.
 
