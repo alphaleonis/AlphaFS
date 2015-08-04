@@ -248,14 +248,18 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static Dictionary<string, long> GetPropertiesCore(KernelTransaction transaction, string path, DirectoryEnumerationOptions options, PathFormat pathFormat)
       {
+         long total = 0;
+         long size = 0;
+
          const string propFile = "File";
          const string propTotal = "Total";
          const string propSize = "Size";
-         long total = 0;
-         long size = 0;
+         
          Type typeOfAttrs = typeof(FileAttributes);
          Array attributes = Enum.GetValues(typeOfAttrs);
-         var props = Enum.GetNames(typeOfAttrs).OrderBy(attrs => attrs).ToDictionary<string, string, long>(name => name, name => 0);
+
+         Dictionary<string, long> props = Enum.GetNames(typeOfAttrs).OrderBy(attrs => attrs).ToDictionary<string, string, long>(name => name, name => 0);
+
 
          string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
 
@@ -266,13 +270,10 @@ namespace Alphaleonis.Win32.Filesystem
             if (!fsei.IsDirectory)
                size += fsei.FileSize;
 
-            foreach (FileAttributes attributeMarker in attributes)
+            var fsei1 = fsei;
+            foreach (FileAttributes attributeMarker in attributes.Cast<FileAttributes>().Where(attributeMarker => (fsei1.Attributes & attributeMarker) != 0))
             {
-               // Marker exists in flags.
-               if ((fsei.Attributes & attributeMarker) == attributeMarker)
-
-                  // Regular directory that will go to stack, adding directory flag ++
-                  props[(((attributeMarker & FileAttributes.Directory) == FileAttributes.Directory) ? FileAttributes.Directory : attributeMarker).ToString()]++;
+               props[(((attributeMarker & FileAttributes.Directory) != 0) ? FileAttributes.Directory : attributeMarker).ToString()]++;
             }
          }
 

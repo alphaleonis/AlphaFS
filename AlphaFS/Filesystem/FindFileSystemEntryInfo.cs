@@ -226,12 +226,12 @@ namespace Alphaleonis.Win32.Filesystem
                         continue;
 
                      // Skip reparse points here to cleanly separate regular directories from links.
-                     if (SkipReparsePoints && (win32FindData.dwFileAttributes & FileAttributes.ReparsePoint) == FileAttributes.ReparsePoint)
+                     if (SkipReparsePoints && (win32FindData.dwFileAttributes & FileAttributes.ReparsePoint) != 0)
                         continue;
 
 
                      string fseiFullPathLp = path + fileName;
-                     bool fseiIsFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) == FileAttributes.Directory;
+                     bool fseiIsFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
 
                      // If object is a directory, add it to the queue for later traversal.
                      if (fseiIsFolder && Recursive)
