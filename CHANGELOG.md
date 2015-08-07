@@ -30,7 +30,7 @@ Version 2.1
 - Issue #151: Add `Directory.EnumerateXxx()` methods with support for `DirectoryEnumerationOptions`- and `PathFormat` enum.
 - Issue #154: Modify private method `FindFileSystemEntryInfo.FindFirstFile()` to report the full path on Exception. 
 - Issue #146: Add method `DirectoryInfo.EnumerateAlternateDataStreams()`.
-- Issue #147: Add overloaded methods to set Reparse Point Timestamp. (Thanks rstarkov!)
+- Issue #147: Add overloaded methods to set Reparse Point Timestamp. (rstarkov)
 - Issue #150: Enhancement: `File.IsLocked()`
 - Issue #184: `File.CreateSymbolicLink()` should throw `PlatformNotSupportedException()` if OS < Vista. 
 - Issue #186: Replace WIN32 API `NativeMethods.GetVersionEx()` with `NativeMethods.RtlGetVersion()`.
@@ -61,8 +61,9 @@ Version 2.1
 - Issue #185: Correct pinvoke signatures of `CreateSymbolicLink()` and `CreateSymbolicLinkTransacted()` functions.
 - Issue #196: Replace usage of `ExtendedFileAttributes.None` with `ExtendedFileAttributes.Normal`.
 - Issue #197: Fix: Prevent normalization of GlobalRootPrefix paths.
-- Isse #198: `Path.GetRegularPathCore()` should not normalize `\\?\Volume` prefix.
-
+- Issue #198: `Path.GetRegularPathCore()` should not normalize `\\?\Volume` prefix.
+- Issue #201: Some exceptions contain an incorrect `HRESULT` (Thomas Levesque)
+- 
 ### Breaking Changes
 
 - Issue #113: Change names of time related properties on `FileSystemEntryInfo` to conform with `FileInfo/DirectoryInfo`.
