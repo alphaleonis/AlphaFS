@@ -141,7 +141,7 @@ namespace Alphaleonis.Win32
 
             default:
                // We don't have a specific exception to generate for this error.               
-               throw new IOException(errorMessage, (int)errorCode);
+               throw new IOException(errorMessage, Win32Errors.GetHrFromWin32Error(errorCode));
          }
       }
 
