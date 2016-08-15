@@ -81,7 +81,10 @@ namespace Alphaleonis.Win32.Filesystem
          var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
          string destinationFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationFileName, pathFormat, options);
-         string destinationBackupFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationBackupFileName, pathFormat, options);
+         string destinationBackupFileNameLp =
+                destinationBackupFileName != null?
+                    Path.GetExtendedLengthPathCore(Transaction, destinationBackupFileName, pathFormat, options):
+                    null;
 
          File.ReplaceCore(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, false, PathFormat.LongFullPath);
 
@@ -106,7 +109,10 @@ namespace Alphaleonis.Win32.Filesystem
          var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
          string destinationFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationFileName, pathFormat, options);
-         string destinationBackupFileNameLp = Path.GetExtendedLengthPathCore(Transaction, destinationBackupFileName, pathFormat, options);
+            string destinationBackupFileNameLp =
+                   destinationBackupFileName != null ?
+                       Path.GetExtendedLengthPathCore(Transaction, destinationBackupFileName, pathFormat, options) :
+                       null; 
 
          File.ReplaceCore(LongFullName, destinationFileNameLp, destinationBackupFileNameLp, ignoreMetadataErrors, PathFormat.LongFullPath);
 
