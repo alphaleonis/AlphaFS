@@ -157,7 +157,10 @@ namespace Alphaleonis.Win32.Filesystem
          string destinationFileNameLp = Path.GetExtendedLengthPathCore(null, destinationFileName, pathFormat, options);
          
          // Pass null to the destinationBackupFileName parameter if you do not want to create a backup of the file being replaced.
-         string destinationBackupFileNameLp = Path.GetExtendedLengthPathCore(null, destinationBackupFileName, pathFormat, options);
+         string destinationBackupFileNameLp =
+                destinationBackupFileName != null?
+                    Path.GetExtendedLengthPathCore(null, destinationBackupFileName, pathFormat, options) :
+                    null;
 
          const int replacefileWriteThrough = 1;
          const int replacefileIgnoreMergeErrors = 2;
