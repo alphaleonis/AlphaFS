@@ -64,6 +64,7 @@ Version 2.1
 - Issue #198: `Path.GetRegularPathCore()` should not normalize `\\?\Volume` prefix.
 - Issue #201: Some exceptions contain an incorrect `HRESULT` (Thomas Levesque)
 - Issue #217: Find.Replace() raises an exception.
+- Issue #219: Mismatching Implementation to System.IO.Path.GetDirectoryName.
 - Issue #226: DirectoryInfo using searchoption.
 - Issue #232: Enable null for destinationBackupFileName for File.Replace and FileInfo.Replace.
 

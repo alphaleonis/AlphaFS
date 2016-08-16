@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
                   return null;
 
                while (length > rootLength && path[--length] != DirectorySeparatorChar && path[length] != AltDirectorySeparatorChar) { }
-               return path.Substring(0, length);
+               return path.Substring(0, length).Replace(AltDirectorySeparatorChar, DirectorySeparatorChar);
             }
          }
 

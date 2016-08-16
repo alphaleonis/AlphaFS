@@ -91,6 +91,8 @@ namespace AlphaFS.UnitTest
          Path.GlobalRootPrefix + @"device\harddisk0\partition1\",
          Path.VolumePrefix + @"{XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX}\Program Files\notepad.exe",
 
+         "dir1/dir2/dir3/",
+
          @"Program Files\Microsoft Office",
          SysDrive[0].ToString(CultureInfo.InvariantCulture),
          SysDrive,

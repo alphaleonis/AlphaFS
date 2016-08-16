@@ -2513,7 +2513,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
+            Console.WriteLine("\t   System.IO : [{0}]", expected ?? "null");
 
 
             // AlphaFS
@@ -2530,7 +2530,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
+            Console.WriteLine("\t   AlphaFS   : [{0}]", actual ?? "null");
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
@@ -2619,7 +2619,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\tSystem.IO : [{0}]", expected ?? "null");
+            Console.WriteLine("\t   System.IO : [{0}]", expected ?? "null");
 
 
             // AlphaFS
@@ -2637,7 +2637,7 @@ namespace AlphaFS.UnitTest
 
                Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
-            Console.WriteLine("\tAlphaFS   : [{0}]", actual ?? "null");
+            Console.WriteLine("\t   AlphaFS   : [{0}]", actual ?? "null");
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
 
