@@ -237,7 +237,7 @@ namespace Alphaleonis.Win32.Filesystem
                      if (fseiIsFolder && Recursive)
                         dirs.Enqueue(fseiFullPathLp);
 
-                     
+
                      // Determine yield.
                      if (!(_nameFilter == null || (_nameFilter != null && _nameFilter.IsMatch(fileName))))
                         continue;
@@ -409,6 +409,8 @@ namespace Alphaleonis.Win32.Filesystem
       private string _searchPattern = Path.WildcardStarMatchAll;
       private Regex _nameFilter;
 
+      private static readonly Regex WildcardMatchAll = new Regex(@"^(\*)+(\.\*+)+$", RegexOptions.IgnoreCase | RegexOptions.Compiled); // special case to recognize *.* or *.** etc
+
       /// <summary>Search for file system object-name using a pattern.</summary>
       /// <value>The path which has wildcard characters, for example, an asterisk (<see cref="Path.WildcardStarMatchAll"/>) or a question mark (<see cref="Path.WildcardQuestion"/>).</value>
       [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly")]
@@ -423,9 +425,9 @@ namespace Alphaleonis.Win32.Filesystem
 
             _searchPattern = value;
 
-            _nameFilter = _searchPattern == Path.WildcardStarMatchAll
+            _nameFilter = _searchPattern == Path.WildcardStarMatchAll || WildcardMatchAll.IsMatch(_searchPattern)
                ? null
-               : new Regex("^" + Regex.Escape(_searchPattern).Replace(@"\.", ".").Replace(@"\*", ".*").Replace(@"\?", ".?") + "$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+               : new Regex($"^{Regex.Escape(_searchPattern).Replace(@"\*", ".*").Replace(@"\?", ".")}$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
          }
       }
 

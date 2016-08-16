@@ -47,30 +47,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public partial class DirectoryTest
    {
-      #region Unit Tests
-
-      #region DumpAccessRules
-
-      private void DumpAccessRules(int cntCheck, DirectorySecurity dsSystem, DirectorySecurity dsAlpha)
-      {
-         Console.WriteLine("\n\tSanity check AlphaFS <> System.IO {0}.", cntCheck);
-         Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesProtected: [{0}]", dsAlpha.AreAccessRulesProtected);
-         Assert.AreEqual(dsSystem.AreAccessRulesProtected, dsAlpha.AreAccessRulesProtected);
-
-         Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesProtected: [{0}]", dsAlpha.AreAuditRulesProtected);
-         Assert.AreEqual(dsSystem.AreAuditRulesProtected, dsAlpha.AreAuditRulesProtected);
-
-         Console.WriteLine("\t\tFile.GetAccessControl().AreAccessRulesCanonical: [{0}]", dsAlpha.AreAccessRulesCanonical);
-         Assert.AreEqual(dsSystem.AreAccessRulesCanonical, dsAlpha.AreAccessRulesCanonical);
-
-         Console.WriteLine("\t\tFile.GetAccessControl().AreAuditRulesCanonical: [{0}]", dsAlpha.AreAuditRulesCanonical);
-         Assert.AreEqual(dsSystem.AreAuditRulesCanonical, dsAlpha.AreAuditRulesCanonical);
-      }
-
-      #endregion // DumpAccessRules
-
-      #region DumpCompressDecompress
-
       private void DumpCompressDecompress(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
@@ -105,7 +81,7 @@ namespace AlphaFS.UnitTest
             action = (actual & FileAttributes.Compressed) != 0;
 
             Console.WriteLine("\t#{0:000}\tCompressed (Should be False): [{1}]\tAttributes: [{2}] [{3}]", ++cnt, action, actual, Path.GetFullPath(file));
-            
+
             if (cnt == 0)
                Assert.Inconclusive("Nothing was enumerated.");
 
@@ -143,7 +119,7 @@ namespace AlphaFS.UnitTest
             action = (actual & FileAttributes.Compressed) != 0;
 
             Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tCompressed (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
-            
+
             if (cnt == 0)
                Assert.Inconclusive("Nothing was enumerated.");
 
@@ -192,10 +168,6 @@ namespace AlphaFS.UnitTest
          Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          Console.WriteLine();
       }
-
-      #endregion // DumpCompressDecompress
-
-      #region DumpCopy
 
       private void DumpCopy(bool isLocal)
       {
@@ -422,72 +394,6 @@ namespace AlphaFS.UnitTest
          }
       }
 
-      #endregion // DumpCopy
-
-      #region DumpEnableDisableCompression
-
-      private void DumpEnableDisableCompression(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tempPath = Path.Combine(Path.GetTempPath(), "Directory.EnableDisableCompression()-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-
-         Directory.CreateDirectory(tempPath);
-         FileAttributes actual = File.GetAttributes(tempPath);
-         Console.WriteLine("Attributes: [{0}]", actual);
-         Assert.IsFalse((actual & FileAttributes.Compressed) != 0);
-         Assert.IsTrue((actual & FileAttributes.Directory) != 0);
-
-
-         string report = string.Empty;
-         bool action = false;
-         UnitTestConstants.StopWatcher(true);
-         try
-         {
-            Directory.EnableCompression(tempPath);
-            report = UnitTestConstants.Reporter();
-            action = true;
-            actual = File.GetAttributes(tempPath);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\nEnableCompression() successful (Should be True): [{0}]", action);
-         Console.WriteLine("Attributes: [{0}]\n\t{1}", actual, report);
-         Assert.IsTrue(action, "Directory should have compression enabled.");
-         Assert.IsTrue((actual & FileAttributes.Compressed) != 0, "Directory should have compression enabled.");
-
-
-         action = false;
-         try
-         {
-            Directory.DisableCompression(tempPath);
-            report = UnitTestConstants.Reporter();
-            action = true;
-            actual = File.GetAttributes(tempPath);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Console.WriteLine("\nDisableCompression() successful (Should be True): [{0}]", action);
-         Console.WriteLine("Attributes: [{0}]\n\t{1}", actual, report);
-         Assert.IsTrue(action, "Directory should have compression disabled.");
-         Assert.IsFalse((actual & FileAttributes.Compressed) != 0, "Directory should have compression disabled.");
-
-
-         Directory.Delete(tempPath, true);
-         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
-      }
-
-      #endregion // DumpEnableDisableCompression
-
-      #region DumpEnableDisableEncryption
-
       private void DumpEnableDisableEncryption(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
@@ -572,10 +478,6 @@ namespace AlphaFS.UnitTest
          Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
          Console.WriteLine();
       }
-
-      #endregion // DumpEnableDisableEncryption
-
-      #region DumpEncryptDecrypt
 
       private void DumpEncryptDecrypt(bool isLocal)
       {
@@ -704,10 +606,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpEncryptDecrypt
-
-      #region DumpEnumerateDirectories
-
       private void DumpEnumerateDirectories(bool isLocal)
       {
          #region Setup
@@ -728,7 +626,7 @@ namespace AlphaFS.UnitTest
          string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
          string letter = originalLetter + @"\";
 
-         #endregion //Setup
+         #endregion // Setup
 
          #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
@@ -860,7 +758,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
          Console.WriteLine(UnitTestConstants.Reporter());
-         
+
          if (cnt == 0)
             Assert.Inconclusive("Nothing was enumerated.");
 
@@ -902,16 +800,12 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpEnumerateDirectories
-
-      #region DumpEnumerateFileIdBothDirectoryInfo
-
       private void DumpEnumerateFileIdBothDirectoryInfo(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
          string tempPath = UnitTestConstants.SysRoot;
          if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-         
+
          string searchPattern = Path.WildcardStarMatchAll;
 
          long directories = Directory.CountFileSystemObjects(tempPath, searchPattern, DirectoryEnumerationOptions.Folders);
@@ -946,10 +840,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpEnumerateFileIdBothDirectoryInfo
-
-      #region DumpEnumerateFiles
-
       private void DumpEnumerateFiles(bool isLocal)
       {
          #region Setup
@@ -970,7 +860,7 @@ namespace AlphaFS.UnitTest
          string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
          string letter = originalLetter + @"\";
 
-         #endregion //Setup
+         #endregion // Setup
 
          #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
@@ -1069,7 +959,7 @@ namespace AlphaFS.UnitTest
                var win32Error = new Win32Exception("", ex);
                Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
                Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-                  
+
                exception = true;
                Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
             }
@@ -1143,10 +1033,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpEnumerateFiles
-
-      #region DumpEnumerateFileSystemEntries
-
       private void DumpEnumerateFileSystemEntries(bool isLocal)
       {
          #region Setup
@@ -1167,7 +1053,7 @@ namespace AlphaFS.UnitTest
          string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
          string letter = originalLetter + @"\";
 
-         #endregion //Setup
+         #endregion // Setup
 
          #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
@@ -1341,10 +1227,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpEnumerateFileSystemEntries
-
-      #region DumpGetDirectories
-
       private void DumpGetDirectories(bool isLocal)
       {
          #region Setup
@@ -1365,7 +1247,7 @@ namespace AlphaFS.UnitTest
          string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
          string letter = originalLetter + @"\";
 
-         #endregion //Setup
+         #endregion // Setup
 
          #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
@@ -1494,11 +1376,7 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine();
       }
-
-      #endregion // DumpGetDirectories
-
-      #region DumpGetDrives
-
+      
       private void DumpGetDrives(bool enumerate)
       {
          Console.WriteLine("\nIf you are missing drives, please see this topic: https://alphafs.codeplex.com/discussions/397693 \n");
@@ -1526,173 +1404,7 @@ namespace AlphaFS.UnitTest
          }
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
       }
-
-      #endregion // DumpGetDrives
-
-      #region DumpGetFiles
-
-      private void DumpGetFiles(bool isLocal)
-      {
-         #region Setup
-
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-
-         int cnt = 0;
-         string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.TopDirectoryOnly;
-
-         bool exception;
-         int expectedLastError;
-         string expectedException;
-
-         string random = Path.GetRandomFileName();
-         string folderSource = @"folder-source-" + random;
-
-         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
-         string letter = originalLetter + @"\";
-
-         #endregion //Setup
-
-         #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
-
-         expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
-         expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
-         exception = false;
-         try
-         {
-            Console.WriteLine("\nCatch: [{0}]: The specified path is not found or is invalid (for example, it is on an unmapped drive).", expectedException);
-
-            string nonExistingPath = letter + folderSource;
-            if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
-
-            Directory.GetFiles(nonExistingPath);
-         }
-         catch (Exception ex)
-         {
-            // win32Error is always 0
-            var win32Error = new Win32Exception("", ex);
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            string exceptionTypeName = ex.GetType().FullName;
-            if (exceptionTypeName.Equals(expectedException))
-            {
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            else
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-         Console.WriteLine();
-
-         #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
-
-         #region IOException
-
-         string tempPath = Path.GetTempPath("Directory.GetDirectories-file-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         try
-         {
-            using (File.Create(tempPath)) { }
-
-            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
-            expectedException = "System.IO.IOException";
-            exception = false;
-            try
-            {
-               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
-
-               Directory.GetFiles(tempPath);
-            }
-            catch (IOException ex)
-            {
-               var win32Error = new Win32Exception("", ex);
-               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-         }
-         finally
-         {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
-
-         #endregion // IOException
-
-         #region UnauthorizedAccessException
-
-         tempPath = Path.Combine(UnitTestConstants.SysRoot, "CSC");
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         if (Directory.Exists(tempPath))
-         {
-            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
-            expectedException = "System.UnauthorizedAccessException";
-            exception = false;
-            try
-            {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
-
-               Directory.GetFiles(tempPath, searchPattern, SearchOption.AllDirectories).Any();
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-               var win32Error = new Win32Exception("", ex);
-               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-               string exceptionTypeName = ex.GetType().FullName;
-               if (exceptionTypeName.Equals(expectedException))
-               {
-                  exception = true;
-                  Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-               }
-               else
-                  Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-            Console.WriteLine();
-         }
-
-         #endregion // UnauthorizedAccessException
-
-         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
-         Console.WriteLine("\tGet files, using \"SearchOption.{0}\"\n", searchOption);
-
-         UnitTestConstants.StopWatcher(true);
-         foreach (string file in Directory.GetFiles(path, searchPattern, searchOption))
-            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, file);
-
-         Console.WriteLine();
-         Console.WriteLine(UnitTestConstants.Reporter());
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
-
-         Console.WriteLine();
-      }
-
-      #endregion // DumpGetFiles
-
-      #region DumpGetXxxTime
-
+      
       private void DumpGetXxxTime(bool isLocal)
       {
          #region Setup
@@ -1816,10 +1528,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpGetXxxTime
-
-      #region DumpGetFileSystemEntries
-
       private void DumpGetFileSystemEntries(bool isLocal)
       {
          #region Setup
@@ -1840,7 +1548,7 @@ namespace AlphaFS.UnitTest
          string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
          string letter = originalLetter + @"\";
 
-         #endregion //Setup
+         #endregion // Setup
 
          #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
 
@@ -1970,10 +1678,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpGetFileSystemEntries
-
-      #region DumpGetProperties
-
       private void DumpGetProperties(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
@@ -2004,10 +1708,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // DumpGetProperties
-
-      #region DumpMove
-
       private void DumpMove(bool isLocal)
       {
          #region Setup
@@ -2021,7 +1721,7 @@ namespace AlphaFS.UnitTest
          string tempPathDestination = Path.Combine(tempPath, "Destination");
 
          bool exception;
-         int expectedLastError;         
+         int expectedLastError;
          string report;
 
          string random = Path.GetRandomFileName();
@@ -2068,7 +1768,7 @@ namespace AlphaFS.UnitTest
 
             var rule = new FileSystemAccessRule(user, FileSystemRights.FullControl, InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit, PropagationFlags.None, AccessControlType.Deny);
 
-            
+
             expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
             string expectedException = "System.UnauthorizedAccessException";
             exception = false;
@@ -2270,10 +1970,6 @@ namespace AlphaFS.UnitTest
          }
       }
 
-      #endregion // DumpMove
-
-      #region DumpSetTimestamps
-
       private void DumpSetTimestamps(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
@@ -2360,10 +2056,6 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(!Directory.Exists(path), "Cleanup failed: Directory should have been removed.");
          Console.WriteLine();
       }
-
-      #endregion // DumpSetTimestamps
-
-      #region DumpSetXxxTime
 
       private void DumpSetXxxTime(bool isLocal)
       {
@@ -2480,10 +2172,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
-      #endregion // DumpSetXxxTime
-
-      #region DumpTransferTimestamps
-
       private void DumpTransferTimestamps(bool isLocal)
       {
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
@@ -2545,20 +2233,11 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n");
       }
 
-      #endregion // DumpTransferTimestamps
-
-      #region HasInheritedPermissions
-
       private bool HasInheritedPermissions(string path)
       {
          DirectorySecurity acl = Directory.GetAccessControl(path);
          return acl.GetAccessRules(false, true, typeof(SecurityIdentifier)).Count > 0;
       }
-
-      #endregion // HasInheritedPermissions
-
-
-      #region Create directory with trailing dot/space
 
       private void DumpDirectoryTrailingDotSpace(bool isLocal)
       {
@@ -2728,13 +2407,8 @@ namespace AlphaFS.UnitTest
          Console.WriteLine();
       }
 
-      #endregion // Create directory with trailing dot/space
-
-      #endregion // Unit Tests
 
       #region .NET
-
-      #region EnumerateDirectories
 
       [TestMethod]
       public void EnumerateDirectories()
@@ -2745,10 +2419,6 @@ namespace AlphaFS.UnitTest
          DumpEnumerateDirectories(false);
       }
 
-      #endregion // EnumerateDirectories
-
-      #region EnumerateFiles
-
       [TestMethod]
       public void EnumerateFiles()
       {
@@ -2757,10 +2427,6 @@ namespace AlphaFS.UnitTest
          DumpEnumerateFiles(true);
          DumpEnumerateFiles(false);
       }
-
-      #endregion // EnumerateFiles
-
-      #region EnumerateFileSystemEntries
 
       [TestMethod]
       public void EnumerateFileSystemEntries()
@@ -2771,10 +2437,6 @@ namespace AlphaFS.UnitTest
          DumpEnumerateFileSystemEntries(false);
       }
 
-      #endregion // EnumerateFileSystemEntries
-
-      #region GetCreationTime
-
       [TestMethod]
       public void GetCreationTime()
       {
@@ -2784,10 +2446,6 @@ namespace AlphaFS.UnitTest
          DumpGetXxxTime(false);
       }
 
-      #endregion // GetCreationTime
-
-      #region GetCurrentDirectory (.NET)
-
       [TestMethod]
       public void NET_GetCurrentDirectory()
       {
@@ -2795,23 +2453,15 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nThe .NET method is used.");
       }
 
-      #endregion // GetCurrentDirectory (.NET)
-
-      #region GetDirectories
-
       [TestMethod]
-      public void GetDirectories()
+      public void Directory_GetDirectories_LocalAndUNC_Success()
       {
          Console.WriteLine("Directory.GetDirectories()");
 
          DumpGetDirectories(true);
          DumpGetDirectories(false);
       }
-
-      #endregion // GetDirectories
-
-      #region GetDirectoryRoot
-
+      
       [TestMethod]
       public void GetDirectoryRoot()
       {
@@ -2887,22 +2537,7 @@ namespace AlphaFS.UnitTest
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
 
-      #endregion // GetDirectoryRoot
-
-      #region GetFiles
-
-      [TestMethod]
-      public void GetFiles()
-      {
-         Console.WriteLine("Directory.GetFiles()");
-
-         DumpGetFiles(true);
-         DumpGetFiles(false);
-      }
-
-      #endregion // GetFiles
-
-      #region GetFileSystemEntries
+      
 
       [TestMethod]
       public void GetFileSystemEntries()
@@ -2947,10 +2582,6 @@ namespace AlphaFS.UnitTest
          }
       }
 
-      #endregion // GetFileSystemEntries
-
-      #region GetLogicalDrives
-
       [TestMethod]
       public void GetLogicalDrives()
       {
@@ -2958,10 +2589,6 @@ namespace AlphaFS.UnitTest
 
          DumpGetDrives(false);
       }
-
-      #endregion // GetLogicalDrives
-
-      #region GetParent
 
       [TestMethod]
       public void GetParent()
@@ -3017,10 +2644,6 @@ namespace AlphaFS.UnitTest
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
 
-      #endregion // GetParent
-
-      #region Move
-
       [TestMethod]
       public void Move()
       {
@@ -3029,10 +2652,6 @@ namespace AlphaFS.UnitTest
          DumpMove(true);
          DumpMove(false);
       }
-
-      #endregion // Move
-
-      #region SetCreationTime
 
       [TestMethod]
       public void SetCreationTime()
@@ -3043,10 +2662,6 @@ namespace AlphaFS.UnitTest
          DumpSetXxxTime(false);
       }
 
-      #endregion // SetCreationTime
-
-      #region SetCurrentDirectory (.NET)
-
       [TestMethod]
       public void NET_SetCurrentDirectory()
       {
@@ -3054,13 +2669,9 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\nThe .NET method is used.");
       }
 
-      #endregion // SetCurrentDirectory (.NET)
-
       #endregion // .NET
 
       #region AlphaFS
-
-      #region Compress/Decompress
 
       [TestMethod]
       public void AlphaFS_Compress()
@@ -3071,10 +2682,6 @@ namespace AlphaFS.UnitTest
          DumpCompressDecompress(false);
       }
 
-      #endregion Compress/Decompress
-
-      #region Copy
-
       [TestMethod]
       public void AlphaFS_Copy()
       {
@@ -3083,10 +2690,6 @@ namespace AlphaFS.UnitTest
          DumpCopy(true);
          DumpCopy(false);
       }
-
-      #endregion // Copy
-
-      #region CountFileSystemObjects
 
       [TestMethod]
       public void AlphaFS_CountFileSystemObjects()
@@ -3196,10 +2799,6 @@ namespace AlphaFS.UnitTest
          #endregion // Count Files
       }
 
-      #endregion // CountFileSystemObjects
-
-      #region DeleteEmptySubdirectories
-
       [TestMethod]
       public void AlphaFS_DeleteEmptySubdirectories()
       {
@@ -3258,10 +2857,6 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue((emptyDirectories + remainingDirectories) == totalDirectories);
       }
 
-      #endregion // DeleteEmptySubdirectories
-
-      #region Encrypt/Decrypt
-
       [TestMethod]
       public void AlphaFS_Encrypt()
       {
@@ -3280,10 +2875,6 @@ namespace AlphaFS.UnitTest
          DumpEnableDisableEncryption(false);
       }
 
-      #endregion // Encrypt/Decrypt
-
-      #region EnumerateFileIdBothDirectoryInfo
-
       [TestMethod]
       public void AlphaFS_EnumerateFileIdBothDirectoryInfo()
       {
@@ -3293,10 +2884,6 @@ namespace AlphaFS.UnitTest
          DumpEnumerateFileIdBothDirectoryInfo(false);
       }
 
-      #endregion // EnumerateFileIdBothDirectoryInfo
-
-      #region GetProperties
-
       [TestMethod]
       public void AlphaFS_GetProperties()
       {
@@ -3305,10 +2892,6 @@ namespace AlphaFS.UnitTest
          DumpGetProperties(true);
          DumpGetProperties(false);
       }
-
-      #endregion // GetProperties
-
-      #region HasInheritedPermissions
 
       [TestMethod]
       public void AlphaFS_HasInheritedPermissions()
@@ -3339,10 +2922,6 @@ namespace AlphaFS.UnitTest
          Console.Write("\n{0}", UnitTestConstants.Reporter());
       }
 
-      #endregion // HasInheritedPermissions
-
-      #region SetTimestamps
-
       [TestMethod]
       public void AlphaFS_SetTimestamps()
       {
@@ -3352,10 +2931,6 @@ namespace AlphaFS.UnitTest
          DumpSetTimestamps(false);
       }
 
-      #endregion // SetTimestamps
-
-      #region TransferTimestamps
-
       [TestMethod]
       public void AlphaFS_TransferTimestamps()
       {
@@ -3364,11 +2939,6 @@ namespace AlphaFS.UnitTest
          DumpTransferTimestamps(true);
          DumpTransferTimestamps(false);
       }
-
-      #endregion // TransferTimestamps
-
-
-      #region AlphaFS___DirectoryTrailingDotSpace
 
       [TestMethod]
       public void AlphaFS___DirectoryTrailingDotSpace()
@@ -3382,8 +2952,6 @@ namespace AlphaFS.UnitTest
          DumpDirectoryTrailingDotSpace(true);
          DumpDirectoryTrailingDotSpace(false);
       }
-
-      #endregion // AlphaFS___DirectoryTrailingDotSpace
 
       #endregion // AlphaFS
    }
