@@ -172,7 +172,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static DateTime GetCreationTimeCore(KernelTransaction transaction, string path, bool returnUtc, PathFormat pathFormat)
       {
-         NativeMethods.FILETIME creationTime = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, path, pathFormat).ftCreationTime;
+         NativeMethods.FILETIME creationTime = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, path, pathFormat, false).ftCreationTime;
 
          return returnUtc
             ? DateTime.FromFileTimeUtc(creationTime)

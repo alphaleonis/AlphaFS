@@ -679,136 +679,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // TestDelete
-
-      #region DumpGetXxxTimeXxx
-
-      private void DumpGetXxxTimeXxx(bool isLocal)
-      {
-         #region Setup
-
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string path = UnitTestConstants.NotepadExe;
-         if (!isLocal) path = Path.LocalToUnc(path);
-
-         Console.WriteLine("\nInput File Path: [{0}]\n", path);
-
-         #endregion // Setup
-
-         UnitTestConstants.StopWatcher(true);
-
-         #region GetCreationTimeXxx
-
-         DateTime actual = File.GetCreationTime(path);
-         DateTime expected = System.IO.File.GetCreationTime(path);
-         Console.WriteLine("\tGetCreationTime()     : [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         actual = File.GetCreationTimeUtc(path);
-         expected = System.IO.File.GetCreationTimeUtc(path);
-         Console.WriteLine("\tGetCreationTimeUtc()  : [{0}]    System.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         #endregion // GetCreationTimeXxx
-
-         #region GetLastAccessTimeXxx
-
-         actual = File.GetLastAccessTime(path);
-         expected = System.IO.File.GetLastAccessTime(path);
-         Console.WriteLine("\tGetLastAccessTime()   : [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         actual = File.GetLastAccessTimeUtc(path);
-         expected = System.IO.File.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\tGetLastAccessTimeUtc(): [{0}]    System.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         #endregion // GetLastAccessTimeXxx
-
-         #region GetLastWriteTimeXxx
-
-         actual = File.GetLastWriteTime(path);
-         expected = System.IO.File.GetLastWriteTime(path);
-         Console.WriteLine("\tGetLastWriteTime()    : [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         actual = File.GetLastWriteTimeUtc(path);
-         expected = System.IO.File.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\tGetLastWriteTimeUtc() : [{0}]    System.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual, "AlphaFS != System.IO");
-
-         #endregion // GetLastWriteTimeXxx
-
-
-         #region GetChangeTimeXxx
-
-         Console.WriteLine("\tGetChangeTime()       : [{0}]    System.IO: [N/A]", File.GetChangeTime(path));
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]    System.IO: [N/A]", File.GetChangeTimeUtc(path));
-
-         #endregion // GetChangeTimeXxx
-
-         Console.WriteLine();
-         Console.WriteLine(UnitTestConstants.Reporter());
-         Console.WriteLine();
-
-         #region Trigger GetChangeTimeXxx
-
-         // We can not compare ChangeTime against .NET because it does not exist.
-         // Creating a file and renaming it triggers ChangeTime, so test for that.
-
-         path = Path.GetTempPath("File-GetChangeTimeXxx()-file-" + Path.GetRandomFileName());
-         if (!isLocal) path = Path.LocalToUnc(path);
-
-         FileInfo fi = new FileInfo(path);
-         using (fi.Create()) { }
-         string fileName = fi.Name;
-
-         DateTime lastAccessTimeActual = File.GetLastAccessTime(path);
-         DateTime lastAccessTimeUtcActual = File.GetLastAccessTimeUtc(path);
-
-         DateTime changeTimeActual = File.GetChangeTime(path);
-         DateTime changeTimeUtcActual = File.GetChangeTimeUtc(path);
-
-         Console.WriteLine("\nTesting ChangeTime on a temp file.");
-         Console.WriteLine("\nInput File Path: [{0}]\n", path);
-         Console.WriteLine("\tGetChangeTime()       : [{0}]\t", changeTimeActual);
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t", changeTimeUtcActual);
-
-         fi.MoveTo(fi.FullName.Replace(fileName, fileName + "-Renamed"));
-
-         // Pause for at least a second so that the difference in time can be seen.
-         int sleep = new Random().Next(2000, 4000);
-         Thread.Sleep(sleep);
-
-         fi.MoveTo(fi.FullName.Replace(fileName + "-Renamed", fileName));
-
-         DateTime lastAccessTimeExpected = File.GetLastAccessTime(path);
-         DateTime lastAccessTimeUtcExpected = File.GetLastAccessTimeUtc(path);
-         DateTime changeTimeExpected = File.GetChangeTime(path);
-         DateTime changeTimeUtcExpected = File.GetChangeTimeUtc(path);
-
-         Console.WriteLine("\nTrigger ChangeTime by renaming the file.");
-         Console.WriteLine("For Unit Test, ChangeTime should differ approximately: [{0}] seconds.\n", sleep / 1000);
-         Console.WriteLine("\tGetChangeTime()       : [{0}]\t", changeTimeExpected);
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t\n", changeTimeUtcExpected);
-
-
-         Assert.AreNotEqual(changeTimeActual, changeTimeExpected);
-         Assert.AreNotEqual(changeTimeUtcActual, changeTimeUtcExpected);
-
-         Assert.AreEqual(lastAccessTimeExpected, lastAccessTimeActual);
-         Assert.AreEqual(lastAccessTimeUtcExpected, lastAccessTimeUtcActual);
-
-         #endregion // Trigger GetChangeTimeXxx
-
-
-         fi.Delete();
-         fi.Refresh(); // Must Refresh() to get actual state.
-         Assert.IsFalse(fi.Exists, "Cleanup failed: File should have been removed.");
-         Console.WriteLine();
-      }
-
-      #endregion // DumpGetXxxTimeXxx
-
+      
       #region DumpGetSize
 
       private void DumpGetSize(bool isLocal)
@@ -2236,8 +2107,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Create file with trailing dot/space
-
-
+      
       #endregion // Unit Tests
 
       #region .NET
@@ -2520,18 +2390,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // GetAttributes
 
-      #region GetCreationTime
-
-      [TestMethod]
-      public void GetCreationTime()
-      {
-         Console.WriteLine("File.GetXxxTimeXxx()");
-
-         DumpGetXxxTimeXxx(true);
-         DumpGetXxxTimeXxx(false);
-      }
-
-      #endregion // GetCreationTime
 
       #region Move
 

@@ -1251,129 +1251,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
       }
       
-      private void DumpGetXxxTime(bool isLocal)
-      {
-         #region Setup
-
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string path = isLocal ? UnitTestConstants.SysRoot32 : Path.LocalToUnc(UnitTestConstants.SysRoot32);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
-
-         #endregion // Setup
-
-         UnitTestConstants.StopWatcher(true);
-
-         #region GetCreationTimeXxx
-
-         DateTime actual = Directory.GetCreationTime(path);
-         DateTime expected = System.IO.Directory.GetCreationTime(path);
-         Console.WriteLine("\tGetCreationTime()     : [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "GetCreationTime()");
-
-         actual = Directory.GetCreationTimeUtc(path);
-         expected = System.IO.Directory.GetCreationTimeUtc(path);
-         Console.WriteLine("\tGetCreationTimeUtc()  : [{0}]    System.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual, "GetCreationTimeUtc()");
-
-         #endregion // GetCreationTimeXxx
-
-         #region GetLastAccessTimeXxx
-
-         actual = Directory.GetLastAccessTime(path);
-         expected = System.IO.Directory.GetLastAccessTime(path);
-         Console.WriteLine("\tGetLastAccessTime()   : [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "GetLastAccessTime()");
-
-         actual = Directory.GetLastAccessTimeUtc(path);
-         expected = System.IO.Directory.GetLastAccessTimeUtc(path);
-         Console.WriteLine("\tGetLastAccessTimeUtc(): [{0}]    System.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual, "GetLastAccessTimeUtc()");
-
-         #endregion // GetLastAccessTimeXxx
-
-         #region GetLastWriteTimeXxx
-
-         actual = Directory.GetLastWriteTime(path);
-         expected = System.IO.Directory.GetLastWriteTime(path);
-         Console.WriteLine("\tGetLastWriteTime()    : [{0}]    System.IO: [{1}]", actual, expected);
-         Assert.AreEqual(expected, actual, "GetLastWriteTime()");
-
-         actual = Directory.GetLastWriteTimeUtc(path);
-         expected = System.IO.Directory.GetLastWriteTimeUtc(path);
-         Console.WriteLine("\tGetLastWriteTimeUtc() : [{0}]    System.IO: [{1}]\n", actual, expected);
-         Assert.AreEqual(expected, actual, "GetLastWriteTimeUtc()");
-
-         #endregion // GetLastWriteTimeXxx
-
-
-         #region GetChangeTimeXxx
-
-         Console.WriteLine("\tGetChangeTime()       : [{0}]    System.IO: [N/A]", Directory.GetChangeTime(path));
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]    System.IO: [N/A]", Directory.GetChangeTimeUtc(path));
-
-         #endregion GetChangeTimeXxx
-
-         Console.WriteLine();
-         Console.WriteLine(UnitTestConstants.Reporter());
-         Console.WriteLine();
-
-         #region Trigger GetChangeTimeXxx
-
-         // We can not compare ChangeTime against .NET because it does not exist.
-         // Creating a directory and renaming it triggers ChangeTime, so test for that.
-
-         path = Path.GetTempPath("Directory-GetChangeTimeXxx()-directory-" + Path.GetRandomFileName());
-         if (!isLocal) path = Path.LocalToUnc(path);
-
-         DirectoryInfo di = new DirectoryInfo(path);
-         di.Create();
-         string fileName = di.Name;
-
-         DateTime lastAccessTimeActual = Directory.GetLastAccessTime(path);
-         DateTime lastAccessTimeUtcActual = Directory.GetLastAccessTimeUtc(path);
-
-         DateTime changeTimeActual = Directory.GetChangeTime(path);
-         DateTime changeTimeUtcActual = Directory.GetChangeTimeUtc(path);
-
-         Console.WriteLine("\nTesting ChangeTime on a temp directory.");
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
-         Console.WriteLine("\tGetChangeTime()       : [{0}]\t", changeTimeActual);
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t", changeTimeUtcActual);
-
-         di.MoveTo(di.FullName.Replace(fileName, fileName + "-Renamed"));
-
-         // Pause for at least a second so that the difference in time can be seen.
-         int sleep = new Random().Next(2000, 4000);
-         Thread.Sleep(sleep);
-
-         di.MoveTo(di.FullName.Replace(fileName + "-Renamed", fileName));
-
-         DateTime lastAccessTimeExpected = Directory.GetLastAccessTime(path);
-         DateTime lastAccessTimeUtcExpected = Directory.GetLastAccessTimeUtc(path);
-         DateTime changeTimeExpected = Directory.GetChangeTime(path);
-         DateTime changeTimeUtcExpected = Directory.GetChangeTimeUtc(path);
-
-         Console.WriteLine("\nTrigger ChangeTime by renaming the directory.");
-         Console.WriteLine("For Unit Test, ChangeTime should differ approximately: [{0}] seconds.\n", sleep / 1000);
-         Console.WriteLine("\tGetChangeTime()       : [{0}]\t", changeTimeExpected);
-         Console.WriteLine("\tGetChangeTimeUtc()    : [{0}]\t\n", changeTimeUtcExpected);
-
-
-         Assert.AreNotEqual(changeTimeActual, changeTimeExpected);
-         Assert.AreNotEqual(changeTimeUtcActual, changeTimeUtcExpected);
-
-         Assert.AreEqual(lastAccessTimeExpected, lastAccessTimeActual);
-         Assert.AreEqual(lastAccessTimeUtcExpected, lastAccessTimeUtcActual);
-
-         #endregion // Trigger GetChangeTimeXxx
-
-         di.Delete();
-         di.Refresh(); // Must Refresh() to get actual state.
-         Assert.IsFalse(di.Exists, "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
-      }
-
       private void DumpGetFileSystemEntries(bool isLocal)
       {
          #region Setup
@@ -2282,15 +2159,6 @@ namespace AlphaFS.UnitTest
       }
 
       [TestMethod]
-      public void GetCreationTime()
-      {
-         Console.WriteLine("Directory.GetXxxTime()");
-
-         DumpGetXxxTime(true);
-         DumpGetXxxTime(false);
-      }
-
-      [TestMethod]
       public void NET_GetCurrentDirectory()
       {
          Console.WriteLine("Directory.GetCurrentDirectory()");
@@ -2371,8 +2239,6 @@ namespace AlphaFS.UnitTest
 
          Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
       }
-
-      
 
       [TestMethod]
       public void GetFileSystemEntries()

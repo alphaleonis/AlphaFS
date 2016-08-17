@@ -37,7 +37,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path)
       {
-         return GetAttributesExCore<FileAttributes>(null, path, PathFormat.RelativePath);
+         return GetAttributesExCore<FileAttributes>(null, path, PathFormat.RelativePath, true);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -47,7 +47,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributes(string path, PathFormat pathFormat)
       {
-         return GetAttributesExCore<FileAttributes>(null, path, pathFormat);
+         return GetAttributesExCore<FileAttributes>(null, path, pathFormat, true);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -57,7 +57,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributesTransacted(KernelTransaction transaction, string path)
       {
-         return GetAttributesExCore<FileAttributes>(transaction, path, PathFormat.RelativePath);
+         return GetAttributesExCore<FileAttributes>(transaction, path, PathFormat.RelativePath, true);
       }
 
       /// <summary>[AlphaFS] Gets the <see cref="FileAttributes"/> of the file on the path.</summary>
@@ -68,7 +68,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static FileAttributes GetAttributesTransacted(KernelTransaction transaction, string path, PathFormat pathFormat)
       {
-         return GetAttributesExCore<FileAttributes>(transaction, path, pathFormat);
+         return GetAttributesExCore<FileAttributes>(transaction, path, pathFormat, true);
       }
 
       #endregion
@@ -83,9 +83,10 @@ namespace Alphaleonis.Win32.Filesystem
       /// <param name="transaction">The transaction.</param>
       /// <param name="path">The path to the file or directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>
+      /// <param name="returnErrorOnNotFound"></param>
       [SuppressMessage("Microsoft.Interoperability", "CA1404:CallGetLastErrorImmediatelyAfterPInvoke", Justification = "Marshal.GetLastWin32Error() is manipulated.")]
       [SecurityCritical]
-      internal static T GetAttributesExCore<T>(KernelTransaction transaction, string path, PathFormat pathFormat)
+      internal static T GetAttributesExCore<T>(KernelTransaction transaction, string path, PathFormat pathFormat, bool returnErrorOnNotFound)
       {
          if (pathFormat == PathFormat.RelativePath)
             Path.CheckSupportedPathFormat(path, true, true);
@@ -93,7 +94,7 @@ namespace Alphaleonis.Win32.Filesystem
          string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.CheckInvalidPathChars);
 
          var data = new NativeMethods.WIN32_FILE_ATTRIBUTE_DATA();
-         int dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, true);
+         int dataInitialised = FillAttributeInfoCore(transaction, pathLp, ref data, false, returnErrorOnNotFound);
 
          if (dataInitialised != Win32Errors.ERROR_SUCCESS)
             NativeError.ThrowException(dataInitialised, pathLp);

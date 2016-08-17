@@ -90,7 +90,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       internal static void TransferTimestampsCore(bool isFolder, KernelTransaction transaction, string sourcePath, string destinationPath, PathFormat pathFormat)
       {
-         NativeMethods.WIN32_FILE_ATTRIBUTE_DATA attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, sourcePath, pathFormat);
+         NativeMethods.WIN32_FILE_ATTRIBUTE_DATA attrs = GetAttributesExCore<NativeMethods.WIN32_FILE_ATTRIBUTE_DATA>(transaction, sourcePath, pathFormat, true);
 
          SetFsoDateTimeCore(isFolder, transaction, destinationPath, DateTime.FromFileTimeUtc(attrs.ftCreationTime), DateTime.FromFileTimeUtc(attrs.ftLastAccessTime), DateTime.FromFileTimeUtc(attrs.ftLastWriteTime), false, pathFormat);
       }

@@ -33,7 +33,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Open_Create1Append2And3_LocalUNC_Success()
+      public void File_Open_Create1Append2And3_LocalAndUNC_Success()
       {
          File_Open(false);
          File_Open(true);
