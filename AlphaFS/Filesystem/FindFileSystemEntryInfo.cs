@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Security;
@@ -39,7 +40,9 @@ namespace Alphaleonis.Win32.Filesystem
       {
          Transaction = transaction;
 
+         OriginalInputPath = path;
          InputPath = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck);
+         IsRelativePath = !Path.IsPathRooted(OriginalInputPath, false);
 
          SearchPattern = searchPattern;
          FileSystemObjectType = null;
@@ -151,9 +154,14 @@ namespace Alphaleonis.Win32.Filesystem
          if (FileSystemObjectType != null && ((!(bool) FileSystemObjectType || !isFolder) && (!(bool) !FileSystemObjectType || isFolder)))
             return (T) (object) null;
 
+
+         // Return object instance FullPath property as string, optionally in long path format.
          if (AsString)
-            // Return object instance FullPath property as string, optionally in long path format.
-            return (T) (object) (AsLongPath ? fullPathLp : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None));
+         {
+            return (T) (object) (IsRelativePath
+               ? fullPathLp
+               : (AsLongPath ? fullPathLp : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None)));
+         }
 
 
          // Make sure the requested file system object type is returned.
@@ -161,7 +169,7 @@ namespace Alphaleonis.Win32.Filesystem
          // true = Return only directories.
          // false = Return only files.
 
-         var fsei = new FileSystemEntryInfo(win32FindData) { FullPath = fullPathLp };
+         var fsei = new FileSystemEntryInfo(win32FindData) {FullPath = fullPathLp};
 
          return AsFileSystemInfo
             // Return object instance of type FileSystemInfo.
@@ -230,7 +238,8 @@ namespace Alphaleonis.Win32.Filesystem
                         continue;
 
 
-                     string fseiFullPathLp = path + fileName;
+                     string fseiFullPathLp = string.Format(CultureInfo.InvariantCulture, "{0}{1}", IsRelativePath ? OriginalInputPath + Path.DirectorySeparator : path, fileName);
+
                      bool fseiIsFolder = (win32FindData.dwFileAttributes & FileAttributes.Directory) != 0;
 
                      // If object is a directory, add it to the queue for later traversal.
@@ -372,6 +381,22 @@ namespace Alphaleonis.Win32.Filesystem
       }
 
       #endregion // FileSystemObjectType
+
+      #region IsRelativePath
+
+      /// <summary>Gets or sets if the path is an absolute or relative path.</summary>
+      /// <value>Gets a value indicating whether the specified path string contains absolute or relative path information.</value>
+      public bool IsRelativePath { get; set; }
+
+      #endregion // IsRelativePath
+      
+      #region OriginalInputPath
+
+      /// <summary>Gets or sets the initial path to the folder.</summary>
+      /// <value>The initial path to the file or folder in long path format.</value>
+      public string OriginalInputPath { get; internal set; }
+
+      #endregion // OriginalInputPath
 
       #region InputPath
 

@@ -63,6 +63,8 @@ Version 2.1
 - Issue #197: Fix: Prevent normalization of GlobalRootPrefix paths.
 - Issue #198: `Path.GetRegularPathCore()` should not normalize `\\?\Volume` prefix.
 - Issue #201: Some exceptions contain an incorrect `HRESULT` (Thomas Levesque)
+- Issue #203: Directory.GetDirectories and GetFiles return absolute paths when given relative argument.
+- Issue #204: Giving empty string to GetFileName and related methods throws exception.
 - Issue #217: Find.Replace() raises an exception.
 - Issue #219: Mismatching Implementation to System.IO.Path.GetDirectoryName.
 - Issue #226: DirectoryInfo using searchoption.
