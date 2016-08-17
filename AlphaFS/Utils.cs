@@ -94,7 +94,7 @@ namespace Alphaleonis
 
       #region UnitSizeToText
 
-      /// <summary>Converts a number of type T to string with UnitSize or Percentage suffixed.</summary>
+      /// <summary>Converts a number of type T to string, suffixed with a unit size.</summary>
       public static string UnitSizeToText<T>(T numberOfBytes)
       {
          string[] sizeFormats =
@@ -103,8 +103,8 @@ namespace Alphaleonis
          };
 
 
-         int i = 0;
-         double bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
+         var i = 0;
+         var bytes = Convert.ToDouble(numberOfBytes, CultureInfo.InvariantCulture);
 
          while (i < sizeFormats.Length && bytes > 1024)
          {
@@ -112,12 +112,9 @@ namespace Alphaleonis
             bytes /= 1024;
          }
 
-         return string.Format(CultureInfo.CurrentCulture,
 
-            // Will return "512 B" instead of "512,00 B".
-            i == 0 ? "{0:0}{1}" : "{0:0.00}{1}",
-            
-            bytes, " " + sizeFormats[i]);
+         // Will return "512 B" instead of "512,00 B".
+         return string.Format(CultureInfo.CurrentCulture, i == 0 ? "{0:0} {1}" : "{0:0.##} {1}", bytes, sizeFormats[i]);
       }
 
       /// <summary>Calculates a percentage value.</summary>

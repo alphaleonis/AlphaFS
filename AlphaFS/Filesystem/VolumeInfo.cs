@@ -53,7 +53,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             if (volumeName.Length == 1)
                volumeName += Path.VolumeSeparatorChar;
-            else
+            else if (!volumeName.StartsWith(Path.GlobalRootPrefix, StringComparison.OrdinalIgnoreCase))
                volumeName = Path.GetPathRoot(volumeName, false);
          }
 

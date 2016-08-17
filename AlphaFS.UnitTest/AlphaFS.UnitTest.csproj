@@ -177,7 +177,8 @@
     <Compile Include="File Class\FileTest.cs" />
     <Compile Include="Path Class\PathTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AlphaFS_VolumeTest.cs" />
+    <Compile Include="Volume Class\GetVolumeInfo.cs" />
+    <Compile Include="Volume Class\VolumeTest.cs" />
     <Compile Include="Utils\PathUtils.cs" />
     <Compile Include="Utils\UnitTestConstants.cs" />
     <Compile Include="Utils\TemporaryDirectory.cs" />

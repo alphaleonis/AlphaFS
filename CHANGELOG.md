@@ -68,6 +68,7 @@ Version 2.1
 - Issue #204: Giving empty string to GetFileName and related methods throws exception.
 - Issue #206: GetLastWriteTime throws exception for non-existing path.
 - Issue #217: Find.Replace() raises an exception.
+- Issue #218: Volume.GetVolumeInfo() fails for global root paths.
 - Issue #219: Mismatching Implementation to System.IO.Path.GetDirectoryName.
 - Issue #226: DirectoryInfo using searchoption.
 - Issue #232: Enable null for destinationBackupFileName for File.Replace and FileInfo.Replace.
