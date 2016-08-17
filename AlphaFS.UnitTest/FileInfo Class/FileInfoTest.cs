@@ -29,16 +29,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class FileInfoTest
    {
-      [TestMethod]
-      public void ATest()
-      {
-         //new FileInfo(@"textfile.txt").Open(FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
-
-         var file = new Alphaleonis.Win32.Filesystem.FileInfo(@"textfile.txt").Open(FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
-         Console.WriteLine(file.Name);
-      }
-
-
       #region Unit Tests
 
       #region DumpRefresh

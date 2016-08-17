@@ -117,7 +117,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                bool checkAdditional = (options & GetFullPathOptions.CheckAdditional) != 0;
 
-               CheckInvalidPathChars(path, checkAdditional);
+               CheckInvalidPathChars(path, checkAdditional, false);
 
                // Prevent duplicate checks.
                options &= ~GetFullPathOptions.CheckInvalidPathChars;
@@ -173,7 +173,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             return (options & GetFullPathOptions.AsLongPath) != 0
                ? GetLongPathCore(buffer.ToString(), GetFullPathOptions.None)
-               : GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None);
+               : GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None, false);
          }
       }
 
@@ -211,7 +211,7 @@ namespace Alphaleonis.Win32.Filesystem
             path = RemoveTrailingDirectorySeparator(path, false);
 
          if ((options & GetFullPathOptions.CheckInvalidPathChars) != 0)
-            CheckInvalidPathChars(path, (options & GetFullPathOptions.CheckAdditional) != 0);
+            CheckInvalidPathChars(path, (options & GetFullPathOptions.CheckAdditional) != 0, false);
 
 
          // Trim leading whitespace.

@@ -76,7 +76,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetRegularPath(string path)
       {
-         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars);
+         return GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false);
       }
 
       #endregion // GetRegularPath
@@ -202,7 +202,7 @@ namespace Alphaleonis.Win32.Filesystem
                NativeError.ThrowException(pathLp);
          }
 
-         return GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None);
+         return GetRegularPathCore(buffer.ToString(), GetFullPathOptions.None, false);
       }
 
       /// <summary>Gets the regular path from a long path.</summary>
@@ -217,13 +217,14 @@ namespace Alphaleonis.Win32.Filesystem
       /// <exception cref="ArgumentException"/>
       /// <param name="path">The path.</param>
       /// <param name="options">Options for controlling the operation.</param>
+      /// <param name="allowEmpty">When <see langword="false"/>, throws an <see cref="ArgumentException"/>.</param>
       [SecurityCritical]
-      internal static string GetRegularPathCore(string path, GetFullPathOptions options)
+      internal static string GetRegularPathCore(string path, GetFullPathOptions options, bool allowEmpty)
       {
          if (path == null)
             throw new ArgumentNullException("path");
 
-         if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
+         if (!allowEmpty && (path.Length == 0 || Utils.IsNullOrWhiteSpace(path)))
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
          if (options != GetFullPathOptions.None)

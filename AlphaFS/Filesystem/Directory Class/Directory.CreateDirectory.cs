@@ -709,7 +709,7 @@ namespace Alphaleonis.Win32.Filesystem
          #region Construct Full Path
 
          string longPathPrefix = Path.IsUncPathCore(path, false, false) ? Path.LongPathUncPrefix : Path.LongPathPrefix;
-         path = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None);
+         path = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false);
 
          int length = path.Length;
          if (length >= 2 && Path.IsDVsc(path[length - 1], false))

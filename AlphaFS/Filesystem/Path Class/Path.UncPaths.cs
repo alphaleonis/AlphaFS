@@ -160,10 +160,10 @@ namespace Alphaleonis.Win32.Filesystem
       internal static bool IsUncPathCore(string path, bool isRegularPath, bool checkInvalidPathChars)
       {
          if (!isRegularPath)
-            path = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0);
+            path = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : 0, false);
 
          else if (checkInvalidPathChars)
-            CheckInvalidPathChars(path, false);
+            CheckInvalidPathChars(path, false, false);
 
          Uri uri;
          return Uri.TryCreate(path, UriKind.Absolute, out uri) && uri.IsUnc;
@@ -190,7 +190,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(localPath))
             return null;
 
-         localPath = GetRegularPathCore(localPath, GetFullPathOptions.CheckInvalidPathChars);
+         localPath = GetRegularPathCore(localPath, GetFullPathOptions.CheckInvalidPathChars, false);
 
 
          if (!IsUncPathCore(localPath, true, false))

@@ -168,7 +168,7 @@ namespace Alphaleonis.Win32.Filesystem
             return null;
 
          if (checkInvalidPathChars)
-            CheckInvalidPathChars(path, false);
+            CheckInvalidPathChars(path, false, true);
 
          int length = path.Length;
          int index = length;
@@ -225,7 +225,7 @@ namespace Alphaleonis.Win32.Filesystem
             return path;
 
          if (checkInvalidPathChars)
-            CheckInvalidPathChars(path, false);
+            CheckInvalidPathChars(path, false, true);
 
          int length = path.Length;
          int index = length;
@@ -346,7 +346,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path.Trim().Length == 0)
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
-         string pathRp = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None);
+         string pathRp = GetRegularPathCore(path, checkInvalidPathChars ? GetFullPathOptions.CheckInvalidPathChars : GetFullPathOptions.None, false);
 
          var rootLengthPath = GetRootLength(path, false);
          var rootLengthPathRp = GetRootLength(pathRp, false);

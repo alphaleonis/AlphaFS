@@ -160,7 +160,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             return (T) (object) (IsRelativePath
                ? fullPathLp
-               : (AsLongPath ? fullPathLp : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None)));
+               : (AsLongPath ? fullPathLp : Path.GetRegularPathCore(fullPathLp, GetFullPathOptions.None, false)));
          }
 
 

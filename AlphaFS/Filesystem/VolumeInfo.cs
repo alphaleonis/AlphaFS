@@ -170,7 +170,7 @@ namespace Alphaleonis.Win32.Filesystem
             } while (lastError == Win32Errors.ERROR_MORE_DATA);
          }
 
-         FullPath = Path.GetRegularPathCore(Name, GetFullPathOptions.None);
+         FullPath = Path.GetRegularPathCore(Name, GetFullPathOptions.None, false);
          Name = volumeNameBuffer.ToString();
 
          FileSystemName = fileSystemNameBuffer.ToString();

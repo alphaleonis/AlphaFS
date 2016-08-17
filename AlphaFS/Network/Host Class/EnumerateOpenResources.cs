@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Network
       [SecurityCritical]
       private static IEnumerable<OpenResourceInfo> EnumerateOpenResourcesCore(string host, string basePath, string typeName, bool continueOnException)
       {
-         basePath = Utils.IsNullOrWhiteSpace(basePath) ? null : Path.GetRegularPathCore(basePath, GetFullPathOptions.CheckInvalidPathChars);
+         basePath = Utils.IsNullOrWhiteSpace(basePath) ? null : Path.GetRegularPathCore(basePath, GetFullPathOptions.CheckInvalidPathChars, false);
          typeName = Utils.IsNullOrWhiteSpace(typeName) ? null : typeName;
 
 
@@ -101,7 +101,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetFileEnum(stripUnc, fd.ExtraData1, fd.ExtraData2, 3, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 

@@ -39,6 +39,8 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public partial class PathTest
    {
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
       #region Unit Tests
 
       private void Dump83Path(bool isLocal)
@@ -817,26 +819,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // HasExtension (.NET)
 
-      #region IsPathRooted (.NET)
-
-      [TestMethod]
-      public void NET_IsPathRooted()
-      {
-         Console.WriteLine("Path.IsPathRooted()");
-         Console.WriteLine("\nThe .NET method is used.\n");
-
-         UnitTestConstants.StopWatcher(true);
-         foreach (string path in UnitTestConstants.InputPaths)
-         {
-            bool action = Path.IsPathRooted(path);
-            Console.WriteLine("\tIsPathRooted: [{0}]\t\tInput Path: [{1}]", action, path);
-            Assert.AreEqual(System.IO.Path.IsPathRooted(path), action);
-         }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
-      }
-
-      #endregion // IsPathRooted (.NET)
-
       #endregion // .NET
 
       #region AlphaFS
@@ -1160,7 +1142,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // IsUncPath
-
+      
       #region LocalToUnc
 
       [TestMethod]

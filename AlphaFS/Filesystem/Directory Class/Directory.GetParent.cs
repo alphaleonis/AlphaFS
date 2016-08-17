@@ -81,7 +81,7 @@ namespace Alphaleonis.Win32.Filesystem
       {
          string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
 
-         pathLp = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None);
+         pathLp = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false);
          string dirName = Path.GetDirectoryName(pathLp, false);
 
          return Utils.IsNullOrWhiteSpace(dirName) ? null : new DirectoryInfo(transaction, dirName, PathFormat.RelativePath);

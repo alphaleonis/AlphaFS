@@ -441,10 +441,10 @@ namespace Alphaleonis.Win32.Filesystem
       private void CopyToMoveToCoreRefresh(string destinationPath, string destinationPathLp)
       {
          LongFullName = destinationPathLp;
-         FullPath = Path.GetRegularPathCore(destinationPathLp, GetFullPathOptions.None);
+         FullPath = Path.GetRegularPathCore(destinationPathLp, GetFullPathOptions.None, false);
 
          OriginalPath = destinationPath;
-         DisplayPath = Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None);
+         DisplayPath = Path.GetRegularPathCore(OriginalPath, GetFullPathOptions.None, false);
 
          // Flush any cached information about the directory.
          Reset();

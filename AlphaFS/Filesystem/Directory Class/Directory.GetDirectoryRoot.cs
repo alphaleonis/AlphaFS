@@ -103,7 +103,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          string pathLp = Path.GetExtendedLengthPathCore(transaction, path, pathFormat, GetFullPathOptions.CheckInvalidPathChars);
 
-         pathLp = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None);
+         pathLp = Path.GetRegularPathCore(pathLp, GetFullPathOptions.None, false);
 
          string rootPath = Path.GetPathRoot(pathLp, false);
 

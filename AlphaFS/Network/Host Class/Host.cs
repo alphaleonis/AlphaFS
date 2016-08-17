@@ -157,7 +157,7 @@ namespace Alphaleonis.Win32.Network
          if (Utils.IsNullOrWhiteSpace(path))
             throw new ArgumentNullException("path");
 
-         path = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars); 
+         path = Path.GetRegularPathCore(path, GetFullPathOptions.CheckInvalidPathChars, false); 
 
          // If path already is a network share path, we fill the REMOTE_NAME_INFO structure ourselves.
          if (Path.IsUncPathCore(path, true, false))

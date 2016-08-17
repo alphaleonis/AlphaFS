@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
          set
          {
             LongFullPath = value;
-            _fullPath = Path.GetRegularPathCore(LongFullPath, GetFullPathOptions.None);
+            _fullPath = Path.GetRegularPathCore(LongFullPath, GetFullPathOptions.None, false);
          }
       }
 

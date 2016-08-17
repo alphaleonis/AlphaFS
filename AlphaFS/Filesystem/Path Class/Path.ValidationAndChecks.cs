@@ -86,7 +86,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (path != null)
          {
             if (checkInvalidPathChars)
-               CheckInvalidPathChars(path, false);
+               CheckInvalidPathChars(path, false, true);
 
             int length = path.Length;
 
@@ -123,7 +123,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Tackle: Path.GetFullPath(@"\\\\.txt"), but exclude "." which is the current directory.
          if (!IsLongPath(path) && path.StartsWith(UncPrefix, StringComparison.OrdinalIgnoreCase))
          {
-            string tackle = GetRegularPathCore(path, GetFullPathOptions.None).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
+            string tackle = GetRegularPathCore(path, GetFullPathOptions.None, false).TrimStart(DirectorySeparatorChar, AltDirectorySeparatorChar);
 
             if (tackle.Length >= 2 && tackle[0] == CurrentDirectoryPrefixChar)
                throw new ArgumentException(Resources.UNC_Path_Should_Match_Format);
@@ -141,7 +141,7 @@ namespace Alphaleonis.Win32.Filesystem
          if (Utils.IsNullOrWhiteSpace(path) || path.Length < 2)
             return;
 
-         string regularPath = GetRegularPathCore(path, GetFullPathOptions.None);
+         string regularPath = GetRegularPathCore(path, GetFullPathOptions.None, false);
 
          bool isArgumentException = (regularPath[0] == VolumeSeparatorChar);
          bool throwException = (isArgumentException || (regularPath.Length >= 2 && regularPath.IndexOf(VolumeSeparatorChar, 2) != -1));
@@ -155,25 +155,26 @@ namespace Alphaleonis.Win32.Filesystem
          }
 
          if (checkInvalidPathChars)
-            CheckInvalidPathChars(path, checkAdditional);
+            CheckInvalidPathChars(path, checkAdditional, false);
       }
-      
+
       /// <summary>Checks that the path contains only valid path-characters.</summary>
       /// <exception cref="ArgumentNullException"/>
       /// <exception cref="ArgumentException"/>
       /// <param name="path">A path to the file or directory.</param>
       /// <param name="checkAdditional"><see langword="true"/> also checks for ? and * characters.</param>
+      /// <param name="allowEmpty">When <see langword="false"/>, throws an <see cref="ArgumentException"/>.</param>
       [SecurityCritical]
-      private static void CheckInvalidPathChars(string path, bool checkAdditional)
+      private static void CheckInvalidPathChars(string path, bool checkAdditional, bool allowEmpty)
       {
          if (path == null)
             throw new ArgumentNullException("path");
 
-         if (path.Length == 0 || Utils.IsNullOrWhiteSpace(path))
+         if (!allowEmpty && (path.Length == 0 || Utils.IsNullOrWhiteSpace(path)))
             throw new ArgumentException(Resources.Path_Is_Zero_Length_Or_Only_White_Space, "path");
 
          // Will fail on a Unicode path.
-         string pathRp = GetRegularPathCore(path, GetFullPathOptions.None);
+         string pathRp = GetRegularPathCore(path, GetFullPathOptions.None, allowEmpty);
 
 
          // Handle "Path.GlobalRootPrefix" and "Path.VolumePrefix".
@@ -235,7 +236,7 @@ namespace Alphaleonis.Win32.Filesystem
       internal static int GetRootLength(string path, bool checkInvalidPathChars)
       {
          if (checkInvalidPathChars)
-            CheckInvalidPathChars(path, false);
+            CheckInvalidPathChars(path, false, false);
 
          int index = 0;
          int length = path.Length;

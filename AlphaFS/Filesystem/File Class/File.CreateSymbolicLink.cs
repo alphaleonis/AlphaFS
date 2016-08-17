@@ -116,8 +116,8 @@ namespace Alphaleonis.Win32.Filesystem
          string targetFileNameLp = Path.GetExtendedLengthPathCore(transaction, targetFileName, pathFormat, options);
 
          // Function CreateSymbolicLink does not support long paths.
-         symlinkFileNameLp = Path.GetRegularPathCore(symlinkFileNameLp, GetFullPathOptions.None);
-         targetFileNameLp = Path.GetRegularPathCore(targetFileNameLp, GetFullPathOptions.None);
+         symlinkFileNameLp = Path.GetRegularPathCore(symlinkFileNameLp, GetFullPathOptions.None, false);
+         targetFileNameLp = Path.GetRegularPathCore(targetFileNameLp, GetFullPathOptions.None, false);
 
 
          if (!(transaction == null

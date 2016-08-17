@@ -145,7 +145,7 @@ namespace Alphaleonis.Win32.Network
             return null;
          
          Uri uri;
-         if (Uri.TryCreate(Path.GetRegularPathCore(uncPath, GetFullPathOptions.None), UriKind.Absolute, out uri) && uri.IsUnc)
+         if (Uri.TryCreate(Path.GetRegularPathCore(uncPath, GetFullPathOptions.None, false), UriKind.Absolute, out uri) && uri.IsUnc)
          {
             return new[]
             {
@@ -236,7 +236,7 @@ namespace Alphaleonis.Win32.Network
                // However, the resulting OpenResourceInfo.Host property will be empty.
                // So, explicitly state Environment.MachineName to prevent this.
                // Furthermore, the UNC prefix: \\ is not required and always removed.
-               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+               string stripUnc = Utils.IsNullOrWhiteSpace(host) ? Environment.MachineName : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
                return NativeMethods.NetConnectionEnum(stripUnc, functionData.ExtraData1, 1, out buffer, NativeMethods.MaxPreferredLength, out entriesRead, out totalEntries, out resumeHandle);
 
@@ -265,7 +265,7 @@ namespace Alphaleonis.Win32.Network
          // Furthermore, the UNC prefix: \\ is not required and always removed.
          string stripUnc = Utils.IsNullOrWhiteSpace(host)
             ? Environment.MachineName
-            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
          var fd = new FunctionData();
          bool hasItems = false;
@@ -328,7 +328,7 @@ namespace Alphaleonis.Win32.Network
          // Furthermore, the UNC prefix: \\ is not required and always removed.
          string stripUnc = Utils.IsNullOrWhiteSpace(host)
             ? Environment.MachineName
-            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars).Replace(Path.UncPrefix, string.Empty);
+            : Path.GetRegularPathCore(host, GetFullPathOptions.CheckInvalidPathChars, false).Replace(Path.UncPrefix, string.Empty);
 
          bool fallback = false;
 
