@@ -231,7 +231,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
 
                // Set DENY for current user.
                dirSecurity = dirInfoParent.GetAccessControl();
@@ -273,7 +273,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive).", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                Directory.Copy(letter + folderSource, letter + folderDestination, CopyOptions.FailIfExists);
             }
             catch (Exception ex)
@@ -303,7 +303,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The sourceDirName and destDirName parameters refer to the same file or directory.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                Directory.Move(letter + folderDestination, letter + folderDestination);
             }
             catch (IOException ex)
@@ -635,7 +635,7 @@ namespace AlphaFS.UnitTest
          exception = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]: Path is invalid, such as referring to an unmapped drive.", expectedException);
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
 
             string nonExistingPath = letter + folderSource;
             if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
@@ -676,7 +676,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
 
                new DirectoryInfo(tempPath).EnumerateDirectories().Any();
             }
@@ -717,7 +717,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
 
                di.EnumerateDirectories(searchPattern, SearchOption.AllDirectories).All(o => o.Exists);
             }
@@ -869,7 +869,7 @@ namespace AlphaFS.UnitTest
          exception = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]: Path is invalid, such as referring to an unmapped drive.", expectedException);
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
 
             string nonExistingPath = letter + folderSource;
             if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
@@ -911,8 +911,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
-
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                new DirectoryInfo(tempPath).EnumerateFiles().Any();
             }
             catch (IOException ex)
@@ -950,8 +949,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
-
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                di.EnumerateFiles(searchPattern, SearchOption.AllDirectories).All(o => o.Exists);
             }
             catch (UnauthorizedAccessException ex)
@@ -1062,7 +1060,7 @@ namespace AlphaFS.UnitTest
          exception = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]: Path is invalid, such as referring to an unmapped drive.", expectedException);
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
 
             string nonExistingPath = letter + folderSource;
             if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
@@ -1103,8 +1101,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
-
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                new DirectoryInfo(tempPath).EnumerateFileSystemInfos().Any();
             }
             catch (IOException ex)
@@ -1142,8 +1139,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
-
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                di.EnumerateFileSystemInfos(searchPattern, SearchOption.AllDirectories).All(o => o.Exists);
             }
             catch (UnauthorizedAccessException ex)
@@ -1223,156 +1219,6 @@ namespace AlphaFS.UnitTest
             Assert.IsTrue((File.GetAttributes(file) & FileAttributes.Directory) == 0, string.Format("Expected a file, not a folder: [{0}]", file));
 
          #endregion // DirectoryEnumerationOptions
-
-         Console.WriteLine();
-      }
-
-      private void DumpGetDirectories(bool isLocal)
-      {
-         #region Setup
-
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-
-         int cnt = 0;
-         string searchPattern = Path.WildcardStarMatchAll;
-         SearchOption searchOption = SearchOption.TopDirectoryOnly;
-
-         bool exception;
-         int expectedLastError;
-         string expectedException;
-
-         string random = Path.GetRandomFileName();
-         string folderSource = @"folder-source-" + random;
-
-         string originalLetter = DriveInfo.GetFreeDriveLetter() + @":";
-         string letter = originalLetter + @"\";
-
-         #endregion // Setup
-
-         #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
-
-         expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
-         expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
-         exception = false;
-         try
-         {
-            Console.WriteLine("\nCatch: [{0}]: The specified path is invalid (for example, it is on an unmapped drive).", expectedException);
-
-            string nonExistingPath = letter + folderSource;
-            if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
-
-            Directory.GetDirectories(nonExistingPath);
-         }
-         catch (Exception ex)
-         {
-            // win32Error is always 0
-            var win32Error = new Win32Exception("", ex);
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            string exceptionTypeName = ex.GetType().FullName;
-            if (exceptionTypeName.Equals(expectedException))
-            {
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            else
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", exceptionTypeName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-         Console.WriteLine();
-
-         #endregion // DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
-
-         #region IOException
-
-         string tempPath = Path.GetTempPath("Directory.GetDirectories-file-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         try
-         {
-            using (File.Create(tempPath)) { }
-
-            expectedLastError = (int)Win32Errors.ERROR_DIRECTORY;
-            expectedException = "System.IO.IOException";
-            exception = false;
-            try
-            {
-               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
-
-               Directory.GetDirectories(tempPath);
-            }
-            catch (IOException ex)
-            {
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-         }
-         finally
-         {
-            File.Delete(tempPath);
-            Assert.IsFalse(File.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            Console.WriteLine();
-         }
-
-         #endregion // IOException
-
-         #region UnauthorizedAccessException
-
-         tempPath = Path.Combine(UnitTestConstants.SysRoot, "CSC");
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         if (Directory.Exists(tempPath))
-         {
-            expectedLastError = (int)Win32Errors.ERROR_ACCESS_DENIED;
-            expectedException = "System.UnauthorizedAccessException";
-            exception = false;
-            try
-            {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
-
-               Directory.GetDirectories(tempPath, searchPattern, SearchOption.AllDirectories).Any();
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-               var win32Error = new Win32Exception("", ex);
-               Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-               exception = true;
-               Console.WriteLine("\n\t[{0}]: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-            Console.WriteLine();
-         }
-
-         #endregion // UnauthorizedAccessException
-
-         string path = isLocal ? UnitTestConstants.SysRoot : Path.LocalToUnc(UnitTestConstants.SysRoot);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]\n", path);
-         Console.WriteLine("\tGet directories, using \"SearchOption.{0}\"\n", searchOption);
-
-         UnitTestConstants.StopWatcher(true);
-         foreach (string folder in Directory.GetDirectories(path, searchPattern, searchOption))
-            Console.WriteLine("\t#{0:000}\t[{1}]", ++cnt, folder);
-
-         Console.WriteLine();
-         Console.WriteLine(UnitTestConstants.Reporter());
-
-         if (cnt == 0)
-            Assert.Inconclusive("Nothing was enumerated.");
 
          Console.WriteLine();
       }
@@ -1551,13 +1397,13 @@ namespace AlphaFS.UnitTest
          #endregion // Setup
 
          #region DirectoryNotFoundException (UnitTestConstants.Local) / IOException (UnitTestConstants.Network)
-
+         
          expectedLastError = (int)(isLocal ? Win32Errors.ERROR_PATH_NOT_FOUND : Win32Errors.ERROR_BAD_NET_NAME);
          expectedException = isLocal ? "System.IO.DirectoryNotFoundException" : "System.IO.IOException";
          exception = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]: The specified path is invalid (for example, it is on an unmapped drive).", expectedException);
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
 
             string nonExistingPath = letter + folderSource;
             if (!isLocal) nonExistingPath = Path.LocalToUnc(nonExistingPath);
@@ -1599,8 +1445,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: Path is a file name.", expectedException);
-
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                Directory.GetFileSystemEntries(tempPath).Any();
             }
             catch (IOException ex)
@@ -1637,8 +1482,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
-
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                Directory.GetFileSystemEntries(tempPath, searchPattern, SearchOption.AllDirectories).Any();
             }
             catch (UnauthorizedAccessException ex)
@@ -1774,7 +1618,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
 
                // Set DENY for current user.
                dirSecurity = dirInfoParent.GetAccessControl();
@@ -1818,7 +1662,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The path specified by sourceDirName is invalid (for example, it is on an unmapped drive).", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                Directory.Move(letter + folderSource, letter + folderDestination);
             }
             catch (DirectoryNotFoundException ex)
@@ -1845,7 +1689,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The sourceDirName and destDirName parameters refer to the same file or directory.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                Directory.Move(letter + folderDestination, letter + folderDestination);
             }
             catch (IOException ex)
@@ -1871,7 +1715,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: An attempt was made to move a directory to a different volume. ", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                Directory.Move(UnitTestConstants.SysDrive + @"\" + folderSource, otherDisk);
             }
             catch (IOException ex)
@@ -2452,15 +2296,6 @@ namespace AlphaFS.UnitTest
          Console.WriteLine("Directory.GetCurrentDirectory()");
          Console.WriteLine("\nThe .NET method is used.");
       }
-
-      [TestMethod]
-      public void Directory_GetDirectories_LocalAndUNC_Success()
-      {
-         Console.WriteLine("Directory.GetDirectories()");
-
-         DumpGetDirectories(true);
-         DumpGetDirectories(false);
-      }
       
       [TestMethod]
       public void GetDirectoryRoot()
@@ -2476,7 +2311,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]: \\\\.txt", expectedException);
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
             Directory.GetDirectoryRoot(@"\\\\.txt");
          }
          catch (ArgumentException ex)

@@ -22,8 +22,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.IO;
-using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
-using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
 {
@@ -31,6 +29,16 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public class FileInfoTest
    {
+      [TestMethod]
+      public void ATest()
+      {
+         //new FileInfo(@"textfile.txt").Open(FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+
+         var file = new Alphaleonis.Win32.Filesystem.FileInfo(@"textfile.txt").Open(FileMode.Append, FileAccess.Write, FileShare.ReadWrite);
+         Console.WriteLine(file.Name);
+      }
+
+
       #region Unit Tests
 
       #region DumpRefresh
@@ -41,10 +49,10 @@ namespace AlphaFS.UnitTest
 
          Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
 
-         string tempPathSysIo = Path.GetTempPath("FileInfo.Refresh()-file-SysIo-" + Path.GetRandomFileName());
-         string tempPath = Path.GetTempPath("FileInfo.Refresh()-file-AlphaFS-" + Path.GetRandomFileName());
-         if (!isLocal) tempPathSysIo = Path.LocalToUnc(tempPathSysIo);
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
+         string tempPathSysIo = Alphaleonis.Win32.Filesystem.Path.GetTempPath("FileInfo.Refresh()-file-SysIo-" + Path.GetRandomFileName());
+         string tempPath = Alphaleonis.Win32.Filesystem.Path.GetTempPath("FileInfo.Refresh()-file-AlphaFS-" + Path.GetRandomFileName());
+         if (!isLocal) tempPathSysIo = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPathSysIo);
+         if (!isLocal) tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
          Console.WriteLine("\nInput File Path: [{0}]", tempPath);
 

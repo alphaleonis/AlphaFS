@@ -82,7 +82,15 @@ namespace AlphaFS.UnitTest
          }
          catch (Exception ex)
          {
-            Console.WriteLine("\n\nFailed to delete TemporaryDirectory: [{0}]: [{1}]", Directory, ex.Message);
+            try
+            {
+               // In case it's a long path.
+               Alphaleonis.Win32.Filesystem.Directory.Delete(Directory.FullName, true);
+            }
+            catch
+            {
+               Console.WriteLine("\n\nFailed to delete TemporaryDirectory: [{0}]: [{1}]", Directory, ex.Message);
+            }
          }
       }
 

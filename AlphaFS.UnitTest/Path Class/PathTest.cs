@@ -250,6 +250,27 @@ namespace AlphaFS.UnitTest
          Assert.IsTrue(gotVolumeNameNt);
          Assert.IsTrue(gotVolumeNameNone);
          Assert.IsTrue(gotSomething);
+
+
+
+         // AlphaFS implementation of fileStream.Name returns = "[Unknown]"
+         // System.IO returns the full path.
+         Console.WriteLine();
+         var fileName = Path.Combine(Environment.ExpandEnvironmentVariables("%temp%") + "foo.bar");
+
+         var fileStream2 = System.IO.File.Create(fileName);
+         Assert.AreEqual(fileStream2.Name, fileName);
+         fileStream2.Close();
+         File.Delete(fileName);
+
+         var fileStream = File.Create(fileName);
+         var fileStreamName = Alphaleonis.Win32.Filesystem.Path.GetFinalPathNameByHandle(fileStream.SafeFileHandle);
+
+         Assert.AreNotEqual(fileName, fileStream.Name);
+         Assert.AreEqual(fileName, Path.GetRegularPath(fileStreamName));
+
+         fileStream.Close();
+         File.Delete(fileName);
       }
 
       private void DumpGetSuffixedDirectoryName(bool isLocal)

@@ -189,7 +189,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]: The given path's format is not supported.", expectedException);
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
 
             string invalidPath = UnitTestConstants.SysDrive + @"\:a";
             if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + @":a";
@@ -562,7 +562,7 @@ namespace AlphaFS.UnitTest
          bool exception = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]: The given path's format is not supported.", expectedException);
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
 
             string invalidPath = UnitTestConstants.SysDrive + @"\:a";
             if (!isLocal) invalidPath = Path.LocalToUnc(invalidPath) + @":a";
@@ -599,7 +599,7 @@ namespace AlphaFS.UnitTest
          exception = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]: Length property is called, the file does not exist.", expectedException);
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
             Console.WriteLine(new FileInfo(nonExistingFile).Length);
          }
          catch (Exception ex)
@@ -629,8 +629,7 @@ namespace AlphaFS.UnitTest
          exception = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]: Length property is called, the file does not exist (Unmapped drive).", expectedException);
-
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
             Console.WriteLine(new FileInfo(nonExistingFile.Replace(sysDrive + @"\", letter)).Length);
          }
          catch (Exception ex)
@@ -660,7 +659,7 @@ namespace AlphaFS.UnitTest
          exception = false;
          try
          {
-            Console.WriteLine("\nCatch: [{0}]: Length property is called, the file is a directory.", expectedException);
+            Console.WriteLine("\nCatch: [{0}]", expectedException);
             Console.WriteLine(new FileInfo(sysRoot).Length);
          }
          catch (Exception ex)

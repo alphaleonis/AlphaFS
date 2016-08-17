@@ -25,8 +25,8 @@ using System.IO;
 using Alphaleonis.Win32;
 using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SysIOPath = System.IO.Path;
-using SysIOFile = System.IO.File;
+using Path = System.IO.Path;
+using File = System.IO.File;
 
 namespace AlphaFS.UnitTest
 {
@@ -34,7 +34,7 @@ namespace AlphaFS.UnitTest
    partial class AlphaFS_ClassesTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
-
+      
       [TestMethod]
       public void BackupFileStream_LocalAndUNC_Success()
       {
@@ -47,21 +47,21 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         if (!SysIOFile.Exists(UnitTestConstants.NotepadExe))
+         if (!File.Exists(UnitTestConstants.NotepadExe))
             Assert.Inconclusive("Test ignored because {0} was not found.", UnitTestConstants.NotepadExe);
 
-         string tempPath = SysIOPath.GetTempPath();
+         string tempPath = Path.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
          
 
          using (var rootDir = new TemporaryDirectory(tempPath, "BackupFileStream"))
          {
-            string file = SysIOPath.Combine(rootDir.Directory.FullName, SysIOPath.GetFileName(UnitTestConstants.NotepadExe));
+            string file = Path.Combine(rootDir.Directory.FullName, Path.GetFileName(UnitTestConstants.NotepadExe));
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
-            SysIOFile.Copy(UnitTestConstants.NotepadExe, file);
+            File.Copy(UnitTestConstants.NotepadExe, file);
             
 
             using (var bfs = new BackupFileStream(file, FileMode.Open))

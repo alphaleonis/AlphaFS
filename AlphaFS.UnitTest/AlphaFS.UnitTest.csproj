@@ -145,6 +145,7 @@
     </Compile>
     <Compile Include="AlphaFS_DeviceTest.cs" />
     <Compile Include="Classes\BackupFileStream.cs" />
+    <Compile Include="Directory Class\GetDirectories.cs" />
     <Compile Include="Directory Class\GetFiles.cs" />
     <Compile Include="Directory Class\EnumerateAlternateDataStreams.cs" />
     <Compile Include="Directory Class\Exists.cs" />

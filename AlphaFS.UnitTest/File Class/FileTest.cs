@@ -171,7 +171,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
 
                FileInfo fileInfo = new FileInfo(fullPathSource);
                using (StreamWriter sw = fileInfo.CreateText())
@@ -216,8 +216,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: sourceFileName was not found.", expectedException);
-               
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                File.Copy(isLocal ? fileSource : Path.LocalToUnc(fileSource), isLocal ? fileDestination : Path.LocalToUnc(fileDestination));
             }
             catch (FileNotFoundException ex)
@@ -244,8 +243,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The path specified in sourceFileName or destFileName is invalid (for example, it is on an unmapped drive).", expectedException);
-               
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                File.Copy(fullPathSource, fullPathDestination);
             }
             catch (DirectoryNotFoundException ex)
@@ -277,8 +275,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: destFileName exists and overwrite is false.", expectedException);
-
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                File.Copy(fullPathSource, fullPathDestination);
             }
             catch (AlreadyExistsException ex)
@@ -310,7 +307,8 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: A folder with the same name as the file exists.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
+
                foreach (string file in Directory.EnumerateFiles(path))
                {
                   string newFile = Path.Combine(tempPath, Path.GetFileName(file, true));
@@ -1181,7 +1179,7 @@ namespace AlphaFS.UnitTest
 
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The caller does not have the required permission.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
 
                FileInfo fileInfo = new FileInfo(fullPathSource);
                using (StreamWriter sw = fileInfo.CreateText())
@@ -1229,7 +1227,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: sourceFileName was not found.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                File.Move(isLocal ? fileSource : Path.LocalToUnc(fileSource), isLocal ? fileDestination : Path.LocalToUnc(fileDestination));
             }
             catch (FileNotFoundException ex)
@@ -1256,7 +1254,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The path specified in sourceFileName or destFileName is invalid (for example, it is on an unmapped drive).", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                File.Move(fullPathSource, fullPathDestination);
             }
             catch (DirectoryNotFoundException ex)
@@ -1288,8 +1286,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: The destination file already exists.", expectedException);
-
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                File.Move(fullPathSource, fullPathDestination);
             }
             catch (AlreadyExistsException ex)
@@ -1323,7 +1320,7 @@ namespace AlphaFS.UnitTest
             exception = false;
             try
             {
-               Console.WriteLine("\nCatch: [{0}]: A folder with the same name as the file exists.", expectedException);
+               Console.WriteLine("\nCatch: [{0}]", expectedException);
                foreach (string file in Directory.EnumerateFiles(path))
                {
                   string newFile = Path.Combine(tempPath, Path.GetFileName(file, true));
