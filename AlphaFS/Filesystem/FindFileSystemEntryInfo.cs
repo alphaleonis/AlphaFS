@@ -452,7 +452,7 @@ namespace Alphaleonis.Win32.Filesystem
 
             _nameFilter = _searchPattern == Path.WildcardStarMatchAll || WildcardMatchAll.IsMatch(_searchPattern)
                ? null
-               : new Regex($"^{Regex.Escape(_searchPattern).Replace(@"\*", ".*").Replace(@"\?", ".")}$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+               : new Regex(string.Format(CultureInfo.CurrentCulture, "^{0}$", Regex.Escape(_searchPattern).Replace(@"\*", ".*").Replace(@"\?", ".")), RegexOptions.IgnoreCase | RegexOptions.Compiled);
          }
       }
 
