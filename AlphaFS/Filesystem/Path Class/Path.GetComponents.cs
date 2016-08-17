@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
       [SecurityCritical]
       public static string GetExtension(string path)
       {
-         return GetExtension(path, true);
+         return GetExtension(path, !Utils.IsNullOrWhiteSpace(path));
       }
 
       #endregion // .NET

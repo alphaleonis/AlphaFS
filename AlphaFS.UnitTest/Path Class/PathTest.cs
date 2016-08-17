@@ -449,63 +449,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // Combine
-
-      #region GetExtension
-
-      [TestMethod]
-      public void GetExtension()
-      {
-         Console.WriteLine("Path.GetExtension()");
-
-         int pathCnt = 0;
-         int errorCnt = 0;
-         bool skipAssert = false;
-
-         UnitTestConstants.StopWatcher(true);
-         foreach (string path in UnitTestConstants.InputPaths)
-         {
-            string expected = null;
-            string actual = null;
-
-            Console.WriteLine("\n#{0:000}\tInput Path: [{1}]", ++pathCnt, path);
-
-            // System.IO
-            try
-            {
-               expected = System.IO.Path.GetExtension(path);
-            }
-            catch (Exception ex)
-            {
-               skipAssert = ex is ArgumentException;
-
-               Console.WriteLine("\tCaught [System.IO] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\t   System.IO : [{0}]", expected ?? "null");
-
-
-            // AlphaFS
-            try
-            {
-               actual = Path.GetExtension(path);
-
-               if (!skipAssert)
-                  Assert.AreEqual(expected, actual);
-            }
-            catch (Exception ex)
-            {
-               errorCnt++;
-
-               Console.WriteLine("\tCaught [AlphaFS] {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-            Console.WriteLine("\t   AlphaFS   : [{0}]", actual ?? "null");
-         }
-         Console.WriteLine("\n{0}", UnitTestConstants.Reporter(true));
-
-         Assert.AreEqual(0, errorCnt, "Encountered paths where AlphaFS != System.IO");
-      }
-
-      #endregion // GetExtension
-
+      
       #region GetFileName
 
       [TestMethod]
