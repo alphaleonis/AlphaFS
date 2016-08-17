@@ -43,7 +43,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</para>
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CM_Connect_MachineW")]
       [return: MarshalAs(UnmanagedType.I4)]
       public static extern int CM_Connect_Machine([MarshalAs(UnmanagedType.LPWStr)] string uncServerName, out SafeCmConnectMachineHandle phMachine);
 
@@ -66,7 +66,7 @@ namespace Alphaleonis.Win32.Filesystem
       ///   <para>Otherwise, it returns one of the CR_-prefixed error codes defined in Cfgmgr32.h.</para>
       /// </returns>
       [SuppressMessage("Microsoft.Security", "CA5122:PInvokesShouldNotBeSafeCriticalFxCopRule")]
-      [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+      [DllImport("setupapi.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CM_Get_Device_ID_ExW")]
       [return: MarshalAs(UnmanagedType.I4)]
       public static extern int CM_Get_Device_ID_Ex([MarshalAs(UnmanagedType.U4)] uint dnDevInst, SafeGlobalMemoryBufferHandle buffer, [MarshalAs(UnmanagedType.U4)] uint bufferLen, [MarshalAs(UnmanagedType.U4)] uint ulFlags, SafeCmConnectMachineHandle hMachine);
 
