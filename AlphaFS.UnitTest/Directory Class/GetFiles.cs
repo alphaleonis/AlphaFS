@@ -244,16 +244,17 @@ namespace AlphaFS.UnitTest
          {
             var files = Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath, "foo.txt");
             Console.WriteLine("\tDirectory.GetFiles(tempPath, \"foo.txt\");");
-            Assert.IsTrue(files.Contains(Path.Combine(tempPath, "foo.txt"), StringComparer.InvariantCultureIgnoreCase));
+            Assert.IsTrue(files.Length == 1 && files.Contains(Path.Combine(tempPath, "foo.txt"), StringComparer.InvariantCultureIgnoreCase));
             Assert.IsFalse(files.Contains(Path.Combine(tempPath, "fooatxt"), StringComparer.InvariantCultureIgnoreCase));
 
             files = Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath, "a?a.txt");
             Console.WriteLine("\tDirectory.GetFiles(tempPath, \"a?a.txt\");");
-            Assert.IsTrue(files.Contains(Path.Combine(tempPath, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
+            Assert.IsTrue(files.Length == 1 && files.Contains(Path.Combine(tempPath, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
             Assert.IsFalse(files.Contains(Path.Combine(tempPath, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "? wildcard failed");
 
             files = Alphaleonis.Win32.Filesystem.Directory.GetFiles(tempPath, "a*.*");
             Console.WriteLine("\tDirectory.GetFiles(tempPath, \"a*.*\");");
+            Assert.IsTrue(files.Length == 3);
             Assert.IsTrue(files.Contains(Path.Combine(tempPath, "a.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
             Assert.IsTrue(files.Contains(Path.Combine(tempPath, "aa.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
             Assert.IsTrue(files.Contains(Path.Combine(tempPath, "aba.txt"), StringComparer.InvariantCultureIgnoreCase), "* wildcard failed");
