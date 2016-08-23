@@ -85,7 +85,7 @@ namespace Alphaleonis.Win32.Filesystem
          return EnumerateFileSystemEntryInfosCore<string>(null, path, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.RelativePath).ToArray();
       }
 
-      /// <summary>Gets the names of the subdirectories (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.</summary>
+      /// <summary>Returns the names of files (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.</summary>
       /// <returns>An array of the full names (including paths) for the files in the specified directory that match the specified search pattern and option, or an empty array if no files are found.</returns>
       /// <remarks>
       ///   <para>The returned file names are appended to the supplied <paramref name="path"/> parameter.</para>
@@ -176,7 +176,7 @@ namespace Alphaleonis.Win32.Filesystem
          return EnumerateFileSystemEntryInfosCore<string>(transaction, path, searchPattern, DirectoryEnumerationOptions.Files, PathFormat.RelativePath).ToArray();
       }
 
-      /// <summary>Gets the names of the subdirectories (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.</summary>
+      /// <summary>Returns the names of files (including their paths) that match the specified search pattern in the current directory, and optionally searches subdirectories.</summary>
       /// <returns>An array of the full names (including paths) for the files in the specified directory that match the specified search pattern and option, or an empty array if no files are found.</returns>
       /// <remarks>
       ///   <para>The returned file names are appended to the supplied <paramref name="path"/> parameter.</para>
