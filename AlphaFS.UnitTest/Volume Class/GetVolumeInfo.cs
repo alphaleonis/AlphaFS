@@ -41,10 +41,17 @@ namespace AlphaFS.UnitTest
 
          var globalRootPath = @"\\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1";
 
-         var volume = Volume.GetVolumeInfo(globalRootPath);
-         Console.WriteLine("Volume full path: " + volume.FullPath);
+         try
+         {
+            var volume = Volume.GetVolumeInfo(globalRootPath);
+            Console.WriteLine("Volume full path: " + volume.FullPath);
 
-         Assert.AreEqual(globalRootPath + @"\", volume.FullPath);
+            Assert.AreEqual(globalRootPath + @"\", volume.FullPath);
+         }
+         catch (Exception)
+         {
+            Assert.Inconclusive("Volume not found: " + globalRootPath);
+         }
       }
 
 
