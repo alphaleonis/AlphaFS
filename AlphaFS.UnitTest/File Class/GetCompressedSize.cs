@@ -21,7 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using Alphaleonis;
 
 namespace AlphaFS.UnitTest
 {
@@ -51,8 +50,6 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, "File-GetCompressedSize"))
          {
             string file = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
-
 
             long streamLength;
             int thousand = 100 * UnitTestConstants.TenNumbers.Length;
@@ -78,8 +75,6 @@ namespace AlphaFS.UnitTest
 
 
             var fileLength = Alphaleonis.Win32.Filesystem.File.GetCompressedSize(file);
-
-            Console.WriteLine("\tFile.GetCompressedSize() = [{0}]", Utils.UnitSizeToText(fileLength));
 
             Assert.IsTrue(fileLength == compressedSize && fileLength != streamLength, "File should be [{0}] bytes in size.", compressedSize);
          }

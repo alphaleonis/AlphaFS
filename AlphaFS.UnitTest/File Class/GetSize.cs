@@ -51,8 +51,6 @@ namespace AlphaFS.UnitTest
          using (var rootDir = new TemporaryDirectory(tempPath, "File-GetSize"))
          {
             string file = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
-            
 
             long streamLength;
             int ten = UnitTestConstants.TenNumbers.Length;
@@ -67,8 +65,6 @@ namespace AlphaFS.UnitTest
 
 
             var fileLength = Alphaleonis.Win32.Filesystem.File.GetSize(file);
-
-            Console.WriteLine("\tFile.GetSize() = [{0}]", Utils.UnitSizeToText(fileLength));
 
             Assert.IsTrue(fileLength == ten && fileLength == streamLength, "File should be [{0}] bytes in size.", ten);
          }

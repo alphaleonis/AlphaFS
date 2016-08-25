@@ -29,24 +29,24 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_Directory_Compress_LocalAndUNC_Success()
+      public void AlphaFS_Directory_Compress_Decompress_LocalAndUNC_Success()
       {
-         Directory_Compress(false, false);
-         Directory_Compress(true, false);
+         Directory_Compress_Decompress(false, false);
+         Directory_Compress_Decompress(true, false);
       }
 
 
       [TestMethod]
-      public void AlphaFS_Directory_Compress_Recursive_LocalAndUNC_Success()
+      public void AlphaFS_Directory_Compress_Decompress_Recursive_LocalAndUNC_Success()
       {
-         Directory_Compress(false, true);
-         Directory_Compress(true, true);
+         Directory_Compress_Decompress(false, true);
+         Directory_Compress_Decompress(true, true);
       }
 
 
 
 
-      private void Directory_Compress(bool isNetwork, bool recursive)
+      private void Directory_Compress_Decompress(bool isNetwork, bool recursive)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -55,10 +55,9 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Compress"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.Decompress"))
          {
             string rootFolder = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput Directory Path: [{0}]\n", rootFolder);
 
             string folderAaa = System.IO.Path.Combine(rootFolder, "folder-aaa");
             string folderBbb = System.IO.Path.Combine(rootFolder, "folder-bbb");
@@ -93,6 +92,23 @@ namespace AlphaFS.UnitTest
                DirectoryAssert.IsCompressed(folderCcc);
                FileAssert.IsCompressed(fileAaa);
                FileAssert.IsCompressed(fileBbb);
+            }
+            else
+            {
+               DirectoryAssert.IsNotCompressed(folderCcc);
+               FileAssert.IsNotCompressed(fileAaa);
+               FileAssert.IsNotCompressed(fileBbb);
+            }
+
+
+            Alphaleonis.Win32.Filesystem.Directory.Decompress(rootFolder, recursive ? Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.Recursive : Alphaleonis.Win32.Filesystem.DirectoryEnumerationOptions.None);
+
+
+            if (recursive)
+            {
+               DirectoryAssert.IsNotCompressed(folderCcc);
+               FileAssert.IsNotCompressed(fileAaa);
+               FileAssert.IsNotCompressed(fileBbb);
             }
             else
             {

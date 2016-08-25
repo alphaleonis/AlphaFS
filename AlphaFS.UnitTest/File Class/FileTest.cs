@@ -740,76 +740,7 @@ namespace AlphaFS.UnitTest
       }
 
       #endregion // DumpIsLocked
-
-      #region DumpEnumerateHardlinks
-
-      private void DumpEnumerateHardlinks(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string subDir = Directory.CreateDirectory(Path.GetTempPath("Hardlink-" + Path.GetRandomFileName())).FullName;
-         string tempPath = Path.Combine(subDir, "File.EnumerateHardlinks()-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-
-         // Create original file with text content.
-         File.WriteAllText(tempPath, UnitTestConstants.TextHelloWorld);
-         Console.WriteLine("\nInput File Path: [{0}]\n\nContents: [{1}]", tempPath, File.ReadAllText(tempPath));
-
-
-         // Create a random number of hardlinks to the original file.
-         int numCreate = new Random().Next(1, 20);
-         List<string> hardlinks = new List<string>();
-
-         for (int i = 0; i < numCreate; i++)
-         {
-            string subdir2 = Directory.CreateDirectory(Path.Combine(subDir, Path.GetRandomFileName())).FullName;
-            string newfile = Path.Combine(subdir2, "File.CreateHardlink()-" + Path.GetRandomFileName());
-            if (!isLocal) newfile = Path.LocalToUnc(newfile);
-            File.CreateHardlink(newfile, tempPath);
-
-            hardlinks.Add(newfile);
-         }
-
-         numCreate++;  // +1 is for the original file.
-         Console.WriteLine("\nCreated: [{0}] Hardlinks.\n", numCreate);
-
-         if (isLocal)
-         {
-            int cnt = 0;
-            UnitTestConstants.StopWatcher(true);
-
-            foreach (string hardLink in File.EnumerateHardlinks(tempPath))
-               Console.WriteLine("\t#{0:000}\tHardlink: [{1}]", ++cnt, hardLink);
-
-            Console.WriteLine();
-            Console.WriteLine(UnitTestConstants.Reporter());
-            Assert.AreEqual(numCreate, cnt);
-            Console.WriteLine();
-         }
-         else
-            Console.WriteLine("\tEnumerating Hardlinks does not work with UNC paths.");
-
-
-         using (FileStream stream = File.OpenRead(tempPath))
-         {
-            UnitTestConstants.StopWatcher(true);
-            ByHandleFileInfo bhfi = File.GetFileInfoByHandle(stream.SafeFileHandle);
-            string report = UnitTestConstants.Reporter();
-            Assert.AreEqual(numCreate, (int)bhfi.NumberOfLinks);
-
-            Console.WriteLine("\n\tByHandleFileInfo for Input Path, see property: NumberOfLinks");
-            UnitTestConstants.Dump(bhfi, -18);
-            Console.WriteLine("\n{0}", report);
-         }
-
-
-         Directory.Delete(subDir, true, true);
-         Assert.IsFalse(Directory.Exists(subDir), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
-      }
-
-      #endregion // DumpEnumerateHardlinks
-
+      
       #region DumpCreateSymbolicLink
 
       private void DumpCreateSymbolicLink(bool isLocal)
@@ -2559,19 +2490,6 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
-
-      #region CreateHardlink
-
-      [TestMethod]
-      public void AlphaFS_CreateHardlink()
-      {
-         Console.WriteLine("File.CreateHardlink()");
-
-         DumpEnumerateHardlinks(true);
-         DumpEnumerateHardlinks(false);
-      }
-
-      #endregion // CreateHardlink
 
       #region CreateSymbolicLink
 

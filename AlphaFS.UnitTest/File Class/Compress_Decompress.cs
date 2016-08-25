@@ -29,16 +29,16 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_Compress_LocalAndUNC_Success()
+      public void AlphaFS_File_Compress_And_Decompress_LocalAndUNC_Success()
       {
-         File_Compress(false);
-         File_Compress(true);
+         File_Compress_And_Decompress(false);
+         File_Compress_And_Decompress(true);
       }
 
 
 
 
-      private void File_Compress(bool isNetwork)
+      private void File_Compress_And_Decompress(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
@@ -47,16 +47,17 @@ namespace AlphaFS.UnitTest
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File.Compress"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.Decompress"))
          {
             string file = rootDir.RandomFileFullPath;
-            Console.WriteLine("\nInput File Path: [{0}]\n", file);
-
             using (System.IO.File.CreateText(file)) { }
 
-            Alphaleonis.Win32.Filesystem.File.Compress(file);
 
+            Alphaleonis.Win32.Filesystem.File.Compress(file);
             FileAssert.IsCompressed(file);
+
+            Alphaleonis.Win32.Filesystem.File.Decompress(file);
+            FileAssert.IsNotCompressed(file);
          }
 
          Console.WriteLine();

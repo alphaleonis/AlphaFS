@@ -145,8 +145,7 @@
     </Compile>
     <Compile Include="AlphaFS_DeviceTest.cs" />
     <Compile Include="Classes\BackupFileStream.cs" />
-    <Compile Include="Directory Class\Decompress.cs" />
-    <Compile Include="Directory Class\Compress.cs" />
+    <Compile Include="Directory Class\Compress_Decompress.cs" />
     <Compile Include="Directory Class\GetDirectories.cs" />
     <Compile Include="Directory Class\GetFiles.cs" />
     <Compile Include="Directory Class\EnumerateAlternateDataStreams.cs" />
@@ -156,8 +155,8 @@
     <Compile Include="Directory Class\GetAccessControl.cs" />
     <Compile Include="Directory Class\GetXxxTimeXxx.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
-    <Compile Include="File Class\Decompress.cs" />
-    <Compile Include="File Class\Compress.cs" />
+    <Compile Include="File Class\CreateHardlink_EnumerateHardlinks.cs" />
+    <Compile Include="File Class\Compress_Decompress.cs" />
     <Compile Include="File Class\GetCompressedSize.cs" />
     <Compile Include="File Class\GetSize.cs" />
     <Compile Include="File Class\EnumerateAlternateDataStreams.cs" />
