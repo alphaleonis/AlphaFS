@@ -21,15 +21,13 @@
 
 using Alphaleonis;
 using System;
-using SysIODirectoryInfo = System.IO.DirectoryInfo;
-using SysIOPath = System.IO.Path;
 
 namespace AlphaFS.UnitTest
 {
    /// <summary>Used to create a temporary directory that will be deleted once this instance is disposed.</summary>
    internal sealed class TemporaryDirectory : IDisposable
    {
-      public TemporaryDirectory(string prefix = null) : this(SysIOPath.GetTempPath(), prefix) { }
+      public TemporaryDirectory(string prefix = null) : this(System.IO.Path.GetTempPath(), prefix) { }
       
       public TemporaryDirectory(string root, string prefix)
       {
@@ -38,18 +36,18 @@ namespace AlphaFS.UnitTest
 
          do
          {
-            Directory = new SysIODirectoryInfo(SysIOPath.Combine(root, prefix + "-" + Guid.NewGuid().ToString("N").Substring(0, 6)));
+            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, prefix + "-" + Guid.NewGuid().ToString("N").Substring(0, 6)));
 
          } while (Directory.Exists);
 
          Directory.Create();
       }
 
-      public SysIODirectoryInfo Directory { get; private set; }
+      public System.IO.DirectoryInfo Directory { get; private set; }
 
       public string RandomFileFullPath
       {
-         get { return SysIOPath.Combine(Directory.FullName, SysIOPath.GetRandomFileName()); }
+         get { return System.IO.Path.Combine(Directory.FullName, System.IO.Path.GetRandomFileName()); }
       }
 
       #region Disposable Members

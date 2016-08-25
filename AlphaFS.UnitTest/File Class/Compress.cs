@@ -19,23 +19,47 @@
  *  THE SOFTWARE. 
  */
 
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Globalization;
-using System.Linq;
 
 namespace AlphaFS.UnitTest
 {
-   internal static class PathUtils
+   partial class FileTest
    {
-      public static string AsUncPath(string localPath)
+      // Pattern: <class>_<function>_<scenario>_<expected result>
+
+      [TestMethod]
+      public void AlphaFS_File_Compress_LocalAndUNC_Success()
       {
-         localPath = System.IO.Path.GetFullPath(localPath);
+         File_Compress(false);
+         File_Compress(true);
+      }
 
-         if (Alphaleonis.Win32.Filesystem.Path.IsUncPath(localPath))
-            throw new ArgumentException("Path is not a local path.");
 
-         return string.Format(CultureInfo.InvariantCulture, @"\\{0}\{1}$\{2}", Environment.MachineName,
-            localPath.First(), localPath.Substring(System.IO.Path.GetPathRoot(localPath).Length));
+
+
+      private void File_Compress(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.Compress"))
+         {
+            string file = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
+            using (System.IO.File.CreateText(file)) { }
+
+            Alphaleonis.Win32.Filesystem.File.Compress(file);
+
+            FileAssert.IsCompressed(file);
+         }
+
+         Console.WriteLine();
       }
    }
 }

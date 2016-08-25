@@ -38,7 +38,6 @@ using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
 using File = Alphaleonis.Win32.Filesystem.File;
 using FileInfo = Alphaleonis.Win32.Filesystem.FileInfo;
 using FileSystemInfo = Alphaleonis.Win32.Filesystem.FileSystemInfo;
-using OperatingSystem = Alphaleonis.Win32.OperatingSystem;
 using Path = Alphaleonis.Win32.Filesystem.Path;
 
 namespace AlphaFS.UnitTest
@@ -47,128 +46,6 @@ namespace AlphaFS.UnitTest
    [TestClass]
    public partial class DirectoryTest
    {
-      private void DumpCompressDecompress(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-         string tempPath = Path.Combine(Path.GetTempPath(), "Directory.CompressDecompress()-" + Path.GetRandomFileName());
-         if (!isLocal) tempPath = Path.LocalToUnc(tempPath);
-
-         Console.WriteLine("\nInput Directory Path: [{0}]", tempPath);
-
-         int cnt = 0;
-         Directory.CreateDirectory(tempPath);
-         FileAttributes actual = File.GetAttributes(tempPath);
-         bool action = (actual & FileAttributes.Compressed) != 0;
-
-         Console.WriteLine("\nCompressed (Should be False): [{0}]\t\tAttributes: [{1}]\n", action, actual);
-         Assert.IsFalse(action, "Compression should be False");
-         Assert.IsFalse((actual & FileAttributes.Compressed) != 0, "Compression should be False");
-
-
-         // Create some directories and files.
-         for (int i = 0; i < 5; i++)
-         {
-            string file = Path.Combine(tempPath, Path.GetRandomFileName());
-
-            string dir = file + "-dir";
-            Directory.CreateDirectory(dir);
-
-            // using() == Dispose() == Close() = deletable.
-            using (File.Create(file)) { }
-            using (File.Create(Path.Combine(dir, Path.GetFileName(file, true)))) { }
-
-            actual = File.GetAttributes(file);
-            action = (actual & FileAttributes.Compressed) != 0;
-
-            Console.WriteLine("\t#{0:000}\tCompressed (Should be False): [{1}]\tAttributes: [{2}] [{3}]", ++cnt, action, actual, Path.GetFullPath(file));
-
-            if (cnt == 0)
-               Assert.Inconclusive("Nothing was enumerated.");
-
-            Assert.IsFalse(action, "Compression should be False");
-         }
-
-
-         // Compress directory recursively.
-         action = false;
-         string report = "";
-
-         UnitTestConstants.StopWatcher(true);
-         try
-         {
-            Directory.Compress(tempPath, DirectoryEnumerationOptions.Recursive);
-            report = UnitTestConstants.Reporter();
-            action = true;
-            actual = File.GetAttributes(tempPath);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Directory.Delete(tempPath, true);
-         }
-         Console.WriteLine("\n\nDirectory compressed recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
-         Assert.IsTrue(action, "Compression should be True");
-         Assert.IsTrue((actual & FileAttributes.Compressed) != 0, "Compression should be True");
-
-         // Check that everything is compressed.
-         cnt = 0;
-         foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
-         {
-            actual = fsei.Attributes;
-            action = (actual & FileAttributes.Compressed) != 0;
-
-            Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tCompressed (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
-
-            if (cnt == 0)
-               Assert.Inconclusive("Nothing was enumerated.");
-
-            Assert.IsTrue(action, "Compression should be True");
-         }
-
-
-         // Decompress directory recursively.
-         action = false;
-         UnitTestConstants.StopWatcher(true);
-
-         try
-         {
-            Directory.Decompress(tempPath, DirectoryEnumerationOptions.Recursive);
-            report = UnitTestConstants.Reporter();
-            action = true;
-            actual = File.GetAttributes(tempPath);
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\n\tCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Directory.Delete(tempPath, true);
-         }
-         Console.WriteLine("\n\nDirectory decompressed recursively (Should be True): [{0}]\t\tAttributes: [{1}]\n\t{2}\n", action, actual, report);
-         Assert.IsTrue(action, "Compression should be True");
-         Assert.IsFalse((actual & FileAttributes.Compressed) != 0, "Compression should be True");
-
-         // Check that everything is decompressed.
-         cnt = 0;
-         foreach (var fsei in Directory.EnumerateFileSystemEntryInfos<FileSystemEntryInfo>(tempPath, Path.WildcardStarMatchAll, DirectoryEnumerationOptions.Recursive))
-         {
-            actual = fsei.Attributes;
-            action = (actual & FileAttributes.Compressed) == 0;
-
-            Console.WriteLine("\t#{0:000}\tFS Entry: [{1}]\t\tDecompressed (Should be True): [{2}]\t\tAttributes: [{3}]", ++cnt, fsei.FileName, action, actual);
-
-            if (cnt == 0)
-               Assert.Inconclusive("Nothing was enumerated.");
-
-            Assert.IsTrue(action, "Decompression should be True");
-         }
-
-
-         Directory.Delete(tempPath, true);
-         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
-      }
-
       private void DumpCopy(bool isLocal)
       {
          #region Setup
@@ -2373,15 +2250,6 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
-
-      [TestMethod]
-      public void AlphaFS_Compress()
-      {
-         Console.WriteLine("Directory.Compress()");
-
-         DumpCompressDecompress(true);
-         DumpCompressDecompress(false);
-      }
 
       [TestMethod]
       public void AlphaFS_Copy()

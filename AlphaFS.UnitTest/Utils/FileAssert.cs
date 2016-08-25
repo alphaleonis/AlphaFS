@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -28,8 +27,8 @@ namespace AlphaFS.UnitTest
    {
       public static void Exists(string filePath)
       {
-         if (!File.Exists(filePath))
-            throw new AssertFailedException(string.Format("The file: [{0}] does not exist, but was expected to.", filePath));
+         if (!System.IO.File.Exists(filePath))
+            throw new AssertFailedException(string.Format("The file: [{0}] does not exist, but is expected to.", filePath));
       }
 
       public static void AreEqual(string expectedFilePath, string actualFilePath)
@@ -39,13 +38,13 @@ namespace AlphaFS.UnitTest
          using (var s2 = System.IO.File.OpenRead(actualFilePath))
          {
             if (s1.Length != s2.Length)
-               throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are not equal but were expected to be. Their size differs.", expectedFilePath, actualFilePath));
+               throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are not equal but are expected to be. Their size differs.", expectedFilePath, actualFilePath));
             
             int a = s1.ReadByte();
             int b = s2.ReadByte();
             
             if (a != b)
-               throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are not equal but were expected to be. The first difference was at position: [{2}]", expectedFilePath, actualFilePath, position));
+               throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are not equal but are expected to be. The first difference was at position: [{2}]", expectedFilePath, actualFilePath, position));
 
             position++;
          }
@@ -69,19 +68,31 @@ namespace AlphaFS.UnitTest
             position++;
          }
 
-         throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are equal but were not expected to be.", expectedFilePath, actualFilePath));
+         throw new AssertFailedException(string.Format("The files: [{0}] and \"{1}\" are equal but are not expected to be.", expectedFilePath, actualFilePath));
       }
 
       public static void IsEncrypted(string filePath)
       {
-         if ((File.GetAttributes(filePath) & System.IO.FileAttributes.Encrypted) == 0)
-            throw new AssertFailedException(string.Format("The file: [{0}] was not encrypted, but was expected to be.", filePath));
+         if ((System.IO.File.GetAttributes(filePath) & System.IO.FileAttributes.Encrypted) == 0)
+            throw new AssertFailedException(string.Format("The file: [{0}] is not encrypted, but is expected to be.", filePath));
       }
 
       public static void IsNotEncrypted(string filePath)
       {
-         if ((File.GetAttributes(filePath) & System.IO.FileAttributes.Encrypted) != 0)
-            throw new AssertFailedException(string.Format("The file: [{0}] is encrypted, but was expected not to be.", filePath));
+         if ((System.IO.File.GetAttributes(filePath) & System.IO.FileAttributes.Encrypted) != 0)
+            throw new AssertFailedException(string.Format("The file: [{0}] is encrypted, but is expected not to be.", filePath));
+      }
+
+      public static void IsCompressed(string filePath)
+      {
+         if ((System.IO.File.GetAttributes(filePath) & System.IO.FileAttributes.Compressed) == 0)
+            throw new AssertFailedException(string.Format("The file: [{0}] is not compressed, but is expected to be.", filePath));
+      }
+
+      public static void IsNotCompressed(string filePath)
+      {
+         if ((System.IO.File.GetAttributes(filePath) & System.IO.FileAttributes.Compressed) != 0)
+            throw new AssertFailedException(string.Format("The file: [{0}] is compressed, but is expected not to be.", filePath));
       }
    }
 }

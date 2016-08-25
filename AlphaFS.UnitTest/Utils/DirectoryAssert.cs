@@ -19,7 +19,6 @@
  *  THE SOFTWARE. 
  */
 
-using Alphaleonis.Win32.Filesystem;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AlphaFS.UnitTest
@@ -28,22 +27,32 @@ namespace AlphaFS.UnitTest
    {
       public static void Exists(string directoryPath)
       {
-         if (!Directory.Exists(directoryPath))
-            throw new AssertFailedException(string.Format("The directory: [{0}] does not exist, but was expected to.", directoryPath));
+         if (!System.IO.Directory.Exists(directoryPath))
+            throw new AssertFailedException(string.Format("The directory: [{0}] does not exist, but is expected to.", directoryPath));
       }
 
       public static void IsEncrypted(string dirPath)
       {
-         var dir = new DirectoryInfo(dirPath);
-         if ((dir.Attributes & System.IO.FileAttributes.Encrypted) == 0)
-            throw new AssertFailedException(string.Format("The directory: [{0}] was not encrypted, but was expected to be.", dirPath));
+         if ((System.IO.File.GetAttributes(dirPath) & System.IO.FileAttributes.Encrypted) == 0)
+            throw new AssertFailedException(string.Format("The directory: [{0}] is not encrypted, but is expected to be.", dirPath));
       }
 
       public static void IsNotEncrypted(string dirPath)
       {
-         var dir = new DirectoryInfo(dirPath);
-         if ((dir.Attributes & System.IO.FileAttributes.Encrypted) != 0)
-            throw new AssertFailedException(string.Format("The directory: [{0}] is encrypted, but was expected not to be.", dirPath));
+         if ((System.IO.File.GetAttributes(dirPath) & System.IO.FileAttributes.Encrypted) != 0)
+            throw new AssertFailedException(string.Format("The directory: [{0}] is encrypted, but is expected not to be.", dirPath));
+      }
+
+      public static void IsCompressed(string dirPath)
+      {
+         if ((System.IO.File.GetAttributes(dirPath) & System.IO.FileAttributes.Compressed) == 0)
+            throw new AssertFailedException(string.Format("The directory: [{0}] is not compressed, but is expected to be.", dirPath));
+      }
+
+      public static void IsNotCompressed(string dirPath)
+      {
+         if ((System.IO.File.GetAttributes(dirPath) & System.IO.FileAttributes.Compressed) != 0)
+            throw new AssertFailedException(string.Format("The directory: [{0}] is compressed, but is expected not to be.", dirPath));
       }
    }
 }
