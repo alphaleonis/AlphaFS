@@ -154,6 +154,8 @@
     <Compile Include="Directory Class\GetAccessControl.cs" />
     <Compile Include="Directory Class\GetXxxTimeXxx.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
+    <Compile Include="File Class\GetCompressedSize.cs" />
+    <Compile Include="File Class\GetSize.cs" />
     <Compile Include="File Class\EnumerateAlternateDataStreams.cs" />
     <Compile Include="File Class\Create.cs" />
     <Compile Include="File Class\GetXxxTimeXxx.cs" />
