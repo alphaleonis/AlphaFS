@@ -97,8 +97,7 @@ namespace Alphaleonis.Win32.Filesystem
          try
          {
             // Use FileAccess.Read since FileAccess.ReadWrite always fails when file is read-only.
-            using (OpenCore(transaction, path, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat))
-            {}
+            using (OpenCore(transaction, path, FileMode.Open, FileAccess.Read, FileShare.None, ExtendedFileAttributes.Normal, null, null, pathFormat)) {}
          }
          catch (IOException ex)
          {

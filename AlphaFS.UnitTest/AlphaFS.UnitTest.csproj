@@ -155,6 +155,7 @@
     <Compile Include="Directory Class\GetAccessControl.cs" />
     <Compile Include="Directory Class\GetXxxTimeXxx.cs" />
     <Compile Include="Directory Class\SetAccessControl.cs" />
+    <Compile Include="File Class\IsLocked.cs" />
     <Compile Include="File Class\CreateSymbolicLink_GetLinkTargetInfo.cs" />
     <Compile Include="File Class\CreateHardlink_EnumerateHardlinks.cs" />
     <Compile Include="File Class\Compress_Decompress.cs" />

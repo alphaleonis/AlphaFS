@@ -29,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void AlphaFS_File_CreateSymbolicLink_GetLinkTargetInfo_LocalUNC_Success()
+      public void AlphaFS_File_CreateSymbolicLink_And_GetLinkTargetInfo_LocalUNC_Success()
       {
          File_CreateSymbolicLink_GetLinkTargetInfo(false);
          File_CreateSymbolicLink_GetLinkTargetInfo(true);

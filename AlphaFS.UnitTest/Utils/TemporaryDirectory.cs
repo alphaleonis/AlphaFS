@@ -21,6 +21,7 @@
 
 using Alphaleonis;
 using System;
+using System.Globalization;
 
 namespace AlphaFS.UnitTest
 {
@@ -36,7 +37,7 @@ namespace AlphaFS.UnitTest
 
          do
          {
-            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, prefix + "-" + Guid.NewGuid().ToString("N").Substring(0, 6)));
+            Directory = new System.IO.DirectoryInfo(System.IO.Path.Combine(root, prefix + "-" + Guid.NewGuid().ToString("N", CultureInfo.InvariantCulture).Substring(0, 6)));
 
          } while (Directory.Exists);
 
@@ -75,7 +76,7 @@ namespace AlphaFS.UnitTest
                   Directory.Delete(true);
 
                else
-                  Console.WriteLine("\n\nThe TemporaryDirectory was already removed.");
+                  Console.WriteLine("\n\nThe TemporaryDirectory was already removed: [{0}]", Directory.FullName);
             }
          }
          catch (Exception ex)
