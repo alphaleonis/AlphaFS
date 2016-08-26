@@ -247,8 +247,9 @@ namespace Alphaleonis.Win32.Filesystem
       internal static LinkTargetInfo GetLinkTargetInfoCore(SafeFileHandle safeHandle)
       {
          // Start with a large buffer to prevent a 2nd call.
-         uint bytesReturned = NativeMethods.DefaultFileBufferSize;
-
+         // MAXIMUM_REPARSE_DATA_BUFFER_SIZE = 16384
+         uint bytesReturned = 4*NativeMethods.DefaultFileBufferSize;
+         
          using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int) bytesReturned))
          {
             while (true)
