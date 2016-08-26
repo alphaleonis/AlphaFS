@@ -113,11 +113,10 @@ namespace Alphaleonis.Win32.Filesystem
          var options = GetFullPathOptions.RemoveTrailingDirectorySeparator | GetFullPathOptions.FullCheck;
 
          string symlinkFileNameLp = Path.GetExtendedLengthPathCore(transaction, symlinkFileName, pathFormat, options);
-         string targetFileNameLp = Path.GetExtendedLengthPathCore(transaction, targetFileName, pathFormat, options);
+         string targetFileNameRp = Path.GetExtendedLengthPathCore(transaction, targetFileName, pathFormat, options);
 
-         // Function CreateSymbolicLink does not support long paths.
-         symlinkFileNameLp = Path.GetRegularPathCore(symlinkFileNameLp, GetFullPathOptions.None, false);
-         targetFileNameLp = Path.GetRegularPathCore(targetFileNameLp, GetFullPathOptions.None, false);
+         // Don't use long path notation, as it will be empty upon creation.
+         targetFileNameRp = Path.GetRegularPathCore(targetFileNameRp, GetFullPathOptions.None, false);
 
 
          if (!(transaction == null
@@ -128,13 +127,13 @@ namespace Alphaleonis.Win32.Filesystem
             // 2014-02-14: MSDN does not confirm LongPath usage but a Unicode version of this function exists.
             // 2015-07-17: This function does not support long paths.
 
-            ? NativeMethods.CreateSymbolicLink(symlinkFileNameLp, targetFileNameLp, targetType)
-            : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileNameLp, targetFileNameLp, targetType,
+            ? NativeMethods.CreateSymbolicLink(symlinkFileNameLp, targetFileNameRp, targetType)
+            : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileNameLp, targetFileNameRp, targetType,
                transaction.SafeHandle)))
          {
             var lastError = Marshal.GetLastWin32Error();
             if (lastError != 0)
-               NativeError.ThrowException(lastError, symlinkFileNameLp, targetFileNameLp);
+               NativeError.ThrowException(lastError, symlinkFileNameLp, targetFileNameRp);
          }
       }
 

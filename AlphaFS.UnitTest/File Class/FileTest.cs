@@ -741,54 +741,6 @@ namespace AlphaFS.UnitTest
 
       #endregion // DumpIsLocked
       
-      #region DumpCreateSymbolicLink
-
-      private void DumpCreateSymbolicLink(bool isLocal)
-      {
-         Console.WriteLine("\n=== TEST {0} ===", isLocal ? UnitTestConstants.Local : UnitTestConstants.Network);
-
-         string random = Path.GetRandomFileName();
-         string tempPath = Directory.CreateDirectory(Path.GetTempPath("SymbolicLink-Shortcut-" + random)).FullName;
-         string tempPath2 = Path.GetTempPath("SymbolicLink-Target-" + random);
-
-         var symLinkFolder = Path.Combine(tempPath, "FolderShortcutToFolder");
-         var symLinkFile = Path.Combine(tempPath, "FileShortcutToFolder");
-         tempPath2 = Path.Combine(tempPath2, "SymbolicLinkTargetFolder");
-
-         if (!isLocal)
-         {
-            tempPath = Path.LocalToUnc(tempPath);
-            tempPath2 = Path.LocalToUnc(tempPath);
-         }
-
-
-         File.CreateSymbolicLink(symLinkFolder, tempPath2, SymbolicLinkTarget.Directory);
-         Assert.IsTrue(Directory.Exists(symLinkFolder));
-         
-         
-         File.CreateSymbolicLink(symLinkFile, tempPath2, SymbolicLinkTarget.File);
-         Assert.IsTrue(File.Exists(symLinkFile));
-
-         LinkTargetInfo lti = File.GetLinkTargetInfo(symLinkFile);
-         Assert.IsTrue(!string.IsNullOrWhiteSpace(lti.PrintName));
-         Assert.IsTrue(!string.IsNullOrWhiteSpace(lti.SubstituteName));
-         Assert.IsTrue(UnitTestConstants.Dump(lti, -14), "Unable to dump object.");
-
-
-         File.Delete(symLinkFile);
-         Assert.IsTrue(!File.Exists(symLinkFile));
-
-         Directory.Delete(symLinkFolder);
-         Assert.IsTrue(!Directory.Exists(symLinkFolder));
-
-
-         Directory.Delete(tempPath, true, true);
-         Assert.IsFalse(Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
-         Console.WriteLine();
-      }
-
-      #endregion // DumpCreateSymbolicLink
-
       #region DumpMove
 
       private void DumpMove(bool isLocal)
@@ -2490,20 +2442,6 @@ namespace AlphaFS.UnitTest
       #endregion // .NET
 
       #region AlphaFS
-
-      #region CreateSymbolicLink
-
-      [TestMethod]
-      public void AlphaFS_CreateSymbolicLink()
-      {
-         Console.WriteLine("File.CreateSymbolicLink()");
-
-         DumpCreateSymbolicLink(true);
-         DumpCreateSymbolicLink(false);
-      }
-
-      #endregion // CreateSymbolicLink
-
 
       #region IsLocked
 

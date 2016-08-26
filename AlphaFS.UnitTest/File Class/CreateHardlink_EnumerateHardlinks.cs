@@ -41,20 +41,25 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
+         string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
          {
+            //tempPath = PathUtils.AsUncPath(tempPath);
             Console.WriteLine("\n\tEnumerating Hardlinks does not work with UNC paths.");
             return;
          }
 
 
-         using (var rootDir = new TemporaryDirectory(System.IO.Path.GetTempPath(), "File.EnumerateHardlinks"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.EnumerateHardlinks"))
          {
             var hardlinkFolder = System.IO.Path.Combine(rootDir.Directory.FullName, "Hardlinks");
             System.IO.Directory.CreateDirectory(hardlinkFolder);
 
 
-            var file = System.IO.Path.Combine(rootDir.Directory.FullName, "File.EnumerateHardlinks.txt");
+            var file = System.IO.Path.Combine(rootDir.Directory.FullName, "OriginalFile.txt");
             Console.WriteLine("\n\tInput File Path: [{0}]\n", file);
 
             // Create original file with text content.
@@ -65,7 +70,7 @@ namespace AlphaFS.UnitTest
             int numCreate = new Random().Next(1, 20);
             List<string> hardlinks = new List<string>();
 
-            Console.WriteLine("\tCreated {0} hardlinks:", numCreate);
+            Console.WriteLine("\tCreated {0} hardlinks:", numCreate + 1);
 
             for (int i = 0; i < numCreate; i++)
             {
@@ -79,12 +84,21 @@ namespace AlphaFS.UnitTest
 
             int cnt = 0;
             foreach (string hardLink in Alphaleonis.Win32.Filesystem.File.EnumerateHardlinks(file))
-            {
-               if (!file.EndsWith(hardLink, StringComparison.OrdinalIgnoreCase))
-                  Console.WriteLine("\t\t#{0:000}\tHardlink: [{1}]", ++cnt, hardLink);
-            }
+               Console.WriteLine("\t\t#{0:000}\tHardlink: [{1}]", ++cnt, hardLink);
             
-            Assert.AreEqual(numCreate, cnt);
+            Assert.AreEqual(numCreate + 1, cnt);
+
+
+            using (var stream = System.IO.File.OpenRead(file))
+            {
+               UnitTestConstants.StopWatcher(true);
+               var bhfi = Alphaleonis.Win32.Filesystem.File.GetFileInfoByHandle(stream.SafeFileHandle);
+
+               Assert.AreEqual(numCreate + 1, bhfi.NumberOfLinks);
+
+               Console.WriteLine("\n\n\tByHandleFileInfo for Input Path, see property: NumberOfLinks");
+               UnitTestConstants.Dump(bhfi, -18);
+            }
          }
 
          Console.WriteLine();

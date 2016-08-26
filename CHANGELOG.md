@@ -44,6 +44,7 @@ Version 2.1
 - Issue #195: Add useful FileAttributes as properties to `FileSystemEntryInfo` class.
 - Issue #199: Change `FindFileSystemEntryInfo.FindFirstFile()` to show actual path instead of inputpath on access error.
 - Issue #235: Implement unicode versions of methods: CM_Connect_Machine and CM_Get_Device_ID_Ex.
+- Issue #239: Enable long path support for CreateSymbolicLink() source parameter.
 
 ### Bugs Fixed
 
