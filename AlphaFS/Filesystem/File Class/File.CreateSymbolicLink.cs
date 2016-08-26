@@ -128,8 +128,7 @@ namespace Alphaleonis.Win32.Filesystem
             // 2015-07-17: This function does not support long paths.
 
             ? NativeMethods.CreateSymbolicLink(symlinkFileNameLp, targetFileNameRp, targetType)
-            : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileNameLp, targetFileNameRp, targetType,
-               transaction.SafeHandle)))
+            : NativeMethods.CreateSymbolicLinkTransacted(symlinkFileNameLp, targetFileNameRp, targetType, transaction.SafeHandle)))
          {
             var lastError = Marshal.GetLastWin32Error();
             if (lastError != 0)

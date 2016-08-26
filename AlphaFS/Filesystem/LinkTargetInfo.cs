@@ -30,18 +30,10 @@ namespace Alphaleonis.Win32.Filesystem
          SubstituteName = substituteName;
       }
 
-      #region PrintName
-
       /// <summary>The print name.</summary>
       public string PrintName { get; private set; }
 
-      #endregion // PrintName
-
-      #region SubstituteName
-
       /// <summary>The substitute name.</summary>
       public string SubstituteName { get; private set; }
-
-      #endregion // SubstituteName
    }
 }

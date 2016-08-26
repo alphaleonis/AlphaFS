@@ -249,7 +249,7 @@ namespace Alphaleonis.Win32.Filesystem
          // Start with a large buffer to prevent a 2nd call.
          uint bytesReturned = NativeMethods.DefaultFileBufferSize;
 
-         using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int)bytesReturned))
+         using (var safeBuffer = new SafeGlobalMemoryBufferHandle((int) bytesReturned))
          {
             while (true)
             {
@@ -257,10 +257,10 @@ namespace Alphaleonis.Win32.Filesystem
                // DeviceIoControlFileDevice.FileSystem = 9
                // FsctlGetReparsePoint = (DeviceIoControlFileDevice.FileSystem << 16) | (42 << 2) | DeviceIoControlMethod.Buffered | (0 << 14)
 
-               if (!NativeMethods.DeviceIoControl(safeHandle, ((9 << 16) | (42 << 2) | 0 | (0 << 14)), IntPtr.Zero, 0, safeBuffer, (uint)safeBuffer.Capacity, out bytesReturned, IntPtr.Zero))
+               if (!NativeMethods.DeviceIoControl(safeHandle, ((9 << 16) | (42 << 2) | 0 | (0 << 14)), IntPtr.Zero, 0, safeBuffer, (uint) safeBuffer.Capacity, out bytesReturned, IntPtr.Zero))
                {
                   int lastError = Marshal.GetLastWin32Error();
-                  switch ((uint)lastError)
+                  switch ((uint) lastError)
                   {
                      case Win32Errors.ERROR_MORE_DATA:
                      case Win32Errors.ERROR_INSUFFICIENT_BUFFER:

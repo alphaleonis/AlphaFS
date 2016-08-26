@@ -24,18 +24,13 @@ namespace Alphaleonis.Win32.Filesystem
    /// <summary>Represents information about a symbolic link.</summary>
    public class SymbolicLinkTargetInfo : LinkTargetInfo
    {
-      internal SymbolicLinkTargetInfo(string substituteName, string printName, SymbolicLinkType type)
-         : base(substituteName, printName)
+      internal SymbolicLinkTargetInfo(string substituteName, string printName, SymbolicLinkType type) : base(substituteName, printName)
       {
          LinkType = type;
       }
 
-      #region SymbolicLinkType
-
       /// <summary>Gets the type of the link.</summary>
       /// <value>The type of the link.</value>
       public SymbolicLinkType LinkType { get; private set; }
-
-      #endregion // SymbolicLinkType
    }
 }

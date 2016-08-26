@@ -30,7 +30,7 @@ namespace Alphaleonis.Win32.Filesystem
    {
       #region CreateHardlink
 
-      /// <summary>AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
+      /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>
       /// <param name="pathFormat">Indicates the format of the path parameter(s).</param>      
@@ -41,7 +41,7 @@ namespace Alphaleonis.Win32.Filesystem
          CreateHardlinkCore(null, fileName, existingFileName, pathFormat);
       }
 
-      /// <summary>AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
+      /// <summary>[AlphaFS] Establishes a hard link between an existing file and a new file. This function is only supported on the NTFS file system, and only for files, not directories.</summary>
       /// <param name="fileName">The name of the new file. This parameter cannot specify the name of a directory.</param>
       /// <param name="existingFileName">The name of the existing file. This parameter cannot specify the name of a directory.</param>      
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Hardlink")]

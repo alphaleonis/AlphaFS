@@ -394,12 +394,12 @@
     <Compile Include="Filesystem\Enumerations\MoveOptions.cs" />
     <Compile Include="Filesystem\Exceptions\NotAReparsePointException.cs" />
     <Compile Include="Filesystem\Shell32.cs" />
-    <Compile Include="Filesystem\MountPointReparseBuffer.cs" />
-    <Compile Include="Filesystem\ReparseDataBufferHeader.cs" />
+    <Compile Include="Filesystem\Native Structures\MountPointReparseBuffer.cs" />
+    <Compile Include="Filesystem\Native Structures\ReparseDataBufferHeader.cs" />
     <Compile Include="Filesystem\Native Structures\SP_DEVINFO_DATA.cs" />
     <Compile Include="Filesystem\Native Structures\SP_DEVICE_INTERFACE_DATA.cs" />
     <Compile Include="Filesystem\Native Structures\SP_DEVICE_INTERFACE_DETAIL_DATA.cs" />
-    <Compile Include="Filesystem\SymbolicLinkReparseBuffer.cs" />
+    <Compile Include="Filesystem\Native Structures\SymbolicLinkReparseBuffer.cs" />
     <Compile Include="Filesystem\Native Structures\WIN32_FILE_ATTRIBUTE_DATA.cs" />
     <Compile Include="Filesystem\Native Structures\WIN32_FIND_DATA.cs" />
     <Compile Include="Filesystem\Native Structures\WIN32_STREAM_ID.cs" />
@@ -518,7 +518,7 @@
   -->
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Reset="1" AssemblyVersion="0" AssemblyFileVersion="0" StartDate="20080813" />
+      <UserProperties StartDate="20080813" AssemblyFileVersion="0" AssemblyVersion="0" Reset="1" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
