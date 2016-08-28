@@ -144,7 +144,7 @@ namespace Alphaleonis.Win32.Filesystem
 
                try
                {
-                  if (handle != null && handle.IsInvalid)
+                  if (handle.IsInvalid)
                   {
                      error = true;
                      dataInitialised = Marshal.GetLastWin32Error();

@@ -21,12 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
-using System.Security.AccessControl;
-using System.Security.Principal;
-using File = Alphaleonis.Win32.Filesystem.File;
-using SysIOFile = System.IO.File;
-using SysIOPath = System.IO.Path;
 
 namespace AlphaFS.UnitTest
 {
@@ -35,7 +29,7 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Create_A10ByteFile_LocalAndUNC_Success()
+      public void File_Create_LocalAndUNC_Success()
       {
          File_Create(false);
          File_Create(true);
@@ -59,7 +53,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = SysIOPath.GetTempPath();
+         string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
 
@@ -70,27 +64,19 @@ namespace AlphaFS.UnitTest
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
-            try
+            long fileLength;
+            int ten = UnitTestConstants.TenNumbers.Length;
+
+            using (var fs = Alphaleonis.Win32.Filesystem.File.Create(file))
             {
-               long fileLength;
-               int ten = UnitTestConstants.TenNumbers.Length;
+               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
+               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
 
-               using (FileStream fs = File.Create(file))
-               {
-                  // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
-                  fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
-
-                  fileLength = fs.Length;
-               }
-
-               Assert.IsTrue(SysIOFile.Exists(file), "File should exist.");
-               Assert.IsTrue(fileLength == ten, "File should be [{0}] bytes in size.", ten);
+               fileLength = fs.Length;
             }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-               Assert.IsTrue(false);
-            }
+
+            Assert.IsTrue(System.IO.File.Exists(file), "File should exist.");
+            Assert.IsTrue(fileLength == ten, "The file is: {0} bytes, but is expected to be: {1} bytes.", fileLength, ten);
          }
 
          Console.WriteLine();
@@ -101,7 +87,7 @@ namespace AlphaFS.UnitTest
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
          
-         string tempPath = SysIOPath.GetTempPath();
+         string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
 
@@ -115,23 +101,19 @@ namespace AlphaFS.UnitTest
             string pathExpected = rootDir.RandomFileFullPath;
             string pathActual = rootDir.RandomFileFullPath;
 
-            FileSecurity expectedFileSecurity = new FileSecurity();
-            expectedFileSecurity.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.FullControl, AccessControlType.Allow));
-            expectedFileSecurity.AddAuditRule(new FileSystemAuditRule(new SecurityIdentifier(WellKnownSidType.WorldSid, null), FileSystemRights.Read, AuditFlags.Success));
+            var expectedFileSecurity = new System.Security.AccessControl.FileSecurity();
+            expectedFileSecurity.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.AccessControlType.Allow));
+            expectedFileSecurity.AddAuditRule(new System.Security.AccessControl.FileSystemAuditRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.Read, System.Security.AccessControl.AuditFlags.Success));
 
 
             using (new Alphaleonis.Win32.Security.PrivilegeEnabler(Alphaleonis.Win32.Security.Privilege.Security))
-            {
-               using (FileStream s1 = SysIOFile.Create(pathExpected, 4096, FileOptions.None, expectedFileSecurity))
-               using (FileStream s2 = File.Create(pathActual, 4096, FileOptions.None, expectedFileSecurity))
-               {
-               }
-            }
-            
-            string expectedFileSecuritySddl = SysIOFile.GetAccessControl(pathExpected).GetSecurityDescriptorSddlForm(AccessControlSections.All);
-            string actualFileSecuritySddl = SysIOFile.GetAccessControl(pathActual).GetSecurityDescriptorSddlForm(AccessControlSections.All);
+            using (var s1 = System.IO.File.Create(pathExpected, 4096, System.IO.FileOptions.None, expectedFileSecurity))
+            using (var s2 = Alphaleonis.Win32.Filesystem.File.Create(pathActual, 4096, System.IO.FileOptions.None, expectedFileSecurity)) {}
 
-            Assert.AreEqual(expectedFileSecuritySddl, actualFileSecuritySddl);
+            string expected = System.IO.File.GetAccessControl(pathExpected).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
+            string actual = Alphaleonis.Win32.Filesystem.File.GetAccessControl(pathActual).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
+
+            Assert.AreEqual(expected, actual);
          }
 
          Console.WriteLine();

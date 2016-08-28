@@ -21,10 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.IO;
-using System.Text;
-using SysIOPath = System.IO.Path;
-using SysIOFile = System.IO.File;
 
 namespace AlphaFS.UnitTest
 {
@@ -33,77 +29,166 @@ namespace AlphaFS.UnitTest
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
       [TestMethod]
-      public void File_Open_Create1Append2And3_LocalAndUNC_Success()
+      public void File_Open_Create_LocalAndUNC_Success()
       {
-         File_Open(false);
-         File_Open(true);
+         Open_Create(false);
+         Open_Create(true);
+      }
+
+
+      [TestMethod]
+      public void File_Open_Append_LocalAndUNC_Success()
+      {
+         Open_Append(false);
+         Open_Append(true);
       }
 
 
 
 
-      private void File_Open(bool isNetwork)
+      private void Open_Create(bool isNetwork)
       {
          UnitTestConstants.PrintUnitTestHeader(isNetwork);
 
-         string tempPath = SysIOPath.GetTempPath();
+         string tempPath = System.IO.Path.GetTempPath();
          if (isNetwork)
             tempPath = PathUtils.AsUncPath(tempPath);
 
 
-         using (var rootDir = new TemporaryDirectory(tempPath, "File-Open"))
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.Open_Create"))
          {
             string file = rootDir.RandomFileFullPath;
             Console.WriteLine("\nInput File Path: [{0}]\n", file);
 
 
-            try
+            long fileLength;
+            int ten = UnitTestConstants.TenNumbers.Length;
+
+            using (var fs = Alphaleonis.Win32.Filesystem.File.Open(file, System.IO.FileMode.Create))
             {
-               using (FileStream fs = File.Open(file, FileMode.Create))
-               {
-                  byte[] text = Encoding.UTF8.GetBytes(new string('1', 100));
-                  fs.Write(text, 0, text.Length);
-               }
-               Assert.AreEqual(SysIOFile.ReadAllBytes(file).Length, 100);
+               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
+               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
 
-
-               using (FileStream fs = File.Open(file, FileMode.Append))
-               {
-                  byte[] text = Encoding.UTF8.GetBytes(new string('2', 100));
-                  fs.Write(text, 0, text.Length);
-               }
-               Assert.AreEqual(SysIOFile.ReadAllBytes(file).Length, 200);
-               
-
-
-               using (FileStream fs = File.Open(file, FileMode.Append))
-               {
-                  byte[] text = Encoding.UTF8.GetBytes(new string('3', 100));
-                  fs.Write(text, 0, text.Length);
-               }
-               Assert.AreEqual(SysIOFile.ReadAllBytes(file).Length, 300);
-
-
-               // Open the stream and read it back.
-               using (FileStream fs = SysIOFile.Open(file, FileMode.Open))
-               {
-                  byte[] b = new byte[50];
-                  UTF8Encoding temp = new UTF8Encoding(true);
-
-                  while (fs.Read(b, 0, b.Length) > 0)
-                     Console.WriteLine(temp.GetString(b));
-
-                  Assert.AreEqual(fs.Length, 300);
-               }
+               fileLength = fs.Length;
             }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-               Assert.IsTrue(false);
-            }
+
+            Assert.IsTrue(System.IO.File.Exists(file), "The file does not exists, but is expected to be.");
+            Assert.IsTrue(fileLength == ten, "The file is: {0} bytes, but is expected to be: {1} bytes.", fileLength, ten);
          }
 
          Console.WriteLine();
       }
+
+
+      private void Open_Append(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "File.Open_Append"))
+         {
+            string file = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
+
+            long fileLength;
+            int ten = UnitTestConstants.TenNumbers.Length;
+
+            // Create.
+            using (var fs = Alphaleonis.Win32.Filesystem.File.Open(file, System.IO.FileMode.Create))
+            {
+               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
+               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
+
+               fileLength = fs.Length;
+            }
+            Assert.IsTrue(fileLength == ten, "The file is: {0} bytes, but is expected to be: {1} bytes.", fileLength, ten);
+
+
+            // Append.
+            using (var fs = Alphaleonis.Win32.Filesystem.File.Open(file, System.IO.FileMode.Append))
+            {
+               // According to NotePad++, creates a file type: "ANSI", which is reported as: "Unicode (UTF-8)".
+               fs.Write(UnitTestConstants.StringToByteArray(UnitTestConstants.TenNumbers), 0, ten);
+
+               fileLength = fs.Length;
+            }
+
+            Assert.IsTrue(System.IO.File.Exists(file), "The file does not exists, but is expected to be.");
+            Assert.IsTrue(fileLength == 2*ten, "The file is: {0} bytes, but is expected to be: {1} bytes.", fileLength, 2*ten);
+         }
+
+         Console.WriteLine();
+      }
+
+
+
+      //private void File_Open(bool isNetwork)
+      //{
+      //   UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+      //   string tempPath = System.IO.Path.GetTempPath();
+      //   if (isNetwork)
+      //      tempPath = PathUtils.AsUncPath(tempPath);
+
+
+      //   using (var rootDir = new TemporaryDirectory(tempPath, "File-Open"))
+      //   {
+      //      string file = rootDir.RandomFileFullPath;
+      //      Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
+
+      //      try
+      //      {
+      //         using (var fs = Alphaleonis.Win32.Filesystem.File.Open(file, System.IO.FileMode.Create))
+      //         {
+      //            byte[] text = System.Text.Encoding.UTF8.GetBytes(new string('1', 100));
+      //            fs.Write(text, 0, text.Length);
+      //         }
+      //         Assert.AreEqual(System.IO.File.ReadAllBytes(file).Length, 100);
+
+
+      //         using (var fs = Alphaleonis.Win32.Filesystem.File.Open(file, System.IO.FileMode.Append))
+      //         {
+      //            byte[] text = System.Text.Encoding.UTF8.GetBytes(new string('2', 100));
+      //            fs.Write(text, 0, text.Length);
+      //         }
+      //         Assert.AreEqual(System.IO.File.ReadAllBytes(file).Length, 200);
+
+
+
+      //         using (var fs = Alphaleonis.Win32.Filesystem.File.Open(file, System.IO.FileMode.Append))
+      //         {
+      //            byte[] text = System.Text.Encoding.UTF8.GetBytes(new string('3', 100));
+      //            fs.Write(text, 0, text.Length);
+      //         }
+      //         Assert.AreEqual(System.IO.File.ReadAllBytes(file).Length, 300);
+
+
+      //         // Open the stream and read it back.
+      //         using (var fs = Alphaleonis.Win32.Filesystem.File.Open(file, System.IO.FileMode.Open))
+      //         {
+      //            byte[] b = new byte[50];
+      //            var temp = new System.Text.UTF8Encoding(true);
+
+      //            while (fs.Read(b, 0, b.Length) > 0)
+      //               Console.WriteLine(temp.GetString(b));
+
+      //            Assert.AreEqual(fs.Length, 300);
+      //         }
+      //      }
+      //      catch (Exception ex)
+      //      {
+      //         Console.WriteLine("\nCaught (unexpected) {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
+      //         Assert.IsTrue(false);
+      //      }
+      //   }
+
+      //   Console.WriteLine();
+      //}
    }
 }

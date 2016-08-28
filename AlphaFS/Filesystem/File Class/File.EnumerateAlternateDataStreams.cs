@@ -91,7 +91,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                int errorCode = Marshal.GetLastWin32Error();
 
-               if (handle != null && handle.IsInvalid)
+               if (handle.IsInvalid)
                {
                   if (errorCode == Win32Errors.ERROR_HANDLE_EOF)
                      yield break;

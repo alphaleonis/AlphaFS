@@ -455,7 +455,7 @@ namespace Alphaleonis.Win32.Filesystem
          {
             int lastError = Marshal.GetLastWin32Error();
 
-            if (handle != null && handle.IsInvalid)
+            if (handle.IsInvalid)
             {
                handle.Close();
 
@@ -478,7 +478,7 @@ namespace Alphaleonis.Win32.Filesystem
             {
                lastError = Marshal.GetLastWin32Error();
 
-               if (handle != null && handle.IsInvalid)
+               if (handle.IsInvalid)
                {
                   handle.Close();
 

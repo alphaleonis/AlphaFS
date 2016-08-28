@@ -111,8 +111,8 @@ namespace Alphaleonis.Win32.Filesystem
             : NativeMethods.FindFirstFileNameTransacted(pathLp, 0, out length, builder, transaction.SafeHandle))
          {
          	int lastError = Marshal.GetLastWin32Error();
-         	
-            if (handle != null && handle.IsInvalid)
+
+            if (handle.IsInvalid)
             {
                handle.Close();
                

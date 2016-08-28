@@ -21,16 +21,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.ComponentModel;
-using System.IO;
-using Alphaleonis.Win32;
-using Alphaleonis.Win32.Filesystem;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using DriveInfo = Alphaleonis.Win32.Filesystem.DriveInfo;
-using Path = Alphaleonis.Win32.Filesystem.Path;
-using SysIOPath = System.IO.Path;
-using SysIOFile = System.IO.File;
-using SysIODirectory = System.IO.Directory;
 
 namespace AlphaFS.UnitTest
 {
@@ -38,228 +28,67 @@ namespace AlphaFS.UnitTest
    {
       // Pattern: <class>_<function>_<scenario>_<expected result>
 
-      #region AlreadyExistsException: FileExistsWithSameNameAsDirectory
-
-      [TestMethod]
-      public void Directory_CreateDirectory_FileExistsWithSameNameAsDirectory_LocalAndUNC_AlreadyExistsException()
-      {
-         Directory_CreateDirectory_FileExistsWithSameNameAsDirectory_AlreadyExistsException(false);
-         Directory_CreateDirectory_FileExistsWithSameNameAsDirectory_AlreadyExistsException(true);
-      }
-
-
-      private void Directory_CreateDirectory_FileExistsWithSameNameAsDirectory_AlreadyExistsException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = Path.GetTempPath("Directory.CreateDirectory()-FileExistsWithSameNameAsDirectory-" + Path.GetRandomFileName());
-
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
-
-         try
-         {
-            using (SysIOFile.Create(tempPath)) { }
-
-            const int expectedLastError = (int) Win32Errors.ERROR_ALREADY_EXISTS;
-            const string expectedException = "System.IO.IOException";
-            bool exception = false;
-
-            try
-            {
-               Directory.CreateDirectory(tempPath);
-            }
-            catch (AlreadyExistsException ex)
-            {
-               exception = true;
-               Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-               Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-            }
-            catch (Exception ex)
-            {
-               Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-            }
-
-            Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-         }
-         finally
-         {
-            if (SysIOFile.Exists(tempPath))
-            {
-               SysIOFile.Delete(tempPath);
-               Assert.IsFalse(SysIOFile.Exists(tempPath), "Cleanup failed: File should have been removed.");
-            }
-         }
-      }
-
-      #endregion // AlreadyExistsException: FileExistsWithSameNameAsDirectory
-
-
-      #region ArgumentException: PathContainsInvalidCharacters
-
-      [TestMethod]
-      public void Directory_CreateDirectory_PathContainsInvalidCharacters_ArgumentException()
-      {
-         const string expectedException = "System.ArgumentException";
-         bool exception = false;
-
-         try
-         {
-            Directory.CreateDirectory(UnitTestConstants.SysDrive + @"\<>");
-         }
-         catch (ArgumentException ex)
-         {
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // ArgumentException: PathContainsInvalidCharacters
-
-      #region ArgumentException: PathStartsWithColon
-
-      [TestMethod]
-      public void Directory_CreateDirectory_PathStartsWithColon_ArgumentException()
-      {
-         string tempPath = @":AAAAAAAAAA";
-
-         const string expectedException = "System.ArgumentException";
-         bool exception = false;
-
-         try
-         {
-            Directory.CreateDirectory(tempPath);
-         }
-         catch (ArgumentException ex)
-         {
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // ArgumentException: PathStartsWithColon
-
-
-      #region DirectoryNotFoundException & IOException: NonExistingDriveLetterLocal
-
-      // Note: isNetwork ? "System.IO.IOException" : "System.IO.DirectoryNotFoundException";
-
-      [TestMethod]
-      public void Directory_CreateDirectory_NonExistingDriveLetter_LocalAndUNC_DirectoryNotFoundException()
-      {
-         Directory_CreateDirectory_NonExistingDriveLetter_XxxException(false);
-         Directory_CreateDirectory_NonExistingDriveLetter_XxxException(true);
-      }
-
-
-      private void Directory_CreateDirectory_NonExistingDriveLetter_XxxException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string tempPath = DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter";
-
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
-
-         int expectedLastError = (int) (isNetwork ? Win32Errors.ERROR_BAD_NET_NAME : Win32Errors.ERROR_PATH_NOT_FOUND);
-         string expectedException = isNetwork ? "System.IO.IOException" : "System.IO.DirectoryNotFoundException";
-         bool exception = false;
-
-         try
-         {
-            Directory.CreateDirectory(tempPath);
-         }
-         catch (DirectoryNotFoundException ex)
-         {
-            var win32Error = new Win32Exception("", ex);
-
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-
-            Assert.IsTrue(win32Error.NativeErrorCode == expectedLastError, string.Format("Expected Win32Exception error should be: [{0}], got: [{1}]", expectedLastError, win32Error.NativeErrorCode));
-         }
-         catch (IOException ex)
-         {
-            exception = isNetwork;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-
-            Assert.IsTrue(ex.Message.StartsWith("(" + expectedLastError + ")"), string.Format("Expected Win32Exception error is: [{0}]", expectedLastError));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // DirectoryNotFoundException & IOException: NonExistingDriveLetterLocal
-
-
-      #region NotSupportedException: PathContainsColon
-
-      [TestMethod]
-      public void Directory_CreateDirectory_PathContainsColon_LocalAndUNC_NotSupportedException()
-      {
-         Directory_CreateDirectory_PathContainsColon_NotSupportedException(false);
-         Directory_CreateDirectory_PathContainsColon_NotSupportedException(true);
-      }
-
-
-      private void Directory_CreateDirectory_PathContainsColon_NotSupportedException(bool isNetwork)
-      {
-         UnitTestConstants.PrintUnitTestHeader(isNetwork);
-
-         string colonText = ":aaa.txt";
-         string tempPath = UnitTestConstants.SysDrive + @"\dev\test\"+ colonText;
-
-         if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath) + colonText;
-
-         const string expectedException = "System.NotSupportedException";
-         bool exception = false;
-
-         try
-         {
-            Directory.CreateDirectory(tempPath);
-         }
-         catch (NotSupportedException ex)
-         {
-            exception = true;
-            Console.WriteLine("\nCaught: [{0}]\n\n[{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine("\nCaught unexpected {0}: [{1}]", ex.GetType().FullName, ex.Message.Replace(Environment.NewLine, "  "));
-         }
-
-         Assert.IsTrue(exception, "[{0}] should have been caught.", expectedException);
-      }
-
-      #endregion // NotSupportedException: PathContainsColon
-
-
       [TestMethod]
       public void Directory_CreateDirectory_LocalAndUNC_Success()
       {
          Directory_CreateDirectory(false);
          Directory_CreateDirectory(true);
       }
+
+
+      [TestMethod]
+      public void Directory_CreateDirectory_WithFileSecurity_LocalAndUNC_Success()
+      {
+         if (!UnitTestConstants.IsAdmin())
+            Assert.Inconclusive();
+
+         Directory_CreateDirectory_WithFileSecurity(false);
+         Directory_CreateDirectory_WithFileSecurity(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory_LocalAndUNC_Success()
+      {
+         Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory(false);
+         Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters_LocalAndUNC_Success()
+      {
+         Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters(false);
+         Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_CreateDirectory_CatchArgumentException_PathStartsWithColon_Local_Success()
+      {
+         Directory_CreateDirectory_CatchArgumentException_PathStartsWithColon(false);
+      }
+
+
+      [TestMethod]
+      public void Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon_Local_Success()
+      {
+         Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(false);
+         Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(true);
+      }
+
+
+      [TestMethod]
+      public void Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter_LocalAndUNC_Success()
+      {
+         Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter(false);
+         Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter(true);
+      }
+
+
+
+
+
 
 
       private void Directory_CreateDirectory(bool isNetwork)
@@ -271,41 +100,207 @@ namespace AlphaFS.UnitTest
 
 #if NET35
          string emspace = "\u3000";
-         string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + SysIOPath.GetRandomFileName() + emspace);
+         string tempPath =
+            Alphaleonis.Win32.Filesystem.Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" +
+                                                          System.IO.Path.GetRandomFileName() + emspace);
 #else
-         // MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
+// MSDN: .NET 4+ Trailing spaces are removed from the end of the path parameter before deleting the directory.
          string tempPath = Path.GetTempPath("Directory.CreateDirectory()-" + level + "-" + Path.GetRandomFileName());
 #endif
 
          if (isNetwork)
-            tempPath = Path.LocalToUnc(tempPath);
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
 
          try
          {
-            string root = SysIOPath.Combine(tempPath, "MaxPath-Hit-The-Road");
+            string root = System.IO.Path.Combine(tempPath, "MaxPath-Hit-The-Road");
 
             for (int i = 0; i < level; i++)
-               root = SysIOPath.Combine(root, "-" + (i + 1) + "-subdir");
+               root = System.IO.Path.Combine(root, "-" + (i + 1) + "-subdir");
 
-            Directory.CreateDirectory(root);
+            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(root);
 
-            Console.WriteLine("\nCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level, root.Length);
+            Console.WriteLine("\nCreated directory structure: Depth: [{0}], path length: [{1}] characters.", level,
+               root.Length);
             Console.WriteLine("\n{0}", root);
 
-            Assert.IsTrue(Directory.Exists(root), "Directory should exist.");
+            Assert.IsTrue(Alphaleonis.Win32.Filesystem.Directory.Exists(root), "Directory should exist.");
          }
          finally
          {
-            if (SysIODirectory.Exists(tempPath))
-               Directory.Delete(tempPath, true);
-               //SysIODirectory.Delete(tempPath, true);
+            if (System.IO.Directory.Exists(tempPath))
+               Alphaleonis.Win32.Filesystem.Directory.Delete(tempPath, true);
+            //SysIODirectory.Delete(tempPath, true);
 
-            Assert.IsFalse(SysIODirectory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
+            Assert.IsFalse(System.IO.Directory.Exists(tempPath), "Cleanup failed: Directory should have been removed.");
 
             Console.WriteLine("\nDirectory deleted.");
          }
 
          Console.WriteLine();
+      }
+
+
+      private void Directory_CreateDirectory_WithFileSecurity(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory-CreateWithFileSecurity"))
+         {
+            string file = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput Folder Path: [{0}]\n", file);
+
+
+            string pathExpected = rootDir.RandomFileFullPath;
+            string pathActual = rootDir.RandomFileFullPath;
+
+            var expectedFileSecurity = new System.Security.AccessControl.DirectorySecurity();
+            expectedFileSecurity.AddAccessRule(new System.Security.AccessControl.FileSystemAccessRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.FullControl, System.Security.AccessControl.AccessControlType.Allow));
+            expectedFileSecurity.AddAuditRule(new System.Security.AccessControl.FileSystemAuditRule(new System.Security.Principal.SecurityIdentifier(System.Security.Principal.WellKnownSidType.WorldSid, null), System.Security.AccessControl.FileSystemRights.Read, System.Security.AccessControl.AuditFlags.Success));
+
+
+            using (new Alphaleonis.Win32.Security.PrivilegeEnabler(Alphaleonis.Win32.Security.Privilege.Security))
+            {
+               var s1 = System.IO.Directory.CreateDirectory(pathExpected, expectedFileSecurity);
+               var s2 = Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(pathActual, expectedFileSecurity);
+            }
+
+            string expected = System.IO.File.GetAccessControl(pathExpected).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
+            string actual = Alphaleonis.Win32.Filesystem.File.GetAccessControl(pathActual).GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
+
+            Assert.AreEqual(expected, actual);
+         }
+
+         Console.WriteLine();
+      }
+
+
+      private void Directory_CreateDirectory_CatchAlreadyExistsException_FileExistsWithSameNameAsDirectory(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
+         {
+            string file = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
+            var gotException = false;
+            try
+            {
+               using (System.IO.File.Create(file))
+               {
+               }
+               Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file);
+
+            }
+            catch (Exception ex)
+            {
+               gotException = ex.GetType().Name.Equals("AlreadyExistsException", StringComparison.OrdinalIgnoreCase);
+            }
+            Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+         }
+      }
+
+
+      private void Directory_CreateDirectory_CatchArgumentException_PathContainsInvalidCharacters(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = System.IO.Path.GetTempPath();
+         if (isNetwork)
+            tempPath = PathUtils.AsUncPath(tempPath);
+
+
+         using (var rootDir = new TemporaryDirectory(tempPath, "Directory.CreateDirectory"))
+         {
+            string file = rootDir.RandomFileFullPath;
+            Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
+            var gotException = false;
+            try
+            {
+               Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(UnitTestConstants.SysDrive + @"\<>");
+
+            }
+            catch (Exception ex)
+            {
+               gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+            }
+            Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+         }
+      }
+
+
+      private void Directory_CreateDirectory_CatchArgumentException_PathStartsWithColon(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string file = @":AAAAAAAAAA";
+         Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file);
+         }
+         catch (Exception ex)
+         {
+            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
+         }
+         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+      }
+
+
+      private void Directory_CreateDirectory_CatchNotSupportedException_PathContainsColon(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string colonText = ":aaa.txt";
+         string file = (isNetwork ? PathUtils.AsUncPath(UnitTestConstants.LocalHostShare) : UnitTestConstants.SysDrive + @"\dev\test\") + colonText;
+
+         Console.WriteLine("\nInput File Path: [{0}]\n", file);
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(file);
+         }
+         catch (Exception ex)
+         {
+            gotException = ex.GetType().Name.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
+         }
+         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+      }
+
+
+      private void Directory_CreateDirectory_CatchDirectoryNotFoundException_NonExistingDriveLetter(bool isNetwork)
+      {
+         UnitTestConstants.PrintUnitTestHeader(isNetwork);
+
+         string tempPath = Alphaleonis.Win32.Filesystem.DriveInfo.GetFreeDriveLetter() + @":\NonExistingDriveLetter";
+         if (isNetwork)
+            tempPath = Alphaleonis.Win32.Filesystem.Path.LocalToUnc(tempPath);
+
+         var gotException = false;
+         try
+         {
+            Alphaleonis.Win32.Filesystem.Directory.CreateDirectory(tempPath);
+         }
+         catch (Exception ex)
+         {
+            gotException = ex.GetType() .Name.Equals(isNetwork ? "IOException" : "DirectoryNotFoundException", StringComparison.OrdinalIgnoreCase);
+         }
+         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
       }
    }
 }

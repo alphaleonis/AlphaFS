@@ -320,7 +320,7 @@ namespace Alphaleonis.Win32.Filesystem
 
          try
          {
-            safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights)access, share, true, pathFormat);
+            safeHandle = CreateFileCore(transaction, path, attributes, fileSecurity, mode, (FileSystemRights) access, share, true, pathFormat);
 
             return new FileStream(safeHandle, access, bufferSize, (attributes & ExtendedFileAttributes.Overlapped) != 0);
          }
@@ -368,8 +368,11 @@ namespace Alphaleonis.Win32.Filesystem
          PrivilegeEnabler privilegeEnabler = null;
 
 
+         var isAppend = fileMode == FileMode.Append;
+
+
          // CreateFileXxx() does not support FileMode.Append mode.
-         if (fileMode == FileMode.Append)
+         if (isAppend)
          {
             fileMode = FileMode.OpenOrCreate;
             fileSystemRights &= FileSystemRights.AppendData; // Add right.
@@ -402,10 +405,17 @@ namespace Alphaleonis.Win32.Filesystem
 
             int lastError = Marshal.GetLastWin32Error();
 
-            if (handle != null && handle.IsInvalid)
+            if (handle.IsInvalid)
             {
                handle.Close();
                NativeError.ThrowException(lastError, pathLp);
+            }
+
+
+            if (isAppend)
+            {
+               var stream = new FileStream(handle, isAppend ? FileAccess.Write : FileAccess.ReadWrite, 4096, (attributes & ExtendedFileAttributes.Overlapped) != 0);
+               stream.Seek(0, SeekOrigin.End);
             }
 
             return handle;

@@ -19,8 +19,8 @@
  *  THE SOFTWARE. 
  */
 
-using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace AlphaFS.UnitTest
 {
@@ -84,9 +84,9 @@ namespace AlphaFS.UnitTest
 
 
       [TestMethod]
-      public void Path_GetFullPath_CatchArgumentException_Success()
+      public void Path_GetFullPath_CatchArgumentException_InvalidPath1_Success()
       {
-         var skipAssert = false;
+         var gotException = false;
          try
          {
             Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\?test.txt");
@@ -94,42 +94,45 @@ namespace AlphaFS.UnitTest
             //Path.GetFullPath(UnitTestConstants.SysDrive + @"\\test.txt");
             //Path.GetFullPath(UnitTestConstants.SysDrive + @"\/test.txt");
          }
-         catch (ArgumentException)
+         catch (Exception ex)
          {
-            skipAssert = true;
+            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
          }
-         Assert.IsTrue(skipAssert, "ArgumentException should have been caught.");
+         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
+      }
 
 
+      [TestMethod]
+      public void Path_GetFullPath_CatchArgumentException_InvalidPath2_Success()
+      {
+         var gotException = false;
          try
          {
             Alphaleonis.Win32.Filesystem.Path.GetFullPath(@"\\\\.txt");
          }
-         catch (ArgumentException)
+         catch (Exception ex)
          {
-            skipAssert = true;
+            gotException = ex.GetType().Name.Equals("ArgumentException", StringComparison.OrdinalIgnoreCase);
          }
-         Assert.IsTrue(skipAssert, "ArgumentException should have been caught.");
+         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
       }
 
 
       [TestMethod]
       public void Path_GetFullPath_CatchNotSupportedException_Success()
       {
-         var skipAssert = false;
+         var gotException = false;
          try
          {
             Alphaleonis.Win32.Filesystem.Path.GetFullPath(UnitTestConstants.SysDrive + @"\dev\test\aaa:aaa.txt");
          }
-         catch (NotSupportedException)
+         catch (Exception ex)
          {
-            skipAssert = true;
+            gotException = ex.GetType().Name.Equals("NotSupportedException", StringComparison.OrdinalIgnoreCase);
          }
-         Assert.IsTrue(skipAssert, "NotSupportedException should have been caught.");
+         Assert.IsTrue(gotException, "The exception was not caught, but was expected to.");
       }
-
-
-
+      
 
       [TestMethod]
       public void AlphaFS_Path_GetFullPath_WithTrailingDotOrSpace_LocalAndUNC_Success()
